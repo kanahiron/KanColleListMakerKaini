@@ -1,0 +1,4 @@
+#define CONSUMER_KEY 	""
+#define CONSUMER_SECRET	""
+
+// apps.twitter,comでアプリを作りコンシューマーキーとコンシューマーシークレットをここに記入

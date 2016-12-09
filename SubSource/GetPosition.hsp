@@ -1,0 +1,269 @@
+
+//SSキャプチャセッティング――――――――――――――――――――――――――――――――――
+*sssetting
+
+	oncmd 0
+
+	nidPush
+	
+	gsel WND_MAIN
+	objenable comboxid,0
+	objenable sscapiid,0
+	
+	if mode = 0{
+		objenable sscapbid,0
+		objenable seqcapbid,0
+		if (yabumiautoupload = 1) & (availableyabumi = 1){
+			objenable yabumibid,0
+		}
+	}
+
+	if autoSearch {
+		//新座標検出===========================================
+
+		gsel WND_MAIN
+		logmessage = "艦これの画面にマウスカーソルを重ねてください。"
+		objprm logid,logmessage:await 
+
+		dim rect, 4
+		dim mouPoint, 2
+		dim scrPoint, 2
+		dim cliPoint, 2
+		dim KCRect,4
+		hClient = 0
+		temp_hClient = 0
+		dcClient = 0
+		KCRect(0) = -1, -1, -1, -1
+		enablePos = FALSE
+		sti = 0
+
+		repeat
+			mouPoint(0) = ginfo(0)
+			mouPoint(1) = ginfo(1)
+			
+			if (enablePos == TRUE){
+	
+				scrPoint(0) = KCRect(0), KCRect(1)
+				ClientToScreen hClient, varptr(scrPoint)
+				if (mouPoint(0) < scrPoint(0)) | (mouPoint(0) > (scrPoint(0)+KCRect(2)-KCRect(0)))  | (mouPoint(1) < scrPoint(1)) | (mouPoint(1) > (scrPoint(1)+KCRect(3)-KCRect(1))) {
+					KCRect(0) = -1, -1, -1, -1
+					enablePos = FALSE
+					temp_hClient = 0
+					gsel WND_OVERLAY, -1
+					gsel WND_MAIN, 0
+				}
+				
+			} else {
+
+				if ginfo(3) != WND_IMAGE_BUF2:gsel WND_IMAGE_BUF2,2
+				width ,,mouPoint(0)+1, mouPoint(1)+1
+				gsel WND_MAIN,0
+				
+				hClient = WindowFromPoint(mouPoint(0), mouPoint(1))
+		
+				GetClientRect hClient, varptr(rect)
+				winSizeX = rect(2)
+				winSizeY = rect(3)
+		
+				//拡大率が40%未満には対応しないのでそのサイズ未満なら弾く
+				if (winSizeX >= 320 and winSizeY >= 192) {
+					logmes "画面サイズは艦これの可能性あり"
+		
+					//過去に取得したウィンドウハンドルと同じならデバイスコンテキストの無駄な取得を避けるために飛ばす
+					if (temp_hClient != hClient) {
+						logmes "デバイスコンテキストを取得"
+						temp_hClient = hClient
+			
+						dcClient = GetDC(hClient)
+						buffer WND_TEMP1, winSizeX, winSizeY :SET_WND_INFO
+						BitBlt hdc, 0, 0, winSizeX, winSizeY, dcClient, 0, 0, SRCCOPY: redraw
+						ReleaseDC  dcClient
+						
+						gsel WND_MAIN, 0
+					}
+					
+					//スクリーン座標からクライアント座標へ
+					cliPoint = mouPoint(0), mouPoint(1) 
+					ScreenToClient hClient, varptr(cliPoint)
+			
+					getKanCollePos WND_TEMP1, WND_TEMP2, KCRect, cliPoint(0), cliPoint(1)
+					if (stat = 1){
+						//取得したクライアント座標からスクリーン座標へ
+						scrPoint(0) = KCRect(0), KCRect(1)
+						ClientToScreen hClient, varptr(scrPoint)
+						gsel WND_OVERLAY, 2
+						width KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), scrPoint(0), scrPoint(1)
+
+						gsel WND_MAIN, 0
+						enablePos = TRUE
+						
+					} else {
+						KCRect(0) = -1, -1, -1, -1
+						enablePos = FALSE
+						gsel WND_OVERLAY, -1
+						gsel WND_MAIN, 0
+					}
+						
+				}
+			}
+
+			stick sti, , 0
+			if (sti == 256) {
+				if (enablePos = TRUE){
+					ssCap(0) = KCRect(0), KCRect(1), KCRect(2), KCRect(3)
+					positionType = PT_RELATIVE
+					dcClient = GetDC(hClient)
+					clientSize(0) = winSizeX, winSizeY
+					break	
+				} else {
+					dialog "艦これの画面が取得されませんでした。\n取得を継続しますか？",2,"自動座標取得中"
+					ssCap(0) = 0, 0, 0, 0
+					if (stat != 6):break
+				}
+			}
+			if (sti == 128){
+				ssCap(0) = 0, 0, 0, 0
+				if (stat != 6):break
+			}
+			await 33
+		loop
+
+		gsel WND_OVERLAY, -1
+		gsel WND_IMAGE_BUF2, -1
+		gsel WND_MAIN, 0
+		
+	} else {
+		//手動手動=============================================
+			
+		buffer WND_TEMP1, disinfo(2), disinfo(3)
+		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY: redraw
+
+		bgscr WND_TEMP_SCR1, disinfo(2), disinfo(3), 2: SET_WND_INFO
+		font "メイリオ",30
+	
+		gcopy WND_TEMP1, 0, 0, disinfo(2), disinfo(3)
+		color 128,128,128
+		repeat (disinfo(3) / 120)+1
+			ycnt = cnt
+			repeat (disinfo(2) / 500)+2
+				pos (cnt*600)+(ycnt*70)-800,ycnt*200
+				mes "艦これ一覧めいかー　座標取得中"
+			loop
+		loop
+		color 255,255,255
+		boxf abs(disinfo(0)), abs(disinfo(1)), abs(disinfo(0))+970, abs(disinfo(1))+45
+		color
+		pos abs(disinfo(0))+5, abs(disinfo(1))+2
+		mes "艦これの画面を覆うようにドラッグしてください Escキーでキャンセル"
+
+		KanCollePosManual WND_TEMP1, sscap, WND_OVERLAY, WND_TEMP_SCR1
+
+		//positionType == PT_ABSOLUTE
+	}
+
+	
+	nidPop
+	oncmd 1
+	
+	gosub *ssSettingCheck
+
+return
+
+*ssSettingCheck
+
+	oncmd 0
+	nidPush
+	
+	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
+	luposx = sscap(0)
+	luposy = sscap(1)
+	rdposx = sscap(2)
+	rdposy = sscap(3)
+	
+	gsel WND_MAIN
+	if manualpos & (mode = 0){
+		objprm luposxiid, luposx
+		objprm luposyiid, luposy
+		objprm rdposxiid, rdposx
+		objprm rdposyiid, rdposy
+	}
+	
+	gsel WND_MAIN,1+frontrow
+	objenable comboxid, 1
+	objenable sscapiid, 1
+	
+	if ( (autosearch=1) & (sscapwh(0) != 0) ) | ( (othergame=1) & (autosearch=0) & (sscapwh(0) >= 99) & (sscapwh(1) >= 59) ){
+
+		if (autoSearch == FALSE):positionType = PT_ABSOLUTE
+		
+		if (positionType == PT_ABSOLUTE){
+			ssCapMes = strf("%d,%d",　sscap(0),　sscap(1))
+		} else {
+			ssCapMes = "追跡中"
+		}
+		objprm sscapiid,sscapmes
+		
+		if mode = 0{
+			objenable sscapbid,1
+			objenable seqcapbid,1
+			objenable yabumibid,1
+		}
+		
+		logmessage = "座標の取得に成功しました"
+		objprm logid,logmessage
+		
+		availablecap = TRUE
+	
+		if autoSearch: autoSearchFailureCount = 0
+		
+	} else {
+		
+		sscapmes = "取得する"
+		objprm sscapiid,sscapmes
+		
+		if mode = 0{
+			objenable sscapbid,0
+			objenable seqcapbid,0
+			objenable yabumibid,0
+		}
+		
+		logmessage = "座標を取得できません\n詳細はreadmeをお読みください"
+		objprm logid,logmessage
+		availablecap = FALSE
+	
+		if autoSearch{
+			autoSearchFailureCount++
+			if autoSearchFailureCount = 4{
+				dialog "自動取得に連続して失敗しました\n手動取得に切り替えもう一度座標取得しますか？",2,""
+				if stat = 7:autoSearchFailureCount = 0
+			}
+		}
+		
+	}
+	
+	if mode = 0 {
+		
+		if manualpos: objenable sscapbid,1
+
+	}
+	
+	if (hotkeyset == 1 & availablecap == 1) {
+		gsel WND_MAIN, 0
+		title "*"+SOFTNAME
+	} else {
+		gsel WND_MAIN, 0
+		title SOFTNAME
+	}
+
+	if autoSearch {
+		if autoSearchFailureCount = 4{
+			autoSearchFailureCount = 0
+			autoSearch = 0
+			objprm autoSearchCId,autoSearch
+			gosub *sssetting
+		}
+	}
+	
+	nidPop
+	oncmd 1
+return

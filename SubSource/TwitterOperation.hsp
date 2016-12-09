@@ -1,0 +1,472 @@
+
+*twiwindowimage
+	oncmd 0
+	
+	if ginfo(24) = WND_TWITTER{
+	
+		nidpush
+		
+		mx = lParam & 0x0000FFFF;         // カーソルx座標
+		my = (lParam >> 16) & 0x0000FFFF;  // カーソルy座標
+	
+		gsel WND_TWITTER
+	
+		twiOrderPos = -1
+		repeat 4
+			if ((twiPicFrameXL(cnt)<mx) & (twiPicFrameXR(cnt)>mx) & (twiPicFrameYU(cnt)<my) & (twiPicFrameYD(cnt)>my)){
+				twiOrderPos = cnt
+			}
+		loop
+	
+		if twiOrderPos != -1{
+				
+			if twiOrder(twiOrderPos) = 0{
+				twiOrderCount++
+				twiOrder(twiOrderPos) = twiOrderCount
+			} else {
+				temp = twiOrder(twiOrderPos)
+				twiOrder(twiOrderPos) = 0
+				twiOrderCount--
+				repeat 4
+					if temp <= twiOrder(cnt):twiOrder(cnt)--
+				loop		
+			}
+		}
+
+		gosub *TweetWindow
+	
+		nidpop
+	}
+	oncmd 1
+return
+
+
+*openbrowser
+
+	address = getAuthorizeAddress()
+	if address != "Error"{
+		exec "rundll32.exe url.dll,FileProtocolHandler \""+address+"\""
+	} else {
+		dialog "認証に失敗しました\nインターネットに繋がっているか確認しもう一度お試しください"
+	}
+
+return
+
+*twioauthok
+	
+	userdata = ""
+	ACCESS_TOKEN = ""
+	ACCESS_SECRET = ""
+	
+	publishAccessToken ACCESS_TOKEN,ACCESS_SECRET,userdata,PIN
+	if stat != 200{
+		dialog "Twitter認証に失敗しました\nもう一度お試しください"
+	} else {
+		gosub *twiinit
+	}
+
+return
+
+*twiinit
+
+	if ACCESS_TOKEN != "" & ACCESS_SECRET != ""{
+		
+		setAccessToken ACCESS_TOKEN, ACCESS_SECRET
+		nidpush
+		gsel WND_MAIN
+		logmessage = "Twitter連携が有効です"
+		objprm logid,logmessage
+	
+		gsel WND_TWITTER
+		DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 1
+		clrobj
+		
+		objmode 2
+		title "ツイートウィンドウ"
+		font "メイリオ",12
+		pos 1,1
+		mesbox tweettext,180,217,1
+		ttid = stat
+		tth = objinfo(ttid,2)
+		objsize 140,32
+		pos 0,218
+		font "メイリオ",20
+		button gosub "ツイート",*tweet_
+		tweetbid = stat
+	
+		objsize 105,30
+		pos 184,220
+		button gosub "←",*picHistoryBack
+		picHistoryBackBId = stat
+		pos 341,220
+		button gosub "→",*picHistoryNext
+		picHistoryNextBId = stat
+		objsize 54,40
+		pos 288,210
+		button gosub "↑",*picHistoryAddStack
+	
+		picHistoryNum = 0
+	
+		////スタティックテキスト
+		font "メイリオ",14
+		mref BMSCR, 67
+		hFont = BMSCR.38
+	
+		pos 140,230
+		winobj "static", strf("%3d",140-ttCount), , $50000002, 44, 30
+		ttCounth = objinfo(stat, 2)
+		sendmsg ttCounth, $30, hFont
+	
+		pos 379,189
+		winobj "static", strf("%3d/100 ",picHistoryNum+1), , $50001002, 65,20
+		stackCounth = objinfo(stat, 2)
+		sendmsg stackCounth, $30, hFont
+	
+		sendmsg ttCounth, $C ,, strf("%3d/140 ",ttCount)
+		sendmsg stackCounth ,$C , , strf("%3d/100",picHistoryNum+1)
+
+		//----
+
+		pos 0,250
+		winobj "msctls_progress32", "", , $50000000, 448, 20
+		hProgress = objinfo(stat, 2)	
+		sendmsg hProgress ,PBM_SETRANGE,0,MAKELPARAM(0,100)
+		sendmsg hProgress ,PBM_SETRANGE,0,MAKELPARAM(0,100)
+		//----
+
+		nidpop
+		gosub *TweetWindow
+		
+	} else {
+	
+		nidpush
+		
+		gsel WND_TWITTER
+		DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 0
+		clrobj
+		syscolor 15
+		boxf
+		color
+		objmode 2
+		title "ツイートウィンドウ"
+		font "メイリオ",14
+		pos 10,10
+		mes "Twitterへの投稿には認証が必要です"
+		mes "次のボタンを押すとブラウザが開くので表示されたコードを入力し、\nOKを押してください"
+	
+		pos 10,80
+		objsize 428,40
+		button gosub "ブラウザを開いて認証する",*openbrowser
+	
+		pos 10,134
+		mes "PIN"
+		PIN = ""
+		pos 40,130
+		input PIN,100,30
+		objsize 150,30
+		pos 150,130
+		button　gosub "OK",*twioauthok
+	
+		nidpop
+	}
+
+return
+
+*picHistoryNext
+	
+	nidPush
+	gsel WND_TWITTER
+	
+	if picHistoryNum < 99{
+		if picHistory(picHistoryNum+1) != ""{
+			picHistoryNum++
+		}
+	}
+	sendmsg stackCounth ,$C , , strf("%3d/100",picHistoryNum+1)
+	
+	nidPop
+	gosub *tweetWindow
+return
+
+*picHistoryBack
+	
+	nidPush
+	gsel WND_TWITTER
+	
+	if 0 < picHistoryNum{
+		picHistoryNum--
+	}
+	
+	sendmsg stackCounth ,$C , , strf("%3d/100",picHistoryNum+1)
+	nidPop
+	
+	gosub *tweetWindow
+return
+
+*picHistoryAddStack
+	logmes "*picHistoryAddStack"
+	if kmexist(picHistory(picHistoryNum)) > 0{
+		i = 3
+		repeat 3
+			PicStack(i) = PicStack(i-1)
+			if twiOrder(i) = 0{
+				twiOrder(i) = twiOrder(i-1)
+				twiOrder(i-1) = 0
+			}
+			i--
+		loop
+		PicStack(0) = picHistory(picHistoryNum)
+
+		if twiOrder(0) = 0{
+			twiOrderCount++
+			twiOrder(0) = twiOrderCount
+		}
+	
+	}
+	logmes "gosub *TweetWindow"
+	gosub *TweetWindow
+	logmes "return"
+	logmes "return"
+return
+
+
+*TweetWindow
+
+	if (ACCESS_TOKEN != "" & ACCESS_SECRET != ""){
+		nidpush
+		gsel WND_TWITTER
+		gosub *TweetWindowDraw
+		nidpop
+	}
+
+return
+
+*rideCursor
+
+	oncmd 0
+	if ACCESS_TOKEN != "" & ACCESS_SECRET != ""{
+	
+		mx = lparam&0x0000FFFF
+		my = (lparam&0xFFFF0000)>>16
+		flag = -1
+	
+		repeat 4
+			if PicStack(cnt) = "":break
+			if ((twiPicFrameXL(cnt)<mx) & (twiPicFrameXR(cnt)>mx) & (twiPicFrameYU(cnt)<my) & (twiPicFrameYD(cnt)>my)){
+				flag = cnt
+				break
+			}
+		loop
+		
+		if flag != flag_ {
+			
+			nidpush
+			flag_ = flag 
+	
+			if flag > -1{
+				//buffer 21
+				buffer WND_TEMP1
+				picload PicStack(flag)
+				
+				gsel WND_TWITTER
+				
+				color 200,200,200
+				boxf
+				color
+	
+				pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
+				gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TEMP1, 0, 0, 800, 480, 1
+				pos twiPicFrameXL(flag)+1,twiPicFrameYU(flag)+1
+				gzoom 62, 38, WND_TEMP1, 0, 0, 800, 480
+	
+				sendmsg stackCounth ,$C , , strf("プレビュー")
+				
+				redraw 1
+			} else {
+				gsel WND_TWITTER
+				gosub *TweetWindowDraw
+				sendmsg stackCounth ,$C , , strf("%3d/100",picHistoryNum+1)
+			}
+			nidpop
+		}
+	}
+	oncmd 1	
+return
+
+
+*TweetWindowDraw
+
+	redraw 0
+	gmode 0
+
+	syscolor 15
+	boxf
+			
+	syscolor 16 //外枠表示
+	repeat 4
+		boxf twiPicFrameXL(cnt),twiPicFrameYU(cnt),twiPicFrameXR(cnt),twiPicFrameYD(cnt)
+	loop
+	boxf twiPicFrameXL(4),twiPicFrameYU(4),twiPicFrameXR(4),twiPicFrameYD(4)
+	
+	syscolor 15 //内側上書き
+	repeat 4
+		boxf twiPicFrameXL(cnt)+1,twiPicFrameYU(cnt)+1,twiPicFrameXR(cnt)-1,twiPicFrameYD(cnt)-1
+	loop
+	boxf twiPicFrameXL(4)+2,twiPicFrameYU(4)+2,twiPicFrameXR(4)-2,twiPicFrameYD(4)-2
+	color
+	
+	if kmexist(picHistory(picHistoryNum)) > 0{
+		buffer WND_TEMP1
+		picload picHistory(picHistoryNum)
+		gsel WND_TWITTER
+		pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
+		gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TEMP1, 0, 0, 800, 480, 1
+	}
+	
+	repeat 4
+		if PicStack(cnt) = "":break
+		if kmexist(PicStack(cnt)) < 1:break
+		buffer WND_TEMP1
+		picload PicStack(cnt)
+		gsel WND_TWITTER
+		pos twiPicFrameXL(cnt)+1, twiPicFrameYU(cnt)+1
+		gzoom 62, 38, WND_TEMP1, 0, 0, 800, 480
+	loop
+
+	gmode 2
+	repeat 4
+		if PicStack(cnt) = "": break
+		pos twiPicFrameXL(cnt)+1, twiPicFrameYU(cnt)+1
+		gcopy WND_IMAGE_BUF, 0, 50+twiOrder(cnt)*90, 62, 38
+	loop
+	
+	gmode 0
+	redraw 1
+	
+return
+
+*tweet_
+	
+	if ACCESS_TOKEN != ""{
+	
+		nidpush
+
+		gsel WND_MAIN
+		objenable comboxid, 0
+		objenable sscapiid, 0
+		wait 50
+	
+		gsel WND_TWITTER
+		objenable ttid, 0
+		objenable tweetbid, 0
+		wait 50
+		
+		sdim mediaids, 1024
+		sdim tempsdim, 256, 4
+	
+		count = 0
+		repeat 4
+			if (twiOrder(cnt) == count+1) {
+				if picStack(cnt) != "" {
+					tempsdim(count) = picStack(cnt)
+					count++
+					continue 0
+				}
+			}
+		loop
+
+		if (twijpg == TRUE & jpgsave == FALSE){
+			repeat count
+				buffer WND_TEMP1
+				picload tempsdim(cnt)
+				savenamed = strf("%s\\temp_%d.jpg", sssavedir, cnt)
+				gdiimagesave savenamed, jpgquality
+				if kmexist(savenamed) > 0{
+					tempsdim(cnt) = savenamed
+				}
+			loop
+		}
+		
+		gsel WND_TWITTER
+		logmes tempSdim(0)
+		logmes tempSdim(1)
+		logmes tempSdim(2)
+		logmes tempSdim(3)
+		logmes length(tempSdim)
+		logmes count
+		
+		media_upload tempsdim,count,mediaids, hProgress
+		
+		gsel WND_TWITTER
+		if stat != 0{
+			dialog "画像のアップロードに失敗しました"
+		} else {
+			
+			tweet tweettext,"",mediaids
+			if stat = 200{
+		
+				repeat 4
+					picStack(cnt) = ""
+				loop
+				tweettext = ""
+				twiOrder = 0,0,0,0
+				twiOrderCount = 0
+				objprm ttid,tweettext
+
+				sendmsg hProgress, $402, 0
+	
+				logmessage = "ツイートを投稿しました"
+
+			} else {
+				dialog "ツイートに失敗しました"
+			} 
+		}
+		
+		if (twijpg == TRUE & jpgsave == FALSE){
+			repeat count
+				if kmexist(savenamed) > 0{
+					delete tempsdim(cnt)
+				}
+			loop
+		}
+
+		gsel WND_TWITTER
+
+		objenable ttid,1
+		objenable tweetbid,1
+	
+		gsel WND_MAIN
+		if mode != modeOptionNum{
+			objprm logid,logmessage
+		}
+		objenable comboxid,1
+		objenable sscapiid,1
+		
+		nidpop
+	}
+	
+	gosub *TweetWindow
+
+return
+
+*twireset
+	userdata = ""
+	ACCESS_TOKEN = ""
+	ACCESS_SECRET = ""
+	gosub *twiinit
+return
+
+*getText
+	oncmd 0
+	
+	if (lparam = tth){
+		if ( ((wparam >> 16)&0x0000FFFF) == 0x0400 ){
+			MultiByteToWideChar 65001, 0, varptr(tweettext), -1, 0, 0
+			ttCount = stat -1
+			if twiOrderCount :ttCount += 24
+			sendmsg ttCounth ,$C , , strf("%3d",140-ttCount)
+		}
+	}
+	
+	oncmd 1
+return

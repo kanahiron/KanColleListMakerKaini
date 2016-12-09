@@ -1,0 +1,257 @@
+
+*drawString
+	
+	nidpush
+
+	gsel WND_MAKE_STRING
+
+	font fontnum,fontsizenum,1
+	mes "1,3,4"
+	OSOW = ginfo(15)
+	
+	font fontname,fontsizename,1
+	mref BMSCR, 67
+	r = 0.1 * abs(BMSCR.49)
+	n = int(2.0 * M_PI * r)
+	
+	mes "ええ！？ぱんつ！！<- 美乳 ->"
+	OSOWm = ginfo(15)
+	color :boxf
+
+	x = 10
+	y = 10
+
+	if enableFirst = 1{
+		x = 10
+		string = FirstFleetName
+		color 255,255,255
+		repeat n
+			rad = 2.0 * M_PI * cnt / n
+			xt = x + int(r * cos(rad))
+			yt = y + int(r * sin(rad))
+			pos xt, yt
+			mes string
+			pos xt+220, yt
+			mes string
+		loop
+		color ((fontColorFirstFleet&0x00FF0000)>>16),((fontColorFirstFleet&0x0000FF00)>>8),(fontColorFirstFleet&0x000000FF)
+		pos x, y
+		mes string
+		y += 70
+	}
+	
+	if enableSecond = 1{
+		x = 10
+		string = SecondFleetName
+		color 255,255,255
+		repeat n
+			rad = 2.0 * M_PI * cnt / n
+			xt = x + int(r * cos(rad))
+			yt = y + int(r * sin(rad))
+			pos xt, yt
+			mes string
+			pos xt+220, yt
+			mes string
+		loop
+		color ((fontColorSecondFleet&0x00FF0000)>>16),((fontColorSecondFleet&0x0000FF00)>>8),(fontColorSecondFleet&0x000000FF)
+		pos x, y
+		mes string
+		y += 70
+	}
+	
+	if enableThread = 1{
+		x = 10
+		string = ThreadFleetName
+		color 255,255,255
+		repeat n
+			rad = 2.0 * M_PI * cnt / n
+			xt = x + int(r * cos(rad))
+			yt = y + int(r * sin(rad))
+			pos xt, yt
+			mes string
+			pos xt+220, yt
+			mes string
+		loop
+		color ((fontColorThreadFleet&0x00FF0000)>>16),((fontColorThreadFleet&0x0000FF00)>>8),(fontColorThreadFleet&0x000000FF)
+		pos x, y
+		mes string
+		y += 70
+	}
+	
+	if enableFourth = 1{
+		x = 10
+		string = FourthFleetName
+		color 255,255,255
+		repeat n
+			rad = 2.0 * M_PI * cnt / n
+			xt = x + int(r * cos(rad))
+			yt = y + int(r * sin(rad))
+			pos xt, yt
+			mes string
+			pos xt+220, yt
+			mes string
+		loop
+		color ((fontColorFourthFleet&0x00FF0000)>>16),((fontColorFourthFleet&0x0000FF00)>>8),(fontColorFourthFleet&0x000000FF)
+		pos x, y
+		mes string
+	}
+
+	font fontnum,fontsizenum,1
+	mref BMSCR, 67
+	r = 0.1 * abs(BMSCR.49)
+	n = int(2.0 * M_PI * r)
+	
+	x = 510
+	
+	if enableFirst = 1{
+		y = 10
+		string = "1\n2\n3\n4\n5\n6"
+		color 255,255,255
+		repeat n
+			rad = 2.0 * M_PI * cnt / n
+			xt = x + int(r * cos(rad))
+			yt = y + int(r * sin(rad))
+			pos xt, yt
+			mes string
+			pos xt+50, yt
+			mes string
+		loop
+		color ((fontColorFirstFleet&0x00FF0000)>>16),((fontColorFirstFleet&0x0000FF00)>>8),(fontColorFirstFleet&0x000000FF)
+		pos x, y
+		mes string
+		x += 100
+	}
+	
+	if enableSecond = 1{
+		y = 10
+		string = "1\n2\n3\n4\n5\n6"
+		color 255,255,255
+		repeat n
+			rad = 2.0 * M_PI * cnt / n
+			xt = x + int(r * cos(rad))
+			yt = y + int(r * sin(rad))
+			pos xt, yt
+			mes string
+			pos xt+50, yt
+			mes string
+		loop
+		color ((fontColorSecondFleet&0x00FF0000)>>16),((fontColorSecondFleet&0x0000FF00)>>8),(fontColorSecondFleet&0x000000FF)
+		pos x, y
+		mes string
+		x += 100
+	}
+	
+	if enableThread = 1{
+		y = 10
+		string = "1\n2\n3\n4\n5\n6"
+		color 255,255,255
+		repeat n
+			rad = 2.0 * M_PI * cnt / n
+			xt = x + int(r * cos(rad))
+			yt = y + int(r * sin(rad))
+			pos xt, yt
+			mes string
+			pos xt+50, yt
+			mes string
+		loop
+		color ((fontColorThreadFleet&0x00FF0000)>>16),((fontColorThreadFleet&0x0000FF00)>>8),(fontColorThreadFleet&0x000000FF)
+		pos x, y
+		mes string
+		x += 100
+	}
+	
+	if enableFourth = 1{
+		y = 10
+		string = "1\n2\n3\n4\n5\n6"
+		color 255,255,255
+		repeat n
+			rad = 2.0 * M_PI * cnt / n
+			xt = x + int(r * cos(rad))
+			yt = y + int(r * sin(rad))
+			pos xt, yt
+			mes string
+			pos xt+50, yt
+			mes string
+		loop
+		color ((fontColorFourthFleet&0x00FF0000)>>16),((fontColorFourthFleet&0x0000FF00)>>8),(fontColorFourthFleet&0x000000FF)
+		pos x, y
+		mes string
+	}
+
+	font "メイリオ",15,1
+	mref BMSCR, 67
+	r = 0.1 * abs(BMSCR.49)
+	n = int(2.0 * M_PI * r)
+
+	x = 10
+	y = 310
+	string = SOFTNAME
+	color 255,255,255
+	repeat n
+		rad = 2.0 * M_PI * cnt / n
+		xt = x + int(r * cos(rad))
+		yt = y + int(r * sin(rad))
+		pos xt, yt
+		color 245,240,220
+		mes string
+		pos xt+240, yt
+		color 255,255,255
+		mes string
+	loop
+	color 170,60,70
+	pos x, y
+	mes string
+	redraw 1
+	
+	nidpop
+return
+
+*colorCange1
+	dialog "",33
+	if stat = 1{
+		fontColorFirstFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
+		fontColorFirstFleet = int("$"+fontColorFirstFleetStr)
+		gosub *drawColor
+	}
+return
+*colorCange2
+	dialog "",33
+	if stat = 1{
+		fontColorSecondFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
+		fontColorSecondFleet = int("$"+fontColorSecondFleetStr)
+		gosub *drawColor
+	}
+return
+*colorCange3
+	dialog "",33
+	if stat = 1{
+		fontColorThreadFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
+		fontColorThreadFleet = int("$"+fontColorThreadFleetStr)
+		gosub *drawColor	
+	}
+return
+*colorCange4
+	dialog "",33
+	if stat = 1{
+		fontColorFourthFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
+		fontColorFourthFleet = int("$"+fontColorFourthFleetStr)
+		gosub *drawColor
+	}
+return
+
+*drawColor
+	if (mode = 2){
+		nidpush
+		gosub *drawString
+		gsel WND_MAIN
+		color ((fontColorFirstFleet&0x00FF0000)>>16),((fontColorFirstFleet&0x0000FF00)>>8),(fontColorFirstFleet&0x000000FF)
+		boxf 210,drawColorPos+2,348,drawColorPos+19
+		color ((fontColorSecondFleet&0x00FF0000)>>16),((fontColorSecondFleet&0x0000FF00)>>8),(fontColorSecondFleet&0x000000FF)
+		boxf 210,drawColorPos+2+22,348,drawColorPos+19+22
+		color ((fontColorThreadFleet&0x00FF0000)>>16),((fontColorThreadFleet&0x0000FF00)>>8),(fontColorThreadFleet&0x000000FF)
+		boxf 210,drawColorPos+2+44,348,drawColorPos+19+44
+		color ((fontColorFourthFleet&0x00FF0000)>>16),((fontColorFourthFleet&0x0000FF00)>>8),(fontColorFourthFleet&0x000000FF)
+		boxf 210,drawColorPos+2+66,348,drawColorPos+19+66
+		nidpop
+	}
+return

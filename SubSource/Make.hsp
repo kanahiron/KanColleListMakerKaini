@@ -1,0 +1,359 @@
+//一覧作成――――――――――――――――――――――――――――――――――
+*make
+	
+	nidPush
+	
+	yoko = 0
+	tate = 0
+	capx = 0
+	capy = 0
+	w = 0
+	h = 0
+	
+	repeat cellnum(1,listmode)+1
+		ycnt = cnt
+		repeat cellnum(0,listmode)+1
+			if data(cnt,ycnt,listmode) >= 100{
+				if yoko <= cnt:yoko = cnt
+				if tate <= ycnt:tate = ycnt
+			}
+		loop
+	loop
+	yoko++
+	tate++
+	
+	if listmode = 0{
+
+		if ichiranMode1 {
+			if yubiwa = 0 & kantai = 0 : w = 382 : capx = 392
+			if yubiwa = 1 & kantai = 1 : w = 440 : capx = 360
+			if yubiwa = 1 & kantai = 0 : w = 408 : capx = 392
+			if yubiwa = 0 & kantai = 1 : w = 415 : capx = 360
+			if page = 0:h = 279
+			if page = 1:h = 315
+			if lvname = 1:w = 190: capx = 392:h = 279
+			capy = 154
+		}
+		if ichiranMode2 {
+			w = 320
+			h = 310
+			capx = 132
+			capy = 143
+		}
+
+	} 
+	
+	if listmode = 1{
+		if sosuka {
+			w = 460
+			h = 365
+		}
+		if sosu {
+			w = 230
+			h = 365	
+		}
+		if soka {
+			w = 460
+			h = 195
+		}
+		capx = 327
+		capy = 103	
+		gosub *drawString
+	}
+	if listmode = 2{
+		if directLink{
+			w = 800
+			h = 480
+			capx = 0
+			capy = 0
+		}
+		if airStation {
+			if (airStationTab) { 
+				w = 225
+				h = 358
+				capx = 575
+				capy = 109
+			} else {
+				w = 225
+				h = 336
+				capx = 575
+				capy = 131
+			}
+		}
+	}
+
+	
+	buffer WND_TEMP1, w*yoko, h*tate
+	//screen 2,w*yoko,h*tate
+	drawcount = 0
+	repeat cellnum(1,listmode)+1
+		ycnt = cnt
+		repeat cellnum(0,listmode)+1
+			if data(cnt,ycnt,listmode) >= 100{
+				pos cnt*w,ycnt*h
+				gcopy data(cnt,ycnt,listmode),capx,capy,w,h 
+				drawcount++
+			}
+		loop
+	loop
+		
+	if listmode = 1{
+		if tuika1 {
+			if sosuka | soka{
+				gsel WND_TEMP1
+				gmode 7
+				
+				ccnt = 0
+				repeat 6			
+					xcnt_ = (cnt\3)*2
+					ycnt_ = (cnt/3)*3
+					if data(xcnt_,ycnt_,listmode) >= 100{
+						pos 205+w*xcnt_,h*ycnt_+5
+						gcopy WND_MAKE_STRING,0,10+ccnt*70,220,OSOWm+10
+						if addOrderNum {
+							ccnt2 = 0
+							repeat 6
+								xcnt = xcnt_ + cnt\2
+								ycnt = ycnt_ + cnt/2
+								if data(xcnt,ycnt,listmode) >= 100{
+									pos 205+w*xcnt+220,h*ycnt+5
+									gcopy WND_MAKE_STRING,500+(ccnt*100),10+ccnt2*OSOW,50,OSOW
+									ccnt2++
+								}
+							loop
+						}
+						ccnt++
+					}
+					if ccnt = 4:break
+				loop
+			}
+	
+			if fleetPunctuation {
+				buffer WND_TEMP2, w*yoko+(3*((yoko/2)+(yoko\2)-1)), h*tate+(3*(tate/4))
+				pos 0,0
+				gcopy WND_TEMP1,0,0,w*2,h*tate
+				pos w*2+3,0
+				gcopy WND_TEMP1,w*2,0,w*2,h*tate
+				pos w*4+6,0
+				gcopy WND_TEMP1,w*4,0,w*2,h*tate
+				pos 0,h*3+3
+				gcopy WND_TEMP2,0,h*3,w*6+6,h*3
+		
+				color 32,32,192
+				boxf 0,h*3,w*6+6,h*3+2
+				boxf w*2,0,w*2+2,h*tate+3
+				boxf w*4+3,0,w*4+5,h*tate+3
+			} else {
+				buffer WND_TEMP2, w*yoko, h*tate
+				gcopy WND_TEMP1, 0, 0, w*yoko, h*tate
+			}
+				
+				
+		}
+	
+		if tuika4 {
+			if sosuka | soka{
+				gsel WND_TEMP1
+				gmode 7
+				
+				ccnt = 0
+				repeat 6			
+					xcnt_ = (cnt/3)*3
+					ycnt_ = (cnt\3)*2
+					if data(xcnt_,ycnt_,listmode) >= 100{
+						pos 205+w*xcnt_,h*ycnt_+5
+						gcopy WND_MAKE_STRING,0,10+ccnt*70,220,OSOWm+10
+						if addOrderNum {
+							ccnt2 = 0
+							repeat 6
+								xcnt = xcnt_ + cnt/2
+								ycnt = ycnt_ + cnt\2
+								if data(xcnt,ycnt,listmode) >= 100{
+									pos 205+w*xcnt+220,h*ycnt+5
+									gcopy WND_MAKE_STRING,500+(ccnt*100),10+ccnt2*OSOW,50,OSOW
+									ccnt2++
+								}
+							loop
+						}
+						ccnt++
+					}
+					if ccnt = 4:break
+				loop
+
+			}
+	
+			if fleetPunctuation {
+				
+				buffer WND_TEMP2, w*yoko+((yoko/4)*3), h*tate+(((tate+1)/2)-1)*3
+				pos 0,0
+				gcopy WND_TEMP1,0,0,w*3,h*tate
+				pos w*3+3,0
+				gcopy WND_TEMP1,w*3,0,w*3,h*tate	
+				pos 0,h*2+3
+				gcopy WND_TEMP2,0,h*2,w*6+3,h*4
+				pos 0,h*4+6
+				gcopy WND_TEMP2,0,h*4+3,w*6+3,h*2
+		
+				color 32,32,192
+				boxf w*3,0,w*3+2,h*6+6
+				boxf 0,h*2,w*6+6,h*2+2
+				boxf 0,h*4+3,w*6+6,h*4+5
+			} else {
+				buffer WND_TEMP2, w*yoko, h*tate
+				gcopy WND_TEMP1, 0, 0, w*yoko, h*tate
+			}
+				
+		}
+	
+		if tuika2 {
+			//＝＝＝＝
+			//＝＝＝＝
+			
+			if sosuka | soka {
+	
+				gsel WND_TEMP1
+				gmode 7
+						
+				ccnt = 0
+				repeat 6			
+					xcnt_ = 0
+					ycnt_ = cnt
+					if data(xcnt_,ycnt_,listmode) >= 100{
+						pos 205+w*xcnt_,h*ycnt_+5
+						gcopy WND_MAKE_STRING,0,10+ccnt*70,220,OSOWm+10
+						if addOrderNum {
+							ccnt2 = 0
+							repeat 6
+								xcnt = xcnt_ + cnt
+								ycnt = ycnt_ 
+								if data(xcnt,ycnt,listmode) >= 100{
+									pos 205+w*xcnt+220,h*ycnt+5
+									gcopy WND_MAKE_STRING,500+(ccnt*100),10+ccnt2*OSOW,50,OSOW
+									ccnt2++
+								}
+							loop
+						}
+						ccnt++
+					}
+					if ccnt = 4:break
+				loop
+
+			}
+	
+			if fleetPunctuation {
+				buffer WND_TEMP2,w*yoko,h*tate+(3*(tate-1))
+				gmode 0
+				color 32,32,192
+				boxf
+				
+				repeat 6
+					pos 0,(cnt*h)+(cnt*3)
+					gcopy WND_TEMP1,0,h*cnt,w*6,h
+				loop
+			} else {
+				buffer WND_TEMP2,w*yoko,h*tate
+				gcopy WND_TEMP1,0,0,w*yoko,h*tate
+			}
+		}
+		if tuika3 {
+	
+			if sosuka | soka {
+				gsel WND_TEMP1
+				gmode 7
+				
+				ccnt = 0
+				repeat 6			
+					xcnt_ = cnt
+					ycnt_ = 0
+					if data(xcnt_,ycnt_,listmode) >= 100{
+						pos 205+w*xcnt_,h*ycnt_+5
+						gcopy WND_MAKE_STRING,0,10+ccnt*70,220,OSOWm+10
+						if addOrderNum {
+							ccnt2 = 0
+							repeat 6
+								xcnt = xcnt_ 
+								ycnt = ycnt_ + cnt
+								if data(xcnt,ycnt,listmode) >= 100{
+									pos 205+w*xcnt+220,h*ycnt+5
+									gcopy WND_MAKE_STRING,500+(ccnt*100),10+ccnt2*OSOW,50,OSOW
+									ccnt2++
+								}
+							loop
+						}
+						ccnt++
+					}
+					if ccnt = 4:break
+				loop
+			}
+	
+			if fleetPunctuation {
+				buffer WND_TEMP2, w*yoko+(3*(yoko-1)), h*tate
+				gmode 0
+				color 32, 32, 192
+				boxf
+				
+				repeat 6
+					pos (cnt*w)+(cnt*3),0
+					gcopy WND_TEMP1,w*cnt,0,w,h*6
+				loop
+			} else {
+				buffer WND_TEMP2, w*yoko, h*tate
+				gcopy WND_TEMP1, 0, 0, w*yoko, h*tate
+			}
+		}
+	}
+	
+	if senden & (listmode=1) & (sosuka|soka){
+		gsel WND_TEMP2
+		gmode 7
+		pos ginfo_winx-237,ginfo_winy-18//225
+		gcopy WND_MAKE_STRING,10,310,240,30
+	}
+		
+	savename = ""
+	if drawcount != 0{
+		
+		if listmode = 0:saveListName = "艦娘一覧"
+		if listmode = 1:saveListName = "攻略編成"
+		if listmode = 2{
+			if directLink:saveListName = "直接連結":else:saveListName = "基地航空隊"
+		}
+		
+		savename = strf("%s_%04d%02d%02d-%02d%02d%02d%s",saveListName,gettime(0),gettime(1),gettime(3),gettime(4),gettime(5),gettime(6),savekind(jpgsave))
+		gdiimagesave listsavedir +"\\"+ savename,jpgquality
+
+		gsel WND_MAIN, 1+frontRow
+			
+		if kmexist(listsavedir +"\\"+ savename) <= 0{
+			logmessage = savename+"の保存に失敗しました"
+			objprm logid,logmessage
+		} else {
+			logmessage = savename+"を保存しました"
+			objprm logid,logmessage
+	
+			//=============
+			i = 99
+			repeat 99
+				picHistory(i) = picHistory(i-1)
+				i--
+			loop
+			picHistory(0) = listsavedir +"\\"+ savename
+			gosub *TweetWindow
+	
+		}
+	
+	} else {
+		gsel WND_MAIN, 1+frontRow
+		logmessage = "画像が一枚もありません"
+		objprm logid,logmessage
+	}
+
+
+	dim data,CELL_MAX_W,CELL_MAX_H,modeNum
+	dim bc,(CELL_MAX_W*CELL_MAX_H*modeNum)
+	
+	nidPop
+	
+	gosub *draw
+	
+return

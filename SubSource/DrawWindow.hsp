@@ -1,0 +1,560 @@
+//SSモード――――――――――――――――――――――――――――――――――
+*ssmode
+	
+	gsel WND_GRID, -1
+	gsel WND_MAIN, 1+frontrow
+	clrobj 1
+	syscolor 15:boxf:color
+
+	mesy = 31
+	
+	pos 2,mesy
+	mes "キャプチャ座標"
+		
+	objsize 80,25
+	pos 95,mesy-3
+	button gosub sscapmes,*sssetting
+	sscapiid = stat
+	mesy+=22
+	
+	if manualpos {
+		if manualpos {
+			manualposf = 0
+		} else {
+			manualposf = 1
+		}
+		pos 84+(manualposf*200),mesy+5
+		mes "x"
+		pos 0+(manualposf*200),mesy
+		input luposx,40,23,5
+		luposxiid = stat
+		pos 40+(manualposf*200),mesy
+		input luposy,40,23,5
+		luposyiid = stat
+		pos 95+(manualposf*200),mesy
+		input rdposx,40,23,5
+		rdposxiid = stat
+		pos 135+(manualposf*200),mesy
+		input rdposy,40,23,5
+		rdposyiid = stat
+	
+		GetWindowLong objinfo(luposxiid,2), -16
+		SetWindowLong objinfo(luposxiid,2), -16, stat | $2
+		GetWindowLong objinfo(luposyiid,2), -16
+		SetWindowLong objinfo(luposyiid,2), -16, stat | $2
+		GetWindowLong objinfo(rdposxiid,2), -16
+		SetWindowLong objinfo(rdposxiid,2), -16, stat | $2
+		GetWindowLong objinfo(rdposyiid,2), -16
+		SetWindowLong objinfo(rdposyiid,2), -16, stat | $2
+		
+		mesy+=23
+	}
+	
+	if mainWindowSmall {
+		mesaddx = 500
+		tempmesy = mesy
+	} else { 
+		mesaddx=0
+	}
+	
+	objsize 175,20
+	pos 5+mesaddx,mesy
+	chkbox "自動座標取得",autoSearch:mesy+=20
+	autoSearchCId = stat
+	pos 5+mesaddx,mesy
+	chkbox "提督名と司令部Lvを隠す",hidename:mesy+=20
+	hidenamebid = stat
+	pos 5+mesaddx,mesy
+	chkbox "ツイートウィンドウ表示",enabletweetwindow:mesy+=20
+	enabletweetwindowcid = stat
+	enabletweetwindowch = objinfo_hwnd(enabletweetwindowcid)
+	
+	if mainWindowSmall {
+		mesy = tempmesy + 1
+		syscolor 16
+		line 3,mesy,172,mesy
+		line 3,mesy+2,172,mesy+2
+		mesy += 4
+		color
+	}
+
+	objsize 130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25),30
+	pos 0,mesy
+	button gosub "SSキャプチャ",*sscaptcha
+	sscapbid = stat
+
+	objsize 25,30
+	pos 130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25),mesy
+	button gosub "開",*sssavefopen
+	fopenbid = stat
+	
+	if ((yabumiautoupload = 1) & (availableyabumi = 1)) {
+		pos 130,mesy
+	} else {
+		pos 200,mesy
+	}	
+	button gosub "UP",*yabumiupload
+	yabumibid = stat
+	
+	pos 155,mesy
+	objsize 20,30
+	button gosub windowsSizeChangeBMes(mainWindowSmall),*windowsSizeChange
+	windowsSizeChangebid = stat
+	
+	mesy+=30
+	
+	pos 2+(disableseqcap*-175), mesy+2
+	mes "連続キャプチャ"
+	objsize 80, 25
+	pos 95+(disableseqcap*-175), mesy
+	if disableseqcap = 0: mesy+=24
+	button gosub seqcapmes, *seqcap
+	seqcapbid = stat
+	
+	dispcapy = mesy
+	if dispcap {
+		syscolor 16
+		boxf 0, mesy, 175, mesy+105
+		syscolor 15
+		boxf 3, mesy+3, 171, mesy+101
+		color
+		mesy += 105
+	}
+
+	if hidelog_ = 0{
+		pos 0, mesy
+		mesy += 70
+	} else {
+		pos -175, mesy
+	}
+	mesbox logmessage, 175, 70, 0
+	logid = stat
+
+	if availablecap = 0{
+		objenable sscapbid, 0
+		objenable seqcapbid, 0
+		objenable yabumibid, 0
+	} else {
+		objenable sscapbid, 1
+		objenable seqcapbid, 1
+		objenable yabumibid, 1
+	}
+	
+	if manualpos {
+		objenable sscapbid, 1
+	}
+	
+	width 175, mesy
+	
+return
+
+*windowsSizeChange
+	if mainWindowSmall {
+		mainWindowSmall = 0
+		if hidelog = 0:hidelog_ = 0
+	} else {
+		mainWindowSmall = 1
+		if hidelog = 0:hidelog_ = 1
+	}
+	if mode = 0:gosub *ssmode
+	if (mode == 1 | mode == 2):gosub *list
+return
+
+//リストモード――――――――――――――――――――――――――――――――――
+*list
+	
+	mxy(0) = 0, 0
+	mxy_(0) = 0, 0
+	cliflag = 0
+	mesy = 31
+
+	gsel WND_MAIN, 2
+	clrobj 1
+	syscolor 15: boxf: color
+	
+	pos 2, mesy
+	mes "キャプチャ座標"
+		
+	objsize 80, 25
+	pos 95, mesy-3
+	button gosub sscapmes, *sssetting
+	sscapiid = stat
+	mesy+=25
+	
+	objsize 175, 20
+	
+	if listmode = 0{
+	
+		width 175
+		mesy_ = mesy
+		pos 5, mesy
+		chkbox "シーン: 編成→変更", ichiranMode1: mesy+=100
+		ichiranMode1Cid = stat
+		ichiranMode1Ch = objinfo_hwnd(ichiranMode1CId)
+		SetWindowLong ichiranMode1Ch, -16, $50000009 | $20000
+
+		pos 5,mesy
+		chkbox "シーン: 補給", ichiranMode2: mesy+=20
+		ichiranMode2Cid = stat
+		ichiranMode2Ch = objinfo_hwnd(ichiranMode2CId)
+		sendmsg ichiranMode2Ch, $F4, $9
+
+		mesy_+=20
+		pos 22,mesy_
+		chkbox "指輪も入れる", yubiwa: mesy_+=20
+		yubiwacid = stat
+		yubiwach = objinfo_hwnd(yubiwacid)
+		
+		pos 22,mesy_
+		chkbox "所属艦隊も入れる", kantai: mesy_+=20
+		kantaicid = stat
+		kantaich = objinfo_hwnd(kantaicid)
+		
+		pos 22,mesy_
+		chkbox "ページ数も入れる", page: mesy_+=20
+		pagecid = stat
+		pagech = objinfo_hwnd(pagecid)
+
+		pos 17,mesy_
+		chkbox "レベルと艦名のみ", lvname: mesy_+=20
+		lvnamecid = stat
+		lvnamech = objinfo_hwnd(lvnamecid)
+
+		if ichiranMode1 {
+			objenable lvnamecid, 1
+			if lvname = 1{
+				objenable yubiwacid, 0
+				objenable kantaicid, 0
+				objenable pagecid, 0
+			} else {
+				objenable yubiwacid, 1
+				objenable kantaicid, 1
+				objenable pagecid, 1
+			}
+
+		}
+
+		if ichiranMode2 {
+			objenable yubiwacid, 0
+			objenable kantaicid, 0
+			objenable pagecid, 0
+			objenable lvnamecid, 0
+		}
+	}
+	if listmode = 1{
+	
+		width 350
+		
+		mesy2 = 5
+	
+		pos 5,mesy+1
+		mes "自動追加の方法":mesy+=20
+	
+		objsize 70,20
+		
+		pos 7,mesy
+		chkbox "縦3横2",tuika1
+		tuika1cid = stat
+		tuika1ch = objinfo_hwnd(tuika1cid)
+		SetWindowLong tuika1ch, -16, $50000009 | $20000
+		pos 80,mesy
+		chkbox "縦2横3",tuika4
+		tuika4cid = stat
+		tuika4ch = objinfo_hwnd(tuika4cid)
+		sendmsg tuika4ch, $F4, $9
+		mesy+=20
+		
+		pos 7,mesy
+		chkbox "縦6横1",tuika3
+		tuika3cid = stat
+		tuika3ch = objinfo_hwnd(tuika3cid)
+		sendmsg tuika3ch, $F4, $9
+		pos 80,mesy
+		chkbox "縦1横6",tuika2
+		tuika2cid = stat
+		tuika2ch = objinfo_hwnd(tuika2cid)
+		sendmsg tuika2ch, $F4, $9
+		mesy+=20
+	
+		objsize 175,20
+	
+		pos 5,mesy+1
+		mes "キャプチャ範囲":mesy+=18
+	
+		pos 7,mesy
+		chkbox "装備とステータスと艦娘",sosuka:mesy+=20
+		sosukacid = stat
+		sosukach = objinfo_hwnd(sosukacid)
+		SetWindowLong sosukach, -16, $50000009 | $20000
+	
+		pos 7,mesy
+		chkbox "装備とステータス",sosu:mesy+=20
+		sosucid = stat
+		sosuch = objinfo_hwnd(sosucid)
+		sendmsg sosuch, $F4, $9
+	
+		pos 7,mesy
+		chkbox "装備と艦娘の画像",soka:mesy+=21
+		sokacid = stat
+		sokach = objinfo_hwnd(sokacid)
+		sendmsg sokach, $F4, $9
+	
+		pos 5,mesy
+		chkbox "艦隊区切り線を追加",fleetPunctuation:mesy+=20
+		fleetPunctuationCId = stat
+		fleetPunctuationCh = objinfo_hwnd(fleetPunctuationCId)
+		pos 5,mesy
+		chkbox "順番に番号を入れる",addOrderNum:mesy+=20
+		addOrderNumCId = stat	
+	
+		window2x = 175
+	
+		objsize 70,22
+		
+		pos window2x+5,mesy2+1
+		mes "艦隊名":mesy2+=20
+		
+		pos window2x+7,mesy2+1
+		chkbox "第一艦隊",enableFirst
+		pos window2x+80,mesy2
+		input FirstFleetName,95,22:mesy2+=22
+
+		pos window2x+7,mesy2+1
+		chkbox "第二艦隊",enableSecond
+		pos window2x+80,mesy2
+		input SecondFleetName,95,22:mesy2+=22
+
+		pos window2x+7,mesy2+1
+		chkbox "第三艦隊",enableThread
+		pos window2x+80,mesy2
+		input ThreadFleetName,95,22:mesy2+=22
+
+		pos window2x+7,mesy2+1
+		chkbox "第四艦隊",enableFourth
+		pos window2x+80,mesy2
+		input FourthFleetName,95,22:mesy2+=25
+
+		pos window2x+5,mesy2+1
+		mes "艦隊名文字色":mesy2+=20
+	
+		drawColorPos = mesy2
+		pos window2x+7,mesy2
+		button gosub "第一艦隊",*colorCange1:mesy2+=22
+
+		pos window2x+7,mesy2
+		button gosub "第二艦隊",*colorCange2:mesy2+=22
+
+		pos window2x+7,mesy2
+		button gosub "第三艦隊",*colorCange3:mesy2+=22
+		
+		pos window2x+7,mesy2
+		button gosub "第四艦隊",*colorCange4:mesy2+=22
+	
+		gosub *drawColor
+		
+
+	}
+
+	if listmode = 2{
+	
+		width  175
+		
+		objsize 175,20
+		
+		pos 7,mesy
+		chkbox "直接連結",directLink:mesy+=20
+		directLinkCId = stat
+		directLinkCh = objinfo_hwnd(directLinkCId)
+		SetWindowLong directLinkCh, -16, $50000009 | $20000
+
+		pos 7,mesy
+		chkbox "基地航空隊",airStation:mesy+=20
+		airStationCId = stat
+		airStationCh = objinfo_hwnd(airStationCId)
+		sendmsg airStationCh, $F4, $9
+		
+		pos 22,mesy
+		chkbox "タブまで入れる",airStationTab:mesy+=20
+		airStationTabCId = stat
+		airStationTabCh = objinfo_hwnd(airStationTabCId)
+
+
+	}
+
+	syscolor 16
+	line 3,mesy,172,mesy
+	color
+	mesy+=3
+	
+	objsize 175,20
+	
+	pos 7,mesy
+	chkbox "ツイートウィンドウ表示",enabletweetwindow:mesy+=20
+	enabletweetwindowcid = stat
+	enabletweetwindowch = objinfo_hwnd(enabletweetwindowcid)
+			
+	objsize 150-(((yabumiautoupload = 1) & (availableyabumi = 1))*25),30
+	pos 0,mesy
+	button gosub "作成",*make
+	
+	objsize 25,30
+	pos 150-(((yabumiautoupload = 1) & (availableyabumi = 1))*25),mesy
+	button gosub "開",*listsavefopen
+	fopenbid = stat
+	
+	if ((yabumiautoupload = 1) & (availableyabumi = 1)) {
+		pos 150,mesy
+	} else {
+		pos 500,mesy
+	}	
+	
+	button gosub "UP",*yabumiupload
+	yabumibid = stat
+	
+	mesy+=30
+
+	pos 0,mesy
+	mesbox logmessage,175,70,0 :mesy+=70
+	logid = stat
+	
+	width ,mesy-(70*hidelog_)
+	
+	if IsWindowVisible(WND_INFO(WND_GRID, WI_HANDLE)) = 0{
+		gsel WND_GRID,1
+	} else {
+		gsel WND_GRID,0
+	}
+	title modemes(listmode+1)+"モード - 表示させたいセルにD&D"
+	width scrsize(0,listmode),scrsize(1,listmode)
+	
+	gosub *draw
+	
+return
+	
+//オプション――――――――――――――――――――――――――――――――――
+*option
+
+	gsel WND_GRID,-1
+	gsel WND_MAIN, 1+frontrow
+	clrobj 1
+	syscolor 15:boxf:color
+	
+	mesy = 30
+	pos 4,mesy
+	mes "readmeをよくお読み下さい":mesy+=20
+	
+	objsize 350,20
+	pos 5,mesy
+	chkbox "提督名を隠すのではなくカットする",namecut:mesy+=20
+	pos 5,mesy
+	chkbox "常にメインウィンドウを最前列表示",frontrow:mesy+=20
+	pos 5,mesy
+	chkbox "ログを非表示",hidelog:mesy+=20
+	pos 5,mesy
+	chkbox "yabumiに自動でアップロードする",yabumiautoupload:mesy+=20
+	pos 5,mesy
+	chkbox "艦これが等倍でなくも取得できるようにする(手動のみ)",othergame:mesy+=20
+	pos 5,mesy
+	chkbox "キャプチャのプレビューを有効にする",dispcap:mesy+=20
+	pos 5,mesy
+	chkbox "取得座標を手動で入力できるようにする",manualpos:mesy+=20
+	pos 5,mesy
+	chkbox "画像の右下に艦これ一覧めいかーの名前を入れる",senden:mesy+=20
+	pos 5,mesy
+	chkbox "起動時にバージョンチェックを行う",autoVersionCheck:mesy+=20
+	pos 5,mesy
+	chkbox "ホットキーでSSをキャプチャする",hotkeycap:mesy+=20
+
+	objsize 50,20
+	pos 30,mesy
+	chkbox "Alt",hotkeycapalt
+	pos 80,mesy
+	chkbox "Ctrl",hotkeycapctrl
+	pos 130,mesy
+	chkbox "Shift",hotkeycapshift
+	pos 180,mesy
+	chkbox "Win",hotkeycapwin
+	pos 240,mesy
+	input hotkeycapchar,20,20,1
+	pos 265,mesy
+	mes "キー":mesy+=20
+	
+	objsize 350,20
+	pos 5,mesy
+	chkbox "＊一覧モードでSSを自動追加する",autoaddcaptcha:mesy+=20
+	pos 5,mesy
+	;chkbox "＊自動追加の場合はSSを保存しない",autoaddnonsave:mesy+=20
+	pos 5,mesy
+	chkbox "jpgで保存する",jpgsave:mesy+=20
+	
+	pos 5,mesy
+	mes "jpg保存品質"
+	pos 155,mesy
+	mes "1～100(大きいほど高画質)"
+	pos 100,mesy
+	input jpgquality,50,20,3:mesy+=20
+	jpgqualityiid = stat
+	GetWindowLong objinfo(jpgqualityiid,2), -16
+	SetWindowLong objinfo(jpgqualityiid,2), -16, stat | $2
+	
+	pos 5,mesy
+	chkbox "連続キャプチャを無効にする",disableseqcap:mesy+=20
+
+	pos 5,mesy
+	mes "連続キャプチャの間隔"
+	pos 205,mesy
+	mes "x0.1秒 (0.1～99.9秒)"
+	pos 150,mesy
+	input timersec,50,20,3:mesy+=20
+	timerseciid = stat
+	GetWindowLong objinfo(timerseciid,2), -16
+	SetWindowLong objinfo(timerseciid,2), -16, stat | $2
+	
+	pos 5,mesy+2
+	mes "Twitter連携"
+	objsize 250,25
+	pos 100,mesy
+	button gosub "認証情報をリセット",*twireset
+	mesy+=25
+	
+	objsize 350,20
+	pos 5,mesy
+	chkbox "Twitterにはjpgで投稿する",twijpg:mesy+=20
+
+	objsize 150,20
+	pos 14,mesy
+	mes "一覧保存先"
+	pos 200,mesy
+	button gosub "一覧保存先変更",*listsavedialog:mesy+=20
+	pos 0,mesy
+	mesbox listsavedir,350,45,5,259:mesy+=45
+	listsdid = stat
+	
+	pos 14,mesy
+	mes "SS保存先"
+	pos 200,mesy
+	button gosub "SS保存先変更",*sssavedialog:mesy+=20
+	pos 0,mesy
+	mesbox sssavedir,350,45,5,259:mesy+=45
+	sssdid = stat
+	
+	pos 14,mesy
+	mes "連続撮影保存先"
+	pos 200,mesy
+	button gosub "連続撮影保存先変更",*intervalshotsavedialog:mesy+=20
+	pos 0,mesy
+	mesbox intervalShotDir,350,45,5,259:mesy+=45
+	intervalShotDirsdid = stat
+	
+	
+	pos 14,mesy
+	mes "YabumiUploader.exeの場所"
+	pos 200,mesy
+	button gosub "変更",*yabumiuploaderdialog:mesy+=20
+	pos 0,mesy
+	mesbox yabumidir,350,45,5,259:mesy+=45
+	yabumiid = stat
+	
+	width 350,mesy
+
+return

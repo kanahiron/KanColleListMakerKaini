@@ -1,0 +1,1314 @@
+#include "hsp3utf.as"
+#include "./SubSource/FunctionDefinition.hsp"
+#include "./modules/kmodule.as"
+#include "./modules/mbase64.as"
+#include "./modules/ImageFileModule2.as"
+#include "./modules/inimodule2_utf.as"
+#include "./modules/BrowseFolder_kai_utf.as"
+#include "./modules/TsubuyakiSoup_mod_utf.hsp"
+#include "./modules/key.hsp"
+#include "./modules/jsonParse_utf.as"
+#include "./modules/makelistmodule_Ver7.as"
+#include "./modules/isHomepostModule.as"
+
+#pack "start.ax"
+#pack "data2.png"
+#pack "huki.png"
+#packopt name "艦これ一覧めいかー改二"
+#packopt hide 1
+#packopt orgpath 1
+
+#define CELL_MAX_W 8
+#define CELL_MAX_H 7
+#define HOTKEYID	7798
+#define timerID		101
+#define klm2ver 01200
+#define WM_LBUTTONDOWN	0x0201
+#define ctype round(%1) int(strf("%%0.0f", %1))
+#define SOFTNAME "艦これ一覧めいかー改二 Ver0.1.2"
+
+#define nidPush nidindex++:nidstack(nidindex) = ginfo(3)
+#define nidPop gsel nidstack(nidindex),0:nidindex--
+
+#define PT_ABSOLUTE 1
+#define PT_RELATIVE 2
+
+
+#define WI_HANDLE	0
+#define WI_DC		1
+
+#define WND_ID		0
+#define OBJ_ID		1
+#define OBJ_HANDLE	2
+
+
+#define ctype WND_INFO(%1, %2) wndInfoArr(%1, %2)
+
+#define wndInfo_Init dim wndInfoArr, 100,2
+#define nidStack_Init dim nidStack, 100 :nidIndex = 0
+
+#define SET_WND_INFO wndInfoArr(ginfo(3), WI_HANDLE) = hwnd: wndInfoArr(ginfo(3), WI_DC) = hdc
+
+
+#enum WND_MAIN = 0
+#enum WND_GRID
+#enum WND_TWITTER		//元19
+#enum WND_OVERLAY		//元19
+#enum WND_MAKE_STRING	//元12
+#enum WND_GRID_STRING	//元12
+#enum WND_IMAGE_BUF
+#enum WND_IMAGE_BUF2
+#enum WND_TEMP1
+#enum WND_TEMP2
+#enum WND_HOME_PORT_MOD
+#enum WND_TEMP_SCR1
+
+//
+
+	onexit gosub *en_d
+	//onerror *eeeee
+
+	wndInfo_Init
+	nidStack_Init
+	isHomeport_init WND_HOME_PORT_MOD
+	
+
+	mode = 0
+	listmode = 0
+	yubiwa = 1
+	kantai = 1
+	autosearch = 1
+	hidename = 0
+	sti = 0
+	cliflag = 0
+	cellmode = 0
+	mesy = 30
+	hotkeycap = 0
+	ret = 0
+
+	jpgquality = 90
+	namecut = 0
+	hidelog = 0
+	hidelog_ = hidelog
+	jpgsave = 0
+	rapidshooting = 0
+	frontrow = 0
+	othergame = 0
+	
+	availablecap = 0
+	availableyabumi = 0
+	hotkeyset = 0
+	saveListName = ""
+	
+	tempint = 0
+	tempstr = ""
+	currentdir = dir_cur
+
+	modeNum = 3
+
+	positionType = 0
+	
+	//
+	dim clientSize, 2
+	dim rect, 2
+	//
+
+	dim data,CELL_MAX_W,CELL_MAX_H,modeNum
+	dim bc,(CELL_MAX_W*CELL_MAX_H*modeNum)
+	dim dd,4,modeNum
+	dim mesxy,modeNum
+	dim maxscrwh,modeNum
+	dim mindexxy,modeNum
+	dim mxy,2
+	dim mxy_,2
+	dim dmxy,2
+	dim sscap,4
+	dim sscapwh,2
+	dim cellnum,2,modeNum
+	dim scrsize,2,modeNum
+	dim cellsize,2,modeNum
+	dim tempmouse,2
+	dim disinfo,4
+	dim scrsizetemp,2,modeNum
+
+	ddim AspectRatio,modeNum
+	sdim sscapmes,256
+	sdim logmessage,256
+	sdim modemes,64,4
+	sdim stemp
+	sdim sssavedir ,260
+	sdim listsavedir ,260
+	sdim yabumidir,260
+	sdim savekind,64,modeNum
+	sdim hotkeycapchar
+	sdim hotkeystr
+	sdim hotkeystr_temp
+	sdim savelogtext,1024
+	sdim picStack,1024,4
+	sdim tweettext,200
+	sdim picHistory,512,101
+	cellnum(0,0) = 6,4
+	cellnum(0,1) = 5,5
+	cellnum(0,2) = 6,4
+
+	twiPicFrameXL = 185,250,315,380,184
+	twiPicFrameXR = 248,313,378,443,444
+	twiPicFrameYU = 3 ,3 , 3, 3, 45
+	twiPicFrameYD = 42,42,42,42,209
+	twiOrder = 0,0,0,0
+	twiOrdercount = 0
+	
+	enableFirst = 1
+	enableSecond = 1
+	enableThread = 0
+	enableFourth = 0
+
+	directLink = 1
+	airStation = 0
+	
+	bc(0) = 0
+	maxscrwh(0) = int(0.8*ginfo(20)),int(0.8*ginfo(21))
+	mindexxy(0) = 0,0
+	modemes(0) = "SSキャプチャ","艦娘一覧","攻略編成","その他一覧作成モード","オプション"
+	mxy(0) = 0,0
+	mxy_(0) = 0,0
+	sscapwh = 0,0
+	seccapf = 0
+	sscapmes = "取得する"
+	savekind = ".png",".jpg"
+	seqcapmes = "開始"
+	luposx = 0
+	luposy = 0
+	rdposx = 0
+	rdposy = 0
+	twijpg = 1
+	timersec = 5
+	dropwindowid = 0
+	dropf = 0
+	intervalsavedir = ""
+	savenamepath = ""
+	intervalShotDir = ""
+	
+	picHistoryNum = 0
+	mainWindowSmall = 0
+	
+	windowsSizeChangeBMes = "↑","↓"
+	autoSearchFailureCount = 0
+	
+	userdata = ""
+	ACCESS_TOKEN = ""
+	ACCESS_SECRET = ""
+	
+	tCupInit "KanColleListMaker", CONSUMER_KEY, CONSUMER_SECRET, 7
+	
+	scrsize(0,0) = limit(1358,210,round(0.4*maxscrwh(0))),scrsize(0,0)*aspectRatio(0)
+	scrsize(0,1) = limit(1120,250,round(0.4*maxscrwh(0))),scrsize(0,1)*aspectRatio(1)
+	scrsize(0,2) = limit(1120,250,round(0.4*maxscrwh(0))),scrsize(0,2)*aspectRatio(2)
+	scrsizetemp(0,0)  = scrsize(0,0),scrsize(1,0)
+	scrsizetemp(0,1)  = scrsize(0,1),scrsize(1,1)
+	scrsizetemp(0,2)  = scrsize(0,2),scrsize(1,2)
+	
+	gosub *iniload
+	gosub *dataCheck
+	gosub *iniSave
+	gosub *disinfoinit
+	gosub *loadHistory
+
+	screen WND_MAIN,350,700,2:title SOFTNAME
+		SET_WND_INFO
+		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 0
+		oncmd gosub *OnDropFiles ,WM_DROPFILES
+		oncmd gosub *setmode ,WM_COMMAND
+		oncmd gosub *hotkey ,WM_HOTKEY
+		oncmd gosub *sscaptcha,0x0113
+
+	screen WND_GRID, maxscrwh(0), maxscrwh(1),2:title "表示させたいセルにD&D"
+		SET_WND_INFO
+		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 0
+		oncmd gosub *OnDropFiles, WM_DROPFILES
+		oncmd gosub *windowsize, WM_SIZING
+		oncmd gosub *listdrag, WM_LBUTTONDOWN
+		framesx = ginfo_sizex - ginfo_winx
+		framesy = ginfo_sizey - ginfo_winy
+		kmmouse_init
+
+	//範囲選択用レイヤードウィンドウ
+	bgscr WND_OVERLAY, ginfo(20), ginfo(21), 2
+		SET_WND_INFO
+		color 0,255,0
+		boxf
+		GetWindowLong WND_INFO(WND_OVERLAY, WI_HANDLE),-20
+		SetWindowLong WND_INFO(WND_OVERLAY, WI_HANDLE),-20,stat|$80000
+		SetLayeredWindowAttributes WND_INFO(WND_OVERLAY, WI_HANDLE),0x00000000,128,LWA_ALPHA
+
+	buffer WND_MAKE_STRING,1000,340
+		SET_WND_INFO		
+		gosub *drawString
+		
+	//画像読み込み用
+	buffer WND_IMAGE_BUF
+		SET_WND_INFO
+		picload "data2.png"
+
+	bgscr WND_IMAGE_BUF2
+		SET_WND_INFO
+		picload "huki.png"
+		GetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20
+		SetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20,stat|$80000
+		SetLayeredWindowAttributes WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),0x000000FF,192,LWA_COLORKEY | LWA_ALPHA
+		gsel WND_IMAGE_BUF2, -1
+
+		buffer WND_GRID_STRING ,640,150
+		SET_WND_INFO
+		syscolor 16
+		font "メイリオ",25,1
+		mes "スクリーンショットをここにドラッグアンドドロップ"
+		mes "またはホットキー(Altキー＋Zキー同時押し)で
+		mes "                                         画像を追加してください"
+		mes "セルの画像はウィンドウ外にドラッグで消去できます"
+	
+	screen WND_TWITTER,448,270,2
+		SET_WND_INFO
+		oncmd gosub *twiwindowimage,0x0201
+		oncmd gosub *rideCursor,WM_MOUSEMOVE
+		oncmd gosub *getText ,WM_COMMAND
+		oncmd gosub *OnDropFiles, WM_DROPFILES
+
+	gosub *VerCheck
+
+	gsel WND_MAIN, -1
+	syscolor 15:boxf:color
+	font "メイリオ",13
+	objmode 2
+	
+	objsize 175,30
+	pos 0,0
+	combox cellmode,30,"  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+	;combox cellmode,30,"  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  オプション"
+	comboxid = stat
+	hcombox = objinfo_hwnd(comboxid)
+	modeOptionNum = 4
+	
+	button "dum_my",*adummy
+	
+	gosub *ssmode
+	gosub *hotkeycapsetting
+	
+	gsel WND_MAIN,1+frontRow
+
+	gosub *twiinit
+
+	if enabletweetwindow {
+		gsel WND_TWITTER,1
+		gsel WND_MAIN,1+frontrow
+	}
+
+	stop
+
+*adummy
+	
+*setmode
+	//oncmd 0
+
+	logmes "WM_COMMAND"
+
+	if (lparam = hcombox) & (((wparam>>16) & 0x0000FFFF) = 1){
+	
+		if (mode != 0) & (mode != modeOptionNum) {
+			DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 0
+			DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 0
+			gsel WND_GRID,0
+		}
+	
+		if mode = modeOptionNum{
+			gosub *dataCheck			
+			gosub *hotkeycapsetting
+			gosub *disinfoinit
+			gosub *twiinit
+		}
+	
+		sendmsg hCombox, $147
+		mode = stat
+	
+		if (mode != 0) & (mode != modeOptionNum) {
+			DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 1
+			DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 1
+		}
+	
+		if mode = 0{
+			gsel WND_MAIN
+			gosub *ssmode
+		}
+		if mode = 1{
+			listmode = 0
+			gsel WND_GRID,0
+			gosub *list
+		}
+		if mode = 2{
+			listmode = 1
+			gsel WND_GRID,0
+			gosub *list
+		}
+		if mode = 3{
+			listmode = 2
+			gsel WND_GRID,0
+			gosub *list
+		}
+		if mode = modeOptionNum{
+			gosub *option
+		}
+		
+	} else {
+	
+		if mode != modeOptionNum{
+
+			if (lparam = enabletweetwindowch){
+				sendmsg enabletweetwindowch, $F2
+				enabletweetwindow = stat & 0x01
+				if enabletweetwindow {
+					gsel WND_TWITTER, 1+frontrow
+				} else {
+					gsel WND_TWITTER, -1
+				}
+				gsel WND_MAIN
+	
+			}
+		}
+
+		if ((mode != 0)&(mode != modeOptionNum)){
+			gosub *listchange
+		}
+	}
+	
+	
+	oncmd 1
+return
+
+*listchange
+
+	nidPush
+	gsel WND_MAIN
+	
+	if mode = 1{
+
+		sendmsg ichiranMode1Ch, $F2
+		ichiranMode1 = stat & 0x01
+		sendmsg ichiranMode2Ch, $F2
+		ichiranMode2 = stat & 0x01
+
+		if ichiranMode1 {
+		
+			lvnamef = lvname
+			sendmsg yubiwach, $F2
+			yubiwa = stat & 0x01
+			sendmsg kantaich, $F2
+			kantai = stat & 0x01
+			sendmsg pagech, $F2
+			page = stat & 0x01
+			sendmsg lvnamech, $F2
+			lvname = stat & 0x01
+			
+			objenable lvnamecid,1
+			
+			if lvname = 1{
+				objenable yubiwacid,0
+				objenable kantaicid,0
+				objenable pagecid,0
+			} else {
+				objenable yubiwacid,1
+				objenable kantaicid,1
+				objenable pagecid,1
+			}
+			
+			if yubiwa = 0 & kantai = 0 : w = 382 : capx = 392
+			if yubiwa = 1 & kantai = 1 : w = 440 : capx = 360
+			if yubiwa = 1 & kantai = 0 : w = 408 : capx = 392
+			if yubiwa = 0 & kantai = 1 : w = 415 : capx = 360
+			if page = 0:h = 279
+			if page = 1:h = 315
+			if lvname = 1:w = 190: capx = 392:h = 279
+			capy = 154
+		
+			dd(0,0) = capx,capy,w,h
+			cellratio = 1.0*h/w
+	
+			if lvname = 0{
+				if lvnamef = 1{
+					scrsize(0,0) = scrsizetemp(0)
+				}
+				cellsize(0,0) = scrsize(0,0)/(cellnum(0,0)+1),round(cellratio*cellsize(0,0))
+				scrsize(1,0) = round(cellsize(1,0)* (cellnum(1,0)+1) )
+				
+			} else {
+				if lvnamef = 0{
+					scrsizetemp(0,0)  = scrsize(0,0)
+					cellsize(1,0) = scrsize(1,0)/(cellnum(1,0)+1)
+					cellsize(0,0) = round(1.0*cellsize(0,0)/cellratio)
+					scrsize(0,0) = round(cellsize(0,0)* (cellnum(0,0)+1) )
+				}
+			}
+		}
+
+		if ichiranMode2 {
+
+			objenable yubiwacid,0
+			objenable kantaicid,0
+			objenable pagecid,0
+			objenable lvnamecid,0
+			
+			w = 320
+			h = 310
+			capx = 132
+			capy = 143
+
+			dd(0,0) = capx,capy,w,h
+			cellratio = 1.0*h/w
+	
+			cellsize(0,0) = scrsize(0,0)/(cellnum(0,0)+1),round(cellratio*cellsize(0,0))
+			scrsize(1,0) = round(cellsize(1,0)* (cellnum(1,0)+1) )
+			
+		}
+		
+		AspectRatio(0,0) = 1.0*scrsize(1,0)/scrsize(0,0)
+	}
+	
+	
+	if mode = 2{
+	
+		sosuf = sosu
+	
+		w = 0
+		h = 0
+		capx = 0
+		capy = 0
+		cellratio = 0,0
+		sendmsg sosukach, $F2
+		sosuka = stat & 0x01
+		sendmsg sosuch, $F2
+		sosu = stat & 0x01
+		sendmsg sokach, $F2
+		soka = stat & 0x01
+	
+		sendmsg tuika1ch, $F2
+		tuika1 = stat & 0x01
+		sendmsg tuika2ch, $F2
+		tuika2 = stat & 0x01
+		sendmsg tuika3ch, $F2
+		tuika3 = stat & 0x01
+		sendmsg tuika4ch, $F2
+		tuika4 = stat & 0x01
+	
+		sendmsg listsize1ch, $F2
+		listsize1 = stat & 0x01
+		sendmsg listsize2ch, $F2
+		listsize2 = stat & 0x01
+	
+		sendmsg fleetPunctuationch, $F2
+		fleetPunctuation = stat & 0x01
+	
+		if sosuka {
+			w = 460
+			h = 365
+		}
+		if sosu {
+			w = 230
+			h = 365	
+		}
+		if soka {
+			w = 460
+			h = 195
+		}
+		capx = 327
+		capy = 103
+	
+		dd(0,1) = capx,capy,w,h
+		cellratio = 1.0*h/w
+
+		if sosuka | soka{
+			if sosuf = 1{
+				scrsize(0,1) = scrsizetemp(0,1)
+			}
+			cellsize(0,1) = scrsize(0,1)/(cellnum(0,1)+1),round(cellratio*cellsize(0,1))
+			scrsize(1,1) = round(cellsize(1,1)* (cellnum(1,1)+1) )
+			
+		} else {
+			if sosuf = 0{
+				scrsizetemp(0,1)  = scrsize(0,1)
+				cellsize(1,1) = scrsize(1,1)/(cellnum(1,1)+1)
+				cellsize(0,1) = round(1.0*cellsize(1,1)/cellratio)
+				scrsize(0,1) = round(cellsize(0,1) * (cellnum(0,1)+1) )
+			}
+		}
+
+		AspectRatio(1) = 1.0*scrsize(1,1)/scrsize(0,1)
+	}
+
+	if (mode = 3){
+		w = 0
+		h = 0
+		capx = 0
+		capy = 0
+		cellratio = 0,0
+		sendmsg directLinkCh, $F2
+		directLink = stat & 0x01
+		sendmsg airStationCh, $F2
+		airStation = stat & 0x01
+		sendmsg airStationTabCh, $F2
+		airStationTab = stat & 0x01
+
+		if directLink {
+			objenable airStationTabCId,0
+		} else {
+			objenable airStationTabCId,1
+		}
+
+		if directLink{
+			w = 800
+			h = 480
+			capx = 0
+			capy = 0
+			cellnum(0,2) = 6,4
+		}
+		if airStation {
+			if (airStationTab) { 
+				w = 225
+				h = 358
+				capx = 575
+				capy = 109
+			} else {
+				w = 225
+				h = 336
+				capx = 575
+				capy = 131
+			}
+			cellnum(0,2) = 2,0
+		}
+		
+		dd(0,2) = capx,capy,w,h
+		cellratio = 1.0*h/w
+
+		cellsize(0,2) = scrsize(0,2)/(cellnum(0,2)+1),round(cellratio*cellsize(0,2))
+		scrsize(1,2) = round(cellsize(1,2)*(cellnum(1,2)+1) )
+		AspectRatio(2) = 1.0*scrsize(1,2)/scrsize(0,2)
+	}
+
+	gsel WND_GRID
+	width scrsize(0, mode-1),scrsize(1, mode-1)
+
+	gosub *draw
+
+	nidPop
+
+return
+
+//SSキャプチャ――――――――――――――――――――――――――――――――――
+*sscaptcha
+	oncmd 0
+
+	nidPush
+	gsel WND_MAIN
+
+	if (positionType == PT_RELATIVE){
+		if (IsWindow(hClient) == 0){
+
+			ssCap(0) = 0, 0, 0, 0
+			hClient = 0
+			ReleaseDC dcClient
+
+			gosub *ssSettingCheck
+			
+			logmessage = "艦これの画面を見失いました"
+			if mode != modeOptionNum{
+				objprm logid,logmessage
+			}
+
+			nidPop
+			oncmd 1
+			return
+		}
+
+		GetClientRect hClient, varptr(rect)
+		if (clientSize(0) != (rect(2)-rect(0))) | (clientSize(1) != (rect(3)-rect(1))){
+
+			ssCap(0) = 0, 0, 0, 0
+			hClient = 0
+			ReleaseDC dcClient
+
+			gosub *ssSettingCheck
+			
+			logmessage = "艦これの画面を見失いました"
+			if mode != modeOptionNum{
+				objprm logid,logmessage
+			}
+			
+			nidPop
+			oncmd 1
+			return
+		}
+			
+	}
+	
+	//暫定数値直接入力
+	sscap(0) = luposx
+	sscap(1) = luposy
+	sscap(2) = rdposx
+	sscap(3) = rdposy
+	sscapwh(0) = sscap(2)-sscap(0),sscap(3)-sscap(1)
+
+	if (positionType == PT_ABSOLUTE){
+		ssCapMes = strf("%d,%d",　sscap(0),　sscap(1))
+	} else {
+		ssCapMes = "追跡中"
+	}
+	
+	if mode = 0{
+		objprm sscapiid,sscapmes
+	}
+	//
+	if (sscapwh(0) < 50) | (sscapwh(1) < 30){
+
+		if mode != modeOptionNum{
+			logmessage = "取得範囲が小さすぎます"
+			objprm logid,logmessage
+		}
+		nidPop
+		oncmd 1
+		return
+	}
+		
+
+	buffer WND_TEMP1, sscapwh(0), sscapwh(1)
+
+	if (positionType == PT_RELATIVE) {
+		BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), dcClient, sscap(0), sscap(1),SRCCOPY:redraw
+	} else {
+		//PT_ABSOLUTE 絶対座標
+		BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, sscap(0), sscap(1),SRCCOPY:redraw
+	}
+
+	if (hidename == TRUE & isHomeport(WND_TEMP1) == TRUE){
+
+
+		if (namecut = TRUE) {
+			buffer WND_TEMP1, sscapwh(0), int(0.9375*sscapwh(1)+0.5)
+			if (positionType == PT_RELATIVE) {
+				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), dcClient, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY:redraw
+			} else {
+				//PT_ABSOLUTE 絶対座標
+				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), hdcScreen, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY:redraw
+			}
+		} else {
+
+			//提督名とレベルを隠す処理
+			pos 0.14125*sscapwh(0), 0
+			gzoom 0.20375*sscapwh(0), 0.05*sscapwh(1), WND_IMAGE_BUF, 0, 0, 163, 24, 1
+			pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
+			gzoom 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, WND_IMAGE_BUF, 0, 24, 100, 16, 1
+			
+		}
+	
+	}
+	
+	savename = strf("kancolle_%04d%02d%02d-%02d%02d%02d%03d%s",gettime(0),gettime(1),gettime(3),gettime(4),gettime(5),gettime(6),gettime(7),savekind(jpgsave))
+	
+	if seqcapf = 0{
+		savenamepath = sssavedir +"\\"+ savename
+		gdiimagesave sssavedir +"\\"+ savename,jpgquality
+	} else {
+		savenamepath = intervalShotDir+"\\"+intervalsavedir+"\\" +savename
+		gdiimagesave intervalShotDir+"\\"+intervalsavedir+"\\" +savename,jpgquality
+	}
+	
+	gsel WND_MAIN
+	
+	if mode != modeOptionNum{
+		if kmexist(savenamepath) <= 0{
+			logmessage = savename+"の保存に失敗しました"
+		} else {
+			logmessage = savename+"を保存しました"
+			if dispcap & (mode = 0){
+				pos 0,dispcapy
+				gzoom 175, 105, WND_TEMP1, 0, 0, sscapwh(0), sscapwh(1), 1
+			}
+			
+			if (seqcapf = 0) {
+				i = 99
+				repeat 99
+					PicHistory(i) = PicHistory(i-1)
+					i--
+				loop
+				PicHistory(0) = savenamepath 
+				gosub *TweetWindow
+			}
+			
+		}
+		objprm logid,logmessage
+	}
+
+	nidPop
+	oncmd 1
+return
+
+
+*listdrag
+
+	oncmd 0
+
+	if ginfo(24) = 1 {
+
+			//縮小処理用
+		buffer WND_TEMP1, maxscrwh(0)/5, maxscrwh(1)/3
+			SET_WND_INFO
+	
+		//背景コピー用
+		buffer WND_TEMP2, maxscrwh(0), maxscrwh(1)
+			SET_WND_INFO
+	
+		gsel WND_GRID
+		dragdata = 0
+		repeat
+			stick sti,256
+			if sti = 256{
+				//mxy はドラッグを話した時点の座標
+				//mxy_ はドラッグ開始の座標
+				mxy(0) = limit(kmmousex/cellsize(0,listmode),0,cellnum(0,listmode)) ,limit(kmmousey/cellsize(1,listmode),0,cellnum(1,listmode))
+				if (data(mxy(0),mxy(1),listmode)) >= 100 & cliflag = 0{				
+					cliflag = 1
+					mxy_(0) = mxy(0),mxy(1)
+					mindexxy(0) = (mousex-(mxy_(0)*(cellsize(0,listmode)-1))),(mousey-(mxy_(1)*(cellsize(1,listmode)-1)))				
+					gsel WND_TEMP2
+					pos 0,0
+					gcopy 1,0,0,maxscrwh(0),maxscrwh(1)
+					gsel WND_TEMP1
+					pos 0,0
+					gzoom cellsize(0,listmode),cellsize(1,listmode),data(mxy_(0),mxy_(1),listmode),dd(0,listmode),dd(1,listmode),dd(2,listmode),dd(3,listmode),1
+					gsel WND_GRID,0
+				}
+			
+			}
+		
+			if cliflag = 1{
+				redraw 0
+				pos 0,0
+				gcopy WND_TEMP2, 0, 0, maxscrwh(0), maxscrwh(1)
+				gmode 4, cellsize(0,listmode), cellsize(1,listmode), 100
+				pos mousex-mindexxy(0),mousey-mindexxy(1)
+				gcopy WND_TEMP1, 0, 0, cellsize(0,listmode), cellsize(1,listmode)
+				gmode 0
+				redraw 1
+			}
+			
+			if (sti == 0 and cliflag == 1){
+				if (kmmousex < 0) | (kmmousex > scrsize(0,listmode)) | (kmmousey < 0) | (kmmousey > scrsize(1,listmode)){
+					//マウス座標がウィンドウ外のとき
+					if data(mxy_(0),mxy_(1),listmode) >= 100{
+						bc( data(mxy_(0),mxy_(1),listmode) - 100 ) = 0
+						data(mxy_(0),mxy_(1),listmode) = 0
+						gsel WND_MAIN
+						logmessage = "セル("+mxy_(0)+","+mxy_(1)+")を削除しました"
+						objprm logid,logmessage
+						gsel WND_GRID		
+					}
+				} else {
+					temp = data(mxy_(0),mxy_(1),listmode) 
+					data(mxy_(0),mxy_(1),listmode) = data(mxy(0),mxy(1),listmode)
+					data(mxy(0),mxy(1),listmode) = temp
+					gsel WND_MAIN
+					logmessage = "セル("+mxy_(0)+","+mxy_(1)+")をセル("+mxy(0)+","+mxy(1)+")に移動しました"
+					objprm logid,logmessage
+					gsel WND_GRID
+				}
+		
+				mxy(0) = 0,0
+				mxy_(0) = 0,0
+				temp = 0
+				cliflag = 0
+				gosub *draw
+			}
+		
+			if sti = 0 & cliflag = 0{
+				break
+			}
+	
+			await 16
+		loop
+	}
+	
+
+	oncmd 1
+	
+return
+
+//ドロップ処理――――――――――――――――――――――――――――――――――
+*OnDropFiles
+	//oncmd 0
+	
+	if (ginfo(24) = 0) | (ginfo(24) = 1){
+		nidPush
+		dropwindowid = ginfo(24)
+		hdrop = wParam
+		sdim dropfile,1024
+		DragQueryFile hdrop, 0, varptr(dropfile), 260
+		dropFile = cnvwtos(dropFile)
+		DragFinish hdrop
+		if peek(dropfile,0) = '"' : getstr dropfile, dropfile, 1, '"'
+		
+		if ImgF_GetFormat(dropfile) = 0{
+			nidPop
+			return
+		}
+	
+		addfilename = dropfile
+		gosub *addcaptcha
+		nidPop
+	}
+	if ginfo(24) = WND_TWITTER{
+		
+		nidPush
+	
+		hdrop = wParam
+		sdim dropfile,1024
+		DragQueryFile hdrop, 0, varptr(dropfile), 1024
+		DragFinish hdrop
+		dropFile = cnvwtos(dropFile)
+		if peek(dropfile,0) = '"' : getstr dropfile, dropfile, 1, '"'
+		
+		if ImgF_GetFormat(dropfile) = 0{
+			nidPop
+			return
+		}
+
+		i = 99
+		repeat 99
+			PicHistory(i) = PicHistory(i-1)
+			i--
+		loop
+		PicHistory(0) = dropfile
+	
+		gosub *tweetWindow
+	
+		nidPop
+	
+	}
+	oncmd 1
+return
+
+*addcaptcha
+	
+	//oncmd 0
+	gsel WND_GRID,0
+	
+	if (dropf = 1) & (dropwindowid = 1){
+		xcnt = mousex/cellsize(0,listmode) 
+		ycnt = mousey/cellsize(1,listmode)
+		dmxy(0) = xcnt, ycnt
+		if data(xcnt,ycnt,listmode) >= 100{
+			dmxy(0) = xcnt, ycnt
+			bc(data(xcnt, ycnt,listmode)-100) = 0
+		}
+	}
+	if (autoaddcaptcha = 1){
+
+		repeat
+			if listmode = 0 {
+				ycnt = cnt\(cellnum(1,listmode)+1)
+				xcnt = cnt/(cellnum(1,listmode)+1)
+			} 
+			if listmode = 1{
+				if tuika1{
+					xcnt = (((cnt\(6*(cellnum(0,listmode)+1)/2))/6)*2)+(cnt\2)
+					ycnt = ((cnt/((cellnum(0,listmode)+1)*3))*3)+((cnt\6)/2)
+				}
+				if tuika4{
+					xcnt = (((cnt\(6*(cellnum(0,listmode)+1)/3))/6)*3)+(cnt\3)
+					ycnt = ((cnt/((cellnum(0,listmode)+1)*2))*2)+((cnt\6)/3)
+				}
+				if tuika2 {
+					xcnt = cnt\6
+					ycnt = cnt/6
+				}
+				if tuika3{
+					xcnt = cnt/6
+					ycnt = cnt\6
+				}
+			}
+			if listmode = 2 {
+				ycnt = cnt\(cellnum(1,listmode)+1)
+				xcnt = cnt/(cellnum(1,listmode)+1)
+			} 
+			xcnt = limit(xcnt,0,cellnum(0,listmode))
+			ycnt = limit(ycnt,0,cellnum(1,listmode))
+			if data(xcnt,ycnt,listmode) = 0{
+				dmxy(0) = xcnt, ycnt
+				break
+			}
+			if (xcnt=cellnum(0,listmode)) & (ycnt=cellnum(1,listmode)){
+				dmxy(0) = xcnt, ycnt
+				bc(data(xcnt, ycnt,listmode)-100) = 0
+				break
+			}
+		loop
+		
+	}
+
+	repeat (CELL_MAX_W*CELL_MAX_H*modeNum)
+		if bc(cnt) = 0{
+			bc(cnt) = 1
+			bufid = cnt +100
+			break
+		}
+	loop
+	
+	data(dmxy(0),dmxy(1),listmode) = bufid
+	ImgF_GetPicSize addfilename,picx,picy
+
+	if (picx != 480) & (picy != 450){
+		buffer bufid,limit(picx,800,picx),limit(picy,480,picy)
+		ImgF_PicloadEx addfilename,1
+		gzoom 800,480,bufid,0,0,picx,picy,1
+	} else {
+		if picy = 480{
+			buffer bufid,800,480
+			pos 0,0
+			ImgF_PicloadEx addfilename,1
+
+		}
+		if picy = 450{
+			buffer bufid,800,480
+			pos 0,30
+			ImgF_PicloadEx addfilename,1
+		}
+	}
+
+	gsel WND_GRID
+	gosub *draw
+	
+	gsel WND_MAIN
+	logmessage = strf("%sをセル(%d,%d)に読み込みました",getpath(addfilename,11),dmxy(0),dmxy(1))
+	objprm logid,logmessage
+	
+	gsel WND_GRID
+
+	addfilename = ""
+	hotkeyaddf = 0
+	oncmd 1
+return
+
+//描画――――――――――――――――――――――――――――――――――
+*draw
+	
+	gsel WND_GRID,0
+	redraw 0
+	color 255,255,255
+	boxf
+	color 150,150,150
+	
+	pos int(0.33333334*scrsize(0,listmode)),20
+	gzoom int(0.66666667*scrsize(0,listmode)),int(0.15625*scrsize(0,listmode)),WND_GRID_STRING,0,0,640,150
+	
+	repeat cellnum(0,listmode),1
+		line  cnt*cellsize(0,listmode),-1,cnt*cellsize(0,listmode),maxscrwh(1)+1
+	loop
+	repeat cellnum(1,listmode),1
+		line  -1,cnt*cellsize(1,listmode),maxscrwh(0)+1,cnt*cellsize(1,listmode)
+	loop
+	
+	repeat cellnum(1,listmode)+1
+		ycnt = cnt
+		repeat cellnum(0,listmode)+1
+			if data(cnt,ycnt,listmode) >= 100{
+				pos cnt*cellsize(0,listmode),ycnt*cellsize(1,listmode)
+				gzoom cellsize(0,listmode),cellsize(1,listmode),data(cnt,ycnt,listmode),dd(0,listmode),dd(1,listmode),dd(2,listmode),dd(3,listmode),1
+			}
+		loop
+	loop
+	
+	if (mode = 2) & fleetPunctuation{
+		color 32,32,192
+		if tuika1 {
+			boxf  2*cellsize(0,listmode)-1, -1, 2*cellsize(0,listmode)+1, maxscrwh(1)+1
+			boxf  4*cellsize(0,listmode)-1, -1, 4*cellsize(0,listmode)+1, maxscrwh(1)+1
+			boxf  -1, cellsize(1,listmode)*3-1, maxscrwh(0)+1, cellsize(1,listmode)*3+1
+		}
+		if tuika2 {
+			boxf  -1, cellsize(1,listmode)-1, maxscrwh(0)+1, cellsize(1,listmode)+1
+			boxf  -1, cellsize(1,listmode)*2-1, maxscrwh(0)+1, cellsize(1,listmode)*2+1
+			boxf  -1, cellsize(1,listmode)*3-1, maxscrwh(0)+1, cellsize(1,listmode)*3+1
+			boxf  -1, cellsize(1,listmode)*4-1, maxscrwh(0)+1, cellsize(1,listmode)*4+1
+			boxf  -1, cellsize(1,listmode)*5-1, maxscrwh(0)+1, cellsize(1,listmode)*5+1
+			
+		}
+		if tuika3 {
+			boxf  cellsize(0,listmode)-1, -1, cellsize(0,listmode)+1, maxscrwh(1)+1
+			boxf  cellsize(0,listmode)*2-1, -1, cellsize(0,listmode)*2+1, maxscrwh(1)+1
+			boxf  cellsize(0,listmode)*3-1, -1, cellsize(0,listmode)*3+1, maxscrwh(1)+1
+			boxf  cellsize(0,listmode)*4-1, -1, cellsize(0,listmode)*4+1, maxscrwh(1)+1
+			boxf  cellsize(0,listmode)*5-1, -1, cellsize(0,listmode)*5+1, maxscrwh(1)+1
+		}
+	
+		if tuika4 {
+	
+			boxf  3*cellsize(0,listmode)-1, -1, 3*cellsize(0,listmode)+1, maxscrwh(1)+1
+			boxf  -1, cellsize(1,listmode)*2-1, maxscrwh(0)+1, cellsize(1,listmode)*2+1
+			boxf  -1, cellsize(1,listmode)*4-1, maxscrwh(0)+1, cellsize(1,listmode)*4+1
+
+		}
+		
+		color 0,0,0
+		
+	}
+	
+	redraw 1
+return
+
+*seqcap
+	
+	if seqcapf = 0{
+		SetTimer WND_INFO(WND_MAIN, WI_HANDLE),timerID,100*timersec,0
+		seqcapmes = "停止"
+		objprm seqcapBId,seqcapmes
+		objenable comboxid,0
+		objenable sscapBId,0
+		objenable sscapiid,0
+		objenable yabumiBId,0
+		seqcapf = 1
+	
+		chdir intervalShotDir
+		intervalsavedir =  strf("IntervalShot%04d%02d%02d-%02d%02d%02d",gettime(0),gettime(1),gettime(3),gettime(4),gettime(5),gettime(6))
+		if PathIsDirectory(intervalShotDir+"\\"+intervalsavedir) = 0 {
+			mkdir intervalsavedir
+		}
+		chdir currentdir
+		
+		gosub *sscaptcha
+	} else {
+		KillTimer WND_INFO(WND_MAIN, WI_HANDLE),timerID
+		seqcapmes = "開始"
+		objprm seqcapBId,seqcapmes
+		objenable comboxid,1
+		objenable sscapBId,1
+		objenable sscapiid,1
+		objenable yabumiBId,1
+		seqcapf = 0
+	}
+	
+return
+
+*yabumiupload
+	
+	if mode = 0 {	
+		gosub *sscaptcha
+		exec yabumidir+" \""+(sssavedir +"\\"+ savename)+"\""
+	}
+	if mode != 0{
+		gosub *make
+		if savename != ""{
+			exec yabumidir+" \""+(listsavedir +"\\"+ savename)+"\""
+		}
+	}
+return
+
+//ホットキー――――――――――――――――――――――――――――――――――
+*hotkey
+	//oncmd 0
+	nidpush
+	
+	if (wparam = HOTKEYID) & (availablecap = 1){
+
+		gosub *sscaptcha
+		if ((mode != 0)&(mode != modeOptionNum)) {
+			if autoaddcaptcha{
+				addfilename = sssavedir +"\\"+ savename
+				gosub *addcaptcha
+			}
+		}
+		await 16
+	}
+	
+	nidpop
+	oncmd 1
+return
+
+*windowsize
+	//oncmd 0
+
+	dupptr left,   lparam,    4
+	dupptr top,    lparam+4,  4
+	dupptr right,  lparam+8,  4
+	dupptr bottom, lparam+12, 4
+
+	switch wparam
+	case 1
+	case 2
+	case 7
+	case 8
+		bottom = top + round(AspectRatio(listmode) * (right - left - framesx)) + framesy
+		swbreak
+	case 3
+	case 5
+	case 6
+		right = left + round(1.0/AspectRatio(listmode) * (bottom - top - framesy)) + framesx
+		swbreak
+	case 4
+		left = right - round(1.0/AspectRatio(listmode) * (bottom - top - framesy)) - framesx
+		swbreak
+	swend
+
+	scrsize(0,listmode) = ginfo_winx ,round(AspectRatio(listmode)*ginfo_winx)
+	cellsize(0,listmode) = round(1.0*scrsize(0,listmode) / (cellnum(0,listmode)+1)) ,round(1.0*scrsize(1,listmode) / (cellnum(1,listmode)+1))
+	
+	gosub *draw
+	
+	oncmd 1
+return 1
+
+	
+//設定――――――――――――――――――――――――――――――――――
+*listsavedialog
+	
+	BrowseFolder "一覧の保存先",(dir_exe)
+	if stat = 1{
+		listsavedir = refstr
+		objprm listsdid,listsavedir
+	}
+	
+return
+
+*sssavedialog
+	
+	BrowseFolder "SSキャプチャの保存先",(dir_exe+"\\ScreenShots")
+	if stat = 1{
+		sssavedir = refstr
+		objprm sssdid,sssavedir
+	}
+
+return
+
+*intervalshotsavedialog
+	
+	BrowseFolder "連続撮影の保存先",(dir_exe+"\\ScreenShots")
+	if stat = 1{
+		intervalShotDir = refstr
+		objprm intervalShotDirsdid,intervalShotDir
+	}
+
+return
+
+*yabumiuploaderdialog
+	
+	dialog "exe",16,"YabumiUpLoader"
+	if stat = 1{
+		yabumidir = refstr
+		objprm yabumiid,yabumidir
+	}
+
+return
+
+*listsavefopen
+	exec listsavedir,16
+return
+
+*sssavefopen
+	exec sssavedir,16
+return
+
+*hotkeycapsetting
+
+	if (hotkeycap = 1) & (hotkeystr != hotkeystr_temp) {
+		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID
+		RegisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID,(MOD_ALT*hotkeycapalt)|(MOD_CONTROL*hotkeycapctrl)|(MOD_SHIFT*hotkeycapshift)|(MOD_WIN*hotkeycapwin),hotkeycode
+		hotkeystr_temp = hotkeystr
+		if stat = 0{
+			logmessage = "ホットキーの設定に失敗しました"
+			objprm logid,logmessage
+			hotkeyset = 0
+		} else {
+			logmessage = "ホットキーを設定しました"
+			objprm logid,logmessage
+			hotkeyset = 1
+		}
+	}
+	
+	if (hotkeycap = 0) & (hotkeyset = 1){
+		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID
+		logmessage = "ホットキーを解除しました"
+		objprm logid,logmessage
+		hotkeyset = 0
+		hotkeystr_temp = ""
+	}
+
+	if hotkeyset = 1 & availablecap = 1 {
+		gsel WND_MAIN,0
+		title "*"+SOFTNAME
+	} else {
+		gsel WND_MAIN,0
+		title SOFTNAME
+	}
+	
+return
+
+
+*disinfoinit
+	
+	disinfo(0) = GetSystemMetrics(76)
+	disinfo(1) = GetSystemMetrics(77)
+	disinfo(2) = GetSystemMetrics(78)
+	disinfo(3) = GetSystemMetrics(79)
+	
+	init_makelist disinfo
+	hdcScreen = CreateDC("DISPLAY", NULL, NULL, NULL)
+
+return
+
+
+*en_d
+	
+	if wparam = 1{
+		mode = 0
+		gosub *ssmode
+		objprm comboxid,0
+		return
+	}
+	
+	if wparam = WND_TWITTER{
+		gsel WND_TWITTER, -1
+		enabletweetwindow = 0
+		gsel WND_MAIN
+		if mode != modeOptionNum{
+			objprm enabletweetwindowcid,0
+		}
+		return
+	}
+
+	DeleteDC hdcScreen
+	if dcClient: ReleaseDC dcClient
+	
+	DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 0
+	DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 0
+	DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 0
+
+	if seqcapf = 1{
+		KillTimer WND_INFO(WND_MAIN, WI_HANDLE),timerID
+	}
+
+	if hotkeyset = 1 {
+		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID
+	}
+	
+	gosub *dataCheck
+	gosub *iniSave
+		
+	end
+
+#include "./SubSource/DrawWindow.hsp"
+#include "./SubSource/iniFileOperation.hsp"
+#include "./SubSource/TwitterOperation.hsp"
+#include "./SubSource/DrawString.hsp"
+#include "./SubSource/Make.hsp"
+#include "./SubSource/GetPosition.hsp"
+#include "./SubSource/VersionCheck.hsp"
+
+*eeeee
+	dialog "Error :"+wparam+"\nFile :"+__file__+"\n line:"+lparam
+	end
+	end

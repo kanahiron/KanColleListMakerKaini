@@ -1,0 +1,417 @@
+*iniload
+
+	errDialog = TRUE
+	SetIni (dir_exe+"\\makelist.ini")
+	if (stat == 2):errDialog = FALSE
+
+	sdim intervalShotDir,512
+	sdim listsavedir,512
+	sdim sssavedir,512
+	sdim yabumidir,512
+
+	GetIni "Setting", "yubiwa", yubiwa, "1"
+	GetIni "Setting", "kantai", kantai, "1"
+	GetIni "Setting", "page", page, "0"
+	GetIni "Setting", "autosearch", autosearch, "1"
+	GetIni "Setting", "hidename", hidename, "0"
+	GetIni "Setting", "namecut", namecut, "0"
+	GetIni "Setting", "frontrow", frontrow, "1"
+	GetIni "Setting", "hidelog", hidelog, "0"
+	GetIni "Setting", "yabumiautoupload", yabumiautoupload, "1"
+	GetIni "Setting", "othergame", othergame, "1"
+	GetIni "Setting", "dispcap", dispcap, "1"
+	GetIni "Setting", "hotkeycap", hotkeycap, "1"
+	GetIni "Setting", "autoaddcaptcha", autoaddcaptcha, "1"
+	GetIni "Setting", "jpgsave", jpgsave, "0"
+	GetIni "Setting", "jpgquality", jpgquality, "90"
+	GetIni "Setting", "disableseqcap", disableseqcap, "1"
+	GetIni "Setting", "timersec", timersec, "5"
+	GetIni "Setting", "listsavedir", listsavedir, "\"\""
+	GetIni "Setting", "sssavedir", sssavedir, "\"\""
+	GetIni "Setting", "yabumidir", yabumidir, "\"\""
+	GetIni "Setting", "hotkeystr", hotkeystr, "\"A___Z\""
+	GetIni "Setting122", "lvname", lvname, "0"
+	GetIni "Setting122", "senden", senden, "1"
+	GetIni "Setting122", "tuika1", tuika1, "1"
+	GetIni "Setting122", "tuika2", tuika2, "0"
+	GetIni "Setting122", "tuika3", tuika3, "0"
+	GetIni "Setting122", "sosuka", sosuka, "1"
+	GetIni "Setting122", "sosu", sosu, "0"
+	GetIni "Setting122", "soka", soka, "0"
+	GetIni "Setting122", "manualpos", manualpos, "0"
+
+	sdim temp,256
+	GetIni "Setting130", "Twi_userdata",temp, "\"00\""
+	if stat = 0: userdata = decstr(temp)
+	GetIni "Setting130", "Twi_ACCESS_TOKEN",temp, "\"00\""
+	if stat = 0: ACCESS_TOKEN = decstr(temp)
+	GetIni "Setting130", "Twi_ACCESS_SECRET",temp, "\"00\""
+	if stat = 0: ACCESS_SECRET = decstr(temp)
+
+	GetIni "Setting130", "enabletweetwindow",enabletweetwindow, "0"
+	GetIni "Setting130", "twijpg",twijpg, "1"
+	GetIni "Setting130", "tuika4", tuika4, "0"
+
+	
+	GetIni "Setting200", "fontname", fontname, "\"\""
+	GetIni "Setting200", "fontnum", fontnum ,"\"\""
+	GetIni "Setting200", "fontsizename", fontsizename, "30"
+	GetIni "Setting200", "fontsizenum", fontsizenum, "34"
+	GetIni "Setting200", "intervalShotDir",intervalShotDir, "\"\""
+
+	GetIni "Setting250", "FirstFleetName", FirstFleetName, "\"第一艦隊\""
+	GetIni "Setting250", "SecondFleetName", SecondFleetName, "\"第二艦隊\""
+	GetIni "Setting250", "ThreadFleetName", ThreadFleetName, "\"ボス支援\""
+	GetIni "Setting250", "FourthFleetName", FourthFleetName, "\"道中支援\""
+	
+	GetIni "Setting250", "fontColorFirstFleetStr", fontColorFirstFleetStr, "\"FF0000\""
+	GetIni "Setting250", "fontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
+	GetIni "Setting250", "fontColorThreadFleetStr", fontColorThreadFleetStr, "\"20AC4C\""
+	GetIni "Setting250", "fontColorFourthFleetStr", fontColorFourthFleetStr, "\"E06020\""
+	GetIni "Setting250", "fleetPunctuation", fleetPunctuation, "1"
+	GetIni "Setting250", "addOrderNum", addOrderNum, "1"
+
+	GetIni "Setting250", "airStation", airStation, "0"
+	GetIni "Setting250", "directLink", directLink, "1"
+
+	GetIni "SettingFINAL", "airStationTab", airStationTab, "1"
+	GetIni "SettingFINAL", "ichiranMode1", ichiranMode1, "1"
+	GetIni "SettingFINAL", "ichiranMode2", ichiranMode2, "0"
+
+	GetIni "Configuration", "autoVersionCheck", autoVersionCheck, "1"
+	
+	if strmid(hotkeystr,0,1) = "A":hotkeycapalt	= 1
+	if strmid(hotkeystr,1,1) = "C":hotkeycapctrl = 1
+	if strmid(hotkeystr,2,1) = "S":hotkeycapshift = 1
+	if strmid(hotkeystr,3,1) = "W":hotkeycapwin	= 1
+	hotkeycapchar = strmid(hotkeystr,4,1)
+	
+	chdir currentdir
+return
+		
+
+*dataCheck
+	
+	savelogtext = ""
+
+	if (yubiwa != 0) & (yubiwa != 1):yubiwa = 1
+	if (kantai != 0) & (kantai != 1):kantai = 1
+	if (page != 0) & (page != 1):page = 0
+	if (autosearch != 0) & (autosearch != 1):autosearch = 1
+	if (hidename != 0) & (hidename != 1):hidename = 0
+	if (namecut != 0) & (namecut != 1):namecut=0
+	if (frontrow != 0) & (frontrow != 1):frontrow=1
+	if (hidelog != 0) & (hidelog != 1):hidelog = 0
+	if (yabumiautoupload != 0) & (yabumiautoupload != 1):yabumiautoupload=1
+	if (othergame != 0) & (othergame != 1):othergame = 1
+	if (dispcap != 0) & (dispcap != 1):dispcap=1
+	if (hotkeycap != 0) & (hotkeycap != 1): hotkeycap = 1
+	if (autoaddcaptcha != 0) & (autoaddcaptcha != 1):autoaddcaptcha=1
+	if (jpgsave != 0) & (jpgsave != 1):jpgsave=0
+	if (jpgquality < 1) | (jpgquality > 100):jpgquality = 90
+	if (disableseqcap != 0) & (disableseqcap != 1):disableseqcap = 1
+	if (timersec < 0) | (timersec > 999):timersec = 5
+	if (manualpos != 0) & (manualpos != 1):manualpos=0
+	if (lvname != 0) & (lvname != 1):lvname=0
+	if (tuika1 != 0) & (tuika1 != 1):tuika1=1
+	if (tuika2 != 0) & (tuika2 != 1):tuika2=0
+	if (tuika3 != 0) & (tuika3 != 1):tuika3=0
+	if (tuika4 != 0) & (tuika4 != 1):tuika4=0
+	if (sosuka != 0) & (sosuka != 1):sosuka=1
+	if (sosu != 0) & (sosu != 1):sosu=0
+	if (soka != 0) & (soka != 1):soka=0
+	if (enabletweetwindow != 0) & (enabletweetwindow != 1):enabletweetwindow=0
+	if (twijpg != 0) & (twijpg != 1):twijpg=1
+	if fontname = "":fontname = "ＭＳ　ゴシック"
+	if fontnum = "":fontnum = "ＭＳ　ゴシック"
+	if (fontsizename < 10) | ( 50 < fontsizename):fontsizename=30
+	if (fontsizenum < 10) | ( 50 < fontsizenum):fontsizenum=34
+	if FirstFleetName = "":FirstFleetName = "第一艦隊"
+	if SecondFleetName = "":SecondFleetName = "第二艦隊"
+	
+	if fontColorFirstFleetStr = "":fontColorFirstFleetStr = "FF0000"
+	if fontColorSecondFleetStr = "":fontColorSecondFleetStr = "0000FF"
+	if fontColorThreadFleetStr = "":fontColorThreadFleetStr = "20AC4C"
+	if fontColorFourthFleetStr = "":fontColorFourthFleetStr = "E06020"
+	if ThreadFleetName = "":ThreadFleetName = "ボス支援"
+	if FourthFleetName = "":FourthFleetName = "道中支援"
+	if (fleetPunctuation != 0) & (fleetPunctuation != 1):fleetPunctuation=1
+	if (addOrderNum != 0) & (addOrderNum != 1):addOrderNum=1
+
+	if (airStationTab != 0) & (airStationTab != 1):airStationTab=1
+
+	fontColorFirstFleet = int("$"+fontcolorFirstFleetstr)
+	fontColorSecondFleet = int("$"+fontcolorSecondFleetstr)
+	fontColorThreadFleet = int("$"+fontcolorThreadFleetstr)
+	fontColorFourthFleet = int("$"+fontcolorFourthFleetstr)
+	
+	hidelog_ = hidelog
+	
+	if PathIsDirectory(listsavedir) = 0 {
+		savelogtext += "Info - 一覧保存先が存在しないためデフォルトに変更しました\n"
+		listsavedir = dir_exe
+	}
+
+	if PathIsDirectory(sssavedir) = 0{
+		savelogtext += "Info - SS保存先が存在しないためデフォルトに変更しました\n"
+		chdir dir_exe
+		if PathIsDirectory(dir_exe+"\\ScreenShots") = 0 {
+			mkdir "ScreenShots"
+		}
+		sssavedir = dir_exe+"\\ScreenShots"
+	}
+	
+	if PathIsDirectory(intervalShotDir) = 0{
+		savelogtext += "Info - 連続撮影保存先が存在しないためデフォルトに変更しました\n"
+		intervalShotDir = sssavedir
+	} 
+
+	if kmexist(yabumidir) = -1{
+		yabumidir = dirinfo(0x10026) +"\\yabumi\\yabumiuploader.exe"
+		if kmexist(yabumidir) = -1{
+			availableyabumi = 0
+			yabumidir = ""
+		} else {
+			availableyabumi = 1
+		}
+	} else {
+		availableyabumi = 1
+	}
+	
+	if (hotkeycapalt + hotkeycapctrl + hotkeycapshift + hotkeycapwin) = 0{
+		savelogtext += "Info - ホットキーの設定が不適切です(1) 設定をデフォルトに変更しました\n"
+		hotkeycap = 0
+		hotkeycapalt = 1
+		hotkeycapctrl = 0
+		hotkeycapshift= 0
+		hotkeycapwin = 0
+		hotkeystr = ""
+	}
+	
+	if hotkeycapalt	= 1	:poke hotkeystr,0,'A':else:poke hotkeystr,0,95
+	if hotkeycapctrl = 1:poke hotkeystr,1,'C':else:poke hotkeystr,1,95
+	if hotkeycapshift= 1:poke hotkeystr,2,'S':else:poke hotkeystr,2,95
+	if hotkeycapwin	= 1	:poke hotkeystr,3,'W':else:poke hotkeystr,3,95
+	
+	if (65 <= peek(hotkeycapchar)) & (peek(hotkeycapchar) <= 90){
+		hotkeycode = peek(hotkeycapchar)
+		poke hotkeystr,4,hotkeycode
+	} else {
+		if (97 <= peek(hotkeycapchar)) & (peek(hotkeycapchar) <= 122){
+			hotkeycode = peek(hotkeycapchar)-32
+			hotkeycapchar = strf("%c",hotkeycode)
+			poke hotkeystr,4,hotkeycode
+		} else {
+			savelogtext += "Info - ホットキーの設定が不適切です(2) 設定をデフォルトに変更しました\n"
+			hotkeycode = 90
+			hotkeycapchar = strf("%c",hotkeycode)
+			hotkeystr = "A___Z"
+			hotkeycap = 0
+		}
+	}
+	
+	fontcolorname = int("$"+fontcolornamestr)
+	fontcolornum = int("$"+fontcolornumstr)
+	
+	if (tuika1+tuika2+tuika3+tuika4) != 1{
+		tuika1 = 1
+		tuika2 = 0
+		tuika3 = 0
+		tuika4 = 0
+	}
+	
+	if (airStation+directLink) != 1{
+		dim airStation
+		airStation = 0
+		dim directLink
+		directLink = 1
+	}
+	
+	if (sosuka+sosu+sosk) != 1{
+		sosuka = 1
+		sosu = 0
+		soka = 0
+	}
+
+	if savelogtext != ""{
+		if errDialog {
+			dialog savelogtext
+			errDialog = TRUE
+		}
+		savelogtext = ""
+	}
+
+	if (ichiranMode1 + ichiranMode2) != 1{
+		ichiranMode1 = 1
+		ichiranMode2 = 0
+	}
+
+
+	
+	////////////////
+	if ichiranMode1 {
+		if yubiwa = 0 & kantai = 0 : w = 382 : capx = 392
+		if yubiwa = 1 & kantai = 1 : w = 440 : capx = 360
+		if yubiwa = 1 & kantai = 0 : w = 408 : capx = 392
+		if yubiwa = 0 & kantai = 1 : w = 415 : capx = 360
+		if page = 0:h = 279
+		if page = 1:h = 315
+		if lvname = 1:w = 190: capx = 392:h = 279
+		capy = 154
+	}
+	if ichiranMode2 {
+		w = 320
+		h = 310
+		capx = 132
+		capy = 143
+	}
+		
+	dd(0,0) = capx,capy,w,h
+	cellratio = 1.0*h/w
+	cellsize(0,0) = scrsize(0,0)/(cellnum(0,0)+1),round(cellratio*cellsize(0,0))
+	scrsize(1,0) = round(cellsize(1,0)* (cellnum(1,0)+1) )
+	AspectRatio(0) = 1.0*scrsize(1,0)/scrsize(0,0)
+	
+	
+	if sosuka {
+		w = 460
+		h = 365
+	}
+	if sosu {
+		w = 230
+		h = 365	
+	}
+	if soka {
+		w = 460
+		h = 105
+	}
+	
+	capx = 327
+	capy = 103
+
+	dd(0,1) = capx,capy,w,h
+	cellratio = 1.0*h/w
+	cellsize(0,1) = scrsize(0,1)/(cellnum(0,1)+1),round(cellratio*cellsize(0,1))
+	scrsize(1,1) = round(cellsize(1,1)*(cellnum(1,1)+1) )
+	AspectRatio(1) = 1.0*scrsize(1,1)/scrsize(0,1)
+
+		
+	if directLink{
+		w = 800
+		h = 480
+		capx = 0
+		capy = 0
+		cellnum(0,2) = 6,4
+	}
+	if airStation {
+		if (airStationTab) { 
+			w = 225
+			h = 358
+			capx = 575
+			capy = 109
+		} else {
+			w = 225
+			h = 336
+			capx = 575
+			capy = 131
+		}
+		cellnum(0,2) = 2,0
+	}
+		
+	dd(0,2) = capx,capy,w,h
+	cellratio = 1.0*h/w
+
+	cellsize(0,2) = scrsize(0,2)/(cellnum(0,2)+1),round(cellratio*cellsize(0,2))
+	scrsize(1,2) = round(cellsize(1,2)*(cellnum(1,2)+1) )
+	AspectRatio(2) = 1.0*scrsize(1,2)/scrsize(0,2)
+
+	chdir currentdir
+return
+
+
+*inisave
+
+	WriteIni "Setting", "yubiwa",yubiwa
+	WriteIni "Setting", "kantai",kantai
+	WriteIni "Setting", "page",page
+	WriteIni "Setting", "autosearch",autosearch
+	WriteIni "Setting", "hidename",hidename
+	WriteIni "Setting", "namecut",namecut
+	WriteIni "Setting", "frontrow",frontrow
+	WriteIni "Setting", "hidelog",hidelog
+	WriteIni "Setting", "yabumiautoupload",yabumiautoupload
+	WriteIni "Setting", "othergame",othergame
+	WriteIni "Setting", "dispcap",dispcap
+	WriteIni "Setting", "hotkeycap",hotkeycap
+	WriteIni "Setting", "autoaddcaptcha",autoaddcaptcha
+	WriteIni "Setting", "jpgsave",jpgsave
+	WriteIni "Setting", "jpgquality",jpgquality
+	WriteIni "Setting", "disableseqcap",disableseqcap
+	WriteIni "Setting", "timersec",timersec
+	WriteIni "Setting", "listsavedir", listsavedir
+	WriteIni "Setting", "sssavedir",  sssavedir
+	WriteIni "Setting", "sssavedir", sssavedir
+	WriteIni "Setting", "yabumidir", yabumidir
+	WriteIni "Setting", "hotkeystr", hotkeystr
+	WriteIni "Setting122", "manualpos",manualpos
+	WriteIni "Setting122", "lvname",lvname
+	WriteIni "Setting122", "senden",senden
+	WriteIni "Setting122", "tuika1",tuika1
+	WriteIni "Setting122", "tuika2",tuika2
+	WriteIni "Setting122", "tuika3",tuika3
+	WriteIni "Setting122", "sosuka",sosuka
+	WriteIni "Setting122", "sosu",sosu
+	WriteIni "Setting122", "soka",soka
+
+	sdim temp,256
+	temp = encstr(userdata)
+	WriteIni "Setting130", "Twi_userdata",temp
+	temp = encstr(ACCESS_TOKEN)
+	WriteIni "Setting130", "Twi_ACCESS_TOKEN",temp
+	temp = encstr(ACCESS_SECRET)
+	WriteIni "Setting130", "Twi_ACCESS_SECRET",temp
+	
+	WriteIni "Setting130", "enabletweetwindow",enabletweetwindow
+	WriteIni "Setting130", "twijpg",twijpg
+	WriteIni "Setting130", "tuika4", tuika4
+	WriteIni "Setting200", "fontname", fontname
+	WriteIni "Setting200", "fontnum", fontnum
+	WriteIni "Setting200", "fontsizename", fontsizename
+	WriteIni "Setting200", "fontsizenum", fontsizenum
+	WriteIni "Setting200", "intervalShotDir",intervalShotDir
+	
+	WriteIni "Setting250", "FirstFleetName", FirstFleetName
+	WriteIni "Setting250", "SecondFleetName", SecondFleetName
+	WriteIni "Setting250", "ThreadFleetName", ThreadFleetName
+	WriteIni "Setting250", "FourthFleetName", FourthFleetName
+	
+	WriteIni "Setting250", "fontColorFirstFleetStr", fontColorFirstFleetStr
+	WriteIni "Setting250", "fontColorSecondFleetStr", fontColorSecondFleetStr
+	WriteIni "Setting250", "fontColorThreadFleetStr", fontColorThreadFleetStr
+	WriteIni "Setting250", "fontColorFourthFleetStr", fontColorFourthFleetStr
+	WriteIni "Setting250", "fleetPunctuation", fleetPunctuation
+	WriteIni "Setting250", "addOrderNum", addOrderNum
+	WriteIni "Setting250", "airStation", airStation
+	WriteIni "Setting250", "directLink", directLink
+	
+	WriteIni "SettingFINAL", "airStationTab",airStationTab
+	WriteIni "SettingFINAL", "ichiranMode1",ichiranMode1
+	WriteIni "SettingFINAL", "ichiranMode2",ichiranMode2
+
+	WriteIni "Configuration", "autoVersionCheck", autoVersionCheck
+
+return
+
+*loadHistory
+	chdir sssavedir
+	dirlist listbuf,"*.*",3
+	if stat != 0{
+		sortnote listbuf,1
+		notesel listbuf
+		sdim listarr,512,notemax+1
+		repeat notemax
+			picHistory(cnt) = sssavedir+"\\"+kmnoteget(cnt)
+		loop
+	}
+	chdir currentdir
+return
