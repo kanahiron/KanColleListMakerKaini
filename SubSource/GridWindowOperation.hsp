@@ -1,0 +1,158 @@
+
+
+*listdrag
+
+	oncmd 0
+
+	if ginfo(24) = 1 {
+
+			//縮小処理用
+		buffer WND_TEMP1, maxScrSize(0)/5, maxScrSize(1)/3
+			SET_WND_INFO
+	
+		//背景コピー用
+		buffer WND_TEMP2, maxScrSize(0), maxScrSize(1)
+			SET_WND_INFO
+	
+		gsel WND_GRID
+		dragdata = 0
+		repeat
+			stick sti,256
+			if sti = 256{
+				//mxy はドラッグを話した時点の座標
+				//mxy_ はドラッグ開始の座標
+				mxy(0) = limit(kmmousex/cellsize(0,listmode),0,cellnum(0,listmode)) ,limit(kmmousey/cellsize(1,listmode),0,cellnum(1,listmode))
+				if (data(mxy(0),mxy(1),listmode)) >= 100 & cliflag = 0{				
+					cliflag = 1
+					mxy_(0) = mxy(0),mxy(1)
+					mindexxy(0) = (mousex-(mxy_(0)*(cellsize(0,listmode)-1))),(mousey-(mxy_(1)*(cellsize(1,listmode)-1)))				
+					gsel WND_TEMP2
+					pos 0,0
+					gcopy 1,0,0,maxScrSize(0),maxScrSize(1)
+					gsel WND_TEMP1
+					pos 0,0
+					gzoom cellsize(0,listmode),cellsize(1,listmode),data(mxy_(0),mxy_(1),listmode),dd(0,listmode),dd(1,listmode),dd(2,listmode),dd(3,listmode),1
+					gsel WND_GRID,0
+				}
+			
+			}
+		
+			if cliflag = 1{
+				redraw 0
+				pos 0,0
+				gcopy WND_TEMP2, 0, 0, maxScrSize(0), maxScrSize(1)
+				gmode 4, cellsize(0,listmode), cellsize(1,listmode), 100
+				pos mousex-mindexxy(0),mousey-mindexxy(1)
+				gcopy WND_TEMP1, 0, 0, cellsize(0,listmode), cellsize(1,listmode)
+				gmode 0
+				redraw 1
+			}
+			
+			if (sti == 0 and cliflag == 1){
+				if (kmmousex < 0) | (kmmousex > scrsize(0,listmode)) | (kmmousey < 0) | (kmmousey > scrsize(1,listmode)){
+					//マウス座標がウィンドウ外のとき
+					if data(mxy_(0),mxy_(1),listmode) >= 100{
+						bc( data(mxy_(0),mxy_(1),listmode) - 100 ) = 0
+						data(mxy_(0),mxy_(1),listmode) = 0
+						gsel WND_MAIN
+						logmessage = "セル("+mxy_(0)+","+mxy_(1)+")を削除しました"
+						objprm logid,logmessage
+						gsel WND_GRID		
+					}
+				} else {
+					temp = data(mxy_(0),mxy_(1),listmode) 
+					data(mxy_(0),mxy_(1),listmode) = data(mxy(0),mxy(1),listmode)
+					data(mxy(0),mxy(1),listmode) = temp
+					gsel WND_MAIN
+					logmessage = "セル("+mxy_(0)+","+mxy_(1)+")をセル("+mxy(0)+","+mxy(1)+")に移動しました"
+					objprm logid,logmessage
+					gsel WND_GRID
+				}
+		
+				mxy(0) = 0,0
+				mxy_(0) = 0,0
+				temp = 0
+				cliflag = 0
+				gosub *draw
+			}
+		
+			if sti = 0 & cliflag = 0{
+				break
+			}
+	
+			await 16
+		loop
+	}
+	
+
+	oncmd 1
+	
+return
+
+
+//描画――――――――――――――――――――――――――――――――――
+*draw
+	
+	gsel WND_GRID,0
+	redraw 0
+	color 255,255,255
+	boxf
+	color 150,150,150
+	
+	pos int(0.33333334*scrsize(0,listmode)),20
+	gzoom int(0.66666667*scrsize(0,listmode)),int(0.15625*scrsize(0,listmode)),WND_GRID_STRING,0,0,640,150
+	
+	repeat cellnum(0,listmode),1
+		line  cnt*cellsize(0,listmode),-1,cnt*cellsize(0,listmode),maxScrSize(1)+1
+	loop
+	repeat cellnum(1,listmode),1
+		line  -1,cnt*cellsize(1,listmode),maxScrSize(0)+1,cnt*cellsize(1,listmode)
+	loop
+	
+	repeat cellnum(1,listmode)+1
+		ycnt = cnt
+		repeat cellnum(0,listmode)+1
+			if data(cnt,ycnt,listmode) >= 100{
+				pos cnt*cellsize(0,listmode),ycnt*cellsize(1,listmode)
+				gzoom cellsize(0,listmode),cellsize(1,listmode),data(cnt,ycnt,listmode),dd(0,listmode),dd(1,listmode),dd(2,listmode),dd(3,listmode),1
+			}
+		loop
+	loop
+	
+	if (mode = 2) & fleetPunctuation{
+		color 32,32,192
+		if tuika1 {
+			boxf  2*cellsize(0,listmode)-1, -1, 2*cellsize(0,listmode)+1, maxScrSize(1)+1
+			boxf  4*cellsize(0,listmode)-1, -1, 4*cellsize(0,listmode)+1, maxScrSize(1)+1
+			boxf  -1, cellsize(1,listmode)*3-1, maxScrSize(0)+1, cellsize(1,listmode)*3+1
+		}
+		if tuika2 {
+			boxf  -1, cellsize(1,listmode)-1, maxScrSize(0)+1, cellsize(1,listmode)+1
+			boxf  -1, cellsize(1,listmode)*2-1, maxScrSize(0)+1, cellsize(1,listmode)*2+1
+			boxf  -1, cellsize(1,listmode)*3-1, maxScrSize(0)+1, cellsize(1,listmode)*3+1
+			boxf  -1, cellsize(1,listmode)*4-1, maxScrSize(0)+1, cellsize(1,listmode)*4+1
+			boxf  -1, cellsize(1,listmode)*5-1, maxScrSize(0)+1, cellsize(1,listmode)*5+1
+			
+		}
+		if tuika3 {
+			boxf  cellsize(0,listmode)-1, -1, cellsize(0,listmode)+1, maxScrSize(1)+1
+			boxf  cellsize(0,listmode)*2-1, -1, cellsize(0,listmode)*2+1, maxScrSize(1)+1
+			boxf  cellsize(0,listmode)*3-1, -1, cellsize(0,listmode)*3+1, maxScrSize(1)+1
+			boxf  cellsize(0,listmode)*4-1, -1, cellsize(0,listmode)*4+1, maxScrSize(1)+1
+			boxf  cellsize(0,listmode)*5-1, -1, cellsize(0,listmode)*5+1, maxScrSize(1)+1
+		}
+	
+		if tuika4 {
+	
+			boxf  3*cellsize(0,listmode)-1, -1, 3*cellsize(0,listmode)+1, maxScrSize(1)+1
+			boxf  -1, cellsize(1,listmode)*2-1, maxScrSize(0)+1, cellsize(1,listmode)*2+1
+			boxf  -1, cellsize(1,listmode)*4-1, maxScrSize(0)+1, cellsize(1,listmode)*4+1
+
+		}
+		
+		color 0,0,0
+		
+	}
+	
+	redraw 1
+return

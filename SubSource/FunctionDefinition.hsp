@@ -2,91 +2,130 @@
 #cfunc PathIsDirectory "PathIsDirectoryW" wptr
 
 #uselib "shell32.dll"
-#func global DragAcceptFiles "DragAcceptFiles" int,int
-#func global DragQueryFile   "DragQueryFileW"  int,int,int,int
-#func global DragQueryPoint  "DragQueryPoint"  int,int
-#func global DragFinish      "DragFinish"      int
+#func  DragAcceptFiles "DragAcceptFiles" int, int
+#func  DragQueryFile   "DragQueryFileW"  int, int, int, int
+#func  DragQueryPoint  "DragQueryPoint"  int, int
+#func  DragFinish      "DragFinish"      int
 
 #uselib "gdi32.dll"
-#cfunc global CreateDC "CreateDCW" wptr,wptr,int,int
-#func global DeleteDC "DeleteDC"  wptr
-#func global BitBlt "BitBlt" int,int,int,int,int,int,int,int,int
-#func global CreateDIBSection "CreateDIBSection" int,int,int,int,int,int
-#func global CreateCompatibleBitmap "CreateCompatibleBitmap" int,int,int
-#func global SelectObject "SelectObject" int,int
-#func global DeleteObject "DeleteObject" int 
+#cfunc CreateDC "CreateDCW" wptr, wptr, int, int
+#func  DeleteDC "DeleteDC"  wptr
+#func  BitBlt "BitBlt" int, int, int, int, int, int, int, int, int
+#func  CreateDIBSection "CreateDIBSection" int, int, int, int, int, int
+#func  CreateCompatibleBitmap "CreateCompatibleBitmap" int, int, int
+#func  SelectObject "SelectObject" int, int
+#func  DeleteObject "DeleteObject" int 
 
 #uselib "user32.dll"
-#func global GetDC "GetDC" int
-#func global ReleaseDC "ReleaseDC" int,int
-#func global MoveWindow "MoveWindow" int , int , int , int , int , int
-#func global GetWindowLong "GetWindowLongW" int,int
-#func global SetWindowLong "SetWindowLongW" int,int,int
-#func global SetLayeredWindowAttributes "SetLayeredWindowAttributes" int,int,int,int
-#func global GetCursorPos "GetCursorPos" int
-#func global SetCursorPos "SetCursorPos" int,int
-#func global ScreenToClient "ScreenToClient" int ,int
-#func global ChildWindowFromPoint "ChildWindowFromPoint" int ,int
-#func global SetFocus "SetFocus" int
-#func global SetParent "SetParent" int ,int
-#func global RegisterHotKey "RegisterHotKey" int,int,int,int
-#func global UnregisterHotKey "UnregisterHotKey" int,int
-#cfunc global IsWindowVisible "IsWindowVisible" int
-#cfunc global GetSystemMetrics "GetSystemMetrics" int
-#func global SetClassLong "SetClassLongW" int,int,int
-#func global LoadCursor "LoadCursorW" int,int
-#func global SetTimer "SetTimer" int,int,int,wptr
-#func global KillTimer "KillTimer" int,int
+#func  GetDC "GetDC" int
+#func  ReleaseDC "ReleaseDC" int, int
+#func  MoveWindow "MoveWindow" int, int, int, int, int, int
+#func  GetWindowLong "GetWindowLongW" int, int
+#func  SetWindowLong "SetWindowLongW" int, int, int
+#func  SetLayeredWindowAttributes "SetLayeredWindowAttributes" int, int, int, int
+#func  GetCursorPos "GetCursorPos" int
+#func  SetCursorPos "SetCursorPos" int, int
+#func  ScreenToClient "ScreenToClient" int , int
+#func  ChildWindowFromPoint "ChildWindowFromPoint" int, int, int
+#func  SetFocus "SetFocus" int
+#func  SetParent "SetParent" int , int
+#func  RegisterHotKey "RegisterHotKey" int, int, int, int
+#func  UnregisterHotKey "UnregisterHotKey" int, int
+#cfunc IsWindowVisible "IsWindowVisible" int
+#cfunc GetSystemMetrics "GetSystemMetrics" int
+#func  SetClassLong "SetClassLongW" int, int, int
+#func  LoadCursor "LoadCursorW" int, int
+#func  SetTimer "SetTimer" int, int, int, sptr
+#func  KillTimer "KillTimer" int, int
+
+#func  ChildWindowFromPointEx "ChildWindowFromPointEx" int, int, int, int
+;#func  ChildWindowFromPoint "ChildWindowFromPoint" int, int
 
 #cfunc WindowFromPoint "WindowFromPoint" int, int
-#func GetClientRect "GetClientRect" int, int
-#func ClientToScreen "ClientToScreen" int, int
+#func  GetClientRect "GetClientRect" int, int
+#func  GetWindowRect "GetWindowRect" int, int
+#func  ClientToScreen "ClientToScreen" int, int
 #cfunc GetParent "GetParent" int
 #cfunc GetAncestor "GetAncestor" int, int
-#func IsWindow "IsWindow" int
-
+#func  IsWindow "IsWindow" int
 
 #uselib "kernel32.dll"
-#func MultiByteToWideChar "MultiByteToWideChar" int,int,int,int,int,int
+#func  MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
 
 #uselib "winmm.dll"
-#cfunc global timeGetTime "timeGetTime"
+#cfunc timeGetTime "timeGetTime"
 
 
 //レイヤードウィンドウ周り
-#define LWA_COLORKEY 1
-#define LWA_ALPHA 0x0002
+#const LWA_COLORKEY 1
+#const LWA_ALPHA 0x0002
 
 // bitblt
-#define SRCCOPY 0x00CC0020
+#const SRCCOPY 0x00CC0020
 
 //ウィンドウメッセージ
-#define WM_DROPFILES 0x0233
-#define WM_SIZING 0x214
-#define WM_COMMAND 0x0111
-#define WM_HOTKEY 0x0312
-#define WM_ACTIVATE 0x0006
-#define WM_MOUSEMOVE 0x200
-#define WA_INACTIVE 0
-#define WA_ACTIVE 1
-#define WA_CLICKACTIVE 2
+#const WM_ACTIVATE		0x0006
+#const WM_COMMAND		0x0111
+#const WM_TIMER			0x0113
+#const WM_VSCROLL		0x0114
+
+#const WM_MOUSEMOVE		0x0200
+#const WM_LBUTTONDOWN	0x0201
+#const WM_SIZING		0x0214
+#const WM_DROPFILES		0x0233
+#const WM_HOTKEY		0x0312
+
+#const WA_INACTIVE		0
+#const WA_ACTIVE		1
+#const WA_CLICKACTIVE	2
 
 //ホットキー周り
-#define MOD_ALT 0x0001
-#define MOD_CONTROL 0x0002
-#define MOD_SHIFT 0x0004
-#define MOD_WIN 0x0008
+#const MOD_ALT		0x0001
+#const MOD_CONTROL	0x0002
+#const MOD_SHIFT	0x0004
+#const MOD_WIN	0x0008
 
-#define PBS_MARQUEE 0x08
-#define PBM_SETMARQUEE 0x040A
-#define GWL_STYLE (-16)
-#define WS_CHILD 0x40000000
-#define WS_VISIBLE 0x10000000
-#define PBM_SETRANGE 0x0401
-#define PBM_SETPOS 0x0402
-#define ctype MAKELPARAM(%1,%2) (%1 | %2<<16)
+#const PBS_MARQUEE		0x08
+#const PBM_SETMARQUEE	0x040A
+#const GWL_STYLE		(-16)
+#const WS_CHILD			0x40000000
+#const WS_VISIBLE		0x10000000
+#const PBM_SETRANGE		0x0401
+#const PBM_SETPOS		0x0402
+#define ctype MAKELPARAM(%1,%2)	(%1 | %2<<16)
 
 //GetAncestor用
-#define GA_PARENT 1
-#define GA_ROOT 2
-#define GA_ROOTOWNER 3
+#const GA_PARENT		1
+#const GA_ROO			2
+#const GA_ROOTOWNER		3
+
+//トラックバーコントロール用
+#enum TBM_GETPOS         = 0x0400
+#enum TBM_GETRANGEMIN
+#enum TBM_GETRANGEMAX
+#enum TBM_GETTIC
+#enum TBM_SETTIC
+#enum TBM_SETPOS
+#enum TBM_SETRANGE
+#enum TBM_SETRANGEMIN
+#enum TBM_SETRANGEMAX
+#enum TBM_CLEARTICS
+#enum TBM_SETSEL
+#enum TBM_SETSELSTART
+#enum TBM_SETSELEND
+#enum TBM_GETPTICS		= 0x040e
+#enum TBM_GETTICPOS
+#enum TBM_GETNUMTICS
+#enum TBM_GETSELSTART
+#enum TBM_GETSELEND
+#enum TBM_CLEARSEL
+#enum TBM_SETTICFREQ
+#enum TBM_SETPAGESIZE
+#enum TBM_GETPAGESIZE
+#enum TBM_SETLINESIZE
+#enum TBM_GETLINESIZE
+#enum TBM_GETTHUMBRECT
+#enum TBM_GETCHANNELRECT
+#enum TBM_SETTHUMBLENGTH
+#enum TBM_GETTHUMBLENGTH
+

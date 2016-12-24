@@ -312,14 +312,20 @@
 		
 	savename = ""
 	if drawcount != 0{
+
+		sdim tempstr
 		
-		if listmode = 0:saveListName = "ŠÍ–ºˆê——"
-		if listmode = 1:saveListName = "U—ª•Ò¬"
+		if listmode = 0:DateAndTimeFormat saveNameList, tempstr
+		if listmode = 1:DateAndTimeFormat saveNameFormation, tempstr
 		if listmode = 2{
-			if directLink:saveListName = "’¼Ú˜AŒ‹":else:saveListName = "Šî’nq‹ó‘à"
+			if directLink{
+				DateAndTimeFormat saveNameDirectLink, tempstr
+			} else {
+				DateAndTimeFormat saveNameAirStation, tempstr
+			}
 		}
 		
-		savename = strf("%s_%04d%02d%02d-%02d%02d%02d%s",saveListName,gettime(0),gettime(1),gettime(3),gettime(4),gettime(5),gettime(6),savekind(jpgsave))
+		savename = strf("%s%s",tempstr,savekind(jpgsave))
 		gdiimagesave listsavedir +"\\"+ savename,jpgquality
 
 		gsel WND_MAIN, 1+frontRow

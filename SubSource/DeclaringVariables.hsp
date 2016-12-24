@@ -1,0 +1,139 @@
+*DeclaringVariables
+
+	mode = 0
+	listmode = 0
+	yubiwa = 1
+	kantai = 1
+	autosearch = 1
+	hidename = 0
+	sti = 0
+	cliflag = 0
+	cellmode = 0
+	mesy = 30
+	hotkeycap = 0
+	ret = 0
+
+	jpgquality = 90
+	namecut = 0
+	hidelog = 0
+	hidelog_ = hidelog
+	jpgsave = 0
+	rapidshooting = 0
+	frontrow = 0
+	othergame = 0
+	
+	availablecap = 0
+	availableyabumi = 0
+	hotkeyset = 0
+	saveListName = ""
+	
+	tempint = 0
+	tempstr = ""
+	currentdir = dir_cur
+
+	modeNum = 3
+
+	positionType = 0
+
+	optionMode = 0
+	
+	//
+	dim clientSize, 2
+	dim rect, 4
+	//
+
+	dim data,CELL_MAX_W,CELL_MAX_H,modeNum
+	dim bc,(CELL_MAX_W*CELL_MAX_H*modeNum)
+	dim dd,4,modeNum
+	dim mesxy,modeNum
+	dim maxScrSize,modeNum
+	dim mindexxy,modeNum
+	dim mxy,2
+	dim mxy_,2
+	dim dmxy,2
+	dim sscap,4
+	dim sscapwh,2
+	dim cellnum,2,modeNum
+	dim scrsize,2,modeNum
+	dim cellsize,2,modeNum
+	dim tempmouse,2
+	dim scrsizetemp,2,modeNum
+
+	ddim AspectRatio,modeNum
+	sdim sscapmes,256
+	sdim logmessage,256
+	sdim modemes,64,4
+	sdim stemp
+	sdim sssavedir ,260
+	sdim listsavedir ,260
+	sdim yabumidir,260
+	sdim savekind,64,modeNum
+	sdim hotkeycapchar
+	sdim hotkeystr
+	sdim hotkeystr_temp
+	sdim savelogtext,1024
+	sdim picStack,1024,4
+	sdim tweettext,200
+	sdim picHistory,512,101
+	cellnum(0,0) = 6,4
+	cellnum(0,1) = 5,5
+	cellnum(0,2) = 6,4
+
+	twiPicFrameXL = 185,250,315,380,184
+	twiPicFrameXR = 248,313,378,443,444
+	twiPicFrameYU = 3 ,3 , 3, 3, 45
+	twiPicFrameYD = 42,42,42,42,209
+	twiOrder = 0,0,0,0
+	twiOrdercount = 0
+	
+	enableFirst = 1
+	enableSecond = 1
+	enableThread = 0
+	enableFourth = 0
+
+	directLink = 1
+	airStation = 0
+	
+	bc(0) = 0
+	maxScrSize(0) = disInfo(2), disInfo(3)
+	mindexxy(0) = 0,0
+	modemes(0) = "SSキャプチャ","艦娘一覧","攻略編成","その他一覧作成モード","オプション"
+	mxy(0) = 0,0
+	mxy_(0) = 0,0
+	sscapwh = 0,0
+	seccapf = 0
+	sscapmes = "取得する"
+	savekind = ".png",".jpg"
+	seqcapmes = "開始"
+	luposx = 0
+	luposy = 0
+	rdposx = 0
+	rdposy = 0
+	twijpg = 1
+	timersec = 5
+	dropwindowid = 0
+	dropf = 0
+	intervalsavedir = ""
+	savenamepath = ""
+	intervalShotDir = ""
+	
+	picHistoryNum = 0
+	mainWindowSmall = 0
+	
+	windowsSizeChangeBMes = "↑","↓"
+	autoSearchFailureCount = 0
+	
+	userdata = ""
+	ACCESS_TOKEN = ""
+	ACCESS_SECRET = ""
+	
+	tCupInit "KanColleListMakerKaini", CONSUMER_KEY, CONSUMER_SECRET, 7
+	
+	scrsize(0,0) = limit(1358,210,round(0.4*maxScrSize(0))),scrsize(0,0)*aspectRatio(0)
+	scrsize(0,1) = limit(1120,250,round(0.4*maxScrSize(0))),scrsize(0,1)*aspectRatio(1)
+	scrsize(0,2) = limit(1120,250,round(0.4*maxScrSize(0))),scrsize(0,2)*aspectRatio(2)
+	scrsizetemp(0,0)  = scrsize(0,0),scrsize(1,0)
+	scrsizetemp(0,1)  = scrsize(0,1),scrsize(1,1)
+	scrsizetemp(0,2)  = scrsize(0,2),scrsize(1,2)
+	
+return

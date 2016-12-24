@@ -1,12 +1,13 @@
 //SSモード――――――――――――――――――――――――――――――――――
 *ssmode
+	oncmd 1
 	
 	gsel WND_GRID, -1
 	gsel WND_MAIN, 1+frontrow
 	clrobj 1
 	syscolor 15:boxf:color
 
-	mesy = 31
+	mesy = ComBoxSizeH+3
 	
 	pos 2,mesy
 	mes "キャプチャ座標"
@@ -145,10 +146,13 @@
 	}
 	
 	width 175, mesy
-	
+
+	oncmd 1
 return
 
 *windowsSizeChange
+	oncmd 0
+	
 	if mainWindowSmall {
 		mainWindowSmall = 0
 		if hidelog = 0:hidelog_ = 0
@@ -158,15 +162,19 @@ return
 	}
 	if mode = 0:gosub *ssmode
 	if (mode == 1 | mode == 2):gosub *list
+
+	oncmd 1
 return
 
 //リストモード――――――――――――――――――――――――――――――――――
 *list
+	oncmd 0
 	
 	mxy(0) = 0, 0
 	mxy_(0) = 0, 0
 	cliflag = 0
-	mesy = 31
+	
+	mesy = ComBoxSizeH+3
 
 	gsel WND_MAIN, 2
 	clrobj 1
@@ -202,8 +210,8 @@ return
 		mesy_+=20
 		pos 22,mesy_
 		chkbox "指輪も入れる", yubiwa: mesy_+=20
-		yubiwacid = stat
-		yubiwach = objinfo_hwnd(yubiwacid)
+		yubiwaCId = stat
+		yubiwaCh = objinfo_hwnd(yubiwacid)
 		
 		pos 22,mesy_
 		chkbox "所属艦隊も入れる", kantai: mesy_+=20
@@ -429,132 +437,207 @@ return
 	
 	gosub *draw
 	
+	oncmd 1
 return
 	
 //オプション――――――――――――――――――――――――――――――――――
 *option
+	oncmd 0
 
 	gsel WND_GRID,-1
 	gsel WND_MAIN, 1+frontrow
 	clrobj 1
 	syscolor 15:boxf:color
-	
-	mesy = 30
-	pos 4,mesy
-	mes "readmeをよくお読み下さい":mesy+=20
-	
-	objsize 350,20
-	pos 5,mesy
-	chkbox "提督名を隠すのではなくカットする",namecut:mesy+=20
-	pos 5,mesy
-	chkbox "常にメインウィンドウを最前列表示",frontrow:mesy+=20
-	pos 5,mesy
-	chkbox "ログを非表示",hidelog:mesy+=20
-	pos 5,mesy
-	chkbox "yabumiに自動でアップロードする",yabumiautoupload:mesy+=20
-	pos 5,mesy
-	chkbox "艦これが等倍でなくも取得できるようにする(手動のみ)",othergame:mesy+=20
-	pos 5,mesy
-	chkbox "キャプチャのプレビューを有効にする",dispcap:mesy+=20
-	pos 5,mesy
-	chkbox "取得座標を手動で入力できるようにする",manualpos:mesy+=20
-	pos 5,mesy
-	chkbox "画像の右下に艦これ一覧めいかーの名前を入れる",senden:mesy+=20
-	pos 5,mesy
-	chkbox "起動時にバージョンチェックを行う",autoVersionCheck:mesy+=20
-	pos 5,mesy
-	chkbox "ホットキーでSSをキャプチャする",hotkeycap:mesy+=20
 
-	objsize 50,20
-	pos 30,mesy
-	chkbox "Alt",hotkeycapalt
-	pos 80,mesy
-	chkbox "Ctrl",hotkeycapctrl
-	pos 130,mesy
-	chkbox "Shift",hotkeycapshift
-	pos 180,mesy
-	chkbox "Win",hotkeycapwin
-	pos 240,mesy
-	input hotkeycapchar,20,20,1
-	pos 265,mesy
-	mes "キー":mesy+=20
-	
-	objsize 350,20
-	pos 5,mesy
-	chkbox "＊一覧モードでSSを自動追加する",autoaddcaptcha:mesy+=20
-	pos 5,mesy
-	;chkbox "＊自動追加の場合はSSを保存しない",autoaddnonsave:mesy+=20
-	pos 5,mesy
-	chkbox "jpgで保存する",jpgsave:mesy+=20
-	
-	pos 5,mesy
-	mes "jpg保存品質"
-	pos 155,mesy
-	mes "1～100(大きいほど高画質)"
-	pos 100,mesy
-	input jpgquality,50,20,3:mesy+=20
-	jpgqualityiid = stat
-	GetWindowLong objinfo(jpgqualityiid,2), -16
-	SetWindowLong objinfo(jpgqualityiid,2), -16, stat | $2
-	
-	pos 5,mesy
-	chkbox "連続キャプチャを無効にする",disableseqcap:mesy+=20
+	pos 175, 0
+	objsize 175,25
+	combox optionMode, 100, " 環境設定\n キャプチャ・作成設定\n Twitter設定\n その他設定"
+	hOptionComBox = objinfo(stat, 2)
 
-	pos 5,mesy
-	mes "連続キャプチャの間隔"
-	pos 205,mesy
-	mes "x0.1秒 (0.1～99.9秒)"
-	pos 150,mesy
-	input timersec,50,20,3:mesy+=20
-	timerseciid = stat
-	GetWindowLong objinfo(timerseciid,2), -16
-	SetWindowLong objinfo(timerseciid,2), -16, stat | $2
-	
-	pos 5,mesy+2
-	mes "Twitter連携"
-	objsize 250,25
-	pos 100,mesy
-	button gosub "認証情報をリセット",*twireset
-	mesy+=25
-	
-	objsize 350,20
-	pos 5,mesy
-	chkbox "Twitterにはjpgで投稿する",twijpg:mesy+=20
+	mesy = ComBoxSizeH+3
 
-	objsize 150,20
-	pos 14,mesy
-	mes "一覧保存先"
-	pos 200,mesy
-	button gosub "一覧保存先変更",*listsavedialog:mesy+=20
-	pos 0,mesy
-	mesbox listsavedir,350,45,5,259:mesy+=45
-	listsdid = stat
+	if (optionMode == 0){
+
+		objsize 350,20
+		
+		pos 5,mesy
+		chkbox "常にメインウィンドウを最前列表示",frontrow:mesy+=20
+		pos 5,mesy
+		chkbox "ログを非表示",hidelog:mesy+=20
+		pos 5,mesy
+		chkbox "yabumiに自動でアップロードする",yabumiautoupload:mesy+=20
+		pos 5,mesy
+		chkbox "艦これが等倍でなくも取得できるようにする(手動のみ)",othergame:mesy+=20
+		pos 5,mesy
+		chkbox "キャプチャのプレビューを有効にする",dispcap:mesy+=20
+		pos 5,mesy
+		chkbox "取得座標を手動で入力できるようにする",manualpos:mesy+=20
+		pos 5,mesy
+		chkbox "画像の右下に艦これ一覧めいかーの名前を入れる",senden:mesy+=20
+		pos 5,mesy
+		chkbox "起動時にバージョンチェックを行う",autoVersionCheck:mesy+=20
+
+		pos 5,mesy
+		mes "UIの拡大率": mesy+=20
+
+		pos 0,mesy
+		winobj "msctls_trackbar32", "", , $50000000 | $1, 300, 30
+		hTrackbar = objinfo(stat, 2)
 	
-	pos 14,mesy
-	mes "SS保存先"
-	pos 200,mesy
-	button gosub "SS保存先変更",*sssavedialog:mesy+=20
-	pos 0,mesy
-	mesbox sssavedir,350,45,5,259:mesy+=45
-	sssdid = stat
+		sendmsg hTrackbar, TBM_SETRANGE, 1, (300<<16) | 100
+		sendmsg hTrackbar, TBM_SETPAGESIZE, 0, 25
+		sendmsg hTrackbar, TBM_SETPOS, 1, 50
+		sendmsg hTrackbar, TBM_SETTICFREQ, 50, 0
+
+		////スタティックテキスト
+		//font "メイリオ",14
+		mref BMSCR, 67
+		hFont = BMSCR.38
 	
-	pos 14,mesy
-	mes "連続撮影保存先"
-	pos 200,mesy
-	button gosub "連続撮影保存先変更",*intervalshotsavedialog:mesy+=20
-	pos 0,mesy
-	mesbox intervalShotDir,350,45,5,259:mesy+=45
-	intervalShotDirsdid = stat
+		pos 300, mesy
+		winobj "static", strf("%3d",140-ttCount), , $50000002, 40, 30: mesy+=30
+		hTrackBarScale = objinfo(stat, 2)
+		sendmsg hTrackBarScale, $30, hFont
+		sendmsg hTrackBarScale, $C ,, "100% "
+
 	
+		objsize 150,20
+		pos 14,mesy
+		mes "一覧保存先"
+		pos 200,mesy
+		button gosub "一覧保存先変更",*listsavedialog:mesy+=20
+		pos 0,mesy
+		mesbox listsavedir,350,45,5,259:mesy+=45
+		listsdid = stat
+		
+		pos 14,mesy
+		mes "SS保存先"
+		pos 200,mesy
+		button gosub "SS保存先変更",*sssavedialog:mesy+=20
+		pos 0,mesy
+		mesbox sssavedir,350,45,5,259:mesy+=45
+		sssdid = stat
+		
+		pos 14,mesy
+		mes "連続撮影保存先"
+		pos 200,mesy
+		button gosub "連続撮影保存先変更",*intervalshotsavedialog:mesy+=20
+		pos 0,mesy
+		mesbox intervalShotDir,350,45,5,259:mesy+=45
+		intervalShotDirsdid = stat
+		
+		
+		pos 14,mesy
+		mes "YabumiUploader.exeの場所"
+		pos 200,mesy
+		button gosub "変更",*yabumiuploaderdialog:mesy+=20
+		pos 0,mesy
+		mesbox yabumidir,350,45,5,259:mesy+=45
+		yabumiid = stat
+	}
+
+	if (optionMode == 1){
+
+		objsize 350,20
+		
+		pos 5,mesy
+		chkbox "提督名を隠すのではなくカットする",namecut:mesy+=20
+		pos 5,mesy
+		chkbox "ホットキーでSSをキャプチャする",hotkeycap:mesy+=20
 	
-	pos 14,mesy
-	mes "YabumiUploader.exeの場所"
-	pos 200,mesy
-	button gosub "変更",*yabumiuploaderdialog:mesy+=20
-	pos 0,mesy
-	mesbox yabumidir,350,45,5,259:mesy+=45
-	yabumiid = stat
+		objsize 50,20
+		pos 30,mesy
+		chkbox "Alt",hotkeycapalt
+		pos 80,mesy
+		chkbox "Ctrl",hotkeycapctrl
+		pos 130,mesy
+		chkbox "Shift",hotkeycapshift
+		pos 180,mesy
+		chkbox "Win",hotkeycapwin
+		pos 240,mesy
+		input hotkeycapchar,20,20,1
+		pos 265,mesy
+		mes "キー":mesy+=20
+		
+		objsize 350,20
+		pos 5,mesy
+		chkbox "＊一覧モードでSSを自動追加する",autoaddcaptcha:mesy+=20
+		pos 5,mesy
+		;chkbox "＊自動追加の場合はSSを保存しない",autoaddnonsave:mesy+=20
+		pos 5,mesy
+		chkbox "jpgで保存する",jpgsave:mesy+=20
+		
+		pos 5,mesy
+		mes "jpg保存品質"
+		pos 155,mesy
+		mes "1～100(大きいほど高画質)"
+		pos 100,mesy
+		input jpgquality,50,20,3:mesy+=20
+		jpgqualityiid = stat
+		GetWindowLong objinfo(jpgqualityiid,2), -16
+		SetWindowLong objinfo(jpgqualityiid,2), -16, stat | $2
+		
+		pos 5,mesy
+		chkbox "連続キャプチャを無効にする",disableseqcap:mesy+=20
+	
+		pos 5,mesy
+		mes "連続キャプチャの間隔"
+		pos 205,mesy
+		mes "x0.1秒 (0.1～99.9秒)"
+		pos 150,mesy
+		input timersec,50,20,3:mesy+=20
+		timerseciid = stat
+		GetWindowLong objinfo(timerseciid,2), -16
+		SetWindowLong objinfo(timerseciid,2), -16, stat | $2
+
+		pos 5,mesy
+		mes "保存名": mesy+=20
+
+		pos 5, mesy
+		mes "キャプチャ"
+		pos 80, mesy
+		mesbox saveNameCaptcha,270,45,5,259:mesy+=45
+
+		pos 5,mesy
+		mes "艦娘一覧"
+		pos 80, mesy
+		mesbox saveNameList,270,45,5,259:mesy+=45
+
+		pos 5,mesy
+		mes "攻略編成"
+		pos 80, mesy
+		mesbox saveNameFormation,270,45,5,259:mesy+=45
+
+		pos 5,mesy
+		mes "直接連結"
+		pos 80, mesy
+		mesbox saveNameDirectLink,270,45,5,259:mesy+=45
+		
+		pos 5,mesy
+		mes "基地航空隊"
+		pos 80, mesy
+		mesbox saveNameAirStation,270,45,5,259:mesy+=45
+
+	}
+
+	if (optionMode == 2){
+
+		pos 5,mesy+2
+		mes "Twitter連携"
+		objsize 250,25
+		pos 100,mesy
+		button gosub "認証情報をリセット",*twireset
+		mesy+=25
+		
+		objsize 350,20
+		pos 5,mesy
+		chkbox "Twitterにはjpgで投稿する",twijpg:mesy+=20
+
+		
+
+	}
 	
 	width 350,mesy
 
+	oncmd 1
 return

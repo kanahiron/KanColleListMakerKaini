@@ -3,7 +3,7 @@
 
 #uselib	"user32.dll"
 #func GetDC "GetDC" int
-#func ReleaseDC "ReleaseDC" int,int
+#func ReleaseDC "ReleaseDC" int, int
 
 #uselib "gdi32.dll"
 #func CreateDIBSection "CreateDIBSection" int,int,int,int,int,int
@@ -39,6 +39,11 @@ return
 
 
 #module makelistmodule
+
+#uselib	"user32.dll"
+#func MoveWindow "MoveWindow" int, int, int, int, int, int
+#func LoadCursor "LoadCursorW" int, int
+#func SetClassLong "SetClassLongW" int, int, int
 
 #define ctype GetRGB(%1, %2, %3, %4, %5) %1((%3-1-%5)*%2 + %4 \ %2)
 #define TRUE 1

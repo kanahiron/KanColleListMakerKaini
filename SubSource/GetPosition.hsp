@@ -56,7 +56,7 @@
 			} else {
 
 				if ginfo(3) != WND_IMAGE_BUF2:gsel WND_IMAGE_BUF2,2
-				width ,,mouPoint(0)+1, mouPoint(1)+1
+				MoveWindow WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), mouPoint(0)+1, mouPoint(1)+1, ginfo_winx, ginfo_winy ,1
 				gsel WND_MAIN,0
 				
 				hClient = WindowFromPoint(mouPoint(0), mouPoint(1))
@@ -64,6 +64,28 @@
 				GetClientRect hClient, varptr(rect)
 				winSizeX = rect(2)
 				winSizeY = rect(3)
+
+				temp_ = winSizeX, winSizeY
+				aaaa = 0
+				bbbb = 0
+
+				hChildClient = hClient
+				_hChildClient = 0
+
+				logmes "====================="
+				logmes hClient
+					
+				repeat
+					loopcnt = cnt
+					_hChildClient = hChildClient
+					ChildWindowFromPointEx hChildClient, mouPoint(0), mouPoint(1), 0x0001
+					hChildClient = stat
+					if (hChildClient == 0) or (hChildClient == _hChildClient): break
+				loop
+
+				logmes ""+_hChildClient+ "  :"+loopcnt
+
+				hClient = _hChildClient
 		
 				//拡大率が40%未満には対応しないのでそのサイズ未満なら弾く
 				if (winSizeX >= 320 and winSizeY >= 192) {
@@ -80,7 +102,7 @@
 						ReleaseDC  dcClient
 						
 						gsel WND_MAIN, 0
-					}
+					} else {logmes "デバイスコンテキストの取得をスキップ"}
 					
 					//スクリーン座標からクライアント座標へ
 					cliPoint = mouPoint(0), mouPoint(1) 
@@ -92,7 +114,7 @@
 						scrPoint(0) = KCRect(0), KCRect(1)
 						ClientToScreen hClient, varptr(scrPoint)
 						gsel WND_OVERLAY, 2
-						width KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), scrPoint(0), scrPoint(1)
+						MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), scrPoint(0), scrPoint(1), KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), 1
 
 						gsel WND_MAIN, 0
 						enablePos = TRUE
@@ -139,7 +161,7 @@
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY: redraw
 
 		bgscr WND_TEMP_SCR1, disinfo(2), disinfo(3), 2: SET_WND_INFO
-		font "メイリオ",30
+		font "メイリオ", FONT_SIZE_MANUAL_GETPOS_STRING
 	
 		gcopy WND_TEMP1, 0, 0, disinfo(2), disinfo(3)
 		color 128,128,128
@@ -158,7 +180,6 @@
 
 		KanCollePosManual WND_TEMP1, sscap, WND_OVERLAY, WND_TEMP_SCR1
 
-		//positionType == PT_ABSOLUTE
 	}
 
 	

@@ -1,0 +1,102 @@
+	
+//設定――――――――――――――――――――――――――――――――――
+*listsavedialog
+	
+	BrowseFolder "一覧の保存先",(dir_exe)
+	if stat = 1{
+		listsavedir = refstr
+		objprm listsdid,listsavedir
+	}
+	
+return
+
+*sssavedialog
+	
+	BrowseFolder "SSキャプチャの保存先",(dir_exe+"\\ScreenShots")
+	if stat = 1{
+		sssavedir = refstr
+		objprm sssdid,sssavedir
+	}
+
+return
+
+*intervalshotsavedialog
+	
+	BrowseFolder "連続撮影の保存先",(dir_exe+"\\ScreenShots")
+	if stat = 1{
+		intervalShotDir = refstr
+		objprm intervalShotDirsdid,intervalShotDir
+	}
+
+return
+
+*yabumiuploaderdialog
+	
+	dialog "exe",16,"YabumiUpLoader"
+	if stat = 1{
+		yabumidir = refstr
+		objprm yabumiid,yabumidir
+	}
+
+return
+
+*listsavefopen
+	exec listsavedir,16
+return
+
+*sssavefopen
+	exec sssavedir,16
+return
+
+*hotkeycapsetting
+
+	if (hotkeycap = 1) & (hotkeystr != hotkeystr_temp) {
+		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID
+		RegisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID,(MOD_ALT*hotkeycapalt)|(MOD_CONTROL*hotkeycapctrl)|(MOD_SHIFT*hotkeycapshift)|(MOD_WIN*hotkeycapwin),hotkeycode
+		hotkeystr_temp = hotkeystr
+		if stat = 0{
+			logmessage = "ホットキーの設定に失敗しました"
+			objprm logid,logmessage
+			hotkeyset = 0
+		} else {
+			logmessage = "ホットキーを設定しました"
+			objprm logid,logmessage
+			hotkeyset = 1
+		}
+	}
+	
+	if (hotkeycap = 0) & (hotkeyset = 1){
+		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID
+		logmessage = "ホットキーを解除しました"
+		objprm logid,logmessage
+		hotkeyset = 0
+		hotkeystr_temp = ""
+	}
+
+	if hotkeyset = 1 & availablecap = 1 {
+		gsel WND_MAIN,0
+		title "*"+SOFTNAME
+	} else {
+		gsel WND_MAIN,0
+		title SOFTNAME
+	}
+	
+return
+
+
+
+*yabumiupload
+	
+	if mode = 0 {	
+		gosub *sscaptcha
+		exec yabumidir+" \""+(sssavedir +"\\"+ savename)+"\""
+	}
+	if mode != 0{
+		gosub *make
+		if savename != ""{
+			exec yabumidir+" \""+(listsavedir +"\\"+ savename)+"\""
+		}
+	}
+return
+
+

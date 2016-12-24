@@ -79,7 +79,13 @@
 	GetIni "SettingFINAL", "ichiranMode2", ichiranMode2, "0"
 
 	GetIni "Configuration", "autoVersionCheck", autoVersionCheck, "1"
-	
+
+	GetIni "CaptchaAndMaking", "saveNameCaptcha", saveNameCaptcha, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptchaAndMaking", "saveNameList", saveNameList, "\"艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptchaAndMaking", "saveNameFormation", saveNameFormation, "\"攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptchaAndMaking", "saveNameAirStation", saveNameAirStation, "\"基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptchaAndMaking", "saveNameDirectLink", saveNameDirectLink, "\"直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+
 	if strmid(hotkeystr,0,1) = "A":hotkeycapalt	= 1
 	if strmid(hotkeystr,1,1) = "C":hotkeycapctrl = 1
 	if strmid(hotkeystr,2,1) = "S":hotkeycapshift = 1
@@ -148,12 +154,12 @@ return
 	hidelog_ = hidelog
 	
 	if PathIsDirectory(listsavedir) = 0 {
-		savelogtext += "Info - 一覧保存先が存在しないためデフォルトに変更しました\n"
+		savelogtext += "Info - 一覧保存先が存在しません。デフォルトに変更しました。\n"
 		listsavedir = dir_exe
 	}
 
 	if PathIsDirectory(sssavedir) = 0{
-		savelogtext += "Info - SS保存先が存在しないためデフォルトに変更しました\n"
+		savelogtext += "Info - SS保存先が存在しません。デフォルトに変更しました。\n"
 		chdir dir_exe
 		if PathIsDirectory(dir_exe+"\\ScreenShots") = 0 {
 			mkdir "ScreenShots"
@@ -162,7 +168,7 @@ return
 	}
 	
 	if PathIsDirectory(intervalShotDir) = 0{
-		savelogtext += "Info - 連続撮影保存先が存在しないためデフォルトに変更しました\n"
+		savelogtext += "Info - 連続撮影保存先が存在しません。デフォルトに変更しました。\n"
 		intervalShotDir = sssavedir
 	} 
 
@@ -179,7 +185,7 @@ return
 	}
 	
 	if (hotkeycapalt + hotkeycapctrl + hotkeycapshift + hotkeycapwin) = 0{
-		savelogtext += "Info - ホットキーの設定が不適切です(1) 設定をデフォルトに変更しました\n"
+		savelogtext += "Info - ホットキーの設定が不適切です。デフォルトに変更しました。\n"
 		hotkeycap = 0
 		hotkeycapalt = 1
 		hotkeycapctrl = 0
@@ -202,13 +208,59 @@ return
 			hotkeycapchar = strf("%c",hotkeycode)
 			poke hotkeystr,4,hotkeycode
 		} else {
-			savelogtext += "Info - ホットキーの設定が不適切です(2) 設定をデフォルトに変更しました\n"
+			savelogtext += "Info - ホットキーの設定が不適切です。デフォルトに変更しました。\n"
 			hotkeycode = 90
 			hotkeycapchar = strf("%c",hotkeycode)
 			hotkeystr = "A___Z"
 			hotkeycap = 0
 		}
 	}
+
+	//=====
+
+	sdim tempstr
+
+	DateAndTimeFormat saveNameCaptcha, tempstr
+	if (stat != 0): saveNameCaptcha = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	if (stat == -1){
+		savelogtext += "Info - キャプチャ保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
+	} else : if (stat == -2){
+		savelogtext += "Info - キャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+	}
+
+	DateAndTimeFormat saveNameList, tempstr
+	if (stat != 0): saveNameList = "艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	if (stat == -1){
+		savelogtext += "Info - 艦娘一覧保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
+	} else : if (stat == -2){
+		savelogtext += "Info - 艦娘一覧保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+	}
+
+	DateAndTimeFormat saveNameFormation, tempstr
+	if (stat != 0): saveNameFormation = "攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	if (stat == -1){
+		savelogtext += "Info - 攻略編成保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
+	} else : if (stat == -2){
+		savelogtext += "Info - 攻略編成保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+	}
+
+	DateAndTimeFormat saveNameAirStation, tempstr
+	if (stat != 0): saveNameAirStation = "基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	if (stat == -1){
+		savelogtext += "Info - 基地航空隊保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
+	} else : if (stat == -2){
+		savelogtext += "Info - 基地航空隊保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+	}
+
+	DateAndTimeFormat saveNameDirectLink, tempstr
+	if (stat != 0): saveNameDirectLink = "直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	if (stat == -1){
+		savelogtext += "Info - 直接連結保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
+	} else : if (stat == -2){
+		savelogtext += "Info - 直接連結保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+	}
+
+	//=====
 	
 	fontcolorname = int("$"+fontcolornamestr)
 	fontcolornum = int("$"+fontcolornumstr)
@@ -221,9 +273,9 @@ return
 	}
 	
 	if (airStation+directLink) != 1{
-		dim airStation
+		dim airStation, 1
 		airStation = 0
-		dim directLink
+		dim directLink, 1
 		directLink = 1
 	}
 	
@@ -269,8 +321,8 @@ return
 	dd(0,0) = capx,capy,w,h
 	cellratio = 1.0*h/w
 	cellsize(0,0) = scrsize(0,0)/(cellnum(0,0)+1),round(cellratio*cellsize(0,0))
-	scrsize(1,0) = round(cellsize(1,0)* (cellnum(1,0)+1) )
-	AspectRatio(0) = 1.0*scrsize(1,0)/scrsize(0,0)
+	scrsize(1,0) = round(cellsize(1,0) * (cellnum(1,0)+1))
+	AspectRatio(0) = 1.0 * scrsize(1,0) / scrsize(0,0)
 	
 	
 	if sosuka {
@@ -399,6 +451,12 @@ return
 	WriteIni "SettingFINAL", "ichiranMode2",ichiranMode2
 
 	WriteIni "Configuration", "autoVersionCheck", autoVersionCheck
+
+	WriteIni "CaptchaAndMaking", "saveNameCaptcha", saveNameCaptcha
+	WriteIni "CaptchaAndMaking", "saveNameList", saveNameList
+	WriteIni "CaptchaAndMaking", "saveNameFormation", saveNameFormation
+	WriteIni "CaptchaAndMaking", "saveNameAirStation", saveNameAirStation
+	WriteIni "CaptchaAndMaking", "saveNameDirectLink", saveNameDirectLink
 
 return
 

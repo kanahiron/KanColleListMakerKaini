@@ -187,11 +187,9 @@ return
 	rsize = 1024	// バッファ初期値
 	hsize = 0		// 取得したバイト数が代入される変数
 	
-	RequestURL = ""
-	//アップデートファイルをダウンロードする場所のドメイン名
+	RequestURL = "drive.google.com"
 
-	apiUrl = ""
-	//アップデートファイルをダウンロードする場所のドメイン名を除いた後続部分
+	apiUrl = "uc?export=download&id=0BxC9-Nilt2alT1JlVG9MNlE4OWM"
 	
 	usePort = 443
 	requestFlag  = INTERNET_FLAG_RELOAD
@@ -267,11 +265,11 @@ return statcode
 #defcfunc getResponse
 return responseBody
 
-
 #global
 
 
 *VerCheck
+	oncmd 0
 
 	if autoVersionCheck {
 		VerCheckInit
@@ -304,4 +302,5 @@ return responseBody
 		VerCheckWash
 	}
 
+	oncmd 1
 return
