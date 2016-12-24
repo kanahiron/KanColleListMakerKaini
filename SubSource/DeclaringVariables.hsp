@@ -95,7 +95,7 @@
 	airStation = 0
 	
 	bc(0) = 0
-	maxScrSize(0) = disInfo(2), disInfo(3)
+	maxScrSize(0) = 0.8*disInfo(2), 0.8*disInfo(3)
 	mindexxy(0) = 0,0
 	modemes(0) = "SSキャプチャ","艦娘一覧","攻略編成","その他一覧作成モード","オプション"
 	mxy(0) = 0,0

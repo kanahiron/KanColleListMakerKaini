@@ -5,7 +5,6 @@
 	logmes "lparam :"+lparam
 	logmes "wparam :"+wparam
 	
-	
 	if (lparam = hcombox) & (((wparam>>16) & 0x0000FFFF) = 1){
 		
 		logmes "ComBox"
@@ -19,7 +18,7 @@
 		if mode = modeOptionNum{
 			gosub *dataCheck			
 			gosub *hotkeycapsetting
-			gosub *disinfoinit
+			//gosub *disinfoinit
 			gosub *twiinit
 		}
 	
@@ -415,9 +414,73 @@ return
 return
 
 *vscroll
-
+	
 	if (lparam == hTrackbar) {
 		sendmsg hTrackbar, TBM_GETPOS
-		sendmsg hTrackBarScale, $C ,, strf("%d%% ",stat)
+		tempint = stat
+		sendmsg hTrackBarScale, $C ,, strf("%d%% ",tempint)
+		DPIScale = (0.01 * tempint)
+
+		if (mode == 0){
+			gsel WND_MAIN
+			gosub *ssmode
+		}
+		if (mode == 1){
+			listmode = 0
+			gsel WND_GRID,0
+			gosub *list
+		}
+		if (mode == 2){
+			listmode = 1
+			gsel WND_GRID,0
+			gosub *list
+		}
+		if (mode == 3){
+			listmode = 2
+			gsel WND_GRID,0
+			gosub *list
+		}
+		if (mode == modeOptionNum){
+			gosub *option
+		}
+		if (enableTweetWindow == TRUE){
+			gosub *twiInit
+		}
+		
 	}
 return
+
+*DPICHANGED
+	logmes "WM_DPICHANGED"
+	
+	dpi = HIWORD(wparam)
+	DPIScale = 1.0 * dpi / 96.0
+
+	if (mode == 0){
+		gsel WND_MAIN
+		gosub *ssmode
+		}
+	if (mode == 1){
+		listmode = 0
+		gsel WND_GRID,0
+		gosub *list
+	}
+	if (mode == 2){
+		listmode = 1
+		gsel WND_GRID,0
+		gosub *list
+	}
+	if (mode == 3){
+		listmode = 2
+		gsel WND_GRID,0
+		gosub *list
+	}
+	if (mode == modeOptionNum){
+		gosub *option
+	}
+	if (enableTweetWindow == TRUE){
+		gosub *twiInit
+	}
+
+return
+	

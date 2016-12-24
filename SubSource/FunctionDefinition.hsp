@@ -15,6 +15,8 @@
 #func  CreateCompatibleBitmap "CreateCompatibleBitmap" int, int, int
 #func  SelectObject "SelectObject" int, int
 #func  DeleteObject "DeleteObject" int 
+#cfunc GetDeviceCaps "GetDeviceCaps" int, int
+#cfunc CreateFontIndirect "CreateFontIndirectW" int
 
 #uselib "user32.dll"
 #func  GetDC "GetDC" int
@@ -68,11 +70,11 @@
 #const WM_COMMAND		0x0111
 #const WM_TIMER			0x0113
 #const WM_VSCROLL		0x0114
-
 #const WM_MOUSEMOVE		0x0200
 #const WM_LBUTTONDOWN	0x0201
 #const WM_SIZING		0x0214
 #const WM_DROPFILES		0x0233
+#const WM_DPICHANGED	0x02E0
 #const WM_HOTKEY		0x0312
 
 #const WA_INACTIVE		0
@@ -93,6 +95,8 @@
 #const PBM_SETRANGE		0x0401
 #const PBM_SETPOS		0x0402
 #define ctype MAKELPARAM(%1,%2)	(%1 | %2<<16)
+#define ctype HIWORD(%1) (%1>>16) and 0x0000FFFFF
+#define ctype LOWORD(%1) %1 and 0x0000FFFFF
 
 //GetAncestor—p
 #const GA_PARENT		1

@@ -58,6 +58,8 @@
 #define FONT_SIZE_MANUAL_GETPOS_STRING 30
 #define FONT_SIZE_ALL 13
 
+#define ctype Scale(%1) int(DPIScale*%1+0.5)
+
 
 #ifdef _debug
 
@@ -93,7 +95,7 @@
 	gosub *iniSave
 	gosub *loadHistory
 
-	screen WND_MAIN, 400, 700, 2:title SOFTNAME
+	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 0
 		oncmd gosub *OnDropFiles ,WM_DROPFILES
@@ -101,8 +103,9 @@
 		oncmd gosub *hotkey, WM_HOTKEY
 		oncmd gosub *sscaptcha, WM_TIMER
 		oncmd gosub *vscroll, WM_VSCROLL
+		oncmd gosub *DPICHANGED, WM_DPICHANGED
 
-	screen WND_GRID, maxScrSize(0), maxScrSize(1),2:title "表示させたいセルにD&D"
+	screen WND_GRID, disInfo(2), disInfo(3), 2:title "表示させたいセルにD&D"
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 0
 		oncmd gosub *OnDropFiles, WM_DROPFILES
@@ -113,7 +116,7 @@
 		kmmouse_init
 
 	//範囲選択用レイヤードウィンドウ
-	bgscr WND_OVERLAY, ginfo(20), ginfo(21), 2
+	bgscr WND_OVERLAY, disInfo(2), disInfo(3), 2
 		SET_WND_INFO
 		color 0,255,0
 		boxf
@@ -121,7 +124,7 @@
 		SetWindowLong WND_INFO(WND_OVERLAY, WI_HANDLE),-20,stat|$80000
 		SetLayeredWindowAttributes WND_INFO(WND_OVERLAY, WI_HANDLE),0x00000000,128,LWA_ALPHA
 
-	buffer WND_MAKE_STRING,1000,340
+	buffer WND_MAKE_STRING, 1000, 340
 		SET_WND_INFO		
 		gosub *drawString
 		
@@ -146,20 +149,22 @@
 		mes "またはホットキー(Altキー＋Zキー同時押し)で
 		mes "                                         画像を追加してください"
 		mes "セルの画像はウィンドウ外にドラッグで消去できます"
+		//640,150
 	
-	screen WND_TWITTER,448,270,2
+	screen WND_TWITTER, 448, 270, 2
 		SET_WND_INFO
 		oncmd gosub *twiwindowimage,0x0201
 		oncmd gosub *rideCursor,WM_MOUSEMOVE
 		oncmd gosub *getText ,WM_COMMAND
 		oncmd gosub *OnDropFiles, WM_DROPFILES
+		//448, 270
 
 	gsel WND_MAIN, -1
 	syscolor 15:boxf:color
 	font "メイリオ", FONT_SIZE_ALL
 	objmode 2
 	
-	objsize 175,30
+	objsize Scale(175),Scale(30)
 	pos 0,0
 	combox cellmode,100,"  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
 	comboxId = stat
@@ -203,6 +208,9 @@
 	init_makelist disinfo
 	hdcScreen = CreateDC("DISPLAY", NULL, NULL, NULL)
 
+	dpi = GetDeviceCaps(hdc, 88)
+	DPIScale = 1.0 * dpi / 96.0
+
 return
 
 
@@ -217,7 +225,7 @@ return
 	
 	if (wparam == WND_TWITTER){
 		gsel WND_TWITTER, -1
-		enabletweetwindow = FALSE
+		enableTweetWindow = FALSE
 		gsel WND_MAIN
 		if mode != modeOptionNum{
 			objprm enabletweetwindowcid, 0

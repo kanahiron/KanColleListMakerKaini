@@ -145,7 +145,7 @@
 		objenable sscapbid, 1
 	}
 	
-	width 175, mesy
+	width Scale(175), Scale(mesy)
 
 	oncmd 1
 return
@@ -425,7 +425,7 @@ return
 	mesbox logmessage,175,70,0 :mesy+=70
 	logid = stat
 	
-	width ,mesy-(70*hidelog_)
+	width Scale(175), Scale(mesy-(Scale(70)*hidelog_))
 	
 	if IsWindowVisible(WND_INFO(WND_GRID, WI_HANDLE)) = 0{
 		gsel WND_GRID,1
@@ -486,21 +486,17 @@ return
 	
 		sendmsg hTrackbar, TBM_SETRANGE, 1, (300<<16) | 100
 		sendmsg hTrackbar, TBM_SETPAGESIZE, 0, 25
-		sendmsg hTrackbar, TBM_SETPOS, 1, 50
 		sendmsg hTrackbar, TBM_SETTICFREQ, 50, 0
+		sendmsg hTrackbar, TBM_SETPOS, 1, int(DPIScale*100)
 
-		////スタティックテキスト
-		//font "メイリオ",14
 		mref BMSCR, 67
 		hFont = BMSCR.38
 	
 		pos 300, mesy
-		winobj "static", strf("%3d",140-ttCount), , $50000002, 40, 30: mesy+=30
+		winobj "static", strf("%d%% ",DPIScale*100), , $50000002, 40, 30: mesy+=30
 		hTrackBarScale = objinfo(stat, 2)
 		sendmsg hTrackBarScale, $30, hFont
-		sendmsg hTrackBarScale, $C ,, "100% "
 
-	
 		objsize 150,20
 		pos 14,mesy
 		mes "一覧保存先"
@@ -632,12 +628,13 @@ return
 		objsize 350,20
 		pos 5,mesy
 		chkbox "Twitterにはjpgで投稿する",twijpg:mesy+=20
-
-		
-
 	}
-	
-	width 350,mesy
+
+	pos 0,mesy+100
+	mesbox logmessage,175,70,0
+	logid = stat
+
+	width Scale(350),Scale(mesy)
 
 	oncmd 1
 return

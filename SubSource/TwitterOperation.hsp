@@ -68,14 +68,17 @@ return
 return
 
 *twiinit
-
+	oncmd 0
+	
 	if ACCESS_TOKEN != "" & ACCESS_SECRET != ""{
+
+		nidpush
 		
 		setAccessToken ACCESS_TOKEN, ACCESS_SECRET
-		nidpush
+
 		gsel WND_MAIN
 		logmessage = "Twitter˜AŒg‚ª—LŒø‚Å‚·"
-		objprm logid,logmessage
+		objprm logid, logmessage
 	
 		gsel WND_TWITTER
 		DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 1
@@ -169,7 +172,7 @@ return
 	
 		nidpop
 	}
-
+	oncmd 0
 return
 
 *picHistoryNext
