@@ -1,13 +1,13 @@
 
-*twiwindowimage
+*twiWindowImage
 	oncmd 0
 	
 	if ginfo(24) = WND_TWITTER{
 	
 		nidpush
 		
-		mx = lParam & 0x0000FFFF;         // カーソルx座標
-		my = (lParam >> 16) & 0x0000FFFF;  // カーソルy座標
+		mx = lParam & 0x0000FFFF			// カーソルx座標
+		my = (lParam >> 16) & 0x0000FFFF	// カーソルy座標
 	
 		gsel WND_TWITTER
 	
@@ -72,7 +72,7 @@ return
 	
 	if ACCESS_TOKEN != "" & ACCESS_SECRET != ""{
 
-		nidpush
+		nidPush
 		
 		setAccessToken ACCESS_TOKEN, ACCESS_SECRET
 
@@ -83,96 +83,105 @@ return
 		gsel WND_TWITTER
 		DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 1
 		clrobj
-		
 		objmode 2
 		title "ツイートウィンドウ"
-		font "メイリオ",12
+		width Scale(448), Scale(270)
+		
+		font "メイリオ", Scale(12)
+		
 		pos 1,1
-		mesbox tweettext,180,217,1
+		mesbox tweettext, Scale(180), Scale(217), 1
 		ttid = stat
 		tth = objinfo(ttid,2)
-		objsize 140,32
-		pos 0,218
-		font "メイリオ",20
+		objsize Scale(140), Scale(32)
+		pos 0, Scale(218)
+		
+		font "メイリオ",Scale(20)
 		button gosub "ツイート",*tweet_
 		tweetbid = stat
 	
-		objsize 105,30
-		pos 184,220
+		objsize Scale(105), Scale(30)
+		pos Scale(184), Scale(220)
 		button gosub "←",*picHistoryBack
 		picHistoryBackBId = stat
-		pos 341,220
+		pos Scale(341), Scale(220)
 		button gosub "→",*picHistoryNext
 		picHistoryNextBId = stat
-		objsize 54,40
-		pos 288,210
+		
+		objsize Scale(54), Scale(40)
+		pos Scale(288), Scale(210)
 		button gosub "↑",*picHistoryAddStack
 	
 		picHistoryNum = 0
 	
 		////スタティックテキスト
-		font "メイリオ",14
+		font "メイリオ", Scale(14)
 		mref BMSCR, 67
 		hFont = BMSCR.38
 	
-		pos 140,230
-		winobj "static", strf("%3d",140-ttCount), , $50000002, 44, 30
+		pos Scale(140), Scale(230)
+		winobj "static", strf("%3d", 140-ttCount), , $50000002, Scale(44), Scale(20)
 		ttCounth = objinfo(stat, 2)
 		sendmsg ttCounth, $30, hFont
 	
-		pos 379,189
-		winobj "static", strf("%3d/100 ",picHistoryNum+1), , $50001002, 65,20
+		pos Scale(379), Scale(189)
+		winobj "static", strf("%3d/100 ",picHistoryNum+1), , $50001002, Scale(65), Scale(20)
 		stackCounth = objinfo(stat, 2)
 		sendmsg stackCounth, $30, hFont
 	
-		sendmsg ttCounth, $C ,, strf("%3d/140 ",ttCount)
-		sendmsg stackCounth ,$C , , strf("%3d/100",picHistoryNum+1)
+		sendmsg ttCounth, $C , , strf("%3d ", 140-ttCount)
+		sendmsg stackCounth, $C , , strf("%3d/100",picHistoryNum+1)
 
 		//----
 
-		pos 0,250
-		winobj "msctls_progress32", "", , $50000000, 448, 20
+		pos 0, Scale(250)
+		winobj "msctls_progress32", "", , $50000000, Scale(448), Scale(20)
 		hProgress = objinfo(stat, 2)	
 		sendmsg hProgress ,PBM_SETRANGE,0,MAKELPARAM(0,100)
-		sendmsg hProgress ,PBM_SETRANGE,0,MAKELPARAM(0,100)
 		//----
 
-		nidpop
+		nidPop
 		gosub *TweetWindow
 		
 	} else {
 	
-		nidpush
+		nidPush
 		
 		gsel WND_TWITTER
 		DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 0
 		clrobj
-		syscolor 15
-		boxf
-		color
+		syscolor 15: boxf: color 8
 		objmode 2
+		width Scale(448), Scale(270)
+		
 		title "ツイートウィンドウ"
-		font "メイリオ",14
-		pos 10,10
+		font "メイリオ",Scale(14)
+		pos Scale(10), Scale(10)
 		mes "Twitterへの投稿には認証が必要です"
 		mes "次のボタンを押すとブラウザが開くので表示されたコードを入力し、\nOKを押してください"
 	
-		pos 10,80
-		objsize 428,40
+		pos Scale(10), Scale(80)
+		objsize Scale(428), Scale(40)
 		button gosub "ブラウザを開いて認証する",*openbrowser
 	
-		pos 10,134
+		pos Scale(10), Scale(134)
 		mes "PIN"
 		PIN = ""
-		pos 40,130
-		input PIN,100,30
-		objsize 150,30
-		pos 150,130
+		pos Scale(40), Scale(130)
+		input PIN, Scale(100), Scale(30)
+		objsize Scale(150), Scale(30)
+		pos Scale(150), Scale(130)
 		button　gosub "OK",*twioauthok
+
+		pos 0,Scale(240)
+		objsize Scale(448),Scale(30)
+		button gosub "Amazonほしい物リスト", *Amazon: mesy+=30
 	
-		nidpop
+		nidPop
 	}
-	oncmd 0
+
+	
+	oncmd 1
 return
 
 *picHistoryNext
@@ -267,7 +276,7 @@ return
 			flag_ = flag 
 	
 			if flag > -1{
-				//buffer 21
+				
 				buffer WND_TEMP1
 				picload PicStack(flag)
 				
@@ -275,14 +284,14 @@ return
 				
 				color 200,200,200
 				boxf
-				color
+				syscolor 8
 	
 				pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
 				gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TEMP1, 0, 0, 800, 480, 1
 				pos twiPicFrameXL(flag)+1,twiPicFrameYU(flag)+1
-				gzoom 62, 38, WND_TEMP1, 0, 0, 800, 480
+				gzoom Scale(62), Scale(38), WND_TEMP1, 0, 0, 800, 480
 	
-				sendmsg stackCounth ,$C , , strf("プレビュー")
+				sendmsg stackCounth ,$C , , strf("プレビュ")
 				
 				redraw 1
 			} else {
@@ -304,14 +313,15 @@ return
 
 	syscolor 15
 	boxf
-			
 	syscolor 16 //外枠表示
+
 	repeat 4
 		boxf twiPicFrameXL(cnt),twiPicFrameYU(cnt),twiPicFrameXR(cnt),twiPicFrameYD(cnt)
 	loop
 	boxf twiPicFrameXL(4),twiPicFrameYU(4),twiPicFrameXR(4),twiPicFrameYD(4)
 	
 	syscolor 15 //内側上書き
+	
 	repeat 4
 		boxf twiPicFrameXL(cnt)+1,twiPicFrameYU(cnt)+1,twiPicFrameXR(cnt)-1,twiPicFrameYD(cnt)-1
 	loop
@@ -333,14 +343,14 @@ return
 		picload PicStack(cnt)
 		gsel WND_TWITTER
 		pos twiPicFrameXL(cnt)+1, twiPicFrameYU(cnt)+1
-		gzoom 62, 38, WND_TEMP1, 0, 0, 800, 480
+		gzoom Scale(62), Scale(38), WND_TEMP1, 0, 0, 800, 480
 	loop
 
 	gmode 2
 	repeat 4
 		if PicStack(cnt) = "": break
 		pos twiPicFrameXL(cnt)+1, twiPicFrameYU(cnt)+1
-		gcopy WND_IMAGE_BUF, 0, 50+twiOrder(cnt)*90, 62, 38
+		gcopy WND_IMAGE_BUF, 0, 40+twiOrder(cnt)*120, Scale(62), Scale(38)
 	loop
 	
 	gmode 0

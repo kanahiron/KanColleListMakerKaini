@@ -99,4 +99,8 @@ return
 	}
 return
 
+*Amazon
+	dialog "Amazonのほしい物リストだよ！\nぜひポチって支援してね！！！",2,"でちでち"
+	if stat = 6:exec "http://www.amazon.co.jp/wishlist/181BGDSFXZC6M/?sort=priority",16
+return
 

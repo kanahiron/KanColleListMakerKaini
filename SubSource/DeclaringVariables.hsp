@@ -79,12 +79,30 @@
 	cellnum(0,1) = 5,5
 	cellnum(0,2) = 6,4
 
-	twiPicFrameXL = 185,250,315,380,184
-	twiPicFrameXR = 248,313,378,443,444
-	twiPicFrameYU = 3 ,3 , 3, 3, 45
-	twiPicFrameYD = 42,42,42,42,209
+	dim twiPicFrameXL, 5
+	dim twiPicFrameXR, 5
+	dim twiPicFrameYU, 5
+	dim twiPicFrameYD, 5
+	dim _twiPicFrameXL, 5
+	dim _twiPicFrameXR, 5
+	dim _twiPicFrameYU, 5
+	dim _twiPicFrameYD, 5
+	
+	_twiPicFrameXL = 185,250,315,380,184
+	_twiPicFrameXR = 248,313,378,443,444
+	_twiPicFrameYU = 3 ,3 , 3, 3, 45
+	_twiPicFrameYD = 42,42,42,42,209
+
+	repeat 5
+		twiPicFrameXL(cnt) = Scale(_twiPicFrameXL(cnt))
+		twiPicFrameXR(cnt) = Scale(_twiPicFrameXR(cnt))
+		twiPicFrameYU(cnt) = Scale(_twiPicFrameYU(cnt))
+		twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
+	loop
+
 	twiOrder = 0,0,0,0
 	twiOrdercount = 0
+
 	
 	enableFirst = 1
 	enableSecond = 1
@@ -126,6 +144,8 @@
 	userdata = ""
 	ACCESS_TOKEN = ""
 	ACCESS_SECRET = ""
+
+	modeOptionNum = 4
 	
 	tCupInit "KanColleListMakerKaini", CONSUMER_KEY, CONSUMER_SECRET, 7
 	

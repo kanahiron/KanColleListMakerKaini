@@ -62,7 +62,6 @@
 
 #define ctype Scale(%1) int(DPIScale*(%1)+0.5)
 
-
 #ifdef _debug
 
 	exist "./SubSource/hsptmp"
@@ -85,7 +84,6 @@
 	if (strsize != -1): delete "./packfile"
 	
 #endif
-	
 
 	onexit gosub *exit
 
@@ -110,7 +108,8 @@
 		oncmd gosub *ssCapture, WM_TIMER
 		oncmd gosub *vscroll, WM_VSCROLL
 		oncmd gosub *DPICHANGED, WM_DPICHANGED
-
+		objmode 2
+	
 	screen WND_GRID, disInfo(2), disInfo(3), 2:title "表示させたいセルにD&D"
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 0
@@ -157,21 +156,14 @@
 		mes "セルの画像はウィンドウ外にドラッグで消去できます"
 		//640,150
 	
-	screen WND_TWITTER, disInfo(2), disInfo(3), 2
+	screen WND_TWITTER, disInfo(2), disInfo(3), 2 | 4
 		SET_WND_INFO
 		oncmd gosub *twiwindowimage,0x0201
 		oncmd gosub *rideCursor,WM_MOUSEMOVE
 		oncmd gosub *getText ,WM_COMMAND
 		oncmd gosub *OnDropFiles, WM_DROPFILES
-		width 448, 270
-		//448, 270
 
 	gsel WND_MAIN, -1
-	syscolor 15:boxf:color
-	font "メイリオ", Scale(13)
-	objmode 2
-	
-	modeOptionNum = 4
 	
 	gosub *ssMode
 	gosub *hotkeyCapSetting

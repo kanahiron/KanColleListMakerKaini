@@ -477,7 +477,7 @@ return
 	oncmd 0
 	redraw 0
 
-	gsel WND_GRID,-1
+	gsel WND_GRID, -1
 	gsel WND_MAIN, 1+frontrow
 	clrobj
 	syscolor 15: boxf: syscolor 8
@@ -669,6 +669,16 @@ return
 		pos scale5, mesy
 		chkbox "TwitterÇ…ÇÕjpgÇ≈ìäçeÇ∑ÇÈ", twijpg: mesy += scale20
 	}
+
+	if (optionMode == 3){
+		
+		pos 0,mesy
+		objsize Scale(350), scale20
+		button gosub "AmazonÇŸÇµÇ¢ï®ÉäÉXÉg", *Amazon: mesy += scale20
+		//http://www.amazon.co.jp/wishlist/181BGDSFXZC6M/?sort=priority
+		
+	}
+	
 
 	pos 0, mesy + Scale(100)
 	mesbox logmessage, Scale(175), Scale(70), 0
