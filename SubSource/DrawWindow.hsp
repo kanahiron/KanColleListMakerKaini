@@ -522,6 +522,9 @@ return
 		chkbox "起動時にバージョンチェックを行う", autoVersionCheck: mesy += scale20
 
 		pos scale5, mesy
+		chkbox "UI拡大率を自動で設定する", autoDPIScale: mesy += scale20
+
+		pos scale5, mesy
 		mes "UIの拡大率": mesy += scale20
 
 		pos 0, mesy

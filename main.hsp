@@ -92,12 +92,21 @@
 	isHomeport_init WND_HOME_PORT_MOD
 	DateAndTimeFormat_Init
 		
-	gosub *disInfoInit
 	gosub *DeclaringVariables
 	gosub *iniLoad
 	gosub *dataCheck
 	gosub *iniSave
 	gosub *loadHistory
+
+	DPIScale = 1.0
+	if (autoDPIScale){
+		dpi = GetDeviceCaps(hdc, 88)
+		DPIScale = 1.0 * dpi / 96.0
+	}
+
+	scale3 = scale(3)
+	scale5 = scale(5)
+	scale20 = scale(20)
 
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
@@ -184,27 +193,6 @@
 	stop
 
 
-*disInfoInit
-
-	dim disInfo, 4
-	disInfo(0) = GetSystemMetrics(76)
-	disInfo(1) = GetSystemMetrics(77)
-	disInfo(2) = GetSystemMetrics(78)
-	disInfo(3) = GetSystemMetrics(79)
-	
-	init_makelist disinfo
-	hdcScreen = CreateDC("DISPLAY", NULL, NULL, NULL)
-
-	dpi = GetDeviceCaps(hdc, 88)
-	DPIScale = 1.0 * dpi / 96.0
-
-	scale3 = scale(3)
-	scale5 = scale(5)
-	scale20 = scale(20)
-
-return
-
-
 *exit
 	
 	if (wparam == WND_GRID){
@@ -224,7 +212,7 @@ return
 		return
 	}
 
-	DeleteDC hdcScreen
+	if hdcScreen: DeleteDC hdcScreen
 	if dcClient: ReleaseDC dcClient
 	
 	DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 0

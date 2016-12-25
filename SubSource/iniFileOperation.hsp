@@ -79,6 +79,7 @@
 	GetIni "SettingFINAL", "ichiranMode2", ichiranMode2, "0"
 
 	GetIni "Configuration", "autoVersionCheck", autoVersionCheck, "1"
+	GetIni "Configuration", "autoDPIScale", autoDPIScale, "1"
 
 	GetIni "CaptureAndMaking", "saveNameCapture", saveNameCapture, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "saveNameList", saveNameList, "\"艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
@@ -299,10 +300,6 @@ return
 	}
 
 
-	
-	////////////////
-	/////////////////
-
 	//艦娘一覧モード
 	if yubiwa = 0 & kantai = 0 : w = 382 : capx = 392
 	if yubiwa = 1 & kantai = 1 : w = 440 : capx = 360
@@ -379,11 +376,9 @@ return
 			scrsize(0,1) = round(cellsize(0,1) * (cellnum(0,1)+1) )
 		}
 	}
-
 	AspectRatio(1) = 1.0*scrsize(1,1)/scrsize(0,1)
 
 	//直接連結or基地航空隊モード
-
 	if directLink{
 		w = 800
 		h = 480
@@ -412,87 +407,6 @@ return
 	cellsize(0,2) = scrsize(0,2)/(cellnum(0,2)+1),round(cellratio*cellsize(0,2))
 	scrsize(1,2) = round(cellsize(1,2)*(cellnum(1,2)+1) )
 	AspectRatio(2) = 1.0*scrsize(1,2)/scrsize(0,2)
-
-/*
-	////////////////
-	///////////////
-	if ichiranMode1 {
-		if yubiwa = 0 & kantai = 0 : w = 382 : capx = 392
-		if yubiwa = 1 & kantai = 1 : w = 440 : capx = 360
-		if yubiwa = 1 & kantai = 0 : w = 408 : capx = 392
-		if yubiwa = 0 & kantai = 1 : w = 415 : capx = 360
-		if page = 0:h = 279
-		if page = 1:h = 315
-		if lvname = 1:w = 190: capx = 392:h = 279
-		capy = 154
-	}
-	if ichiranMode2 {
-		w = 320
-		h = 310
-		capx = 132
-		capy = 143
-	}
-		
-	dd(0,0) = capx,capy,w,h
-	cellratio = 1.0*h/w
-	cellsize(0,0) = scrsize(0,0)/(cellnum(0,0)+1),round(cellratio*cellsize(0,0))
-	scrsize(1,0) = round(cellsize(1,0) * (cellnum(1,0)+1))
-	AspectRatio(0) = 1.0 * scrsize(1,0) / scrsize(0,0)
-	
-	
-	if sosuka {
-		w = 460
-		h = 365
-	}
-	if sosu {
-		w = 230
-		h = 365	
-	}
-	if soka {
-		w = 460
-		h = 105
-	}
-	
-	capx = 327
-	capy = 103
-
-	dd(0,1) = capx,capy,w,h
-	cellratio = 1.0*h/w
-	cellsize(0,1) = scrsize(0,1)/(cellnum(0,1)+1),round(cellratio*cellsize(0,1))
-	scrsize(1,1) = round(cellsize(1,1)*(cellnum(1,1)+1) )
-	AspectRatio(1) = 1.0*scrsize(1,1)/scrsize(0,1)
-
-		
-	if directLink{
-		w = 800
-		h = 480
-		capx = 0
-		capy = 0
-		cellnum(0,2) = 6,4
-	}
-	if airStation {
-		if (airStationTab) { 
-			w = 225
-			h = 358
-			capx = 575
-			capy = 109
-		} else {
-			w = 225
-			h = 336
-			capx = 575
-			capy = 131
-		}
-		cellnum(0,2) = 2,0
-	}
-		
-	dd(0,2) = capx,capy,w,h
-	cellratio = 1.0*h/w
-
-	cellsize(0,2) = scrsize(0,2)/(cellnum(0,2)+1),round(cellratio*cellsize(0,2))
-	scrsize(1,2) = round(cellsize(1,2)*(cellnum(1,2)+1) )
-	AspectRatio(2) = 1.0*scrsize(1,2)/scrsize(0,2)
-
-	*/
 
 	chdir currentdir
 return
@@ -568,6 +482,7 @@ return
 	WriteIni "SettingFINAL", "ichiranMode2",ichiranMode2
 
 	WriteIni "Configuration", "autoVersionCheck", autoVersionCheck
+	WriteIni "Configuration", "autoDPIScale", autoDPIScale
 
 	WriteIni "CaptureAndMaking", "saveNameCapture", saveNameCapture
 	WriteIni "CaptureAndMaking", "saveNameList", saveNameList

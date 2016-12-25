@@ -1,47 +1,18 @@
 *DeclaringVariables
 
-	mode = 0
-	listmode = 0
-	yubiwa = 1
-	kantai = 1
-	autosearch = 1
-	hidename = 0
-	sti = 0
-	cliflag = 0
-	cellmode = 0
-	mesy = 30
-	hotkeycap = 0
-	ret = 0
 
-	jpgquality = 90
-	namecut = 0
-	hidelog = 0
-	hidelog_ = hidelog
-	jpgsave = 0
-	rapidshooting = 0
-	frontrow = 0
-	othergame = 0
 	
-	availablecap = 0
-	availableyabumi = 0
-	hotkeyset = 0
 	saveListName = ""
-	
 	tempint = 0
 	tempstr = ""
 	currentdir = dir_cur
-
 	modeNum = 3
-
 	positionType = 0
-
 	optionMode = 0
-	
-	//
+
+	dim disInfo, 4
 	dim clientSize, 2
 	dim rect, 4
-	//
-
 	dim data,CELL_MAX_W,CELL_MAX_H,modeNum
 	dim bc,(CELL_MAX_W*CELL_MAX_H*modeNum)
 	dim dd,4,modeNum
@@ -100,9 +71,15 @@
 		twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
 	loop
 
+	disInfo(0) = GetSystemMetrics(76)
+	disInfo(1) = GetSystemMetrics(77)
+	disInfo(2) = GetSystemMetrics(78)
+	disInfo(3) = GetSystemMetrics(79)
+	
+	init_makelist disinfo
+
 	twiOrder = 0,0,0,0
 	twiOrdercount = 0
-
 	
 	enableFirst = 1
 	enableSecond = 1
@@ -155,5 +132,7 @@
 	scrsizetemp(0,0)  = scrsize(0,0),scrsize(1,0)
 	scrsizetemp(0,1)  = scrsize(0,1),scrsize(1,1)
 	scrsizetemp(0,2)  = scrsize(0,2),scrsize(1,2)
+
+	hdcScreen = CreateDC("DISPLAY", NULL, NULL, NULL)
 	
 return

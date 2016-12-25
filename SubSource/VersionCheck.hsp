@@ -273,13 +273,20 @@ return responseBody
 
 	if autoVersionCheck {
 		VerCheckInit
+
+		if (mode == 0){
+			logmessage = "バージョンチェックを開始します。"
+			objprm logId, logMessage: await
+		}
+		
 		execVerCheck
 		if stat = 200{
 			logmes "アップデートファイルの取得成功"
 			sdim json,1024*4
 			json = getResponse()
 			json_sel json
-			logmes "取得したバージョン " + int(json_val("[0].version"))
+			
+			logmes "取得したバージョン " + json_val("[0].version")
 			if klm2ver < int(json_val("[0].version")){
 				
 				sdim text,1024
@@ -300,6 +307,13 @@ return responseBody
 			dialog "次の原因が考えられます\nアップデート情報配信サーバーのダウン\nインターネット未接続",0,"アップデート情報の取得に失敗しました"
 		}
 		VerCheckWash
+
+		if (mode == 0){
+			logmessage = "バージョンチェックが完了しました。"
+			objprm logId, logMessage: await
+		}
+		
+		
 	}
 
 	oncmd 1
