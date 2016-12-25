@@ -231,7 +231,7 @@ return
 		gosub *drawColor
 	}
 return
-*colorCanrge3
+*colorCange3
 	colorRefArr(0) = RGBtoBGR(fontColorThirdFleet)
 	chooseColoerStruct(3) = RGBtoBGR(fontColorThirdFleet)
 	ChooseColor varptr(chooseColoerStruct)
@@ -258,13 +258,13 @@ return
 		gosub *drawString
 		gsel WND_MAIN
 		color ((fontColorFirstFleet&0x00FF0000)>>16),((fontColorFirstFleet&0x0000FF00)>>8),(fontColorFirstFleet&0x000000FF)
-		boxf Scale(210), drawColorPos + 1, Scale(350) - 1, drawColorPos + Scale(20)
+		boxf Scale(211), drawColorPos + 1, Scale(349), drawColorPos + Scale(21)
 		color ((fontColorSecondFleet&0x00FF0000)>>16),((fontColorSecondFleet&0x0000FF00)>>8),(fontColorSecondFleet&0x000000FF)
-		boxf Scale(210), drawColorPos + Scale(22) + 1, Scale(350) - 1, drawColorPos + Scale(20 + 22)
+		boxf Scale(211), drawColorPos + Scale(22) + 1, Scale(349), drawColorPos + Scale(21 + 22)
 		color ((fontColorThirdFleet&0x00FF0000)>>16),((fontColorThirdFleet&0x0000FF00)>>8),(fontColorThirdFleet&0x000000FF)
-		boxf Scale(210), drawColorPos + Scale(44) + 1, Scale(350) - 1, drawColorPos + Scale(20 + 44)
+		boxf Scale(211), drawColorPos + Scale(44) + 1, Scale(349), drawColorPos + Scale(21 + 44)
 		color ((fontColorFourthFleet&0x00FF0000)>>16),((fontColorFourthFleet&0x0000FF00)>>8),(fontColorFourthFleet&0x000000FF)
-		boxf Scale(210), drawColorPos + Scale(66) + 1, Scale(350) - 1, drawColorPos + Scale(20 + 66)
+		boxf Scale(211), drawColorPos + Scale(66) + 1, Scale(349), drawColorPos + Scale(21 + 66)
 		nidPop
 	}
 return

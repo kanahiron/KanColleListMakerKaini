@@ -350,7 +350,7 @@ return
 		objsize Scale(70), Scale(22)
 		
 		pos window2x + Scale(5), mesy2+Scale(1)
-		mes "ŠÍ‘à–¼": mesy2 += scale20
+		mes " ŠÍ‘à–¼": mesy2 += scale20
 		
 		pos window2x + Scale(7), mesy2+Scale(1)
 		chkbox "‘æˆêŠÍ‘à",enableFirst
@@ -373,7 +373,7 @@ return
 		input FourthFleetName, Scale(95), Scale(22): mesy2 += Scale(25)
 
 		pos window2x + Scale(5), mesy2+Scale(1)
-		mes "ŠÍ‘à–¼•¶šF": mesy2 += scale20
+		mes " ŠÍ‘à–¼•¶šF": mesy2 += scale20
 	
 		drawColorPos = mesy2
 		pos window2x + Scale(7), mesy2
