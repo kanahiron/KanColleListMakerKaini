@@ -161,7 +161,7 @@
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY: redraw
 
 		bgscr WND_TEMP_SCR1, disinfo(2), disinfo(3), 2: SET_WND_INFO
-		font "メイリオ", FONT_SIZE_MANUAL_GETPOS_STRING
+		font "メイリオ", Scale(30)
 	
 		gcopy WND_TEMP1, 0, 0, disinfo(2), disinfo(3)
 		color 128,128,128

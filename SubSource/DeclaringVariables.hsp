@@ -88,7 +88,7 @@
 	
 	enableFirst = 1
 	enableSecond = 1
-	enableThread = 0
+	enableThird = 0
 	enableFourth = 0
 
 	directLink = 1

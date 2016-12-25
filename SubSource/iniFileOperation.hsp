@@ -21,7 +21,7 @@
 	GetIni "Setting", "othergame", othergame, "1"
 	GetIni "Setting", "dispcap", dispcap, "1"
 	GetIni "Setting", "hotkeycap", hotkeycap, "1"
-	GetIni "Setting", "autoaddcaptcha", autoaddcaptcha, "1"
+	GetIni "Setting", "autoaddCapture", autoaddCapture, "1"
 	GetIni "Setting", "jpgsave", jpgsave, "0"
 	GetIni "Setting", "jpgquality", jpgquality, "90"
 	GetIni "Setting", "disableseqcap", disableseqcap, "1"
@@ -61,12 +61,12 @@
 
 	GetIni "Setting250", "FirstFleetName", FirstFleetName, "\"第一艦隊\""
 	GetIni "Setting250", "SecondFleetName", SecondFleetName, "\"第二艦隊\""
-	GetIni "Setting250", "ThreadFleetName", ThreadFleetName, "\"ボス支援\""
+	GetIni "Setting250", "ThirdFleetName", ThirdFleetName, "\"ボス支援\""
 	GetIni "Setting250", "FourthFleetName", FourthFleetName, "\"道中支援\""
 	
 	GetIni "Setting250", "fontColorFirstFleetStr", fontColorFirstFleetStr, "\"FF0000\""
 	GetIni "Setting250", "fontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
-	GetIni "Setting250", "fontColorThreadFleetStr", fontColorThreadFleetStr, "\"20AC4C\""
+	GetIni "Setting250", "fontColorThirdFleetStr", fontColorThirdFleetStr, "\"20AC4C\""
 	GetIni "Setting250", "fontColorFourthFleetStr", fontColorFourthFleetStr, "\"E06020\""
 	GetIni "Setting250", "fleetPunctuation", fleetPunctuation, "1"
 	GetIni "Setting250", "addOrderNum", addOrderNum, "1"
@@ -80,11 +80,11 @@
 
 	GetIni "Configuration", "autoVersionCheck", autoVersionCheck, "1"
 
-	GetIni "CaptchaAndMaking", "saveNameCaptcha", saveNameCaptcha, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptchaAndMaking", "saveNameList", saveNameList, "\"艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptchaAndMaking", "saveNameFormation", saveNameFormation, "\"攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptchaAndMaking", "saveNameAirStation", saveNameAirStation, "\"基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptchaAndMaking", "saveNameDirectLink", saveNameDirectLink, "\"直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "saveNameCapture", saveNameCapture, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "saveNameList", saveNameList, "\"艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "saveNameFormation", saveNameFormation, "\"攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "saveNameAirStation", saveNameAirStation, "\"基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "saveNameDirectLink", saveNameDirectLink, "\"直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 
 	if strmid(hotkeystr,0,1) = "A":hotkeycapalt	= 1
 	if strmid(hotkeystr,1,1) = "C":hotkeycapctrl = 1
@@ -112,7 +112,7 @@ return
 	if (othergame != 0) & (othergame != 1):othergame = 1
 	if (dispcap != 0) & (dispcap != 1):dispcap=1
 	if (hotkeycap != 0) & (hotkeycap != 1): hotkeycap = 1
-	if (autoaddcaptcha != 0) & (autoaddcaptcha != 1):autoaddcaptcha=1
+	if (autoaddCapture != 0) & (autoaddCapture != 1):autoaddCapture=1
 	if (jpgsave != 0) & (jpgsave != 1):jpgsave=0
 	if (jpgquality < 1) | (jpgquality > 100):jpgquality = 90
 	if (disableseqcap != 0) & (disableseqcap != 1):disableseqcap = 1
@@ -137,9 +137,9 @@ return
 	
 	if fontColorFirstFleetStr = "":fontColorFirstFleetStr = "FF0000"
 	if fontColorSecondFleetStr = "":fontColorSecondFleetStr = "0000FF"
-	if fontColorThreadFleetStr = "":fontColorThreadFleetStr = "20AC4C"
+	if fontColorThirdFleetStr = "":fontColorThirdFleetStr = "20AC4C"
 	if fontColorFourthFleetStr = "":fontColorFourthFleetStr = "E06020"
-	if ThreadFleetName = "":ThreadFleetName = "ボス支援"
+	if ThirdFleetName = "":ThirdFleetName = "ボス支援"
 	if FourthFleetName = "":FourthFleetName = "道中支援"
 	if (fleetPunctuation != 0) & (fleetPunctuation != 1):fleetPunctuation=1
 	if (addOrderNum != 0) & (addOrderNum != 1):addOrderNum=1
@@ -148,7 +148,7 @@ return
 
 	fontColorFirstFleet = int("$"+fontcolorFirstFleetstr)
 	fontColorSecondFleet = int("$"+fontcolorSecondFleetstr)
-	fontColorThreadFleet = int("$"+fontcolorThreadFleetstr)
+	fontColorThirdFleet = int("$"+fontcolorThirdFleetstr)
 	fontColorFourthFleet = int("$"+fontcolorFourthFleetstr)
 	
 	hidelog_ = hidelog
@@ -220,8 +220,8 @@ return
 
 	sdim tempstr
 
-	DateAndTimeFormat saveNameCaptcha, tempstr
-	if (stat != 0): saveNameCaptcha = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	DateAndTimeFormat saveNameCapture, tempstr
+	if (stat != 0): saveNameCapture = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 	if (stat == -1){
 		savelogtext += "Info - キャプチャ保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
 	} else : if (stat == -2){
@@ -395,7 +395,7 @@ return
 	WriteIni "Setting", "othergame",othergame
 	WriteIni "Setting", "dispcap",dispcap
 	WriteIni "Setting", "hotkeycap",hotkeycap
-	WriteIni "Setting", "autoaddcaptcha",autoaddcaptcha
+	WriteIni "Setting", "autoaddCapture",autoaddCapture
 	WriteIni "Setting", "jpgsave",jpgsave
 	WriteIni "Setting", "jpgquality",jpgquality
 	WriteIni "Setting", "disableseqcap",disableseqcap
@@ -434,12 +434,12 @@ return
 	
 	WriteIni "Setting250", "FirstFleetName", FirstFleetName
 	WriteIni "Setting250", "SecondFleetName", SecondFleetName
-	WriteIni "Setting250", "ThreadFleetName", ThreadFleetName
+	WriteIni "Setting250", "ThirdFleetName", ThirdFleetName
 	WriteIni "Setting250", "FourthFleetName", FourthFleetName
 	
 	WriteIni "Setting250", "fontColorFirstFleetStr", fontColorFirstFleetStr
 	WriteIni "Setting250", "fontColorSecondFleetStr", fontColorSecondFleetStr
-	WriteIni "Setting250", "fontColorThreadFleetStr", fontColorThreadFleetStr
+	WriteIni "Setting250", "fontColorThirdFleetStr", fontColorThirdFleetStr
 	WriteIni "Setting250", "fontColorFourthFleetStr", fontColorFourthFleetStr
 	WriteIni "Setting250", "fleetPunctuation", fleetPunctuation
 	WriteIni "Setting250", "addOrderNum", addOrderNum
@@ -452,11 +452,11 @@ return
 
 	WriteIni "Configuration", "autoVersionCheck", autoVersionCheck
 
-	WriteIni "CaptchaAndMaking", "saveNameCaptcha", saveNameCaptcha
-	WriteIni "CaptchaAndMaking", "saveNameList", saveNameList
-	WriteIni "CaptchaAndMaking", "saveNameFormation", saveNameFormation
-	WriteIni "CaptchaAndMaking", "saveNameAirStation", saveNameAirStation
-	WriteIni "CaptchaAndMaking", "saveNameDirectLink", saveNameDirectLink
+	WriteIni "CaptureAndMaking", "saveNameCapture", saveNameCapture
+	WriteIni "CaptureAndMaking", "saveNameList", saveNameList
+	WriteIni "CaptureAndMaking", "saveNameFormation", saveNameFormation
+	WriteIni "CaptureAndMaking", "saveNameAirStation", saveNameAirStation
+	WriteIni "CaptureAndMaking", "saveNameDirectLink", saveNameDirectLink
 
 return
 

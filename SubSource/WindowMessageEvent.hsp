@@ -343,11 +343,11 @@ return 1
 	
 	if (wparam = HOTKEYID) & (availablecap = 1){
 
-		gosub *sscaptcha
+		gosub *ssCapture
 		if ((mode != 0)&(mode != modeOptionNum)) {
-			if autoaddcaptcha{
+			if autoaddCapture{
 				addfilename = sssavedir +"\\"+ savename
-				gosub *addcaptcha
+				gosub *addCapture
 			}
 		}
 		await 16
@@ -379,7 +379,7 @@ return
 		}
 	
 		addfilename = dropfile
-		gosub *addcaptcha
+		gosub *addCapture
 		nidPop
 	}
 	if ginfo(24) = WND_TWITTER{

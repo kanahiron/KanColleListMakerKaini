@@ -9,20 +9,20 @@
 
 	font "メイリオ", Scale(13)
 
-	objsize Scale(175),Scale(30)
+	objsize Scale(175), Scale(30)
 	pos 0,0
 	combox cellmode, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
 	comboxId = stat
 	hCombox = objinfo_hwnd(comboxId)
 	await: GetClientRect hComBox, varptr(rect)
 	
-	mesy = rect(3)+Scale(3)
+	mesy = rect(3) + scale3
 	
 	pos Scale(2), mesy
 	mes "キャプチャ座標"
 		
 	objsize Scale(80), Scale(25)
-	pos Scale(95), mesy-Scale(3)
+	pos Scale(95), mesy - scale3
 	button gosub sscapmes,*sssetting
 	sscapiid = stat
 	mesy += Scale(22)
@@ -33,7 +33,7 @@
 		} else {
 			manualposf = 1
 		}
-		pos Scale(84+(manualposf * 200)), mesy+Scale(5)
+		pos Scale(84+(manualposf * 200)), mesy + scale5
 		mes "x"
 		pos Scale(0+(manualposf*200)), mesy
 		input luposx, Scale(40), Scale(23), 5
@@ -69,12 +69,15 @@
 
 
 	objsize Scale(175), Scale(20)
+	
 	pos Scale(5+mesaddx), mesy
 	chkbox "自動座標取得", autoSearch: mesy += scale20
 	autoSearchCId = stat
+	
 	pos Scale(5+mesaddx), mesy
 	chkbox "提督名と司令部Lvを隠す", hidename: mesy += scale20
 	hidenamebid = stat
+	
 	pos Scale(5+mesaddx), mesy
 	chkbox "ツイートウィンドウ表示",enableTweetWindow: mesy += scale20
 	enableTweetWindowCId = stat
@@ -83,15 +86,15 @@
 	if mainWindowSmall {
 		mesy = tempmesy + 1
 		syscolor 16
-		line Scale(3), mesy, Scale(172), mesy
-		line Scale(3), mesy+Scale(2), Scale(172), mesy+Scale(2)
+		line scale3, mesy, Scale(172), mesy
+		line scale3, mesy+Scale(2), Scale(172), mesy+Scale(2)
 		mesy += Scale(4)
 		color
 	}
 
 	objsize Scale(130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), Scale(30)
 	pos 0,mesy
-	button gosub "SSキャプチャ",*sscaptcha
+	button gosub "SSキャプチャ",*ssCapture
 	sscapbid = stat
 
 	objsize Scale(25), Scale(30)
@@ -114,7 +117,7 @@
 	
 	mesy += Scale(30)
 	
-	pos Scale(2+(disableseqcap*-175)), mesy+Scale(3)
+	pos Scale(2+(disableseqcap*-175)), mesy + scale3
 	mes "連続キャプチャ"
 	objsize Scale(80), Scale(25)
 	pos Scale(95+(disableseqcap*-175)), mesy
@@ -198,30 +201,30 @@ return
 	await: GetClientRect hComBox, varptr(rect)
 	ComBoxH = rect(3)
 
-	mesy = ComBoxH + Scale(3)
+	mesy = ComBoxH + scale3
 	
 	pos 2, mesy
 	mes "キャプチャ座標"
 		
 	objsize Scale(80), Scale(25)
-	pos Scale(95), mesy - Scale(3)
+	pos Scale(95), mesy - scale3
 	button gosub sscapmes, *sssetting
 	sscapiid = stat
 	mesy += Scale(25)
 	
-	objsize Scale(175), Scale(20)
+	objsize Scale(175), scale20
 	
 	if listmode = 0{
 	
 		width Scale(175)
 		mesy_ = mesy
-		pos Scale(5), mesy
+		pos scale5, mesy
 		chkbox "シーン: 編成→変更", ichiranMode1: mesy += Scale(100)
 		ichiranMode1Cid = stat
 		ichiranMode1Ch = objinfo_hwnd(ichiranMode1CId)
 		SetWindowLong ichiranMode1Ch, -16, $50000009 | $20000
 
-		pos Scale(5), mesy
+		pos scale5, mesy
 		chkbox "シーン: 補給", ichiranMode2: mesy += scale20
 		ichiranMode2Cid = stat
 		ichiranMode2Ch = objinfo_hwnd(ichiranMode2CId)
@@ -274,18 +277,19 @@ return
 	
 		width Scale(350)
 		
-		mesy2 = ComBoxh + Scale(3)
+		mesy2 = ComBoxh + scale3
 	
 		pos 5,mesy+1
 		mes "自動追加の方法": mesy += scale20
 	
-		objsize Scale(70), Scale(20)
+		objsize Scale(70), scale20
 		
 		pos Scale(7), mesy
 		chkbox "縦3横2",tuika1
 		tuika1cid = stat
 		tuika1ch = objinfo_hwnd(tuika1cid)
 		SetWindowLong tuika1ch, -16, $50000009 | $20000
+		
 		pos Scale(80), mesy
 		chkbox "縦2横3",tuika4
 		tuika4cid = stat
@@ -298,14 +302,16 @@ return
 		tuika3cid = stat
 		tuika3ch = objinfo_hwnd(tuika3cid)
 		sendmsg tuika3ch, $F4, $9
+		
 		pos Scale(80), mesy
 		chkbox "縦1横6", tuika2
 		tuika2cid = stat
 		tuika2ch = objinfo_hwnd(tuika2cid)
 		sendmsg tuika2ch, $F4, $9
 		mesy += scale20
+
 	
-		objsize Scale(175), Scale(20)
+		objsize Scale(175), scale20
 	
 		pos Scale(5),mesy+Scale(1)
 		mes "キャプチャ範囲":mesy += Scale(18)
@@ -357,9 +363,9 @@ return
 		input SecondFleetName, Scale(95), Scale(22): mesy2 += Scale(22)
 
 		pos window2x + Scale(7),mesy2+Scale(1)
-		chkbox "第三艦隊",enableThread
+		chkbox "第三艦隊",enableThird
 		pos window2x + Scale(80), mesy2
-		input ThreadFleetName, Scale(95), Scale(22): mesy2 += Scale(22)
+		input ThirdFleetName, Scale(95), Scale(22): mesy2 += Scale(22)
 
 		pos window2x + Scale(7), mesy2+Scale(1)
 		chkbox "第四艦隊",enableFourth
@@ -591,7 +597,7 @@ return
 		
 		objsize Scale(350), scale20
 		pos scale5, mesy
-		chkbox "＊一覧モードでSSを自動追加する", autoaddcaptcha: mesy += scale20
+		chkbox "＊一覧モードでSSを自動追加する", autoaddCapture: mesy += scale20
 		pos scale5, mesy
 		;chkbox "＊自動追加の場合はSSを保存しない", autoaddnonsave: mesy += scale20
 		pos scale5, mesy
@@ -626,7 +632,7 @@ return
 		pos scale5, mesy
 		mes "キャプチャ"
 		pos Scale(80), mesy
-		mesbox saveNameCaptcha, Scale(270), Scale(45), 5, 259: mesy += Scale(45)
+		mesbox saveNameCapture, Scale(270), Scale(45), 5, 259: mesy += Scale(45)
 
 		pos scale5,mesy
 		mes "艦娘一覧"

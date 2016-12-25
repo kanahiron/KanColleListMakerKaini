@@ -41,6 +41,8 @@
 #define SET_WND_INFO wndInfoArr(ginfo(3), WI_HANDLE) = hwnd: wndInfoArr(ginfo(3), WI_DC) = hdc
 #define ctype WND_INFO(%1, %2) wndInfoArr(%1, %2)
 
+#define ctype RGBtoBGR(%1) (((%1<<16)&0xFF0000) | ((%1>>16)&0xFF) | (%1&0xFF00))
+
 #enum WND_MAIN = 0
 #enum WND_GRID
 #enum WND_TWITTER		//Œ³19
@@ -105,7 +107,7 @@
 		oncmd gosub *OnDropFiles ,WM_DROPFILES
 		oncmd gosub *setmode, WM_COMMAND
 		oncmd gosub *hotkey, WM_HOTKEY
-		oncmd gosub *sscaptcha, WM_TIMER
+		oncmd gosub *ssCapture, WM_TIMER
 		oncmd gosub *vscroll, WM_VSCROLL
 		oncmd gosub *DPICHANGED, WM_DPICHANGED
 
@@ -125,8 +127,8 @@
 		color 0,255,0
 		boxf
 		GetWindowLong WND_INFO(WND_OVERLAY, WI_HANDLE),-20
-		SetWindowLong WND_INFO(WND_OVERLAY, WI_HANDLE),-20,stat|$80000
-		SetLayeredWindowAttributes WND_INFO(WND_OVERLAY, WI_HANDLE),0x00000000,128,LWA_ALPHA
+		SetWindowLong WND_INFO(WND_OVERLAY, WI_HANDLE),-20, stat | $80000
+		SetLayeredWindowAttributes WND_INFO(WND_OVERLAY, WI_HANDLE), 0x00000000, 128, LWA_ALPHA
 
 	buffer WND_MAKE_STRING, 1000, 340
 		SET_WND_INFO		
@@ -141,8 +143,8 @@
 		SET_WND_INFO
 		picload "huki.png"
 		GetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20
-		SetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20,stat|$80000
-		SetLayeredWindowAttributes WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),0x000000FF,192,LWA_COLORKEY | LWA_ALPHA
+		SetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20, stat | $80000
+		SetLayeredWindowAttributes WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), 0x000000FF, 192, LWA_COLORKEY | LWA_ALPHA
 		gsel WND_IMAGE_BUF2, -1
 
 	buffer WND_GRID_STRING ,640,150
@@ -174,16 +176,15 @@
 	gosub *ssMode
 	gosub *hotkeyCapSetting
 	
-	
 	gsel WND_MAIN,1+frontRow
 
-	wait 100
+	wait 50
 
 	gosub *twiInit
 
 	if enableTweetWindow {
-		gsel WND_TWITTER,1
-		gsel WND_MAIN,1+frontrow
+		gsel WND_TWITTER, 1
+		gsel WND_MAIN, 1+frontrow
 	}
 	
 	gosub *VerCheck
@@ -205,6 +206,8 @@
 	dpi = GetDeviceCaps(hdc, 88)
 	DPIScale = 1.0 * dpi / 96.0
 
+	scale3 = scale(3)
+	scale5 = scale(5)
 	scale20 = scale(20)
 
 return
@@ -260,5 +263,5 @@ return
 #include "./SubSource/VersionCheck.hsp"
 #include "./SubSource/OptionSetting.hsp"
 #include "./SubSource/WindowMessageEvent.hsp"
-#include "./SubSource/Captcha.hsp"
+#include "./SubSource/Capture.hsp"
 #include "./SubSource/GridWindowOperation.hsp"

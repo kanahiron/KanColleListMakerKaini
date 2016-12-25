@@ -59,9 +59,9 @@
 		y += 70
 	}
 	
-	if enableThread = 1{
+	if enableThird = 1{
 		x = 10
-		string = ThreadFleetName
+		string = ThirdFleetName
 		color 255,255,255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
@@ -72,7 +72,7 @@
 			pos xt+220, yt
 			mes string
 		loop
-		color ((fontColorThreadFleet&0x00FF0000)>>16),((fontColorThreadFleet&0x0000FF00)>>8),(fontColorThreadFleet&0x000000FF)
+		color ((fontColorThirdFleet&0x00FF0000)>>16),((fontColorThirdFleet&0x0000FF00)>>8),(fontColorThirdFleet&0x000000FF)
 		pos x, y
 		mes string
 		y += 70
@@ -141,7 +141,7 @@
 		x += 100
 	}
 	
-	if enableThread = 1{
+	if enableThird = 1{
 		y = 10
 		string = "1\n2\n3\n4\n5\n6"
 		color 255,255,255
@@ -154,7 +154,7 @@
 			pos xt+50, yt
 			mes string
 		loop
-		color ((fontColorThreadFleet&0x00FF0000)>>16),((fontColorThreadFleet&0x0000FF00)>>8),(fontColorThreadFleet&0x000000FF)
+		color ((fontColorThirdFleet&0x00FF0000)>>16),((fontColorThirdFleet&0x0000FF00)>>8),(fontColorThirdFleet&0x000000FF)
 		pos x, y
 		mes string
 		x += 100
@@ -202,41 +202,54 @@
 	pos x, y
 	mes string
 	redraw 1
+
+	dim colorRefArr, 16
+	repeat 16: colorRefArr(cnt) = 0x00FFFFFF: loop
+	dim chooseColoerStruct, 9
+	chooseColoerStruct(0) = 36, hwnd, 0, 0, varptr(colorRefArr), CC_FULLOPEN | CC_RGBINIT
 	
 	nidpop
 return
 
 *colorCange1
-	dialog "",33
-	if stat = 1{
-		fontColorFirstFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
-		fontColorFirstFleet = int("$"+fontColorFirstFleetStr)
+	colorRefArr(0) = RGBtoBGR(fontColorFirstFleet)
+	chooseColoerStruct(3) = RGBtoBGR(fontColorFirstFleet)
+	ChooseColor varptr(chooseColoerStruct)
+	if (stat != 0){
+		fontColorFirstFleet = RGBtoBGR(chooseColoerStruct(3))
+		fontColorFirstFleetStr = strf("%06X",fontColorFirstFleet)
+		gosub *drawColor
 	}
-	gosub *drawColor
 return
 *colorCange2
-	dialog "",33
-	if stat = 1{
-		fontColorSecondFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
-		fontColorSecondFleet = int("$"+fontColorSecondFleetStr)
+	colorRefArr(0) = RGBtoBGR(fontColorSecondFleet)
+	chooseColoerStruct(3) = RGBtoBGR(fontColorSecondFleet)
+	ChooseColor varptr(chooseColoerStruct)
+	if (stat != 0){
+		fontColorSecondFleet = RGBtoBGR(chooseColoerStruct(3))
+		fontColorSecondFleetStr = strf("%06X",fontColorSecondFleet)
+		gosub *drawColor
 	}
-	gosub *drawColor
 return
-*colorCange3
-	dialog "",33
-	if stat = 1{
-		fontColorThreadFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
-		fontColorThreadFleet = int("$"+fontColorThreadFleetStr)
+*colorCanrge3
+	colorRefArr(0) = RGBtoBGR(fontColorThirdFleet)
+	chooseColoerStruct(3) = RGBtoBGR(fontColorThirdFleet)
+	ChooseColor varptr(chooseColoerStruct)
+	if (stat != 0){
+		fontColorThirdFleet = RGBtoBGR(chooseColoerStruct(3))
+		fontColorThirdFleetStr = strf("%06X",fontColorThirdFleet)
+		gosub *drawColor
 	}
-	gosub *drawColor
 return
 *colorCange4
-	dialog "",33
-	if stat = 1{
-		fontColorFourthFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
-		fontColorFourthFleet = int("$"+fontColorFourthFleetStr)
+	colorRefArr(0) = RGBtoBGR(fontColorFourthFleet)
+	chooseColoerStruct(3) = RGBtoBGR(fontColorFourthFleet)
+	ChooseColor varptr(chooseColoerStruct)
+	if (stat != 0){
+		fontColorFourthFleet = RGBtoBGR(chooseColoerStruct(3))
+		fontColorFourthFleetStr = strf("%06X",fontColorFourthFleet)
+		gosub *drawColor
 	}
-	gosub *drawColor
 return
 
 *drawColor
@@ -248,7 +261,7 @@ return
 		boxf Scale(210), drawColorPos + 1, Scale(350) - 1, drawColorPos + Scale(20)
 		color ((fontColorSecondFleet&0x00FF0000)>>16),((fontColorSecondFleet&0x0000FF00)>>8),(fontColorSecondFleet&0x000000FF)
 		boxf Scale(210), drawColorPos + Scale(22) + 1, Scale(350) - 1, drawColorPos + Scale(20 + 22)
-		color ((fontColorThreadFleet&0x00FF0000)>>16),((fontColorThreadFleet&0x0000FF00)>>8),(fontColorThreadFleet&0x000000FF)
+		color ((fontColorThirdFleet&0x00FF0000)>>16),((fontColorThirdFleet&0x0000FF00)>>8),(fontColorThirdFleet&0x000000FF)
 		boxf Scale(210), drawColorPos + Scale(44) + 1, Scale(350) - 1, drawColorPos + Scale(20 + 44)
 		color ((fontColorFourthFleet&0x00FF0000)>>16),((fontColorFourthFleet&0x0000FF00)>>8),(fontColorFourthFleet&0x000000FF)
 		boxf Scale(210), drawColorPos + Scale(66) + 1, Scale(350) - 1, drawColorPos + Scale(20 + 66)
