@@ -414,47 +414,30 @@ return
 return
 
 *vscroll
-	
+	oncmd 0
+	nidPush
 	if (lparam == hTrackbar) {
 		sendmsg hTrackbar, TBM_GETPOS
 		tempint = stat
 		sendmsg hTrackBarScale, $C ,, strf("%d%% ",tempint)
 		DPIScale = (0.01 * tempint)
 
-		if (mode == 0){
-			gsel WND_MAIN
-			gosub *ssmode
-		}
-		if (mode == 1){
-			listmode = 0
-			gsel WND_GRID,0
-			gosub *list
-		}
-		if (mode == 2){
-			listmode = 1
-			gsel WND_GRID,0
-			gosub *list
-		}
-		if (mode == 3){
-			listmode = 2
-			gsel WND_GRID,0
-			gosub *list
-		}
-		if (mode == modeOptionNum){
-			gosub *option
-		}
-		if (enableTweetWindow == TRUE){
-			gosub *twiInit
-		}
-		
+		scale20 = scale(20)
 	}
+	nidPop
+	oncmd 1
 return
 
 *DPICHANGED
+	oncmd 0
+	nidPush
+	
 	logmes "WM_DPICHANGED"
 	
 	dpi = HIWORD(wparam)
 	DPIScale = 1.0 * dpi / 96.0
+
+	scale20 = scale(20)
 
 	if (mode == 0){
 		gsel WND_MAIN
@@ -482,5 +465,7 @@ return
 		gosub *twiInit
 	}
 
+	nidPop
+	oncmd 1
 return
 	

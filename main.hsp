@@ -58,7 +58,7 @@
 #define FONT_SIZE_MANUAL_GETPOS_STRING 30
 #define FONT_SIZE_ALL 13
 
-#define ctype Scale(%1) int(DPIScale*%1+0.5)
+#define ctype Scale(%1) int(DPIScale*(%1)+0.5)
 
 
 #ifdef _debug
@@ -77,6 +77,10 @@
 	if (strsize != -1): delete "./hsptmp"
 	exist "./obj"
 	if (strsize != -1): delete "./obj"
+	exist "./start.ax"
+	if (strsize != -1): delete "./start.ax"
+	exist "./packfile"
+	if (strsize != -1): delete "./packfile"
 	
 #endif
 	
@@ -144,36 +148,28 @@
 	buffer WND_GRID_STRING ,640,150
 		SET_WND_INFO
 		syscolor 16
-		font "メイリオ", FONT_SIZE_GRID_STRING, 1
+		font "メイリオ", Scale(25), 1
 		mes "スクリーンショットをここにドラッグアンドドロップ"
 		mes "またはホットキー(Altキー＋Zキー同時押し)で
 		mes "                                         画像を追加してください"
 		mes "セルの画像はウィンドウ外にドラッグで消去できます"
 		//640,150
 	
-	screen WND_TWITTER, 448, 270, 2
+	screen WND_TWITTER, disInfo(2), disInfo(3), 2
 		SET_WND_INFO
 		oncmd gosub *twiwindowimage,0x0201
 		oncmd gosub *rideCursor,WM_MOUSEMOVE
 		oncmd gosub *getText ,WM_COMMAND
 		oncmd gosub *OnDropFiles, WM_DROPFILES
+		width 448, 270
 		//448, 270
 
 	gsel WND_MAIN, -1
 	syscolor 15:boxf:color
-	font "メイリオ", FONT_SIZE_ALL
+	font "メイリオ", Scale(13)
 	objmode 2
 	
-	objsize Scale(175),Scale(30)
-	pos 0,0
-	combox cellmode,100,"  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
-	comboxId = stat
-	hCombox = objinfo_hwnd(comboxId)
 	modeOptionNum = 4
-	await: GetClientRect hComBox, varptr(rect)
-	ComBoxSizeH = rect(3)
-	
-	button "dum_my",*adummy
 	
 	gosub *ssMode
 	gosub *hotkeyCapSetting
@@ -192,8 +188,6 @@
 	
 	gosub *VerCheck
 
-
-*adummy
 	stop
 
 
@@ -210,6 +204,8 @@
 
 	dpi = GetDeviceCaps(hdc, 88)
 	DPIScale = 1.0 * dpi / 96.0
+
+	scale20 = scale(20)
 
 return
 

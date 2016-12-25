@@ -4,19 +4,28 @@
 	
 	gsel WND_GRID, -1
 	gsel WND_MAIN, 1+frontrow
-	clrobj 1
+	clrobj
 	syscolor 15:boxf:color
 
-	mesy = ComBoxSizeH+3
+	font "メイリオ", Scale(13)
+
+	objsize Scale(175),Scale(30)
+	pos 0,0
+	combox cellmode, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+	comboxId = stat
+	hCombox = objinfo_hwnd(comboxId)
+	await: GetClientRect hComBox, varptr(rect)
 	
-	pos 2,mesy
+	mesy = rect(3)+Scale(3)
+	
+	pos Scale(2), mesy
 	mes "キャプチャ座標"
 		
-	objsize 80,25
-	pos 95,mesy-3
+	objsize Scale(80), Scale(25)
+	pos Scale(95), mesy-Scale(3)
 	button gosub sscapmes,*sssetting
 	sscapiid = stat
-	mesy+=22
+	mesy += Scale(22)
 	
 	if manualpos {
 		if manualpos {
@@ -24,19 +33,19 @@
 		} else {
 			manualposf = 1
 		}
-		pos 84+(manualposf*200),mesy+5
+		pos Scale(84+(manualposf * 200)), mesy+Scale(5)
 		mes "x"
-		pos 0+(manualposf*200),mesy
-		input luposx,40,23,5
+		pos Scale(0+(manualposf*200)), mesy
+		input luposx, Scale(40), Scale(23), 5
 		luposxiid = stat
-		pos 40+(manualposf*200),mesy
-		input luposy,40,23,5
+		pos Scale(40+(manualposf*200)), mesy
+		input luposy, Scale(40), Scale(23), 5
 		luposyiid = stat
-		pos 95+(manualposf*200),mesy
-		input rdposx,40,23,5
+		pos Scale(95+(manualposf*200)), mesy
+		input rdposx, Scale(40), Scale(23), 5
 		rdposxiid = stat
-		pos 135+(manualposf*200),mesy
-		input rdposy,40,23,5
+		pos Scale(135+(manualposf*200)), mesy
+		input rdposy, Scale(40), Scale(23), 5
 		rdposyiid = stat
 	
 		GetWindowLong objinfo(luposxiid,2), -16
@@ -48,87 +57,88 @@
 		GetWindowLong objinfo(rdposyiid,2), -16
 		SetWindowLong objinfo(rdposyiid,2), -16, stat | $2
 		
-		mesy+=23
+		mesy += Scale(23)
 	}
 	
 	if mainWindowSmall {
-		mesaddx = 500
+		mesaddx = Scale(500)
 		tempmesy = mesy
 	} else { 
 		mesaddx=0
 	}
-	
-	objsize 175,20
-	pos 5+mesaddx,mesy
-	chkbox "自動座標取得",autoSearch:mesy+=20
+
+
+	objsize Scale(175), Scale(20)
+	pos Scale(5+mesaddx), mesy
+	chkbox "自動座標取得", autoSearch: mesy += scale20
 	autoSearchCId = stat
-	pos 5+mesaddx,mesy
-	chkbox "提督名と司令部Lvを隠す",hidename:mesy+=20
+	pos Scale(5+mesaddx), mesy
+	chkbox "提督名と司令部Lvを隠す", hidename: mesy += scale20
 	hidenamebid = stat
-	pos 5+mesaddx,mesy
-	chkbox "ツイートウィンドウ表示",enabletweetwindow:mesy+=20
-	enabletweetwindowcid = stat
-	enabletweetwindowch = objinfo_hwnd(enabletweetwindowcid)
+	pos Scale(5+mesaddx), mesy
+	chkbox "ツイートウィンドウ表示",enableTweetWindow: mesy += scale20
+	enableTweetWindowCId = stat
+	enableTweetWindowCh = objinfo_hwnd(enableTweetWindowCId)
 	
 	if mainWindowSmall {
 		mesy = tempmesy + 1
 		syscolor 16
-		line 3,mesy,172,mesy
-		line 3,mesy+2,172,mesy+2
-		mesy += 4
+		line Scale(3), mesy, Scale(172), mesy
+		line Scale(3), mesy+Scale(2), Scale(172), mesy+Scale(2)
+		mesy += Scale(4)
 		color
 	}
 
-	objsize 130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25),30
+	objsize Scale(130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), Scale(30)
 	pos 0,mesy
 	button gosub "SSキャプチャ",*sscaptcha
 	sscapbid = stat
 
-	objsize 25,30
-	pos 130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25),mesy
+	objsize Scale(25), Scale(30)
+	pos Scale(130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), mesy
 	button gosub "開",*sssavefopen
 	fopenbid = stat
 	
 	if ((yabumiautoupload = 1) & (availableyabumi = 1)) {
-		pos 130,mesy
+		pos Scale(130), mesy
 	} else {
-		pos 200,mesy
+		pos Scale(200), mesy
 	}	
-	button gosub "UP",*yabumiupload
+	button gosub "UP",*yabumiUpload
 	yabumibid = stat
 	
-	pos 155,mesy
-	objsize 20,30
+	pos Scale(155), mesy
+	objsize Scale(20), Scale(30)
 	button gosub windowsSizeChangeBMes(mainWindowSmall),*windowsSizeChange
 	windowsSizeChangebid = stat
 	
-	mesy+=30
+	mesy += Scale(30)
 	
-	pos 2+(disableseqcap*-175), mesy+2
+	pos Scale(2+(disableseqcap*-175)), mesy+Scale(3)
 	mes "連続キャプチャ"
-	objsize 80, 25
-	pos 95+(disableseqcap*-175), mesy
-	if disableseqcap = 0: mesy+=24
+	objsize Scale(80), Scale(25)
+	pos Scale(95+(disableseqcap*-175)), mesy
+	if disableseqcap = 0: mesy += Scale(25)
 	button gosub seqcapmes, *seqcap
 	seqcapbid = stat
 	
 	dispcapy = mesy
 	if dispcap {
 		syscolor 16
-		boxf 0, mesy, 175, mesy+105
+		boxf 0, mesy, Scale(175), mesy+Scale(105)
 		syscolor 15
-		boxf 3, mesy+3, 171, mesy+101
+		boxf Scale(3), mesy+Scale(3), Scale(171), mesy+Scale(101)
 		color
-		mesy += 105
+		mesy += Scale(105)
 	}
 
 	if hidelog_ = 0{
 		pos 0, mesy
-		mesy += 70
+		mesy += Scale(70)
 	} else {
-		pos -175, mesy
+		pos Scale(-175), mesy
 	}
-	mesbox logmessage, 175, 70, 0
+	mesbox logmessage, Scale(175), Scale(70), 0
 	logid = stat
 
 	if availablecap = 0{
@@ -145,7 +155,7 @@
 		objenable sscapbid, 1
 	}
 	
-	width Scale(175), Scale(mesy)
+	width Scale(175), mesy
 
 	oncmd 1
 return
@@ -173,12 +183,22 @@ return
 	mxy(0) = 0, 0
 	mxy_(0) = 0, 0
 	cliflag = 0
-	
-	mesy = ComBoxSizeH+3
 
 	gsel WND_MAIN, 2
-	clrobj 1
+	clrobj
 	syscolor 15: boxf: color
+
+	font "メイリオ", Scale(13)
+
+	objsize Scale(175),Scale(30)
+	pos 0,0
+	combox cellmode,100,"  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+	comboxId = stat
+	hCombox = objinfo_hwnd(comboxId)
+	await: GetClientRect hComBox, varptr(rect)
+	ComBoxSizeH = rect(3)
+	
+	mesy = ComBoxSizeH+3
 	
 	pos 2, mesy
 	mes "キャプチャ座標"
@@ -189,11 +209,11 @@ return
 	sscapiid = stat
 	mesy+=25
 	
-	objsize 175, 20
+	objsize Scale(175), Scale(20)
 	
 	if listmode = 0{
 	
-		width 175
+		width Scale(175)
 		mesy_ = mesy
 		pos 5, mesy
 		chkbox "シーン: 編成→変更", ichiranMode1: mesy+=100
@@ -251,7 +271,7 @@ return
 	}
 	if listmode = 1{
 	
-		width 350
+		width Scale(350)
 		
 		mesy2 = 5
 	
@@ -365,7 +385,7 @@ return
 
 	if listmode = 2{
 	
-		width  175
+		width  Scale(175)
 		
 		objsize 175,20
 		
@@ -425,7 +445,8 @@ return
 	mesbox logmessage,175,70,0 :mesy+=70
 	logid = stat
 	
-	width Scale(175), Scale(mesy-(Scale(70)*hidelog_))
+	width , Scale(mesy-(Scale(70)*hidelog_))
+	
 	
 	if IsWindowVisible(WND_INFO(WND_GRID, WI_HANDLE)) = 0{
 		gsel WND_GRID,1
@@ -443,15 +464,27 @@ return
 //オプション――――――――――――――――――――――――――――――――――
 *option
 	oncmd 0
+	redraw 0
 
 	gsel WND_GRID,-1
 	gsel WND_MAIN, 1+frontrow
-	clrobj 1
+	clrobj
 	syscolor 15:boxf:color
 
-	pos 175, 0
-	objsize 175,25
-	combox optionMode, 100, " 環境設定\n キャプチャ・作成設定\n Twitter設定\n その他設定"
+	font "メイリオ", Scale(13)
+	mref BMSCR, 67
+	hFontMain = BMSCR.38
+
+	objsize Scale(175),Scale(30)
+	pos 0,0
+	combox cellmode, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+	comboxId = stat
+	hCombox = objinfo_hwnd(comboxId)
+	await: GetClientRect hComBox, varptr(rect)
+	ComBoxSizeH = rect(3)
+
+	pos Scale(175), 0
+	combox optionMode, Scale(100), " 環境設定\n キャプチャ・作成設定\n Twitter設定\n その他設定"
 	hOptionComBox = objinfo(stat, 2)
 
 	mesy = ComBoxSizeH+3
@@ -489,13 +522,10 @@ return
 		sendmsg hTrackbar, TBM_SETTICFREQ, 50, 0
 		sendmsg hTrackbar, TBM_SETPOS, 1, int(DPIScale*100)
 
-		mref BMSCR, 67
-		hFont = BMSCR.38
-	
 		pos 300, mesy
 		winobj "static", strf("%d%% ",DPIScale*100), , $50000002, 40, 30: mesy+=30
 		hTrackBarScale = objinfo(stat, 2)
-		sendmsg hTrackBarScale, $30, hFont
+		sendmsg hTrackBarScale, $30, hFontMain
 
 		objsize 150,20
 		pos 14,mesy
@@ -636,5 +666,6 @@ return
 
 	width Scale(350),Scale(mesy)
 
+	redraw 1
 	oncmd 1
 return
