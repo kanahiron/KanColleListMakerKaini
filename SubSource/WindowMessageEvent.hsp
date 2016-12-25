@@ -422,6 +422,8 @@ return
 		sendmsg hTrackBarScale, $C ,, strf("%d%% ",tempint)
 		DPIScale = (0.01 * tempint)
 
+		scale3 = scale(3)
+		scale5 = scale(5)
 		scale20 = scale(20)
 	}
 	nidPop
@@ -437,6 +439,8 @@ return
 	dpi = HIWORD(wparam)
 	DPIScale = 1.0 * dpi / 96.0
 
+	scale3 = scale(3)
+	scale5 = scale(5)
 	scale20 = scale(20)
 
 	if (mode == 0){

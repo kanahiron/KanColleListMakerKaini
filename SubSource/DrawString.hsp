@@ -211,47 +211,47 @@ return
 	if stat = 1{
 		fontColorFirstFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
 		fontColorFirstFleet = int("$"+fontColorFirstFleetStr)
-		gosub *drawColor
 	}
+	gosub *drawColor
 return
 *colorCange2
 	dialog "",33
 	if stat = 1{
 		fontColorSecondFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
 		fontColorSecondFleet = int("$"+fontColorSecondFleetStr)
-		gosub *drawColor
 	}
+	gosub *drawColor
 return
 *colorCange3
 	dialog "",33
 	if stat = 1{
 		fontColorThreadFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
 		fontColorThreadFleet = int("$"+fontColorThreadFleetStr)
-		gosub *drawColor	
 	}
+	gosub *drawColor
 return
 *colorCange4
 	dialog "",33
 	if stat = 1{
 		fontColorFourthFleetStr = strf("%02X%02X%02X",ginfo_r,ginfo_g,ginfo_b)
 		fontColorFourthFleet = int("$"+fontColorFourthFleetStr)
-		gosub *drawColor
 	}
+	gosub *drawColor
 return
 
 *drawColor
 	if (mode = 2){
-		nidpush
+		nidPush
 		gosub *drawString
 		gsel WND_MAIN
 		color ((fontColorFirstFleet&0x00FF0000)>>16),((fontColorFirstFleet&0x0000FF00)>>8),(fontColorFirstFleet&0x000000FF)
-		boxf 210,drawColorPos+2,348,drawColorPos+19
+		boxf Scale(210), drawColorPos + 1, Scale(350) - 1, drawColorPos + Scale(20)
 		color ((fontColorSecondFleet&0x00FF0000)>>16),((fontColorSecondFleet&0x0000FF00)>>8),(fontColorSecondFleet&0x000000FF)
-		boxf 210,drawColorPos+2+22,348,drawColorPos+19+22
+		boxf Scale(210), drawColorPos + Scale(22) + 1, Scale(350) - 1, drawColorPos + Scale(20 + 22)
 		color ((fontColorThreadFleet&0x00FF0000)>>16),((fontColorThreadFleet&0x0000FF00)>>8),(fontColorThreadFleet&0x000000FF)
-		boxf 210,drawColorPos+2+44,348,drawColorPos+19+44
+		boxf Scale(210), drawColorPos + Scale(44) + 1, Scale(350) - 1, drawColorPos + Scale(20 + 44)
 		color ((fontColorFourthFleet&0x00FF0000)>>16),((fontColorFourthFleet&0x0000FF00)>>8),(fontColorFourthFleet&0x000000FF)
-		boxf 210,drawColorPos+2+66,348,drawColorPos+19+66
-		nidpop
+		boxf Scale(210), drawColorPos + Scale(66) + 1, Scale(350) - 1, drawColorPos + Scale(20 + 66)
+		nidPop
 	}
 return

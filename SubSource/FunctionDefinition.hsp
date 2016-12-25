@@ -29,6 +29,7 @@
 #func  SetCursorPos "SetCursorPos" int, int
 #func  ScreenToClient "ScreenToClient" int , int
 #func  ChildWindowFromPoint "ChildWindowFromPoint" int, int, int
+#func  ChildWindowFromPointEx "ChildWindowFromPointEx" int, int, int, int
 #func  SetFocus "SetFocus" int
 #func  SetParent "SetParent" int , int
 #func  RegisterHotKey "RegisterHotKey" int, int, int, int
@@ -39,10 +40,6 @@
 #func  LoadCursor "LoadCursorW" int, int
 #func  SetTimer "SetTimer" int, int, int, sptr
 #func  KillTimer "KillTimer" int, int
-
-#func  ChildWindowFromPointEx "ChildWindowFromPointEx" int, int, int, int
-;#func  ChildWindowFromPoint "ChildWindowFromPoint" int, int
-
 #cfunc WindowFromPoint "WindowFromPoint" int, int
 #func  GetClientRect "GetClientRect" int, int
 #func  GetWindowRect "GetWindowRect" int, int
@@ -56,6 +53,9 @@
 
 #uselib "winmm.dll"
 #cfunc timeGetTime "timeGetTime"
+
+#uselib "Comdlg32.dll"
+#func ChooseColor "ChooseColorW" int
 
 
 //レイヤードウィンドウ周り
@@ -133,3 +133,13 @@
 #enum TBM_SETTHUMBLENGTH
 #enum TBM_GETTHUMBLENGTH
 
+//Colorなんとか
+#const CC_ANYCOLOR				0x00000100
+#const CC_ENABLEHOOK			0x00000010
+#const CC_ENABLETEMPLATE		0x00000020
+#const CC_ENABLETEMPLATEHANDLE	0x00000040
+#const CC_FULLOPEN				0x00000002
+#const CC_PREVENTFULLOPEN		0x00000004
+#const CC_RGBINIT				0x00000001
+#const CC_SHOWHELP				0x00000008
+#const CC_SOLIDCOLOR			0x00000080
