@@ -91,18 +91,18 @@
 	nidStack_Init
 	isHomeport_init WND_HOME_PORT_MOD
 	DateAndTimeFormat_Init
-		
-	gosub *DeclaringVariables
-	gosub *iniLoad
-	gosub *dataCheck
-	gosub *iniSave
-	gosub *loadHistory
 
 	DPIScale = 1.0
 	if (autoDPIScale){
 		dpi = GetDeviceCaps(hdc, 88)
 		DPIScale = 1.0 * dpi / 96.0
 	}
+
+	gosub *DeclaringVariables
+	gosub *iniLoad
+	gosub *dataCheck
+	gosub *iniSave
+	gosub *loadHistory
 
 	scale3 = scale(3)
 	scale5 = scale(5)
