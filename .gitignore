@@ -2,6 +2,8 @@
 /obj
 /packfile
 /start.ax
+/debuglog.txt
+/.gitignore
 /艦これ一覧めいかー改二.exe
 /makelist.ini
 /SubSource/key.hsp

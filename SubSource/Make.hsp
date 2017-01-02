@@ -315,13 +315,13 @@
 
 		sdim tempstr
 		
-		if listmode = 0:DateAndTimeFormat saveNameList, tempstr
-		if listmode = 1:DateAndTimeFormat saveNameFormation, tempstr
+		if listmode = 0: tempstr = DateAndTimeFormat2(saveNameList)
+		if listmode = 1: tempstr = DateAndTimeFormat2(saveNameFormation)
 		if listmode = 2{
 			if directLink{
-				DateAndTimeFormat saveNameDirectLink, tempstr
+				tempstr = DateAndTimeFormat2(saveNamedirectLink)
 			} else {
-				DateAndTimeFormat saveNameAirStation, tempstr
+				tempstr = DateAndTimeFormat2(saveNameAirStation)
 			}
 		}
 		

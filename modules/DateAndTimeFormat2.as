@@ -1,9 +1,9 @@
-#module "DateAndTimeFormat_Mod"
+#module "DateAndTimeFormat2_Mod"
 
 #uselib "kernel32.dll"
 #func GetLocalTime "GetLocalTime" int
 
-#deffunc DateAndTimeFormat_Init
+#deffunc DateAndTimeFormat2_Init
 
 	dim localTime, 4
 
@@ -15,15 +15,13 @@
 
 	jDayOfWeekFullArr = "“ú—j“ú", "Œ—j“ú", "‰Î—j“ú", "…—j“ú", "–Ø—j“ú", "‹à—j“ú", "“y—j“ú"													//jdddd		
 	jDayOfWeekAbbreviationsArr = "“ú", "Œ", "‰Î", "…", "–Ø", "‹à", "“y"																		//jddd
-
 	
 	eTimeDivisionArr = "AM","PM"		//ett
 	jTimeDivisionArr = "Œß‘O","ŒßŒã"	//jtt
 	
 return
 
-//DateAndTimeFormat –ß‚è’n‚ª0‚È‚ç¬Œ÷ -1‚Í•sˆê’v -2‚Íg‚¦‚È‚¢•¶š
-#deffunc DateAndTimeFormat str _st, var st
+#defcfunc DateAndTimeFormat2 str _st
 
 	sdim st
 	st = _st
@@ -58,71 +56,56 @@ return
 
  	msec = strf("%03d", wpeek(localTime(3), 2))			//ms
 
-
 	strrep st, "<yyyy>", year4
 	strrep st, "<yy>", year2
 	strrep st, "<y>", year1
-	
 	strrep st, "<MMMM>", eMonthFullArr(mouhtNum)
 	strrep st, "<MMM>", eMonthAbbreviationsArr(mouhtNum)
 	strrep st, "<MM>", month2
 	strrep st, "<M>", month1
-
 	strrep st, "<edddd>", eDayOfWeekFullArr(dayOfWeekNum)
 	strrep st, "<eddd>", eDayOfWeekAbbreviationsArr(dayOfWeekNum)
 	strrep st, "<jdddd>", jDayOfWeekFullArr(dayOfWeekNum)
 	strrep st, "<jddd>", jDayOfWeekAbbreviationsArr(dayOfWeekNum)
 	strrep st, "<dd>", day2
 	strrep st, "<d>", day1
-
 	strrep st, "<hh>", hour122
 	strrep st, "<h>", hour121
-
 	strrep st, "<ett>", eTimeDivisionArr(timeDivisionNum)
 	strrep st, "<jtt>", jTimeDivisionArr(timeDivisionNum)
-	
-
 	strrep st, "<HH>",hour242
 	strrep st, "<H>", hour241
-
 	strrep st, "<mm>", min2
 	strrep st, "<m>", min1
-
 	strrep st, "<ss>", sec2
 	strrep st, "<s>", sec1
-
 	strrep st, "<ms>", msec
-	
-	strrep st, "<", ""
-	if stat != 0: return -1
-	strrep st, ">", ""
-	if stat != 0: return -1
-	
-	strrep st, "\\", ""
-	if stat != 0: return -2
-	strrep st, "/", ""
-	if stat != 0: return -2
-	strrep st, ":", ""
-	if stat != 0: return -2
-	strrep st, "*", ""
-	if stat != 0: return -2
-	strrep st, "?", ""
-	if stat != 0: return -2
-	strrep st, "!", ""
-	if stat != 0: return -2
-	strrep st, "\"", ""
-	if stat != 0: return -2
-	strrep st, "|", ""
-	if stat != 0: return -2
 
-	return 0
+return st
+
+#deffunc isValidFileName str _filename, local filename 
+
+	filename = _filename
+
+	if instr(filename, 0, "<") != -1: return 0
+	if instr(filename, 0, ">") != -1: return 0
+	if instr(filename, 0, "\\") != -1: return 0
+	if instr(filename, 0, "/") != -1: return 0
+	if instr(filename, 0, ":") != -1: return 0
+	if instr(filename, 0, "*") != -1: return 0
+	if instr(filename, 0, "?") != -1: return 0
+	if instr(filename, 0, "!") != -1: return 0
+	if instr(filename, 0, "\"") != -1: return 0
+	if instr(filename, 0, "|") != -1: return 0
+
+return 1
+
 
 #global
-
+	
+	DateAndTimeFormat2_Init
 
 #if 0
-
-	DateAndTimeFormat_Init
 
 	st =  "”N@@@@<yyyy>-<yy>-<y>\n"
 	st += "Œ@@@@<MMMM>-<MMM>-<MM>-<M>\n"
@@ -135,9 +118,14 @@ return
 	st += "•b@@@@<ss>-<s>\n"
 	st += "ƒ~ƒŠ•b@@<ms>"
 
-	DateAndTimeFormat st, st
-	mes st
+	mes DateAndTimeFormat2(st)
+
+	isValidFileName "d"
 	mes stat
+
+	isValidFileName "<>"
+	mes stat
+	
 	stop
 
 #endif

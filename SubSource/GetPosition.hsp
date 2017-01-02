@@ -65,10 +65,6 @@
 				winSizeX = rect(2)
 				winSizeY = rect(3)
 
-				temp_ = winSizeX, winSizeY
-				aaaa = 0
-				bbbb = 0
-
 				hChildClient = hClient
 				_hChildClient = 0
 

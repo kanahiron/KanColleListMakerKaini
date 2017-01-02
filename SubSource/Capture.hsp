@@ -112,16 +112,14 @@
 	
 	}
 
-	sdim tempstr
-	DateAndTimeFormat saveNameCapture, tempstr
-	savename = strf("%s%s",tempstr,savekind(jpgsave))
+	saveName = strf("%s%s", DateAndTimeFormat2(saveNameCapture), savekind(jpgsave))
 	
-	if seqcapf = 0{
-		savenamepath = sssavedir +"\\"+ savename
-		gdiimagesave sssavedir +"\\"+ savename,jpgquality
+	if (seqCapf == FALSE){
+		saveNamePath = ssSaveDir +"\\"+ saveName
+		gdiImageSave ssSaveDir +"\\"+ saveName, jpgQuality
 	} else {
-		savenamepath = intervalShotDir+"\\"+intervalsavedir+"\\" +savename
-		gdiimagesave intervalShotDir+"\\"+intervalsavedir+"\\" +savename,jpgquality
+		saveNamePath = intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName
+		gdiImageSave intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName, jpgQuality
 	}
 	
 	gsel WND_MAIN

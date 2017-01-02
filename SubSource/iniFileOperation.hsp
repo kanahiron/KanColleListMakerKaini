@@ -40,7 +40,7 @@
 	GetIni "Setting122", "soka", soka, "0"
 	GetIni "Setting122", "manualpos", manualpos, "0"
 
-	sdim temp,256
+	sdim temp, 256
 	GetIni "Setting130", "Twi_userdata",temp, "\"00\""
 	if stat = 0: userdata = decstr(temp)
 	GetIni "Setting130", "Twi_ACCESS_TOKEN",temp, "\"00\""
@@ -218,49 +218,35 @@ return
 	}
 
 	//=====
-
-	sdim tempstr
-
-	DateAndTimeFormat saveNameCapture, tempstr
-	if (stat != 0): saveNameCapture = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	if (stat == -1){
-		savelogtext += "Info - キャプチャ保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
-	} else : if (stat == -2){
+	isValidFileName DateAndTimeFormat2(saveNameCapture)
+	if (stat == FALSE){
+		saveNameCapture = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 		savelogtext += "Info - キャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
 
-	DateAndTimeFormat saveNameList, tempstr
-	if (stat != 0): saveNameList = "艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	if (stat == -1){
-		savelogtext += "Info - 艦娘一覧保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
-	} else : if (stat == -2){
+	isValidFileName DateAndTimeFormat2(saveNameList)
+	if (stat == FALSE){
+		saveNameList = "艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 		savelogtext += "Info - 艦娘一覧保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
 
-	DateAndTimeFormat saveNameFormation, tempstr
-	if (stat != 0): saveNameFormation = "攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	if (stat == -1){
-		savelogtext += "Info - 攻略編成保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
-	} else : if (stat == -2){
+	isValidFileName DateAndTimeFormat2(saveNameFormation)
+	if (stat == FALSE){
+		saveNameFormation = "攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 		savelogtext += "Info - 攻略編成保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
 
-	DateAndTimeFormat saveNameAirStation, tempstr
-	if (stat != 0): saveNameAirStation = "基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	if (stat == -1){
-		savelogtext += "Info - 基地航空隊保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
-	} else : if (stat == -2){
+	isValidFileName DateAndTimeFormat2(saveNameAirStation)
+	if (stat == FALSE){
+		saveNameAirStation = "基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 		savelogtext += "Info - 基地航空隊保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
 
-	DateAndTimeFormat saveNameDirectLink, tempstr
-	if (stat != 0): saveNameDirectLink = "直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	if (stat == -1){
-		savelogtext += "Info - 直接連結保存名に置換出来ない文字があります。デフォルトに変更しました。\n"
-	} else : if (stat == -2){
+	isValidFileName DateAndTimeFormat2(saveNameDirectLink)
+	if (stat == FALSE){
+		saveNameDirectLink = "直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 		savelogtext += "Info - 直接連結保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
-
 	//=====
 	
 	fontcolorname = int("$"+fontcolornamestr)

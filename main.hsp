@@ -10,7 +10,7 @@
 #include "./modules/jsonParse_utf.as"
 #include "./modules/makelistmodule_Ver7.as"
 #include "./modules/isHomepostModule.as"
-#include "./modules/DateAndTimeFormat_mod.as"
+#include "./modules/DateAndTimeFormat2.as"
 
 #pack "start.ax"
 #pack "data2.png"
@@ -90,7 +90,6 @@
 	wndInfo_Init
 	nidStack_Init
 	isHomeport_init WND_HOME_PORT_MOD
-	DateAndTimeFormat_Init
 
 	DPIScale = 1.0
 	if (autoDPIScale){
