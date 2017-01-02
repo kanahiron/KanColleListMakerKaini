@@ -79,7 +79,8 @@
 	GetIni "SettingFINAL", "ichiranMode2", ichiranMode2, "0"
 
 	GetIni "Configuration", "autoVersionCheck", autoVersionCheck, "1"
-	GetIni "Configuration", "autoDPIScale", autoDPIScale, "1"
+	GetIni "Configuration", "autoUIScale", autoUIScale, "1"
+	GetIni "Configuration", "UIScale", UIScale, "1.0"
 
 	GetIni "CaptureAndMaking", "saveNameCapture", saveNameCapture, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "saveNameList", saveNameList, "\"ŠÍ–ºˆê——_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
@@ -325,7 +326,7 @@ return
 	
 	cellsize(0,0) = scrsize(0,0)/(cellnum(0,0)+1),round(cellratio*cellsize(0,0))
 	scrsize(1,0) = round(cellsize(1,0)* (cellnum(1,0)+1) )
-	
+
 	AspectRatio(0,0) = 1.0*scrsize(1,0)/scrsize(0,0)
 	
 
@@ -468,7 +469,8 @@ return
 	WriteIni "SettingFINAL", "ichiranMode2",ichiranMode2
 
 	WriteIni "Configuration", "autoVersionCheck", autoVersionCheck
-	WriteIni "Configuration", "autoDPIScale", autoDPIScale
+	WriteIni "Configuration", "autoUIScale", autoUIScale
+	WriteIni "Configuration", "UIScale", UIScale
 
 	WriteIni "CaptureAndMaking", "saveNameCapture", saveNameCapture
 	WriteIni "CaptureAndMaking", "saveNameList", saveNameList

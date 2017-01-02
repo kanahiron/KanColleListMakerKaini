@@ -47,6 +47,7 @@
 #cfunc GetParent "GetParent" int
 #cfunc GetAncestor "GetAncestor" int, int
 #func  IsWindow "IsWindow" int
+#func  EnableWindow "EnableWindow" int, int
 
 #uselib "kernel32.dll"
 #func  MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int

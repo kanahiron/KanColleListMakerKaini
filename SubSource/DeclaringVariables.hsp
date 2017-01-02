@@ -1,7 +1,5 @@
 *DeclaringVariables
 
-
-	
 	saveListName = ""
 	tempint = 0
 	tempstr = ""
@@ -64,13 +62,6 @@
 	_twiPicFrameYU = 3 ,3 , 3, 3, 45
 	_twiPicFrameYD = 42,42,42,42,209
 
-	repeat 5
-		twiPicFrameXL(cnt) = Scale(_twiPicFrameXL(cnt))
-		twiPicFrameXR(cnt) = Scale(_twiPicFrameXR(cnt))
-		twiPicFrameYU(cnt) = Scale(_twiPicFrameYU(cnt))
-		twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
-	loop
-
 	disInfo(0) = GetSystemMetrics(76)
 	disInfo(1) = GetSystemMetrics(77)
 	disInfo(2) = GetSystemMetrics(78)
@@ -117,6 +108,8 @@
 	
 	windowsSizeChangeBMes = "Å™","Å´"
 	autoSearchFailureCount = 0
+
+	UIScale = 1.0
 	
 	userdata = ""
 	ACCESS_TOKEN = ""

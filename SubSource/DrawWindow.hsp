@@ -520,10 +520,12 @@ return
 		chkbox "画像の右下に艦これ一覧めいかーの名前を入れる", senden: mesy += scale20
 		pos scale5, mesy
 		chkbox "起動時にバージョンチェックを行う", autoVersionCheck: mesy += scale20
+		autoVersionCheckCh = objinfo(stat, 2)
 
 		pos scale5, mesy
-		chkbox "UI拡大率を自動で設定する", autoDPIScale: mesy += scale20
-
+		chkbox "UI拡大率を自動で設定する", autoUIScale: mesy += scale20
+		autoUIScaleCh = objinfo(stat, 2)
+				
 		pos scale5, mesy
 		mes "UIの拡大率": mesy += scale20
 
@@ -534,12 +536,17 @@ return
 		sendmsg hTrackbar, TBM_SETRANGE, 1, (300<<16) | 100
 		sendmsg hTrackbar, TBM_SETPAGESIZE, 0, 25
 		sendmsg hTrackbar, TBM_SETTICFREQ, 50, 0
-		sendmsg hTrackbar, TBM_SETPOS, 1, int(DPIScale*100)
+		sendmsg hTrackbar, TBM_SETPOS, 1, int(UIScale*100)
 
+		enableWindow hTrackbar, autoUIScale^1
+		
 		pos Scale(300), mesy
-		winobj "static", strf("%d%% ",DPIScale*100), , $50000002, Scale(40), Scale(30): mesy += Scale(30)
+		winobj "static", strf("%d%% ", UIScale*100), , $50000002, Scale(40), Scale(30): mesy += Scale(30)
 		hTrackBarScale = objinfo(stat, 2)
 		sendmsg hTrackBarScale, $30, hFontMain
+
+		enableWindow hTrackBarScale, autoUIScale^1
+
 
 		objsize Scale(150), scale20
 		pos Scale(14), mesy

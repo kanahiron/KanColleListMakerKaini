@@ -60,7 +60,7 @@
 #define FONT_SIZE_MANUAL_GETPOS_STRING 30
 #define FONT_SIZE_ALL 13
 
-#define ctype Scale(%1) int(DPIScale*(%1)+0.5)
+#define ctype Scale(%1) int(UIScale*(%1)+0.5)
 
 #ifdef _debug
 
@@ -91,21 +91,30 @@
 	nidStack_Init
 	isHomeport_init WND_HOME_PORT_MOD
 
-	DPIScale = 1.0
-	if (autoDPIScale){
-		dpi = GetDeviceCaps(hdc, 88)
-		DPIScale = 1.0 * dpi / 96.0
-	}
-
-	gosub *DeclaringVariables
+	gosub *DeclaringVariables	
 	gosub *iniLoad
 	gosub *dataCheck
 	gosub *iniSave
 	gosub *loadHistory
 
+	UIScale = 1.0
+	DPI = GetDeviceCaps(hdc, 88)
+	if (autoUIScale){
+		UIScale = 1.0 * DPI / 96.0
+	}
+
 	scale3 = scale(3)
 	scale5 = scale(5)
 	scale20 = scale(20)
+
+	repeat 5
+		twiPicFrameXL(cnt) = Scale(_twiPicFrameXL(cnt))
+		twiPicFrameXR(cnt) = Scale(_twiPicFrameXR(cnt))
+		twiPicFrameYU(cnt) = Scale(_twiPicFrameYU(cnt))
+		twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
+	loop
+
+	
 
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO

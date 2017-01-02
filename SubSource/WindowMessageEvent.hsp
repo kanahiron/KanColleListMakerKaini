@@ -60,7 +60,7 @@
 		
 	} else {
 	
-		if mode != modeOptionNum{
+		if (mode != modeOptionNum){
 
 			if (lparam = enabletweetwindowch){
 				sendmsg enabletweetwindowch, $F2
@@ -73,6 +73,39 @@
 				gsel WND_MAIN
 	
 			}
+		} else {
+			//UIスケールの自動設定周り
+			if (optionMode == 0){
+				if (lparam = autoUIScaleCh){
+					sendmsg autoUIScaleCh, $F2
+					autoUIScale = stat & 0x01
+
+					DPI = GetDeviceCaps(hdc, 88)
+
+					if autoUIScale {
+						UIScale = 1.0 * DPI / 96.0
+					}
+				
+					scale3 = Scale(3)
+					scale5 = Scale(5)
+					scale20 = Scale(20)
+				
+					repeat 5
+						twiPicFrameXL(cnt) = Scale(_twiPicFrameXL(cnt))
+						twiPicFrameXR(cnt) = Scale(_twiPicFrameXR(cnt))
+						twiPicFrameYU(cnt) = Scale(_twiPicFrameYU(cnt))
+						twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
+					loop
+
+					enableWindow hTrackbar, autoUIScale^1
+					enableWindow hTrackBarScale, autoUIScale^1
+					sendmsg hTrackbar, TBM_SETPOS, 1, int(UIScale*100)
+					sendmsg hTrackBarScale, $C ,, strf("%d%% ", int(UIScale*100))
+					
+				}
+			}
+
+
 		}
 
 		if ((mode != 0)&(mode != modeOptionNum)){
@@ -412,17 +445,20 @@ return
 return
 
 *vscroll
+	//トラックバーを動かしたときの処理
 	oncmd 0
 	nidPush
 	if (lparam == hTrackbar) {
+		
 		sendmsg hTrackbar, TBM_GETPOS
 		tempint = stat
+		
 		sendmsg hTrackBarScale, $C ,, strf("%d%% ",tempint)
-		DPIScale = (0.01 * tempint)
+		UIScale = (0.01 * tempint)
 
-		scale3 = scale(3)
-		scale5 = scale(5)
-		scale20 = scale(20)
+		scale3 = Scale(3)
+		scale5 = Scale(5)
+		scale20 = Scale(20)
 
 		repeat 5
 			twiPicFrameXL(cnt) = Scale(_twiPicFrameXL(cnt))
@@ -438,16 +474,16 @@ return
 *DPICHANGED
 	nidPush
 
-	if autoDPIScale {
+	if autoUIScale {
 		
 		logmes "WM_DPICHANGED"
 		
-		dpi = HIWORD(wparam)
-		DPIScale = 1.0 * dpi / 96.0
+		DPI = HIWORD(wparam)
+		UIScale = 1.0 * DPI / 96.0
 	
-		scale3 = scale(3)
-		scale5 = scale(5)
-		scale20 = scale(20)
+		scale3 = Scale(3)
+		scale5 = Scale(5)
+		scale20 = Scale(20)
 	
 		repeat 5
 			twiPicFrameXL(cnt) = Scale(_twiPicFrameXL(cnt))
