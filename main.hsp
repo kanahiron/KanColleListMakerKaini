@@ -85,6 +85,7 @@
 	
 #endif
 
+	onerror *error
 	onexit gosub *exit
 
 	wndInfo_Init
@@ -97,7 +98,6 @@
 	gosub *iniSave
 	gosub *loadHistory
 
-	UIScale = 1.0
 	DPI = GetDeviceCaps(hdc, 88)
 	if (autoUIScale){
 		UIScale = 1.0 * DPI / 96.0
@@ -113,8 +113,6 @@
 		twiPicFrameYU(cnt) = Scale(_twiPicFrameYU(cnt))
 		twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
 	loop
-
-	
 
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
@@ -240,6 +238,10 @@
 		
 	end
 	end
+
+*error
+	dialog err
+	goto *exit
 
 #include "./SubSource/DeclaringVariables.hsp"
 #include "./SubSource/DrawWindow.hsp"
