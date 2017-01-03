@@ -272,6 +272,9 @@ return responseBody
 	oncmd 0
 
 	if autoVersionCheck {
+
+		debugLog "バージョンチェック 開始"
+		
 		VerCheckInit
 
 		if (mode == 0){
@@ -287,6 +290,7 @@ return responseBody
 			json_sel json
 			
 			logmes "取得したバージョン " + json_val("[0].version")
+			debugLog "    取得したバージョン" + json_val("[0].version")
 			if klm2ver < int(json_val("[0].version")){
 				
 				sdim text,1024
@@ -313,7 +317,7 @@ return responseBody
 			objprm logId, logMessage: await
 		}
 		
-		
+		debugLog "バージョンチェック 終了"
 	}
 
 	oncmd 1

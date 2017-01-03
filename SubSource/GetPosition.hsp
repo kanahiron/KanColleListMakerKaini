@@ -1,7 +1,7 @@
 
 //SSキャプチャセッティング――――――――――――――――――――――――――――――――――
 *sssetting
-
+	debugLog "座標取得 開始"
 	oncmd 0
 
 	nidPush
@@ -20,6 +20,7 @@
 
 	if autoSearch {
 		//新座標検出===========================================
+		debugLog "    自動座標取得"
 
 		gsel WND_MAIN
 		logmessage = "艦これの画面にマウスカーソルを重ねてください。"
@@ -152,7 +153,8 @@
 		
 	} else {
 		//手動手動=============================================
-			
+		debugLog "    手動取得"
+		
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY: redraw
 
@@ -183,11 +185,11 @@
 	oncmd 1
 	
 	gosub *ssSettingCheck
-
+	debugLog "座標取得 終了"
 return
 
 *ssSettingCheck
-
+	debugLog "取得座標の正当性確認 開始"
 	oncmd 0
 	nidPush
 	
@@ -210,6 +212,8 @@ return
 	objenable sscapiid, 1
 	
 	if ( (autosearch=1) & (sscapwh(0) != 0) ) | ( (othergame=1) & (autosearch=0) & (sscapwh(0) >= 99) & (sscapwh(1) >= 59) ){
+
+		debugLog "    座標OK"
 
 		if (autoSearch == FALSE):positionType = PT_ABSOLUTE
 		
@@ -234,6 +238,8 @@ return
 		if autoSearch: autoSearchFailureCount = 0
 		
 	} else {
+
+		debugLog "    座標NG"
 		
 		sscapmes = "取得する"
 		objprm sscapiid,sscapmes
@@ -283,4 +289,5 @@ return
 	
 	nidPop
 	oncmd 1
+	debugLog "取得座標の正当性確認 終了"
 return

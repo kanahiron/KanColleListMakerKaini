@@ -1,5 +1,6 @@
 //SSモード――――――――――――――――――――――――――――――――――
 *ssmode
+	debugLog "SSモード 描画開始"
 	oncmd 1
 	
 	gsel WND_GRID, -1
@@ -160,6 +161,7 @@
 	
 	width Scale(175), mesy
 
+	debugLog "SSモード 描画終了"
 	oncmd 1
 return
 
@@ -181,6 +183,7 @@ return
 
 //リストモード――――――――――――――――――――――――――――――――――
 *list
+	debugLog "一覧作成モード 描画開始"
 	oncmd 0
 	
 	mxy(0) = 0, 0
@@ -468,12 +471,14 @@ return
 	width scrsize(0,listmode),scrsize(1,listmode)
 	
 	gosub *draw
-	
+
+	debugLog "一覧作成モード 描画終了"
 	oncmd 1
 return
 	
 //オプション――――――――――――――――――――――――――――――――――
 *option
+	debugLog "オプションモード 描画開始"
 	oncmd 0
 	redraw 0
 
@@ -698,4 +703,5 @@ return
 
 	redraw 1
 	oncmd 1
+	debugLog "オプションモード 描画終了"
 return

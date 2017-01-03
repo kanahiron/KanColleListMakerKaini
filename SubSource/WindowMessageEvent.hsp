@@ -4,7 +4,8 @@
 	logmes "WM_COMMAND"
 	
 	if (lparam = hComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
-		
+
+		debugLog "モード変更 開始"
 		logmes "ComBox"
 	
 		if (mode != 0) & (mode != modeOptionNum) {
@@ -50,19 +51,27 @@
 		if mode = modeOptionNum{
 			gosub *option
 		}
+
+		debugLog "モード変更 終了"
 		
 	} else : if (lparam = hOptionComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
+
+		debugLog "オプションモード変更 開始"
 		
 		logmes "OptionComBox"
 		sendmsg hOptionComBox, $147
 		optionMode = stat
 		gosub *option
+
+		debugLog "オプションモード変更 終了"
 		
 	} else {
 	
 		if (mode != modeOptionNum){
 
 			if (lparam = enabletweetwindowch){
+				debugLog "ツイートウィンドウ表示変更 開始"
+				
 				sendmsg enabletweetwindowch, $F2
 				enabletweetwindow = stat & 0x01
 				if enabletweetwindow {
@@ -71,12 +80,17 @@
 					gsel WND_TWITTER, -1
 				}
 				gsel WND_MAIN
-	
+
+				debugLog "ツイートウィンドウ表示変更 終了"
 			}
+			
 		} else {
 			//UIスケールの自動設定周り
 			if (optionMode == 0){
 				if (lparam = autoUIScaleCh){
+
+					debugLog "UI自動設定変更 開始"
+					
 					sendmsg autoUIScaleCh, $F2
 					autoUIScale = stat & 0x01
 
@@ -102,6 +116,7 @@
 					sendmsg hTrackbar, TBM_SETPOS, 1, int(UIScale*100)
 					sendmsg hTrackBarScale, $C ,, strf("%d%% ", int(UIScale*100))
 					
+					debugLog "UI自動設定変更 開始"
 				}
 			}
 
@@ -117,6 +132,8 @@
 return
 
 *listchange
+	debugLog "リストチェンジ 開始"
+	oncmd 0
 
 	nidPush
 	gsel WND_MAIN
@@ -331,10 +348,13 @@ return
 
 	nidPop
 
+	oncmd 1
+	debugLog "リストチェンジ 終了"
 return
 
 
 *windowsize
+	debugLog "グリッドウィンドウサイズ変更 開始"
 	oncmd 0
 
 	dupptr left,   lparam,    4
@@ -365,10 +385,12 @@ return
 	gosub *draw
 	
 	oncmd 1
+	debugLog "グリッドウィンドウサイズ変更 終了"
 return 1
 
 //ホットキー――――――――――――――――――――――――――――――――――
 *hotkey
+	debugLog "ホットキー 開始"
 	oncmd 0
 	nidpush
 	
@@ -386,15 +408,19 @@ return 1
 	
 	nidpop
 	oncmd 1
+	debugLog "ホットキー 終了"
 return
 
 
 
 //ドロップ処理――――――――――――――――――――――――――――――――――
 *OnDropFiles
+	debugLog "ドロップ処理 開始"
 	oncmd 0
 	
 	if (ginfo(24) = 0) | (ginfo(24) = 1){
+
+		debugLog "    メインかグリッドウィンドウにドロップされた"
 		nidPush
 		dropwindowid = ginfo(24)
 		hdrop = wParam
@@ -413,8 +439,10 @@ return
 		gosub *addCapture
 		nidPop
 	}
+	
 	if ginfo(24) = WND_TWITTER{
-		
+
+		debugLog "    ツイートウィンドウにドロップされた"
 		nidPush
 	
 		hdrop = wParam
@@ -442,16 +470,20 @@ return
 	
 	}
 	oncmd 1
+	debugLog "ドロップ処理 終了"
 return
 
 *vscroll
 	//トラックバーを動かしたときの処理
+	debugLog "トラックバーを動かしたときの処理 開始"
 	oncmd 0
 	nidPush
 	if (lparam == hTrackbar) {
 		
 		sendmsg hTrackbar, TBM_GETPOS
 		tempint = stat
+
+		debugLog "    トラックバーの位置 :" + tempInt
 		
 		sendmsg hTrackBarScale, $C ,, strf("%d%% ",tempint)
 		UIScale = (0.01 * tempint)
@@ -469,16 +501,21 @@ return
 	}
 	nidPop
 	oncmd 1
+	debugLog "トラックバーを動かしたときの処理 終了"
 return
 
 *DPICHANGED
+	debugLog "DPI変更のウィンドウメッセージ 開始"
 	nidPush
-
+	
 	if autoUIScale {
 		
 		logmes "WM_DPICHANGED"
 		
 		DPI = HIWORD(wparam)
+
+		debugLog "    変更後DPI:"+DPI
+		
 		UIScale = 1.0 * DPI / 96.0
 	
 		scale3 = Scale(3)
@@ -510,11 +547,14 @@ return
 		if (enableTweetWindow == TRUE){
 			gosub *twiInit
 		}
+	} else {
+		debugLog "    DPI自動設定がOFFの為変更無し"
 	}
 	
 	nidPop
-return
 
+	debugLog "DPI変更のウィンドウメッセージ 終了"
+return
 
 *mainWndMove
 	if (wparam == 1) {

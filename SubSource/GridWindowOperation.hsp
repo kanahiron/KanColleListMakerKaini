@@ -4,7 +4,7 @@
 
 	oncmd 0
 
-	if ginfo(24) = 1 {
+	if (ginfo(24) == WND_GRID) {
 
 			//èkè¨èàóùóp
 		buffer WND_TEMP1, maxScrSize(0)/5, maxScrSize(1)/3

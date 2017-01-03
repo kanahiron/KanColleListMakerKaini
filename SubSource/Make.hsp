@@ -1,6 +1,6 @@
 //一覧作成――――――――――――――――――――――――――――――――――
 *make
-	
+	debugLog "一覧作成 開始"
 	nidPush
 	
 	yoko = 0
@@ -361,5 +361,5 @@
 	nidPop
 	
 	gosub *draw
-	
+	debugLog "一覧作成 終了"
 return

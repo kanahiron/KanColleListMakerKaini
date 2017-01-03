@@ -62,6 +62,17 @@
 
 #define ctype Scale(%1) int(UIScale*(%1)+0.5)
 
+#if 1
+	#define debugLog(%1) _debugLogTempStr = DateAndTimeFormat2("<HH>:<mm>:<ss>.<ms>  "): repeat sublev: _debugLogTempStr += "    ": loop: _debugLogTempStr += (%1)+"\n": bsave _debugLogSaveDir + "\\" + _debugLogSaveName, _debugLogTempStr, strlen(_debugLogTempStr), _debugLogSize: _debugLogSize += strlen(_debugLogTempStr)
+	_debugLogSize = 0
+	_debugLogSaveName = DateAndTimeFormat2("debuglog_<yyyy><MM><dd>-<HH><mm><ss>.txt")
+	_debugLogSaveDir = dir_exe
+	_debugLogTempStr = ""
+	bsave _debugLogSaveDir + "\\" + _debugLogSaveName, _debugLogSaveName, 0	
+#else
+	#define debugLog(%1) :
+#endif
+
 #ifdef _debug
 
 	exist "./SubSource/hsptmp"
@@ -84,6 +95,8 @@
 	if (strsize != -1): delete "./packfile"
 	
 #endif
+
+	debugLog "メインルーチン開始"
 
 	onerror *error
 	onexit gosub *exit
@@ -197,7 +210,11 @@
 	
 	gosub *VerCheck
 
+	debugLog "メインルーチン停止"
+
 	stop
+
+	
 
 
 *exit
@@ -219,6 +236,8 @@
 		return
 	}
 
+	debugLog "終了処理 開始"
+
 	if hdcScreen: DeleteDC hdcScreen
 	if dcClient: ReleaseDC dcClient
 	
@@ -236,6 +255,9 @@
 	
 	gosub *dataCheck
 	gosub *iniSave
+
+
+	debugLog "終了処理 終了"
 		
 	end
 	end

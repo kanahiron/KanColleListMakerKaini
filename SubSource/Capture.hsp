@@ -2,6 +2,7 @@
 
 //SSキャプチャ――――――――――――――――――――――――――――――――――
 *ssCapture
+	debugLog "SSキャプチャ 開始"
 	oncmd 0
 
 	nidPush
@@ -10,6 +11,8 @@
 	if (positionType == PT_RELATIVE){
 		if (IsWindow(hClient) == 0){
 
+			debugLog "    追跡先ウィンドウハンドルが消滅"
+
 			ssCap(0) = 0, 0, 0, 0
 			hClient = 0
 			ReleaseDC dcClient
@@ -23,12 +26,15 @@
 
 			nidPop
 			oncmd 1
+			debugLog "SSキャプチャ 終了"
 			return
 		}
 
 		GetClientRect hClient, varptr(rect)
 		if (clientSize(0) != (rect(2)-rect(0))) | (clientSize(1) != (rect(3)-rect(1))){
 
+			debugLog "    追跡先ウィンドウのサイズが変わった"
+
 			ssCap(0) = 0, 0, 0, 0
 			hClient = 0
 			ReleaseDC dcClient
@@ -42,6 +48,7 @@
 			
 			nidPop
 			oncmd 1
+			debugLog "SSキャプチャ 終了"
 			return
 		}
 			
@@ -66,6 +73,9 @@
 	
 	if (sscapwh(0) < 50) | (sscapwh(1) < 30){
 		if mode != modeOptionNum{
+
+			debugLog "    手動座標入力した範囲が小さすぎる"
+			
 			positionType = 0
 			logmessage = "取得範囲が小さすぎます"
 			objprm logid,logmessage
@@ -78,6 +88,7 @@
 		}
 		nidPop
 		oncmd 1
+		debugLog "SSキャプチャ 終了"
 		return
 	}
 		
@@ -121,13 +132,15 @@
 		saveNamePath = intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName
 		gdiImageSave intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName, jpgQuality
 	}
-	
+
 	gsel WND_MAIN
 	
 	if mode != modeOptionNum{
 		if kmexist(savenamepath) <= 0{
+			debugLog "    SSの保存失敗"
 			logmessage = savename+"の保存に失敗しました"
 		} else {
+			debugLog "    SSの保存成功"
 			logmessage = savename+"を保存しました"
 			if dispcap & (mode = 0){
 				pos 0,dispcapy
@@ -150,6 +163,7 @@
 
 	nidPop
 	oncmd 1
+	debugLog "SSキャプチャ 終了"
 return
 
 

@@ -1,5 +1,7 @@
 *DeclaringVariables
 
+	debugLog "*DeclaringVariables äJén"
+	
 	saveListName = ""
 	tempint = 0
 	tempstr = ""
@@ -117,8 +119,6 @@
 
 	modeOptionNum = 4
 	
-	tCupInit "KanColleListMakerKaini", CONSUMER_KEY, CONSUMER_SECRET, 7
-	
 	scrsize(0,0) = limit(1358,210,round(0.4*maxScrSize(0))),scrsize(0,0)*aspectRatio(0)
 	scrsize(0,1) = limit(1120,250,round(0.4*maxScrSize(0))),scrsize(0,1)*aspectRatio(1)
 	scrsize(0,2) = limit(1120,250,round(0.4*maxScrSize(0))),scrsize(0,2)*aspectRatio(2)
@@ -126,6 +126,8 @@
 	scrsizetemp(0,1)  = scrsize(0,1),scrsize(1,1)
 	scrsizetemp(0,2)  = scrsize(0,2),scrsize(1,2)
 
+	tCupInit "KanColleListMakerKaini", CONSUMER_KEY, CONSUMER_SECRET, 7
 	hdcScreen = CreateDC("DISPLAY", NULL, NULL, NULL)
-	
+
+	debugLog "*DeclaringVariables èIóπ"
 return
