@@ -1,5 +1,5 @@
 *setmode
-	oncmd 0
+	//oncmd 0
 
 	logmes "WM_COMMAND"
 	
@@ -128,7 +128,7 @@
 		}
 	}
 	logmes ""
-	oncmd 1
+	//oncmd 1
 return
 
 *listchange
