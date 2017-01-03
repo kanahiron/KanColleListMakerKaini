@@ -16,6 +16,7 @@
 			ssCap(0) = 0, 0, 0, 0
 			hClient = 0
 			ReleaseDC dcClient
+			if seqCapf : gosub *seqcap
 
 			gosub *ssSettingCheck
 			
@@ -38,7 +39,8 @@
 			ssCap(0) = 0, 0, 0, 0
 			hClient = 0
 			ReleaseDC dcClient
-
+			if seqCapf : gosub *seqcap
+			
 			gosub *ssSettingCheck
 			
 			logmessage = "艦これの画面を見失いました"
@@ -270,16 +272,18 @@ return
 
 
 *seqcap
+	debugLog "連続キャプチャ設定 開始"
 	
-	if seqcapf = 0{
-		SetTimer WND_INFO(WND_MAIN, WI_HANDLE),timerID,100*timersec,0
+	if (seqcapf == FALSE){
+		debugLog "連続キャプチャを開始にします"
+		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID, 100*timersec, 0
 		seqcapmes = "停止"
 		objprm seqcapBId,seqcapmes
 		objenable comboxid,0
 		objenable sscapBId,0
 		objenable sscapiid,0
 		objenable yabumiBId,0
-		seqcapf = 1
+		seqcapf = TRUE
 	
 		chdir intervalShotDir
 		intervalsavedir =  strf("IntervalShot%04d%02d%02d-%02d%02d%02d",gettime(0),gettime(1),gettime(3),gettime(4),gettime(5),gettime(6))
@@ -290,14 +294,16 @@ return
 		
 		gosub *ssCapture
 	} else {
-		KillTimer WND_INFO(WND_MAIN, WI_HANDLE),timerID
+		debugLog "連続キャプチャを停止します"
+		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID
 		seqcapmes = "開始"
 		objprm seqcapBId,seqcapmes
 		objenable comboxid,1
 		objenable sscapBId,1
 		objenable sscapiid,1
 		objenable yabumiBId,1
-		seqcapf = 0
+		seqcapf = FALSE
 	}
-	
+
+	debugLog "連続キャプチャ設定 終了"
 return
