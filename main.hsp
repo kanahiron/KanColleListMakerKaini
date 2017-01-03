@@ -58,10 +58,10 @@
 #define CELL_MAX_H	7
 #define HOTKEYID	7798
 #define timerID		101
-#define klm2ver		02100
+#define klm2ver		2200
 
 #define ctype round(%1) int(strf("%%0.0f", %1))
-#define SOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.2.1"
+#define SOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.2.2"
 
 #define PT_ABSOLUTE 1
 #define PT_RELATIVE 2
