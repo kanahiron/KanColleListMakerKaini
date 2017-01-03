@@ -1,4 +1,39 @@
 #include "hsp3utf.as"
+
+#include "./modules/DateAndTimeFormat2.as"
+
+
+#if 1
+
+	#module
+	
+		#deffunc debugLog_Init
+			_debugLogSize = 0
+			_debugLogSaveName = DateAndTimeFormat2("debuglog_<yyyy><MM><dd>-<HH><mm><ss>.txt")
+			_debugLogSaveDir = dir_exe
+			_debugLogTempStr = ""
+			bsave _debugLogSaveDir + "\\" + _debugLogSaveName, _debugLogSaveName, 0
+		return
+		
+		#deffunc debugLog str logAddStr
+		
+			_debugLogTempStr = DateAndTimeFormat2("<HH>:<mm>:<ss>.<ms>  ")
+			repeat sublev-1
+				_debugLogTempStr += "    "
+			loop
+			_debugLogTempStr += (logAddStr)+"\n"
+			bsave _debugLogSaveDir + "\\" + _debugLogSaveName, _debugLogTempStr, strlen(_debugLogTempStr), _debugLogSize
+			_debugLogSize += strlen(_debugLogTempStr)
+		return
+
+	#global
+
+	debugLog_Init
+
+#else
+	#define debugLog(%1) ;
+#endif
+
 #include "./SubSource/FunctionDefinition.hsp"
 #include "./SubSource/key.hsp"
 #include "./modules/kmodule.as"
@@ -10,7 +45,6 @@
 #include "./modules/jsonParse_utf.as"
 #include "./modules/makelistmodule_Ver7.as"
 #include "./modules/isHomepostModule.as"
-#include "./modules/DateAndTimeFormat2.as"
 
 #pack "start.ax"
 #pack "data2.png"
@@ -62,6 +96,7 @@
 
 #define ctype Scale(%1) int(UIScale*(%1)+0.5)
 
+/*
 #if 1
 	#define debugLog(%1) _debugLogTempStr = DateAndTimeFormat2("<HH>:<mm>:<ss>.<ms>  "): repeat sublev: _debugLogTempStr += "    ": loop: _debugLogTempStr += (%1)+"\n": bsave _debugLogSaveDir + "\\" + _debugLogSaveName, _debugLogTempStr, strlen(_debugLogTempStr), _debugLogSize: _debugLogSize += strlen(_debugLogTempStr)
 	_debugLogSize = 0
@@ -72,6 +107,9 @@
 #else
 	#define debugLog(%1) :
 #endif
+*/
+
+
 
 #ifdef _debug
 

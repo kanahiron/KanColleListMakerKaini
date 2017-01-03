@@ -436,35 +436,49 @@ return
 		logmes length(tempSdim)
 		logmes count
 
-		debugLog "    画像をツイート 開始"
-		media_upload tempsdim,count,mediaids, hProgress
-		debugLog "    画像をツイート 終了"
-		
-		gsel WND_TWITTER
-		if stat != 0{
-			dialog "画像のアップロードに失敗しました"
-		} else {
+		mediaTweetSuccess = TRUE
+
+		if (count != 0){
+			debugLog "    画像投稿ツイート 開始"
+			media_upload tempSdim,　count,　mediaids, hProgress
+			if (stat = 1){
+				debugLog "    画像投稿ツイート 成功"
+				
+			} else {
+				mediaTweetSuccess = FALSE
+				dialog "画像のアップロードに失敗しました"
+				debugLog "    画像投稿ツイート 失敗"
+				
+			}
+		}
+
+		if mediaTweetSuccess {
+
+			debugLog "    ツイート 開始"
 			
-			tweet tweettext,"",mediaids
-			if stat = 200{
-		
+			tweet tweettext, "", mediaids
+			if (stat = 200){
 				repeat 4
 					picStack(cnt) = ""
 				loop
+				
 				tweettext = ""
 				twiOrder = 0,0,0,0
 				twiOrderCount = 0
 				objprm ttid,tweettext
 
 				sendmsg hProgress, $402, 0
-	
+		
 				logmessage = "ツイートを投稿しました"
 				debugLog "     ツイート成功"
-
+	
 			} else {
 				dialog "ツイートに失敗しました"
-				debugLog "ツイートの投稿失敗"
-			} 
+				debugLog "    ツイートの投稿失敗"
+			}
+			
+		} else {
+			debugLog "    画像投稿に失敗したのでツイート無し"
 		}
 		
 		if (twijpg == TRUE & jpgsave == FALSE){

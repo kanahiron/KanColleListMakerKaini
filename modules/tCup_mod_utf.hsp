@@ -300,6 +300,8 @@ TsubuyakiSoup補助関数
 %*/
 //------------------------------------------------------------
 #deffunc getHmacSha1 str _p1, str _p2, var ghc_dest
+
+	debugLog "getHmacSha1 開始"
 	
 	ghc_p1 = _p1
 	ghc_p2 = _p2
@@ -325,7 +327,6 @@ TsubuyakiSoup補助関数
 	sdim ghc_dest, 20
 	ghc_dest = "Error"
 	
-
 	//コンテキストの取得
 	if ( _CryptAcquireContext(varptr(hProv), 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT) ) {
 		//キーのインポート
@@ -349,7 +350,7 @@ TsubuyakiSoup補助関数
 		//ハンドルの破棄
 		_CryptReleaseContext hProv, 0
 	}
-	
+	debugLog "getHmacSha1 終了"
 return 
 //============================================================
 
@@ -387,17 +388,17 @@ TsubuyakiSoup補助関数
 %*/
 //------------------------------------------------------------
 #defcfunc sigEncode str se_p1, str se_p2
-	
+	debugLog "sigEncode 開始"
 	SigTmp = se_p1
 	SecretTmp = se_p2
 	//URLエンコード
 	SigEnc = form_encode(SigTmp, 0)
 	SecretEnc = form_encode(SecretTmp, 0)
 	getHmacSha1 SigEnc, SecretEnc, HmacSha1
-	if (HmacSha1 == "Error"):return "Error"
+	if (HmacSha1 == "Error"): debugLog "sigEncode 終了":return "Error"
 	sdim base64HmacSha1,40
 	Base64Encode HmacSha1,20,base64HmacSha1
-	
+	debugLog "sigEncode 終了"
 return form_encode(str(base64HmacSha1), 0)
 //============================================================
 
@@ -407,6 +408,8 @@ return form_encode(str(base64HmacSha1), 0)
 // int   p3 http method
 #define global execRestApi(%1, %2, %3, %4=0) _execRestApi %1, %2, %3, %4
 #deffunc _execRestApi str era_p1, array era_p2, int era_p3, int hProgress
+
+	debugLog "execRestAPI 開始"
 
 	api = era_p1
 	
@@ -439,6 +442,8 @@ return form_encode(str(base64HmacSha1), 0)
 			return 0
 			swbreak
 	swend
+
+	debugLog "     METHOD :"+method
 	
 	sigArrayLength = 6+argumentLength
 	sdim sigArray, 500, sigArrayLength
@@ -535,7 +540,7 @@ return form_encode(str(base64HmacSha1), 0)
 		
 
 
-		sdim RequestHeader,1024*2
+		sdim RequestHeader,1024*4
 
 		RequestHeader = "Accept-Charset: UTF-8"
 		RequestHeader += "\nAccept-Encoding: gzip, deflate;"
@@ -562,6 +567,9 @@ return form_encode(str(base64HmacSha1), 0)
 			apiUrl += sigArray(cnt) +"&"
 		loop
 		apiUrl += "oauth_signature=" +signature
+
+		sdim RequestHeader,1024*4
+		
 		RequestHeader = "\nAccept-Charset: UTF-8"
 		RequestHeader += "\nAccept-Encoding: gzip, deflate;
 		RequestHeader += "\nContent-Type: application/x-www-form-urlencoded;charset=UTF-8;"
@@ -569,12 +577,18 @@ return form_encode(str(base64HmacSha1), 0)
 		PostDataLength = 0
 	}
 
+
+
+	debugLog "     RequestHeader :"+RequestHeader
+	debugLog "     PostDataLength :"+postDataLength
+
 	//サーバへ接続
 	hConnect = _InternetConnect(hInet, RequestURL, INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
 	if (hConnect = 0) {
 		//Connectハンドルを取得できなかった場合
 		return -4
 	}
+	debugLog "    InternetConnect 正常終了"
 
 	//リクエストの初期化
 	logmes "HttpOpenRequest開始 " +method
@@ -585,32 +599,17 @@ return form_encode(str(base64HmacSha1), 0)
 		_InternetCloseHandle hConnect
 		return -3
 	}
+	debugLog "    HttpOpenRequest 正常終了"
 
-	/*
-	RequestHeaderの長さ(UTF-16)はMultiByteToWideCharの戻り値-1で算出できる
-	MultiByteToWideChar 65001, 0, varptr(RequestHeader), -1, 0, 0
-	_len = (stat-1)
-	;*/
-
-	/*/INTERNET_BUFFERS構造体/
-		dwStructSize	As Long		//構造体のサイズ(Byte)
-	    Next			As Long
-	    lpcszHeader		As String	//ヘッダー文字列
-	    dwHeadersLength As Long		//ヘッダーの長さ(文字数？？)
-	    dwHeadersTotal	As Long
-	    lpvBuffer		As Long
-	    dwBufferLength	As Long
-	    dwBufferTotal	As Long		//送信データサイズ(Byte)
-	    dwOffsetLow		As Long
-	    dwOffsetHigh	As Long
-	//*/
-	
 	MultiByteToWideChar 65001, 0, varptr(RequestHeader), -1, 0, 0
 	RequestHeaderWideLength = stat-1						//UTF-16文字列の 文 字 数
-	sdim RequestHeaderWide ,(RequestHeaderWideLength*2)+1	//UTF-16文字列を入れるバッファを確保
+	sdim RequestHeaderWide ,(RequestHeaderWideLength*2)+2	//UTF-16文字列を入れるバッファを確保
 	cnvstow RequestHeaderWide, RequestHeader				//バッファにUTF-8からUTF-16に変換して格納
 	logmes "RequestHeaderWideLength :"+RequestHeaderWideLength
 	logmes "PostDataLength :"+PostDataLength
+
+	debugLog "    RequestHeaderWideLength :"+requestHeaderWideLength
+	debugLog "    PostDataLength :"+postDataLength
 
 	sdim INTERNET_BUFFERS, 64
 	lpoke  INTERNET_BUFFERS, 0, 40
@@ -634,6 +633,8 @@ return form_encode(str(base64HmacSha1), 0)
 		return -10 //HttpSendRequestEx 失敗
 	}
 
+	debugLog "    HttpSendRequestEx 正常終了"
+
 	if (PostDataLength != 0){
 
 		BytesWritten = 0
@@ -641,32 +642,43 @@ return form_encode(str(base64HmacSha1), 0)
 		unSentSize = PostDataLength
 		tSize = 0
 		logmes "InternetWriteFile 開始"
+		debugLog "    InternetWriteFile 開始"
 		repeat
 	
 			if (unSentSize = 0):break
 			if (unSentSize < 8192):tSize = unSentSize:else:tSize = 8192
 
+			debugLog "    送信バイト数 :"+tSize
+
 			_InternetWriteFile hRequest, varptr(PostData)+sentSize, tSize, varptr(BytesWritten)
 			if (stat = 0){
+				debugLog "    InternetWriteFile 失敗"
 				_InternetCloseHandle hRequest
 				_InternetCloseHandle hConnect
 				return -9 //InternetWriteFile 失敗
 			}
 			sentSize += BytesWritten
 			unSentSize -= BytesWritten
+
+			debugLog "    送信済みバイト数 :"+sentSize
+			debugLog "    送信残りバイト数 :"+unSentSize
 			//title strf("送信バイト数 %d/%dByte %.2f%%",sentSize,PostdataLength,(100.0*sentSize/PostDataLength))
 			if hProgress :sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength)
 			await
 		loop
 		if hProgress :sendmsg hProgress, $402, 100:wait 20
 		logmes "InternetWriteFile 終了"
+		debugLog "    InternetWriteFile 正常終了"
 
 	}
-	await
+
+	debugLog "    HttpEndRequest 開始"
 	logmes "HttpEndRequest 開始"
 	if _HttpEndRequest( hRequest, 0, 0, 0){
+		debugLog "　　HttpEndRequest 正常終了"
 		logmes "HttpEndRequest 終了"
 	} else {
+		debugLog "    HttpEndRequest 失敗"
 		logmes "HttpEndRequest 失敗 Code:"+GetLastError()
 		_InternetCloseHandle hRequest
 		_InternetCloseHandle hConnect
@@ -676,9 +688,12 @@ return form_encode(str(base64HmacSha1), 0)
 	responseHeaderSize = 1024*4
 	sdim responseHeader, responseHeaderSize+1
 	//ヘッダの取得
+	debugLog "    HttpQueryInfo 開始"
 	logmes "HttpQueryInfo開始"　　
 	if ( _HttpQueryInfo(hRequest, HTTP_QUERY_RAW_HEADERS_CRLF, varptr(responseHeader), varptr(responseHeaderSize), 0) ) {
 		logmes "HttpQueryInfo成功"
+		debugLog "    HttpQueryInfo 正常終了"
+		
 		//ヘッダの解析
 		responseHeader = cnvwtos(responseHeader)
 		notesel responseHeader
@@ -699,15 +714,22 @@ return form_encode(str(base64HmacSha1), 0)
 		logmes ""+responseBodyLength
 		//入手可能なデータ量を取得
 		_InternetQueryDataAvailable hRequest, varptr(rsize), 0, 0
+		debugLog "    InternetQueryDataAvailable 正常終了"
 		//バッファの初期化
 		logmes "srize : "+ rsize
-		sdim responseBuffer, rsize+1
+		sdim responseBuffer, rsize + 2
 		sdim responseBody, 1024
+
+		debugLog "    InternetReadFile 開始"
 		repeat 
 			_InternetReadFile hRequest, varptr(responseBuffer), rsize, varptr(hsize)
+
+			debugLog "    送信残りバイト数 :"+hsize
+			
 			if (hsize = 0) : break 
 			responseBody += strmid(responseBuffer, 0, hsize)
 		loop
+		debugLog "    InternetReadFile 正常終了"
 	} else {
 		//ヘッダの取得ができなかった場合
 		logmes "HttpQueryInfo失敗 code:"+getlasterror()
@@ -736,6 +758,9 @@ return form_encode(str(base64HmacSha1), 0)
 	sdim picBuf
 	
 	logmes "execRESTAPI 終了"
+
+	debugLog "StatusCode :"+statcode
+	debugLog "execRESTAPI 終了"
 
 return statcode
 
