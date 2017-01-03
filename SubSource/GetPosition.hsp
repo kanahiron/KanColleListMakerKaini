@@ -22,6 +22,20 @@
 		//新座標検出===========================================
 		debugLog "    自動座標取得"
 
+
+/*
+		buffer WND_TEMP1, disinfo(2), disinfo(3)
+		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY: redraw
+		
+		getKanCollePosAuto WND_TEMP1, ssCap, WND_TEMP2
+		if (stat == TRUE){
+			ssCap
+
+
+
+		}
+*/
+
 		gsel WND_MAIN
 		logmessage = "艦これの画面にマウスカーソルを重ねてください。"
 		objprm logid,logmessage:await 

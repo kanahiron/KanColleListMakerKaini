@@ -45,7 +45,7 @@
 #include "./modules/BrowseFolder_kai_utf.as"
 #include "./modules/TsubuyakiSoup_mod_utf.hsp"
 #include "./modules/jsonParse_utf.as"
-#include "./modules/makelistmodule_Ver7.as"
+#include "./modules/listMakerModule.as"
 #include "./modules/isHomepostModule.as"
 
 #pack "start.ax"
@@ -239,8 +239,6 @@
 	debugLog "ƒƒCƒ“ƒ‹[ƒ`ƒ“’â~"
 
 	stop
-
-	
 
 
 *exit

@@ -37,6 +37,46 @@ return
 
 
 
+#module R4HBGC
+#uselib "kernel32.dll"
+#func VirtualAllocR4HBGC "VirtualAlloc" int, int, int, int
+#func VirtualFreeR4HBGC "VirtualFree" int, int, int
+#define NULL                   0x00000000
+#define PAGE_EXECUTE_READWRITE 0x00000040
+#define MEM_COMMIT             0x00001000
+#define MEM_RESERVE            0x00002000
+#define MEM_DECOMMIT           0x00004000
+#define MEM_RELEASE            0x00008000
+#deffunc R4HBGC_destructor onexit
+	if(NULL != getkancollewindowposauto_C_ptr) {
+		VirtualFreeR4HBGC getkancollewindowposauto_C_ptr, 184, MEM_DECOMMIT
+		VirtualFreeR4HBGC getkancollewindowposauto_C_ptr, 0, MEM_RELEASE
+		getkancollewindowposauto_C_ptr = NULL
+	}
+	return
+#deffunc R4HBGC_constructor
+	R4HBGC_destructor
+	VirtualAllocR4HBGC NULL, 184, MEM_RESERVE, PAGE_EXECUTE_READWRITE
+	VirtualAllocR4HBGC stat, 184, MEM_COMMIT, PAGE_EXECUTE_READWRITE
+	getkancollewindowposauto_C_ptr    = stat
+	dupptr getkancollewindowposauto_C_bin, stat, 184, vartype("int")
+	getkancollewindowposauto_C_bin.0  = $6C8B5553, $C0331024, $57DB3356, $840FED85, $00000094, $1424748B
+	getkancollewindowposauto_C_bin.6  = $1C24548B, $0024648D, $819E0C8B, $FFFFFFE1, $750A3B00, $9E348D72
+	getkancollewindowposauto_C_bin.12 = $830CC283, $03BF04C6, $EB000000, $00498D03, $E1810E8B, $00FFFFFF
+	getkancollewindowposauto_C_bin.18 = $75F84A3B, $4E8B4001, $FFE18104, $3B00FFFF, $0175FC4A, $084E8B40
+	getkancollewindowposauto_C_bin.24 = $FFFFE181, $0A3B00FF, $8B400175, $E1810C4E, $00FFFFFF, $75044A3B
+	getkancollewindowposauto_C_bin.30 = $4E8B4001, $FFE18110, $3B00FFFF, $0175084A, $14C68340, $4F14C283
+	getkancollewindowposauto_C_bin.36 = $F883AE75, $8B19740F, $8B142474, $431C2454, $820FDD3B, $FFFFFF78
+	getkancollewindowposauto_C_bin.42 = $835D5E5F, $C35BFFC8, $8B5D5E5F, $00C35BC3
+	return
+#define global getKanColleWindowPosAuto_C(%1, %2, %3) \
+	prm@R4HBGC = varptr(%1), %2, varptr(%3):\
+	mref value@R4HBGC, 64:\
+	value@R4HBGC = callfunc(prm@R4HBGC, getkancollewindowposauto_C_ptr@R4HBGC, 3)
+#global
+R4HBGC_constructor
+
+
 
 #module makelistmodule
 
@@ -51,6 +91,18 @@ return
 
 
 #deffunc init_makelist array disinfo_
+
+	dim resultdata,16
+	resultdata = 0x0029556B ,0x00174357 ,0x000C384C ,0x000E384B ,0x001A4256 ,0x001E4557 ,0x001A3E51 ,0x00395D6E ,0x00294B5D ,0x0016384A ,0x0017394B ,0x0017394B ,0x0016384C ,0x0017394D ,0x0017394D ,0x0017394D
+	//0,122
+	
+	dim mapmovedata,16
+	mapmovedata = 0x00ABAB92 ,0x00ABA991 ,0x006D7560 ,0x003B4430 ,0x002C3220 ,0x00474B37 ,0x005F614C ,0x006C715F ,0x00777B71 ,0x0076736E ,0x007E7B54 ,0x009EA041 ,0x00AEB037 ,0x008F8E37 ,0x004A6C4D ,0x00409897
+	//167,479
+	
+	dim homeportdata,16
+	homeportdata = 0x00C9AC3B ,0x00AC901D ,0x00B69A27 ,0x00B69A25 ,0x00A88D15 ,0x00A1860C ,0x00A2880A ,0x00947A00 ,0x00A28806 ,0x00977E00 ,0x00B19812 ,0x00917800 ,0x00A28A00 ,0x00A78F04 ,0x00988000 ,0x009A7100
+	// 33,106
 	
 	dim tsscap,4
 	dim mxy,2
@@ -66,14 +118,7 @@ return
 		disinfo(cnt) = disinfo_(cnt)
 	loop
 	
-	//4ディスプレイ全体の最左座標
-	//5ディスプレイ全体の最上座標
-	//6ディスプレイ全体の横幅
-	//7ディスプレイ全体の縦幅
-
-	
 return
-
 
 
 #deffunc getKanCollePos int winID, int tempWinID, array posArray, int cx_, int cy_
@@ -223,7 +268,61 @@ return
 	buffer tempWinID, 1, 1
 	dim vram
 	gsel nid
-	return 0
+return 0
+
+
+#deffunc getKanCollePosAuto int imageid,array sscap,int bufid
+
+	nid = ginfo(3)
+
+	gsel imageid
+	sw = ginfo(12)
+	sh = ginfo(13)
+	
+	buffer bufid, sw, sh
+	
+	chgbm 32
+	
+	gcopy imageid,0,0,sw,sh
+	mref vram,66
+	
+	gsel nid
+	
+	getkancollewindowposauto_C vram, sw*sh, homeportdata
+	if stat != -1{
+		//homeportdata 33,106
+		sscap(0) = (stat\sw)+disinfo(0)-33, ((sh-1)-stat/sw)+disinfo(1)-106
+		sscap(2) = sscap(0)+800, sscap(1)+480
+		gsel bufid: chgbm
+		gsel nid
+		return 1
+	}
+
+	getkancollewindowposauto_C vram, sw*sh, resultdata
+	if stat != -1{
+		//resultdata 0,122
+		sscap(0) = (stat\sw)+disinfo(0)-0, ((sh-1)-stat/sw)+disinfo(1)-122
+		sscap(2) = sscap(0)+800, sscap(1)+480
+		gsel bufid: chgbm
+		gsel nid
+		return 1
+	}
+	
+	getkancollewindowposauto_C vram, sw*sh, mapmovedata
+	if stat != -1{
+		//mapmovedata 167,479
+		sscap(0) = (stat\sw)+disinfo(0)-167, ((sh-1)-stat/sw)+disinfo(1)-479
+		sscap(2) = sscap(0)+800, sscap(1)+480
+		gsel bufid: chgbm
+		gsel nid
+		return 1
+	}
+
+	gsel bufid: chgbm
+	gsel nid
+
+return 0
+
 
 
 
