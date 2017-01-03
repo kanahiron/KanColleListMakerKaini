@@ -123,6 +123,7 @@
 		oncmd gosub *ssCapture, WM_TIMER
 		oncmd gosub *vscroll, WM_VSCROLL
 		oncmd gosub *DPICHANGED, WM_DPICHANGED
+		oncmd gosub *mainWndMove, WM_LBUTTONDOWN
 		objmode 2
 	
 	screen WND_GRID, disInfo(2), disInfo(3), 2:title "•\Ž¦‚³‚¹‚½‚¢ƒZƒ‹‚ÉD&D"

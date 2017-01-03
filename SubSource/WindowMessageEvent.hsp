@@ -514,4 +514,10 @@ return
 	
 	nidPop
 return
-	
+
+
+*mainWndMove
+	if (wparam == 1) {
+		sendmsg WND_INFO(WND_MAIN, WI_HANDLE), WM_NCLBUTTONDOWN,HTCAPTION,0
+	}
+return

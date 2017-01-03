@@ -68,6 +68,7 @@
 
 //ウィンドウメッセージ
 #const WM_ACTIVATE		0x0006
+#const WM_NCLBUTTONDOWN 0x00A1
 #const WM_COMMAND		0x0111
 #const WM_TIMER			0x0113
 #const WM_VSCROLL		0x0114
@@ -77,6 +78,8 @@
 #const WM_DROPFILES		0x0233
 #const WM_DPICHANGED	0x02E0
 #const WM_HOTKEY		0x0312
+
+#define HTCAPTION 2
 
 #const WA_INACTIVE		0
 #const WA_ACTIVE		1
