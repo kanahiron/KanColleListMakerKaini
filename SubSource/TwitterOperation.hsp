@@ -394,7 +394,7 @@ return
 
 		gsel WND_MAIN
 		objenable comboxid, 0
-		objenable sscapiid, 0
+		if (mode != modeOptionNum): objenable sscapiid, 0
 		wait 50
 	
 		gsel WND_TWITTER
@@ -404,10 +404,11 @@ return
 		
 		sdim mediaids, 1024
 		sdim tempsdim, 256, 4
-	
+
+		debugLog "    ツイートする画像の並び替えを開始"
 		count = 0
 		repeat 4
-			if (twiOrder(cnt) == count+1) {
+			if (twiOrder(cnt) == (count+1)) {
 				if picStack(cnt) != "" {
 					tempsdim(count) = picStack(cnt)
 					count++
@@ -415,35 +416,57 @@ return
 				}
 			}
 		loop
+		debugLog "    ツイートする画像の並び替えを終了"
+		
+
+		debugLog "    ツイートする画像の検査を開始"
+		countCut = 0
+		repeat count
+			ccnt =  cnt
+			if (ImgF_GetFormat(tempSdim(cnt)) == 0){
+				repeat count-cnt-1, cnt
+					debugLog "        "+tempSdim(cnt)+"は画像ファイルではありませんでした"
+					tempSdim(cnt) = tempSdim(cnt+1)
+					tempSdim(cnt+1) = ""
+					countCut++
+				loop
+			}
+		loop
+		count -= countCut
+		debugLog "    ツイートする画像の検査を終了"
+					
 
 		if (twijpg == TRUE & jpgsave == FALSE){
+			debugLog "    jpgに変換してツイート"
 			repeat count
 				buffer WND_TEMP1
 				picload tempsdim(cnt)
-				savenamed = strf("%s\\temp_%d.jpg", sssavedir, cnt)
-				gdiimagesave savenamed, jpgquality
-				if kmexist(savenamed) > 0{
-					tempsdim(cnt) = savenamed
+				saveNamed = strf("%s\\temp_%d.jpg", ssSaveDir, cnt)
+				GDIImageSave saveNamed, jpgQuality
+				if kmexist(saveNamed) > 0{
+					tempSdim(cnt) = saveNamed
+					debugLog "    "+tempSdim(cnt)+"を"+saveNamed+"に変換しました"
+				} else {
+					debugLog "    jpgの保存に失敗しました :"+tempSdim(cnt)
 				}
 			loop
 		}
 		
 		gsel WND_TWITTER
-		logmes tempSdim(0)
-		logmes tempSdim(1)
-		logmes tempSdim(2)
-		logmes tempSdim(3)
-		logmes length(tempSdim)
-		logmes count
+
+		debugLog "    ツイートする画像ファイル名1 :" + tempSdim(0)
+		debugLog "    ツイートする画像ファイル名2 :" + tempSdim(1)
+		debugLog "    ツイートする画像ファイル名3 :" + tempSdim(2)
+		debugLog "    ツイートする画像ファイル名4 :" + tempSdim(3)
+		debugLog "    ツイート画像枚数 :" + count
 
 		mediaTweetSuccess = TRUE
 
 		if (count != 0){
 			debugLog "    画像投稿ツイート 開始"
-			media_upload tempSdim,　count,　mediaids, hProgress
+			media_upload tempSdim, count,　mediaids, hProgress
 			if (stat = 1){
 				debugLog "    画像投稿ツイート 成功"
-				
 			} else {
 				mediaTweetSuccess = FALSE
 				dialog "画像のアップロードに失敗しました"
@@ -483,7 +506,7 @@ return
 		
 		if (twijpg == TRUE & jpgsave == FALSE){
 			repeat count
-				if kmexist(savenamed) > 0{
+				if kmexist(tempsdim(cnt)) > 0{
 					delete tempsdim(cnt)
 				}
 			loop
@@ -495,11 +518,9 @@ return
 		objenable tweetbid,1
 	
 		gsel WND_MAIN
-		if mode != modeOptionNum{
-			objprm logid,logmessage
-		}
+		if (mode != modeOptionNum): objprm logid, logmessage
 		objenable comboxid,1
-		objenable sscapiid,1
+		if (mode != modeOptionNum): objenable sscapiid, 1
 		
 		nidpop
 		debugLog "ツイート 終了"

@@ -241,13 +241,14 @@ return tempInt
 	sdim rawtext,512
 	sdim p2,512
 	sdim picname,1024
+	
 	repeat p3
 		exist p1(cnt)
 		if strsize <= 0:return 0
 
 		if hProgress: sendmsg hProgress, $402, 0:wait 10
-		picname = p1(cnt)
-		execRestApi "media/upload.json", picname, METHOD_POST, hProgress
+		picName = p1(cnt)
+		execRestApi "media/upload.json", picName, METHOD_POST, hProgress
 		if (stat != 200) :return 0
 		
 		rawtext = "["+getResponseBody()+"]"

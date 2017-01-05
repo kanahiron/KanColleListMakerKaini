@@ -122,6 +122,8 @@
 	
 #endif
 
+	debugLog SOFTNAME+"を起動しました"
+
 	debugLog "メインルーチン開始"
 
 	onerror *error
@@ -282,12 +284,13 @@
 
 
 	debugLog "終了処理 終了"
+	debugLog "-ありがとうございました-"
 		
 	end
 	end
 
 *error
-	dialog err
+	debugLog "エラー発生 エラー番号: "+err
 	goto *exit
 
 #include "./SubSource/DeclaringVariables.hsp"

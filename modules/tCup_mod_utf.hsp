@@ -419,6 +419,9 @@ return form_encode(str(base64HmacSha1), 0)
 	} else {
 		exist era_p2
 		picLength = strsize
+
+		debugLog "    画像サイズ :"+picLength+"Byte"
+		
 		sdim picBuf,picLength+1
 		bload era_p2,picBuf
 	}
@@ -443,7 +446,7 @@ return form_encode(str(base64HmacSha1), 0)
 			swbreak
 	swend
 
-	debugLog "     METHOD :"+method
+	debugLog "    METHOD :"+method
 	
 	sigArrayLength = 6+argumentLength
 	sdim sigArray, 500, sigArrayLength
@@ -579,35 +582,35 @@ return form_encode(str(base64HmacSha1), 0)
 
 
 
-	debugLog "     RequestHeader :"+RequestHeader
-	debugLog "     PostDataLength :"+postDataLength
+	debugLog "    RequestHeader :"+RequestHeader
+	debugLog "    PostDataLength :"+postDataLength
 
 	//サーバへ接続
+	debugLog "    1 InternetConnect 開始"
 	hConnect = _InternetConnect(hInet, RequestURL, INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
 	if (hConnect = 0) {
+		debugLog "    InternetConnect 失敗"
 		//Connectハンドルを取得できなかった場合
 		return -4
 	}
 	debugLog "    InternetConnect 正常終了"
 
 	//リクエストの初期化
-	logmes "HttpOpenRequest開始 " +method
+	debugLog "    2 HttpOpenRequest 開始"
 	hRequest = _HttpOpenRequest(hConnect, method, apiUrl, "HTTP/1.1", 0, 0, requestFlag)
-	logmes "HttpOpenRequest成功"
 	if (hRequest = 0) {
 		//Requestハンドルを取得できなかった場合
+		debugLog "    HttpOpenRequest 失敗"
 		_InternetCloseHandle hConnect
 		return -3
 	}
 	debugLog "    HttpOpenRequest 正常終了"
 
+	debugLog "    RequestHeaderをUTF-16にした時の文字数を取得"
 	MultiByteToWideChar 65001, 0, varptr(RequestHeader), -1, 0, 0
 	RequestHeaderWideLength = stat-1						//UTF-16文字列の 文 字 数
-	sdim RequestHeaderWide ,(RequestHeaderWideLength*2)+2	//UTF-16文字列を入れるバッファを確保
+	sdim RequestHeaderWide ,(RequestHeaderWideLength*2)+16	//UTF-16文字列を入れるバッファを確保
 	cnvstow RequestHeaderWide, RequestHeader				//バッファにUTF-8からUTF-16に変換して格納
-	logmes "RequestHeaderWideLength :"+RequestHeaderWideLength
-	logmes "PostDataLength :"+PostDataLength
-
 	debugLog "    RequestHeaderWideLength :"+requestHeaderWideLength
 	debugLog "    PostDataLength :"+postDataLength
 
@@ -623,17 +626,16 @@ return form_encode(str(base64HmacSha1), 0)
 	lpoke  INTERNET_BUFFERS, 32, 0
 	lpoke  INTERNET_BUFFERS, 36, 0
 	
-	logmes "HttpSendRequestEx 開始 " +method
+	debugLog "    3 HttpSendRequestEx 開始 " +method
 	if _HttpSendRequestEx( hRequest, varptr(INTERNET_BUFFERS), 0, 0, 0) {
-		logmes "HttpSendRequestEx 終了"
 	} else {
-		logmes "HttpSendRequestEx 失敗 Code:"+GetLastError()
+		debugLog "    HttpSendRequestEx 失敗 Code:"+GetLastError()
 		_InternetCloseHandle hRequest
 		_InternetCloseHandle hConnect
 		return -10 //HttpSendRequestEx 失敗
 	}
-
 	debugLog "    HttpSendRequestEx 正常終了"
+	
 
 	if (PostDataLength != 0){
 
@@ -641,15 +643,12 @@ return form_encode(str(base64HmacSha1), 0)
 		sentSize = 0
 		unSentSize = PostDataLength
 		tSize = 0
-		logmes "InternetWriteFile 開始"
-		debugLog "    InternetWriteFile 開始"
+		debugLog "    4 InternetWriteFile 開始"
 		repeat
 	
 			if (unSentSize = 0):break
 			if (unSentSize < 8192):tSize = unSentSize:else:tSize = 8192
-
-			debugLog "    送信バイト数 :"+tSize
-
+			
 			_InternetWriteFile hRequest, varptr(PostData)+sentSize, tSize, varptr(BytesWritten)
 			if (stat = 0){
 				debugLog "    InternetWriteFile 失敗"
@@ -659,27 +658,20 @@ return form_encode(str(base64HmacSha1), 0)
 			}
 			sentSize += BytesWritten
 			unSentSize -= BytesWritten
-
-			debugLog "    送信済みバイト数 :"+sentSize
-			debugLog "    送信残りバイト数 :"+unSentSize
 			//title strf("送信バイト数 %d/%dByte %.2f%%",sentSize,PostdataLength,(100.0*sentSize/PostDataLength))
 			if hProgress :sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength)
 			await
 		loop
 		if hProgress :sendmsg hProgress, $402, 100:wait 20
-		logmes "InternetWriteFile 終了"
 		debugLog "    InternetWriteFile 正常終了"
 
 	}
 
-	debugLog "    HttpEndRequest 開始"
-	logmes "HttpEndRequest 開始"
+	debugLog "    5 HttpEndRequest 開始"
 	if _HttpEndRequest( hRequest, 0, 0, 0){
 		debugLog "　　HttpEndRequest 正常終了"
-		logmes "HttpEndRequest 終了"
 	} else {
-		debugLog "    HttpEndRequest 失敗"
-		logmes "HttpEndRequest 失敗 Code:"+GetLastError()
+		debugLog "    HttpEndRequest 失敗 Code :"+GetLastError()
 		_InternetCloseHandle hRequest
 		_InternetCloseHandle hConnect
 		return -8 //HttpEndRequest 失敗
@@ -688,10 +680,8 @@ return form_encode(str(base64HmacSha1), 0)
 	responseHeaderSize = 1024*4
 	sdim responseHeader, responseHeaderSize+1
 	//ヘッダの取得
-	debugLog "    HttpQueryInfo 開始"
-	logmes "HttpQueryInfo開始"　　
+	debugLog "    6 HttpQueryInfo 開始"
 	if ( _HttpQueryInfo(hRequest, HTTP_QUERY_RAW_HEADERS_CRLF, varptr(responseHeader), varptr(responseHeaderSize), 0) ) {
-		logmes "HttpQueryInfo成功"
 		debugLog "    HttpQueryInfo 正常終了"
 		
 		//ヘッダの解析
@@ -711,28 +701,29 @@ return form_encode(str(base64HmacSha1), 0)
 ;			if (API_Buf != -1) : TS_RateLimit(2) = int(strmid(API_BufStr, -1, strlen(API_BufStr)-(API_buf+19)))
 		loop
 		noteunsel
-		logmes ""+responseBodyLength
+		debugLog "    responseBodyLength :"+responseBodyLength
+		
 		//入手可能なデータ量を取得
+		debugLog "    7 InternetQueryDataAvailable 開始"
 		_InternetQueryDataAvailable hRequest, varptr(rsize), 0, 0
 		debugLog "    InternetQueryDataAvailable 正常終了"
+		
 		//バッファの初期化
-		logmes "srize : "+ rsize
+		debugLog "    レスポンスデータサイズ :"+ rsize
 		sdim responseBuffer, rsize + 2
-		sdim responseBody, 1024
+		sdim responseBody, 1024*4
 
-		debugLog "    InternetReadFile 開始"
+		debugLog "    8 InternetReadFile 開始"
 		repeat 
 			_InternetReadFile hRequest, varptr(responseBuffer), rsize, varptr(hsize)
 
-			debugLog "    送信残りバイト数 :"+hsize
-			
 			if (hsize = 0) : break 
 			responseBody += strmid(responseBuffer, 0, hsize)
 		loop
 		debugLog "    InternetReadFile 正常終了"
 	} else {
 		//ヘッダの取得ができなかった場合
-		logmes "HttpQueryInfo失敗 code:"+getlasterror()
+		debugLog "    HttpQueryInfo失敗 code:"+getlasterror()
 		_InternetCloseHandle hRequest
 		_InternetCloseHandle hConnect
 		return -1
@@ -756,8 +747,6 @@ return form_encode(str(base64HmacSha1), 0)
 	sdim requestHeader,800,75,0
 	sdim postData
 	sdim picBuf
-	
-	logmes "execRESTAPI 終了"
 
 	debugLog "StatusCode :"+statcode
 	debugLog "execRESTAPI 終了"
