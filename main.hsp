@@ -61,7 +61,7 @@
 #define klm2ver		2400
 
 #define ctype round(%1) int(strf("%%0.0f", %1))
-#define SOFTNAME "艦これ一覧めいかー改二 Ver0.2.4"
+#define SOFTNAME "艦これ一覧めいかー改二 Ver0.2.5(仮)"
 
 #define PT_ABSOLUTE 1
 #define PT_RELATIVE 2
@@ -83,7 +83,7 @@
 #define DAControlInit dim DAControlArr, 20: DAControlIndex = 0
 #define SetDAControl(%1) DAControlArr(DAControlIndex) = (%1): DAControlIndex++
 
-#enum WND_MAIN = 1
+#enum WND_MAIN = 0
 #enum WND_GRID
 #enum WND_TWITTER		//元19
 #enum WND_OVERLAY		//元19
@@ -223,6 +223,26 @@
 	if enableTweetWindow {
 		gsel WND_TWITTER, 1
 		gsel WND_MAIN, 1+frontrow
+	}
+
+	if autoSearch {
+	} else {
+		if ((SSCap_temp(2)-SSCap_temp(0)) != 0) | ((SSCap_temp(3)-SSCap_temp(1)) != 0){
+			gsel WND_OVERLAY, 2
+			MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SSCap_temp(0), SSCap_temp(1), SSCap_temp(2)-SSCap_temp(0), SSCap_temp(3)-SSCap_temp(1), 1
+			await
+			gsel WND_MAIN
+			dialog "前回起動時の座標を取得しました。\n復元しますか？", 2
+			dialogStat = stat
+			gsel WND_OVERLAY, -1
+			gsel WND_MAIN, 1+frontrow
+			if (dialogStat == 6){
+				repeat 4
+					SSCap(cnt) = SSCap_temp(cnt)
+				loop
+				gosub *SSSettingCheck
+			}
+		}
 	}
 	
 	gosub *VerCheck

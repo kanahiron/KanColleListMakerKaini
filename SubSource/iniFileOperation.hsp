@@ -53,7 +53,8 @@
 
 	GetIni "SSMode", "AutoSearch", autosearch, "1"
 	GetIni "SSMode", "HideName", hidename, "0"
-	GetIni "SSMode", "EnableTweetWindow",enabletweetwindow, "0"
+	GetIni "SSMode", "EnableTweetWindow", enabletweetwindow, "0"
+	GetIni "SSMode", "SSCapturePosition", SSCap_temp, "0\",\"0\",\"0\",\"0"
 
 	
 	GetIni "KanmusuListMode", "ichiranMode1", ichiranMode1, "1"
@@ -451,6 +452,8 @@ return
 	WriteIni "SSMode", "AutoSearch", autosearch
 	WriteIni "SSMode", "HideName", hidename
 	WriteIni "SSMode", "EnableTweetWindow",enabletweetwindow
+	WriteIni "SSMode", "SSCapturePosition", SSCap
+	
 
 	
 	WriteIni "KanmusuListMode", "ichiranMode1", ichiranMode1
