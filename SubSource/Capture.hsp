@@ -74,6 +74,8 @@
 		if mode != modeOptionNum{
 
 			debugLog "    手動座標入力した範囲が小さすぎる"
+
+			if seqCapf : gosub *seqcap
 			
 			positionType = 0
 			logmessage = "取得範囲が小さすぎます"
@@ -269,26 +271,22 @@ return
 	
 	if (seqcapf == FALSE){
 		debugLog "    連続キャプチャを開始します"
+		
+		seqcapf = TRUE
+		
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID, 100*timersec, 0
 		seqcapmes = "停止"
 		objprm seqcapBId,seqcapmes
-		objenable comboxId,0
-		objenable sscapBId,0
-		objenable sscapIId,0
-		objenable yabumiBId,0
-
-		///*
-
-		if manualpos & (mode != modeOptionNum) {
-			objenable luposxIId, 0
-			objenable luposyIId, 0
-			objenable rdposxIId, 0
-			objenable rdposyIId , 0
-		}
-		//*/
-
 		
-		seqcapf = TRUE
+		objenable comboxId, 0
+		objenable sscapBId, 0
+		objenable sscapIId, 0
+		objenable yabumiBId, 0
+
+		objenable luposxIId, 0
+		objenable luposyIId, 0
+		objenable rdposxIId, 0
+		objenable rdposyIId , 0
 	
 		chdir intervalShotDir
 		intervalsavedir =  strf("IntervalShot%04d%02d%02d-%02d%02d%02d",gettime(0),gettime(1),gettime(3),gettime(4),gettime(5),gettime(6))
@@ -300,22 +298,26 @@ return
 		gosub *ssCapture
 	} else {
 		debugLog "    連続キャプチャを停止します"
+		
+		seqcapf = FALSE
+		
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID
 		seqcapmes = "開始"
 		objprm seqcapBId,seqcapmes
-		objenable comboxId,1
-		objenable sscapBId,1
-		objenable sscapIId,1
-		objenable yabumiBId,1
 
-		if manualpos & (mode != modeOptionNum) {
-			objenable luposxIId, 1
-			objenable luposyIId, 1
-			objenable rdposxIId, 1
-			objenable rdposyIId , 1
+		objenable comboxId,1
+		objenable SSCapIId, 1
+
+		if availableCap | manualpos{
+			objenable SSCapBId, 1
 		}
-		
-		seqcapf = FALSE
+		if availableCap: objenable yabumiBId, 1	
+			
+		objenable luposxIId, 1
+		objenable luposyIId, 1
+		objenable rdposxIId, 1
+		objenable rdposyIId, 1
+
 	}
 
 	debugLog "連続キャプチャ設定 終了"

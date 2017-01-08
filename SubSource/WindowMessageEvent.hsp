@@ -93,22 +93,7 @@
 					sendmsg autoUIScaleCh, $F2
 					autoUIScale = stat & 0x01
 
-					DPI = GetDeviceCaps(hdc, 88)
-
-					if autoUIScale {
-						UIScale = 1.0 * DPI / 96.0
-					}
-				
-					scale3 = Scale(3)
-					scale5 = Scale(5)
-					scale20 = Scale(20)
-				
-					repeat 5
-						twiPicFrameXL(cnt) = Scale(_twiPicFrameXL(cnt))
-						twiPicFrameXR(cnt) = Scale(_twiPicFrameXR(cnt))
-						twiPicFrameYU(cnt) = Scale(_twiPicFrameYU(cnt))
-						twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
-					loop
+					gosub *calcUIScale
 
 					enableWindow hTrackbar, autoUIScale^1
 					enableWindow hTrackBarScale, autoUIScale^1
@@ -123,9 +108,11 @@
 		}
 
 		if (mode != modeOptionNum){
+			logmes "リストチェンジ前判定 Index" + DAControlIndex
 			listChangef = FALSE
 			repeat DAControlIndex
 				if (lparam == DAControlArr(cnt)){
+					logmes "ヒット cnt:"+cnt
 					listChangef = TRUE
 					break
 				}
@@ -556,4 +543,24 @@ return
 	if (wparam == 1) {
 		sendmsg WND_INFO(WND_MAIN, WI_HANDLE), WM_NCLBUTTONDOWN,HTCAPTION,0
 	}
+return
+
+*calcUIScale
+
+	DPI = GetDeviceCaps(hdc, 88)
+	if autoUIScale {
+		UIScale = 1.0 * DPI / 96.0
+	}
+				
+	scale3 = Scale(3)
+	scale5 = Scale(5)
+	scale20 = Scale(20)
+				
+	repeat 5
+		twiPicFrameXL(cnt) = Scale(_twiPicFrameXL(cnt))
+		twiPicFrameXR(cnt) = Scale(_twiPicFrameXR(cnt))
+		twiPicFrameYU(cnt) = Scale(_twiPicFrameYU(cnt))
+		twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
+	loop
+	
 return

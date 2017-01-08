@@ -388,13 +388,24 @@ return
 
 		gsel WND_MAIN
 		objenable comboxid, 0
-		if (mode != modeOptionNum): objenable SSCapIId, 0
-		if (mode != modeOptionNum): objenable yabumiBId, 0
 
 		if (mode == 0){
 			objenable SSCapBId, 0
-			if (disableSeqCap = FALSE): objenable seqCapBId, 0
+			objenable windowsSizeChangeBId, 0
+			objenable SSCapIId, 0
+			objenable seqCapBId, 0
+
+			objenable luposxIId, 0
+			objenable luposyIId, 0
+			objenable rdposxIId, 0
+			objenable rdposyIId, 0
+		} else : if( mode != modeOptionNum){
+			objenable makeBId, 0
 		}
+
+		if (mode != modeOptionNum): objenable enableTweetWindowCId, 0	//ツイートウィンドウ表示切り替え
+		if (mode != modeOptionNum): objenable SSCapIId, 0				//座標取得ボタン
+		if (mode != modeOptionNum): objenable yabumiBId, 0				//yabumiアップロードボタン
 
 		
 		gsel WND_TWITTER
@@ -523,46 +534,27 @@ return
 		gsel WND_MAIN
 
 
-
 		objenable comboxid, 1
-		if (mode != modeOptionNum): objenable SSCapIId, 1
-		if (mode != modeOptionNum): objenable yabumiBId, 1
-
-		if (mode == 0 & availablecap) | manualPos {
-			objenable SSCapBId, 1
-			if (disableSeqCap = FALSE): objenable seqCapBId, 1
-		}
-
-		/*
-
-
-		objenable comboxid, 0
-		if (mode != modeOptionNum): objenable SSCapIId, 0
-		if (mode != modeOptionNum): objenable yabumiBId, 0
 
 		if (mode == 0){
-			objenable SSCapBId, 0
-			if (disableSeqCap = FALSE): objenable seqCapBId, 0
+			if availableCap | manualpos{
+				objenable SSCapBId, 1
+				objenable seqCapBId, 1
+			}
+			objenable windowsSizeChangeBId, 1
+			
+			objenable luposxIId, 1
+			objenable luposyIId, 1
+			objenable rdposxIId, 1
+			objenable rdposyIId, 1
+		} else : if( mode != modeOptionNum){
+			objenable makeBId, 1
 		}
 
+		if (mode != modeOptionNum): objenable enableTweetWindowCId, 1	//ツイートウィンドウ表示切り替え
+		if (mode != modeOptionNum): objenable SSCapIId, 1				//座標取得ボタン
+		if (mode != modeOptionNum) & availableCap: objenable yabumiBId, 1			
 
-		
-
-		objenable comboxId,0
-		if (mode != modeOptionNum): objenable sscapBId,0
-		if (mode != modeOptionNum): objenable sscapIId,0
-		if (mode != modeOptionNum): objenable yabumiBId,0
-
-//
-
-		if (seqCapf == FALSE){
-			objenable comboxid,1
-			if (mode != modeOptionNum): objenable sscapIId, 1
-		}
-*/
-
-
-		///
 
 		if (mode != modeOptionNum): objprm logid, logmessage
 		

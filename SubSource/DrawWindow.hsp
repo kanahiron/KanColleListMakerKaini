@@ -29,37 +29,33 @@
 	button gosub sscapmes,*sssetting
 	sscapiid = stat
 	mesy += Scale(22)
-	
-	//if manualpos {
 
-		manualposf = manualpos^1
-
-		pos Scale(84+(manualposf * 175)), mesy + scale5
-		mes "x"
-		pos Scale(0+(manualposf * 175)), mesy
-		input luposx, Scale(40), Scale(23), 5
-		luposxIId = stat
-		pos Scale(40+(manualposf * 175)), mesy
-		input luposy, Scale(40), Scale(23), 5
-		luposyIId = stat
-		pos Scale(95+(manualposf * 175)), mesy
-		input rdposx, Scale(40), Scale(23), 5
-		rdposxIId = stat
-		pos Scale(135+(manualposf * 175)), mesy
-		input rdposy, Scale(40), Scale(23), 5
-		rdposyIId = stat
+	pos Scale(84+((manualpos^1) * 175)), mesy + scale5
+	mes "x"
+	pos Scale(0+((manualpos^1) * 175)), mesy
+	input luposx, Scale(40), Scale(23), 5
+	luposxIId = stat
+	pos Scale(40+((manualpos^1) * 175)), mesy
+	input luposy, Scale(40), Scale(23), 5
+	luposyIId = stat
+	pos Scale(95+((manualpos^1) * 175)), mesy
+	input rdposx, Scale(40), Scale(23), 5
+	rdposxIId = stat
+	pos Scale(135+((manualpos^1) * 175)), mesy
+	input rdposy, Scale(40), Scale(23), 5
+	rdposyIId = stat
 	
-		GetWindowLong objinfo(luposxiid,2), -16
-		SetWindowLong objinfo(luposxiid,2), -16, stat | $2
-		GetWindowLong objinfo(luposyiid,2), -16
-		SetWindowLong objinfo(luposyiid,2), -16, stat | $2
-		GetWindowLong objinfo(rdposxiid,2), -16
-		SetWindowLong objinfo(rdposxiid,2), -16, stat | $2
-		GetWindowLong objinfo(rdposyiid,2), -16
-		SetWindowLong objinfo(rdposyiid,2), -16, stat | $2
-		
-		if manualpos: mesy += Scale(23)
-	//}
+	GetWindowLong objinfo(luposxiid,2), -16
+	SetWindowLong objinfo(luposxiid,2), -16, stat | $2
+	GetWindowLong objinfo(luposyiid,2), -16
+	SetWindowLong objinfo(luposyiid,2), -16, stat | $2
+	GetWindowLong objinfo(rdposxiid,2), -16
+	SetWindowLong objinfo(rdposxiid,2), -16, stat | $2
+	GetWindowLong objinfo(rdposyiid,2), -16
+	SetWindowLong objinfo(rdposyiid,2), -16, stat | $2
+
+	if manualpos: mesy += Scale(23)
+
 	
 	if mainWindowSmall {
 		mesaddx = Scale(500)
@@ -121,10 +117,10 @@
 	pos Scale(2+(disableseqcap*-175)), mesy + scale3
 	mes "連続キャプチャ"
 	objsize Scale(80), Scale(25)
-	pos Scale(95+(disableseqcap*-175)), mesy
-	if disableseqcap = 0: mesy += Scale(25)
+	pos Scale(95+(disableseqcap*175)), mesy
+	if disableseqcap^1 : mesy += Scale(25)
 	button gosub seqcapmes, *seqcap
-	seqcapBId  = stat
+	seqCapBId  = stat
 	
 	dispcapy = mesy
 	if dispcap {
@@ -157,6 +153,7 @@
 	
 	if manualpos {
 		objenable sscapbid, 1
+		objenable seqcapbid, 1
 	}
 	
 	width Scale(175), mesy
@@ -466,6 +463,7 @@ return
 	objsize Scale(150-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), Scale(30)
 	pos 0, mesy
 	button gosub "作成",*make
+	makeBId = stat
 	
 	objsize Scale(25), Scale(30)
 	pos Scale(150-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), mesy
@@ -475,7 +473,7 @@ return
 	if ((yabumiAutoUpload = 1) & (availableYabumi = 1)) {
 		pos Scale(150), mesy
 	} else {
-		pos Scale(500), mesy
+		pos Scale(350), mesy
 	}	
 	
 	button gosub "UP",*yabumiUpload

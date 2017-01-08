@@ -210,14 +210,14 @@ return
 	debugLog "取得座標の正当性確認 開始"
 	nidPush
 	
-	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
 	luposx = sscap(0)
 	luposy = sscap(1)
 	rdposx = sscap(2)
 	rdposy = sscap(3)
-	
+	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
+
 	gsel WND_MAIN
-	if manualpos & (mode = 0){
+	if (mode == 0){
 		objprm luposxiid, luposx
 		objprm luposyiid, luposy
 		objprm rdposxiid, rdposx
@@ -248,7 +248,7 @@ return
 		}
 		
 		logmessage = "座標の取得に成功しました"
-		objprm logid,logmessage
+		objprm logid, logmessage
 		
 		availablecap = TRUE
 	
@@ -259,13 +259,15 @@ return
 		debugLog "    座標NG"
 		
 		sscapmes = "取得する"
-		objprm sscapiid,sscapmes
+		objprm sscapiid, sscapmes
 		
 		if mode = 0{
 			objenable sscapbid,0
 			objenable seqcapbid,0
 			objenable yabumibid,0
 		}
+
+		if seqcapf: gosub *seqcap
 		
 		logmessage = "座標を取得できません\n詳細はreadmeをお読みください"
 		objprm logid,logmessage
@@ -282,9 +284,10 @@ return
 	}
 	
 	if mode = 0 {
-		
-		if manualpos: objenable sscapbid,1
-
+		if manualpos{
+			objenable ssCapBId, 1
+			objenable seqCapBId, 1
+		}
 	}
 	
 	if (hotkeyset == 1 & availablecap == 1) {
