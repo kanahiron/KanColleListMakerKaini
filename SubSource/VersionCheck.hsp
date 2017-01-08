@@ -246,6 +246,7 @@ return
 				_InternetReadFile hRequest, responseBuffer, rsize, hsize
 				if (hsize = 0) : break 
 				responseBody += strmid(responseBuffer, 0, hsize)
+				await 0
 			loop
 		} else {
 			//ヘッダの取得ができなかった場合
@@ -268,6 +269,7 @@ return responseBody
 
 
 *VerCheck
+	oncmd 0
 
 	if autoVersionCheck {
 
@@ -277,7 +279,7 @@ return responseBody
 
 		if (mode == 0){
 			logmessage = "バージョンチェックを開始します。"
-			objprm logId, logMessage
+			objprm logId, logMessage: await
 		}
 		
 		execVerCheck
@@ -312,10 +314,11 @@ return responseBody
 
 		if (mode == 0){
 			logmessage = "バージョンチェックが完了しました。"
-			objprm logId, logMessage
+			objprm logId, logMessage: await
 		}
 		
 		debugLog "バージョンチェック 終了"
 	}
 
+	oncmd 1
 return

@@ -1,6 +1,7 @@
 //SSモード――――――――――――――――――――――――――――――――――
 *ssmode
 	debugLog "SSモード 描画開始"
+	oncmd 1
 	
 	gsel WND_GRID, -1
 	gsel WND_MAIN, 1+frontrow
@@ -11,13 +12,10 @@
 
 	objsize Scale(175), Scale(30)
 	pos 0,0
-
-	oncmd 0
-		combox cellmode, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
-		comboxId = stat
-		hCombox = objinfo_hwnd(comboxId)
-		await: GetClientRect hComBox, varptr(rect)
-	oncmd 1
+	combox cellmode, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+	comboxId = stat
+	hCombox = objinfo_hwnd(comboxId)
+	await: GetClientRect hComBox, varptr(rect)
 	
 	mesy = rect(3) + scale3
 	
@@ -164,10 +162,11 @@
 	width Scale(175), mesy
 
 	debugLog "SSモード 描画終了"
-	
+	oncmd 1
 return
 
 *windowsSizeChange
+	oncmd 0
 	
 	if mainWindowSmall {
 		mainWindowSmall = 0
@@ -179,11 +178,13 @@ return
 	if mode = 0:gosub *ssmode
 	if (mode == 1 | mode == 2):gosub *list
 
+	oncmd 1
 return
 
 //リストモード――――――――――――――――――――――――――――――――――
 *list
 	debugLog "一覧作成モード 描画開始"
+	oncmd 0
 	
 	mxy(0) = 0, 0
 	mxy_(0) = 0, 0
@@ -197,13 +198,11 @@ return
 
 	objsize Scale(175),Scale(30)
 	pos 0,0
-	oncmd 0
-		combox cellmode, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
-		comboxId = stat
-		hCombox = objinfo_hwnd(comboxId)
-		await: GetClientRect hComBox, varptr(rect)
-		ComBoxH = rect(3)
-	oncmd 1
+	combox cellmode, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+	comboxId = stat
+	hCombox = objinfo_hwnd(comboxId)
+	await: GetClientRect hComBox, varptr(rect)
+	ComBoxH = rect(3)
 
 	mesy = ComBoxH + scale3
 	
@@ -462,6 +461,7 @@ return
 	
 	width , mesy-(Scale(70)*hideLog_)
 	
+	
 	if IsWindowVisible(WND_INFO(WND_GRID, WI_HANDLE)) = 0{
 		gsel WND_GRID,1
 	} else {
@@ -479,7 +479,7 @@ return
 //オプション――――――――――――――――――――――――――――――――――
 *option
 	debugLog "オプションモード 描画開始"
-	
+	oncmd 0
 	redraw 0
 
 	gsel WND_GRID, -1
@@ -493,13 +493,11 @@ return
 
 	objsize Scale(175), Scale(30)
 	pos 0,0
-	oncmd 0
-		combox cellmode, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
-		comboxId = stat
-		hCombox = objinfo_hwnd(comboxId)
-		await: GetClientRect hComBox, varptr(rect)
-		ComBoxH = rect(3)
-	oncmd 1
+	combox cellmode, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+	comboxId = stat
+	hCombox = objinfo_hwnd(comboxId)
+	await: GetClientRect hComBox, varptr(rect)
+	ComBoxH = rect(3)
 
 	pos Scale(175), 0
 	combox optionMode, Scale(100), " 環境設定\n キャプチャ・作成設定\n Twitter設定\n その他設定"
@@ -704,5 +702,6 @@ return
 	width Scale(350), mesy
 
 	redraw 1
+	oncmd 1
 	debugLog "オプションモード 描画終了"
 return

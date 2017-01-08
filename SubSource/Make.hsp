@@ -84,6 +84,7 @@
 
 	
 	buffer WND_TEMP1, w*yoko, h*tate
+	//screen 2,w*yoko,h*tate
 	drawcount = 0
 	repeat cellnum(1,listmode)+1
 		ycnt = cnt

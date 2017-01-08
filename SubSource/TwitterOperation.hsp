@@ -1,10 +1,12 @@
 
 *twiWindowImage
+	oncmd 0
 	
-	if (ginfo(24) == WND_TWITTER) {
+	if ginfo(24) = WND_TWITTER{
 
 		debugLog "ツイートウィンドウの画像描画処理 開始"
-		nidPush
+	
+		nidpush
 		
 		mx = lParam & 0x0000FFFF			// カーソルx座標
 		my = (lParam >> 16) & 0x0000FFFF	// カーソルy座標
@@ -35,9 +37,11 @@
 
 		gosub *TweetWindow
 	
-		nidPop
+		nidpop
+
 		debugLog "ツイートウィンドウの画像描画処理 終了"
 	}
+	oncmd 1
 return
 
 
@@ -77,10 +81,12 @@ return
 
 *twiinit
 	debugLog "ツイートウィンドウ描画処理 開始"
+	oncmd 0
 	
 	if ACCESS_TOKEN != "" & ACCESS_SECRET != ""{
 
 		debugLog "    連携有効"
+
 		nidPush
 		
 		setAccessToken ACCESS_TOKEN, ACCESS_SECRET
@@ -190,14 +196,15 @@ return
 	
 		nidPop
 	}
+
 	
+	oncmd 1
 	debugLog "ツイートウィンドウ描画処理 終了"
 return
 
 *picHistoryNext
 	
 	nidPush
-	
 	gsel WND_TWITTER
 	
 	if picHistoryNum < 99{
@@ -216,7 +223,7 @@ return
 	nidPush
 	gsel WND_TWITTER
 	
-	if (0 < picHistoryNum){
+	if 0 < picHistoryNum{
 		picHistoryNum--
 	}
 	
@@ -227,9 +234,7 @@ return
 return
 
 *picHistoryAddStack
-	
 	if kmexist(picHistory(picHistoryNum)) > 0{
-		
 		i = 3
 		repeat 3
 			PicStack(i) = PicStack(i-1)
@@ -256,10 +261,10 @@ return
 	debugLog "TweetWindow 開始"
 
 	if (ACCESS_TOKEN != "" & ACCESS_SECRET != ""){
-		nidPush
+		nidpush
 		gsel WND_TWITTER
 		gosub *TweetWindowDraw
-		nidPop
+		nidpop
 	}
 
 	debugLog "TweetWindow 終了"
@@ -268,6 +273,7 @@ return
 
 *rideCursor
 
+	oncmd 0
 	if ACCESS_TOKEN != "" & ACCESS_SECRET != ""{
 	
 		mx = lparam&0x0000FFFF
@@ -306,9 +312,9 @@ return
 				gzoom Scale(62), Scale(38), WND_TEMP1, 0, 0, 800, 480
 	
 				sendmsg stackCounth ,$C , , strf("プレビュ")
-			
-			} else {
 				
+				redraw 1
+			} else {
 				gsel WND_TWITTER
 				gosub *TweetWindowDraw
 				sendmsg stackCounth ,$C , , strf("%3d/100",picHistoryNum+1)
@@ -318,6 +324,7 @@ return
 			debugLog "ツイートウィンドウにカーソルが乗ったときの処理 終了"
 		}
 	}
+	oncmd 1
 return
 
 
@@ -388,12 +395,12 @@ return
 		gsel WND_MAIN
 		objenable comboxid, 0
 		if (mode != modeOptionNum): objenable sscapiid, 0
-		//wait 50
+		wait 50
 	
 		gsel WND_TWITTER
 		objenable ttid, 0
 		objenable tweetbid, 0
-		//wait 50
+		wait 50
 		
 		sdim mediaids, 1024
 		sdim tempsdim, 256, 4
@@ -446,67 +453,64 @@ return
 		}
 		
 		gsel WND_TWITTER
-		oncmd 0
-	
-			debugLog "    ツイートする画像ファイル名1 :" + tempSdim(0)
-			debugLog "    ツイートする画像ファイル名2 :" + tempSdim(1)
-			debugLog "    ツイートする画像ファイル名3 :" + tempSdim(2)
-			debugLog "    ツイートする画像ファイル名4 :" + tempSdim(3)
-			debugLog "    ツイート画像枚数 :" + count
-	
-			mediaTweetSuccess = TRUE
-	
-			if (count != 0){
-				debugLog "    画像投稿ツイート 開始"
-				media_upload tempSdim, count,　mediaids, hProgress
-				if (stat = 1){
-					debugLog "    画像投稿ツイート 成功"
-				} else {
-					mediaTweetSuccess = FALSE
-					dialog "画像のアップロードに失敗しました"
-					debugLog "    画像投稿ツイート 失敗"
-					
-				}
-			}
-	
-			if mediaTweetSuccess {
-	
-				debugLog "    ツイート 開始"
-				
-				tweet tweettext, "", mediaids
-				if (stat = 200){
-					repeat 4
-						picStack(cnt) = ""
-					loop
-					
-					tweettext = ""
-					twiOrder = 0,0,0,0
-					twiOrderCount = 0
-					objprm ttid,tweettext
-	
-					sendmsg hProgress, $402, 0
-			
-					logmessage = "ツイートを投稿しました"
-					debugLog "     ツイート成功"
-		
-				} else {
-					dialog "ツイートに失敗しました"
-					debugLog "    ツイートの投稿失敗"
-				}
-				
-			} else {
-				debugLog "    画像投稿に失敗したのでツイート無し"
-			}
-			
-			if (twijpg == TRUE & jpgsave == FALSE){
-				repeat count
-					if kmexist(tempsdim(cnt)) > 0{
-						delete tempsdim(cnt)
-					}
-				loop
-			}
 
-		oncmd 1
+		debugLog "    ツイートする画像ファイル名1 :" + tempSdim(0)
+		debugLog "    ツイートする画像ファイル名2 :" + tempSdim(1)
+		debugLog "    ツイートする画像ファイル名3 :" + tempSdim(2)
+		debugLog "    ツイートする画像ファイル名4 :" + tempSdim(3)
+		debugLog "    ツイート画像枚数 :" + count
+
+		mediaTweetSuccess = TRUE
+
+		if (count != 0){
+			debugLog "    画像投稿ツイート 開始"
+			media_upload tempSdim, count,　mediaids, hProgress
+			if (stat = 1){
+				debugLog "    画像投稿ツイート 成功"
+			} else {
+				mediaTweetSuccess = FALSE
+				dialog "画像のアップロードに失敗しました"
+				debugLog "    画像投稿ツイート 失敗"
+				
+			}
+		}
+
+		if mediaTweetSuccess {
+
+			debugLog "    ツイート 開始"
+			
+			tweet tweettext, "", mediaids
+			if (stat = 200){
+				repeat 4
+					picStack(cnt) = ""
+				loop
+				
+				tweettext = ""
+				twiOrder = 0,0,0,0
+				twiOrderCount = 0
+				objprm ttid,tweettext
+
+				sendmsg hProgress, $402, 0
+		
+				logmessage = "ツイートを投稿しました"
+				debugLog "     ツイート成功"
+	
+			} else {
+				dialog "ツイートに失敗しました"
+				debugLog "    ツイートの投稿失敗"
+			}
+			
+		} else {
+			debugLog "    画像投稿に失敗したのでツイート無し"
+		}
+		
+		if (twijpg == TRUE & jpgsave == FALSE){
+			repeat count
+				if kmexist(tempsdim(cnt)) > 0{
+					delete tempsdim(cnt)
+				}
+			loop
+		}
 
 		gsel WND_TWITTER
 
@@ -538,6 +542,7 @@ return
 return
 
 *getText
+	oncmd 0
 	
 	if (lparam = tth){
 		if ( ((wparam >> 16)&0x0000FFFF) == 0x0400 ){
@@ -548,4 +553,5 @@ return
 		}
 	}
 	
+	oncmd 1
 return

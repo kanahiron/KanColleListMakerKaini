@@ -2,6 +2,8 @@
 //SSキャプチャセッティング――――――――――――――――――――――――――――――――――
 *sssetting
 	debugLog "座標取得 開始"
+	oncmd 0
+
 	nidPush
 	
 	gsel WND_MAIN
@@ -36,8 +38,8 @@
 
 		gsel WND_MAIN
 		logmessage = "艦これの画面にマウスカーソルを重ねてください。"
-		objprm logid,logmessage
-		
+		objprm logid,logmessage:await 
+
 		dim rect, 4
 		dim mouPoint, 2
 		dim scrPoint, 2
@@ -50,118 +52,114 @@
 		enablePos = FALSE
 		sti = 0
 
-		oncmd 0
+		repeat
+			mouPoint(0) = ginfo(0)
+			mouPoint(1) = ginfo(1)
+			
+			if (enablePos == TRUE){
 	
-			repeat
-				mouPoint(0) = ginfo(0)
-				mouPoint(1) = ginfo(1)
+				scrPoint(0) = KCRect(0), KCRect(1)
+				ClientToScreen hClient, varptr(scrPoint)
+				if (mouPoint(0) < scrPoint(0)) | (mouPoint(0) > (scrPoint(0)+KCRect(2)-KCRect(0)))  | (mouPoint(1) < scrPoint(1)) | (mouPoint(1) > (scrPoint(1)+KCRect(3)-KCRect(1))) {
+					KCRect(0) = -1, -1, -1, -1
+					enablePos = FALSE
+					temp_hClient = 0
+					gsel WND_OVERLAY, -1
+					gsel WND_MAIN, 0
+				}
 				
-				if (enablePos == TRUE){
+			} else {
+
+				if ginfo(3) != WND_IMAGE_BUF2:gsel WND_IMAGE_BUF2,2
+				MoveWindow WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), mouPoint(0)+1, mouPoint(1)+1, ginfo_winx, ginfo_winy ,1
+				gsel WND_MAIN,0
+				
+				hClient = WindowFromPoint(mouPoint(0), mouPoint(1))
 		
-					scrPoint(0) = KCRect(0), KCRect(1)
-					ClientToScreen hClient, varptr(scrPoint)
-					if (mouPoint(0) < scrPoint(0)) | (mouPoint(0) > (scrPoint(0)+KCRect(2)-KCRect(0)))  | (mouPoint(1) < scrPoint(1)) | (mouPoint(1) > (scrPoint(1)+KCRect(3)-KCRect(1))) {
+				GetClientRect hClient, varptr(rect)
+				winSizeX = rect(2)
+				winSizeY = rect(3)
+
+				hChildClient = hClient
+				_hChildClient = 0
+
+				logmes "====================="
+				logmes hClient
+					
+				repeat
+					loopcnt = cnt
+					_hChildClient = hChildClient
+					ChildWindowFromPointEx hChildClient, mouPoint(0), mouPoint(1), 0x0001
+					hChildClient = stat
+					if (hChildClient == 0) or (hChildClient == _hChildClient): break
+				loop
+
+				logmes ""+_hChildClient+ "  :"+loopcnt
+
+				hClient = _hChildClient
+		
+				//拡大率が40%未満には対応しないのでそのサイズ未満なら弾く
+				if (winSizeX >= 320 and winSizeY >= 192) {
+					logmes "画面サイズは艦これの可能性あり"
+		
+					//過去に取得したウィンドウハンドルと同じならデバイスコンテキストの無駄な取得を避けるために飛ばす
+					if (temp_hClient != hClient) {
+						logmes "デバイスコンテキストを取得"
+						temp_hClient = hClient
+			
+						dcClient = GetDC(hClient)
+						buffer WND_TEMP1, winSizeX, winSizeY :SET_WND_INFO
+						BitBlt hdc, 0, 0, winSizeX, winSizeY, dcClient, 0, 0, SRCCOPY: redraw
+						ReleaseDC  dcClient
+						
+						gsel WND_MAIN, 0
+					} else {logmes "デバイスコンテキストの取得をスキップ"}
+					
+					//スクリーン座標からクライアント座標へ
+					cliPoint = mouPoint(0), mouPoint(1) 
+					ScreenToClient hClient, varptr(cliPoint)
+			
+					getKanCollePos WND_TEMP1, WND_TEMP2, KCRect, cliPoint(0), cliPoint(1)
+					if (stat = 1){
+						//取得したクライアント座標からスクリーン座標へ
+						scrPoint(0) = KCRect(0), KCRect(1)
+						ClientToScreen hClient, varptr(scrPoint)
+						gsel WND_OVERLAY, 2
+						MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), scrPoint(0), scrPoint(1), KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), 1
+
+						gsel WND_MAIN, 0
+						enablePos = TRUE
+						
+					} else {
 						KCRect(0) = -1, -1, -1, -1
 						enablePos = FALSE
-						temp_hClient = 0
 						gsel WND_OVERLAY, -1
 						gsel WND_MAIN, 0
 					}
-					
+						
+				}
+			}
+
+			stick sti, , 0
+			if (sti == 256) {
+				if (enablePos = TRUE){
+					ssCap(0) = KCRect(0), KCRect(1), KCRect(2), KCRect(3)
+					positionType = PT_RELATIVE
+					dcClient = GetDC(hClient)
+					clientSize(0) = winSizeX, winSizeY
+					break	
 				} else {
-	
-					if ginfo(3) != WND_IMAGE_BUF2:gsel WND_IMAGE_BUF2,2
-					MoveWindow WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), mouPoint(0)+1, mouPoint(1)+1, ginfo_winx, ginfo_winy ,1
-					gsel WND_MAIN,0
-					
-					hClient = WindowFromPoint(mouPoint(0), mouPoint(1))
-			
-					GetClientRect hClient, varptr(rect)
-					winSizeX = rect(2)
-					winSizeY = rect(3)
-	
-					hChildClient = hClient
-					_hChildClient = 0
-	
-					logmes "====================="
-					logmes hClient
-						
-					repeat
-						loopcnt = cnt
-						_hChildClient = hChildClient
-						ChildWindowFromPointEx hChildClient, mouPoint(0), mouPoint(1), 0x0001
-						hChildClient = stat
-						if (hChildClient == 0) or (hChildClient == _hChildClient): break
-					loop
-	
-					logmes ""+_hChildClient+ "  :"+loopcnt
-	
-					hClient = _hChildClient
-			
-					//拡大率が40%未満には対応しないのでそのサイズ未満なら弾く
-					if (winSizeX >= 320 and winSizeY >= 192) {
-						logmes "画面サイズは艦これの可能性あり"
-			
-						//過去に取得したウィンドウハンドルと同じならデバイスコンテキストの無駄な取得を避けるために飛ばす
-						if (temp_hClient != hClient) {
-							logmes "デバイスコンテキストを取得"
-							temp_hClient = hClient
-				
-							dcClient = GetDC(hClient)
-							buffer WND_TEMP1, winSizeX, winSizeY :SET_WND_INFO
-							BitBlt hdc, 0, 0, winSizeX, winSizeY, dcClient, 0, 0, SRCCOPY: redraw
-							ReleaseDC  dcClient
-							
-							gsel WND_MAIN, 0
-						} else {logmes "デバイスコンテキストの取得をスキップ"}
-						
-						//スクリーン座標からクライアント座標へ
-						cliPoint = mouPoint(0), mouPoint(1) 
-						ScreenToClient hClient, varptr(cliPoint)
-				
-						getKanCollePos WND_TEMP1, WND_TEMP2, KCRect, cliPoint(0), cliPoint(1)
-						if (stat = 1){
-							//取得したクライアント座標からスクリーン座標へ
-							scrPoint(0) = KCRect(0), KCRect(1)
-							ClientToScreen hClient, varptr(scrPoint)
-							gsel WND_OVERLAY, 2
-							MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), scrPoint(0), scrPoint(1), KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), 1
-	
-							gsel WND_MAIN, 0
-							enablePos = TRUE
-							
-						} else {
-							KCRect(0) = -1, -1, -1, -1
-							enablePos = FALSE
-							gsel WND_OVERLAY, -1
-							gsel WND_MAIN, 0
-						}
-							
-					}
-				}
-	
-				stick sti, , 0
-				if (sti == 256) {
-					if (enablePos = TRUE){
-						ssCap(0) = KCRect(0), KCRect(1), KCRect(2), KCRect(3)
-						positionType = PT_RELATIVE
-						dcClient = GetDC(hClient)
-						clientSize(0) = winSizeX, winSizeY
-						break	
-					} else {
-						dialog "艦これの画面が取得されませんでした。\n取得を継続しますか？",2,"自動座標取得中"
-						ssCap(0) = 0, 0, 0, 0
-						if (stat != 6):break
-					}
-				}
-				if (sti == 128){
+					dialog "艦これの画面が取得されませんでした。\n取得を継続しますか？",2,"自動座標取得中"
 					ssCap(0) = 0, 0, 0, 0
 					if (stat != 6):break
 				}
-				await 33
-			loop
-
-		oncmd 1
+			}
+			if (sti == 128){
+				ssCap(0) = 0, 0, 0, 0
+				if (stat != 6):break
+			}
+			await 33
+		loop
 
 		gsel WND_OVERLAY, -1
 		gsel WND_IMAGE_BUF2, -1
@@ -192,22 +190,21 @@
 		pos abs(disinfo(0))+5, abs(disinfo(1))+2
 		mes "艦これの画面を覆うようにドラッグしてください Escキーでキャンセル"
 
-		oncmd 0
-
-			KanCollePosManual WND_TEMP1, sscap, WND_OVERLAY, WND_TEMP_SCR1
-
-		oncmd 1
+		KanCollePosManual WND_TEMP1, sscap, WND_OVERLAY, WND_TEMP_SCR1
 
 	}
+
 	
 	nidPop
+	oncmd 1
 	
-	gosub *SSSettingCheck
+	gosub *ssSettingCheck
 	debugLog "座標取得 終了"
 return
 
-*SSSettingCheck
+*ssSettingCheck
 	debugLog "取得座標の正当性確認 開始"
+	oncmd 0
 	nidPush
 	
 	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
@@ -305,5 +302,6 @@ return
 	}
 	
 	nidPop
+	oncmd 1
 	debugLog "取得座標の正当性確認 終了"
 return

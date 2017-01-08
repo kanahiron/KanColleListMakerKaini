@@ -3,7 +3,8 @@
 //SSキャプチャ――――――――――――――――――――――――――――――――――
 *ssCapture
 	debugLog "SSキャプチャ 開始"
-	
+	oncmd 0
+
 	nidPush
 	gsel WND_MAIN
 
@@ -25,6 +26,7 @@
 			}
 
 			nidPop
+			oncmd 1
 			debugLog "SSキャプチャ 終了"
 			return
 		}
@@ -47,6 +49,7 @@
 			}
 			
 			nidPop
+			oncmd 1
 			debugLog "SSキャプチャ 終了"
 			return
 		}
@@ -86,6 +89,7 @@
 			
 		}
 		nidPop
+		oncmd 1
 		debugLog "SSキャプチャ 終了"
 		return
 	}
@@ -160,12 +164,14 @@
 	}
 
 	nidPop
+	oncmd 1
 	debugLog "SSキャプチャ 終了"
 return
 
 
 *addCapture
 	
+	oncmd 0
 	gsel WND_GRID,0
 	
 	if (dropf = 1) & (dropwindowid = 1){
@@ -261,6 +267,7 @@ return
 
 	addfilename = ""
 	hotkeyaddf = 0
+	oncmd 1
 return
 
 

@@ -1,4 +1,5 @@
 *setmode
+	//oncmd 0
 
 	logmes "WM_COMMAND"
 	
@@ -127,10 +128,12 @@
 		}
 	}
 	logmes ""
+	//oncmd 1
 return
 
 *listchange
 	debugLog "リストチェンジ 開始"
+	oncmd 0
 
 	nidPush
 	gsel WND_MAIN
@@ -344,13 +347,16 @@ return
 	gosub *draw
 
 	nidPop
+
+	oncmd 1
 	debugLog "リストチェンジ 終了"
 return
 
 
 *windowsize
 	debugLog "グリッドウィンドウサイズ変更 開始"
-	
+	oncmd 0
+
 	dupptr left,   lparam,    4
 	dupptr top,    lparam+4,  4
 	dupptr right,  lparam+8,  4
@@ -378,13 +384,15 @@ return
 	
 	gosub *draw
 	
+	oncmd 1
 	debugLog "グリッドウィンドウサイズ変更 終了"
 return 1
 
 //ホットキー――――――――――――――――――――――――――――――――――
 *hotkey
 	debugLog "ホットキー 開始"
-	nidPush
+	oncmd 0
+	nidpush
 	
 	if (wparam = HOTKEYID) & (availablecap = 1){
 
@@ -395,9 +403,11 @@ return 1
 				gosub *addCapture
 			}
 		}
+		await 16
 	}
 	
-	nidPop
+	nidpop
+	oncmd 1
 	debugLog "ホットキー 終了"
 return
 
@@ -406,6 +416,7 @@ return
 //ドロップ処理――――――――――――――――――――――――――――――――――
 *OnDropFiles
 	debugLog "ドロップ処理 開始"
+	oncmd 0
 	
 	if (ginfo(24) = 0) | (ginfo(24) = 1){
 
@@ -458,15 +469,15 @@ return
 		nidPop
 	
 	}
-	
+	oncmd 1
 	debugLog "ドロップ処理 終了"
 return
 
 *vscroll
 	//トラックバーを動かしたときの処理
 	debugLog "トラックバーを動かしたときの処理 開始"
+	oncmd 0
 	nidPush
-	
 	if (lparam == hTrackbar) {
 		
 		sendmsg hTrackbar, TBM_GETPOS
@@ -488,8 +499,8 @@ return
 			twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
 		loop
 	}
-	
 	nidPop
+	oncmd 1
 	debugLog "トラックバーを動かしたときの処理 終了"
 return
 
