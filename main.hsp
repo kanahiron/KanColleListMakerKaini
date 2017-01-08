@@ -215,10 +215,8 @@
 	
 	gosub *ssMode
 	gosub *hotkeyCapSetting
-	
-	gsel WND_MAIN,1+frontRow
-
 	wait 50
+	gsel WND_MAIN,1+frontRow
 
 	gosub *twiInit
 

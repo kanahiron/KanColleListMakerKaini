@@ -1,7 +1,7 @@
 *iniload
 
 	errDialog = TRUE
-	SetIni (dir_exe+"\\makelist.ini")
+	SetIni (dir_exe+"\\listmaker.ini")
 	if (stat == 2):errDialog = FALSE
 
 	sdim intervalShotDir,512
@@ -9,85 +9,89 @@
 	sdim sssavedir,512
 	sdim yabumidir,512
 
-	GetIni "Setting", "yubiwa", yubiwa, "1"
-	GetIni "Setting", "kantai", kantai, "1"
-	GetIni "Setting", "page", page, "0"
-	GetIni "Setting", "autosearch", autosearch, "1"
-	GetIni "Setting", "hidename", hidename, "0"
-	GetIni "Setting", "namecut", namecut, "0"
-	GetIni "Setting", "frontrow", frontrow, "1"
-	GetIni "Setting", "hidelog", hidelog, "0"
-	GetIni "Setting", "yabumiautoupload", yabumiautoupload, "1"
-	GetIni "Setting", "othergame", othergame, "1"
-	GetIni "Setting", "dispcap", dispcap, "1"
-	GetIni "Setting", "hotkeycap", hotkeycap, "1"
-	GetIni "Setting", "autoaddCapture", autoaddCapture, "1"
-	GetIni "Setting", "jpgsave", jpgsave, "0"
-	GetIni "Setting", "jpgquality", jpgquality, "90"
-	GetIni "Setting", "disableseqcap", disableseqcap, "1"
-	GetIni "Setting", "timersec", timersec, "5"
-	GetIni "Setting", "listsavedir", listsavedir, "\"\""
-	GetIni "Setting", "sssavedir", sssavedir, "\"\""
-	GetIni "Setting", "yabumidir", yabumidir, "\"\""
-	GetIni "Setting", "hotkeystr", hotkeystr, "\"A___Z\""
-	GetIni "Setting122", "lvname", lvname, "0"
-	GetIni "Setting122", "senden", senden, "1"
-	GetIni "Setting122", "tuika1", tuika1, "1"
-	GetIni "Setting122", "tuika2", tuika2, "0"
-	GetIni "Setting122", "tuika3", tuika3, "0"
-	GetIni "Setting122", "sosuka", sosuka, "1"
-	GetIni "Setting122", "sosu", sosu, "0"
-	GetIni "Setting122", "soka", soka, "0"
-	GetIni "Setting122", "manualpos", manualpos, "0"
+	GetIni "Configuration", "FrontRow", frontrow, "1"
+	GetIni "Configuration", "HideLog", hidelog, "0"
+	GetIni "Configuration", "YabumiAutoUpload", yabumiautoupload, "1"
+	GetIni "Configuration", "OtherGame", othergame, "1"
+	GetIni "Configuration", "DisplayCapture", dispcap, "1"
+	GetIni "Configuration", "ManualPos", manualpos, "0"
+	GetIni "Configuration", "Senden", senden, "1"
+	GetIni "Configuration", "AutoVersionCheck", autoVersionCheck, "1"
+	GetIni "Configuration", "AutoUIScale", autoUIScale, "1"
+	GetIni "Configuration", "UIScale", UIScale, "1.0"
+	GetIni "Configuration", "ScreenShotSaveDir", sssavedir, "\"\""
+	GetIni "Configuration", "ListSaveDir", listsavedir, "\"\""
+	GetIni "Configuration", "IntervalShotSaveDir",intervalShotDir, "\"\""
+	GetIni "Configuration", "YabumiExeDir", yabumidir, "\"\""
+
+	
+	GetIni "CaptureAndMaking", "NameCut", namecut, "0"
+	GetIni "CaptureAndMaking", "HotkeyCapture", hotkeycap, "1"
+	GetIni "CaptureAndMaking", "HotkeyStr", hotkeystr, "\"A___Z\""
+	GetIni "CaptureAndMaking", "AutoAddCapture", autoaddCapture, "1"
+	GetIni "CaptureAndMaking", "JpgSave", jpgsave, "0"
+	GetIni "CaptureAndMaking", "JpgQuality", jpgquality, "90"
+	GetIni "CaptureAndMaking", "DisableIntervalCap", disableseqcap, "1"
+	GetIni "CaptureAndMaking", "IntervalTime", timersec, "5"
+	GetIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "SaveNameList", saveNameList, "\"äÕñ∫àÍóó_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "SaveNameFormation", saveNameFormation, "\"çUó™ï“ê¨_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation, "\"äÓínçqãÛë‡_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink, "\"íºê⁄òAåã_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+
 
 	sdim temp, 256
-	GetIni "Setting130", "Twi_userdata", temp, "\"00\""
+	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
 	if stat = 0: userdata = decstr(temp)
-	GetIni "Setting130", "Twi_ACCESS_TOKEN", temp, "\"00\""
+	GetIni "TwitterSetting", "Twi_ACCESS_TOKEN", temp, "\"00\""
 	if stat = 0: ACCESS_TOKEN = decstr(temp)
-	GetIni "Setting130", "Twi_ACCESS_SECRET", temp, "\"00\""
+	GetIni "TwitterSetting", "Twi_ACCESS_SECRET", temp, "\"00\""
 	if stat = 0: ACCESS_SECRET = decstr(temp)
 
-	GetIni "Setting130", "enabletweetwindow",enabletweetwindow, "0"
-	GetIni "Setting130", "twijpg",twijpg, "1"
-	GetIni "Setting130", "tuika4", tuika4, "0"
+	GetIni "TwitterSetting", "TwiJpg",twijpg, "1"
+	
+
+	GetIni "SSMode", "AutoSearch", autosearch, "1"
+	GetIni "SSMode", "HideName", hidename, "0"
+	GetIni "SSMode", "EnableTweetWindow",enabletweetwindow, "0"
 
 	
-	GetIni "Setting200", "fontname", fontname, "\"\""
-	GetIni "Setting200", "fontnum", fontnum ,"\"\""
-	GetIni "Setting200", "fontsizename", fontsizename, "30"
-	GetIni "Setting200", "fontsizenum", fontsizenum, "34"
-	GetIni "Setting200", "intervalShotDir",intervalShotDir, "\"\""
+	GetIni "KanmusuListMode", "ichiranMode1", ichiranMode1, "1"
+	GetIni "KanmusuListMode", "yubiwa", yubiwa, "1"
+	GetIni "KanmusuListMode", "kantai", kantai, "1"
+	GetIni "KanmusuListMode", "page", page, "0"
+	GetIni "KanmusuListMode", "lvname", lvname, "0"
+	GetIni "KanmusuListMode", "ichiranMode2", ichiranMode2, "0"
 
-	GetIni "Setting250", "FirstFleetName", FirstFleetName, "\"ëÊàÍäÕë‡\""
-	GetIni "Setting250", "SecondFleetName", SecondFleetName, "\"ëÊìÒäÕë‡\""
-	GetIni "Setting250", "ThirdFleetName", ThirdFleetName, "\"É{ÉXéxâá\""
-	GetIni "Setting250", "FourthFleetName", FourthFleetName, "\"ìπíÜéxâá\""
+
+	GetIni "KanmusuFormationMode", "tuika1", tuika1, "1"
+	GetIni "KanmusuFormationMode", "tuika2", tuika2, "0"
+	GetIni "KanmusuFormationMode", "tuika3", tuika3, "0"
+	GetIni "KanmusuFormationMode", "tuika4", tuika4, "0"
+	GetIni "KanmusuFormationMode", "sosuka", sosuka, "1"
+	GetIni "KanmusuFormationMode", "sosu", sosu, "0"
+	GetIni "KanmusuFormationMode", "soka", soka, "0"
+	GetIni "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation, "1"
+	GetIni "KanmusuFormationMode", "AddOrderNum", addOrderNum, "1"
+	GetIni "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"ëÊàÍäÕë‡\""
+	GetIni "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"ëÊìÒäÕë‡\""
+	GetIni "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"É{ÉXéxâá\""
+	GetIni "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"ìπíÜéxâá\""	
+	GetIni "KanmusuFormationMode", "FontColorFirstFleetStr", fontColorFirstFleetStr, "\"FF0000\""
+	GetIni "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
+	GetIni "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr, "\"20AC4C\""
+	GetIni "KanmusuFormationMode", "FontColorFourthFleetStr", fontColorFourthFleetStr, "\"E06020\""
+	GetIni "KanmusuFormationMode", "FontName", fontname, "\"\""
+	GetIni "KanmusuFormationMode", "FontNum", fontnum ,"\"\""
+	GetIni "KanmusuFormationMode", "FontSizeName", fontsizename, "30"
+	GetIni "KanmusuFormationMode", "FontSizeNum", fontsizenum, "34"
+
+
+	GetIni "OtherListMode", "AirStation", airStation, "0"
+	GetIni "OtherListMode", "DirectLink", directLink, "1"
+	GetIni "OtherListMode", "AirStationTab", airStationTab, "1"
+
 	
-	GetIni "Setting250", "fontColorFirstFleetStr", fontColorFirstFleetStr, "\"FF0000\""
-	GetIni "Setting250", "fontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
-	GetIni "Setting250", "fontColorThirdFleetStr", fontColorThirdFleetStr, "\"20AC4C\""
-	GetIni "Setting250", "fontColorFourthFleetStr", fontColorFourthFleetStr, "\"E06020\""
-	GetIni "Setting250", "fleetPunctuation", fleetPunctuation, "1"
-	GetIni "Setting250", "addOrderNum", addOrderNum, "1"
-
-	GetIni "Setting250", "airStation", airStation, "0"
-	GetIni "Setting250", "directLink", directLink, "1"
-
-	GetIni "SettingFINAL", "airStationTab", airStationTab, "1"
-	GetIni "SettingFINAL", "ichiranMode1", ichiranMode1, "1"
-	GetIni "SettingFINAL", "ichiranMode2", ichiranMode2, "0"
-
-	GetIni "Configuration", "autoVersionCheck", autoVersionCheck, "1"
-	GetIni "Configuration", "autoUIScale", autoUIScale, "1"
-	GetIni "Configuration", "UIScale", UIScale, "1.0"
-
-	GetIni "CaptureAndMaking", "saveNameCapture", saveNameCapture, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "saveNameList", saveNameList, "\"äÕñ∫àÍóó_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "saveNameFormation", saveNameFormation, "\"çUó™ï“ê¨_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "saveNameAirStation", saveNameAirStation, "\"äÓínçqãÛë‡_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "saveNameDirectLink", saveNameDirectLink, "\"íºê⁄òAåã_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-
 	if strmid(hotkeystr,0,1) = "A":hotkeycapalt	= 1
 	if strmid(hotkeystr,1,1) = "C":hotkeycapctrl = 1
 	if strmid(hotkeystr,2,1) = "S":hotkeycapshift = 1
@@ -401,82 +405,88 @@ return
 
 *inisave
 
-	WriteIni "Setting", "yubiwa",yubiwa
-	WriteIni "Setting", "kantai",kantai
-	WriteIni "Setting", "page",page
-	WriteIni "Setting", "autosearch",autosearch
-	WriteIni "Setting", "hidename",hidename
-	WriteIni "Setting", "namecut",namecut
-	WriteIni "Setting", "frontrow",frontrow
-	WriteIni "Setting", "hidelog",hidelog
-	WriteIni "Setting", "yabumiautoupload",yabumiautoupload
-	WriteIni "Setting", "othergame",othergame
-	WriteIni "Setting", "dispcap",dispcap
-	WriteIni "Setting", "hotkeycap",hotkeycap
-	WriteIni "Setting", "autoaddCapture",autoaddCapture
-	WriteIni "Setting", "jpgsave",jpgsave
-	WriteIni "Setting", "jpgquality",jpgquality
-	WriteIni "Setting", "disableseqcap",disableseqcap
-	WriteIni "Setting", "timersec",timersec
-	WriteIni "Setting", "listsavedir", listsavedir
-	WriteIni "Setting", "sssavedir",  sssavedir
-	WriteIni "Setting", "sssavedir", sssavedir
-	WriteIni "Setting", "yabumidir", yabumidir
-	WriteIni "Setting", "hotkeystr", hotkeystr
-	WriteIni "Setting122", "manualpos",manualpos
-	WriteIni "Setting122", "lvname",lvname
-	WriteIni "Setting122", "senden",senden
-	WriteIni "Setting122", "tuika1",tuika1
-	WriteIni "Setting122", "tuika2",tuika2
-	WriteIni "Setting122", "tuika3",tuika3
-	WriteIni "Setting122", "sosuka",sosuka
-	WriteIni "Setting122", "sosu",sosu
-	WriteIni "Setting122", "soka",soka
 
-	sdim temp,256
-	temp = encstr(userdata)
-	WriteIni "Setting130", "Twi_userdata",temp
-	temp = encstr(ACCESS_TOKEN)
-	WriteIni "Setting130", "Twi_ACCESS_TOKEN",temp
-	temp = encstr(ACCESS_SECRET)
-	WriteIni "Setting130", "Twi_ACCESS_SECRET",temp
-	
-	WriteIni "Setting130", "enabletweetwindow",enabletweetwindow
-	WriteIni "Setting130", "twijpg",twijpg
-	WriteIni "Setting130", "tuika4", tuika4
-	WriteIni "Setting200", "fontname", fontname
-	WriteIni "Setting200", "fontnum", fontnum
-	WriteIni "Setting200", "fontsizename", fontsizename
-	WriteIni "Setting200", "fontsizenum", fontsizenum
-	WriteIni "Setting200", "intervalShotDir",intervalShotDir
-	
-	WriteIni "Setting250", "FirstFleetName", FirstFleetName
-	WriteIni "Setting250", "SecondFleetName", SecondFleetName
-	WriteIni "Setting250", "ThirdFleetName", ThirdFleetName
-	WriteIni "Setting250", "FourthFleetName", FourthFleetName
-	
-	WriteIni "Setting250", "fontColorFirstFleetStr", fontColorFirstFleetStr
-	WriteIni "Setting250", "fontColorSecondFleetStr", fontColorSecondFleetStr
-	WriteIni "Setting250", "fontColorThirdFleetStr", fontColorThirdFleetStr
-	WriteIni "Setting250", "fontColorFourthFleetStr", fontColorFourthFleetStr
-	WriteIni "Setting250", "fleetPunctuation", fleetPunctuation
-	WriteIni "Setting250", "addOrderNum", addOrderNum
-	WriteIni "Setting250", "airStation", airStation
-	WriteIni "Setting250", "directLink", directLink
-	
-	WriteIni "SettingFINAL", "airStationTab",airStationTab
-	WriteIni "SettingFINAL", "ichiranMode1",ichiranMode1
-	WriteIni "SettingFINAL", "ichiranMode2",ichiranMode2
-
-	WriteIni "Configuration", "autoVersionCheck", autoVersionCheck
-	WriteIni "Configuration", "autoUIScale", autoUIScale
+	WriteIni "Configuration", "FrontRow", frontrow
+	WriteIni "Configuration", "HideLog", hidelog
+	WriteIni "Configuration", "YabumiAutoUpload", yabumiautoupload
+	WriteIni "Configuration", "OtherGame", othergame
+	WriteIni "Configuration", "DisplayCapture", dispcap
+	WriteIni "Configuration", "ManualPos", manualpos
+	WriteIni "Configuration", "Senden", senden
+	WriteIni "Configuration", "AutoVersionCheck", autoVersionCheck
+	WriteIni "Configuration", "AutoUIScale", autoUIScale
 	WriteIni "Configuration", "UIScale", UIScale
+	WriteIni "Configuration", "ScreenShotSaveDir", sssavedir
+	WriteIni "Configuration", "ListSaveDir", listsavedir
+	WriteIni "Configuration", "IntervalShotSaveDir",intervalShotDir
+	WriteIni "Configuration", "YabumiExeDir", yabumidir
 
-	WriteIni "CaptureAndMaking", "saveNameCapture", saveNameCapture
-	WriteIni "CaptureAndMaking", "saveNameList", saveNameList
-	WriteIni "CaptureAndMaking", "saveNameFormation", saveNameFormation
-	WriteIni "CaptureAndMaking", "saveNameAirStation", saveNameAirStation
-	WriteIni "CaptureAndMaking", "saveNameDirectLink", saveNameDirectLink
+	
+	WriteIni "CaptureAndMaking", "NameCut", namecut
+	WriteIni "CaptureAndMaking", "HotkeyCapture", hotkeycap
+	WriteIni "CaptureAndMaking", "HotkeyStr", hotkeystr
+	WriteIni "CaptureAndMaking", "AutoAddCapture", autoaddCapture
+	WriteIni "CaptureAndMaking", "JpgSave", jpgsave
+	WriteIni "CaptureAndMaking", "JpgQuality", jpgquality
+	WriteIni "CaptureAndMaking", "DisableIntervalCap", disableseqcap
+	WriteIni "CaptureAndMaking", "IntervalTime", timersec
+	WriteIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture
+	WriteIni "CaptureAndMaking", "SaveNameList", saveNameList
+	WriteIni "CaptureAndMaking", "SaveNameFormation", saveNameFormation
+	WriteIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation
+	WriteIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink
+
+
+	sdim temp, 256
+	temp = encstr(userdata)
+	WriteIni "TwitterSetting", "Twi_userdata", temp
+	temp = encstr(ACCESS_TOKEN)
+	WriteIni "TwitterSetting", "Twi_ACCESS_TOKEN", temp
+	temp = encstr(ACCESS_SECRET)
+	WriteIni "TwitterSetting", "Twi_ACCESS_SECRET", temp
+
+	WriteIni "TwitterSetting", "TwiJpg",twijpg
+	
+
+	WriteIni "SSMode", "AutoSearch", autosearch
+	WriteIni "SSMode", "HideName", hidename
+	WriteIni "SSMode", "EnableTweetWindow",enabletweetwindow
+
+	
+	WriteIni "KanmusuListMode", "ichiranMode1", ichiranMode1
+	WriteIni "KanmusuListMode", "yubiwa", yubiwa
+	WriteIni "KanmusuListMode", "kantai", kantai
+	WriteIni "KanmusuListMode", "page", page
+	WriteIni "KanmusuListMode", "lvname", lvname
+	WriteIni "KanmusuListMode", "ichiranMode2", ichiranMode2
+
+
+	WriteIni "KanmusuFormationMode", "tuika1", tuika1
+	WriteIni "KanmusuFormationMode", "tuika2", tuika2
+	WriteIni "KanmusuFormationMode", "tuika3", tuika3
+	WriteIni "KanmusuFormationMode", "tuika4", tuika4
+	WriteIni "KanmusuFormationMode", "sosuka", sosuka
+	WriteIni "KanmusuFormationMode", "sosu", sosu
+	WriteIni "KanmusuFormationMode", "soka", soka
+	WriteIni "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation
+	WriteIni "KanmusuFormationMode", "AddOrderNum", addOrderNum
+	WriteIni "KanmusuFormationMode", "FirstFleetName", FirstFleetName
+	WriteIni "KanmusuFormationMode", "SecondFleetName", SecondFleetName
+	WriteIni "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName
+	WriteIni "KanmusuFormationMode", "FourthFleetName", FourthFleetName
+	WriteIni "KanmusuFormationMode", "FontColorFirstFleetStr", fontColorFirstFleetStr
+	WriteIni "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr
+	WriteIni "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr
+	WriteIni "KanmusuFormationMode", "FontColorFourthFleetStr", fontColorFourthFleetStr
+	WriteIni "KanmusuFormationMode", "FontName", fontname
+	WriteIni "KanmusuFormationMode", "FontNum", fontnum
+	WriteIni "KanmusuFormationMode", "FontSizeName", fontsizename
+	WriteIni "KanmusuFormationMode", "FontSizeNum", fontsizenum
+
+	WriteIni "OtherListMode", "AirStation", airStation
+	WriteIni "OtherListMode", "DirectLink", directLink
+	WriteIni "OtherListMode", "AirStationTab", airStationTab
+
 
 return
 
