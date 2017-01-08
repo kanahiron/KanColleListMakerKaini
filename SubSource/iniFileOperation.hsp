@@ -41,11 +41,11 @@
 	GetIni "Setting122", "manualpos", manualpos, "0"
 
 	sdim temp, 256
-	GetIni "Setting130", "Twi_userdata",temp, "\"00\""
+	GetIni "Setting130", "Twi_userdata", temp, "\"00\""
 	if stat = 0: userdata = decstr(temp)
-	GetIni "Setting130", "Twi_ACCESS_TOKEN",temp, "\"00\""
+	GetIni "Setting130", "Twi_ACCESS_TOKEN", temp, "\"00\""
 	if stat = 0: ACCESS_TOKEN = decstr(temp)
-	GetIni "Setting130", "Twi_ACCESS_SECRET",temp, "\"00\""
+	GetIni "Setting130", "Twi_ACCESS_SECRET", temp, "\"00\""
 	if stat = 0: ACCESS_SECRET = decstr(temp)
 
 	GetIni "Setting130", "enabletweetwindow",enabletweetwindow, "0"

@@ -41,11 +41,11 @@ return
 return
 
 *listsavefopen
-	exec listsavedir,16
+	exec listsavedir, 16
 return
 
 *sssavefopen
-	exec sssavedir,16
+	exec sssavedir, 16
 return
 
 *hotkeycapsetting
