@@ -227,7 +227,7 @@
 	
 	gsel WND_MAIN,1+frontRow
 
-	wait 50
+	//wait 50
 
 	gosub *twiInit
 
@@ -272,11 +272,11 @@
 	DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 0
 
 	if (seqCapF == TRUE){
-		KillTimer WND_INFO(WND_MAIN, WI_HANDLE),timerID
+		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID
 	}
 
 	if (hotkeySet == TRUE) {
-		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID
+		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
 	}
 	
 	gosub *dataCheck
