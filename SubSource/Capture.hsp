@@ -268,14 +268,26 @@ return
 	debugLog "連続キャプチャ設定 開始"
 	
 	if (seqcapf == FALSE){
-		debugLog "連続キャプチャを開始にします"
+		debugLog "    連続キャプチャを開始します"
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID, 100*timersec, 0
 		seqcapmes = "停止"
 		objprm seqcapBId,seqcapmes
-		objenable comboxid,0
+		objenable comboxId,0
 		objenable sscapBId,0
-		objenable sscapiid,0
+		objenable sscapIId,0
 		objenable yabumiBId,0
+
+		///*
+
+		if manualpos & (mode != modeOptionNum) {
+			objenable luposxIId, 0
+			objenable luposyIId, 0
+			objenable rdposxIId, 0
+			objenable rdposyIId , 0
+		}
+		//*/
+
+		
 		seqcapf = TRUE
 	
 		chdir intervalShotDir
@@ -287,14 +299,22 @@ return
 		
 		gosub *ssCapture
 	} else {
-		debugLog "連続キャプチャを停止します"
+		debugLog "    連続キャプチャを停止します"
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID
 		seqcapmes = "開始"
 		objprm seqcapBId,seqcapmes
-		objenable comboxid,1
+		objenable comboxId,1
 		objenable sscapBId,1
-		objenable sscapiid,1
+		objenable sscapIId,1
 		objenable yabumiBId,1
+
+		if manualpos & (mode != modeOptionNum) {
+			objenable luposxIId, 1
+			objenable luposyIId, 1
+			objenable rdposxIId, 1
+			objenable rdposyIId , 1
+		}
+		
 		seqcapf = FALSE
 	}
 

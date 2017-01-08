@@ -65,13 +65,14 @@ return
 	userdata = ""
 	ACCESS_TOKEN = ""
 	ACCESS_SECRET = ""
-	
-	publishAccessToken ACCESS_TOKEN,ACCESS_SECRET,userdata,PIN
-	if stat != 200{
-		dialog "Twitter認証に失敗しました\nもう一度お試しください"
-	} else {
-		gosub *twiinit
-	}
+	oncmd 0
+		publishAccessToken ACCESS_TOKEN,ACCESS_SECRET,userdata,PIN
+		if stat != 200{
+			dialog "Twitter認証に失敗しました\nもう一度お試しください"
+		} else {
+			gosub *twiinit
+		}
+	oncmd 1
 	debugLog "PIN入力確定処理 終了"
 return
 
@@ -387,9 +388,15 @@ return
 
 		gsel WND_MAIN
 		objenable comboxid, 0
-		if (mode != modeOptionNum): objenable sscapiid, 0
-		//wait 50
-	
+		if (mode != modeOptionNum): objenable SSCapIId, 0
+		if (mode != modeOptionNum): objenable yabumiBId, 0
+
+		if (mode == 0){
+			objenable SSCapBId, 0
+			if (disableSeqCap = FALSE): objenable seqCapBId, 0
+		}
+
+		
 		gsel WND_TWITTER
 		objenable ttid, 0
 		objenable tweetbid, 0
@@ -514,9 +521,50 @@ return
 		objenable tweetbid,1
 	
 		gsel WND_MAIN
+
+
+
+		objenable comboxid, 1
+		if (mode != modeOptionNum): objenable SSCapIId, 1
+		if (mode != modeOptionNum): objenable yabumiBId, 1
+
+		if (mode == 0 & availablecap) | manualPos {
+			objenable SSCapBId, 1
+			if (disableSeqCap = FALSE): objenable seqCapBId, 1
+		}
+
+		/*
+
+
+		objenable comboxid, 0
+		if (mode != modeOptionNum): objenable SSCapIId, 0
+		if (mode != modeOptionNum): objenable yabumiBId, 0
+
+		if (mode == 0){
+			objenable SSCapBId, 0
+			if (disableSeqCap = FALSE): objenable seqCapBId, 0
+		}
+
+
+		
+
+		objenable comboxId,0
+		if (mode != modeOptionNum): objenable sscapBId,0
+		if (mode != modeOptionNum): objenable sscapIId,0
+		if (mode != modeOptionNum): objenable yabumiBId,0
+
+//
+
+		if (seqCapf == FALSE){
+			objenable comboxid,1
+			if (mode != modeOptionNum): objenable sscapIId, 1
+		}
+*/
+
+
+		///
+
 		if (mode != modeOptionNum): objprm logid, logmessage
-		objenable comboxid,1
-		if (mode != modeOptionNum): objenable sscapiid, 1
 		
 		nidpop
 		debugLog "ツイート 終了"

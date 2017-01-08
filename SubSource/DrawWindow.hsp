@@ -30,26 +30,24 @@
 	sscapiid = stat
 	mesy += Scale(22)
 	
-	if manualpos {
-		if manualpos {
-			manualposf = 0
-		} else {
-			manualposf = 1
-		}
-		pos Scale(84+(manualposf * 200)), mesy + scale5
+	//if manualpos {
+
+		manualposf = manualpos^1
+
+		pos Scale(84+(manualposf * 175)), mesy + scale5
 		mes "x"
-		pos Scale(0+(manualposf*200)), mesy
+		pos Scale(0+(manualposf * 175)), mesy
 		input luposx, Scale(40), Scale(23), 5
-		luposxiid = stat
-		pos Scale(40+(manualposf*200)), mesy
+		luposxIId = stat
+		pos Scale(40+(manualposf * 175)), mesy
 		input luposy, Scale(40), Scale(23), 5
-		luposyiid = stat
-		pos Scale(95+(manualposf*200)), mesy
+		luposyIId = stat
+		pos Scale(95+(manualposf * 175)), mesy
 		input rdposx, Scale(40), Scale(23), 5
-		rdposxiid = stat
-		pos Scale(135+(manualposf*200)), mesy
+		rdposxIId = stat
+		pos Scale(135+(manualposf * 175)), mesy
 		input rdposy, Scale(40), Scale(23), 5
-		rdposyiid = stat
+		rdposyIId = stat
 	
 		GetWindowLong objinfo(luposxiid,2), -16
 		SetWindowLong objinfo(luposxiid,2), -16, stat | $2
@@ -60,8 +58,8 @@
 		GetWindowLong objinfo(rdposyiid,2), -16
 		SetWindowLong objinfo(rdposyiid,2), -16, stat | $2
 		
-		mesy += Scale(23)
-	}
+		if manualpos: mesy += Scale(23)
+	//}
 	
 	if mainWindowSmall {
 		mesaddx = Scale(500)
@@ -79,7 +77,7 @@
 	
 	pos Scale(5+mesaddx), mesy
 	chkbox "提督名と司令部Lvを隠す", hidename: mesy += scale20
-	hidenamebid = stat
+	hidenameBId  = stat
 	
 	pos Scale(5+mesaddx), mesy
 	chkbox "ツイートウィンドウ表示",enableTweetWindow: mesy += scale20
@@ -98,12 +96,12 @@
 	objsize Scale(130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), Scale(30)
 	pos 0,mesy
 	button gosub "SSキャプチャ",*ssCapture
-	sscapbid = stat
+	sscapBId  = stat
 
 	objsize Scale(25), Scale(30)
 	pos Scale(130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), mesy
 	button gosub "開",*sssavefopen
-	fopenbid = stat
+	fopenBId  = stat
 	
 	if ((yabumiautoupload = 1) & (availableyabumi = 1)) {
 		pos Scale(130), mesy
@@ -111,12 +109,12 @@
 		pos Scale(200), mesy
 	}	
 	button gosub "UP",*yabumiUpload
-	yabumibid = stat
+	yabumiBId  = stat
 	
 	pos Scale(155), mesy
 	objsize Scale(20), Scale(30)
 	button gosub windowsSizeChangeBMes(mainWindowSmall),*windowsSizeChange
-	windowsSizeChangebid = stat
+	windowsSizeChangeBId  = stat
 	
 	mesy += Scale(30)
 	
@@ -126,7 +124,7 @@
 	pos Scale(95+(disableseqcap*-175)), mesy
 	if disableseqcap = 0: mesy += Scale(25)
 	button gosub seqcapmes, *seqcap
-	seqcapbid = stat
+	seqcapBId  = stat
 	
 	dispcapy = mesy
 	if dispcap {
@@ -142,7 +140,7 @@
 		pos 0, mesy
 		mesy += Scale(70)
 	} else {
-		pos Scale(-175), mesy
+		pos Scale(175), mesy
 	}
 	mesbox logmessage, Scale(175), Scale(70), 0
 	logid = stat
@@ -218,7 +216,9 @@ return
 	
 	objsize Scale(175), scale20
 	
-	if listmode = 0{
+	if (listmode == 0){
+
+		DAControlInit
 	
 		width Scale(175)
 		mesy_ = mesy
@@ -243,18 +243,25 @@ return
 		
 		pos Scale(22), mesy_
 		chkbox "所属艦隊も入れる", kantai: mesy_ += scale20
-		kantaicid = stat
-		kantaich = objinfo_hwnd(kantaicid)
+		kantaiCId  = stat
+		kantaiCh = objinfo_hwnd(kantaicid)
 		
 		pos Scale(22), mesy_
 		chkbox "ページ数も入れる", page: mesy_ += scale20
-		pagecid = stat
-		pagech = objinfo_hwnd(pagecid)
+		pageCId  = stat
+		pageCh = objinfo_hwnd(pagecid)
 
 		pos Scale(17), mesy_
 		chkbox "レベルと艦名のみ", lvname: mesy_ += scale20
-		lvnamecid = stat
-		lvnamech = objinfo_hwnd(lvnamecid)
+		lvnameCId  = stat
+		lvnameCh = objinfo_hwnd(lvnamecid)
+
+		SetDAControl ichiranMode1Ch
+		SetDAControl ichiranMode2Ch
+		SetDAControl yubiwaCh
+		SetDAControl kantaiCh
+		SetDAControl pageCh
+		SetDAControl lvnameCh
 
 		if ichiranMode1 {
 			objenable lvnamecid, 1
@@ -277,7 +284,10 @@ return
 			objenable lvnamecid, 0
 		}
 	}
-	if listmode = 1{
+	
+	if (listmode == 1){
+
+		DAControlInit
 	
 		width Scale(350)
 		
@@ -290,27 +300,27 @@ return
 		
 		pos Scale(7), mesy
 		chkbox "縦3横2",tuika1
-		tuika1cid = stat
-		tuika1ch = objinfo_hwnd(tuika1cid)
+		tuika1CId  = stat
+		tuika1Ch = objinfo_hwnd(tuika1cid)
 		SetWindowLong tuika1ch, -16, $50000009 | $20000
 		
 		pos Scale(80), mesy
 		chkbox "縦2横3",tuika4
-		tuika4cid = stat
-		tuika4ch = objinfo_hwnd(tuika4cid)
+		tuika4CId  = stat
+		tuika4Ch = objinfo_hwnd(tuika4cid)
 		sendmsg tuika4ch, $F4, $9
 		mesy += scale20
 		
 		pos Scale(7), mesy
 		chkbox "縦6横1", tuika3
-		tuika3cid = stat
-		tuika3ch = objinfo_hwnd(tuika3cid)
+		tuika3CId  = stat
+		tuika3Ch = objinfo_hwnd(tuika3cid)
 		sendmsg tuika3ch, $F4, $9
 		
 		pos Scale(80), mesy
 		chkbox "縦1横6", tuika2
-		tuika2cid = stat
-		tuika2ch = objinfo_hwnd(tuika2cid)
+		tuika2CId  = stat
+		tuika2Ch = objinfo_hwnd(tuika2cid)
 		sendmsg tuika2ch, $F4, $9
 		mesy += scale20
 
@@ -322,20 +332,20 @@ return
 	
 		pos Scale(7), mesy
 		chkbox "装備とステータスと艦娘",sosuka: mesy += scale20
-		sosukacid = stat
-		sosukach = objinfo_hwnd(sosukacid)
+		sosukaCId  = stat
+		sosukaCh = objinfo_hwnd(sosukacid)
 		SetWindowLong sosukach, -16, $50000009 | $20000
 	
 		pos Scale(7), mesy
 		chkbox "装備とステータス",sosu: mesy+= scale20
-		sosucid = stat
-		sosuch = objinfo_hwnd(sosucid)
+		sosuCId  = stat
+		sosuCh = objinfo_hwnd(sosucid)
 		sendmsg sosuch, $F4, $9
 	
 		pos Scale(7), mesy
 		chkbox "装備と艦娘の画像",soka: mesy += scale20
-		sokacid = stat
-		sokach = objinfo_hwnd(sokacid)
+		sokaCId  = stat
+		sokaCh = objinfo_hwnd(sokacid)
 		sendmsg sokach, $F4, $9
 
 		mesy += Scale(1)
@@ -347,7 +357,18 @@ return
 		
 		pos Scale(5), mesy
 		chkbox "順番に番号を入れる",addOrderNum: mesy += scale20
-		addOrderNumCId = stat	
+		addOrderNumCId = stat
+
+
+		SetDAControl tuika1Ch
+		SetDAControl tuika2Ch
+		SetDAControl tuika3Ch
+		SetDAControl tuika4Ch
+		SetDAControl sosukaCh
+		SetDAControl sosuCh
+		SetDAControl sokaCh
+		SetDAControl fleetPunctuationCh
+
 	
 		window2x = Scale(175)
 	
@@ -397,7 +418,9 @@ return
 
 	}
 
-	if listmode = 2{
+	if (listmode == 2){
+
+		DAControlInit
 	
 		width  Scale(175)
 		
@@ -419,6 +442,10 @@ return
 		chkbox "タブまで入れる", airStationTab: mesy += scale20
 		airStationTabCId = stat
 		airStationTabCh = objinfo_hwnd(airStationTabCId)
+
+		SetDAControl directLinkCh
+		SetDAControl airStationCh
+		SetDAControl airStationTabCh
 
 
 	}

@@ -69,17 +69,21 @@
 #define WI_HANDLE	0
 #define WI_DC		1
 
-#define nidStack_Init dim nidStack, 100 :nidIndex = 0
+#define nidStackInit dim nidStack, 100: nidIndex = 0
 #define nidPush nidindex++:nidstack(nidindex) = ginfo(3)
 #define nidPop gsel nidstack(nidindex),0:nidindex--
 
-#define wndInfo_Init dim wndInfoArr, 100,2
+#define wndInfoInit dim wndInfoArr, 100,2
 #define SET_WND_INFO wndInfoArr(ginfo(3), WI_HANDLE) = hwnd: wndInfoArr(ginfo(3), WI_DC) = hdc
 #define ctype WND_INFO(%1, %2) wndInfoArr(%1, %2)
 
 #define ctype RGBtoBGR(%1) (((%1<<16)&0xFF0000) | ((%1>>16)&0xFF) | (%1&0xFF00))
 
-#enum WND_MAIN = 0
+//DynamicActionControl 
+#define DAControlInit dim DAControlArr, 20: DAControlIndex = 0
+#define SetDAControl(%1) DAControlArr(DAControlIndex) = (%1): DAControlIndex++
+
+#enum WND_MAIN = 1
 #enum WND_GRID
 #enum WND_TWITTER		//元19
 #enum WND_OVERLAY		//元19
@@ -126,11 +130,12 @@
 
 	debugLog "メインルーチン開始"
 
-	onerror *error
+	//onerror *error
 	onexit gosub *exit
 
-	wndInfo_Init
-	nidStack_Init
+	wndInfoInit
+	nidStackInit
+	DAControlInit
 	isHomeport_init WND_HOME_PORT_MOD
 
 	gosub *DeclaringVariables	
@@ -290,6 +295,8 @@
 	end
 
 *error
+	onerror 0
+	dialog "エラー発生 エラー番号: "+err
 	debugLog "エラー発生 エラー番号: "+err
 	goto *exit
 

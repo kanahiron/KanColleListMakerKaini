@@ -8,6 +8,7 @@
 		logmes "ComBox"
 	
 		if (mode != 0) & (mode != modeOptionNum) {
+			DAControlInit
 			DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 0
 			DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 0
 			gsel WND_GRID,0
@@ -16,7 +17,6 @@
 		if mode = modeOptionNum{
 			gosub *dataCheck			
 			gosub *hotkeycapsetting
-			//gosub *disinfoinit
 			gosub *twiinit
 		}
 	
@@ -122,8 +122,15 @@
 
 		}
 
-		if ((mode != 0)&(mode != modeOptionNum)){
-			gosub *listchange
+		if (mode != modeOptionNum){
+			listChangef = FALSE
+			repeat DAControlIndex
+				if (lparam == DAControlArr(cnt)){
+					listChangef = TRUE
+					break
+				}
+			loop
+			if listChangef: gosub *listchange
 		}
 	}
 	logmes ""

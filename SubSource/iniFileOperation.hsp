@@ -486,7 +486,7 @@ return
 	if stat != 0{
 		sortnote listbuf,1
 		notesel listbuf
-		sdim listarr,512,notemax+1
+		sdim listarr, 2048, notemax+1
 		repeat notemax
 			picHistory(cnt) = sssavedir+"\\"+kmnoteget(cnt)
 		loop
