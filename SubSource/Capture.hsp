@@ -96,10 +96,10 @@
 	buffer WND_TEMP1, sscapwh(0), sscapwh(1)
 
 	if (positionType == PT_RELATIVE) {
-		BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), dcClient, sscap(0), sscap(1),SRCCOPY:redraw
+		BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), dcClient, sscap(0), sscap(1),SRCCOPY | CAPTUREBLT:redraw
 	} else {
 		//PT_ABSOLUTE ê‚ëŒç¿ïW
-		BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, sscap(0), sscap(1),SRCCOPY:redraw
+		BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, sscap(0), sscap(1),SRCCOPY | CAPTUREBLT:redraw
 	}
 
 	if (hidename == TRUE & isHomeport(WND_TEMP1) == TRUE){
@@ -107,10 +107,10 @@
 		if (namecut = TRUE) {
 			buffer WND_TEMP1, sscapwh(0), int(0.9375*sscapwh(1)+0.5)
 			if (positionType == PT_RELATIVE) {
-				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), dcClient, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY:redraw
+				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), dcClient, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY | CAPTUREBLT:redraw
 			} else {
 				//PT_ABSOLUTE ê‚ëŒç¿ïW
-				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), hdcScreen, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY:redraw
+				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), hdcScreen, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY | CAPTUREBLT:redraw
 			}
 		} else {
 			//íÒì¬ñºÇ∆ÉåÉxÉãÇâBÇ∑èàóù

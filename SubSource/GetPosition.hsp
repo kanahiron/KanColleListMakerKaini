@@ -109,7 +109,7 @@
 				
 							dcClient = GetDC(hClient)
 							buffer WND_TEMP1, winSizeX, winSizeY :SET_WND_INFO
-							BitBlt hdc, 0, 0, winSizeX, winSizeY, dcClient, 0, 0, SRCCOPY: redraw
+							BitBlt hdc, 0, 0, winSizeX, winSizeY, dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
 							ReleaseDC  dcClient
 							
 							gsel WND_MAIN, 0
@@ -172,7 +172,7 @@
 		debugLog "    éËìÆéÊìæ"
 		
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
-		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY: redraw
+		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY | CAPTUREBLT: redraw
 
 		bgscr WND_TEMP_SCR1, disinfo(2), disinfo(3), 2: SET_WND_INFO
 		font "ÉÅÉCÉäÉI", Scale(30)

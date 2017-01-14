@@ -64,7 +64,8 @@
 #const LWA_ALPHA 0x0002
 
 // bitblt
-#const SRCCOPY 0x00CC0020
+#const SRCCOPY		0x00CC0020
+#const CAPTUREBLT	0x40000000
 
 //ウィンドウメッセージ
 #const WM_ACTIVATE		0x0006
