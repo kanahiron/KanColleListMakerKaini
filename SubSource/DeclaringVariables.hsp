@@ -69,7 +69,7 @@
 	disInfo(2) = GetSystemMetrics(78)
 	disInfo(3) = GetSystemMetrics(79)
 	
-	init_makelist disinfo
+	init_ListMakerMod disinfo
 
 	twiOrder = 0,0,0,0
 	twiOrdercount = 0

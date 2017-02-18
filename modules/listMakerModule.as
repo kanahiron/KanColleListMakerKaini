@@ -78,7 +78,7 @@ R4HBGC_constructor
 
 
 
-#module makelistmodule
+#module "ListMakerModule"
 
 #uselib	"user32.dll"
 #func MoveWindow "MoveWindow" int, int, int, int, int, int
@@ -90,7 +90,7 @@ R4HBGC_constructor
 #define FALSE 0
 
 
-#deffunc init_makelist array disinfo_
+#deffunc init_ListMakerMod array disinfo_
 
 	dim resultdata,16
 	resultdata = 0x0029556B ,0x00174357 ,0x000C384C ,0x000E384B ,0x001A4256 ,0x001E4557 ,0x001A3E51 ,0x00395D6E ,0x00294B5D ,0x0016384A ,0x0017394B ,0x0017394B ,0x0016384C ,0x0017394D ,0x0017394D ,0x0017394D

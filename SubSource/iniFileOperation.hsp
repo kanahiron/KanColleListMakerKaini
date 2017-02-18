@@ -1,7 +1,7 @@
 *iniload
 
 	errDialog = TRUE
-	SetIni (dir_exe+"\\listmaker.ini")
+	SetIni (dir_exe+"\\ListMaker2.ini")
 	if (stat == 2):errDialog = FALSE
 
 	sdim intervalShotDir,512

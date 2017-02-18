@@ -19,7 +19,8 @@
 			gosub *hotkeycapsetting
 			gosub *twiinit
 		}
-	
+
+		modePrev = mode
 		sendmsg hCombox, $147
 		mode = stat
 	
@@ -34,17 +35,17 @@
 		}
 		if mode = 1{
 			listmode = 0
-			gsel WND_GRID,0
+			gsel WND_GRID, 0
 			gosub *list
 		}
 		if mode = 2{
 			listmode = 1
-			gsel WND_GRID,0
+			gsel WND_GRID, 0
 			gosub *list
 		}
 		if mode = 3{
 			listmode = 2
-			gsel WND_GRID,0
+			gsel WND_GRID, 0
 			gosub *list
 		}
 		if mode = modeOptionNum{
