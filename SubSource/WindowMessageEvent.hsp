@@ -1,5 +1,4 @@
 *setmode
-
 	logmes "WM_COMMAND"
 	
 	if (lparam = hComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
@@ -7,51 +6,25 @@
 		debugLog "モード変更 開始"
 		logmes "ComBox"
 	
-		if (mode != 0) & (mode != modeOptionNum) {
-			DAControlInit
-			DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 0
-			DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 0
-			gsel WND_GRID,0
-		}
-	
 		if mode = modeOptionNum{
 			gosub *dataCheck			
 			gosub *hotkeycapsetting
 			gosub *twiinit
 		}
 
-		modePrev = mode
 		sendmsg hCombox, $147
 		mode = stat
-	
-		if (mode != 0) & (mode != modeOptionNum) {
-			DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 1
-			DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 1
-		}
-	
-		if mode = 0{
-			gsel WND_MAIN
-			gosub *ssmode
-		}
-		if mode = 1{
-			listmode = 0
-			gsel WND_GRID, 0
-			gosub *list
-		}
-		if mode = 2{
-			listmode = 1
-			gsel WND_GRID, 0
-			gosub *list
-		}
-		if mode = 3{
-			listmode = 2
-			gsel WND_GRID, 0
-			gosub *list
-		}
-		if mode = modeOptionNum{
-			gosub *option
-		}
+		optionMode = 0
 
+		if (mode != modePrev){
+		
+			if (mode == 1): listmode = 0
+			if (mode == 2): listmode = 1
+			if (mode == 3): listmode = 2
+		
+			gosub *drawMainWindow
+		}
+		modePrev = mode
 		debugLog "モード変更 終了"
 		
 	} else : if (lparam = hOptionComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
@@ -59,10 +32,15 @@
 		debugLog "オプションモード変更 開始"
 		
 		logmes "OptionComBox"
+		
 		sendmsg hOptionComBox, $147
 		optionMode = stat
-		gosub *option
 
+		if (optionMode != optionModePrev){
+			gosub *drawMainWindow
+		}
+
+		optionModePrev = optionMode
 		debugLog "オプションモード変更 終了"
 		
 	} else {

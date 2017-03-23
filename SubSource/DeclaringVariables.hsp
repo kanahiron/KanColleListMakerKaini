@@ -9,6 +9,8 @@
 	modeNum = 3
 	positionType = 0
 	optionMode = 0
+	modePrev = -1
+	optionModePrev = -1
 
 	dim disInfo, 4
 	dim clientSize, 2

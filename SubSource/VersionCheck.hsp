@@ -275,10 +275,14 @@ return responseBody
 		
 		VerCheckInit
 
+		oncmd 0
+
 		if (mode == 0){
-			logmessage = "バージョンチェックを開始します。"
-			objprm logId, logMessage
+			logmessage = "バージョンチェック中です。"
+			objprm logId, logMessage:await 
 		}
+
+		oncmd 1
 		
 		execVerCheck
 		if stat = 200{

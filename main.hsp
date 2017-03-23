@@ -127,10 +127,12 @@
 #endif
 
 	debugLog SOFTNAME+"を起動しました"
-
 	debugLog "メインルーチン開始"
 
-	//onerror *error
+	#ifdef _debug
+		//onerror *error
+	#endif
+	
 	onexit gosub *exit
 
 	wndInfoInit
@@ -148,7 +150,7 @@
 
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
-		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 0
+		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 1
 		oncmd gosub *OnDropFiles ,WM_DROPFILES
 		oncmd gosub *setmode, WM_COMMAND
 		oncmd gosub *hotkey, WM_HOTKEY
@@ -160,7 +162,7 @@
 	
 	screen WND_GRID, disInfo(2), disInfo(3), 2:title "表示させたいセルにD&D"
 		SET_WND_INFO
-		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 0
+		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 1
 		oncmd gosub *OnDropFiles, WM_DROPFILES
 		oncmd gosub *windowsize, WM_SIZING
 		oncmd gosub *listdrag, WM_LBUTTONDOWN
@@ -212,8 +214,10 @@
 		oncmd gosub *OnDropFiles, WM_DROPFILES
 
 	gsel WND_MAIN, -1
+
 	
-	gosub *ssMode
+	
+	gosub *drawMainWindow
 	gosub *hotkeyCapSetting
 	wait 50
 	gsel WND_MAIN,1+frontRow
@@ -256,7 +260,7 @@
 	
 	if (wparam == WND_GRID){
 		mode = 0
-		gosub *ssmode
+		gosub *drawMainWindow
 		objprm comboxid,0
 		return
 	}
@@ -297,12 +301,14 @@
 		
 	end
 	end
-
+	
+#ifdef _debug
 *error
 	onerror 0
 	dialog "エラー発生 エラー番号: "+err
 	debugLog "エラー発生 エラー番号: "+err
 	goto *exit
+#endif
 
 #include "./SubSource/DeclaringVariables.hsp"
 #include "./SubSource/DrawWindow.hsp"
