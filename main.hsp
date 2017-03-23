@@ -199,7 +199,7 @@
 	buffer WND_GRID_STRING ,640,150
 		SET_WND_INFO
 		syscolor 16
-		font "メイリオ", Scale(25), 1
+		font "メイリオ", 25, 1
 		mes "スクリーンショットをここにドラッグアンドドロップ"
 		mes "またはホットキー(Altキー＋Zキー同時押し)で
 		mes "                                         画像を追加してください"
