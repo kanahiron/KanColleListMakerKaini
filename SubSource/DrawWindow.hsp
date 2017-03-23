@@ -688,7 +688,6 @@ return
 
 *windowsSizeChange
 
-	/*
 	if mainWindowSmall {
 		mainWindowSmall ^= 1
 		if hidelog = 0:hidelog_ = 0
@@ -696,8 +695,5 @@ return
 		mainWindowSmall ^= 1
 		if hidelog = 0:hidelog_ = 1
 	}
-	if mode = 0:gosub *ssmode
-	if (mode == 1 | mode == 2):gosub *list
-	*/
-
+	gosub *drawMainWindow
 return

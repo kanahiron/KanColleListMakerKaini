@@ -3,7 +3,7 @@
 #include "./modules/DateAndTimeFormat2.as"
 
 
-#if 1
+#if 0
 	#module
 	
 		#deffunc debugLog_Init
