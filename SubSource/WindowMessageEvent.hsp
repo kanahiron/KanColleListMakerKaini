@@ -379,6 +379,11 @@ return
 //ドロップ処理――――――――――――――――――――――――――――――――――
 *OnDropFiles
 	debugLog "ドロップ処理 開始"
+
+	if (ginfo(24) == 0) & ( (mode == 0) | (mode == modeOptionNum) ){
+		return
+	}
+		
 	
 	if (ginfo(24) = 0) | (ginfo(24) = 1){
 
