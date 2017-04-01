@@ -418,7 +418,7 @@ return
 		dropFile = cnvwtos(dropFile)
 		if peek(dropfile,0) = '"' : getstr dropfile, dropfile, 1, '"'
 		
-		if ImgF_GetFormat(dropfile) = 0{
+		if (ImgF_GetFormat(dropfile) == 0){
 			nidPop
 			return
 		}
@@ -429,8 +429,9 @@ return
 			i--
 		loop
 		PicHistory(0) = dropfile
-	
-		gosub *tweetWindow
+
+		gosub *picHistoryTop
+		gosub *picHistoryAddStack
 	
 		nidPop
 	

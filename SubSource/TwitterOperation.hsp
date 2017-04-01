@@ -109,16 +109,21 @@ return
 		font "メイリオ",Scale(20)
 		button gosub "ツイート",*tweet_
 		tweetbid = stat
-	
-		objsize Scale(105), Scale(30)
+
+		objsize Scale(40), Scale(30)
 		pos Scale(184), Scale(220)
+		button gosub "<<",*picHistoryTop
+	
+		objsize Scale(65), Scale(30)
+		pos Scale(224), Scale(220)
 		button gosub "←",*picHistoryBack
 		picHistoryBackBId = stat
+		objsize Scale(105), Scale(30)
 		pos Scale(341), Scale(220)
 		button gosub "→",*picHistoryNext
 		picHistoryNextBId = stat
 		
-		objsize Scale(54), Scale(40)
+		objsize Scale(53), Scale(40)
 		pos Scale(288), Scale(210)
 		button gosub "↑",*picHistoryAddStack
 	
@@ -227,6 +232,19 @@ return
 	gosub *tweetWindow
 return
 
+*picHistoryTop
+	
+	nidPush
+	gsel WND_TWITTER
+
+	picHistoryNum = 0
+
+	sendmsg stackCounth ,$C , , strf("%3d/100",picHistoryNum+1)
+	nidPop
+	
+	gosub *tweetWindow
+return
+
 *picHistoryAddStack
 	
 	if kmexist(picHistory(picHistoryNum)) > 0{
@@ -302,7 +320,7 @@ return
 				syscolor 8
 	
 				pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
-				gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TEMP1, 0, 0, 800, 480, 1
+				gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TEMP1, 0, 0, 800, 480
 				pos twiPicFrameXL(flag)+1,twiPicFrameYU(flag)+1
 				gzoom Scale(62), Scale(38), WND_TEMP1, 0, 0, 800, 480
 	
