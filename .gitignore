@@ -1,8 +1,9 @@
-/hsptmp
-/obj
-/packfile
-/start.ax
-/*.txt
-/*.exe
-/makelist.ini
-/ScreenShots/
+hsptmp
+obj
+packfile
+*.ax
+*.txt
+*.exe
+*.ini
+ScreenShots/
+SubSource/key.hsp
