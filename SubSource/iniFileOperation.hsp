@@ -2,7 +2,7 @@
 
 	errDialog = TRUE
 	SetIni (dir_exe+"\\ListMaker2.ini")
-	if (stat == 2):errDialog = FALSE
+	if (stat == 2):errDialog = FALSE:initialActivation = TRUE
 
 	sdim intervalShotDir,512
 	sdim listsavedir,512

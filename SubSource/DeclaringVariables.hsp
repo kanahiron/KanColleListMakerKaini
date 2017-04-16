@@ -11,6 +11,7 @@
 	optionMode = 0
 	modePrev = -1
 	optionModePrev = -1
+	initialActivation = FALSE
 
 	dim disInfo, 4
 	dim clientSize, 2

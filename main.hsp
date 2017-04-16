@@ -61,7 +61,7 @@
 #define klm2ver		2400
 
 #define ctype round(%1) int(strf("%%0.0f", %1))
-#define SOFTNAME "艦これ一覧めいかー改二 Ver0.2.5(仮)"
+#define SOFTNAME "艦これ一覧めいかー改二 Ver0.2.5"
 
 #define PT_ABSOLUTE 1
 #define PT_RELATIVE 2
@@ -125,13 +125,6 @@
 	if (strsize != -1): delete "./packfile"
 	
 #endif
-
-	debugLog SOFTNAME+"を起動しました"
-	debugLog "メインルーチン開始"
-
-	#ifdef _debug
-		//onerror *error
-	#endif
 	
 	onexit gosub *exit
 
@@ -213,13 +206,11 @@
 		oncmd gosub *getText ,WM_COMMAND
 		oncmd gosub *OnDropFiles, WM_DROPFILES
 
-	gsel WND_MAIN, -1
+	gsel WND_MAIN
 
-	
-	
+
 	gosub *drawMainWindow
 	gosub *hotkeyCapSetting
-	wait 50
 	gsel WND_MAIN,1+frontRow
 
 	gosub *twiInit
@@ -248,11 +239,15 @@
 			}
 		}
 	}
+
+	if initialActivation {
+		dialog "艦これ一覧めいかー改二へようこそ！\n自動バージョンチェック機能を有効にしますか？\n※設定からいつでも切り替えができます", 2, "初回起動"
+		if (stat != 6){
+			autoVersionCheck = FALSE
+		}
+	}
 	
 	gosub *VerCheck
-
-	debugLog "メインルーチン停止"
-
 	stop
 
 
@@ -275,8 +270,6 @@
 		return
 	}
 
-	debugLog "終了処理 開始"
-
 	if hdcScreen: DeleteDC hdcScreen
 	if dcClient: ReleaseDC dcClient
 	
@@ -294,21 +287,9 @@
 	
 	gosub *dataCheck
 	gosub *iniSave
-
-
-	debugLog "終了処理 終了"
-	debugLog "-ありがとうございました-"
 		
 	end
 	end
-	
-#ifdef _debug
-*error
-	onerror 0
-	dialog "エラー発生 エラー番号: "+err
-	debugLog "エラー発生 エラー番号: "+err
-	goto *exit
-#endif
 
 #include "./SubSource/DeclaringVariables.hsp"
 #include "./SubSource/DrawWindow.hsp"

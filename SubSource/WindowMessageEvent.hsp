@@ -3,10 +3,9 @@
 	
 	if (lparam = hComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
 
-		debugLog "モード変更 開始"
 		logmes "ComBox"
 	
-		if mode = modeOptionNum{
+		if (modePrev == modeOptionNum){
 			gosub *dataCheck			
 			gosub *hotkeycapsetting
 			gosub *twiinit
@@ -15,6 +14,7 @@
 		sendmsg hCombox, $147
 		mode = stat
 		optionMode = 0
+		optionModePrev = 0
 
 		if (mode != modePrev){
 		
@@ -25,11 +25,9 @@
 			gosub *drawMainWindow
 		}
 		modePrev = mode
-		debugLog "モード変更 終了"
 		
-	} else : if (lparam = hOptionComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
-
-		debugLog "オプションモード変更 開始"
+	}
+	if (lparam = hOptionComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
 		
 		logmes "OptionComBox"
 		
@@ -41,49 +39,39 @@
 		}
 
 		optionModePrev = optionMode
-		debugLog "オプションモード変更 終了"
 		
-	} else {
-	
-		if (mode != modeOptionNum){
+	}
 
-			if (lparam = enabletweetwindowch){
-				debugLog "ツイートウィンドウ表示変更 開始"
-				
-				sendmsg enabletweetwindowch, $F2
-				enabletweetwindow = stat & 0x01
-				if enabletweetwindow {
-					gsel WND_TWITTER, 1+frontrow
-				} else {
-					gsel WND_TWITTER, -1
-				}
-				gsel WND_MAIN
-
-				debugLog "ツイートウィンドウ表示変更 終了"
-			}
+	if (mode != modeOptionNum){
+		
+		//ツイートウィンドウ表示のチェックボックスが押された時
+		if (lparam == enabletweetwindowch){
 			
-		} else {
-			//UIスケールの自動設定周り
-			if (optionMode == 0){
-				if (lparam = autoUIScaleCh){
-
-					debugLog "UI自動設定変更 開始"
-					
-					sendmsg autoUIScaleCh, $F2
-					autoUIScale = stat & 0x01
-
-					gosub *calcUIScale
-
-					enableWindow hTrackbar, autoUIScale^1
-					enableWindow hTrackBarScale, autoUIScale^1
-					sendmsg hTrackbar, TBM_SETPOS, 1, int(UIScale*100)
-					sendmsg hTrackBarScale, $C ,, strf("%d%% ", int(UIScale*100))
-					
-					debugLog "UI自動設定変更 開始"
-				}
+			sendmsg enabletweetwindowch, $F2
+			enabletweetwindow = stat & 0x01
+			if enabletweetwindow {
+				gsel WND_TWITTER, 1+frontrow
+			} else {
+				gsel WND_TWITTER, -1
 			}
+			gsel WND_MAIN
+			
+		}
+		
+		//UIスケールの自動設定周り
+		if (optionMode == 0){
+			if (lparam = autoUIScaleCh){
+				sendmsg autoUIScaleCh, $F2
+				autoUIScale = stat & 0x01
 
+				gosub *calcUIScale
 
+				enableWindow hTrackbar, autoUIScale^1
+				enableWindow hTrackBarScale, autoUIScale^1
+				sendmsg hTrackbar, TBM_SETPOS, 1, int(UIScale*100)
+				sendmsg hTrackBarScale, $C ,, strf("%d%% ", int(UIScale*100))
+
+			}
 		}
 
 		if (mode != modeOptionNum){
