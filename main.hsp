@@ -1,8 +1,6 @@
 #include "hsp3utf.as"
 
-#include "./modules/DateAndTimeFormat2.as"
-
-
+/*
 #if 0
 	#module
 	
@@ -32,9 +30,10 @@
 
 	debugLog_Init
 
-#else
-	#define global debugLog(%1) ;
 #endif
+//*/
+
+#define global debugLog(%1) ;
 
 #include "./SubSource/FunctionDefinition.hsp"
 #include "./SubSource/key.hsp"
@@ -47,6 +46,7 @@
 #include "./modules/jsonParse_utf.as"
 #include "./modules/listMakerModule.as"
 #include "./modules/isHomepostModule.as"
+#include "./modules/DateAndTimeFormat2.as"
 
 #pack "start.ax"
 #pack "data2.png"

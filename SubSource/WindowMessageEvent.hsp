@@ -1,6 +1,7 @@
 *setmode
 	logmes "WM_COMMAND"
-	
+
+	//コンボボックスによるモード切替の発生
 	if (lparam = hComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
 
 		logmes "ComBox"
@@ -27,6 +28,8 @@
 		modePrev = mode
 		
 	}
+
+	//オプションモード切替コンボボックスによるオプションモード切替の発生
 	if (lparam = hOptionComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
 		
 		logmes "OptionComBox"
@@ -42,6 +45,7 @@
 		
 	}
 
+	//モードがオプションモードでないとき
 	if (mode != modeOptionNum){
 		
 		//ツイートウィンドウ表示のチェックボックスが押された時
@@ -57,6 +61,21 @@
 			gsel WND_MAIN
 			
 		}
+
+		//一覧作成モードでチェックボックスのオンオフで動的に画面を切り替えるための判定処理
+		logmes "リストチェンジ前判定 Index" + DAControlIndex
+		listChangef = FALSE
+		repeat DAControlIndex
+			if (lparam == DAControlArr(cnt)){
+				logmes "ヒット cnt:"+cnt
+				listChangef = TRUE
+				break
+			}
+		loop
+		if listChangef: gosub *listchange
+		
+	} else {
+		//オプションモードのとき
 		
 		//UIスケールの自動設定周り
 		if (optionMode == 0){
@@ -73,20 +92,8 @@
 
 			}
 		}
-
-		if (mode != modeOptionNum){
-			logmes "リストチェンジ前判定 Index" + DAControlIndex
-			listChangef = FALSE
-			repeat DAControlIndex
-				if (lparam == DAControlArr(cnt)){
-					logmes "ヒット cnt:"+cnt
-					listChangef = TRUE
-					break
-				}
-			loop
-			if listChangef: gosub *listchange
-		}
 	}
+	
 	logmes ""
 return
 
@@ -430,7 +437,7 @@ return
 
 *vscroll
 	//トラックバーを動かしたときの処理
-	debugLog "トラックバーを動かしたときの処理 開始"
+	logmes "トラックバーを動かしたときの処理 開始"
 	nidPush
 	
 	if (lparam == hTrackbar) {
