@@ -48,6 +48,7 @@
 #cfunc GetAncestor "GetAncestor" int, int
 #func  IsWindow "IsWindow" int
 #func  EnableWindow "EnableWindow" int, int
+#func  PrintWindow "PrintWindow" int, int, int 
 
 #uselib "kernel32.dll"
 #func  MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
@@ -148,3 +149,6 @@
 #const CC_RGBINIT				0x00000001
 #const CC_SHOWHELP				0x00000008
 #const CC_SOLIDCOLOR			0x00000080
+
+#const CM_BITBLT				0
+#const CM_PRINTWINDOW			1 

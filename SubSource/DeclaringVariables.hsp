@@ -13,6 +13,9 @@
 	optionModePrev = -1
 	initialActivation = FALSE
 
+	captureMethod = CM_BITBLT
+	
+
 	dim disInfo, 4
 	dim clientSize, 2
 	dim rect, 4

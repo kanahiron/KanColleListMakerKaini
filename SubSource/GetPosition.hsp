@@ -75,6 +75,7 @@
 					gsel WND_MAIN,0
 					
 					hClient = WindowFromPoint(mouPoint(0), mouPoint(1))
+					hClient1 = hClient
 			
 					GetClientRect hClient, varptr(rect)
 					winSizeX = rect(2)
@@ -97,23 +98,36 @@
 					logmes ""+_hChildClient+ "  :"+loopcnt
 	
 					hClient = _hChildClient
+
+					GetClientRect hClient, varptr(rect)
+					winSizeX = rect(2)
+					winSizeY = rect(3)
 			
 					//拡大率が40%未満には対応しないのでそのサイズ未満なら弾く
 					if (winSizeX >= 320 and winSizeY >= 192) {
 						logmes "画面サイズは艦これの可能性あり"
-			
-						//過去に取得したウィンドウハンドルと同じならデバイスコンテキストの無駄な取得を避けるために飛ばす
-						if (temp_hClient != hClient) {
-							logmes "デバイスコンテキストを取得"
-							temp_hClient = hClient
-				
-							dcClient = GetDC(hClient)
-							buffer WND_TEMP1, winSizeX, winSizeY :SET_WND_INFO
-							BitBlt hdc, 0, 0, winSizeX, winSizeY, dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
-							ReleaseDC  dcClient
-							
-							gsel WND_MAIN, 0
-						} else {logmes "デバイスコンテキストの取得をスキップ"}
+
+						buffer WND_TEMP1, winSizeX, winSizeY : SET_WND_INFO: mref vram, 66: title "print"
+						PrintWindow hClient, hdc, 1
+						captureMethod = CM_PRINTWINDOW
+
+						isfilled vram, winSizeX, winSizeY
+						if (stat == 1){
+							//PrintWindowに失敗
+							//過去に取得したウィンドウハンドルと同じならデバイスコンテキストの無駄な取得を避けるために飛ばす
+							//if (temp_hClient != hClient) {
+								logmes "デバイスコンテキストを取得"
+								temp_hClient = hClient
+								screen WND_TEMP1, winSizeX, winSizeY :SET_WND_INFO: title "bit"
+								dcClient = GetDC(hClient)
+								BitBlt hdc, 0, 0, winSizeX, winSizeY, dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
+								ReleaseDC  dcClient
+
+								captureMethod = CM_BITBLT
+
+							//} else {logmes "デバイスコンテキストの取得をスキップ"}
+						}
+						gsel WND_MAIN, 0
 						
 						//スクリーン座標からクライアント座標へ
 						cliPoint = mouPoint(0), mouPoint(1) 
@@ -170,6 +184,7 @@
 	} else {
 		//手動手動=============================================
 		debugLog "    手動取得"
+		captureMethod = CM_BITBLT
 		
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY | CAPTUREBLT: redraw
