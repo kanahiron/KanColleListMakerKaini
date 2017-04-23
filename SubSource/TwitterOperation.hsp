@@ -585,23 +585,19 @@ return
 return
 
 *twireset
-	debugLog "Twitter認証情報リセット 開始"
-	
+	//Twitterの認証情報をリセット
 	userdata = ""
 	ACCESS_TOKEN = ""
 	ACCESS_SECRET = ""
 	gosub *twiinit
-	
-	debugLog "Twitter認証情報リセット 終了"
 return
 
 *getText
-	
+	//ツイートウィンドウのテキストボックスに入力された文字数のカウント
 	if (lparam = tth){
 		if ( ((wparam >> 16)&0x0000FFFF) == 0x0400 ){
 			MultiByteToWideChar 65001, 0, varptr(tweettext), -1, 0, 0
 			ttCount = stat -1
-			if twiOrderCount :ttCount += 24
 			sendmsg ttCounth ,$C , , strf("%3d",140-ttCount)
 		}
 	}
