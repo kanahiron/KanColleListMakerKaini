@@ -14,29 +14,28 @@
 	initialActivation = FALSE
 
 	captureMethod = CM_BITBLT
-	
 
 	dim disInfo, 4
 	dim clientSize, 2
 	dim rect, 4
-	dim data,CELL_MAX_W,CELL_MAX_H,modeNum
-	dim bc,(CELL_MAX_W*CELL_MAX_H*modeNum)
-	dim dd,4,modeNum
+	dim bufIDPos, CELL_MAX_W, CELL_MAX_H
+	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
+	dim dd,4
 	dim mesxy,modeNum
-	dim maxScrSize,modeNum
-	dim mindexxy,modeNum
+	dim maxScrSize
+	dim mIndexXY
 	dim mxy,2
 	dim mxy_,2
 	dim dmxy,2
 	dim sscap,4
 	dim sscapwh,2
-	dim cellnum,2,modeNum
-	dim scrsize,2,modeNum
-	dim cellsize,2,modeNum
-	dim tempmouse,2
-	dim scrsizetemp,2,modeNum
+	dim cellNum,2
+	dim scrSize,2
+	dim cellSize,2
+	dim tempMouse,2
+	dim scrSizeTemp,2
 
-	ddim AspectRatio,modeNum
+	ddim AspectRatio,1
 	sdim sscapmes,256
 	sdim logmessage,256
 	sdim modemes,64,4
@@ -52,10 +51,7 @@
 	sdim picStack,1024,4
 	sdim tweettext,200
 	sdim picHistory,512,101
-	cellnum(0,0) = 6,4
-	cellnum(0,1) = 5,5
-	cellnum(0,2) = 6,4
-
+	
 	dim twiPicFrameXL, 5
 	dim twiPicFrameXR, 5
 	dim twiPicFrameYU, 5
@@ -88,7 +84,7 @@
 	directLink = 1
 	airStation = 0
 	
-	bc(0) = 0
+	loadPicBufID(0) = 0
 	maxScrSize(0) = 0.8*disInfo(2), 0.8*disInfo(3)
 	mindexxy(0) = 0,0
 	modemes(0) = "SSキャプチャ","艦娘一覧","攻略編成","その他一覧作成モード","オプション"
@@ -125,15 +121,144 @@
 
 	modeOptionNum = 4
 	
-	scrsize(0,0) = limit(1358,210,round(0.4*maxScrSize(0))),scrsize(0,0)*aspectRatio(0)
-	scrsize(0,1) = limit(1120,250,round(0.4*maxScrSize(0))),scrsize(0,1)*aspectRatio(1)
-	scrsize(0,2) = limit(1120,250,round(0.4*maxScrSize(0))),scrsize(0,2)*aspectRatio(2)
-	scrsizetemp(0,0)  = scrsize(0,0),scrsize(1,0)
-	scrsizetemp(0,1)  = scrsize(0,1),scrsize(1,1)
-	scrsizetemp(0,2)  = scrsize(0,2),scrsize(1,2)
+	scrsize(0) = limit(1358,210,round(0.4*maxScrSize(0))),scrsize(0)*aspectRatio
+	scrsizetemp(0)  = scrsize(0),scrsize(1)
 
 	tCupInit "KanColleListMakerKaini", CONSUMER_KEY, CONSUMER_SECRET, 7
 	hdcScreen = CreateDC("DISPLAY", NULL, NULL, NULL)
 
 	debugLog "*DeclaringVariables 終了"
+return
+
+
+
+*CalcCapPosAndWinSize
+
+	if (listMode == 0){
+
+		cellnum(0) = 6, 4
+
+		if ichiranMode1 {
+			
+			if yubiwa = 0 & kantai = 0 : w = 382 : capx = 392
+			if yubiwa = 1 & kantai = 1 : w = 440 : capx = 360
+			if yubiwa = 1 & kantai = 0 : w = 408 : capx = 392
+			if yubiwa = 0 & kantai = 1 : w = 415 : capx = 360
+			if page = 0:h = 279
+			if page = 1:h = 315
+			if lvname = 1:w = 190: capx = 392:h = 279
+			capy = 154
+		
+			dd(0) = capx,capy,w,h
+			cellratio = 1.0*h/w
+	
+			if lvname = 0{
+				if lvnamef = 1{
+					scrsize(0) = scrsizetemp(0)
+				}
+				cellsize(0) = scrsize(0)/(cellnum(0)+1),round(cellratio*cellsize(0))
+				scrsize(1) = round(cellsize(1)* (cellnum(1)+1) )
+				
+			} else {
+				if lvnamef = 0{
+					scrsizetemp(0)  = scrsize(0)
+					cellsize(1) = scrsize(1)/(cellnum(1)+1)
+					cellsize(0) = round(1.0*cellsize(0)/cellratio)
+					scrsize(0) = round(cellsize(0)* (cellnum(0)+1) )
+				}
+			}
+		}
+
+		if ichiranMode2 {
+			
+			w = 320
+			h = 310
+			capx = 132
+			capy = 143
+
+			dd(0) = capx,capy,w,h
+			cellratio = 1.0*h/w
+	
+			cellsize(0) = scrsize(0)/(cellnum(0)+1),round(cellratio*cellsize(0))
+			scrsize(1) = round(cellsize(1)* (cellnum(1)+1) )
+			
+		}
+		
+		AspectRatio(0) = 1.0*scrsize(1)/scrsize(0)
+	}
+	
+	
+	if (listMode == 1){
+
+		cellnum(0) = 5, 5
+	
+		if sosuka {
+			w = 460
+			h = 365
+		}
+		if sosu {
+			w = 230
+			h = 365	
+		}
+		if soka {
+			w = 460
+			h = 195
+		}
+		capx = 327
+		capy = 103
+	
+		dd(0) = capx,capy,w,h
+		cellratio = 1.0*h/w
+
+		if sosuka | soka{
+			if sosuf = 1{
+				scrsize(0) = scrsizetemp(0)
+			}
+			cellsize(0) = scrsize(0)/(cellnum(0)+1),round(cellratio*cellsize(0))
+			scrsize(1) = round(cellsize(1)* (cellnum(1)+1) )
+			
+		} else {
+			if sosuf = 0{
+				scrsizetemp(0)  = scrsize(0)
+				cellsize(1) = scrsize(1)/(cellnum(1)+1)
+				cellsize(0) = round(1.0*cellsize(1)/cellratio)
+				scrsize(0) = round(cellsize(0) * (cellnum(0)+1) )
+			}
+		}
+
+		AspectRatio = 1.0*scrsize(1)/scrsize(0)
+	}
+
+	if (listMode == 2){
+
+		if directLink{
+			w = 800
+			h = 480
+			capx = 0
+			capy = 0
+			cellnum(0) = 6, 4
+		}
+		if airStation {
+			if (airStationTab) { 
+				w = 225
+				h = 358
+				capx = 575
+				capy = 109
+			} else {
+				w = 225
+				h = 336
+				capx = 575
+				capy = 131
+			}
+			cellnum(0) = 2,0
+		}
+		
+		dd(0) = capx,capy,w,h
+		cellratio = 1.0*h/w
+
+		cellsize(0) = scrsize(0)/(cellnum(0)+1),round(cellratio*cellsize(0))
+		scrsize(1) = round(cellsize(1)*(cellnum(1)+1) )
+		AspectRatio = 1.0*scrsize(1)/scrsize(0)
+	}
+
 return

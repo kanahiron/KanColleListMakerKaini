@@ -186,26 +186,26 @@ return
 		xcnt = mousex/cellsize(0,listmode) 
 		ycnt = mousey/cellsize(1,listmode)
 		dmxy(0) = xcnt, ycnt
-		if data(xcnt,ycnt,listmode) >= 100{
+		if bufIDPos(xcnt,ycnt,listmode) >= 100{
 			dmxy(0) = xcnt, ycnt
-			bc(data(xcnt, ycnt,listmode)-100) = 0
+			loadPicBufID(bufIDPos(xcnt, ycnt,listmode)-100) = 0
 		}
 	}
 	if (autoaddCapture = 1){
 
 		repeat
 			if listmode = 0 {
-				ycnt = cnt\(cellnum(1,listmode)+1)
-				xcnt = cnt/(cellnum(1,listmode)+1)
+				ycnt = cnt\(cellnum(1)+1)
+				xcnt = cnt/(cellnum(1)+1)
 			} 
 			if listmode = 1{
 				if tuika1{
-					xcnt = (((cnt\(6*(cellnum(0,listmode)+1)/2))/6)*2)+(cnt\2)
-					ycnt = ((cnt/((cellnum(0,listmode)+1)*3))*3)+((cnt\6)/2)
+					xcnt = (((cnt\(6*(cellnum(0)+1)/2))/6)*2)+(cnt\2)
+					ycnt = ((cnt/((cellnum(0)+1)*3))*3)+((cnt\6)/2)
 				}
 				if tuika4{
-					xcnt = (((cnt\(6*(cellnum(0,listmode)+1)/3))/6)*3)+(cnt\3)
-					ycnt = ((cnt/((cellnum(0,listmode)+1)*2))*2)+((cnt\6)/3)
+					xcnt = (((cnt\(6*(cellnum(0)+1)/3))/6)*3)+(cnt\3)
+					ycnt = ((cnt/((cellnum(0)+1)*2))*2)+((cnt\6)/3)
 				}
 				if tuika2 {
 					xcnt = cnt\6
@@ -217,18 +217,18 @@ return
 				}
 			}
 			if listmode = 2 {
-				ycnt = cnt\(cellnum(1,listmode)+1)
-				xcnt = cnt/(cellnum(1,listmode)+1)
+				ycnt = cnt\(cellnum(1)+1)
+				xcnt = cnt/(cellnum(1)+1)
 			} 
-			xcnt = limit(xcnt,0,cellnum(0,listmode))
-			ycnt = limit(ycnt,0,cellnum(1,listmode))
-			if data(xcnt,ycnt,listmode) = 0{
+			xcnt = limit(xcnt,0,cellnum(0))
+			ycnt = limit(ycnt,0,cellnum(1))
+			if bufIDPos(xcnt,ycnt) = 0{
 				dmxy(0) = xcnt, ycnt
 				break
 			}
-			if (xcnt=cellnum(0,listmode)) & (ycnt=cellnum(1,listmode)){
+			if (xcnt=cellnum(0)) & (ycnt=cellnum(1)){
 				dmxy(0) = xcnt, ycnt
-				bc(data(xcnt, ycnt,listmode)-100) = 0
+				loadPicBufID(bufIDPos(xcnt, ycnt)-100) = 0
 				break
 			}
 		loop
@@ -236,14 +236,14 @@ return
 	}
 
 	repeat (CELL_MAX_W*CELL_MAX_H*modeNum)
-		if bc(cnt) = 0{
-			bc(cnt) = 1
+		if loadPicBufID(cnt) = 0{
+			loadPicBufID(cnt) = 1
 			bufid = cnt +100
 			break
 		}
 	loop
 	
-	data(dmxy(0),dmxy(1),listmode) = bufid
+	bufIDPos(dmxy(0),dmxy(1)) = bufid
 	ImgF_GetPicSize addfilename,picx,picy
 
 	if (picx != 480) & (picy != 450){

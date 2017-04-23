@@ -10,10 +10,10 @@
 	w = 0
 	h = 0
 	
-	repeat cellnum(1,listmode)+1
+	repeat cellnum(1)+1
 		ycnt = cnt
-		repeat cellnum(0,listmode)+1
-			if data(cnt,ycnt,listmode) >= 100{
+		repeat cellnum(0)+1
+			if bufIDPos(cnt,ycnt) >= 100{
 				if yoko <= cnt:yoko = cnt
 				if tate <= ycnt:tate = ycnt
 			}
@@ -85,12 +85,12 @@
 	
 	buffer WND_TEMP1, w*yoko, h*tate
 	drawcount = 0
-	repeat cellnum(1,listmode)+1
+	repeat cellnum(1)+1
 		ycnt = cnt
-		repeat cellnum(0,listmode)+1
-			if data(cnt,ycnt,listmode) >= 100{
+		repeat cellnum(0)+1
+			if bufIDPos(cnt,ycnt) >= 100{
 				pos cnt*w,ycnt*h
-				gcopy data(cnt,ycnt,listmode),capx,capy,w,h 
+				gcopy bufIDPos(cnt,ycnt),capx,capy,w,h 
 				drawcount++
 			}
 		loop
@@ -106,7 +106,7 @@
 				repeat 6			
 					xcnt_ = (cnt\3)*2
 					ycnt_ = (cnt/3)*3
-					if data(xcnt_,ycnt_,listmode) >= 100{
+					if bufIDPos(xcnt_,ycnt_) >= 100{
 						pos 205+w*xcnt_,h*ycnt_+5
 						gcopy WND_MAKE_STRING,0,10+ccnt*70,220,OSOWm+10
 						if addOrderNum {
@@ -114,7 +114,7 @@
 							repeat 6
 								xcnt = xcnt_ + cnt\2
 								ycnt = ycnt_ + cnt/2
-								if data(xcnt,ycnt,listmode) >= 100{
+								if bufIDPos(xcnt,ycnt) >= 100{
 									pos 205+w*xcnt+220,h*ycnt+5
 									gcopy WND_MAKE_STRING,500+(ccnt*100),10+ccnt2*OSOW,50,OSOW
 									ccnt2++
@@ -159,7 +159,7 @@
 				repeat 6			
 					xcnt_ = (cnt/3)*3
 					ycnt_ = (cnt\3)*2
-					if data(xcnt_,ycnt_,listmode) >= 100{
+					if bufIDPos(xcnt_,ycnt_) >= 100{
 						pos 205+w*xcnt_,h*ycnt_+5
 						gcopy WND_MAKE_STRING,0,10+ccnt*70,220,OSOWm+10
 						if addOrderNum {
@@ -167,7 +167,7 @@
 							repeat 6
 								xcnt = xcnt_ + cnt/2
 								ycnt = ycnt_ + cnt\2
-								if data(xcnt,ycnt,listmode) >= 100{
+								if bufIDPos(xcnt,ycnt) >= 100{
 									pos 205+w*xcnt+220,h*ycnt+5
 									gcopy WND_MAKE_STRING,500+(ccnt*100),10+ccnt2*OSOW,50,OSOW
 									ccnt2++
@@ -217,7 +217,7 @@
 				repeat 6			
 					xcnt_ = 0
 					ycnt_ = cnt
-					if data(xcnt_,ycnt_,listmode) >= 100{
+					if bufIDPos(xcnt_,ycnt_) >= 100{
 						pos 205+w*xcnt_,h*ycnt_+5
 						gcopy WND_MAKE_STRING,0,10+ccnt*70,220,OSOWm+10
 						if addOrderNum {
@@ -225,7 +225,7 @@
 							repeat 6
 								xcnt = xcnt_ + cnt
 								ycnt = ycnt_ 
-								if data(xcnt,ycnt,listmode) >= 100{
+								if bufIDPos(xcnt,ycnt) >= 100{
 									pos 205+w*xcnt+220,h*ycnt+5
 									gcopy WND_MAKE_STRING,500+(ccnt*100),10+ccnt2*OSOW,50,OSOW
 									ccnt2++
@@ -264,7 +264,7 @@
 				repeat 6			
 					xcnt_ = cnt
 					ycnt_ = 0
-					if data(xcnt_,ycnt_,listmode) >= 100{
+					if bufIDPos(xcnt_,ycnt_) >= 100{
 						pos 205+w*xcnt_,h*ycnt_+5
 						gcopy WND_MAKE_STRING,0,10+ccnt*70,220,OSOWm+10
 						if addOrderNum {
@@ -272,7 +272,7 @@
 							repeat 6
 								xcnt = xcnt_ 
 								ycnt = ycnt_ + cnt
-								if data(xcnt,ycnt,listmode) >= 100{
+								if bufIDPos(xcnt,ycnt) >= 100{
 									pos 205+w*xcnt+220,h*ycnt+5
 									gcopy WND_MAKE_STRING,500+(ccnt*100),10+ccnt2*OSOW,50,OSOW
 									ccnt2++
@@ -354,8 +354,8 @@
 	}
 
 
-	dim data,CELL_MAX_W,CELL_MAX_H,modeNum
-	dim bc,(CELL_MAX_W*CELL_MAX_H*modeNum)
+	dim bufIDPos, CELL_MAX_W, CELL_MAX_H, modeNum
+	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
 	
 	nidPop
 	

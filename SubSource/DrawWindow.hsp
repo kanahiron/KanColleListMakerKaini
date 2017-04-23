@@ -475,7 +475,7 @@
 			gsel WND_GRID,0
 		}
 		title modemes(listmode+1)+"モード - 表示させたいセルにD&D"
-		width scrsize(0,listmode),scrsize(1,listmode)
+		width scrsize(0), scrsize(1)
 		
 		gosub *draw
 		//一覧作成モードここまで//一覧作成モードここまで//一覧作成モードここまで//一覧作成モードここまで

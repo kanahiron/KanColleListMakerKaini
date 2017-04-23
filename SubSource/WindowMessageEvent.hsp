@@ -22,8 +22,10 @@
 			if (mode == 1): listmode = 0
 			if (mode == 2): listmode = 1
 			if (mode == 3): listmode = 2
-		
+
+			gosub *CalcCapPosAndWinSize
 			gosub *drawMainWindow
+			
 		}
 		modePrev = mode
 		
@@ -103,7 +105,7 @@ return
 	nidPush
 	gsel WND_MAIN
 	
-	if mode = 1{
+	if (listMode == 0){
 
 		sendmsg ichiranMode1Ch, $F2
 		ichiranMode1 = stat & 0x01
@@ -134,33 +136,6 @@ return
 				objenable pagecid,1
 			}
 			
-			if yubiwa = 0 & kantai = 0 : w = 382 : capx = 392
-			if yubiwa = 1 & kantai = 1 : w = 440 : capx = 360
-			if yubiwa = 1 & kantai = 0 : w = 408 : capx = 392
-			if yubiwa = 0 & kantai = 1 : w = 415 : capx = 360
-			if page = 0:h = 279
-			if page = 1:h = 315
-			if lvname = 1:w = 190: capx = 392:h = 279
-			capy = 154
-		
-			dd(0,0) = capx,capy,w,h
-			cellratio = 1.0*h/w
-	
-			if lvname = 0{
-				if lvnamef = 1{
-					scrsize(0,0) = scrsizetemp(0)
-				}
-				cellsize(0,0) = scrsize(0,0)/(cellnum(0,0)+1),round(cellratio*cellsize(0,0))
-				scrsize(1,0) = round(cellsize(1,0)* (cellnum(1,0)+1) )
-				
-			} else {
-				if lvnamef = 0{
-					scrsizetemp(0,0)  = scrsize(0,0)
-					cellsize(1,0) = scrsize(1,0)/(cellnum(1,0)+1)
-					cellsize(0,0) = round(1.0*cellsize(0,0)/cellratio)
-					scrsize(0,0) = round(cellsize(0,0)* (cellnum(0,0)+1) )
-				}
-			}
 		}
 
 		if ichiranMode2 {
@@ -170,32 +145,14 @@ return
 			objenable pagecid,0
 			objenable lvnamecid,0
 			
-			w = 320
-			h = 310
-			capx = 132
-			capy = 143
-
-			dd(0,0) = capx,capy,w,h
-			cellratio = 1.0*h/w
-	
-			cellsize(0,0) = scrsize(0,0)/(cellnum(0,0)+1),round(cellratio*cellsize(0,0))
-			scrsize(1,0) = round(cellsize(1,0)* (cellnum(1,0)+1) )
-			
 		}
 		
-		AspectRatio(0,0) = 1.0*scrsize(1,0)/scrsize(0,0)
 	}
 	
 	
-	if mode = 2{
+	if (listMode == 1){
 	
 		sosuf = sosu
-	
-		w = 0
-		h = 0
-		capx = 0
-		capy = 0
-		cellratio = 0,0
 		sendmsg sosukach, $F2
 		sosuka = stat & 0x01
 		sendmsg sosuch, $F2
@@ -219,50 +176,10 @@ return
 	
 		sendmsg fleetPunctuationch, $F2
 		fleetPunctuation = stat & 0x01
-	
-		if sosuka {
-			w = 460
-			h = 365
-		}
-		if sosu {
-			w = 230
-			h = 365	
-		}
-		if soka {
-			w = 460
-			h = 195
-		}
-		capx = 327
-		capy = 103
-	
-		dd(0,1) = capx,capy,w,h
-		cellratio = 1.0*h/w
-
-		if sosuka | soka{
-			if sosuf = 1{
-				scrsize(0,1) = scrsizetemp(0,1)
-			}
-			cellsize(0,1) = scrsize(0,1)/(cellnum(0,1)+1),round(cellratio*cellsize(0,1))
-			scrsize(1,1) = round(cellsize(1,1)* (cellnum(1,1)+1) )
-			
-		} else {
-			if sosuf = 0{
-				scrsizetemp(0,1)  = scrsize(0,1)
-				cellsize(1,1) = scrsize(1,1)/(cellnum(1,1)+1)
-				cellsize(0,1) = round(1.0*cellsize(1,1)/cellratio)
-				scrsize(0,1) = round(cellsize(0,1) * (cellnum(0,1)+1) )
-			}
-		}
-
-		AspectRatio(1) = 1.0*scrsize(1,1)/scrsize(0,1)
 	}
 
-	if (mode = 3){
-		w = 0
-		h = 0
-		capx = 0
-		capy = 0
-		cellratio = 0,0
+	if (listMode == 2){
+
 		sendmsg directLinkCh, $F2
 		directLink = stat & 0x01
 		sendmsg airStationCh, $F2
@@ -275,39 +192,13 @@ return
 		} else {
 			objenable airStationTabCId,1
 		}
-
-		if directLink{
-			w = 800
-			h = 480
-			capx = 0
-			capy = 0
-			cellnum(0,2) = 6,4
-		}
-		if airStation {
-			if (airStationTab) { 
-				w = 225
-				h = 358
-				capx = 575
-				capy = 109
-			} else {
-				w = 225
-				h = 336
-				capx = 575
-				capy = 131
-			}
-			cellnum(0,2) = 2,0
-		}
-		
-		dd(0,2) = capx,capy,w,h
-		cellratio = 1.0*h/w
-
-		cellsize(0,2) = scrsize(0,2)/(cellnum(0,2)+1),round(cellratio*cellsize(0,2))
-		scrsize(1,2) = round(cellsize(1,2)*(cellnum(1,2)+1) )
-		AspectRatio(2) = 1.0*scrsize(1,2)/scrsize(0,2)
 	}
 
+
+	gosub *CalcCapPosAndWinSize
+
 	gsel WND_GRID
-	width scrsize(0, mode-1),scrsize(1, mode-1)
+	width scrsize(0),scrsize(1)
 
 	gosub *draw
 
@@ -329,25 +220,25 @@ return
 	case 2
 	case 7
 	case 8
-		bottom = top + round(AspectRatio(listmode) * (right - left - framesx)) + framesy
+		bottom = top + round(AspectRatio * (right - left - framesx)) + framesy
 		swbreak
 	case 3
 	case 5
 	case 6
-		right = left + round(1.0/AspectRatio(listmode) * (bottom - top - framesy)) + framesx
+		right = left + round(1.0/AspectRatio * (bottom - top - framesy)) + framesx
 		swbreak
 	case 4
-		left = right - round(1.0/AspectRatio(listmode) * (bottom - top - framesy)) - framesx
+		left = right - round(1.0/AspectRatio * (bottom - top - framesy)) - framesx
 		swbreak
 	swend
 
-	scrsize(0,listmode) = ginfo_winx ,round(AspectRatio(listmode)*ginfo_winx)
-	cellsize(0,listmode) = round(1.0*scrsize(0,listmode) / (cellnum(0,listmode)+1)) ,round(1.0*scrsize(1,listmode) / (cellnum(1,listmode)+1))
+	scrsize(0) = ginfo_winx ,round(AspectRatio*ginfo_winx)
+	cellsize(0) = round(1.0*scrsize(0) / (cellnum(0)+1)) ,round(1.0*scrsize(1) / (cellnum(1)+1))
 	
 	gosub *draw
 	
 	debugLog "グリッドウィンドウサイズ変更 終了"
-return 1
+return
 
 //ホットキー――――――――――――――――――――――――――――――――――
 *hotkey
@@ -358,7 +249,7 @@ return 1
 
 		gosub *ssCapture
 		if ((mode != 0)&(mode != modeOptionNum)) {
-			if autoaddCapture{
+			if autoAddCapture{
 				addfilename = sssavedir +"\\"+ savename
 				gosub *addCapture
 			}
