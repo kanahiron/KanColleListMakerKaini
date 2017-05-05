@@ -266,9 +266,7 @@ return
 	}
 	
 	if (airStation+directLink) != 1{
-		dim airStation, 1
 		airStation = 0
-		dim directLink, 1
 		directLink = 1
 	}
 	

@@ -72,9 +72,9 @@
 
 #define nidStackInit dim nidStack, 100: nidIndex = 0
 #define nidPush nidindex++:nidstack(nidindex) = ginfo(3)
-#define nidPop gsel nidstack(nidindex),0:nidindex--
+#define nidPop gsel nidstack(nidindex), 0:nidindex--
 
-#define wndInfoInit dim wndInfoArr, 100,2
+#define wndInfoInit dim wndInfoArr, 100, 2
 #define SET_WND_INFO wndInfoArr(ginfo(3), WI_HANDLE) = hwnd: wndInfoArr(ginfo(3), WI_DC) = hdc
 #define ctype WND_INFO(%1, %2) wndInfoArr(%1, %2)
 
@@ -134,7 +134,7 @@
 	DAControlInit
 	isHomeport_init WND_HOME_PORT_MOD
 
-	gosub *DeclaringVariables	
+	gosub *DeclaringVariables
 	gosub *iniLoad
 	gosub *dataCheck
 	gosub *iniSave
@@ -144,7 +144,7 @@
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 1
-		oncmd gosub *OnDropFiles ,WM_DROPFILES
+		oncmd gosub *OnDropFiles, WM_DROPFILES
 		oncmd gosub *setmode, WM_COMMAND
 		oncmd gosub *hotkey, WM_HOTKEY
 		oncmd gosub *ssCapture, WM_TIMER
