@@ -1,4 +1,4 @@
-*listdrag
+*ListDrag
 
 	if (ginfo(24) == WND_GRID) {
 
@@ -16,6 +16,7 @@
 			dragdata = 0
 			repeat
 				stick sti, 256
+				//左クリック用の処理ここから-----
 				if sti = 256{
 					//mxy はドラッグを話した時点の座標
 					//mxy_ はドラッグ開始の座標
@@ -77,6 +78,9 @@
 				if sti = 0 & cliflag = 0{
 					break
 				}
+				//左クリック用の処理ここまで-----
+
+				
 		
 				await 16
 			loop
@@ -85,6 +89,62 @@
 	}
 	
 return
+
+
+
+*ListRelocation
+
+	if (ginfo(24) != WND_GRID) :return
+	gsel WND_GRID
+	
+	
+	oncmd 0
+	repeat
+
+		stick sti, 512
+
+		//右クリック用の処理ここから-----
+
+		if (sti == 512){
+			if (RCliFlag == FALSE){
+				staMPos = ginfo_mx, ginfo_my
+				MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), 0, 0, 0, 0, 1
+				gsel WND_OVERLAY, 2
+				gsel WND_GRID
+				RCliFlag = TRUE
+			}
+			if (RCliFlag){
+
+				dragW = abs(staMPos(0)-ginfo_mx)
+				dragH = abs(staMPos(1)-ginfo_my)
+
+				if staMPos(0) < ginfo_mx: overRlayWndX = staMPos(0): else: overRlayWndX = ginfo_mx
+				if staMPos(1) < ginfo_my: overRlayWndY = staMPos(1): else: overRlayWndY = ginfo_my
+
+				
+				MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), overRlayWndX, overRlayWndY, dragW, dragH, 1
+			}
+		}
+
+		if (sti == 0) & RCliFlag{
+			title "しゅうｒ"
+			gsel WND_OVERLAY, -1
+			gsel WND_GRID
+			RCliFlag = FALSE
+			break
+		}
+		//右クリック用の処理ここまで-----
+
+		await 16
+
+	loop
+
+
+	oncmd 1
+
+return
+
+
 
 
 //描画――――――――――――――――――――――――――――――――――

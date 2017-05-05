@@ -208,12 +208,12 @@ return
 
 
 *windowsize
-	debugLog "グリッドウィンドウサイズ変更 開始"
+	oncmd 0
 	
-	dupptr left,	lparam,		4
-	dupptr top,		lparam+4,	4
-	dupptr right,	lparam+8,	4
-	dupptr bottom,	lparam+12,	4
+	dupptr left,   lparam,    4
+	dupptr top,    lparam+4,  4
+	dupptr right,  lparam+8,  4
+	dupptr bottom, lparam+12, 4
 
 	switch wparam
 	case 1
@@ -232,12 +232,21 @@ return
 		swbreak
 	swend
 
+	/*
+	//最小サイズを指定しようと思ったらめちゃくちゃ面倒であきらめた
+	if (bottom-top) < scrSizeMin(1){
+		bottom = top  + scrSizeMin(1)
+		right = left + round(1.0/AspectRatio * (bottom - top - framesy)) + framesx
+	}
+	//*/
+		
+
 	scrsize(0) = ginfo_winx ,round(AspectRatio*ginfo_winx)
 	cellsize(0) = round(1.0*scrsize(0) / (cellnum(0)+1)) ,round(1.0*scrsize(1) / (cellnum(1)+1))
 	
 	gosub *draw
 	
-	debugLog "グリッドウィンドウサイズ変更 終了"
+	oncmd 1
 return
 
 //ホットキー――――――――――――――――――――――――――――――――――
@@ -279,6 +288,8 @@ return
 		sdim dropfile,1024
 		DragQueryFile hdrop, 0, varptr(dropfile), 260
 		dropFile = cnvwtos(dropFile)
+		dim dragPoint,2
+		DragQueryPoint hdrop, varptr(dragPoint)
 		DragFinish hdrop
 		if peek(dropfile,0) = '"' : getstr dropfile, dropfile, 1, '"'
 		

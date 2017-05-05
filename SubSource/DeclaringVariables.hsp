@@ -34,10 +34,6 @@
 	dim cellSize, 2
 	dim tempMouse, 2
 
-	dim scrSize, 2
-	dim scrSizeTemp, 2
-	dim scrSizeBase, 2
-
 	ddim AspectRatio, 1
 	sdim sscapmes, 256
 	sdim logmessage, 256
@@ -127,12 +123,17 @@
 	tCupInit "KanColleListMakerKaini", CONSUMER_KEY, CONSUMER_SECRET, 7
 	hdcScreen = CreateDC("DISPLAY", NULL, NULL, NULL)
 
+
+	dim scrSize, 2
+	dim scrSizeMin, 2
+	dim scrSizeBase, 2
+
 	//グリッドウィンドウの最大サイズ
 	maxScrSize(0) = disInfo(2), disInfo(3)
-	//グリッドウィンドウの初期サイズ
-	scrSize(0) = 0, 0
-	//作ってみた
-	scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.8*ginfo_dispy)
+	//グリッドウィンドウの基準サイズ
+	scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.667*ginfo_dispy)
+	
+	scrSizeMin(0) = 700, 500
 	
 
 	debugLog "*DeclaringVariables 終了"
