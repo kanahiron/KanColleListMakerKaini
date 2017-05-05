@@ -6,7 +6,8 @@
 	
 	VNum = 0
 	HNum = 0
-	
+
+	//c‰¡‚Ì‰æ‘œ–‡”‚ğƒJƒEƒ“ƒg
 	repeat cellnum(1)+1
 		ycnt = cnt
 		repeat cellnum(0)+1
@@ -19,7 +20,7 @@
 	VNum++
 	HNum++
 	
-	
+
 	buffer WND_TEMP1, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
 	drawcount = 0
 	repeat cellnum(1)+1

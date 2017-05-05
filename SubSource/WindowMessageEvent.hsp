@@ -210,10 +210,10 @@ return
 *windowsize
 	debugLog "グリッドウィンドウサイズ変更 開始"
 	
-	dupptr left,   lparam,    4
-	dupptr top,    lparam+4,  4
-	dupptr right,  lparam+8,  4
-	dupptr bottom, lparam+12, 4
+	dupptr left,	lparam,		4
+	dupptr top,		lparam+4,	4
+	dupptr right,	lparam+8,	4
+	dupptr bottom,	lparam+12,	4
 
 	switch wparam
 	case 1

@@ -151,4 +151,10 @@
 #const CC_SOLIDCOLOR			0x00000080
 
 #const CM_BITBLT				0
-#const CM_PRINTWINDOW			1 
+#const CM_PRINTWINDOW			1
+
+
+#const CR_X 0
+#const CR_Y 1
+#const CR_W 2
+#const CR_H 3
