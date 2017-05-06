@@ -132,8 +132,11 @@
 	maxScrSize(0) = disInfo(2), disInfo(3)
 	//グリッドウィンドウの基準サイズ
 	scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.667*ginfo_dispy)
-	
+	//Ver0.2.6時点では未使用
 	scrSizeMin(0) = 700, 500
+
+	//ListModeHNum 艦娘一覧モードでの縦幅の指定
+	ListModeHNum = 5
 	
 
 	debugLog "*DeclaringVariables 終了"

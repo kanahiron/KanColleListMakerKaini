@@ -70,6 +70,7 @@
 
 //ウィンドウメッセージ
 #const WM_ACTIVATE		0x0006
+#const WM_GETMINMAXINFO	0x0024
 #const WM_NCLBUTTONDOWN 0x00A1
 #const WM_COMMAND		0x0111
 #const WM_TIMER			0x0113

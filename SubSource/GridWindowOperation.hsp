@@ -18,6 +18,27 @@
 				stick sti, 256
 				//左クリック用の処理ここから-----
 				if sti = 256{
+
+					//------
+
+					//mes (mousey\cellh+10)\cellh
+					if ( (listMode == 0) and (cliFlag == FALSE) ){
+						if (mousey > (cellsize(1)-10)){
+							temph = (mousey\cellsize(1)+10)\cellsize(1)
+							if ( (0 <= temph) and (temph <= 20) ){
+								listModeHNum = (mousey+10)/cellsize(1)
+								gosub *ChangeListModeHNum
+								gosub *draw
+								sti = 0
+								cliflag = 0
+							}
+						}
+					}
+
+
+					//------
+
+					
 					//mxy はドラッグを話した時点の座標
 					//mxy_ はドラッグ開始の座標
 					mxy(0) = limit(kmmousex/cellsize(0), 0, cellnum(0)) , limit(kmmousey/cellsize(1), 0, cellnum(1))
@@ -172,10 +193,19 @@ return
 		repeat cellnum(0)+1
 			if bufIDPos(cnt, ycnt) >= 100{
 				pos cnt*cellsize(0), ycnt*cellsize(1)
+				//assert
 				gzoom cellsize(0), cellsize(1), bufIDPos(cnt, ycnt), cutRange(0), cutRange(1), cutRange(2), cutRange(3), 1
 			}
 		loop
 	loop
+
+	If (listMode == 0){
+
+		color 32, 32, 192
+		boxf -1, cellsize(1)*listModeHNum-2, maxScrSize(0)+1, cellsize(1)*listModeHNum
+		color 0, 0, 0
+
+	}
 	
 	if (mode = 2) & fleetPunctuation{
 		color 32, 32, 192
@@ -211,4 +241,35 @@ return
 	}
 	
 	redraw 1
+return
+
+
+*ChangeListModeHNum
+
+
+	//配列を複製
+	dim temp_bufIDPos, CELL_MAX_W, CELL_MAX_H
+	repeat CELL_MAX_H
+		cntY = cnt
+		repeat CELL_MAX_W
+			cntX = cnt
+			temp_bufIDPos(cntX, cntY) = bufIDPos(cntX, cntY)
+			bufIDPos(cntX, cntY) = 0
+		loop
+	loop
+
+	//最大配置数を計算
+	maxCount = (cellNum(0)+1)*ListModeHNum
+	count = 0
+
+	repeat (cellNum(0)+1) * (cellNum(1)+1)
+		//順番に見て存在したら再配置
+		if temp_bufIDPos(cnt/(cellnum(1)+1), cnt\(cellnum(1)+1)) >= 100{
+			bufIDPos(count/ListModeHNum, count\ListModeHNum) = temp_bufIDPos(cnt/(cellnum(1)+1), cnt\(cellnum(1)+1))
+			count++
+		}
+		//最大配置数になったら抜ける
+		if (maxCount == count) :break
+	loop
+
 return

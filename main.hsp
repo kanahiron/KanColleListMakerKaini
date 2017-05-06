@@ -1,38 +1,5 @@
 #include "hsp3utf.as"
 
-/*
-#if 0
-	#module
-	
-		#deffunc debugLog_Init
-			_debugLogSize = 0
-			_debugLogSaveName = DateAndTimeFormat2("debuglog_<yyyy><MM><dd>-<HH><mm><ss>.txt")
-			_debugLogSaveDir = dir_exe
-			_debugLogTempStr = ""
-			bsave _debugLogSaveDir + "\\" + _debugLogSaveName, _debugLogSaveName, 0
-		return
-		
-		#deffunc debugLog str logAddStr
-			
-			_debugLogTempStr = DateAndTimeFormat2("<HH>:<mm>:<ss>.<ms>  ")
-			repeat sublev-1
-				_debugLogTempStr += "    "
-			loop
-			_debugLogTempStr += (logAddStr)+"\n"
-			bsave _debugLogSaveDir + "\\" + _debugLogSaveName, _debugLogTempStr, strlen(_debugLogTempStr), _debugLogSize
-			_debugLogSize += strlen(_debugLogTempStr)
-			_debugLogTempStr = logAddStr
-		return
-
-		#define global debugLogMes(%1) debugLog %1: logmes strtrim(_debugLogTempStr, 0, ' ')
-
-	#global
-
-	debugLog_Init
-
-#endif
-//*/
-
 #define global debugLog(%1) ;
 
 #include "./SubSource/FunctionDefinition.hsp"
@@ -59,10 +26,10 @@
 #define CELL_MAX_H	7
 #define HOTKEYID	7798
 #define timerID		101
-#define klm2ver		2400
+#define klm2ver		2600
 
 #define ctype round(%1) int(strf("%%0.0f", %1))
-#define SOFTNAME "äÕÇ±ÇÍàÍóóÇﬂÇ¢Ç©Å[â¸ìÒ Ver0.2.5"
+#define SOFTNAME "äÕÇ±ÇÍàÍóóÇﬂÇ¢Ç©Å[â¸ìÒ Ver0.2.6"
 
 #define PT_ABSOLUTE 1
 #define PT_RELATIVE 2

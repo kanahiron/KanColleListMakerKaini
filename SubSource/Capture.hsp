@@ -195,8 +195,8 @@ return
 
 		repeat
 			if listmode = 0 {
-				ycnt = cnt\(cellnum(1)+1)
-				xcnt = cnt/(cellnum(1)+1)
+				ycnt = cnt\ListModeHNum
+				xcnt = cnt/ListModeHNum
 			} 
 			if listmode = 1{
 				if tuika1{
@@ -226,16 +226,24 @@ return
 				dmxy(0) = xcnt, ycnt
 				break
 			}
-			if (xcnt=cellnum(0)) & (ycnt=cellnum(1)){
-				dmxy(0) = xcnt, ycnt
-				loadPicBufID(bufIDPos(xcnt, ycnt)-100) = 0
-				break
+			if (listMode != 0){
+				if (xcnt=cellnum(0)) & (ycnt=cellnum(1)){
+					dmxy(0) = xcnt, ycnt
+					loadPicBufID(bufIDPos(xcnt, ycnt)-100) = 0
+					break
+				}
+			} else {
+				if (xcnt=cellnum(0)) & (ycnt=(ListModeHNum-1)){
+					dmxy(0) = xcnt, ycnt
+					loadPicBufID(bufIDPos(xcnt, ycnt)-100) = 0
+					break
+				}
 			}
 		loop
 		
 	}
 
-	repeat (CELL_MAX_W*CELL_MAX_H*modeNum)
+	repeat (CELL_MAX_W*CELL_MAX_H)
 		if loadPicBufID(cnt) = 0{
 			loadPicBufID(cnt) = 1
 			bufid = cnt +100
