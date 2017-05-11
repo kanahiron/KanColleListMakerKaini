@@ -130,16 +130,25 @@
 		objsize Scale(20), Scale(30)
 		button gosub windowsSizeChangeBMes(mainWindowSmall),*windowsSizeChange
 		windowsSizeChangeBId  = stat
-		
 		mesy += Scale(30)
+
 		
+		pos Scale(2), mesy + scale3
+		mes "セミオート作成"
+		objsize Scale(70), Scale(30)
+		pos Scale(105), mesy
+		button gosub "開始", *StartCreateSemiAuto: mesy += Scale(30)
+		createSemiAutoBId  = stat
+
 		pos Scale(2+(disableseqcap*-175)), mesy + scale3
 		mes "連続キャプチャ"
-		objsize Scale(80), Scale(25)
-		pos Scale(95+(disableseqcap*175)), mesy
+		objsize Scale(70), Scale(25)
+		pos Scale(105+(disableseqcap*175)), mesy
 		if disableseqcap^1 : mesy += Scale(25)
 		button gosub seqcapmes, *seqcap
 		seqCapBId  = stat
+
+		
 		
 		dispcapy = mesy
 		if dispcap {

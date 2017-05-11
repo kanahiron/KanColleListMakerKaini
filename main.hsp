@@ -271,3 +271,4 @@
 #include "./SubSource/WindowMessageEvent.hsp"
 #include "./SubSource/Capture.hsp"
 #include "./SubSource/GridWindowOperation.hsp"
+#include "./SubSource/CreateSemiAuto.hsp"

@@ -223,34 +223,23 @@ return
 	cutRange(0) = capx, capy, w, h
 	cellratio = 1.0 * cutRange(CR_H) /  cutRange(CR_W)
 
-	//純粋な画面のサイズを計算する
-	scrSizeW_ = (cellnum(0)+1) * cutRange(CR_W)
-	scrSizeH_ = (cellnum(1)+1) * cutRange(CR_H)
-
 	//アスペクト比の計算
-	AspectRatio = 1.0 * scrSizeH_ / scrSizeW_
+	AspectRatio = 1.0 * ((cellnum(1)+1) * cutRange(CR_H)) / ((cellnum(0)+1) * cutRange(CR_W))
 
 	if (AspectRatio >= 1.0){
 		//横長の時
 		scrSize(0) = round(1.0*scrSizeBase(1) / AspectRatio)
-		scrSize(1) = scrSizeBase(1)
+		if ( scrSizeBase(0) < scrSize(0) ): zoom = 1.0 * scrSizeBase(0) / scrSize(0)
+		scrSize(0) = round( zoom * scrSize(0) )
+		scrSize(1) = round( zoom * scrSizeBase(1) )
 	} else {
 		//縦長の時
-		scrSize(0) = scrSizeBase(0)
 		scrSize(1) = round(1.0*scrSizeBase(0) * AspectRatio)
+		if ( scrSizeBase(1) < scrSize(1) ): zoom = 1.0 * scrSizeBase(1) / scrSize(1)
+		scrSize(0) = round( zoom * scrSizeBase(0) )
+		scrSize(1) = round( zoom * scrSize(1) )
 	}
 
-	if scrSizeBase(0) < scrSize(0){
-		zoom = 1.0 * scrSizeBase(0) / scrSize(0)
-		scrSize(0) = round( zoom * scrSize(0) )
-		scrSize(1) = round( zoom * scrSize(1) )
-	}
-		
-	if scrSizeBase(1) < scrSize(1){
-		zoom = 1.0 * scrSizeBase(1) / scrSize(1)
-		scrSize(0) = round( zoom * scrSize(0) )
-		scrSize(1) = round( zoom * scrSize(1) )
-	}
 	cellsize(0) = scrSize(0)/(cellnum(0)+1), scrSize(1)/(cellnum(1)+1)
 
 

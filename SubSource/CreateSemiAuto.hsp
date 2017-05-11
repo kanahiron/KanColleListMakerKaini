@@ -1,0 +1,11 @@
+*StartCreateSemiAuto
+
+	gosub *ssCapture
+
+	buffer WND_TEMP1
+	picload saveNamePath
+
+	
+
+
+return
