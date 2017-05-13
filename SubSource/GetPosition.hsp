@@ -107,7 +107,7 @@
 					if (winSizeX >= 320 and winSizeY >= 192) {
 						logmes "画面サイズは艦これの可能性あり"
 
-						buffer WND_TEMP1, winSizeX, winSizeY : SET_WND_INFO: mref vram, 66: title "print"
+						buffer WND_TEMP1, winSizeX, winSizeY : SET_WND_INFO: mref vram, 66
 						PrintWindow hClient, hdc, 1
 						captureMethod = CM_PRINTWINDOW
 
@@ -118,7 +118,7 @@
 							//if (temp_hClient != hClient) {
 								logmes "デバイスコンテキストを取得"
 								temp_hClient = hClient
-								screen WND_TEMP1, winSizeX, winSizeY :SET_WND_INFO: title "bit"
+								buffer WND_TEMP1, winSizeX, winSizeY : SET_WND_INFO
 								dcClient = GetDC(hClient)
 								BitBlt hdc, 0, 0, winSizeX, winSizeY, dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
 								ReleaseDC  dcClient
