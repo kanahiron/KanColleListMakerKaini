@@ -265,9 +265,22 @@ return
 		logmessage = "ç¿ïWÇÃéÊìæÇ…ê¨å˜ÇµÇ‹ÇµÇΩ"
 		objprm logid, logmessage
 		
-		availablecap = TRUE
+		availableCap = TRUE
 	
 		if autoSearch: autoSearchFailureCount = 0
+
+		/////////////
+
+		if (positionType == PT_ABSOLUTE){
+			nidPush
+			gsel WND_SUPPORT, 1+frontRow
+			MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), sscap(0)+sscapwh(0)-supportWndW,sscap(1)+sscapwh(1), supportWndW, supportWndH ,1
+			nidPop
+		} else {
+		}
+
+		
+		/////////////
 		
 	} else {
 

@@ -430,5 +430,7 @@ return
 		twiPicFrameYU(cnt) = Scale(_twiPicFrameYU(cnt))
 		twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
 	loop
+
+	gosub *DrawSupportWnd
 	
 return

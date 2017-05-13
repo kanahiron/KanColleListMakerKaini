@@ -58,6 +58,7 @@
 #enum WND_MAKE_STRING	//å≥12
 #enum WND_GRID_STRING
 #enum WND_HOME_PORT_MOD
+#enum WND_SUPPORT
 #enum WND_IMAGE_BUF
 #enum WND_IMAGE_BUF2
 #enum WND_TEMP1
@@ -143,6 +144,14 @@
 	buffer WND_MAKE_STRING, 1000, 340
 		SET_WND_INFO		
 		gosub *drawString
+
+
+	bgscr WND_SUPPORT, 850, 100, 2
+		SET_WND_INFO
+		GetWindowLong WND_INFO(WND_SUPPORT, WI_HANDLE),-20
+		SetWindowLong WND_INFO(WND_SUPPORT, WI_HANDLE),-20, stat | $80000
+		SetLayeredWindowAttributes WND_INFO(WND_SUPPORT, WI_HANDLE), 0x000000FF, 255, LWA_COLORKEY
+		gosub *DrawSupportWnd
 		
 	//âÊëúì«Ç›çûÇ›óp
 	buffer WND_IMAGE_BUF
@@ -191,7 +200,7 @@
 	if autoSearch {
 	} else {
 		if ((SSCap_temp(2)-SSCap_temp(0)) != 0) | ((SSCap_temp(3)-SSCap_temp(1)) != 0){
-			gsel WND_OVERLAY, 2
+			gsel WND_OVERLAY, 1
 			MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SSCap_temp(0), SSCap_temp(1), SSCap_temp(2)-SSCap_temp(0), SSCap_temp(3)-SSCap_temp(1), 1
 			await
 			gsel WND_MAIN

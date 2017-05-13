@@ -268,3 +268,34 @@ return
 		nidPop
 	}
 return
+
+
+
+*DrawSupportWnd
+
+	nidPush
+
+	gsel WND_SUPPORT
+
+	color 255, 0, 0: boxf
+
+	font "メイリオ", Scale(13) ,1
+	mes "キャプチャ　艦娘一覧　攻略編成　その他一覧"
+
+	tempx = 0, ginfo_mesx+Scale(20), ginfo_mesx+Scale(13), Scale(7)
+	tempy = 0, 0, ginfo_mesy+Scale(2), ginfo_mesy+Scale(2)
+
+	supportWndW = ginfo_mesx+Scale(20)
+	supportWndH = ginfo_mesy+Scale(2)
+	
+
+	color 16, 16, 16
+	gsquare -1, tempx, tempy
+	
+	color 210, 210, 210
+	pos Scale(9), Scale(1)
+	mes "キャプチャ　艦娘一覧　攻略編成　その他一覧"
+
+
+	nidPop
+	return
