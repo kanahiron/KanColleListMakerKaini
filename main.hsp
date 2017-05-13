@@ -26,6 +26,7 @@
 #define CELL_MAX_H	7
 #define HOTKEYID	7798
 #define timerID		101
+#define timer2ID	102
 #define klm2ver		2600
 
 #define ctype round(%1) int(strf("%%0.0f", %1))
@@ -115,7 +116,7 @@
 		oncmd gosub *OnDropFiles, WM_DROPFILES
 		oncmd gosub *setmode, WM_COMMAND
 		oncmd gosub *hotkey, WM_HOTKEY
-		oncmd gosub *ssCapture, WM_TIMER
+		oncmd gosub *L_WM_TIMER, WM_TIMER
 		oncmd gosub *vscroll, WM_VSCROLL
 		oncmd gosub *DPICHANGED, WM_DPICHANGED
 		oncmd gosub *mainWndMove, WM_LBUTTONDOWN
@@ -225,6 +226,9 @@
 	}
 	
 	gosub *VerCheck
+
+	SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 500, 0
+	
 	stop
 
 
@@ -257,6 +261,8 @@
 	if (seqCapF == TRUE){
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID
 	}
+
+	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID
 
 	if (hotkeySet == TRUE) {
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
