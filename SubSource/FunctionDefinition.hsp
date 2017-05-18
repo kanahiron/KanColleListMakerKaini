@@ -48,7 +48,8 @@
 #cfunc GetAncestor "GetAncestor" int, int
 #func  IsWindow "IsWindow" int
 #func  EnableWindow "EnableWindow" int, int
-#func  PrintWindow "PrintWindow" int, int, int 
+#func  PrintWindow "PrintWindow" int, int, int
+#func  SetWindowText "SetWindowTextW" int, wptr
 
 #uselib "kernel32.dll"
 #func  MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
@@ -160,3 +161,6 @@
 #const CR_Y 1
 #const CR_W 2
 #const CR_H 3
+
+#undef title
+#define title(%1, %2 = hwnd) SetWindowText %2, %1
