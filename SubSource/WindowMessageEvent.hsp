@@ -398,6 +398,7 @@ return
 		if (enableTweetWindow == TRUE){
 			gosub *twiInit
 		}
+		gosub *DrawSupportWnd
 	} else {
 		debugLog "    DPIŽ©“®Ý’è‚ªOFF‚Ìˆ×•ÏX–³‚µ"
 	}
@@ -445,42 +446,47 @@ return
 
 			/////////////
 			oncmd 0
+			nidPush
 
 			if availableCap{
 				if (sscapwh(0) >= 99) & (sscapwh(1) >= 59){
-					
-					nidPush
 
-					switch positionType
-					
-						case PT_ABSOLUTE
-							gsel WND_SUPPORT, 1+frontRow
-							MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), sscap(0)+sscapwh(0)-supportWndW,sscap(1)+sscapwh(1), supportWndW, supportWndH ,1
-							swbreak	
+					logmes "ginfo_act :"+ginfo_act
 
-						case PT_RELATIVE
-							
-							dim point, 2
-							point = ssCap(0), ssCap(1)
-							ClientToScreen hClient, varptr(point)
-			
-							gsel WND_SUPPORT, 1+frontRow
-							MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), point(0)+sscapwh(0)-supportWndW,point(1)+sscapwh(1), supportWndW, supportWndH ,1
-							swbreak	
-					swend
+					if (ginfo_act == -1 || ginfo_act == WND_SUPPORT){
 
-					nidPop
+						switch positionType
+						
+							case PT_ABSOLUTE
+								gsel WND_SUPPORT, 2
+								MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), sscap(0)+sscapwh(0)-supportWndW,sscap(1)+sscapwh(1), supportWndW, supportWndH ,1
+								swbreak	
+	
+							case PT_RELATIVE
+								
+								dim point, 2
+								point = ssCap(0), ssCap(1)
+								ClientToScreen hClient, varptr(point)
+				
+								gsel WND_SUPPORT, 2
+								MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), point(0)+sscapwh(0)-supportWndW,point(1)+sscapwh(1), supportWndW, supportWndH ,1
+								swbreak	
+						swend
+					}
 
+				} else {
+					gsel WND_SUPPORT, -1
 				}
+				
+			} else {
+				gsel WND_SUPPORT, -1
 			}
 
-			
+			nidPop
 			oncmd 1
 			/////////////
-
-
 			swbreak
 	swend
 
 
-return
+return 0

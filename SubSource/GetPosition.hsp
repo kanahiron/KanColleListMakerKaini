@@ -75,7 +75,6 @@
 					gsel WND_MAIN,0
 					
 					hClient = WindowFromPoint(mouPoint(0), mouPoint(1))
-					hClient1 = hClient
 			
 					GetClientRect hClient, varptr(rect)
 					winSizeX = rect(2)
@@ -83,10 +82,9 @@
 	
 					hChildClient = hClient
 					_hChildClient = 0
-	
-					logmes "====================="
-					logmes hClient
-						
+
+					//*
+
 					repeat
 						loopcnt = cnt
 						_hChildClient = hChildClient
@@ -95,9 +93,8 @@
 						if (hChildClient == 0) or (hChildClient == _hChildClient): break
 					loop
 	
-					logmes ""+_hChildClient+ "  :"+loopcnt
-	
 					hClient = _hChildClient
+					//*/
 
 					GetClientRect hClient, varptr(rect)
 					winSizeX = rect(2)
@@ -108,25 +105,30 @@
 						logmes "画面サイズは艦これの可能性あり"
 
 						buffer WND_TEMP1, winSizeX, winSizeY : SET_WND_INFO: mref vram, 66
-						PrintWindow hClient, hdc, 1
+						color: boxf
+						PrintWindow hClient, hdc, 1: redraw
 						captureMethod = CM_PRINTWINDOW
 
 						isfilled vram, winSizeX, winSizeY
 						if (stat == 1){
-							//PrintWindowに失敗
-							//過去に取得したウィンドウハンドルと同じならデバイスコンテキストの無駄な取得を避けるために飛ばす
-							//if (temp_hClient != hClient) {
-								logmes "デバイスコンテキストを取得"
-								temp_hClient = hClient
-								buffer WND_TEMP1, winSizeX, winSizeY : SET_WND_INFO
-								dcClient = GetDC(hClient)
-								BitBlt hdc, 0, 0, winSizeX, winSizeY, dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
-								ReleaseDC  dcClient
+							logmes "デバイスコンテキストを取得"
+							dcClient = GetDC(hClient)
+							BitBlt hdc, 0, 0, winSizeX, winSizeY, dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
+							ReleaseDC  dcClient
+							captureMethod = CM_BITBLT
 
-								captureMethod = CM_BITBLT
-
-							//} else {logmes "デバイスコンテキストの取得をスキップ"}
 						}
+						/*
+						switch captureMethod
+							case CM_BITBLT
+								title "BITBLT"
+								swbreak
+							case CM_PRINTWINDOW
+								title "PRINTWINDOW"
+								swbreak
+						swend
+						wait 100
+						//*/
 						gsel WND_MAIN, 0
 						
 						//スクリーン座標からクライアント座標へ
@@ -298,7 +300,7 @@ return
 		
 	}
 	
-	if mode = 0 {
+	if (mode = 0) {
 		if manualpos{
 			objenable ssCapBId, 1
 			objenable seqCapBId, 1

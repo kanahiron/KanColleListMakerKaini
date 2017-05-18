@@ -66,6 +66,10 @@
 #enum WND_TEMP2
 #enum WND_TEMP_SCR1
 
+#enum MODE_MAIN = 0
+#enum MODE_LIST 
+#enum MODE_OPTION
+
 #define FONT_SIZE_GRID_STRING 25
 #define FONT_SIZE_MANUAL_GETPOS_STRING 30
 #define FONT_SIZE_ALL 13
@@ -227,7 +231,7 @@
 	
 	gosub *VerCheck
 
-	SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 500, 0
+	SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 1000, 0
 	
 	stop
 
