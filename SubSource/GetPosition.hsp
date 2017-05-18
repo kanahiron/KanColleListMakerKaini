@@ -308,11 +308,9 @@ return
 	}
 	
 	if (hotkeyset == 1 & availablecap == 1) {
-		gsel WND_MAIN, 0
-		title "*"+SOFTNAME
+		title "*"+SOFTNAME, WND_INFO(WND_MAIN, WI_HANDLE)
 	} else {
-		gsel WND_MAIN, 0
-		title SOFTNAME
+		title SOFTNAME, WND_INFO(WND_MAIN, WI_HANDLE)
 	}
 
 	if autoSearch {
