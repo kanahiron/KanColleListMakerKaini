@@ -289,6 +289,24 @@ return
 return
 
 
+//ホットキー――――――――――――――――――――――――――――――――――
+*hotkey
+	nidPush
+	
+	if (wparam = HOTKEYID) & (availablecap = 1){
+
+		gosub *ssCapture
+		if ((mode != 0)&(mode != modeOptionNum)) {
+			if autoAddCapture{
+				addfilename = sssavedir +"\\"+ savename
+				gosub *addCapture
+			}
+		}
+	}
+	
+	nidPop
+return
+
 *seqcap
 	
 	if (seqcapf == FALSE){

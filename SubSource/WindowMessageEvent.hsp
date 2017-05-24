@@ -249,28 +249,6 @@ return
 	oncmd 1
 return
 
-//ホットキー――――――――――――――――――――――――――――――――――
-*hotkey
-	debugLog "ホットキー 開始"
-	nidPush
-	
-	if (wparam = HOTKEYID) & (availablecap = 1){
-
-		gosub *ssCapture
-		if ((mode != 0)&(mode != modeOptionNum)) {
-			if autoAddCapture{
-				addfilename = sssavedir +"\\"+ savename
-				gosub *addCapture
-			}
-		}
-	}
-	
-	nidPop
-	debugLog "ホットキー 終了"
-return
-
-
-
 //ドロップ処理――――――――――――――――――――――――――――――――――
 *OnDropFiles
 	debugLog "ドロップ処理 開始"
