@@ -1,53 +1,45 @@
 
-//
+//, 
 *CaptureOnMemory
 
-	debugLog "SSキャプチャ 開始"
-	
 	nidPush
 	gsel WND_MAIN
 
 	if (positionType == PT_RELATIVE){
 		if (IsWindow(hClient) == 0){
 
-			debugLog "    追跡先ウィンドウハンドルが消滅"
-
 			ssCap(0) = 0, 0, 0, 0
 			hClient = 0
 			ReleaseDC dcClient
-			if seqCapf : gosub *seqcap
+			if seqCapf: gosub *seqcap
 
 			gosub *ssSettingCheck
 			
 			logmessage = "艦これの画面を見失いました"
 			if mode != modeOptionNum{
-				objprm logid,logmessage
+				objprm logid, logmessage
 			}
 
 			nidPop
-			debugLog "SSキャプチャ 終了"
 			return
 		}
 
 		GetClientRect hClient, varptr(rect)
 		if (clientSize(0) != (rect(2)-rect(0))) | (clientSize(1) != (rect(3)-rect(1))){
 
-			debugLog "    追跡先ウィンドウのサイズが変わった"
-
 			ssCap(0) = 0, 0, 0, 0
 			hClient = 0
 			ReleaseDC dcClient
-			if seqCapf : gosub *seqcap
+			if seqCapf: gosub *seqcap
 			
 			gosub *ssSettingCheck
 			
 			logmessage = "艦これの画面を見失いました"
 			if mode != modeOptionNum{
-				objprm logid,logmessage
+				objprm logid, logmessage
 			}
 			
 			nidPop
-			debugLog "SSキャプチャ 終了"
 			return
 		}
 			
@@ -58,10 +50,10 @@
 	sscap(1) = luposy
 	sscap(2) = rdposx
 	sscap(3) = rdposy
-	sscapwh(0) = sscap(2)-sscap(0),sscap(3)-sscap(1)
+	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
 
 	if (positionType == PT_ABSOLUTE){
-		ssCapMes = strf("%d,%d",　sscap(0),　sscap(1))
+		ssCapMes = strf("%d, %d", 　sscap(0), 　sscap(1))
 	} else {
 		ssCapMes = "追跡中"
 	}
@@ -70,16 +62,14 @@
 		objprm sscapiid, ssCapMes
 	}
 	
-	if (sscapwh(0) < 50) | (sscapwh(1) < 30){
+	if ( (sscapwh(0) < 50) | (sscapwh(1) < 30) ){
 		if mode != modeOptionNum{
 
-			debugLog "    手動座標入力した範囲が小さすぎる"
-
-			if seqCapf : gosub *seqcap
+			if seqCapf: gosub *seqcap
 			
 			positionType = 0
 			logmessage = "取得範囲が小さすぎます"
-			objprm logid,logmessage
+			objprm logid, logmessage
 
 			ssCapMes = "取得する"
 			if (mode != modeOptionNum){
@@ -88,7 +78,6 @@
 			
 		}
 		nidPop
-		debugLog "SSキャプチャ 終了"
 		return
 	}
 		
@@ -100,10 +89,10 @@
 		case CM_BITBLT
 			switch positionType
 				case PT_RELATIVE
-					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), dcClient, sscap(0), sscap(1),SRCCOPY | CAPTUREBLT: redraw
+					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), dcClient, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
 					swbreak
 				case PT_ABSOLUTE
-					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, sscap(0), sscap(1),SRCCOPY | CAPTUREBLT: redraw
+					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
 					swbreak	
 			swend
 			swbreak
@@ -134,15 +123,15 @@ return
 	buffer WND_TEMP1, sscapwh(0), sscapwh(1)
 	gcopy WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1) 
 
-	if (hidename == TRUE & isHomeport(WND_TEMP1) == TRUE){
+	if (hidename && isHomeport(WND_TEMP1)){
 
-		if (namecut = TRUE) {
+		if (namecut){
 			buffer WND_TEMP1, sscapwh(0), int(0.9375*sscapwh(1)+0.5)
 			if (positionType == PT_RELATIVE) {
-				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), dcClient, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY | CAPTUREBLT:redraw
+				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), dcClient, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY | CAPTUREBLT: redraw
 			} else {
 				//PT_ABSOLUTE 絶対座標
-				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), hdcScreen, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY | CAPTUREBLT:redraw
+				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), hdcScreen, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY | CAPTUREBLT: redraw
 			}
 		} else {
 			//提督名とレベルを隠す処理
@@ -167,15 +156,13 @@ return
 
 	gsel WND_MAIN
 	
-	if mode != modeOptionNum{
+	if (mode != modeOptionNum){
 		if kmexist(savenamepath) <= 0{
-			debugLog "    SSの保存失敗"
 			logmessage = savename+"の保存に失敗しました"
 		} else {
-			debugLog "    SSの保存成功"
 			logmessage = savename+"を保存しました"
 			if dispcap & (mode = 0){
-				pos 0,dispcapy
+				pos 0, dispcapy
 				gzoom Scale(175), Scale(105), WND_TEMP1, 0, 0, sscapwh(0), sscapwh(1), 1
 			}
 			
@@ -190,35 +177,35 @@ return
 			}
 			
 		}
-		objprm logid,logmessage
+		objprm logid, logmessage
 	}
 
 	nidPop
-	debugLog "SSキャプチャ 終了"
 return
 
 
 *addCapture
 	
-	gsel WND_GRID,0
+	gsel WND_GRID, 0
 	
-	if (dropf = 1) & (dropwindowid = 1){
-		xcnt = mousex/cellsize(0,listmode) 
-		ycnt = mousey/cellsize(1,listmode)
+	if (dropf == 1) & (dropwindowid == 1){
+		xcnt = mousex/cellsize(0, listmode) 
+		ycnt = mousey/cellsize(1, listmode)
 		dmxy(0) = xcnt, ycnt
-		if bufIDPos(xcnt,ycnt,listmode) >= 100{
+		if bufIDPos(xcnt, ycnt, listmode) >= 100{
 			dmxy(0) = xcnt, ycnt
-			loadPicBufID(bufIDPos(xcnt, ycnt,listmode)-100) = 0
+			loadPicBufID(bufIDPos(xcnt, ycnt, listmode)-100) = 0
 		}
 	}
-	if (autoaddCapture = 1){
+	
+	if (autoaddCapture == 1){
 
 		repeat
-			if listmode = 0 {
+			if (listmode == 0){
 				ycnt = cnt\ListModeHNum
 				xcnt = cnt/ListModeHNum
 			} 
-			if listmode = 1{
+			if (listmode == 1){
 				if tuika1{
 					xcnt = (((cnt\(6*(cellnum(0)+1)/2))/6)*2)+(cnt\2)
 					ycnt = ((cnt/((cellnum(0)+1)*3))*3)+((cnt\6)/2)
@@ -236,13 +223,13 @@ return
 					ycnt = cnt\6
 				}
 			}
-			if listmode = 2 {
+			if (listmode == 2){
 				ycnt = cnt\(cellnum(1)+1)
 				xcnt = cnt/(cellnum(1)+1)
 			} 
-			xcnt = limit(xcnt,0,cellnum(0))
-			ycnt = limit(ycnt,0,cellnum(1))
-			if bufIDPos(xcnt,ycnt) = 0{
+			xcnt = limit(xcnt, 0, cellnum(0))
+			ycnt = limit(ycnt, 0, cellnum(1))
+			if (bufIDPos(xcnt, ycnt) == 0){
 				dmxy(0) = xcnt, ycnt
 				break
 			}
@@ -271,24 +258,24 @@ return
 		}
 	loop
 	
-	bufIDPos(dmxy(0),dmxy(1)) = bufid
-	ImgF_GetPicSize addfilename,picx,picy
+	bufIDPos(dmxy(0), dmxy(1)) = bufid
+	ImgF_GetPicSize addfilename, picx, picy
 
-	if (picx != 480) & (picy != 450){
-		buffer bufid,limit(picx,800,picx),limit(picy,480,picy)
-		ImgF_PicloadEx addfilename,1
-		gzoom 800,480,bufid,0,0,picx,picy,1
+	if ( (picx != 480) & (picy != 450) ){
+		buffer bufid, limit(picx, 800, picx), limit(picy, 480, picy)
+		ImgF_PicloadEx addfilename, 1
+		gzoom 800, 480, bufid, 0, 0, picx, picy, 1
 	} else {
-		if picy = 480{
-			buffer bufid,800,480
-			pos 0,0
-			ImgF_PicloadEx addfilename,1
+		if (picy == 480){
+			buffer bufid, 800, 480
+			pos 0, 0
+			ImgF_PicloadEx addfilename, 1
 
 		}
-		if picy = 450{
-			buffer bufid,800,480
-			pos 0,30
-			ImgF_PicloadEx addfilename,1
+		if (picy == 450){
+			buffer bufid, 800, 480
+			pos 0, 30
+			ImgF_PicloadEx addfilename, 1
 		}
 	}
 
@@ -296,8 +283,8 @@ return
 	gosub *draw
 	
 	gsel WND_MAIN
-	logmessage = strf("%sをセル(%d,%d)に読み込みました",getpath(addfilename,11),dmxy(0),dmxy(1))
-	objprm logid,logmessage
+	logmessage = strf("%sをセル(%d, %d)に読み込みました", getpath(addfilename, 11), dmxy(0), dmxy(1))
+	objprm logid, logmessage
 	
 	gsel WND_GRID
 
@@ -307,16 +294,14 @@ return
 
 
 *seqcap
-	debugLog "連続キャプチャ設定 開始"
 	
 	if (seqcapf == FALSE){
-		debugLog "    連続キャプチャを開始します"
 		
 		seqcapf = TRUE
 		
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID, 100*timersec, 0
 		seqcapmes = "停止"
-		objprm seqcapBId,seqcapmes
+		objprm seqcapBId, seqcapmes
 		
 		objenable comboxId, 0
 		objenable sscapBId, 0
@@ -326,10 +311,10 @@ return
 		objenable luposxIId, 0
 		objenable luposyIId, 0
 		objenable rdposxIId, 0
-		objenable rdposyIId , 0
+		objenable rdposyIId, 0
 	
 		chdir intervalShotDir
-		intervalsavedir =  strf("IntervalShot%04d%02d%02d-%02d%02d%02d",gettime(0),gettime(1),gettime(3),gettime(4),gettime(5),gettime(6))
+		intervalsavedir = strf("IntervalShot%04d%02d%02d-%02d%02d%02d", gettime(0), gettime(1), gettime(3), gettime(4), gettime(5), gettime(6))
 		if PathIsDirectory(intervalShotDir+"\\"+intervalsavedir) = 0 {
 			mkdir intervalsavedir
 		}
@@ -337,15 +322,14 @@ return
 		
 		gosub *ssCapture
 	} else {
-		debugLog "    連続キャプチャを停止します"
 		
 		seqcapf = FALSE
 		
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID
 		seqcapmes = "開始"
-		objprm seqcapBId,seqcapmes
+		objprm seqcapBId, seqcapmes
 
-		objenable comboxId,1
+		objenable comboxId, 1
 		objenable SSCapIId, 1
 
 		if availableCap | manualpos{
@@ -359,6 +343,4 @@ return
 		objenable rdposyIId, 1
 
 	}
-
-	debugLog "連続キャプチャ設定 終了"
 return
