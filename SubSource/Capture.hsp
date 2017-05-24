@@ -126,13 +126,9 @@ return
 	if (hidename && isHomeport(WND_TEMP1)){
 
 		if (namecut){
+			//バッファを初期化し直し上部をカット
 			buffer WND_TEMP1, sscapwh(0), int(0.9375*sscapwh(1)+0.5)
-			if (positionType == PT_RELATIVE) {
-				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), dcClient, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY | CAPTUREBLT: redraw
-			} else {
-				//PT_ABSOLUTE 絶対座標
-				BitBlt hdc, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5), hdcScreen, sscap(0), sscap(1)+(sscapwh(1)-int(0.9375*sscapwh(1)+0.5)), SRCCOPY | CAPTUREBLT: redraw
-			}
+			gcopy WND_CAPTURE, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5)
 		} else {
 			//提督名とレベルを隠す処理
 			pos 0.14125*sscapwh(0), 0
