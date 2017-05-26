@@ -29,6 +29,7 @@
 	GetIni "CaptureAndMaking", "HotkeyCapture", hotkeycap, "1"
 	GetIni "CaptureAndMaking", "HotkeyStr", hotkeystr, "\"A___Z\""
 	GetIni "CaptureAndMaking", "AutoAddCapture", autoaddCapture, "1"
+	GetIni "CaptureAndMaking", "AutoAddNonSave", autoaddnonsave, "1"
 	GetIni "CaptureAndMaking", "JpgSave", jpgsave, "0"
 	GetIni "CaptureAndMaking", "JpgQuality", jpgquality, "90"
 	GetIni "CaptureAndMaking", "DisableIntervalCap", disableseqcap, "1"
@@ -318,6 +319,7 @@ return
 	WriteIni "CaptureAndMaking", "HotkeyCapture", hotkeycap
 	WriteIni "CaptureAndMaking", "HotkeyStr", hotkeystr
 	WriteIni "CaptureAndMaking", "AutoAddCapture", autoaddCapture
+	WriteIni "CaptureAndMaking", "AutoAddNonSave", autoaddnonsave //Ver0.2.7
 	WriteIni "CaptureAndMaking", "JpgSave", jpgsave
 	WriteIni "CaptureAndMaking", "JpgQuality", jpgquality
 	WriteIni "CaptureAndMaking", "DisableIntervalCap", disableseqcap
@@ -327,7 +329,6 @@ return
 	WriteIni "CaptureAndMaking", "SaveNameFormation", saveNameFormation
 	WriteIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation
 	WriteIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink
-
 
 	sdim temp, 256
 	temp = encstr(userdata)

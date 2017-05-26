@@ -1,6 +1,6 @@
 
 //, 
-*CaptureOnMemory
+*SSCaptureOnMemory
 
 	nidPush
 	gsel WND_MAIN
@@ -118,7 +118,7 @@ return
 
 	nidPush
 	
-	gosub *CaptureOnMemory
+	gosub *SSCaptureOnMemory
 
 	buffer WND_TEMP1, sscapwh(0), sscapwh(1)
 	gcopy WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1) 
@@ -253,33 +253,49 @@ return
 			break
 		}
 	loop
-	
+
 	bufIDPos(dmxy(0), dmxy(1)) = bufid
-	ImgF_GetPicSize addfilename, picx, picy
-
-	if ( (picx != 480) & (picy != 450) ){
-		buffer bufid, limit(picx, 800, picx), limit(picy, 480, picy)
-		ImgF_PicloadEx addfilename, 1
-		gzoom 800, 480, bufid, 0, 0, picx, picy, 1
+			
+	if autoAddNonSave {
+		gosub *SSCaptureOnMemory
+		gsel WND_CAPTURE
+		picx = ginfo_winx
+		picy = ginfo_winy
+		buffer bufid, 800, 480
+		gzoom 800, 480,  WND_CAPTURE, 0, 0, picx, picy, 1
+		logmessage = strf("âÊëúÇÉZÉã(%d, %d)Ç…ì«Ç›çûÇ›Ç‹ÇµÇΩ", dmxy(0), dmxy(1))
+		
 	} else {
-		if (picy == 480){
-			buffer bufid, 800, 480
-			pos 0, 0
-			ImgF_PicloadEx addfilename, 1
-
+		
+		gosub *ssCapture
+		ImgF_GetPicSize saveNamePath, picx, picy
+	
+		if ( (picx != 480) & (picy != 450) ){
+			buffer bufid, limit(picx, 800, picx), limit(picy, 480, picy)
+			ImgF_PicloadEx saveNamePath, 1
+			gzoom 800, 480, bufid, 0, 0, picx, picy, 1
+		} else {
+			if (picy == 480){
+				buffer bufid, 800, 480
+				pos 0, 0
+				ImgF_PicloadEx saveNamePath, 1
+	
+			}
+			if (picy == 450){
+				buffer bufid, 800, 480
+				pos 0, 30
+				ImgF_PicloadEx saveNamePath, 1
+			}
 		}
-		if (picy == 450){
-			buffer bufid, 800, 480
-			pos 0, 30
-			ImgF_PicloadEx addfilename, 1
-		}
+		logmessage = strf("%sÇÉZÉã(%d, %d)Ç…ì«Ç›çûÇ›Ç‹ÇµÇΩ", getpath(addfilename, 11), dmxy(0), dmxy(1))
+		
 	}
+
 
 	gsel WND_GRID
 	gosub *draw
 	
 	gsel WND_MAIN
-	logmessage = strf("%sÇÉZÉã(%d, %d)Ç…ì«Ç›çûÇ›Ç‹ÇµÇΩ", getpath(addfilename, 11), dmxy(0), dmxy(1))
 	objprm logid, logmessage
 	
 	gsel WND_GRID
@@ -295,8 +311,14 @@ return
 	
 	if (wparam = HOTKEYID) & (availablecap = 1){
 
-		gosub *ssCapture
+		if (mode == 0){
+			gosub *ssCapture
+		}
+		
 		if ((mode != 0)&(mode != modeOptionNum)) {
+			if autoAddNonSave{
+				//gosub *
+			}
 			if autoAddCapture{
 				addfilename = sssavedir +"\\"+ savename
 				gosub *addCapture

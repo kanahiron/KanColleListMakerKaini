@@ -605,7 +605,7 @@
 			pos scale5, mesy
 			chkbox "–ˆê——ƒ‚[ƒh‚ÅSS‚ğ©“®’Ç‰Á‚·‚é", autoaddCapture: mesy += scale20
 			pos scale5, mesy
-			;chkbox "–©“®’Ç‰Á‚Ìê‡‚ÍSS‚ğ•Û‘¶‚µ‚È‚¢", autoaddnonsave: mesy += scale20
+			chkbox "–©“®’Ç‰Á‚Ìê‡‚ÍSS‚ğ•Û‘¶‚µ‚È‚¢", autoaddnonsave: mesy += scale20
 			pos scale5, mesy
 			chkbox "jpg‚Å•Û‘¶‚·‚é", jpgsave: mesy += scale20
 			
