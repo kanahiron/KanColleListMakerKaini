@@ -267,7 +267,7 @@ return
 		
 	} else {
 		
-		gosub *ssCapture
+		gosub *SSCapture
 		ImgF_GetPicSize saveNamePath, picx, picy
 	
 		if ( (picx != 480) & (picy != 450) ){
