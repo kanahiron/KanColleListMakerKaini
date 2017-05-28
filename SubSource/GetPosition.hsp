@@ -1,7 +1,6 @@
 
 //SSキャプチャセッティング――――――――――――――――――――――――――――――――――
 *sssetting
-	debugLog "座標取得 開始"
 	nidPush
 	
 	gsel WND_MAIN
@@ -18,21 +17,6 @@
 
 	if autoSearch {
 		//新座標検出===========================================
-		debugLog "    自動座標取得"
-
-
-/*
-		buffer WND_TEMP1, disinfo(2), disinfo(3)
-		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY: redraw
-		
-		getKanCollePosAuto WND_TEMP1, ssCap, WND_TEMP2
-		if (stat == TRUE){
-			ssCap
-
-
-
-		}
-*/
 
 		gsel WND_MAIN
 		logmessage = "艦これの画面にマウスカーソルを重ねてください。"
@@ -83,8 +67,6 @@
 					hChildClient = hClient
 					_hChildClient = 0
 
-					//*
-
 					repeat
 						loopcnt = cnt
 						_hChildClient = hChildClient
@@ -94,8 +76,7 @@
 					loop
 	
 					hClient = _hChildClient
-					//*/
-
+	
 					GetClientRect hClient, varptr(rect)
 					winSizeX = rect(2)
 					winSizeY = rect(3)
@@ -118,17 +99,7 @@
 							captureMethod = CM_BITBLT
 
 						}
-						/*
-						switch captureMethod
-							case CM_BITBLT
-								title "BITBLT"
-								swbreak
-							case CM_PRINTWINDOW
-								title "PRINTWINDOW"
-								swbreak
-						swend
-						wait 100
-						//*/
+
 						gsel WND_MAIN, 0
 						
 						//スクリーン座標からクライアント座標へ
@@ -185,7 +156,6 @@
 		
 	} else {
 		//手動手動=============================================
-		debugLog "    手動取得"
 		captureMethod = CM_BITBLT
 		
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
@@ -220,11 +190,9 @@
 	nidPop
 	
 	gosub *SSSettingCheck
-	debugLog "座標取得 終了"
 return
 
 *SSSettingCheck
-	debugLog "取得座標の正当性確認 開始"
 	nidPush
 	
 	luposx = sscap(0)
@@ -246,8 +214,6 @@ return
 	objenable sscapiid, 1
 	
 	if ( (autosearch=1) & (sscapwh(0) != 0) ) | ( (othergame=1) & (autosearch=0) & (sscapwh(0) >= 99) & (sscapwh(1) >= 59) ){
-
-		debugLog "    座標OK"
 
 		if (autoSearch == FALSE):positionType = PT_ABSOLUTE
 		
@@ -272,8 +238,6 @@ return
 		if autoSearch: autoSearchFailureCount = 0
 		
 	} else {
-
-		debugLog "    座標NG"
 		
 		sscapmes = "取得する"
 		objprm sscapiid, sscapmes
@@ -323,5 +287,4 @@ return
 	}
 	
 	nidPop
-	debugLog "取得座標の正当性確認 終了"
 return
