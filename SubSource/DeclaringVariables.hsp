@@ -107,6 +107,7 @@
 	intervalShotDir = ""
 	
 	picHistoryNum = 0
+	picHistoryCount = 0
 	mainWindowSmall = 0
 	
 	windowsSizeChangeBMes = "↑", "↓"
@@ -123,7 +124,6 @@
 	tCupInit "KanColleListMakerKaini", CONSUMER_KEY, CONSUMER_SECRET, 7
 	hdcScreen = CreateDC("DISPLAY", NULL, NULL, NULL)
 
-
 	dim scrSize, 2
 	dim scrSizeMin, 2
 	dim scrSizeBase, 2
@@ -137,7 +137,6 @@
 
 	//ListModeHNum 艦娘一覧モードでの縦幅の指定
 	ListModeHNum = 5
-	
 
 	debugLog "*DeclaringVariables 終了"
 return
@@ -253,6 +252,5 @@ return
 	}
 	
 	cellsize(0) = scrSize(0)/(cellnum(0)+1), scrSize(1)/(cellnum(1)+1)
-
 
 return

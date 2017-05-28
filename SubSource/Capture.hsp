@@ -163,8 +163,12 @@ return
 			}
 			
 			if (seqcapf = 0) {
-				i = 99
-				repeat 99
+					
+				picHistoryCount++
+				if picHistoryCount > 100: picHistoryCount = 100
+				
+				i = picHistoryNum
+				repeat picHistoryNum
 					PicHistory(i) = PicHistory(i-1)
 					i--
 				loop
