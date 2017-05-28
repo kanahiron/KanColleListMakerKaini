@@ -30,7 +30,7 @@
 #define klm2ver		2600
 
 #define ctype round(%1) int(strf("%%0.0f", %1))
-#define SOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.2.6"
+#define SOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.2.7(‰¼)"
 
 #define PT_ABSOLUTE 1
 #define PT_RELATIVE 2

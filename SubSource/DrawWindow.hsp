@@ -132,13 +132,14 @@
 		windowsSizeChangeBId  = stat
 		mesy += Scale(30)
 
-		
+		/*
 		pos Scale(2), mesy + scale3
 		mes "セミオート作成"
 		objsize Scale(70), Scale(30)
 		pos Scale(105), mesy
 		button gosub "開始", *StartCreateSemiAuto: mesy += Scale(30)
 		createSemiAutoBId  = stat
+		//*/
 
 		pos Scale(2+(disableseqcap*-175)), mesy + scale3
 		mes "連続キャプチャ"
