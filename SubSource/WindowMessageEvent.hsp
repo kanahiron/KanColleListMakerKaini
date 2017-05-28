@@ -257,11 +257,11 @@ return
 		return
 	}
 	
-	if (ginfo(24) = 0) | (ginfo(24) = 1){
+	if ((ginfo(24) = 0) | (ginfo(24) = 1)){
 
 		debugLog "    メインかグリッドウィンドウにドロップされた"
 		nidPush
-		dropwindowid = ginfo(24)
+		dropWindowId = ginfo(24)
 		hdrop = wParam
 		sdim dropfile,1024
 		DragQueryFile hdrop, 0, varptr(dropfile), 260
@@ -275,9 +275,13 @@ return
 			nidPop
 			return
 		}
-	
+
+		dropFlag = TRUE
 		addfilename = dropfile
 		gosub *addCapture
+
+		addfilename = ""
+		dropFlag = FALSE
 		nidPop
 	}
 	

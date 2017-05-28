@@ -181,20 +181,19 @@ return
 
 
 *addCapture
-	
+
 	gsel WND_GRID, 0
-	
-	if (dropf == 1) & (dropwindowid == 1){
-		xcnt = mousex/cellsize(0, listmode) 
-		ycnt = mousey/cellsize(1, listmode)
+
+	if ( dropFlag & (dropWindowId == 1) ){
+		xcnt = dragPoint(0)/cellsize(0) 
+		ycnt = dragPoint(1)/cellsize(1)
 		dmxy(0) = xcnt, ycnt
-		if bufIDPos(xcnt, ycnt, listmode) >= 100{
+		if bufIDPos(xcnt, ycnt) >= 100{
 			dmxy(0) = xcnt, ycnt
-			loadPicBufID(bufIDPos(xcnt, ycnt, listmode)-100) = 0
+			loadPicBufID(bufIDPos(xcnt, ycnt)-100) = 0
 		}
-	}
-	
-	if (autoaddCapture == 1){
+		
+	} else: if ( hotKeyFlag && autoAddCapture){
 
 		repeat
 			if (listmode == 0){
@@ -253,11 +252,11 @@ return
 			break
 		}
 	loop
-
+	
 	bufIDPos(dmxy(0), dmxy(1)) = bufid
 			
-	if autoAddNonSave {
-		gosub *SSCaptureOnMemory
+	if (hotKeyFlag && autoAddNonSave) {
+
 		gsel WND_CAPTURE
 		picx = ginfo_winx
 		picy = ginfo_winy
@@ -267,24 +266,22 @@ return
 		
 	} else {
 		
-		gosub *SSCapture
-		ImgF_GetPicSize saveNamePath, picx, picy
+		ImgF_GetPicSize addFileName, picx, picy
 	
 		if ( (picx != 480) & (picy != 450) ){
 			buffer bufid, limit(picx, 800, picx), limit(picy, 480, picy)
-			ImgF_PicloadEx saveNamePath, 1
+			ImgF_PicloadEx addFileName, 1
 			gzoom 800, 480, bufid, 0, 0, picx, picy, 1
 		} else {
 			if (picy == 480){
 				buffer bufid, 800, 480
 				pos 0, 0
-				ImgF_PicloadEx saveNamePath, 1
-	
+				ImgF_PicloadEx addFileName, 1
 			}
 			if (picy == 450){
 				buffer bufid, 800, 480
 				pos 0, 30
-				ImgF_PicloadEx saveNamePath, 1
+				ImgF_PicloadEx addFileName, 1
 			}
 		}
 		logmessage = strf("%sをセル(%d, %d)に読み込みました", getpath(addfilename, 11), dmxy(0), dmxy(1))
@@ -300,8 +297,6 @@ return
 	
 	gsel WND_GRID
 
-	addfilename = ""
-	hotkeyaddf = 0
 return
 
 
@@ -311,19 +306,30 @@ return
 	
 	if (wparam = HOTKEYID) & (availablecap = 1){
 
+		hotKeyFlag = TRUE
+
+		//通常のホットキーによるキャプチャ
 		if (mode == 0){
 			gosub *ssCapture
 		}
-		
-		if ((mode != 0)&(mode != modeOptionNum)) {
+
+		//一覧作成モードの自動追加ありのキャプチャ
+		if ( (mode != 0) && (mode != modeOptionNum) && autoAddCapture ) {
 			if autoAddNonSave{
-				//gosub *
+				//保存なしの場合
+				gosub *SSCaptureOnMemory
+			} else {
+				//保存ありの場合
+				gosub *SSCapture
+				addFileName = saveNamePath
 			}
-			if autoAddCapture{
-				addfilename = sssavedir +"\\"+ savename
-				gosub *addCapture
-			}
+			//追加
+			gosub *addCapture
+
 		}
+
+		hotKeyFlag = FALSE
+		addfilename = ""
 	}
 	
 	nidPop
