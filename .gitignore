@@ -6,6 +6,7 @@ packfile
 *.exe
 *.ini
 ScreenShots/
+ScreenShots2/
 SubSource/key.hsp
 *.zip
 SubSource/GridWindowOperation_old.hsp
