@@ -111,8 +111,7 @@
 	
 return
 
-
-
+/*
 *ListRelocation
 
 	if (ginfo(24) != WND_GRID) :return
@@ -164,9 +163,7 @@ return
 	oncmd 1
 
 return
-
-
-
+*/
 
 //描画――――――――――――――――――――――――――――――――――
 *draw
@@ -199,7 +196,7 @@ return
 		loop
 	loop
 
-	If (listMode == 0){
+	If (listMode == LISTMODE_LIST){
 
 		color 32, 32, 192
 		boxf -1, cellsize(1)*listModeHNum-2, maxScrSize(0)+1, cellsize(1)*listModeHNum
@@ -207,7 +204,7 @@ return
 
 	}
 	
-	if (mode = 2) & fleetPunctuation{
+	if (listMode == LISTMODE_FLEET && fleetPunctuation){
 		color 32, 32, 192
 		if tuika1 {
 			boxf 2*cellsize(0)-1, -1, 2*cellsize(0)+1, maxScrSize(1)+1
@@ -245,7 +242,6 @@ return
 
 
 *ChangeListModeHNum
-
 
 	//配列を複製
 	dim temp_bufIDPos, CELL_MAX_W, CELL_MAX_H

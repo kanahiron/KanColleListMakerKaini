@@ -13,21 +13,38 @@
 		}
 
 		sendmsg hCombox, $147
-		mode = stat
+		mode_ = stat
 		optionMode = 0
 		optionModePrev = 0
 
-		if (mode != modePrev){
-		
-			if (mode == 1): listmode = 0
-			if (mode == 2): listmode = 1
-			if (mode == 3): listmode = 2
+		switch mode_
+			case 0
+				mode = MODE_MAIN
+				swbreak
+			case 1
+				listmode = LISTMODE_LIST
+				mode = MODE_LIST
+				swbreak
+			case 2
+				listmode = LISTMODE_FLEET
+				mode = MODE_LIST
+				swbreak
+			case 3
+				listmode = LISTMODE_OTHER
+				mode = MODE_LIST
+				swbreak
+			case 4
+				mode = MODE_OPTION
+				swbreak
+		swend
 
+		//if (mode != modePrev){
 			gosub *CalcCapPosAndWinSize
-			gosub *drawMainWindow
+			gosub *DrawMainWindow
 			
-		}
+		//}
 		modePrev = mode
+		
 		
 	}
 
@@ -48,7 +65,7 @@
 	}
 
 	//モードがオプションモードでないとき
-	if (mode != modeOptionNum){
+	if (mode != MODE_OPTION){
 		
 		//ツイートウィンドウ表示のチェックボックスが押された時
 		if (lparam == enabletweetwindowch){

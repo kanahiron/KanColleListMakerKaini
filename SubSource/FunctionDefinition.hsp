@@ -162,5 +162,19 @@
 #const CR_W 2
 #const CR_H 3
 
+#const MODE_MAIN	0
+#const MODE_LIST	1
+#const MODE_OPTION	2
+#const LISTMODE_LIST		0
+#const LISTMODE_FLEET		1
+#const LISTMODE_OTHER		2
+
+#const LISTMODEOTHER_DIRECT		0
+#const LISTMODEOTHER_AIRBASE	1
+#const LISTMODEOTHER_ITEM		2
+
+
+
+
 #undef title
 #define title(%1, %2 = hwnd) SetWindowText %2, %1

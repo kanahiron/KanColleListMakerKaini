@@ -7,7 +7,7 @@
 	objenable comboxid,0
 	objenable sscapiid,0
 	
-	if mode = 0{
+	if (mode == MODE_MAIN){
 		objenable sscapbid,0
 		objenable seqcapbid,0
 		if (yabumiautoupload = 1) & (availableyabumi = 1){
@@ -202,7 +202,7 @@ return
 	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
 
 	gsel WND_MAIN
-	if (mode == 0){
+	if (mode == MODE_MAIN){
 		objprm luposxiid, luposx
 		objprm luposyiid, luposy
 		objprm rdposxiid, rdposx
@@ -224,7 +224,7 @@ return
 		}
 		objprm sscapiid,sscapmes
 		
-		if mode = 0{
+		if (mode == MODE_MAIN){
 			objenable sscapbid,1
 			objenable seqcapbid,1
 			objenable yabumibid,1
@@ -242,7 +242,7 @@ return
 		sscapmes = "Žæ“¾‚·‚é"
 		objprm sscapiid, sscapmes
 		
-		if mode = 0{
+		if (mode == MODE_MAIN){
 			objenable sscapbid,0
 			objenable seqcapbid,0
 			objenable yabumibid,0
@@ -264,7 +264,7 @@ return
 		
 	}
 	
-	if (mode = 0) {
+	if (mode == MODE_MAIN){
 		if manualpos{
 			objenable ssCapBId, 1
 			objenable seqCapBId, 1
@@ -277,7 +277,7 @@ return
 		title SOFTNAME, WND_INFO(WND_MAIN, WI_HANDLE)
 	}
 
-	if autoSearch {
+	if (autoSearch) {
 		if autoSearchFailureCount = 4{
 			autoSearchFailureCount = 0
 			autoSearch = 0

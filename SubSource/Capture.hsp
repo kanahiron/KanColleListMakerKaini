@@ -58,7 +58,7 @@
 		ssCapMes = "í«ê’íÜ"
 	}
 	
-	if (mode != modeOptionNum){
+	if (mode != MODE_OPTION){
 		objprm sscapiid, ssCapMes
 	}
 	
@@ -152,7 +152,7 @@ return
 
 	gsel WND_MAIN
 	
-	if (mode != modeOptionNum){
+	if (mode != MODE_OPTION){
 		if kmexist(savenamepath) <= 0{
 			logmessage = savename+"ÇÃï€ë∂Ç…é∏îsÇµÇ‹ÇµÇΩ"
 		} else {
@@ -162,7 +162,7 @@ return
 				gzoom Scale(175), Scale(105), WND_TEMP1, 0, 0, sscapwh(0), sscapwh(1), 1
 			}
 			
-			if (seqcapf = 0) {
+			if (seqcapf^1) {
 					
 				picHistoryCount++
 				if picHistoryCount > 100: picHistoryCount = 100
@@ -200,11 +200,11 @@ return
 	} else: if ( hotKeyFlag && autoAddCapture){
 
 		repeat
-			if (listmode == 0){
+			if (listmode == LISTMODE_LIST){
 				ycnt = cnt\ListModeHNum
 				xcnt = cnt/ListModeHNum
 			} 
-			if (listmode == 1){
+			if (listmode == LISTMODE_FLEET){
 				if tuika1{
 					xcnt = (((cnt\(6*(cellnum(0)+1)/2))/6)*2)+(cnt\2)
 					ycnt = ((cnt/((cellnum(0)+1)*3))*3)+((cnt\6)/2)
@@ -222,7 +222,7 @@ return
 					ycnt = cnt\6
 				}
 			}
-			if (listmode == 2){
+			if (listmode == LISTMODE_FLEET){
 				ycnt = cnt\(cellnum(1)+1)
 				xcnt = cnt/(cellnum(1)+1)
 			} 

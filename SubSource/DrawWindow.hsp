@@ -2,10 +2,10 @@
 *drawMainWindow
 
 
-	if (mode == 0) | (mode == modeOptionNum ){
-		gsel WND_GRID, -1
-	} else {
+	if (mode == MODE_LIST){
 		gsel WND_GRID, 1
+	} else {
+		gsel WND_GRID, -1
 	}
 
 	gsel WND_MAIN, 1+frontrow
@@ -13,7 +13,7 @@
 	syscolor 15: boxf: syscolor 8
 
 
-	if ( (mode == modeOptionNum) & (modePrev == modeOptionNum) ){
+	if ( (mode == MODE_OPTION) & (modePrev == modeOptionNum) ){
 		clrobj 2, -1
 	} else {
 	
@@ -39,7 +39,7 @@
 
 	mesy = rect(3) + scale3
 
-	if (mode == 0){
+	if (mode == MODE_MAIN){
 		//SSキャプチャモード//SSキャプチャモード//SSキャプチャモード//SSキャプチャモード
 		
 		pos Scale(2), mesy
@@ -191,7 +191,7 @@
 		//SSキャプチャモード　ここまで//SSキャプチャモード　ここまで//SSキャプチャモード　ここまで
 	}
 
-	if (mode != 0) & (mode != modeOptionNum){
+	if (mode == MODE_LIST){
 		//一覧作成モード//一覧作成モード//一覧作成モード//一覧作成モード//一覧作成モード
 
 		pos 2, mesy
@@ -205,7 +205,7 @@
 		
 		objsize Scale(175), scale20
 		
-		if (listmode == 0){
+		if (listmode == LISTMODE_LIST){
 	
 			DAControlInit
 		
@@ -274,7 +274,7 @@
 			}
 		}
 		
-		if (listmode == 1){
+		if (listmode == LISTMODE_FLEET){
 	
 			DAControlInit
 		
@@ -407,7 +407,7 @@
 	
 		}
 	
-		if (listmode == 2){
+		if (listmode == LISTMODE_OTHER){
 	
 			DAControlInit
 		
@@ -492,7 +492,7 @@
 	}
 
 
-	if (mode == modeOptionNum){
+	if (mode == MODE_OPTION){
 		//オプション//オプション//オプション//オプション//オプション
 		mesy = ComBoxH+3
 		syscolor 15: boxf: syscolor 8
