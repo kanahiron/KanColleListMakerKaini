@@ -164,7 +164,7 @@
 		createSemiAutoBId  = stat
 		//*/
 
-		pos Scale(2+(disableseqcap*-175)), mesy + scale3
+		pos Scale(3+(disableseqcap*-175)), mesy + scale3
 		mes "連続キャプチャ"
 		objsize Scale(70), Scale(25)
 		pos Scale(105+(disableseqcap*175)), mesy
