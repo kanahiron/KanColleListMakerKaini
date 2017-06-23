@@ -220,7 +220,7 @@ return
 					ycnt = cnt\6
 				}
 			}
-			if (listmode == LISTMODE_FLEET){
+			if (listmode == LISTMODE_OTHER){
 				ycnt = cnt\(cellnum(1)+1)
 				xcnt = cnt/(cellnum(1)+1)
 			} 

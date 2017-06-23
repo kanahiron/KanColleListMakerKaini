@@ -145,7 +145,7 @@ return
 
 *CalcCapPosAndWinSize
 
-	if (listMode == 0){
+	if (listMode == LISTMODE_LIST){
 
 		cellnum(0) = 6, 4
 
@@ -170,7 +170,7 @@ return
 	}
 	
 	
-	if (listMode == 1){
+	if (listMode == LISTMODE_FLEET){
 
 		cellnum(0) = 5, 5
 	
@@ -191,9 +191,9 @@ return
 
 	}
 
-	if (listMode == 2){
+	if (listMode == LISTMODE_OTHER){
 
-		if directLink{
+		if directLink {
 			cellnum(0) = 6, 4
 			w = 800
 			h = 480
