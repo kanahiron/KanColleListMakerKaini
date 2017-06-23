@@ -13,7 +13,7 @@
 	syscolor 15: boxf: syscolor 8
 
 
-	if ( (mode == MODE_OPTION) & (modePrev == modeOptionNum) ){
+	if ( (mode == MODE_OPTION) & (modePrev == MODE_OPTION) ){
 		clrobj 2, -1
 	} else {
 	
@@ -30,7 +30,7 @@
 		await: GetClientRect hComBox, varptr(rect)
 		ComBoxH = rect(3)
 	
-		if (mode == modeOptionNum){
+		if (mode == MODE_OPTION){
 			pos Scale(175), 0
 			combox optionMode, Scale(100), " 環境設定\n キャプチャ・作成設定\n Twitter設定\n その他設定"
 			hOptionComBox = objinfo(stat, 2)
@@ -39,7 +39,7 @@
 
 	mesy = rect(3) + scale3
 
-	if (mode == MODE_MAIN){
+	if (mode == MODE_SSCAP){
 		//SSキャプチャモード//SSキャプチャモード//SSキャプチャモード//SSキャプチャモード
 		
 		pos Scale(2), mesy

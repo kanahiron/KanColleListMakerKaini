@@ -162,7 +162,7 @@
 #const CR_W 2
 #const CR_H 3
 
-#const MODE_MAIN	0
+#const MODE_SSCAP	0
 #const MODE_LIST	1
 #const MODE_OPTION	2
 #const LISTMODE_LIST		0

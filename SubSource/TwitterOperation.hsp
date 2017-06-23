@@ -404,7 +404,7 @@ return
 		gsel WND_MAIN
 		objenable comboxid, 0
 
-		if (mode == 0){
+		if (mode == MODE_SSCAP){
 			objenable SSCapBId, 0
 			objenable windowsSizeChangeBId, 0
 			objenable SSCapIId, 0
@@ -414,13 +414,15 @@ return
 			objenable luposyIId, 0
 			objenable rdposxIId, 0
 			objenable rdposyIId, 0
-		} else : if( mode != modeOptionNum){
+		} else : if( mode != MODE_OPTION){
 			objenable makeBId, 0
 		}
 
-		if (mode != modeOptionNum): objenable enableTweetWindowCId, 0	//ツイートウィンドウ表示切り替え
-		if (mode != modeOptionNum): objenable SSCapIId, 0				//座標取得ボタン
-		if (mode != modeOptionNum): objenable yabumiBId, 0				//yabumiアップロードボタン
+		if (mode != MODE_OPTION){
+			objenable enableTweetWindowCId, 0	//ツイートウィンドウ表示切り替え
+			objenable SSCapIId, 0				//座標取得ボタン
+			objenable yabumiBId, 0				//yabumiアップロードボタン4
+		}
 
 		
 		gsel WND_TWITTER
@@ -551,7 +553,7 @@ return
 
 		objenable comboxid, 1
 
-		if (mode == 0){
+		if (mode == _MODE_SSCAP){
 			if availableCap | manualpos{
 				objenable SSCapBId, 1
 				objenable seqCapBId, 1
@@ -562,16 +564,16 @@ return
 			objenable luposyIId, 1
 			objenable rdposxIId, 1
 			objenable rdposyIId, 1
-		} else : if( mode != modeOptionNum){
+		} else : if( mode != MODE_OPTION){
 			objenable makeBId, 1
 		}
 
-		if (mode != modeOptionNum): objenable enableTweetWindowCId, 1	//ツイートウィンドウ表示切り替え
-		if (mode != modeOptionNum): objenable SSCapIId, 1				//座標取得ボタン
-		if (mode != modeOptionNum) & availableCap: objenable yabumiBId, 1			
+		if (mode != MODE_OPTION): objenable enableTweetWindowCId, 1	//ツイートウィンドウ表示切り替え
+		if (mode != MODE_OPTION): objenable SSCapIId, 1				//座標取得ボタン
+		if (mode != MODE_OPTION) & availableCap: objenable yabumiBId, 1			
 
 
-		if (mode != modeOptionNum): objprm logid, logmessage
+		if (mode != MODE_OPTION): objprm logid, logmessage
 		
 		nidpop
 		debugLog "ツイート 終了"

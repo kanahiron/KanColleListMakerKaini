@@ -87,11 +87,10 @@ return
 
 *yabumiupload
 	
-	if mode = 0 {	
+	if (mode == MODE_SSCAP) {	
 		gosub *ssCapture
 		exec yabumidir+" \""+(sssavedir +"\\"+ savename)+"\""
-	}
-	if mode != 0{
+	} else {
 		gosub *make
 		if savename != ""{
 			exec yabumidir+" \""+(listsavedir +"\\"+ savename)+"\""

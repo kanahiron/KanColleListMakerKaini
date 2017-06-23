@@ -253,7 +253,7 @@ return
 return
 
 *drawColor
-	if (mode = 2){
+	if (mode = MODE_LIST && listMode == LISTMODE_FLEET){
 		nidPush
 		gosub *drawString
 		gsel WND_MAIN

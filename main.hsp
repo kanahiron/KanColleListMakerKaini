@@ -238,7 +238,7 @@
 *exit
 	
 	if (wparam == WND_GRID){
-		mode = 0
+		mode = MODE_SSCAP
 		gosub *drawMainWindow
 		objprm comboxid,0
 		return
@@ -248,7 +248,7 @@
 		gsel WND_TWITTER, -1
 		enableTweetWindow = FALSE
 		gsel WND_MAIN
-		if mode != modeOptionNum{
+		if (mode != MODE_OPTION){
 			objprm enabletweetwindowcid, 0
 		} 
 		return

@@ -277,7 +277,7 @@ return responseBody
 
 		oncmd 0
 
-		if (mode == 0){
+		if (mode == MODE_SSCAP){
 			logmessage = "バージョンチェック中です。"
 			objprm logId, logMessage:await 
 		}
@@ -314,7 +314,7 @@ return responseBody
 		}
 		VerCheckWash
 
-		if (mode == 0){
+		if (mode == MODE_SSCAP){
 			logmessage = "バージョンチェックが完了しました。"
 			objprm logId, logMessage
 		}

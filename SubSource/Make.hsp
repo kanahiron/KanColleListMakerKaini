@@ -34,7 +34,7 @@
 		loop
 	loop
 		
-	if listmode = 1{
+	if (listmode == LISTMODE_FLEET){
 		if tuika1 {
 			if sosuka | soka{
 				gsel WND_TEMP1
@@ -240,7 +240,7 @@
 		}
 	}
 	
-	if senden & (listmode=1) & (sosuka|soka){
+	if senden & (listmode==LISTMODE_FLEET) & (sosuka|soka){
 		gsel WND_TEMP2
 		gmode 7
 		pos ginfo_winx-237, ginfo_winy-18//225
@@ -252,9 +252,9 @@
 
 		sdim tempstr
 		
-		if listmode = 0: tempstr = DateAndTimeFormat2(saveNameList)
-		if listmode = 1: tempstr = DateAndTimeFormat2(saveNameFormation)
-		if listmode = 2{
+		if listmode = LISTMODE_LIST : tempstr = DateAndTimeFormat2(saveNameList)
+		if listmode = LISTMODE_FLEET: tempstr = DateAndTimeFormat2(saveNameFormation)
+		if listmode = LISTMODE_OTHER{
 			if directLink{
 				tempstr = DateAndTimeFormat2(saveNamedirectLink)
 			} else {

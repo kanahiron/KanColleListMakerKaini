@@ -16,7 +16,7 @@
 			gosub *ssSettingCheck
 			
 			logmessage = "艦これの画面を見失いました"
-			if mode != modeOptionNum{
+			if (mode != MODE_OPTION){
 				objprm logid, logmessage
 			}
 
@@ -35,7 +35,7 @@
 			gosub *ssSettingCheck
 			
 			logmessage = "艦これの画面を見失いました"
-			if mode != modeOptionNum{
+			if (mode != MODE_OPTION){
 				objprm logid, logmessage
 			}
 			
@@ -63,7 +63,7 @@
 	}
 	
 	if ( (sscapwh(0) < 50) | (sscapwh(1) < 30) ){
-		if mode != modeOptionNum{
+		if (mode != MODE_OPTION){
 
 			if seqCapf: gosub *seqcap
 			
@@ -72,9 +72,7 @@
 			objprm logid, logmessage
 
 			ssCapMes = "取得する"
-			if (mode != modeOptionNum){
-				objprm sscapiid, ssCapMes
-			}
+			objprm sscapiid, ssCapMes
 			
 		}
 		nidPop
@@ -157,7 +155,7 @@ return
 			logmessage = savename+"の保存に失敗しました"
 		} else {
 			logmessage = savename+"を保存しました"
-			if dispcap & (mode = 0){
+			if dispcap & (mode == MODE_SSCAP){
 				pos 0, dispcapy
 				gzoom Scale(175), Scale(105), WND_TEMP1, 0, 0, sscapwh(0), sscapwh(1), 1
 			}
@@ -313,12 +311,12 @@ return
 		hotKeyFlag = TRUE
 
 		//通常のホットキーによるキャプチャ
-		if (mode == 0){
+		if (mode == MODE_SSCAP){
 			gosub *ssCapture
 		}
 
 		//一覧作成モードの自動追加ありのキャプチャ
-		if ( (mode != 0) && (mode != modeOptionNum) && autoAddCapture ) {
+		if ( (mode != MODE_SSCAP) && (mode != MODE_OPTION) && autoAddCapture ) {
 			if autoAddNonSave{
 				//保存なしの場合
 				gosub *SSCaptureOnMemory
