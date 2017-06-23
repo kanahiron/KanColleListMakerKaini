@@ -24,58 +24,6 @@
 #packopt name "äÕÇ±ÇÍàÍóóÇﬂÇ¢Ç©Å[â¸ìÒ"
 #packopt hide 1
 
-#define CELL_MAX_W	8
-#define CELL_MAX_H	7
-#define HOTKEYID	7798
-#define timerID		101
-#define timer2ID	102
-#define klm2ver		2700
-
-#define ctype round(%1) int(strf("%%0.0f", %1))
-#define SOFTNAME "äÕÇ±ÇÍàÍóóÇﬂÇ¢Ç©Å[â¸ìÒ Ver0.2.7(âº)"
-
-#define PT_ABSOLUTE 1
-#define PT_RELATIVE 2
-
-#define WI_HANDLE	0
-#define WI_DC		1
-
-#define nidStackInit dim nidStack, 100: nidIndex = 0
-#define nidPush nidindex++:nidstack(nidindex) = ginfo(3)
-#define nidPop gsel nidstack(nidindex), 0:nidindex--
-
-#define wndInfoInit dim wndInfoArr, 100, 2
-#define SET_WND_INFO wndInfoArr(ginfo(3), WI_HANDLE) = hwnd: wndInfoArr(ginfo(3), WI_DC) = hdc
-#define ctype WND_INFO(%1, %2) wndInfoArr(%1, %2)
-
-#define ctype RGBtoBGR(%1) (((%1<<16)&0xFF0000) | ((%1>>16)&0xFF) | (%1&0xFF00))
-
-//DynamicActionControl 
-#define DAControlInit dim DAControlArr, 20: DAControlIndex = 0
-#define SetDAControl(%1) DAControlArr(DAControlIndex) = (%1): DAControlIndex++
-
-#enum WND_MAIN = 0
-#enum WND_GRID
-#enum WND_TWITTER		//å≥19
-#enum WND_OVERLAY		//å≥19
-#enum WND_MAKE_STRING	//å≥12
-#enum WND_GRID_STRING
-#enum WND_HOME_PORT_MOD
-#enum WND_SUPPORT
-#enum WND_CAPTURE
-#enum WND_IMAGE_BUF
-#enum WND_IMAGE_BUF2
-#enum WND_TEMP1
-#enum WND_TEMP2
-#enum WND_TEMP_SCR1
-
-
-#define FONT_SIZE_GRID_STRING 25
-#define FONT_SIZE_MANUAL_GETPOS_STRING 30
-#define FONT_SIZE_ALL 13
-
-#define ctype Scale(%1) int(UIScale*(%1)+0.5)
-
 
 #ifdef _debug
 
