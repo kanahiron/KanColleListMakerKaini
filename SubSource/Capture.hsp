@@ -6,6 +6,7 @@
 	gsel WND_MAIN
 
 	if (positionType == PT_RELATIVE){
+		
 		if (IsWindow(hClient) == 0){
 
 			ssCap(0) = 0, 0, 0, 0

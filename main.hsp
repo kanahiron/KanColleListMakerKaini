@@ -60,8 +60,7 @@
 	gosub *dataCheck
 	gosub *iniSave
 	gosub *loadHistory
-	gosub *calcUIScale
-
+	
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 1
@@ -137,7 +136,7 @@
 
 	gsel WND_MAIN
 
-
+	gosub *calcUIScale
 	gosub *drawMainWindow
 	gosub *hotkeyCapSetting
 	gsel WND_MAIN,1+frontRow
