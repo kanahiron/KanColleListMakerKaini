@@ -122,7 +122,7 @@ return
 	nidPush
 	gsel WND_MAIN
 	
-	if (listMode == 0){
+	if (listMode == LISTMODE_LIST){
 
 		sendmsg ichiranMode1Ch, $F2
 		ichiranMode1 = stat & 0x01
@@ -167,7 +167,7 @@ return
 	}
 	
 	
-	if (listMode == 1){
+	if (listMode == LISTMODE_FLEET){
 	
 		sosuf = sosu
 		sendmsg sosukach, $F2
@@ -195,7 +195,7 @@ return
 		fleetPunctuation = stat & 0x01
 	}
 
-	if (listMode == 2){
+	if (listMode == LISTMODE_OTHER){
 
 		sendmsg directLinkCh, $F2
 		directLink = stat & 0x01
@@ -249,15 +249,6 @@ return
 		swbreak
 	swend
 
-	/*
-	//最小サイズを指定しようと思ったらめちゃくちゃ面倒であきらめた
-	if (bottom-top) < scrSizeMin(1){
-		bottom = top  + scrSizeMin(1)
-		right = left + round(1.0/AspectRatio * (bottom - top - framesy)) + framesx
-	}
-	//*/
-		
-
 	scrsize(0) = ginfo_winx ,round(AspectRatio*ginfo_winx)
 	cellsize(0) = round(1.0*scrsize(0) / (cellnum(0)+1)) ,round(1.0*scrsize(1) / (cellnum(1)+1))
 	
@@ -270,11 +261,11 @@ return
 *OnDropFiles
 	debugLog "ドロップ処理 開始"
 
-	if ( ginfo_intid == 0 && mode != MODE_LIST ){
+	if ( ginfo_intid == WND_MAIN && mode != MODE_LIST ){
 		return
 	}
 	
-	if ( ginfo_intid == 0 || ginfo_intid == 1 ){
+	if ( ginfo_intid == WND_MAIN || ginfo_intid == WND_GRID ){
 
 		debugLog "    メインかグリッドウィンドウにドロップされた"
 		nidPush
@@ -302,7 +293,7 @@ return
 		nidPop
 	}
 	
-	if ginfo(24) = WND_TWITTER{
+	if (ginfo_intid == WND_TWITTER){
 
 		debugLog "    ツイートウィンドウにドロップされた"
 		nidPush
@@ -411,6 +402,7 @@ return
 return
 
 *mainWndMove
+	//タイトルバー以外の部分をクリックしてもメインウィンドウを移動できるようにするための処理
 	if (wparam == 1) {
 		sendmsg WND_INFO(WND_MAIN, WI_HANDLE), WM_NCLBUTTONDOWN,HTCAPTION,0
 	}
