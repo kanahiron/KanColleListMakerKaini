@@ -64,6 +64,43 @@
 #undef title
 #define title(%1, %2 = hwnd) SetWindowText %2, %1
 
+#define CELL_MAX_W	8
+#define CELL_MAX_H	7
+#define HOTKEYID	7798
+#define timerID		101
+#define timer2ID	102
+#define klm2ver		2700
+
+#define ctype round(%1) int(strf("%%0.0f", %1))
+#define SOFTNAME "艦これ一覧めいかー改二 Ver0.2.7(仮)"
+
+#enum WND_MAIN = 0
+#enum WND_GRID
+#enum WND_TWITTER		//元19
+#enum WND_OVERLAY		//元19
+#enum WND_MAKE_STRING	//元12
+#enum WND_GRID_STRING
+#enum WND_HOME_PORT_MOD
+#enum WND_SUPPORT
+#enum WND_CAPTURE
+#enum WND_IMAGE_BUF
+#enum WND_IMAGE_BUF2
+#enum WND_TEMP1
+#enum WND_TEMP2
+#enum WND_TEMP_SCR1
+
+
+#const MODE_SSCAP	0
+#const MODE_LIST	1
+#const MODE_OPTION	2
+#const LISTMODE_LIST		0
+#const LISTMODE_FLEET		1
+#const LISTMODE_OTHER		2
+
+#const LISTMODEOTHER_DIRECT		0
+#const LISTMODEOTHER_AIRBASE	1
+#const LISTMODEOTHER_ITEM		2
+
 
 //レイヤードウィンドウ周り
 #const LWA_COLORKEY 1
@@ -160,47 +197,15 @@
 #const CM_BITBLT				0
 #const CM_PRINTWINDOW			1
 
+#const PT_ABSOLUTE 1
+#const PT_RELATIVE 2
+#const PT_WNDABSOLUTE 3
+
 
 #const CR_X 0
 #const CR_Y 1
 #const CR_W 2
 #const CR_H 3
-
-#const MODE_SSCAP	0
-#const MODE_LIST	1
-#const MODE_OPTION	2
-#const LISTMODE_LIST		0
-#const LISTMODE_FLEET		1
-#const LISTMODE_OTHER		2
-
-#const LISTMODEOTHER_DIRECT		0
-#const LISTMODEOTHER_AIRBASE	1
-#const LISTMODEOTHER_ITEM		2
-
-
-#enum WND_MAIN = 0
-#enum WND_GRID
-#enum WND_TWITTER		//元19
-#enum WND_OVERLAY		//元19
-#enum WND_MAKE_STRING	//元12
-#enum WND_GRID_STRING
-#enum WND_HOME_PORT_MOD
-#enum WND_SUPPORT
-#enum WND_CAPTURE
-#enum WND_IMAGE_BUF
-
-#define CELL_MAX_W	8
-#define CELL_MAX_H	7
-#define HOTKEYID	7798
-#define timerID		101
-#define timer2ID	102
-#define klm2ver		2700
-
-#define ctype round(%1) int(strf("%%0.0f", %1))
-#define SOFTNAME "艦これ一覧めいかー改二 Ver0.2.7(仮)"
-
-#define PT_ABSOLUTE 1
-#define PT_RELATIVE 2
 
 #define WI_HANDLE	0
 #define WI_DC		1
@@ -218,10 +223,7 @@
 //DynamicActionControl 
 #define DAControlInit dim DAControlArr, 20: DAControlIndex = 0
 #define SetDAControl(%1) DAControlArr(DAControlIndex) = (%1): DAControlIndex++
-#enum WND_IMAGE_BUF2
-#enum WND_TEMP1
-#enum WND_TEMP2
-#enum WND_TEMP_SCR1
+
 
 #define FONT_SIZE_GRID_STRING 25
 #define FONT_SIZE_MANUAL_GETPOS_STRING 30

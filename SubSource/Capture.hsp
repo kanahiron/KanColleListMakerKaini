@@ -5,7 +5,7 @@
 	nidPush
 	gsel WND_MAIN
 
-	if (positionType == PT_RELATIVE){
+	if (positionType == PT_RELATIVE || positionType = PT_WNDABSOLUTE){
 		
 		if (IsWindow(hClient) == 0){
 
@@ -16,32 +16,35 @@
 
 			gosub *ssSettingCheck
 			
-			logmessage = "艦これの画面を見失いました"
+			logmessage = "艦これの画面を見失いました(1)"
 			if (mode != MODE_OPTION){
-				objprm logid, logmessage
+				objprm logid, logmessage: await
 			}
 
 			nidPop
 			return
 		}
 
-		GetClientRect hClient, varptr(rect)
-		if (clientSize(0) != (rect(2)-rect(0))) | (clientSize(1) != (rect(3)-rect(1))){
-
-			ssCap(0) = 0, 0, 0, 0
-			hClient = 0
-			ReleaseDC dcClient
-			if seqCapf: gosub *seqcap
-			
-			gosub *ssSettingCheck
-			
-			logmessage = "艦これの画面を見失いました"
-			if (mode != MODE_OPTION){
-				objprm logid, logmessage
+		if (positionType==PT_RELATIVE){
+	
+			GetClientRect hClient, varptr(rect)
+			if (clientSize(0) != (rect(2)-rect(0))) | (clientSize(1) != (rect(3)-rect(1))){
+	
+				ssCap(0) = 0, 0, 0, 0
+				hClient = 0
+				ReleaseDC dcClient
+				if seqCapf: gosub *seqcap
+				
+				gosub *ssSettingCheck
+				
+				logmessage = "艦これの画面を見失いました(2)"
+				if (mode != MODE_OPTION){
+					objprm logid, logmessage: await
+				}
+				
+				nidPop
+				return
 			}
-			
-			nidPop
-			return
 		}
 			
 	}
@@ -53,11 +56,17 @@
 	sscap(3) = rdposy
 	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
 
-	if (positionType == PT_ABSOLUTE){
-		ssCapMes = strf("%d, %d", 　sscap(0), 　sscap(1))
-	} else {
-		ssCapMes = "追跡中"
-	}
+	switch positionType
+		case PT_ABSOLUTE
+			ssCapMes = strf("%d,%d",　sscap(0),　sscap(1))
+			swbreak
+		case PT_RELATIVE
+			ssCapMes = "追跡中S"
+			swbreak
+		case PT_WNDABSOLUTE
+			ssCapMes = "追跡中A"
+			swbreak
+	swend
 	
 	if (mode != MODE_OPTION){
 		objprm sscapiid, ssCapMes
@@ -92,7 +101,13 @@
 					swbreak
 				case PT_ABSOLUTE
 					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
-					swbreak	
+					swbreak
+
+				case PT_WNDABSOLUTE
+					scrPoint = sscap(0), sscap(1)
+					ClientToScreen hClient, varptr(scrPoint)
+					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, scrPoint(0), scrPoint(1), SRCCOPY | CAPTUREBLT: redraw
+					swbreak
 			swend
 			swbreak
 			

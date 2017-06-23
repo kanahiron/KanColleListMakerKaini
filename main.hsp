@@ -115,8 +115,10 @@
 		GetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20
 		SetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20, stat | $80000
 		SetLayeredWindowAttributes WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), 0x000000FF, 192, LWA_COLORKEY | LWA_ALPHA
+		imageBuf2W = ginfo_winx
+		imageBuf2H = ginfo_winy
 		gsel WND_IMAGE_BUF2, -1
-
+		
 	buffer WND_GRID_STRING ,640,150
 		SET_WND_INFO
 		syscolor 16
@@ -176,6 +178,7 @@
 	}
 	
 	gosub *VerCheck
+
 
 	//SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 1000, 0
 	
