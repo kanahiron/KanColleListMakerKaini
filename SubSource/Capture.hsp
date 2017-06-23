@@ -230,7 +230,7 @@ return
 				dmxy(0) = xcnt, ycnt
 				break
 			}
-			if (listMode != 0){
+			if (listMode != LISTMODE_LIST){
 				if (xcnt=cellnum(0)) & (ycnt=cellnum(1)){
 					dmxy(0) = xcnt, ycnt
 					loadPicBufID(bufIDPos(xcnt, ycnt)-100) = 0

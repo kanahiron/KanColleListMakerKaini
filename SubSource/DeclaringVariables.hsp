@@ -120,8 +120,6 @@
 	ACCESS_TOKEN = ""
 	ACCESS_SECRET = ""
 
-	modeOptionNum = 4
-
 	tCupInit "KanColleListMakerKaini", CONSUMER_KEY, CONSUMER_SECRET, 7
 	hdcScreen = CreateDC("DISPLAY", NULL, NULL, NULL)
 
