@@ -1,0 +1,223 @@
+//つーさ☆くーかんで配布されているpipe2.hspをHSP3utf用に改変
+//配布元 : http://tu3.jp/0569
+//作成者 : つーさ(月影とも)さん
+//改変者 : kanahiron
+//
+// Win32 コンソール向きパイプ通信モジュール
+//      月影とも 2008. 2. 7 v0.02
+// 
+//      パイプを使ったリダイレクトで
+//      標準入力(STDIN), 標準出力(STDOUT), 標準エラー出力(STDERR)
+//      を操作できるモジュール。以下の命令を定義してます。
+// 
+// #deffunc pipe2exec str cmdline
+//      子プロセスをパイプ付き実行。
+//        cmdline : 実行するコマンドライン。
+//        statの値 : 成功時 procid (0以上), 失敗時 -1
+//
+// #deffunc pipe2get int procid, var buf, int size, int offset
+// #deffunc pipe2err int procid, var buf, int size, int offset
+//      標準出力/標準エラー出力の(文字列/バイナリ)取得。
+//        procid : pipe2exec の戻り値
+//        buf : 内容取得先のバッファ
+//        size : 取得する最大サイズ
+//        offset : バッファの書き込み開始位置
+//        statの値 : 取得したバイト数
+//        備考 : size 以降を省略した場合、必要なサイズを勝手にbufに確保する(内容はクリアされる)。
+//          取得内容が文字列とわかっている場合は便利。ただしoffsetの指定は無効。
+//        
+// #deffunc pipe2write int procid, var buf, int size, int offset
+//      標準入力へバイナリ書き込み。
+//        procid : pipe2exec の戻り値
+//        buf : 書き込み元のデータが入っているバッファ
+//        size : 書き込むバイト数
+//        offset : 書き込み元データの開始位置
+//        statの値 : 実際に書き込めたサイズ
+//
+// #deffunc pipe2put int procid, str string
+//      標準入力へ文字列書き込み。
+//        procid : pipe2exec の戻り値
+//        string : 書き込む内容
+//        statの値 : 実際に書き込めたサイズ
+//        
+// #deffunc pipe2check int procid
+//      パイプの状況をチェック。
+//        procid : pipe2exec の戻り値
+//        statの値 : 以下のビットの組み合わせ。
+//            if stat & 1 : プログラムは実行中
+//            if stat & 2 : STDOUTにデータあり(pipe2getで取得)
+//            if stat & 4 : STDERRにデータあり(pipe2errで取得)
+//
+// #deffunc pipe2term int procid
+//      子プロセスの強制終了＋パイプを閉じる
+//        procid : pipe2exec の戻り値
+//        statの値 : 常に 0
+//
+
+#module mod_execconsole m_hStdOut, m_hStdErr, m_hStdIn, m_hProcess
+#uselib "kernel32.dll"
+#func ReadFile "ReadFile" int,int,int,int,nullptr
+#func WriteFile "WriteFile" int,int,int,int,nullptr
+#cfunc GetCurrentProcess "GetCurrentProcess"
+#func CreatePipe "CreatePipe" int,int,int,int
+#func PeekNamedPipe "PeekNamedPipe" int,nullptr,nullptr,nullptr,int,nullptr
+#func DuplicateHandle "DuplicateHandle" int,int,int,int, int,int,int
+#func CloseHandle "CloseHandle" int
+#cfunc GetLastError "GetLastError"
+
+#func CreateProcess "CreateProcessW" int,int,int,int,int,int,int,int,int,int
+#cfunc WaitForSingleObject "WaitForSingleObject" int,int
+#func TerminateProcess "TerminateProcess" int,int
+
+#defcfunc local _GetModIndex var p1, local hspctx, local vptr
+    mref hspctx, 68
+    dupptr vptr, hspctx.207, 8, 4
+    return vptr.1
+
+#modinit
+    return _GetModIndex@mod_execconsole(thismod)
+
+#modfunc local _ExecProcessWithPipe str _cmdline
+    ret = 0
+    
+    thisProcess = GetCurrentProcess()
+    security_attributes = 12, 0, 1
+    
+    // for STDOUT
+    CreatePipe varptr(hTemp), varptr(hStdout), varptr(security_attributes), 0
+    DuplicateHandle thisProcess, hTemp, thisProcess, varptr(m_hStdOut), 0, 0, 2
+    CloseHandle hTemp
+
+    // for STDERR
+    CreatePipe varptr(hTemp), varptr(hStderr), varptr(security_attributes), 0
+    DuplicateHandle thisProcess, hTemp, thisProcess, varptr(m_hStdErr), 0, 0, 2
+    CloseHandle hTemp
+
+    // for STDIN
+    CreatePipe varptr(hStdin), varptr(hTemp), varptr(security_attributes), 0
+    DuplicateHandle thisProcess, hTemp, thisProcess, varptr(m_hStdIn), 0, 0, 2
+    CloseHandle hTemp
+
+    // CreateProcess
+    dim process_information, 4
+    dim startupinfo, 17
+    startupinfo.0 = 68
+    startupinfo.11 = 0x101
+    startupinfo.14 = hStdin, hStdout, hStderr
+    cmdline = _cmdline
+    CreateProcess 0, varptr(cmdline), 0, 0, 1, 0, 0, 0, varptr(startupinfo), varptr(process_information)
+    if stat = 0 : ret = -1 : else : m_hProcess = process_information.0 : CloseHandle process_information.1
+
+    // CloseHandle
+    CloseHandle hStdOut
+    CloseHandle hStdErr
+    CloseHandle hStdIn
+    return ret
+
+#modfunc local _WriteStdin var buf, int size, int offset, local written
+    written = 0
+    WriteFile m_hStdIn, varptr(buf)+offset, size, varptr(written)
+    if stat=0 : return 0
+    return written
+
+#modfunc local _readPipe int hPipe, var buf, int size, int offset, local read, local readable
+    read = 0 : readable = 0
+    PeekNamedPipe hPipe, varptr(readable) : if readable = 0 : return 0
+    if size : sz = size : else : sz = readable : sdim buf, readable+1
+    ReadFile hPipe, varptr(buf)+offset, sz, varptr(read)
+    if stat=0 : return 0
+    return read
+
+#modfunc local _ReadStdout var buf, int size, int offset
+    _readPipe@mod_execconsole thismod, m_hStdout, buf, size, offset : return
+
+#modfunc local _ReadStderr var buf, int size, int offset, local read
+    _readPipe@mod_execconsole thismod, m_hStderr, buf, size, offset : return
+
+#modfunc local _GetProcessStatus local status, local readable
+    status = 0
+    readable = 0 : PeekNamedPipe m_hStderr, varptr(readable) : if readable : status += 4
+    readable = 0 : PeekNamedPipe m_hStdout, varptr(readable) : if readable : status += 2
+    if WaitForSingleObject(m_hProcess, 0) : status += 1
+    return status
+
+#modfunc local _Dispose
+    CloseHandle m_hStdout
+    CloseHandle m_hStderr
+    CloseHandle m_hStdin
+    if WaitForSingleObject(m_hProcess, 0) : TerminateProcess m_hProcess
+    return 0
+
+#modterm
+    _Dispose@mod_execconsole thismod
+    return
+
+#deffunc pipe2exec str _cmdline
+    newmod children, mod_execconsole : idx = stat
+    _ExecProcessWithPipe@mod_execconsole children.idx, _cmdline
+    if stat != 0 : delmod children.idx : return -1
+    return idx
+
+#deffunc pipe2err int procid, var buf, int size, int offset
+    _ReadStderr@mod_execconsole children.procid, buf, size, offset
+    return
+
+#deffunc pipe2get int procid, var buf, int size, int offset
+    _ReadStdout@mod_execconsole children.procid, buf, size, offset
+    return
+
+#deffunc pipe2write int procid, var buf, int size, int offset
+    _WriteStdin@mod_execconsole children.procid, buf, size, offset
+    return
+
+#deffunc pipe2put int procid, str string
+    buf = string
+    _WriteStdin@mod_execconsole children.procid, buf, strlen(buf)
+    return
+
+#deffunc pipe2check int procid
+    _GetProcessStatus@mod_execconsole children.procid
+    return
+
+#deffunc pipe2term int procid
+    _Dispose@mod_execconsole children.procid
+    return
+
+#global
+
+//// モジュ終わり
+
+#if 0 // サンプル
+
+#define CMDLINE "cmd.exe"
+
+    pipe2exec CMDLINE : ChildID = stat
+    if stat<0: dialog "実行に失敗:\n"+CMDLINE : end
+    wait 10
+    pipe2get ChildID, buf : if stat : mes buf
+    pipe2put ChildID, "dir /w \\\n"
+    pipe2put ChildID, "exit\n"
+
+    wait 10
+
+    // 子が終了後でも受け取るモノは受け取れます。
+    pipe2get ChildID, buf : if stat : mes buf
+    pipe2check ChildID : title ""+stat
+
+#endif
+
+#if 0 // サンプル その２
+
+#define CMDLINE "netstat"
+    pipe2exec CMDLINE : ChildID = stat
+    if stat<0: dialog "実行に失敗:\n"+CMDLINE : end
+    repeat
+        pipe2check ChildId : c = stat : title ""+c
+        if c & 4 : pipe2err ChildID, buf : if stat : mes buf
+        if c & 2 : pipe2get ChildID, buf : if stat : mes buf
+        if c = 0 : break
+        wait 10
+    loop
+    mes "終了しました。"
+    
+#endif

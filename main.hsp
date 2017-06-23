@@ -15,6 +15,8 @@
 #include "./modules/isHomepostModule.as"
 #include "./modules/DateAndTimeFormat2.as"
 #include "./modules/isfilled.hsp"
+#include "./modules/pipe2_utf.hsp"
+#include "./modules/MemoryMapModule_utf.as"
 
 #pack "start.ax"
 #pack "data2.png"
@@ -27,7 +29,7 @@
 #define HOTKEYID	7798
 #define timerID		101
 #define timer2ID	102
-#define klm2ver		2600
+#define klm2ver		2700
 
 #define ctype round(%1) int(strf("%%0.0f", %1))
 #define SOFTNAME "äÕÇ±ÇÍàÍóóÇﬂÇ¢Ç©Å[â¸ìÒ Ver0.2.7(âº)"
@@ -147,7 +149,6 @@
 	buffer WND_MAKE_STRING, 1000, 340
 		SET_WND_INFO		
 		gosub *drawString
-
 
 	bgscr WND_SUPPORT, 850, 100, 2
 		SET_WND_INFO

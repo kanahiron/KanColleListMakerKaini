@@ -275,7 +275,7 @@ return
 
 	nidPush
 
-	gsel WND_SUPPORT
+	gsel WND_SUPPORT, 0
 
 	color 255, 0, 0: boxf
 
