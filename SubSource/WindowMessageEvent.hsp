@@ -38,12 +38,13 @@
 				swbreak
 		swend
 
-		//if (mode != modePrev){
+		if (mode != modePrev || listMode != listModePrev){
 			gosub *CalcCapPosAndWinSize
 			gosub *DrawMainWindow
 			
-		//}
+		}
 		modePrev = mode
+		listmodePrev = listmode
 		
 		
 	}

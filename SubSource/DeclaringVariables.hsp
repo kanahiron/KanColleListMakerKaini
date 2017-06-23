@@ -10,6 +10,7 @@
 	positionType = 0
 	optionMode = 0
 	modePrev = -1
+	listModePrev = -1
 	optionModePrev = -1
 	initialActivation = FALSE
 
