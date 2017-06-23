@@ -37,7 +37,7 @@
 	ddim AspectRatio, 1
 	sdim sscapmes, 256
 	sdim logmessage, 256
-	sdim modemes, 64, 4
+	sdim modemes, 64
 	sdim stemp
 	sdim sssavedir , 260
 	sdim listsavedir , 260
@@ -86,7 +86,7 @@
 	loadPicBufID(0) = 0
 	
 	mindexxy(0) = 0, 0
-	modemes(0) = "SSキャプチャ", "艦娘一覧", "攻略編成", "その他一覧作成モード", "オプション"
+	modemes = ""
 	mxy(0) = 0, 0
 	mxy_(0) = 0, 0
 	sscapwh = 0, 0

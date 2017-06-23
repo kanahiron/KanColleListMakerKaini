@@ -24,7 +24,7 @@
 	
 		objsize Scale(175), Scale(30)
 		
-		combox mode, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+		combox dummy, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
 		comboxId = stat
 		hCombox = objinfo_hwnd(comboxId)
 		await: GetClientRect hComBox, varptr(rect)
@@ -35,6 +35,29 @@
 			combox optionMode, Scale(100), " 環境設定\n キャプチャ・作成設定\n Twitter設定\n その他設定"
 			hOptionComBox = objinfo(stat, 2)
 		}
+	}
+
+	if (mode == MODE_SSCAP){
+		objprm comboxId, 0
+		modemes = "SSキャプチャ"
+	} else : if(mode == MODE_LIST){
+		switch listmode
+			case LISTMODE_LIST
+				objprm comboxId, 1
+				modemes = "艦娘一覧"
+				swbreak
+			case LISTMODE_FLEET
+				objprm comboxId, 2
+				modemes = "攻略編成"
+				swbreak
+			case LISTMODE_OTHER
+				objprm comboxId, 3
+				modemes = "その他一覧作成"
+				swbreak
+		swend
+	} else :if(mode == MODE_OPTION){
+		objprm comboxId, 4
+		modemes = "オプション"
 	}
 
 	mesy = rect(3) + scale3
@@ -484,7 +507,7 @@
 		} else {
 			gsel WND_GRID,0
 		}
-		title modemes(listmode+1)+"モード - 表示させたいセルにD&D"
+		title modemes+"モード - 表示させたいセルにD&D"
 		width scrsize(0), scrsize(1)
 		
 		gosub *draw
