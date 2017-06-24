@@ -3,6 +3,8 @@
 	debugLog "ˆê——ì¬ ŠJŽn"
 	nidPush
 
+	gosub *drawString
+
 	
 	VNum = 0
 	HNum = 0
@@ -92,19 +94,19 @@
 			if sosuka | soka{
 				gsel WND_TEMP1
 				gmode 7
-				
+
 				ccnt = 0
 				repeat 6			
-					xcnt_ = (cnt/3)*3
-					ycnt_ = (cnt\3)*2
+					xcnt_ = (cnt\2)*3
+					ycnt_ = (cnt/2)*2
 					if bufIDPos(xcnt_, ycnt_) >= 100{
 						pos 205+cutRange(CR_W)*xcnt_, cutRange(CR_H)*ycnt_+5
 						gcopy WND_MAKE_STRING, 0, 10+ccnt*70, 220, OSOWm+10
 						if addOrderNum {
 							ccnt2 = 0
 							repeat 6
-								xcnt = xcnt_ + cnt/2
-								ycnt = ycnt_ + cnt\2
+								xcnt = xcnt_ + cnt\3
+								ycnt = ycnt_ + cnt/3
 								if bufIDPos(xcnt, ycnt) >= 100{
 									pos 205+cutRange(CR_W)*xcnt+220, cutRange(CR_H)*ycnt+5
 									gcopy WND_MAKE_STRING, 500+(ccnt*100), 10+ccnt2*OSOW, 50, OSOW
