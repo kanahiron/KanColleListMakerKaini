@@ -1,5 +1,4 @@
-
-//, 
+ 
 *SSCaptureOnMemory
 
 	nidPush
@@ -22,7 +21,7 @@
 			}
 
 			nidPop
-			return
+			return 1
 		}
 
 		if (positionType==PT_RELATIVE){
@@ -43,7 +42,7 @@
 				}
 				
 				nidPop
-				return
+				return 1
 			}
 		}
 			
@@ -86,7 +85,7 @@
 			
 		}
 		nidPop
-		return
+		return 1
 	}
 		
 
@@ -97,13 +96,16 @@
 		case CM_BITBLT
 			switch positionType
 				case PT_RELATIVE
+					logmes "PT_RELATIVE"
 					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), dcClient, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
 					swbreak
 				case PT_ABSOLUTE
+					logmes "PT_ABSOLUTE"
 					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
 					swbreak
 
 				case PT_WNDABSOLUTE
+					logmes "PT_WNDABSOLUTE"
 					scrPoint = sscap(0), sscap(1)
 					ClientToScreen hClient, varptr(scrPoint)
 					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, scrPoint(0), scrPoint(1), SRCCOPY | CAPTUREBLT: redraw
@@ -124,7 +126,7 @@
 
 	nidPop
 	
-return
+return 0
 	
 
 //SSキャプチャ――――――――――――――――――――――――――――――――――
@@ -133,6 +135,7 @@ return
 	nidPush
 	
 	gosub *SSCaptureOnMemory
+	if (stat): return
 
 	buffer WND_TEMP1, sscapwh(0), sscapwh(1)
 	gcopy WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1) 

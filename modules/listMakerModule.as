@@ -89,6 +89,15 @@ R4HBGC_constructor
 #define TRUE 1
 #define FALSE 0
 
+//CompArrays 配列同士を比較し全て一致すれば真を返す
+#define CompArrays(%1, %2, %3) %1=TRUE:foreach %2:if %2(cnt) != %3(cnt){%1 = FALSE:break}:loop
+//CompArrays2 配列同士を比較し全て一致しなければ真を返す
+#define CompArrays2(%1, %2, %3) %1=TRUE:foreach %2:if %2(cnt) == %3(cnt){%1 = FALSE:break}:loop
+//CompArrayAndValue 配列と値を比較し全て一致すれば真を返す
+#define CompArrayAndValue(%1, %2, %3) %1=TRUE:foreach %2:if %2(cnt) != %3{%1 = FALSE:break}:loop
+//CompArrayAndValue2 配列と値を比較し全て一致しなければ真を返す
+#define CompArrayAndValue2(%1, %2, %3) %1=TRUE:foreach %2:if %2(cnt) == %3{%1 = FALSE:break}:loop
+
 
 #deffunc init_ListMakerMod array disinfo_
 
@@ -509,6 +518,84 @@ return 0
 	gsel nid
 	
 return
+
+
+#deffunc CheckKanCollePos int imageid, int posX, int posY
+
+	nid = ginfo(3)
+
+	ddim ratio, 5
+	ratio = 0.9, 0.82, 0.73, 0.5, 0.12
+
+	po = posX, posY
+	po2 = -1, -1
+
+	stX = 319
+	stY = 191
+
+	pccX = 0
+	pccY = 0
+	dim tccX, 5
+	dim tccY, 5
+	flagX = 0
+	flagY = 0
+	as = 0.0
+
+	topCnt = 0
+
+	success = FALSE
+
+	gsel imageid, 0
+
+	repeat 2400, stY
+		topCnt = cnt
+		x = cnt
+		y = int(0.6 * cnt + 0.5)
+
+		pget po(0)+ topCnt -1, po(1) + ratio(0)*y
+		pccX = (ginfo_b << 16 | ginfo_g << 8 | ginfo_r)
+
+		pget po(0) + ratio(0)*x, po(1)+y -1
+		pccY = (ginfo_b << 16 | ginfo_g << 8 | ginfo_r)
+
+		repeat 5
+			pget po(0)+ topCnt, po(1) + ratio(cnt)*y
+			tccX(cnt) = (ginfo_b << 16 | ginfo_g << 8 | ginfo_r)
+
+			pget po(0) + ratio(cnt)*x, po(1)+y
+			tccY(cnt) = (ginfo_b << 16 | ginfo_g << 8 | ginfo_r)
+
+			//デバッグ用 これをコメントアウトすると成功判定の一部が壊れる
+			//color 255, 0, 0
+			//pset po(0) + ratio(cnt)*x, po(1)+y
+			//pset po(0)+ topCnt, po(1) + ratio(cnt)*y
+		loop
+		CompArrayAndValue flagX, tccX, tccX(0)
+		CompArrayAndValue flagY, tccY, tccY(0)
+		
+		if ( flagX && flagY ){
+			//デバッグ用
+			//title strf("%4d %4d %4d %4d %4d %4d %4d %f", x, y, pccX, tccX(0), pccY, tccY(0), topCnt, absf(1.0*(y)/(x) - 0.6))
+			//wait 120
+			if ( pccX != tccX(0) && pccY != tccY(0)){
+				as = absf(1.0*(y)/(x) - 0.6)
+				if (as <= 0.021){
+					po2(0) = x + po(0)-1
+					po2(1) = y + po(1)-1
+					success = TRUE
+					break
+				}
+				
+			}
+		}
+		await
+	loop
+
+
+	gsel nid
+
+
+return success
 
 	
 ;#defcfunc getbufid

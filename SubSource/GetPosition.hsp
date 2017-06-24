@@ -128,21 +128,62 @@ return
 
 	//艦これのあるウィンドウのハンドル
 	hClient = WindowFromPoint(scrPosX, scrPosY)
-	dcClient = GetDC(hClient)
 
 	cliPoint(0) = scrPoint(0), scrPoint(1)
 
 	ScreenToClient hClient, varptr(cliPoint)
 	cliPosX = cliPoint(0)
 	cliPosY = cliPoint(1)
-
-	buffer WND_TEMP1, sscapwh(0), sscapwh(1)
-	mref bufwndvram, 66
-	BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), dcClient, cliPosX, cliPosY, SRCCOPY | CAPTUREBLT: redraw
 	
-	isfilled bufwndvram, sscapwh(0), sscapwh(1)
-	if (stat==1){
-		
+	dim clientSize, 2
+	GetClientRect hClient, varptr(rect)
+	clientSize(0) = rect(2)
+	clientSize(1) = rect(3)
+	clientScrX = rect(0)
+	clientScrY = rect(1)
+
+	GetWindowRect hClient, varptr(rect)
+	clientScrX = rect(0)
+	clientScrY = rect(1)
+	
+	
+	buffer WND_TEMP1, clientSize(0), clientSize(1)
+	
+	cls
+	PrintWindow hClient, hdc, 1: redraw
+	CheckKanCollePos WND_TEMP1, cliPosX, cliPosY
+	if (stat){
+		sscap(0) = cliPoint(0)
+		sscap(1) = cliPoint(1)
+		sscap(2) = sscap(0)+sscapwh(0)
+		sscap(3) = sscap(1)+sscapwh(1)
+
+		captureMethod = CM_PRINTWINDOW
+		positionType = PT_RELATIVE
+		return
+	}
+
+	cls
+	dcClient = GetDC(hClient)
+	BitBlt hdc, 0, 0, clientSize(0), clientSize(1), dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
+	CheckKanCollePos WND_TEMP1, cliPosX, cliPosY
+	if (stat){
+		sscap(0) = cliPoint(0)
+		sscap(1) = cliPoint(1)
+		sscap(2) = sscap(0)+sscapwh(0)
+		sscap(3) = sscap(1)+sscapwh(1)
+
+		captureMethod = CM_BITBLT
+		positionType = PT_RELATIVE
+		return
+	} else {
+		ReleaseDC dcClient 
+	}
+
+	cls
+	BitBlt hdc, 0, 0, clientSize(0), clientSize(1), hdcScreen, clientScrX, clientScrY, SRCCOPY | CAPTUREBLT: redraw
+	CheckKanCollePos WND_TEMP1, cliPosX, cliPosY
+	if (stat){
 		sscap(0) = cliPoint(0)
 		sscap(1) = cliPoint(1)
 		sscap(2) = sscap(0)+sscapwh(0)
@@ -150,26 +191,12 @@ return
 
 		captureMethod = CM_BITBLT
 		positionType = PT_WNDABSOLUTE
-
-
-	} else {
-
-		sscap(0) = cliPoint(0)
-		sscap(1) = cliPoint(1)
-		sscap(2) = sscap(0)+sscapwh(0)
-		sscap(3) = sscap(1)+sscapwh(1)
-
-		dim clientSize, 2
-
-		GetClientRect hClient, varptr(rect)
-		clientSize(0) = rect(2)
-		clientSize(1) = rect(3)
-
-		captureMethod = CM_BITBLT
-		positionType = PT_RELATIVE
-
+		return
 	}
 
+	captureMethod = CM_BITBLT
+	positionType = PT_ABSOLUTE
+	
 return
 
 *SSSettingCheck
@@ -222,9 +249,11 @@ return
 		if autoSearch: autoSearchFailureCount = 0
 		
 	} else {
-		
-		sscapmes = "取得する"
-		objprm sscapiid, sscapmes
+
+		if (mode != MODE_OPTION){
+			sscapmes = "取得する"
+			objprm sscapiid, sscapmes
+		}
 		
 		if (mode == MODE_SSCAP){
 			objenable sscapbid,0
@@ -236,6 +265,7 @@ return
 		
 		logmessage = "座標を取得できません\n詳細はreadmeをお読みください"
 		objprm logid,logmessage
+		
 		availablecap = FALSE
 	
 		if autoSearch{

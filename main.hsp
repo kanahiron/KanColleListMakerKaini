@@ -227,6 +227,11 @@
 	end
 	end
 
+*err_
+	onerror 0
+	dialog "�G���[�ԍ�"+wparam+"\n"+lparam+"�s��"
+	gosub *exit
+
 #include "./SubSource/DeclaringVariables.hsp"
 #include "./SubSource/DrawWindow.hsp"
 #include "./SubSource/iniFileOperation.hsp"
