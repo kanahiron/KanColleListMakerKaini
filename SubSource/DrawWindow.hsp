@@ -697,9 +697,30 @@
 
 		if (optionMode == 2){
 
+			gosub *VideoCapSetting
+
 			objsize Scale(350), scale20
 			pos scale5, mesy
 			chkbox "動画キャプチャを有効にする", enableVideoCap: mesy += scale20
+
+			objsize Scale(350), Scale(50)
+			pos scale5, mesy
+			mes "使用するオーディオデバイス": mesy += scale20
+			pos 0, mesy
+			listbox audioDeviceListNum, 30, audioDeviceList
+			await: GetClientRect objinfo_hwnd(stat), varptr(rect)
+			mesy += rect(3)+scale5
+			
+
+			objsize Scale(150), scale20
+			pos Scale(14), mesy
+			mes "ffmpeg.exeの場所"
+			pos Scale(200), mesy
+			button gosub "変更", *openDialogffmpeg: mesy += scale20
+			pos 0,mesy
+			mesbox ffmpegdir, Scale(350), Scale(45), 5, 259 :mesy += Scale(45)
+			ffmpegDirIId = stat
+		
 			
 		}
 	

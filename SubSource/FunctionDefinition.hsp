@@ -64,12 +64,13 @@
 #undef title
 #define title(%1, %2 = hwnd) SetWindowText %2, %1
 
-#define CELL_MAX_W	8
-#define CELL_MAX_H	7
-#define HOTKEYID	7798
-#define timerID		101
-#define timer2ID	102
-#define klm2ver		2700
+#define CELL_MAX_W		8
+#define CELL_MAX_H		7
+#define HOTKEYID		7798
+#define timerID			101
+#define timer2ID		102
+#define VideoCapTimerID	103
+#define klm2ver			2700
 
 #define ctype round(%1) int(strf("%%0.0f", %1))
 #define SOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.2.7(‰¼)"

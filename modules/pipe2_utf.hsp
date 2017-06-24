@@ -104,7 +104,8 @@
     startupinfo.0 = 68
     startupinfo.11 = 0x101
     startupinfo.14 = hStdin, hStdout, hStderr
-    cmdline = _cmdline
+    sdim cmdline, 1024*4
+    cnvstow cmdline, _cmdline
     CreateProcess 0, varptr(cmdline), 0, 0, 1, 0, 0, 0, varptr(startupinfo), varptr(process_information)
     if stat = 0 : ret = -1 : else : m_hProcess = process_information.0 : CloseHandle process_information.1
 

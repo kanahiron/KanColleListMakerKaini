@@ -6,13 +6,69 @@
 	
 	if (videoCapFlg == FALSE){
 		
+		switch captureMethod
+	
+		case CM_BITBLT
+			switch positionType
+				case PT_RELATIVE
+				case PT_WNDABSOLUTE
+					scrPoint = sscap(0), sscap(1)
+					ClientToScreen hClient, varptr(scrPoint)
+					capX = scrPoint(0)
+					capY = scrPoint(1)
+					swbreak
+				case PT_ABSOLUTE
+					capX = sscap(0)
+					capY = sscap(1)
+					swbreak
+			swend
+			swbreak
+			
+		case CM_PRINTWINDOW
+			scrPoint = sscap(0), sscap(1)
+			ClientToScreen hClient, varptr(scrPoint)
+			capX = scrPoint(0)
+			capY = scrPoint(1)
+			swbreak
+
+		swend
+
+		sdim buf, 1024*10
+
+		gosub *VideoCapSetting
+		sdim audioDeviceName, 256
+		notesel audioDeviceList
+		noteget audioDeviceName, audioDeviceListNum
+
+		fname = strf("%s\\video%02d%02d%02d", ssSaveDir, gettime(4), gettime(5), gettime(6))
+		cmdv = strf("%s -an -r 20/1 -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s_v.mp4\"", ffmpegdir, sscapwh(0), sscapwh(1), capX, capY, fname)
+		cmda = strf("%s -vn -f dshow -i audio=\"%s\" -acodec aac -b:a 96k \"%s_a.aac\"", ffmpegdir, audioDeviceName, fname)
+		cmdm = strf("%s -i \"%s_v.mp4\" -i \"%s_a.aac\" -c:v copy -c:a copy \"%s.mp4\"", ffmpegdir, fname, fname, fname)
+
+		//alog cmdv+"\n"+cmda+"\n"+cmdm
+
+///*
+
+		pipe2exec cmda
+		apid = stat
+		pipe2exec cmdv
+		vpid = stat
+
+		if ( (apid == -1) || (vpid == -1) ){
+
+			dialog "動画キャプチャの開始に失敗しました"
+			return
+		}
+
+		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID, 500, 0
+
+//*/
 		videoCapFlg = TRUE
 		
 		videoCapMes = "停止"
 		objprm videoCapBId, videoCapMes
 		
 		objenable comboxId, 0
-		//objenable sscapBId, 0
 		objenable sscapIId, 0
 		objenable seqcapBId, 0
 		objenable yabumiBId, 0
@@ -21,11 +77,60 @@
 		objenable luposyIId, 0
 		objenable rdposxIId, 0
 		objenable rdposyIId, 0
+
+		videoCapStartTime = timeGetTime()
+
 	
 	} else {
 		
 		videoCapFlg = FALSE
+
+
+///*
+		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
+
+
+		pipe2put apid, "q" //録音の停止
+		pipe2put vpid, "q" //動画キャプチャの停止
+	
+		exf = 0
+		exfv = 0
+		exfa = 0
+		repeat //終了の待機
+			if (exfv == 0){
+				pipe2check vpid
+				if stat == 0:exfv = 1
+				if stat & 2: pipe2get vpid, buf
+				if stat & 4: pipe2err vpid, buf
+			}
+	
+			if (exfa == 0){
+				pipe2check apid
+				if stat == 0:exfa = 1
+				if stat & 2: pipe2get apid, buf
+				if stat & 4: pipe2err apid, buf
+			}
+			if exfv && exfa: break
+			wait 10
+		loop
 		
+	
+		pipe2exec cmdm
+		mpid = stat
+		
+		repeat
+			pipe2check mpid
+			if stat == 0:break
+			if stat & 2: pipe2get mpid, buf
+			if stat & 4: pipe2err mpid, buf
+	
+			await 16
+		loop
+
+		delete fname+"_v.mp4"
+		delete fname+"_a.aac"
+
+//*/
 		videoCapMes = "開始"
 		objprm videoCapBId, videoCapMes
 		
@@ -33,7 +138,6 @@
 		objenable SSCapIId, 1
 
 		if availableCap | manualpos{
-			//objenable SSCapBId, 1
 			objenable seqcapBId, 1
 		}
 		if availableCap: objenable yabumiBId, 1	
@@ -45,4 +149,52 @@
 
 	}
 	nidPop
+return
+
+*VideoCapTimerProcessing
+
+	pipe2check vpid
+	if stat & 2: pipe2get vpid, buf
+	if stat & 4: pipe2err vpid, buf
+
+	pipe2check apid
+	if stat & 2: pipe2get apid, buf
+	if stat & 4: pipe2err apid, buf
+
+	elapsedTime = timeGetTime() - videoCapStartTime
+	sdim elapsedTimeStr, 1024
+	elapsedTimeStr =  "動画をキャプチャ中…\n"
+	elapsedTimeStr += strf("経過時間 %02:%02.%03d", (elapsedTime/1000/60), (elapsedTime/1000\60), (elapsedTime\1000))
+
+	objprm logId, elapsedTimeStr
+	
+
+	
+
+	
+
+	
+
+return
+
+*VideoCapSetting
+
+	if (ffmpegdir != ""){
+		GetAudioDevice ffmpegdir, audioDeviceList
+	}
+
+
+return
+
+
+*openDialogffmpeg
+
+	dialog "exe", 16, "ffmpeg.exe"
+	if (stat==1){
+		ffmpegdir = refstr
+		objprm ffmpegDirIId, ffmpegdir
+	}
+
+	gosub *VideoCapSetting
+
 return

@@ -8,6 +8,7 @@
 	sdim listsavedir,512
 	sdim sssavedir,512
 	sdim yabumidir,512
+	sdim ffmpegdir,1024
 
 	GetIni "Configuration", "FrontRow", frontrow, "1"
 	GetIni "Configuration", "HideLog", hidelog, "0"
@@ -42,7 +43,7 @@
 
 
 	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
-
+	GetIni "ffmpegDir", "ffmpegDir", ffmpegDir, "\"\""
 
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
@@ -263,6 +264,22 @@ return
 	
 	fontcolorname = int("$"+fontcolornamestr)
 	fontcolornum = int("$"+fontcolornumstr)
+
+
+
+	//
+
+	exist ffmpegDir
+	if (strsize<0){
+		exist dir_exe+"\\bin\\ffmpeg.exe"
+		if(strsize!=0){
+			ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
+		}
+	} else {
+		ffmpegDir == ""
+	}
+
+	//
 	
 	if (tuika1+tuika2+tuika3+tuika4) != 1{
 		tuika1 = 1

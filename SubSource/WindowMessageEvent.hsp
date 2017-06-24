@@ -481,6 +481,10 @@ return
 			oncmd 1
 			/////////////
 			swbreak
+
+		case VideoCapTimerID
+			gosub *VideoCapTimerProcessing
+			swbreak
 	swend
 
 
