@@ -1,0 +1,48 @@
+
+*VideoCap
+
+	nidPush
+	gsel WND_MAIN, 0
+	
+	if (videoCapFlg == FALSE){
+		
+		videoCapFlg = TRUE
+		
+		videoCapMes = "’âŽ~"
+		objprm videoCapBId, videoCapMes
+		
+		objenable comboxId, 0
+		//objenable sscapBId, 0
+		objenable sscapIId, 0
+		objenable seqcapBId, 0
+		objenable yabumiBId, 0
+
+		objenable luposxIId, 0
+		objenable luposyIId, 0
+		objenable rdposxIId, 0
+		objenable rdposyIId, 0
+	
+	} else {
+		
+		videoCapFlg = FALSE
+		
+		videoCapMes = "ŠJŽn"
+		objprm videoCapBId, videoCapMes
+		
+		objenable comboxId, 1
+		objenable SSCapIId, 1
+
+		if availableCap | manualpos{
+			//objenable SSCapBId, 1
+			objenable seqcapBId, 1
+		}
+		if availableCap: objenable yabumiBId, 1	
+			
+		objenable luposxIId, 1
+		objenable luposyIId, 1
+		objenable rdposxIId, 1
+		objenable rdposyIId, 1
+
+	}
+	nidPop
+return

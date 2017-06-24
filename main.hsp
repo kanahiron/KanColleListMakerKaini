@@ -246,3 +246,4 @@
 #include "./SubSource/Capture.hsp"
 #include "./SubSource/GridWindowOperation.hsp"
 #include "./SubSource/CreateSemiAuto.hsp"
+#include "./SubSource/VideoCapture.hsp"

@@ -10,6 +10,7 @@
 	if (mode == MODE_SSCAP){
 		objenable sscapbid,0
 		objenable seqcapbid,0
+		objenable videoCapbid,0
 		if (yabumiautoupload = 1) & (availableyabumi = 1){
 			objenable yabumibid,0
 		}
@@ -245,6 +246,7 @@ return
 		if (mode == MODE_SSCAP){
 			objenable sscapbid,1
 			objenable seqcapbid,1
+			objenable videoCapbid,1
 			objenable yabumibid,1
 		}
 		
@@ -265,6 +267,7 @@ return
 		if (mode == MODE_SSCAP){
 			objenable sscapbid,0
 			objenable seqcapbid,0
+			objenable videoCapbid,0
 			objenable yabumibid,0
 		}
 
@@ -289,6 +292,7 @@ return
 		if manualpos{
 			objenable ssCapBId, 1
 			objenable seqCapBId, 1
+			objenable videoCapbid,1
 		}
 	}
 	

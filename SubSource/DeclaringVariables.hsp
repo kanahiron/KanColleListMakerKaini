@@ -94,7 +94,10 @@
 	seccapf = 0
 	sscapmes = "取得する"
 	savekind = ".png", ".jpg"
-	seqcapmes = "開始"
+	
+	seqCapMes = "開始"
+	videoCapMes = "開始"
+	
 	luposx = 0
 	luposy = 0
 	rdposx = 0
@@ -136,6 +139,9 @@
 
 	//ListModeHNum 艦娘一覧モードでの縦幅の指定
 	ListModeHNum = 5
+
+
+	videoCapFlg = FALSE
 
 	debugLog "*DeclaringVariables 終了"
 return

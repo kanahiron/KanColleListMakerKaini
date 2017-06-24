@@ -357,6 +357,9 @@ return
 return
 
 *seqcap
+
+	nidPush
+	gsel WND_MAIN, 0
 	
 	if (seqcapf == FALSE){
 		
@@ -367,8 +370,9 @@ return
 		objprm seqcapBId, seqcapmes
 		
 		objenable comboxId, 0
-		objenable sscapBId, 0
+		//objenable sscapBId, 0
 		objenable sscapIId, 0
+		objenable videoCapBId, 0
 		objenable yabumiBId, 0
 
 		objenable luposxIId, 0
@@ -396,7 +400,8 @@ return
 		objenable SSCapIId, 1
 
 		if availableCap | manualpos{
-			objenable SSCapBId, 1
+			//objenable SSCapBId, 1
+			objenable videoCapBId, 1
 		}
 		if availableCap: objenable yabumiBId, 1	
 			
@@ -406,4 +411,6 @@ return
 		objenable rdposyIId, 1
 
 	}
+
+	nidPop
 return

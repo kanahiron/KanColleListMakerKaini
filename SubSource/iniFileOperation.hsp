@@ -41,6 +41,9 @@
 	GetIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink, "\"íºê⁄òAåã_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 
 
+	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
+
+
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
 	if stat = 0: userdata = decstr(temp)
@@ -153,6 +156,8 @@ return
 	if (addOrderNum != 0) & (addOrderNum != 1):addOrderNum=1
 
 	if (airStationTab != 0) & (airStationTab != 1):airStationTab=1
+	
+	if (enableVideoCap != 0) & (enableVideoCap != 1):enableVideoCap=1
 
 	fontColorFirstFleet = int("$"+fontcolorFirstFleetstr)
 	fontColorSecondFleet = int("$"+fontcolorSecondFleetstr)
@@ -329,6 +334,8 @@ return
 	WriteIni "CaptureAndMaking", "SaveNameFormation", saveNameFormation
 	WriteIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation
 	WriteIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink
+
+	WriteIni "VideoCapture", "enableVideoCap", enableVideoCap
 
 	sdim temp, 256
 	temp = encstr(userdata)

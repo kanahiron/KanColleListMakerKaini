@@ -32,7 +32,7 @@
 	
 		if (mode == MODE_OPTION){
 			pos Scale(175), 0
-			combox optionMode, Scale(100), " 環境設定\n キャプチャ・作成設定\n Twitter設定\n その他設定"
+			combox optionMode, Scale(100), " 環境設定\n キャプチャ・作成設定\n 動画キャプチャ設定\n Twitter設定\n その他設定"
 			hOptionComBox = objinfo(stat, 2)
 		}
 	}
@@ -164,7 +164,7 @@
 		createSemiAutoBId  = stat
 		//*/
 
-		pos Scale(3+(disableseqcap*-175)), mesy + scale3
+		pos Scale(7+(disableseqcap*-175)), mesy + scale3
 		mes "連続キャプチャ"
 		objsize Scale(70), Scale(25)
 		pos Scale(105+(disableseqcap*175)), mesy
@@ -172,8 +172,14 @@
 		button gosub seqcapmes, *seqcap
 		seqCapBId  = stat
 
-		
-		
+		pos Scale(7+((enableVideoCap^1)*-175)), mesy + scale3
+		mes "動画キャプチャ"
+		objsize Scale(70), Scale(25)
+		pos Scale(105+((enableVideoCap^1)*175)), mesy
+		if enableVideoCap : mesy += Scale(25)
+		button gosub videoCapMes, *VideoCap
+		videoCapBId  = stat
+
 		dispcapy = mesy
 		if dispcap {
 			syscolor 16
@@ -196,16 +202,19 @@
 		if availablecap = 0{
 			objenable sscapbid, 0
 			objenable seqcapbid, 0
+			objenable videoCapBId, 0
 			objenable yabumibid, 0
 		} else {
 			objenable sscapbid, 1
 			objenable seqcapbid, 1
+			objenable videoCapBId, 1
 			objenable yabumibid, 1
 		}
 		
 		if manualpos {
 			objenable sscapbid, 1
 			objenable seqcapbid, 1
+			objenable videoCapBId, 1
 		}
 		
 		width Scale(175), mesy
@@ -685,9 +694,18 @@
 			mesbox saveNameAirStation, Scale(270), Scale(45), 5, 259: mesy += Scale(45)
 	
 		}
-	
+
 		if (optionMode == 2){
+
+			objsize Scale(350), scale20
+			pos scale5, mesy
+			chkbox "動画キャプチャを有効にする", enableVideoCap: mesy += scale20
+			
+		}
 	
+	
+		if (optionMode == 3){
+
 			pos scale5, mesy + Scale(2)
 			mes "Twitter連携"
 			objsize Scale(250), Scale(25)
@@ -700,7 +718,7 @@
 			chkbox "Twitterにはjpgで投稿する", twijpg: mesy += scale20
 		}
 	
-		if (optionMode == 3){
+		if (optionMode == 4){
 			
 			pos 0,mesy
 			objsize Scale(350), scale20
