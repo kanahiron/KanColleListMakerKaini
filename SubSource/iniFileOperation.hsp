@@ -270,9 +270,10 @@ return
 	//
 
 	exist ffmpegDir
-	if (strsize<0){
+	if (strsize == -1){
+		ffmpegDir == ""
 		exist dir_exe+"\\bin\\ffmpeg.exe"
-		if(strsize!=0){
+		if(strsize != -1){
 			ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
 		}
 	} else {

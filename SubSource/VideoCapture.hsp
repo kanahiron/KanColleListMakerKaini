@@ -178,9 +178,7 @@ return
 
 *VideoCapSetting
 
-	if (ffmpegdir != ""){
-		GetAudioDevice ffmpegdir, audioDeviceList
-	}
+	GetAudioDevice ffmpegdir, audioDeviceList
 
 return
 

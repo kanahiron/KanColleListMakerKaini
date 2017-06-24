@@ -606,10 +606,14 @@ return success
 
 #deffunc GetAudioDevice str ffmpegpath, var output
 
+	sdim output, 1024*4
+
+	if (ffmpegpath == ""):return
+
 	sdim buf, 1024*10
 	sdim buf1, 1024*10
 	sdim buf2, 1024*10
-	sdim output, 1024*4
+	
 
 	cmdm = strf("%s  -list_devices true -f dshow -i audio", ffmpegpath)
 	
