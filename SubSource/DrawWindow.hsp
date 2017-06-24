@@ -164,11 +164,11 @@
 		createSemiAutoBId  = stat
 		//*/
 
-		pos Scale(7+(disableseqcap*-175)), mesy + scale3
+		pos Scale(7+((enableSeqCap^1)*-175)), mesy + scale3
 		mes "連続キャプチャ"
 		objsize Scale(70), Scale(25)
-		pos Scale(105+(disableseqcap*175)), mesy
-		if disableseqcap^1 : mesy += Scale(25)
+		pos Scale(105+((enableSeqCap^1)*175)), mesy
+		if enableSeqCap: mesy += Scale(25)
 		button gosub seqcapmes, *seqcap
 		seqCapBId  = stat
 
@@ -653,7 +653,7 @@
 			SetWindowLong objinfo(jpgqualityiid,2), -16, stat | $2
 			
 			pos 5, mesy
-			chkbox "連続キャプチャを無効にする", disableseqcap: mesy += scale20
+			chkbox "連続キャプチャを有効にする", enableSeqCap: mesy += scale20
 		
 			pos 5, mesy
 			mes "連続キャプチャの間隔"

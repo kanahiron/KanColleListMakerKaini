@@ -32,7 +32,7 @@
 	GetIni "CaptureAndMaking", "AutoAddNonSave", autoaddnonsave, "1"
 	GetIni "CaptureAndMaking", "JpgSave", jpgsave, "0"
 	GetIni "CaptureAndMaking", "JpgQuality", jpgquality, "90"
-	GetIni "CaptureAndMaking", "DisableIntervalCap", disableseqcap, "1"
+	GetIni "CaptureAndMaking", "DisableIntervalCap", enableSeqCap, "0"
 	GetIni "CaptureAndMaking", "IntervalTime", timersec, "5"
 	GetIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameList", saveNameList, "\"ŠÍ–ºˆê——_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
@@ -126,7 +126,7 @@ return
 	if (autoaddCapture != 0) & (autoaddCapture != 1):autoaddCapture=1
 	if (jpgsave != 0) & (jpgsave != 1):jpgsave=0
 	if (jpgquality < 1) | (jpgquality > 100):jpgquality = 90
-	if (disableseqcap != 0) & (disableseqcap != 1):disableseqcap = 1
+	if (enableSeqCap != 0) & (enableSeqCap != 1):enableSeqCap = 0
 	if (timersec < 0) | (timersec > 999):timersec = 5
 	if (manualpos != 0) & (manualpos != 1):manualpos=0
 	if (lvname != 0) & (lvname != 1):lvname=0
@@ -327,7 +327,7 @@ return
 	WriteIni "CaptureAndMaking", "AutoAddNonSave", autoaddnonsave //Ver0.2.7
 	WriteIni "CaptureAndMaking", "JpgSave", jpgsave
 	WriteIni "CaptureAndMaking", "JpgQuality", jpgquality
-	WriteIni "CaptureAndMaking", "DisableIntervalCap", disableseqcap
+	WriteIni "CaptureAndMaking", "EnableIntervalCap", enableSeqCap
 	WriteIni "CaptureAndMaking", "IntervalTime", timersec
 	WriteIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture
 	WriteIni "CaptureAndMaking", "SaveNameList", saveNameList
