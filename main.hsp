@@ -24,6 +24,10 @@
 #packopt name "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ"
 #packopt hide 1
 
+#define SOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.2.9"
+#define klm2ver	2900
+
+
 
 #ifdef _debug
 
@@ -204,6 +208,8 @@
 		} 
 		return
 	}
+
+	if videoCapFlg: gosub *VideoCap
 
 	if hdcScreen: DeleteDC hdcScreen
 	if dcClient: ReleaseDC dcClient

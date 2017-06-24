@@ -400,8 +400,9 @@ return
 		objenable SSCapIId, 1
 
 		if availableCap | manualpos{
-			//objenable SSCapBId, 1
-			objenable videoCapBId, 1
+			if (ffmpegdir != ""){
+				objenable videoCapBId, 1
+			}
 		}
 		if availableCap: objenable yabumiBId, 1	
 			

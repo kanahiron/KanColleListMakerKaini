@@ -207,14 +207,14 @@
 		} else {
 			objenable sscapbid, 1
 			objenable seqcapbid, 1
-			objenable videoCapBId, 1
+			if (ffmpegdir != ""): objenable videoCapBId, 1
 			objenable yabumibid, 1
 		}
 		
 		if manualpos {
 			objenable sscapbid, 1
 			objenable seqcapbid, 1
-			objenable videoCapBId, 1
+			if (ffmpegdir != ""): objenable videoCapBId, 1
 		}
 		
 		width Scale(175), mesy

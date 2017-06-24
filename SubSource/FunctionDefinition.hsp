@@ -70,10 +70,9 @@
 #define timerID			101
 #define timer2ID		102
 #define VideoCapTimerID	103
-#define klm2ver			2700
 
 #define ctype round(%1) int(strf("%%0.0f", %1))
-#define SOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.2.7(‰¼)"
+
 
 #enum WND_MAIN = 0
 #enum WND_GRID
