@@ -2,7 +2,6 @@
 *VideoCap
 
 	nidPush
-	gsel WND_MAIN, 0
 	
 	if (videoCapFlg == FALSE){
 		
@@ -34,6 +33,7 @@
 		swend
 
 		sdim buf, 1024*10
+		sdim elapsedTimeStr, 1024
 
 		gosub *VideoCapSetting
 		sdim audioDeviceName, 256
@@ -45,26 +45,22 @@
 		cmda = strf("%s -vn -f dshow -i audio=\"%s\" -acodec aac -b:a 96k \"%s_a.aac\"", ffmpegdir, audioDeviceName, fname)
 		cmdm = strf("%s -i \"%s_v.mp4\" -i \"%s_a.aac\" -c:v copy -c:a copy \"%s.mp4\"", ffmpegdir, fname, fname, fname)
 
-		//alog cmdv+"\n"+cmda+"\n"+cmdm
-
-///*
-
 		pipe2exec cmda
 		apid = stat
 		pipe2exec cmdv
 		vpid = stat
 
-		if ( (apid == -1) || (vpid == -1) ){
+		gsel WND_MAIN, 0
 
-			dialog "動画キャプチャの開始に失敗しました"
+		if ( (apid == -1) || (vpid == -1) ){
+			logmessage = "動画キャプチャの開始に失敗しました"
+			objprm logid, logmessage
 			return
 		}
 
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID, 500, 0
 
-//*/
 		videoCapFlg = TRUE
-		
 		videoCapMes = "停止"
 		objprm videoCapBId, videoCapMes
 		
@@ -79,16 +75,11 @@
 		objenable rdposyIId, 0
 
 		videoCapStartTime = timeGetTime()
-
 	
 	} else {
 		
 		videoCapFlg = FALSE
-
-
-///*
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
-
 
 		pipe2put apid, "q" //録音の停止
 		pipe2put vpid, "q" //動画キャプチャの停止
@@ -113,6 +104,9 @@
 			if exfv && exfa: break
 			wait 10
 		loop
+
+		pipe2term vpid
+		pipe2term apid
 		
 	
 		pipe2exec cmdm
@@ -127,10 +121,15 @@
 			await 16
 		loop
 
+		pipe2term mpid
+
 		delete fname+"_v.mp4"
 		delete fname+"_a.aac"
 
-//*/
+		gsel WND_MAIN
+		logmessage = "動画キャプチャを停止しました"
+		objprm logid, logmessage
+
 		videoCapMes = "開始"
 		objprm videoCapBId, videoCapMes
 		
@@ -147,11 +146,15 @@
 		objenable rdposxIId, 1
 		objenable rdposyIId, 1
 
+		logmes
+
 	}
 	nidPop
 return
 
 *VideoCapTimerProcessing
+
+	nidPush
 
 	pipe2check vpid
 	if stat & 2: pipe2get vpid, buf
@@ -162,18 +165,14 @@ return
 	if stat & 4: pipe2err apid, buf
 
 	elapsedTime = timeGetTime() - videoCapStartTime
-	sdim elapsedTimeStr, 1024
 	elapsedTimeStr =  "動画をキャプチャ中…\n"
-	elapsedTimeStr += strf("経過時間 %02:%02.%03d", (elapsedTime/1000/60), (elapsedTime/1000\60), (elapsedTime\1000))
+	elapsedTimeStr += strf("経過時間 %02d:%02d.%03d", (elapsedTime/1000/60), (elapsedTime/1000\60), (elapsedTime\1000))
 
+	
+	gsel WND_MAIN
 	objprm logId, elapsedTimeStr
 	
-
-	
-
-	
-
-	
+	nidPop
 
 return
 
@@ -182,7 +181,6 @@ return
 	if (ffmpegdir != ""){
 		GetAudioDevice ffmpegdir, audioDeviceList
 	}
-
 
 return
 

@@ -625,6 +625,8 @@ return success
 		
 		wait 10
 	loop
+
+	pipe2term pid
 	
 	if strlen(buf1) != 0 :buf = buf1
 	if strlen(buf2) != 0 :buf = buf2
