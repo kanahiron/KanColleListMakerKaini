@@ -417,8 +417,13 @@ return
 		notesel listbuf
 		sdim listarr, 2048, notemax+1
 		repeat limit(notemax, 0, 100)
-			picHistory(cnt) = sssavedir+"\\"+kmnoteget(cnt)
-			picHistoryCount++
+
+			temp = sssavedir+"\\"+kmnoteget(cnt)
+			imageType = ImgF_GetFormat(temp)
+			if ( (imageType==2) || (imageType==3) || (imageType==4) ){
+				picHistory(cnt) = sssavedir+"\\"+kmnoteget(cnt)
+				picHistoryCount++
+			}
 		loop
 	}
 	chdir currentdir
