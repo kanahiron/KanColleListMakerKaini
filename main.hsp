@@ -49,6 +49,7 @@
 #endif
 	
 	onexit gosub *exit
+	//onerror gosub *err_
 
 	wndInfoInit
 	nidStackInit
@@ -229,7 +230,7 @@
 
 *err_
 	onerror 0
-	dialog "ï¿½Gï¿½ï¿½ï¿½[ï¿½Ôï¿½"+wparam+"\n"+lparam+"ï¿½sï¿½ï¿½"
+	dialog "ƒGƒ‰[”Ô†"+wparam+"\n"+lparam+"s–Ú"
 	gosub *exit
 
 #include "./SubSource/DeclaringVariables.hsp"
