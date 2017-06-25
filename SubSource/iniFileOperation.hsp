@@ -43,8 +43,8 @@
 
 
 	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
-	GetIni "ffmpegDir", "ffmpegDir", ffmpegDir, "\"\""
-
+	GetIni "VideoCapture", "ffmpegDir", ffmpegDir, "\"\""
+	
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
 	if stat = 0: userdata = decstr(temp)
@@ -265,10 +265,6 @@ return
 	fontcolorname = int("$"+fontcolornamestr)
 	fontcolornum = int("$"+fontcolornumstr)
 
-
-
-	//
-
 	exist ffmpegDir
 	if (strsize == -1){
 		ffmpegDir == ""
@@ -276,11 +272,7 @@ return
 		if(strsize != -1){
 			ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
 		}
-	} else {
-		ffmpegDir == ""
 	}
-
-	//
 	
 	if (tuika1+tuika2+tuika3+tuika4) != 1{
 		tuika1 = 1
@@ -354,6 +346,7 @@ return
 	WriteIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink
 
 	WriteIni "VideoCapture", "enableVideoCap", enableVideoCap
+	WriteIni "VideoCapture", "ffmpegDir", ffmpegDir
 
 	sdim temp, 256
 	temp = encstr(userdata)

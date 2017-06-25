@@ -1,7 +1,7 @@
 
 *drawString
 	
-	nidpush
+	nidPush
 
 	gsel WND_MAKE_STRING
 
@@ -208,7 +208,7 @@
 	dim chooseColoerStruct, 9
 	chooseColoerStruct(0) = 36, hwnd, 0, 0, varptr(colorRefArr), CC_FULLOPEN | CC_RGBINIT
 	
-	nidpop
+	nidPop
 return
 
 *colorCange1

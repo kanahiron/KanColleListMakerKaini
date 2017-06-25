@@ -1,6 +1,6 @@
 
 *drawMainWindow
-
+	nidPush
 
 	if (mode == MODE_LIST){
 		gsel WND_GRID, 1
@@ -11,7 +11,6 @@
 	gsel WND_MAIN, 1+frontrow
 	pos 0,0
 	syscolor 15: boxf: syscolor 8
-
 
 	if ( (mode == MODE_OPTION) & (modePrev == MODE_OPTION) ){
 		clrobj 2, -1
@@ -529,7 +528,7 @@
 		mesy = ComBoxH+3
 		syscolor 15: boxf: syscolor 8
 	
-		if (optionMode == 0){
+		if (optionMode == OPMODE_CONFIG){
 	
 			objsize Scale(350), scale20
 			
@@ -611,7 +610,7 @@
 			yabumiid = stat
 		}
 	
-		if (optionMode == 1){
+		if (optionMode == OPMODE_CAPTURE){
 	
 			objsize Scale(350), scale20
 			
@@ -695,7 +694,7 @@
 	
 		}
 
-		if (optionMode == 2){
+		if (optionMode == OPMODE_VIDEOCAPTURE){
 
 			gosub *VideoCapSetting
 
@@ -725,7 +724,7 @@
 		}
 	
 	
-		if (optionMode == 3){
+		if (optionMode == OPMODE_TWITTER){
 
 			pos scale5, mesy + Scale(2)
 			mes "Twitter連携"
@@ -739,7 +738,7 @@
 			chkbox "Twitterにはjpgで投稿する", twijpg: mesy += scale20
 		}
 	
-		if (optionMode == 4){
+		if (optionMode == OPMODE_OTHER){
 			
 			pos 0,mesy
 			objsize Scale(350), scale20
@@ -755,7 +754,7 @@
 		width Scale(350), mesy
 		//オプションここまで//オプションここまで//オプションここまで//オプションここまで
 	}
-	
+	nidPop
 return
 
 *windowsSizeChange

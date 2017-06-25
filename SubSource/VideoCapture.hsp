@@ -184,13 +184,18 @@ return
 
 
 *openDialogffmpeg
+	;nidPush
+
+	;gsel WND_MAIN
 
 	dialog "exe", 16, "ffmpeg.exe"
 	if (stat==1){
 		ffmpegdir = refstr
-		objprm ffmpegDirIId, ffmpegdir
+		dialog ffmpegDir
+		objprm ffmpegDirIId, ffmpegdir:await
 	}
 
+	;nidPop
 	gosub *VideoCapSetting
 
 return

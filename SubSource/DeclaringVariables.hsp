@@ -1,6 +1,4 @@
 *DeclaringVariables
-
-	debugLog "*DeclaringVariables ŠJŽn"
 	
 	saveListName = ""
 	tempint = 0

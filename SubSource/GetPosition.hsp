@@ -89,7 +89,7 @@
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY | CAPTUREBLT: redraw
 
 		bgscr WND_TEMP_SCR1, disinfo(2), disinfo(3), 2: SET_WND_INFO
-		font "メイリオ", Scale(30)
+		font "メイリオ", 30
 	
 		gcopy WND_TEMP1, 0, 0, disinfo(2), disinfo(3)
 		color 128,128,128
@@ -117,6 +117,7 @@ return
 
 
 *CaptureMethodDecide
+	nidPush
 
 	captureMethod = CM_BITBLT
 	positionType = PT_ABSOLUTE
@@ -204,7 +205,7 @@ return
 
 	captureMethod = CM_BITBLT
 	positionType = PT_ABSOLUTE
-	
+	nidPop
 return
 
 *SSSettingCheck

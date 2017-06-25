@@ -53,7 +53,7 @@
 #endif
 	
 	onexit gosub *exit
-	//onerror gosub *err_
+	onerror gosub *err_
 
 	wndInfoInit
 	nidStackInit
@@ -183,8 +183,7 @@
 	}
 	
 	gosub *VerCheck
-
-
+	
 	//SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 1000, 0
 	
 	stop
