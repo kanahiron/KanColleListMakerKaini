@@ -113,6 +113,12 @@
 			}
 		}
 	}
+
+	if (mode==MODE_OPTION && optionMode==OPMODE_VIDEOCAPTURE){
+		if ( (lparam == hAudioDeviceLB) && (((wparam>>16) & 0x0000FFFF) == 1) ){
+			gosub *SetAudioDeviceName
+		}
+	}
 	
 	logmes ""
 return

@@ -696,8 +696,6 @@
 
 		if (optionMode == OPMODE_VIDEOCAPTURE){
 
-			gosub *VideoCapSetting
-
 			objsize Scale(350), scale20
 			pos scale5, mesy
 			chkbox "動画キャプチャを有効にする", enableVideoCap: mesy += scale20
@@ -707,7 +705,9 @@
 			mes "使用するオーディオデバイス": mesy += scale20
 			pos 0, mesy
 			listbox audioDeviceListNum, 30, audioDeviceList
-			await: GetClientRect objinfo_hwnd(stat), varptr(rect)
+			audioDeviceLBId = stat
+			hAudioDeviceLB = objinfo_hwnd(audioDeviceLBId)
+			await: GetClientRect hAudioDeviceLB, varptr(rect)
 			mesy += rect(3)+scale5
 			
 

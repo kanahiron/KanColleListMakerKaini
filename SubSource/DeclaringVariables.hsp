@@ -139,11 +139,10 @@
 	ListModeHNum = 5
 
 
+	sdim audioDeviceList, 1024*2
+	dim audioDeviceListNum, 1
 	videoCapFlg = FALSE
 
-	audioDeviceListNum = 0
-
-	debugLog "*DeclaringVariables èIóπ"
 return
 
 

@@ -35,11 +35,6 @@
 		sdim buf, 1024*10
 		sdim elapsedTimeStr, 1024
 
-		gosub *VideoCapSetting
-		sdim audioDeviceName, 256
-		notesel audioDeviceList
-		noteget audioDeviceName, audioDeviceListNum
-
 		fname = strf("%s\\video%02d%02d%02d", ssSaveDir, gettime(4), gettime(5), gettime(6))
 		cmdv = strf("%s -an -r 20/1 -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s_v.mp4\"", ffmpegdir, sscapwh(0), sscapwh(1), capX, capY, fname)
 		cmda = strf("%s -vn -f dshow -i audio=\"%s\" -acodec aac -b:a 96k \"%s_a.aac\"", ffmpegdir, audioDeviceName, fname)
@@ -166,7 +161,7 @@ return
 
 	elapsedTime = timeGetTime() - videoCapStartTime
 	elapsedTimeStr =  "動画をキャプチャ中…\n"
-	elapsedTimeStr += strf("経過時間 %02d:%02d.%03d", (elapsedTime/1000/60), (elapsedTime/1000\60), (elapsedTime\1000))
+	elapsedTimeStr += strf("  経過時間 %02d:%02d.%03d", (elapsedTime/1000/60), (elapsedTime/1000\60), (elapsedTime\1000))
 
 	
 	gsel WND_MAIN
@@ -177,25 +172,59 @@ return
 return
 
 *VideoCapSetting
+	//audioDeviceNameからaudioDeviceListNumを取得するためのサブルーチン
+	//起動時に一度だけ呼び出される
 
+	sdim audioDeviceList, 1024*2
 	GetAudioDevice ffmpegdir, audioDeviceList
+	audioDeviceListNum = -1
+	if (audioDeviceName != ""){
+		notesel audioDeviceList
+		repeat notemax
+			noteget tempStr, cnt
+			if (audioDeviceName == tempStr){
+				audioDeviceListNum = cnt
+				break
+			}
+		loop
+		noteunsel
+		if (audioDeviceListNum == -1){
+			audioDeviceName = ""
+		}
+	}
+	
+return
 
+*SetAudioDeviceName
+	//リストボックスをクリックした時に呼び出されるサブルーチン
+	//WindowMessageEventからクリックするたびに呼び出される
+
+	sendmsg hAudioDeviceLB, LB_GETCURSEL
+	audioDeviceListNum = stat
+	notesel audioDeviceList
+	noteget audioDeviceName, audioDeviceListNum
+	noteunsel
+	
 return
 
 
 *openDialogffmpeg
-	;nidPush
-
-	;gsel WND_MAIN
+	//ffmpeg探すダイアログを開くためのサブルーチン
+	//ボタンを押す度に呼び出される
 
 	dialog "exe", 16, "ffmpeg.exe"
 	if (stat==1){
 		ffmpegdir = refstr
-		dialog ffmpegDir
-		objprm ffmpegDirIId, ffmpegdir:await
+	} else {
+		ffmpegdir = ""
 	}
+	
+	objprm ffmpegDirIId, ffmpegdir: await
 
-	;nidPop
-	gosub *VideoCapSetting
+	GetAudioDevice ffmpegdir, audioDeviceList
+	objprm audioDeviceLBId, audioDeviceList: await
+	audioDeviceListNum = -1
+	audioDeviceName = ""
+	sendmsg hAudioDeviceLB, LB_SETCURSEL, audioDeviceListNum, 0
 
 return

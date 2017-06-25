@@ -65,6 +65,7 @@
 	gosub *dataCheck
 	gosub *iniSave
 	gosub *loadHistory
+	gosub *VideoCapSetting
 	
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
@@ -185,6 +186,11 @@
 	gosub *VerCheck
 	
 	//SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 1000, 0
+
+	mode = MODE_OPTION
+	optionMode = OPMODE_VIDEOCAPTURE
+	gosub *drawMainWindow
+	
 	
 	stop
 

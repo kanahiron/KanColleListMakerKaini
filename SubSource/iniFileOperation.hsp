@@ -2,13 +2,13 @@
 
 	errDialog = TRUE
 	SetIni (dir_exe+"\\ListMaker2.ini")
-	if (stat == 2):errDialog = FALSE:initialActivation = TRUE
+	if (stat == 2):errDialog = FALSE: initialActivation = TRUE
 
-	sdim intervalShotDir,512
-	sdim listsavedir,512
-	sdim sssavedir,512
-	sdim yabumidir,512
-	sdim ffmpegdir,1024
+	sdim intervalShotDir, 512
+	sdim listsavedir, 512
+	sdim sssavedir, 512
+	sdim yabumidir, 512
+	sdim ffmpegdir, 1024
 
 	GetIni "Configuration", "FrontRow", frontrow, "1"
 	GetIni "Configuration", "HideLog", hidelog, "0"
@@ -25,7 +25,6 @@
 	GetIni "Configuration", "IntervalShotSaveDir",intervalShotDir, "\"\""
 	GetIni "Configuration", "YabumiExeDir", yabumidir, "\"\""
 
-	
 	GetIni "CaptureAndMaking", "NameCut", namecut, "0"
 	GetIni "CaptureAndMaking", "HotkeyCapture", hotkeycap, "1"
 	GetIni "CaptureAndMaking", "HotkeyStr", hotkeystr, "\"A___Z\""
@@ -41,9 +40,9 @@
 	GetIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation, "\"äÓínçqãÛë‡_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink, "\"íºê⁄òAåã_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 
-
 	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
 	GetIni "VideoCapture", "ffmpegDir", ffmpegDir, "\"\""
+	GetIni "VideoCapture", "AudioDeviceName", AudioDeviceName, "\"\""
 	
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
@@ -60,7 +59,6 @@
 	GetIni "SSMode", "HideName", hidename, "0"
 	GetIni "SSMode", "EnableTweetWindow", enabletweetwindow, "0"
 	GetIni "SSMode", "SSCapturePosition", SSCap_temp, "0\",\"0\",\"0\",\"0"
-
 	
 	GetIni "KanmusuListMode", "ichiranMode1", ichiranMode1, "1"
 	GetIni "KanmusuListMode", "yubiwa", yubiwa, "1"
@@ -68,7 +66,6 @@
 	GetIni "KanmusuListMode", "page", page, "0"
 	GetIni "KanmusuListMode", "lvname", lvname, "0"
 	GetIni "KanmusuListMode", "ichiranMode2", ichiranMode2, "0"
-
 
 	GetIni "KanmusuFormationMode", "tuika1", tuika1, "1"
 	GetIni "KanmusuFormationMode", "tuika2", tuika2, "0"
@@ -328,7 +325,6 @@ return
 	WriteIni "Configuration", "ListSaveDir", listsavedir
 	WriteIni "Configuration", "IntervalShotSaveDir",intervalShotDir
 	WriteIni "Configuration", "YabumiExeDir", yabumidir
-
 	
 	WriteIni "CaptureAndMaking", "NameCut", namecut
 	WriteIni "CaptureAndMaking", "HotkeyCapture", hotkeycap
@@ -347,6 +343,7 @@ return
 
 	WriteIni "VideoCapture", "enableVideoCap", enableVideoCap
 	WriteIni "VideoCapture", "ffmpegDir", ffmpegDir
+	WriteIni "VideoCapture", "AudioDeviceName", AudioDeviceName
 
 	sdim temp, 256
 	temp = encstr(userdata)
@@ -357,14 +354,12 @@ return
 	WriteIni "TwitterSetting", "Twi_ACCESS_SECRET", temp
 
 	WriteIni "TwitterSetting", "TwiJpg",twijpg
-	
+
 
 	WriteIni "SSMode", "AutoSearch", autosearch
 	WriteIni "SSMode", "HideName", hidename
 	WriteIni "SSMode", "EnableTweetWindow",enabletweetwindow
 	WriteIni "SSMode", "SSCapturePosition", SSCap
-	
-
 	
 	WriteIni "KanmusuListMode", "ichiranMode1", ichiranMode1
 	WriteIni "KanmusuListMode", "yubiwa", yubiwa
@@ -372,7 +367,6 @@ return
 	WriteIni "KanmusuListMode", "page", page
 	WriteIni "KanmusuListMode", "lvname", lvname
 	WriteIni "KanmusuListMode", "ichiranMode2", ichiranMode2
-
 
 	WriteIni "KanmusuFormationMode", "tuika1", tuika1
 	WriteIni "KanmusuFormationMode", "tuika2", tuika2
