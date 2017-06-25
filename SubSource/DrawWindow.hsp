@@ -696,6 +696,8 @@
 
 		if (optionMode == OPMODE_VIDEOCAPTURE){
 
+			gosub *VideoCapSetting
+
 			objsize Scale(350), scale20
 			pos scale5, mesy
 			chkbox "動画キャプチャを有効にする", enableVideoCap: mesy += scale20
@@ -717,7 +719,7 @@
 			pos Scale(200), mesy
 			button gosub "変更", *openDialogffmpeg: mesy += scale20
 			pos 0,mesy
-			mesbox ffmpegdir, Scale(350), Scale(45), 5, 259 :mesy += Scale(45)
+			mesbox ffmpegdir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
 			ffmpegDirIId = stat
 		
 			

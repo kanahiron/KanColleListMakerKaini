@@ -2,6 +2,29 @@
 *VideoCap
 
 	nidPush
+
+	if (audioDeviceName == ""){
+		gsel WND_MAIN
+		
+		dialog "オーディオデバイスが選択されていません。\n設定画面を開きますか？",2
+		if (stat == 6){
+			mode = MODE_OPTION
+			optionMode = OPMODE_VIDEOCAPTURE
+			gosub *drawMainWindow
+		
+			optionModePrev = 0
+			modePrev = mode
+
+			nidPop
+			return
+		} else {
+			logmessage = "動画キャプチャを中止しました。"
+			objprm logid, logmessage: await
+			
+			nidPop
+			return
+		}
+	}
 	
 	if (videoCapFlg == FALSE){
 		
@@ -49,7 +72,7 @@
 
 		if ( (apid == -1) || (vpid == -1) ){
 			logmessage = "動画キャプチャの開始に失敗しました"
-			objprm logid, logmessage
+			objprm logid, logmessage: await
 			return
 		}
 
@@ -103,7 +126,6 @@
 		pipe2term vpid
 		pipe2term apid
 		
-	
 		pipe2exec cmdm
 		mpid = stat
 		
@@ -118,8 +140,10 @@
 
 		pipe2term mpid
 
-		delete fname+"_v.mp4"
-		delete fname+"_a.aac"
+		exist fname+"_v.mp4"
+		if (strsize != -1): delete fname+"_v.mp4"
+		exist fname+"_a.aac"
+		if (strsize != -1): delete fname+"_a.aac"
 
 		gsel WND_MAIN
 		logmessage = "動画キャプチャを停止しました"
@@ -204,6 +228,8 @@ return
 	notesel audioDeviceList
 	noteget audioDeviceName, audioDeviceListNum
 	noteunsel
+
+	logmes "audioDeviceName :"+audioDeviceName
 	
 return
 
@@ -211,6 +237,10 @@ return
 *openDialogffmpeg
 	//ffmpeg探すダイアログを開くためのサブルーチン
 	//ボタンを押す度に呼び出される
+
+	nidPush
+
+	gsel WND_MAIN
 
 	dialog "exe", 16, "ffmpeg.exe"
 	if (stat==1){
@@ -226,5 +256,7 @@ return
 	audioDeviceListNum = -1
 	audioDeviceName = ""
 	sendmsg hAudioDeviceLB, LB_SETCURSEL, audioDeviceListNum, 0
+
+	nidPop
 
 return

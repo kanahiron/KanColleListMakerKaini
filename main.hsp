@@ -187,9 +187,9 @@
 	
 	//SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 1000, 0
 
-	mode = MODE_OPTION
-	optionMode = OPMODE_VIDEOCAPTURE
-	gosub *drawMainWindow
+	//mode = MODE_OPTION
+	//optionMode = OPMODE_VIDEOCAPTURE
+	//gosub *drawMainWindow
 	
 	
 	stop
@@ -242,6 +242,9 @@
 *err_
 	onerror 0
 	dialog "ÉGÉâÅ[î‘çÜ"+wparam+"\n"+lparam+"çsñ⁄"
+	pipe2term vpid
+	pipe2term apid
+	pipe2term mpid
 	gosub *exit
 
 #include "./SubSource/DeclaringVariables.hsp"
