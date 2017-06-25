@@ -49,38 +49,44 @@ return
 return
 
 *hotkeycapsetting
+	nidPush
 
-	if (hotkeycap = 1) & (hotkeystr != hotkeystr_temp) {
+
+	if (hotkeycap == 1 && hotkeystr != hotkeystr_temp) {
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID
 		RegisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID,(MOD_ALT*hotkeycapalt)|(MOD_CONTROL*hotkeycapctrl)|(MOD_SHIFT*hotkeycapshift)|(MOD_WIN*hotkeycapwin),hotkeycode
 		hotkeystr_temp = hotkeystr
-		if stat = 0{
-			logmessage = "ホットキーの設定に失敗しました"
-			objprm logid,logmessage
+		if (stat == 0){
 			hotkeyset = 0
+			logmessage = "ホットキーの設定に失敗しました"
 		} else {
-			logmessage = "ホットキーを設定しました"
-			objprm logid,logmessage
 			hotkeyset = 1
+			logmessage = "ホットキーを設定しました"
 		}
 	}
+
 	
-	if (hotkeycap = 0) & (hotkeyset = 1){
+	if ( hotkeycap == 0 && hotkeyset == 1 ){
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID
-		logmessage = "ホットキーを解除しました"
-		objprm logid,logmessage
 		hotkeyset = 0
+		logmessage = "ホットキーを解除しました"
 		hotkeystr_temp = ""
 	}
 
-	if hotkeyset = 1 & availablecap = 1 {
-		gsel WND_MAIN,0
+	if (mode != MODE_OPTION){
+		gsel WND_MAIN
+		objprm logid,logmessage: await
+	}
+
+	if ( hotkeyset && availablecap ) {
+		gsel WND_MAIN, 0
 		title "*"+SOFTNAME
 	} else {
-		gsel WND_MAIN,0
+		gsel WND_MAIN, 0
 		title SOFTNAME
 	}
 	
+	nidPop
 return
 
 
