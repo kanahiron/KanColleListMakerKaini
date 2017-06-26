@@ -72,14 +72,16 @@
 		//ツイートウィンドウ表示のチェックボックスが押された時
 		if (lparam == enabletweetwindowch){
 			
-			sendmsg enabletweetwindowch, $F2
-			enabletweetwindow = stat & 0x01
+			sendmsg enableTweetWindowCh, $F2
+			enableTweetWindow = stat & 0x01
+			
 			if enabletweetwindow {
 				gsel WND_TWITTER, 1+frontrow
 			} else {
 				gsel WND_TWITTER, -1
 			}
 			gsel WND_MAIN
+			objprm enableTweetWindowCId, enableTweetWindow
 			
 		}
 

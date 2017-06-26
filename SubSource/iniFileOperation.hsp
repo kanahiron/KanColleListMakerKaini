@@ -60,7 +60,7 @@
 
 	GetIni "SSMode", "AutoSearch", autosearch, "1"
 	GetIni "SSMode", "HideName", hidename, "0"
-	GetIni "SSMode", "EnableTweetWindow", enabletweetwindow, "0"
+	GetIni "SSMode", "EnableTweetWindow", enableTweetWindow, "0"
 	GetIni "SSMode", "SSCapturePosition", SSCap_temp, "0\",\"0\",\"0\",\"0"
 	
 	GetIni "KanmusuListMode", "ichiranMode1", ichiranMode1, "1"
@@ -138,7 +138,7 @@ return
 	if (sosuka != 0) & (sosuka != 1):sosuka=1
 	if (sosu != 0) & (sosu != 1):sosu=0
 	if (soka != 0) & (soka != 1):soka=0
-	if (enabletweetwindow != 0) & (enabletweetwindow != 1):enabletweetwindow=0
+	if (enableTweetWindow != 0) & (enableTweetWindow != 1):enableTweetWindow=0
 	if (twijpg != 0) & (twijpg != 1):twijpg=1
 	if fontname = "":fontname = "ÇlÇrÅ@ÉSÉVÉbÉN"
 	if fontnum = "":fontnum = "ÇlÇrÅ@ÉSÉVÉbÉN"
@@ -378,7 +378,7 @@ return
 
 	WriteIni "SSMode", "AutoSearch", autosearch
 	WriteIni "SSMode", "HideName", hidename
-	WriteIni "SSMode", "EnableTweetWindow",enabletweetwindow
+	WriteIni "SSMode", "EnableTweetWindow",enableTweetWindow
 	WriteIni "SSMode", "SSCapturePosition", SSCap
 	
 	WriteIni "KanmusuListMode", "ichiranMode1", ichiranMode1
@@ -428,8 +428,6 @@ return
 
 			temp = sssavedir+"\\"+kmnoteget(cnt)
 			imageType = ImgF_GetFormat(temp)
-			title temp+" "+imageType +" cnt :"+cnt
-			await 20
 			if ( (imageType==2) || (imageType==3) || (imageType==4) ){
 				picHistory(picHistoryCount) = temp
 				picHistoryCount++

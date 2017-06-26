@@ -151,7 +151,7 @@
 	gosub *twiInit
 
 	if enableTweetWindow {
-		gsel WND_TWITTER, 1
+		gsel WND_TWITTER, 1+frontrow
 		gsel WND_MAIN, 1+frontrow
 	}
 
