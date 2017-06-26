@@ -141,6 +141,17 @@
 		oncmd gosub *getText ,WM_COMMAND
 		oncmd gosub *OnDropFiles, WM_DROPFILES
 
+	screen WND_FFMPEG, 1024, 768, 2 | 4
+		SET_WND_INFO
+		sdim tempBuf
+		buf1 = ""
+		buf2 = ""
+		buf = ""
+		mesbox Buf1, 1024, 256
+		mesbox Buf2, 1024, 256
+		mesbox Buf, 1024, 256
+		
+
 	gsel WND_MAIN
 
 	gosub *calcUIScale

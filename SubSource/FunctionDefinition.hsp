@@ -90,7 +90,7 @@
 #enum WND_TEMP1
 #enum WND_TEMP2
 #enum WND_TEMP_SCR1
-
+#enum WND_FFMPEG
 
 #const MODE_SSCAP	0
 #const MODE_LIST	1

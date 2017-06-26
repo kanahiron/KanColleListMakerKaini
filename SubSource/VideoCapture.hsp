@@ -56,12 +56,20 @@
 		swend
 
 		sdim buf, 1024*10
+		sdim buf1, 1024*10
+		sdim buf2, 1024*10
 		sdim elapsedTimeStr, 1024
 
+		videoCapSizeX = int((0.125*sscapwh(0))+0.9999999)*8
+		videoCapSizeY = int((0.125*sscapwh(1))+0.9999999)*8
+
 		fname = strf("%s\\%s", videoCapSaveDir, DateAndTimeFormat2(saveNameVideoCapture))
-		cmdv = strf("%s -an -r 20/1 -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s_v.mp4\"", ffmpegdir, sscapwh(0), sscapwh(1), capX, capY, fname)
-		cmda = strf("%s -vn -f dshow -i audio=\"%s\" -acodec aac -b:a 96k \"%s_a.aac\"", ffmpegdir, audioDeviceName, fname)
-		cmdm = strf("%s -i \"%s_v.mp4\" -i \"%s_a.aac\" -c:v copy -c:a copy \"%s.mp4\"", ffmpegdir, fname, fname, fname)
+		cmdv = strf("\"%s\" -an -r 20/1 -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s_v.mp4\"", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY, fname)
+		cmda = strf("\"%s\" -vn -f dshow -i audio=\"%s\" -acodec aac -b:a 96k \"%s_a.aac\"", ffmpegdir, audioDeviceName, fname)
+		cmdm = strf("\"%s\" -i \"%s_v.mp4\" -i \"%s_a.aac\" -c:v copy -c:a copy \"%s.mp4\"", ffmpegdir, fname, fname, fname)
+
+		//gsel WND_FFMPEG, 1
+		gsel WND_MAIN
 
 		pipe2exec cmda
 		apid = stat
@@ -158,15 +166,21 @@ return
 	exfv = 0
 	exfa = 0
 
+	gsel WND_FFMPEG
+
 	pipe2check vpid
-	if (stat == 0):exfv = stat
-	if (stat & 2): pipe2get vpid, buf
-	if (stat & 4): pipe2err vpid, buf
+	if (stat == 0):exfv = 1
+	if (stat & 2): pipe2get vpid, buf1
+	if (stat & 4): pipe2err vpid, buf1
+	//objprm 0, buf1: await
 
 	pipe2check apid
-	if (stat == 0):exfa = stat
-	if (stat & 2): pipe2get apid, buf
-	if (stat & 4): pipe2err apid, buf
+	if (stat == 0):exfa = 1
+	if (stat & 2): pipe2get apid, buf2
+	if (stat & 4): pipe2err apid, buf2
+	//objprm 1, buf2: await
+
+	gsel WND_MAIN
 	
 	if (exfv || exfa){
 		gosub *VideoCap
