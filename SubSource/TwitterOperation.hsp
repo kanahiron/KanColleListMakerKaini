@@ -81,7 +81,6 @@ return
 		objprm logid, logmessage
 	
 		gsel WND_TWITTER
-		sendmsg WND_INFO( WND_TWITTER, WI_HANDLE), WM_SETREDRAW, 1
 		DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 1
 		clrobj
 		objmode 2
@@ -144,7 +143,6 @@ return
 		sendmsg hProgress ,PBM_SETRANGE,0,MAKELPARAM(0,100)
 		//----
 
-		sendmsg WND_INFO( WND_TWITTER, WI_HANDLE), WM_SETREDRAW, 1
 		nidPop
 		gosub *TweetWindow
 		
@@ -153,7 +151,6 @@ return
 		nidPush
 		
 		gsel WND_TWITTER
-		sendmsg WND_INFO( WND_TWITTER, WI_HANDLE), WM_SETREDRAW, 0
 		
 		DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 0
 		clrobj
@@ -184,7 +181,6 @@ return
 		objsize Scale(448),Scale(30)
 		button gosub "Amazon‚Ù‚µ‚¢•¨ƒŠƒXƒg", *Amazon: mesy+=30
 
-		sendmsg WND_INFO( WND_TWITTER, WI_HANDLE), WM_SETREDRAW, 1
 		nidPop
 	}
 	

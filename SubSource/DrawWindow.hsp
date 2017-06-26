@@ -9,7 +9,7 @@
 	}
 
 	gsel WND_MAIN, 1+frontrow
-	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
+	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
 	
 	pos 0,0
 	syscolor 15: boxf: syscolor 8
@@ -61,8 +61,6 @@
 		modemes = "オプション"
 	}
 
-
-	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
 	mesy = rect(3) + scale3
 
 	if (mode == MODE_SSCAP){
@@ -768,6 +766,8 @@
 		width Scale(350), mesy
 		//オプションここまで//オプションここまで//オプションここまで//オプションここまで
 	}
+
+	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
 
 	nidPop
 return

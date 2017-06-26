@@ -285,7 +285,7 @@ return
 
 	isValidFileName DateAndTimeFormat2(saveNameVideoCapture)
 	if (stat == FALSE){
-		saveNameVideoCapture = "KCV_<yyyy><MM><dd>-<HH><mm><ss>"
+		saveNameVideoCapture = "KCVideo_<yyyy><MM><dd>-<HH><mm><ss>"
 		savelogtext += "Info - 動画キャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
 	

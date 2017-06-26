@@ -50,6 +50,8 @@
 #func  EnableWindow "EnableWindow" int, int
 #func  PrintWindow "PrintWindow" int, int, int
 #func  SetWindowText "SetWindowTextW" int, wptr
+#func  UpdateWindow "UpdateWindow" int
+#func  InvalidateRect "InvalidateRect" int, int, int
 
 #uselib "kernel32.dll"
 #func  MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
