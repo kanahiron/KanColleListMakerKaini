@@ -165,19 +165,25 @@
 
 		pos Scale(7+((enableSeqCap^1)*-175)), mesy + scale3
 		mes "連続キャプチャ"
-		objsize Scale(70), Scale(25)
-		pos Scale(105+((enableSeqCap^1)*175)), mesy
+		objsize Scale(75), Scale(25)
+		pos Scale(100+((enableSeqCap^1)*175)), mesy
 		if enableSeqCap: mesy += Scale(25)
 		button gosub seqcapmes, *seqcap
 		seqCapBId  = stat
 
 		pos Scale(7+((enableVideoCap^1)*-175)), mesy + scale3
 		mes "動画キャプチャ"
-		objsize Scale(70), Scale(25)
-		pos Scale(105+((enableVideoCap^1)*175)), mesy
-		if enableVideoCap : mesy += Scale(25)
+		objsize Scale(50), Scale(25)
+		pos Scale(100+((enableVideoCap^1)*175)), mesy
 		button gosub videoCapMes, *VideoCap
 		videoCapBId  = stat
+
+		objsize Scale(25), Scale(25)
+		pos Scale(150+((enableVideoCap^1)*175)), mesy
+		button gosub "開",*sssavefopen
+		fopenBId  = stat
+
+		if enableVideoCap : mesy += Scale(25)
 
 		dispcapy = mesy
 		if dispcap {
@@ -721,7 +727,20 @@
 			pos 0,mesy
 			mesbox ffmpegdir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
 			ffmpegDirIId = stat
-		
+
+			pos Scale(14), mesy
+			mes "動画キャプチャ保存先"
+			pos Scale(200), mesy
+			button gosub "動画保存先変更", *videoCapSaveDialog: mesy += scale20
+			pos 0,mesy
+			mesbox videoCapSaveDir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
+			videoCapSaveDirIId = stat
+
+			pos 5,mesy
+			mes "動画キャプチャ保存名": mesy += scale20
+			pos 0, mesy
+			mesbox saveNameVideoCapture, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+
 			
 		}
 	

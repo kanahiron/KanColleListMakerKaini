@@ -143,6 +143,8 @@
 	dim audioDeviceListNum, 1
 	videoCapFlg = FALSE
 
+	sdim videoCapSaveDir, 1024
+
 return
 
 

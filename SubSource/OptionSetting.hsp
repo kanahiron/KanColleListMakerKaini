@@ -12,7 +12,7 @@ return
 
 *sssavedialog
 	
-	BrowseFolder "SSキャプチャの保存先",(dir_exe+"\\ScreenShots")
+	BrowseFolder "SSキャプチャの保存先", (dir_exe+"\\ScreenShots")
 	if stat = 1{
 		sssavedir = refstr
 		objprm sssdid,sssavedir
@@ -22,10 +22,20 @@ return
 
 *intervalshotsavedialog
 	
-	BrowseFolder "連続撮影の保存先",(dir_exe+"\\ScreenShots")
+	BrowseFolder "連続撮影の保存先", (dir_exe+"\\ScreenShots")
 	if stat = 1{
 		intervalShotDir = refstr
 		objprm intervalShotDirsdid,intervalShotDir
+	}
+
+return
+
+*videoCapSaveDialog
+
+	BrowseFolder "動画キャプチャの保存先", dir_exe
+	if stat = 1{
+		videoCapSaveDir = refstr
+		objprm videoCapSaveDirIId, videoCapSaveDir
 	}
 
 return

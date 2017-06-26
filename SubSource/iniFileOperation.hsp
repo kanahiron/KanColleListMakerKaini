@@ -32,7 +32,7 @@
 	GetIni "CaptureAndMaking", "AutoAddNonSave", autoaddnonsave, "1"
 	GetIni "CaptureAndMaking", "JpgSave", jpgsave, "0"
 	GetIni "CaptureAndMaking", "JpgQuality", jpgquality, "90"
-	GetIni "CaptureAndMaking", "DisableIntervalCap", enableSeqCap, "0"
+	GetIni "CaptureAndMaking", "EnableIntervalCap", enableSeqCap, "0"
 	GetIni "CaptureAndMaking", "IntervalTime", timersec, "5"
 	GetIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameList", saveNameList, "\"艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
@@ -43,6 +43,9 @@
 	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
 	GetIni "VideoCapture", "ffmpegDir", ffmpegDir, "\"\""
 	GetIni "VideoCapture", "AudioDeviceName", AudioDeviceName, "\"\""
+	GetIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir, "\"\""
+	GetIni "VideoCapture", "SaveNameVideoCapture", SaveNameVideoCapture, "\"KCVideo_<yyyy><MM><dd>-<HH><mm><ss>\""
+	
 	
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
@@ -53,7 +56,7 @@
 	if stat = 0: ACCESS_SECRET = decstr(temp)
 
 	GetIni "TwitterSetting", "TwiJpg",twijpg, "1"
-	
+
 
 	GetIni "SSMode", "AutoSearch", autosearch, "1"
 	GetIni "SSMode", "HideName", hidename, "0"
@@ -270,6 +273,21 @@ return
 			ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
 		}
 	}
+
+	if PathIsDirectory(videoCapSaveDir) = 0{
+		savelogtext += "Info - 動画キャプチャ保存先が存在しません。デフォルトに変更しました。\n"
+		chdir dir_exe
+		if PathIsDirectory(dir_exe+"\\VideoCapture") = 0 {
+			mkdir "VideoCapture"
+		}
+		videoCapSaveDir = dir_exe+"\\VideoCapture"
+	}
+
+	isValidFileName DateAndTimeFormat2(saveNameVideoCapture)
+	if (stat == FALSE){
+		saveNameVideoCapture = "KCV_<yyyy><MM><dd>-<HH><mm><ss>"
+		savelogtext += "Info - 動画キャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+	}
 	
 	if (tuika1+tuika2+tuika3+tuika4) != 1{
 		tuika1 = 1
@@ -342,9 +360,11 @@ return
 	WriteIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink
 
 	WriteIni "VideoCapture", "enableVideoCap", enableVideoCap
-	WriteIni "VideoCapture", "ffmpegDir", ffmpegDir
 	WriteIni "VideoCapture", "AudioDeviceName", AudioDeviceName
-
+	WriteIni "VideoCapture", "ffmpegDir", ffmpegDir
+	WriteIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir
+	WriteIni "VideoCapture", "SaveNameVideoCapture", SaveNameVideoCapture
+	
 	sdim temp, 256
 	temp = encstr(userdata)
 	WriteIni "TwitterSetting", "Twi_userdata", temp
