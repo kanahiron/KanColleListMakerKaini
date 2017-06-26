@@ -276,13 +276,15 @@
 			logmessage = savename+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
 			objprm logid, logmessage
 	
-			//=============
-			i = 99
-			repeat 99
-				picHistory(i) = picHistory(i-1)
+			picHistoryCount++
+			if picHistoryCount > 100: picHistoryCount = 100
+
+			i = picHistoryCount
+			repeat picHistoryCount
+				PicHistory(i) = PicHistory(i-1)
 				i--
 			loop
-			picHistory(0) = listsavedir +"\\"+ savename
+			PicHistory(0) = savenamepath 
 			gosub *TweetWindow
 	
 		}
