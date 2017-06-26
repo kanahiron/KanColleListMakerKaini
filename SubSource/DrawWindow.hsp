@@ -173,7 +173,7 @@
 		seqCapBId  = stat
 
 		objsize Scale(25), Scale(25)
-		pos Scale(150+((enableVideoCap^1)*175)), mesy
+		pos Scale(150+((enableSeqCap^1)*175)), mesy
 		button gosub "ŠJ",*seqCapSaveFOpen
 		fopenBId  = stat
 
