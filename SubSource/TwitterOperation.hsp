@@ -375,27 +375,8 @@ return
 		nidpush
 
 		gsel WND_MAIN
-		objenable comboxid, 0
-
-		if (mode == MODE_SSCAP){
-			objenable SSCapBId, 0
-			objenable windowsSizeChangeBId, 0
-			objenable SSCapIId, 0
-			objenable seqCapBId, 0
-
-			objenable luposxIId, 0
-			objenable luposyIId, 0
-			objenable rdposxIId, 0
-			objenable rdposyIId, 0
-		} else : if( mode != MODE_OPTION){
-			objenable makeBId, 0
-		}
-
-		if (mode != MODE_OPTION){
-			objenable enableTweetWindowCId, 0	//ツイートウィンドウ表示切り替え
-			objenable SSCapIId, 0				//座標取得ボタン
-			objenable yabumiBId, 0				//yabumiアップロードボタン4
-		}
+		
+		gosub *SSModeControlDisable
 
 		
 		gsel WND_TWITTER
@@ -444,83 +425,55 @@ return
 		}
 		
 		gsel WND_TWITTER
-		oncmd 0
-		
-			mediaTweetSuccess = TRUE
 	
-			if (count != 0){
-				media_upload tempSdim, count,　mediaids, hProgress
-				if (stat = 1){
-				} else {
-					mediaTweetSuccess = FALSE
-					dialog "画像のアップロードに失敗しました"
-					
-				}
+		mediaTweetSuccess = TRUE
+	
+		if (count != 0){
+			media_upload tempSdim, count,　mediaids, hProgress
+			if (stat = 1){
+			} else {
+				mediaTweetSuccess = FALSE
+				dialog "画像のアップロードに失敗しました"	
 			}
+		}
 	
-			if mediaTweetSuccess {
+		if mediaTweetSuccess {
 				
-				tweet tweettext, "", mediaids
-				if (stat = 200){
-					repeat 4
-						picStack(cnt) = ""
-					loop
-					
-					tweettext = ""
-					twiOrder = 0,0,0,0
-					twiOrderCount = 0
-					objprm ttid,tweettext
-	
-					sendmsg hProgress, $402, 0
-			
-					logmessage = "ツイートを投稿しました"
-		
-				} else {
-					dialog "ツイートに失敗しました"
-				}
-				
-			}
-			
-			if (twijpg == TRUE & jpgsave == FALSE){
-				repeat count
-					if kmexist(tempsdim(cnt)) > 0{
-						delete tempsdim(cnt)
-					}
+			tweet tweettext, "", mediaids
+			if (stat = 200){
+				repeat 4
+					picStack(cnt) = ""
 				loop
+					
+				tweettext = ""
+				twiOrder = 0,0,0,0
+				twiOrderCount = 0
+				objprm ttid,tweettext
+	
+				sendmsg hProgress, $402, 0
+			
+				logmessage = "ツイートを投稿しました"
+		
+			} else {
+				dialog "ツイートに失敗しました"
 			}
-
-		oncmd 1
+				
+		}
+			
+		if (twijpg == TRUE & jpgsave == FALSE){
+			repeat count
+				if kmexist(tempsdim(cnt)) > 0{
+					delete tempsdim(cnt)
+				}
+			loop
+		}
 
 		gsel WND_TWITTER
-
 		objenable ttid,1
 		objenable tweetbid,1
 	
 		gsel WND_MAIN
-		objenable comboxid, 1
-
-		if (mode == _MODE_SSCAP){
-			if availableCap | manualpos{
-				objenable SSCapBId, 1
-				objenable seqCapBId, 1
-			}
-			objenable windowsSizeChangeBId, 1
-			
-			objenable luposxIId, 1
-			objenable luposyIId, 1
-			objenable rdposxIId, 1
-			objenable rdposyIId, 1
-			
-		} else : if( mode != MODE_OPTION){
-			objenable makeBId, 1
-		}
-
-		if (mode != MODE_OPTION): objenable enableTweetWindowCId, 1	//ツイートウィンドウ表示切り替え
-		if (mode != MODE_OPTION): objenable SSCapIId, 1				//座標取得ボタン
-		if (mode != MODE_OPTION) & availableCap: objenable yabumiBId, 1			
-
-
-		if (mode != MODE_OPTION): objprm logid, logmessage
+		gosub *SSModeControlEnable
 		
 		nidPop
 	}

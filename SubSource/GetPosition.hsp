@@ -4,17 +4,7 @@
 	nidPush
 	
 	gsel WND_MAIN
-	objenable comboxid,0
-	objenable SSCapIId,0
-	
-	if (mode == MODE_SSCAP){
-		objenable sscapbid,0
-		objenable seqcapbid,0
-		objenable videoCapbid,0
-		if (yabumiautoupload = 1) & (availableyabumi = 1){
-			objenable yabumibid,0
-		}
-	}
+	gosub *SSModeControlDisable
 
 	if autoSearch {
 		//新座標検出===========================================
@@ -22,7 +12,6 @@
 		gsel WND_MAIN
 		logmessage = "艦これの画面にマウスカーソルを重ねてください。"
 		objprm logid,logmessage
-
 
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
@@ -170,6 +159,7 @@ return
 
 		captureMethod = CM_PRINTWINDOW
 		positionType = PT_RELATIVE
+		nidPop
 		return
 	}
 
@@ -185,6 +175,7 @@ return
 
 		captureMethod = CM_BITBLT
 		positionType = PT_RELATIVE
+		nidPop
 		return
 	} else {
 		ReleaseDC dcClient 
@@ -201,6 +192,7 @@ return
 
 		captureMethod = CM_BITBLT
 		positionType = PT_WNDABSOLUTE
+		nidPop
 		return
 	}
 
@@ -245,13 +237,6 @@ return
 		swend
 		objprm SSCapIId,sscapmes
 		
-		if (mode == MODE_SSCAP){
-			objenable sscapbid,1
-			objenable seqcapbid,1
-			if (ffmpegdir != ""): objenable videoCapbid,1
-			objenable yabumibid,1
-		}
-		
 		logmessage = "座標の取得に成功しました"
 		objprm logid, logmessage
 		
@@ -264,13 +249,6 @@ return
 		if (mode != MODE_OPTION){
 			sscapmes = "取得する"
 			objprm SSCapIId, sscapmes
-		}
-		
-		if (mode == MODE_SSCAP){
-			objenable sscapbid,0
-			objenable seqcapbid,0
-			objenable videoCapbid,0
-			objenable yabumibid,0
 		}
 
 		if seqcapf: gosub *seqcap
@@ -289,15 +267,10 @@ return
 		}
 		
 	}
-	
-	if (mode == MODE_SSCAP){
-		if manualpos{
-			objenable ssCapBId, 1
-			objenable seqCapBId, 1
-			if (ffmpegdir != ""): objenable videoCapbid,1
-		}
-	}
-	
+
+	gsel WND_MAIN
+	gosub *SSModeControlEnable
+
 	if (hotkeyset && availablecap) {
 		title "*"+SOFTNAME, WND_INFO(WND_MAIN, WI_HANDLE)
 	} else {

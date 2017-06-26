@@ -82,15 +82,7 @@
 		videoCapMes = "停止"
 		objprm videoCapBId, videoCapMes
 		
-		objenable comboxId, 0
-		objenable sscapIId, 0
-		objenable seqcapBId, 0
-		objenable yabumiBId, 0
-
-		objenable luposxIId, 0
-		objenable luposyIId, 0
-		objenable rdposxIId, 0
-		objenable rdposyIId, 0
+		gosub *SSModeControlDisable
 
 		videoCapStartTime = timeGetTime()
 	
@@ -152,47 +144,49 @@
 		videoCapMes = "開始"
 		objprm videoCapBId, videoCapMes
 		
-		objenable comboxId, 1
-		objenable SSCapIId, 1
-
-		if availableCap | manualpos{
-			objenable seqcapBId, 1
-		}
-		if availableCap: objenable yabumiBId, 1	
-			
-		objenable luposxIId, 1
-		objenable luposyIId, 1
-		objenable rdposxIId, 1
-		objenable rdposyIId, 1
-
-		logmes
+		gosub *SSModeControlEnable
 
 	}
 	nidPop
 return
 
 *VideoCapTimerProcessing
+	oncmd 0
 
 	nidPush
 
+	exfv = 0
+	exfa = 0
+
 	pipe2check vpid
-	if stat & 2: pipe2get vpid, buf
-	if stat & 4: pipe2err vpid, buf
+	if (stat == 0):exfv = stat
+	if (stat & 2): pipe2get vpid, buf
+	if (stat & 4): pipe2err vpid, buf
 
 	pipe2check apid
-	if stat & 2: pipe2get apid, buf
-	if stat & 4: pipe2err apid, buf
+	if (stat == 0):exfa = stat
+	if (stat & 2): pipe2get apid, buf
+	if (stat & 4): pipe2err apid, buf
+	
+	if (exfv || exfa){
+		gosub *VideoCap
+		
+		gsel WND_MAIN
+		logmessage = "動画キャプチャが異常停止しました"
+		objprm logId, logmessage: await
+		nidPop
+		return
+	}
 
 	elapsedTime = timeGetTime() - videoCapStartTime
 	elapsedTimeStr =  "動画をキャプチャ中…\n"
 	elapsedTimeStr += strf("  経過時間 %02d:%02d.%03d", (elapsedTime/1000/60), (elapsedTime/1000\60), (elapsedTime\1000))
 
-	
 	gsel WND_MAIN
-	objprm logId, elapsedTimeStr
+	objprm logId, elapsedTimeStr: await
 	
 	nidPop
-
+	oncmd 1
 return
 
 *VideoCapSetting

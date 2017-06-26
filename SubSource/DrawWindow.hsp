@@ -746,7 +746,6 @@
 			mes "“®‰æƒLƒƒƒvƒ`ƒƒ•Û‘¶–¼": mesy += scale20
 			pos 0, mesy
 			mesbox saveNameVideoCapture, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
-
 			
 		}
 	
@@ -794,4 +793,72 @@ return
 		if hidelog = 0:hidelog_ = 1
 	}
 	gosub *drawMainWindow
+return
+
+
+*SSModeControlDisable
+
+	objenable comBoxId, 0
+	
+	if (mode != MODE_OPTION){
+		objenable SSCapIId, 0
+	}
+	
+	if (mode == MODE_SSCAP){
+
+		objenable windowsSizeChangeBId, 0
+		
+		if ( (seqCapF^1) && (videoCapFlg^1) ): objenable sscapbid, 0
+		if seqcapf^1: objenable seqcapbid, 0
+		if videoCapFlg^1: objenable videoCapbid, 0
+		objenable yabumibid, 0
+
+		objenable luposxIId, 0
+		objenable luposyIId, 0
+		objenable rdposxIId, 0
+		objenable rdposyIId, 0
+	}
+
+	if ( mode == MODE_LIST){
+		objenable makeBId, 1
+	}
+
+return
+
+*SSModeControlEnable
+
+	if ( (seqCapF^1) && (videoCapFlg^1) ){
+	
+		objenable comBoxId, 1
+	
+		if (mode != MODE_OPTION){
+			objenable SSCapIId, 1
+		}
+		
+		if (mode == MODE_SSCAP){
+	
+			objenable windowsSizeChangeBId, 1
+			objenable luposxIId, 1
+			objenable luposyIId, 1
+			objenable rdposxIId, 1
+			objenable rdposyIId, 1
+	
+			if (availableCap | manualPos){
+				objenable sscapbid, 1
+				objenable seqcapbid, 1
+			}
+		}
+	
+		if (mode == MODE_SSCAP && availableCap){
+			if (ffmpegDir != ""): objenable videoCapBId, 1
+			if (yabumiautoupload = 1) & (availableyabumi = 1){
+				objenable yabumibid, 1
+			}
+		}
+	
+		if ( mode == MODE_LIST ){
+			objenable makeBId, 1
+		}
+	}
+
 return
