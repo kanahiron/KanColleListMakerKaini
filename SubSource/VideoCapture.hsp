@@ -58,7 +58,7 @@
 		sdim buf, 1024*10
 		sdim elapsedTimeStr, 1024
 
-		fname = strf("%s\\video%02d%02d%02d", ssSaveDir, gettime(4), gettime(5), gettime(6))
+		fname = strf("%s\\%s", videoCapSaveDir, DateAndTimeFormat2(saveNameVideoCapture))
 		cmdv = strf("%s -an -r 20/1 -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s_v.mp4\"", ffmpegdir, sscapwh(0), sscapwh(1), capX, capY, fname)
 		cmda = strf("%s -vn -f dshow -i audio=\"%s\" -acodec aac -b:a 96k \"%s_a.aac\"", ffmpegdir, audioDeviceName, fname)
 		cmdm = strf("%s -i \"%s_v.mp4\" -i \"%s_a.aac\" -c:v copy -c:a copy \"%s.mp4\"", ffmpegdir, fname, fname, fname)
