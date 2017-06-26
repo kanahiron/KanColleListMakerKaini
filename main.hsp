@@ -217,6 +217,9 @@
 	dialog "艦これ一覧めいかー改二を終了しますか？", 2, "終了確認"
 	if (stat != 6):return
 
+	onexit 0
+	onerror 0
+
 	if videoCapFlg: gosub *VideoCap
 
 	if hdcScreen: DeleteDC hdcScreen
@@ -230,7 +233,7 @@
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID
 	}
 
-	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID
+	//KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID
 
 	if (hotkeySet == TRUE) {
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
