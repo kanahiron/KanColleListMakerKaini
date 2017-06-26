@@ -170,6 +170,7 @@
 				repeat 4
 					SSCap(cnt) = SSCap_temp(cnt)
 				loop
+				gosub *CaptureMethodDecide
 				gosub *SSSettingCheck
 			}
 		}
@@ -195,7 +196,7 @@
 
 
 *exit
-	
+
 	if (wparam == WND_GRID){
 		mode = MODE_SSCAP
 		gosub *drawMainWindow
