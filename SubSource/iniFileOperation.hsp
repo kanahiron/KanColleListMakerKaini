@@ -428,8 +428,10 @@ return
 
 			temp = sssavedir+"\\"+kmnoteget(cnt)
 			imageType = ImgF_GetFormat(temp)
+			title temp+" "+imageType +" cnt :"+cnt
+			await 20
 			if ( (imageType==2) || (imageType==3) || (imageType==4) ){
-				picHistory(cnt) = sssavedir+"\\"+kmnoteget(cnt)
+				picHistory(picHistoryCount) = temp
 				picHistoryCount++
 			}
 		loop
