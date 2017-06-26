@@ -183,9 +183,10 @@ return 0
 					
 				picHistoryCount++
 				if picHistoryCount > 100: picHistoryCount = 100
+
 				
-				i = picHistoryNum
-				repeat picHistoryNum
+				i = picHistoryCount
+				repeat picHistoryCount
 					PicHistory(i) = PicHistory(i-1)
 					i--
 				loop

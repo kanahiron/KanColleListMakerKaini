@@ -52,7 +52,7 @@
 #endif
 	
 	onexit gosub *exit
-	onerror gosub *err_
+	//onerror gosub *err_
 
 	wndInfoInit
 	nidStackInit
