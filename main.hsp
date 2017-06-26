@@ -214,6 +214,9 @@
 		return
 	}
 
+	dialog "艦これ一覧めいかー改二を終了しますか？", 2, "終了確認"
+	if (stat != 6):return
+
 	if videoCapFlg: gosub *VideoCap
 
 	if hdcScreen: DeleteDC hdcScreen
