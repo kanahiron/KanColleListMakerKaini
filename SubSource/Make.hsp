@@ -271,10 +271,10 @@
 			
 		if kmexist(listsavedir +"\\"+ savename) <= 0{
 			logmessage = savename+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
-			objprm logid, logmessage
+			objprm logid, logmessage: await
 		} else {
 			logmessage = savename+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
-			objprm logid, logmessage
+			objprm logid, logmessage: await
 	
 			picHistoryCount++
 			if picHistoryCount > 100: picHistoryCount = 100
@@ -284,7 +284,7 @@
 				PicHistory(i) = PicHistory(i-1)
 				i--
 			loop
-			PicHistory(0) = savenamepath 
+			PicHistory(0) = listsavedir +"\\"+ savename
 			gosub *TweetWindow
 	
 		}
