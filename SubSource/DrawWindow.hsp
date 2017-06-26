@@ -209,24 +209,8 @@
 		}
 		mesbox logmessage, Scale(175), Scale(70), 0
 		logid = stat
-	
-		if availablecap = 0{
-			objenable sscapBId, 0
-			objenable seqcapBId, 0
-			objenable videoCapBId, 0
-			objenable yabumiBId, 0
-		} else {
-			objenable sscapBId, 1
-			objenable seqcapBId, 1
-			if (ffmpegDir != ""): objenable videoCapBId, 1
-			objenable yabumiBId, 1
-		}
-		
-		if manualpos {
-			objenable sscapBId, 1
-			objenable seqcapBId, 1
-			if (ffmpegDir != ""): objenable videoCapBId, 1
-		}
+
+		gosub *SSModeControlEnable
 		
 		width Scale(175), mesy
 	
@@ -819,8 +803,9 @@ return
 		objenable rdposyIId, 0
 	}
 
-	if ( mode == MODE_LIST){
-		objenable makeBId, 1
+	if ( mode == MODE_LIST ){
+		objenable makeBId, 0
+		objenable yabumiBId, 0
 	}
 
 return
@@ -858,7 +843,24 @@ return
 	
 		if ( mode == MODE_LIST ){
 			objenable makeBId, 1
+			if (availableCap){
+				objenable yabumiBId, 0
+			}
+		
 		}
+
+		if ( mode == MODE_SSCAP){
+			if (availableCap^1){
+				objenable yabumibid, 0
+				objenable videoCapBId, 0
+				if (manualPos^1){
+					objenable sscapbid, 0
+					objenable seqcapbid, 0
+				}
+			}
+		}
+			
+		
 	}
 
 return

@@ -375,8 +375,8 @@ return
 		nidpush
 
 		gsel WND_MAIN
-		
 		gosub *SSModeControlDisable
+		objenable enableTweetWindowCId, 0
 
 		
 		gsel WND_TWITTER
@@ -474,6 +474,7 @@ return
 	
 		gsel WND_MAIN
 		gosub *SSModeControlEnable
+		objenable enableTweetWindowCId, 1
 		
 		nidPop
 	}
