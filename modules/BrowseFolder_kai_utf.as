@@ -83,8 +83,8 @@
 	xdim fncode, 8
 	
 	cnvstow szTitle, _szTitle
-	cnvstow inifldr, _defaultfolder
-	
+	//cnvstow inifldr, _defaultfolder
+	inifldr = _defaultfolder
 	if flag = FALSE{
 		ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE
 	} else {
