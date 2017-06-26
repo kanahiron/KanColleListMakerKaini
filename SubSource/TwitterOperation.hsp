@@ -43,24 +43,16 @@ return
 
 *openbrowser
 
-	debugLog "Twitter認証のためのブラウザオープン 開始"
-
 	address = getAuthorizeAddress()
 	if address != "Error"{
 		exec "rundll32.exe url.dll,FileProtocolHandler \""+address+"\""
-		debugLog "    ブラウザを開きました"
 	} else {
 		dialog "認証に失敗しました\nインターネットに繋がっているか確認しもう一度お試しください"
-		debugLog "    認証処理に失敗"
 	}
-
-	debugLog "Twitter認証のためのブラウザオープン 終了"
 
 return
 
 *twioauthok
-
-	debugLog "PIN入力確定処理 開始"
 	
 	userdata = ""
 	ACCESS_TOKEN = ""
@@ -73,15 +65,13 @@ return
 			gosub *twiinit
 		}
 	oncmd 1
-	debugLog "PIN入力確定処理 終了"
+	
 return
 
 *twiinit
-	debugLog "ツイートウィンドウ描画処理 開始"
 	
-	if ACCESS_TOKEN != "" & ACCESS_SECRET != ""{
+	if ( ACCESS_TOKEN != "" && ACCESS_SECRET != "" ){
 
-		debugLog "    連携有効"
 		nidPush
 		
 		setAccessToken ACCESS_TOKEN, ACCESS_SECRET
@@ -157,8 +147,6 @@ return
 		gosub *TweetWindow
 		
 	} else {
-
-		debugLog "     未認証"
 		
 		nidPush
 		
@@ -195,7 +183,6 @@ return
 		nidPop
 	}
 	
-	debugLog "ツイートウィンドウ描画処理 終了"
 return
 
 *picHistoryNext
@@ -205,7 +192,7 @@ return
 	gsel WND_TWITTER
 	
 	if picHistoryNum < 99{
-		if picHistory(picHistoryNum+1) != ""{
+		if ( picHistory(picHistoryNum+1) != "" ){
 			picHistoryNum++
 		}
 	}
@@ -266,8 +253,6 @@ return
 
 *TweetWindow
 
-	debugLog "TweetWindow 開始"
-
 	if (ACCESS_TOKEN != "" & ACCESS_SECRET != ""){
 		nidPush
 		gsel WND_TWITTER
@@ -278,13 +263,11 @@ return
 		nidPop
 	}
 
-	debugLog "TweetWindow 終了"
-
 return
 
 *rideCursor
 
-	if ACCESS_TOKEN != "" & ACCESS_SECRET != ""{
+	if ( ACCESS_TOKEN != "" && ACCESS_SECRET != "" ){
 	
 		mx = lparam&0x0000FFFF
 		my = (lparam&0xFFFF0000)>>16
@@ -299,8 +282,6 @@ return
 		loop
 		
 		if flag != flag_ {
-
-			debugLog "ツイートウィンドウにカーソルが乗ったときの処理 開始"
 			
 			nidpush
 			flag_ = flag 
@@ -330,16 +311,12 @@ return
 				sendmsg stackCounth ,$C , , strf("%3d/%3d",picHistoryNum+1, picHistoryCount)
 			}
 			nidpop
-			
-			debugLog "ツイートウィンドウにカーソルが乗ったときの処理 終了"
 		}
 	}
 return
 
 
 *TweetWindowDraw
-
-	debugLog "ツイートウィンドウ描画処理 開始"
 
 	redraw 0
 	gmode 0
@@ -389,16 +366,12 @@ return
 	gmode 0
 	redraw 1
 
-	debugLog "ツイートウィンドウ描画処理 終了"
-	
 return
 
 *tweet_
 	
-	if ACCESS_TOKEN != ""{
+	if ( ACCESS_TOKEN != "" ){
 
-		debugLog "ツイート 開始"
-	
 		nidpush
 
 		gsel WND_MAIN
@@ -433,7 +406,6 @@ return
 		sdim mediaids, 1024
 		sdim tempsdim, 256, 4
 
-		debugLog "    ツイートする画像の並び替えを開始"
 		count = 0
 		repeat 4
 			if (twiOrder(cnt) == (count+1)) {
@@ -444,10 +416,7 @@ return
 				}
 			}
 		loop
-		debugLog "    ツイートする画像の並び替えを終了"
-		
 
-		debugLog "    ツイートする画像の検査を開始"
 		countCut = 0
 		repeat count
 			ccnt =  cnt
@@ -461,11 +430,8 @@ return
 			}
 		loop
 		count -= countCut
-		debugLog "    ツイートする画像の検査を終了"
 					
-
 		if (twijpg == TRUE & jpgsave == FALSE){
-			debugLog "    jpgに変換してツイート"
 			repeat count
 				buffer WND_TEMP1
 				picload tempsdim(cnt)
@@ -473,40 +439,26 @@ return
 				GDIImageSave saveNamed, jpgQuality
 				if kmexist(saveNamed) > 0{
 					tempSdim(cnt) = saveNamed
-					debugLog "    "+tempSdim(cnt)+"を"+saveNamed+"に変換しました"
-				} else {
-					debugLog "    jpgの保存に失敗しました :"+tempSdim(cnt)
 				}
 			loop
 		}
 		
 		gsel WND_TWITTER
 		oncmd 0
-	
-			debugLog "    ツイートする画像ファイル名1 :" + tempSdim(0)
-			debugLog "    ツイートする画像ファイル名2 :" + tempSdim(1)
-			debugLog "    ツイートする画像ファイル名3 :" + tempSdim(2)
-			debugLog "    ツイートする画像ファイル名4 :" + tempSdim(3)
-			debugLog "    ツイート画像枚数 :" + count
-	
+		
 			mediaTweetSuccess = TRUE
 	
 			if (count != 0){
-				debugLog "    画像投稿ツイート 開始"
 				media_upload tempSdim, count,　mediaids, hProgress
 				if (stat = 1){
-					debugLog "    画像投稿ツイート 成功"
 				} else {
 					mediaTweetSuccess = FALSE
 					dialog "画像のアップロードに失敗しました"
-					debugLog "    画像投稿ツイート 失敗"
 					
 				}
 			}
 	
 			if mediaTweetSuccess {
-	
-				debugLog "    ツイート 開始"
 				
 				tweet tweettext, "", mediaids
 				if (stat = 200){
@@ -522,15 +474,11 @@ return
 					sendmsg hProgress, $402, 0
 			
 					logmessage = "ツイートを投稿しました"
-					debugLog "     ツイート成功"
 		
 				} else {
 					dialog "ツイートに失敗しました"
-					debugLog "    ツイートの投稿失敗"
 				}
 				
-			} else {
-				debugLog "    画像投稿に失敗したのでツイート無し"
 			}
 			
 			if (twijpg == TRUE & jpgsave == FALSE){
@@ -549,8 +497,6 @@ return
 		objenable tweetbid,1
 	
 		gsel WND_MAIN
-
-
 		objenable comboxid, 1
 
 		if (mode == _MODE_SSCAP){
@@ -564,6 +510,7 @@ return
 			objenable luposyIId, 1
 			objenable rdposxIId, 1
 			objenable rdposyIId, 1
+			
 		} else : if( mode != MODE_OPTION){
 			objenable makeBId, 1
 		}
@@ -575,8 +522,7 @@ return
 
 		if (mode != MODE_OPTION): objprm logid, logmessage
 		
-		nidpop
-		debugLog "ツイート 終了"
+		nidPop
 	}
 	
 	gosub *TweetWindow

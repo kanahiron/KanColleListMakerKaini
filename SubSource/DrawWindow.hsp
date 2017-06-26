@@ -69,8 +69,8 @@
 			
 		objsize Scale(80), Scale(25)
 		pos Scale(95), mesy - scale3
-		button gosub sscapmes,*sssetting
-		sscapiid = stat
+		button gosub SSCapMes,*SSSetting
+		sscapIId = stat
 		mesy += Scale(22)
 	
 		pos Scale(84+((manualpos^1) * 175)), mesy + scale5
@@ -88,14 +88,14 @@
 		input rdposy, Scale(40), Scale(23), 5
 		rdposyIId = stat
 		
-		GetWindowLong objinfo(luposxiid,2), -16
-		SetWindowLong objinfo(luposxiid,2), -16, stat | $2
-		GetWindowLong objinfo(luposyiid,2), -16
-		SetWindowLong objinfo(luposyiid,2), -16, stat | $2
-		GetWindowLong objinfo(rdposxiid,2), -16
-		SetWindowLong objinfo(rdposxiid,2), -16, stat | $2
-		GetWindowLong objinfo(rdposyiid,2), -16
-		SetWindowLong objinfo(rdposyiid,2), -16, stat | $2
+		GetWindowLong objinfo(luposxIId,2), -16
+		SetWindowLong objinfo(luposxIId,2), -16, stat | $2
+		GetWindowLong objinfo(luposyIId,2), -16
+		SetWindowLong objinfo(luposyIId,2), -16, stat | $2
+		GetWindowLong objinfo(rdposxIId,2), -16
+		SetWindowLong objinfo(rdposxIId,2), -16, stat | $2
+		GetWindowLong objinfo(rdposyIId,2), -16
+		SetWindowLong objinfo(rdposyIId,2), -16, stat | $2
 	
 		if manualpos: mesy += Scale(23)
 	
@@ -137,7 +137,7 @@
 	
 		objsize Scale(25), Scale(30)
 		pos Scale(130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), mesy
-		button gosub "開",*sssavefopen
+		button gosub "開",*ssSaveFOpen
 		fopenBId  = stat
 		
 		if ((yabumiautoupload = 1) & (availableyabumi = 1)) {
@@ -211,21 +211,21 @@
 		logid = stat
 	
 		if availablecap = 0{
-			objenable sscapbid, 0
-			objenable seqcapbid, 0
+			objenable sscapBId, 0
+			objenable seqcapBId, 0
 			objenable videoCapBId, 0
-			objenable yabumibid, 0
+			objenable yabumiBId, 0
 		} else {
-			objenable sscapbid, 1
-			objenable seqcapbid, 1
-			if (ffmpegdir != ""): objenable videoCapBId, 1
-			objenable yabumibid, 1
+			objenable sscapBId, 1
+			objenable seqcapBId, 1
+			if (ffmpegDir != ""): objenable videoCapBId, 1
+			objenable yabumiBId, 1
 		}
 		
 		if manualpos {
-			objenable sscapbid, 1
-			objenable seqcapbid, 1
-			if (ffmpegdir != ""): objenable videoCapBId, 1
+			objenable sscapBId, 1
+			objenable seqcapBId, 1
+			if (ffmpegDir != ""): objenable videoCapBId, 1
 		}
 		
 		width Scale(175), mesy
@@ -242,8 +242,8 @@
 			
 		objsize Scale(80), Scale(25)
 		pos Scale(95), mesy - scale3
-		button gosub sscapmes, *sssetting
-		sscapiid = stat
+		button gosub SSCapMes, *SSSetting
+		sscapIId = stat
 		mesy += Scale(25)
 		
 		objsize Scale(175), scale20
@@ -271,22 +271,22 @@
 			pos Scale(22), mesy_
 			chkbox "指輪も入れる", yubiwa: mesy_ += scale20
 			yubiwaCId = stat
-			yubiwaCh = objinfo_hwnd(yubiwacid)
+			yubiwaCh = objinfo_hwnd(yubiwaCId)
 			
 			pos Scale(22), mesy_
 			chkbox "所属艦隊も入れる", kantai: mesy_ += scale20
 			kantaiCId  = stat
-			kantaiCh = objinfo_hwnd(kantaicid)
+			kantaiCh = objinfo_hwnd(kantaiCId)
 			
 			pos Scale(22), mesy_
 			chkbox "ページ数も入れる", page: mesy_ += scale20
 			pageCId  = stat
-			pageCh = objinfo_hwnd(pagecid)
+			pageCh = objinfo_hwnd(pageCId)
 	
 			pos Scale(17), mesy_
 			chkbox "レベルと艦名のみ", lvname: mesy_ += scale20
 			lvnameCId  = stat
-			lvnameCh = objinfo_hwnd(lvnamecid)
+			lvnameCh = objinfo_hwnd(lvnameCId)
 	
 			SetDAControl ichiranMode1Ch
 			SetDAControl ichiranMode2Ch
@@ -296,24 +296,24 @@
 			SetDAControl lvnameCh
 	
 			if ichiranMode1 {
-				objenable lvnamecid, 1
+				objenable lvnameCId, 1
 				if lvname = 1{
-					objenable yubiwacid, 0
-					objenable kantaicid, 0
-					objenable pagecid, 0
+					objenable yubiwaCId, 0
+					objenable kantaiCId, 0
+					objenable pageCId, 0
 				} else {
-					objenable yubiwacid, 1
-					objenable kantaicid, 1
-					objenable pagecid, 1
+					objenable yubiwaCId, 1
+					objenable kantaiCId, 1
+					objenable pageCId, 1
 				}
 	
 			}
 	
 			if ichiranMode2 {
-				objenable yubiwacid, 0
-				objenable kantaicid, 0
-				objenable pagecid, 0
-				objenable lvnamecid, 0
+				objenable yubiwaCId, 0
+				objenable kantaiCId, 0
+				objenable pageCId, 0
+				objenable lvnameCId, 0
 			}
 		}
 		
@@ -333,26 +333,26 @@
 			pos Scale(7), mesy
 			chkbox "縦3横2",tuika1
 			tuika1CId  = stat
-			tuika1Ch = objinfo_hwnd(tuika1cid)
+			tuika1Ch = objinfo_hwnd(tuika1CId)
 			SetWindowLong tuika1ch, -16, $50000009 | $20000
 			
 			pos Scale(80), mesy
 			chkbox "縦2横3",tuika4
 			tuika4CId  = stat
-			tuika4Ch = objinfo_hwnd(tuika4cid)
+			tuika4Ch = objinfo_hwnd(tuika4CId)
 			sendmsg tuika4ch, $F4, $9
 			mesy += scale20
 			
 			pos Scale(7), mesy
 			chkbox "縦6横1", tuika3
 			tuika3CId  = stat
-			tuika3Ch = objinfo_hwnd(tuika3cid)
+			tuika3Ch = objinfo_hwnd(tuika3CId)
 			sendmsg tuika3ch, $F4, $9
 			
 			pos Scale(80), mesy
 			chkbox "縦1横6", tuika2
 			tuika2CId  = stat
-			tuika2Ch = objinfo_hwnd(tuika2cid)
+			tuika2Ch = objinfo_hwnd(tuika2CId)
 			sendmsg tuika2ch, $F4, $9
 			mesy += scale20
 	
@@ -365,19 +365,19 @@
 			pos Scale(7), mesy
 			chkbox "装備とステータスと艦娘",sosuka: mesy += scale20
 			sosukaCId  = stat
-			sosukaCh = objinfo_hwnd(sosukacid)
+			sosukaCh = objinfo_hwnd(sosukaCId)
 			SetWindowLong sosukach, -16, $50000009 | $20000
 		
 			pos Scale(7), mesy
 			chkbox "装備とステータス",sosu: mesy+= scale20
 			sosuCId  = stat
-			sosuCh = objinfo_hwnd(sosucid)
+			sosuCh = objinfo_hwnd(sosuCId)
 			sendmsg sosuch, $F4, $9
 		
 			pos Scale(7), mesy
 			chkbox "装備と艦娘の画像",soka: mesy += scale20
 			sokaCId  = stat
-			sokaCh = objinfo_hwnd(sokacid)
+			sokaCh = objinfo_hwnd(sokaCId)
 			sendmsg sokach, $F4, $9
 	
 			mesy += Scale(1)
@@ -592,23 +592,23 @@
 			pos Scale(14), mesy
 			mes "一覧保存先"
 			pos Scale(200), mesy
-			button gosub "一覧保存先変更", *listsavedialog: mesy += scale20
+			button gosub "一覧保存先変更", *listSaveDialog: mesy += scale20
 			pos 0,mesy
-			mesbox listsavedir, Scale(350), Scale(45), 5, 259 :mesy += Scale(45)
+			mesbox listsaveDir, Scale(350), Scale(45), 5, 259 :mesy += Scale(45)
 			listsdid = stat
 			
 			pos Scale(14), mesy
 			mes "SS保存先"
 			pos Scale(200), mesy
-			button gosub "SS保存先変更", *sssavedialog: mesy += scale20
+			button gosub "SS保存先変更", *ssSaveDialog: mesy += scale20
 			pos 0, mesy
-			mesbox sssavedir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
+			mesbox sssaveDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
 			sssdid = stat
 			
 			pos Scale(14), mesy
 			mes "連続撮影保存先"
 			pos Scale(200), mesy
-			button gosub "連続撮影保存先変更", *intervalshotsavedialog: mesy += scale20
+			button gosub "連続撮影保存先変更", *intervalshotSaveDialog: mesy += scale20
 			pos 0, mesy
 			mesbox intervalShotDir, Scale(350), Scale(45),5,259:mesy += Scale(45)
 			intervalShotDirsdid = stat
@@ -616,10 +616,10 @@
 			pos Scale(14), mesy
 			mes "YabumiUploader.exeの場所"
 			pos Scale(200), mesy
-			button gosub "変更",*yabumiuploaderdialog: mesy += scale20
+			button gosub "変更",*yabumiUploaderDialog: mesy += scale20
 			pos 0, mesy
-			mesbox yabumidir, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
-			yabumiid = stat
+			mesbox yabumiDir, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+			yabumIId = stat
 		}
 	
 		if (optionMode == OPMODE_CAPTURE){
@@ -649,7 +649,7 @@
 			pos scale5, mesy
 			chkbox "＊一覧モードでSSを自動追加する", autoaddCapture: mesy += scale20
 			pos scale5, mesy
-			chkbox "＊自動追加の場合はSSを保存しない", autoaddnonsave: mesy += scale20
+			chkbox "＊自動追加の場合はSSを保存しない", autoAddNonSave: mesy += scale20
 			pos scale5, mesy
 			chkbox "jpgで保存する", jpgsave: mesy += scale20
 			
@@ -659,9 +659,9 @@
 			mes "1～100(大きいほど高画質)"
 			pos Scale(100), mesy
 			input jpgquality,Scale(50), scale20, 3: mesy += scale20
-			jpgqualityiid = stat
-			GetWindowLong objinfo(jpgqualityiid,2), -16
-			SetWindowLong objinfo(jpgqualityiid,2), -16, stat | $2
+			jpgqualityIId = stat
+			GetWindowLong objinfo(jpgqualityIId,2), -16
+			SetWindowLong objinfo(jpgqualityIId,2), -16, stat | $2
 			
 			pos 5, mesy
 			chkbox "連続キャプチャを有効にする", enableSeqCap: mesy += scale20
@@ -672,9 +672,9 @@
 			mes "x0.1秒 (0.1～99.9秒)"
 			pos Scale(150), mesy
 			input timersec, Scale(50), scale20, 3: mesy += scale20
-			timerseciid = stat
-			GetWindowLong objinfo(timerseciid,2), -16
-			SetWindowLong objinfo(timerseciid,2), -16, stat | $2
+			timersecIId = stat
+			GetWindowLong objinfo(timersecIId,2), -16
+			SetWindowLong objinfo(timersecIId,2), -16, stat | $2
 	
 			pos scale5, mesy
 			mes "保存名": mesy += scale20
@@ -731,7 +731,7 @@
 			pos Scale(200), mesy
 			button gosub "変更", *openDialogffmpeg: mesy += scale20
 			pos 0,mesy
-			mesbox ffmpegdir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
+			mesbox ffmpegDir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
 			ffmpegDirIId = stat
 
 			pos Scale(14), mesy

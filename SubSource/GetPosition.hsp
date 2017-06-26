@@ -5,7 +5,7 @@
 	
 	gsel WND_MAIN
 	objenable comboxid,0
-	objenable sscapiid,0
+	objenable SSCapIId,0
 	
 	if (mode == MODE_SSCAP){
 		objenable sscapbid,0
@@ -74,6 +74,7 @@
 				}
 				if (sti & 128){
 					sscap(0) = 0, 0, 0, 0
+					break
 				}
 					
 				await 33
@@ -227,7 +228,7 @@ return
 	
 	gsel WND_MAIN,1+frontrow
 	objenable comboxid, 1
-	objenable sscapiid, 1
+	objenable SSCapIId, 1
 	
 	if ( (autosearch && (sscapwh(0) != 0)) || (othergame && autosearch^1 && (sscapwh(0) >= 99) & (sscapwh(1) >= 59)) ){
 
@@ -242,7 +243,7 @@ return
 				ssCapMes = "í«ê’íÜA"
 				swbreak
 		swend
-		objprm sscapiid,sscapmes
+		objprm SSCapIId,sscapmes
 		
 		if (mode == MODE_SSCAP){
 			objenable sscapbid,1
@@ -262,7 +263,7 @@ return
 
 		if (mode != MODE_OPTION){
 			sscapmes = "éÊìæÇ∑ÇÈ"
-			objprm sscapiid, sscapmes
+			objprm SSCapIId, sscapmes
 		}
 		
 		if (mode == MODE_SSCAP){

@@ -68,7 +68,7 @@
 	swend
 	
 	if (mode != MODE_OPTION){
-		objprm sscapiid, ssCapMes
+		objprm SSCapIId, ssCapMes
 	}
 	
 	if ( (sscapwh(0) < 50) | (sscapwh(1) < 30) ){
@@ -81,7 +81,7 @@
 			objprm logid, logmessage
 
 			ssCapMes = "Žæ“¾‚·‚é"
-			objprm sscapiid, ssCapMes
+			objprm SSCapIId, ssCapMes
 			
 		}
 		nidPop
@@ -282,7 +282,7 @@ return
 		picx = ginfo_winx
 		picy = ginfo_winy
 		buffer bufid, 800, 480
-		gzoom 800, 480,  WND_CAPTURE, 0, 0, picx, picy, 1
+		gzoom 800, 480, WND_CAPTURE, 0, 0, picx, picy, 1
 		logmessage = strf("‰æ‘œ‚ðƒZƒ‹(%d, %d)‚É“Ç‚Ýž‚Ý‚Ü‚µ‚½", dmxy(0), dmxy(1))
 		
 	} else {

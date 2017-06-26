@@ -28,7 +28,6 @@
 #define klm2ver	2900
 
 
-
 #ifdef _debug
 
 	exist "./SubSource/hsptmp"

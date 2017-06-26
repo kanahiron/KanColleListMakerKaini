@@ -5,11 +5,11 @@
 
 	gsel WND_MAKE_STRING
 
-	font fontnum,fontsizenum,1
+	font fontnum, fontsizenum, 1
 	mes "1,3,4"
 	OSOW = ginfo(15)
 	
-	font fontname,fontsizename,1
+	font fontname, fontsizename, 1
 	mref BMSCR, 67
 	r = 0.1 * abs(BMSCR.49)
 	n = int(2.0 * M_PI * r)
@@ -24,7 +24,7 @@
 	if enableFirst = 1{
 		x = 10
 		string = FirstFleetName
-		color 255,255,255
+		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
 			xt = x + int(r * cos(rad))
@@ -34,7 +34,7 @@
 			pos xt+220, yt
 			mes string
 		loop
-		color ((fontColorFirstFleet&0x00FF0000)>>16),((fontColorFirstFleet&0x0000FF00)>>8),(fontColorFirstFleet&0x000000FF)
+		color ((fontColorFirstFleet&0x00FF0000)>>16), ((fontColorFirstFleet&0x0000FF00)>>8), (fontColorFirstFleet&0x000000FF)
 		pos x, y
 		mes string
 		y += 70
@@ -43,7 +43,7 @@
 	if enableSecond = 1{
 		x = 10
 		string = SecondFleetName
-		color 255,255,255
+		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
 			xt = x + int(r * cos(rad))
@@ -53,7 +53,7 @@
 			pos xt+220, yt
 			mes string
 		loop
-		color ((fontColorSecondFleet&0x00FF0000)>>16),((fontColorSecondFleet&0x0000FF00)>>8),(fontColorSecondFleet&0x000000FF)
+		color ((fontColorSecondFleet&0x00FF0000)>>16), ((fontColorSecondFleet&0x0000FF00)>>8), (fontColorSecondFleet&0x000000FF)
 		pos x, y
 		mes string
 		y += 70
@@ -62,7 +62,7 @@
 	if enableThird = 1{
 		x = 10
 		string = ThirdFleetName
-		color 255,255,255
+		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
 			xt = x + int(r * cos(rad))
@@ -72,7 +72,7 @@
 			pos xt+220, yt
 			mes string
 		loop
-		color ((fontColorThirdFleet&0x00FF0000)>>16),((fontColorThirdFleet&0x0000FF00)>>8),(fontColorThirdFleet&0x000000FF)
+		color ((fontColorThirdFleet&0x00FF0000)>>16), ((fontColorThirdFleet&0x0000FF00)>>8), (fontColorThirdFleet&0x000000FF)
 		pos x, y
 		mes string
 		y += 70
@@ -81,7 +81,7 @@
 	if enableFourth = 1{
 		x = 10
 		string = FourthFleetName
-		color 255,255,255
+		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
 			xt = x + int(r * cos(rad))
@@ -91,12 +91,12 @@
 			pos xt+220, yt
 			mes string
 		loop
-		color ((fontColorFourthFleet&0x00FF0000)>>16),((fontColorFourthFleet&0x0000FF00)>>8),(fontColorFourthFleet&0x000000FF)
+		color ((fontColorFourthFleet&0x00FF0000)>>16), ((fontColorFourthFleet&0x0000FF00)>>8), (fontColorFourthFleet&0x000000FF)
 		pos x, y
 		mes string
 	}
 
-	font fontnum,fontsizenum,1
+	font fontnum, fontsizenum, 1
 	mref BMSCR, 67
 	r = 0.1 * abs(BMSCR.49)
 	n = int(2.0 * M_PI * r)
@@ -106,7 +106,7 @@
 	if enableFirst = 1{
 		y = 10
 		string = "1\n2\n3\n4\n5\n6"
-		color 255,255,255
+		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
 			xt = x + int(r * cos(rad))
@@ -116,7 +116,7 @@
 			pos xt+50, yt
 			mes string
 		loop
-		color ((fontColorFirstFleet&0x00FF0000)>>16),((fontColorFirstFleet&0x0000FF00)>>8),(fontColorFirstFleet&0x000000FF)
+		color ((fontColorFirstFleet&0x00FF0000)>>16), ((fontColorFirstFleet&0x0000FF00)>>8), (fontColorFirstFleet&0x000000FF)
 		pos x, y
 		mes string
 		x += 100
@@ -125,7 +125,7 @@
 	if enableSecond = 1{
 		y = 10
 		string = "1\n2\n3\n4\n5\n6"
-		color 255,255,255
+		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
 			xt = x + int(r * cos(rad))
@@ -135,7 +135,7 @@
 			pos xt+50, yt
 			mes string
 		loop
-		color ((fontColorSecondFleet&0x00FF0000)>>16),((fontColorSecondFleet&0x0000FF00)>>8),(fontColorSecondFleet&0x000000FF)
+		color ((fontColorSecondFleet&0x00FF0000)>>16), ((fontColorSecondFleet&0x0000FF00)>>8), (fontColorSecondFleet&0x000000FF)
 		pos x, y
 		mes string
 		x += 100
@@ -144,7 +144,7 @@
 	if enableThird = 1{
 		y = 10
 		string = "1\n2\n3\n4\n5\n6"
-		color 255,255,255
+		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
 			xt = x + int(r * cos(rad))
@@ -154,7 +154,7 @@
 			pos xt+50, yt
 			mes string
 		loop
-		color ((fontColorThirdFleet&0x00FF0000)>>16),((fontColorThirdFleet&0x0000FF00)>>8),(fontColorThirdFleet&0x000000FF)
+		color ((fontColorThirdFleet&0x00FF0000)>>16), ((fontColorThirdFleet&0x0000FF00)>>8), (fontColorThirdFleet&0x000000FF)
 		pos x, y
 		mes string
 		x += 100
@@ -163,7 +163,7 @@
 	if enableFourth = 1{
 		y = 10
 		string = "1\n2\n3\n4\n5\n6"
-		color 255,255,255
+		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
 			xt = x + int(r * cos(rad))
@@ -173,12 +173,12 @@
 			pos xt+50, yt
 			mes string
 		loop
-		color ((fontColorFourthFleet&0x00FF0000)>>16),((fontColorFourthFleet&0x0000FF00)>>8),(fontColorFourthFleet&0x000000FF)
+		color ((fontColorFourthFleet&0x00FF0000)>>16), ((fontColorFourthFleet&0x0000FF00)>>8), (fontColorFourthFleet&0x000000FF)
 		pos x, y
 		mes string
 	}
 
-	font "メイリオ",15,1
+	font "メイリオ", 15, 1
 	mref BMSCR, 67
 	r = 0.1 * abs(BMSCR.49)
 	n = int(2.0 * M_PI * r)
@@ -186,19 +186,19 @@
 	x = 10
 	y = 310
 	string = SOFTNAME
-	color 255,255,255
+	color 255, 255, 255
 	repeat n
 		rad = 2.0 * M_PI * cnt / n
 		xt = x + int(r * cos(rad))
 		yt = y + int(r * sin(rad))
 		pos xt, yt
-		color 245,240,220
+		color 245, 240, 220
 		mes string
 		pos xt+240, yt
-		color 255,255,255
+		color 255, 255, 255
 		mes string
 	loop
-	color 170,60,70
+	color 170, 60, 70
 	pos x, y
 	mes string
 	redraw 1
@@ -217,7 +217,7 @@ return
 	ChooseColor varptr(chooseColoerStruct)
 	if (stat != 0){
 		fontColorFirstFleet = RGBtoBGR(chooseColoerStruct(3))
-		fontColorFirstFleetStr = strf("%06X",fontColorFirstFleet)
+		fontColorFirstFleetStr = strf("%06X", fontColorFirstFleet)
 		gosub *drawColor
 	}
 return
@@ -227,7 +227,7 @@ return
 	ChooseColor varptr(chooseColoerStruct)
 	if (stat != 0){
 		fontColorSecondFleet = RGBtoBGR(chooseColoerStruct(3))
-		fontColorSecondFleetStr = strf("%06X",fontColorSecondFleet)
+		fontColorSecondFleetStr = strf("%06X", fontColorSecondFleet)
 		gosub *drawColor
 	}
 return
@@ -237,7 +237,7 @@ return
 	ChooseColor varptr(chooseColoerStruct)
 	if (stat != 0){
 		fontColorThirdFleet = RGBtoBGR(chooseColoerStruct(3))
-		fontColorThirdFleetStr = strf("%06X",fontColorThirdFleet)
+		fontColorThirdFleetStr = strf("%06X", fontColorThirdFleet)
 		gosub *drawColor
 	}
 return
@@ -247,7 +247,7 @@ return
 	ChooseColor varptr(chooseColoerStruct)
 	if (stat != 0){
 		fontColorFourthFleet = RGBtoBGR(chooseColoerStruct(3))
-		fontColorFourthFleetStr = strf("%06X",fontColorFourthFleet)
+		fontColorFourthFleetStr = strf("%06X", fontColorFourthFleet)
 		gosub *drawColor
 	}
 return
@@ -257,13 +257,13 @@ return
 		nidPush
 		gosub *drawString
 		gsel WND_MAIN
-		color ((fontColorFirstFleet&0x00FF0000)>>16),((fontColorFirstFleet&0x0000FF00)>>8),(fontColorFirstFleet&0x000000FF)
+		color ((fontColorFirstFleet&0x00FF0000)>>16), ((fontColorFirstFleet&0x0000FF00)>>8), (fontColorFirstFleet&0x000000FF)
 		boxf Scale(211), drawColorPos + 1, Scale(349), drawColorPos + Scale(21)
-		color ((fontColorSecondFleet&0x00FF0000)>>16),((fontColorSecondFleet&0x0000FF00)>>8),(fontColorSecondFleet&0x000000FF)
+		color ((fontColorSecondFleet&0x00FF0000)>>16), ((fontColorSecondFleet&0x0000FF00)>>8), (fontColorSecondFleet&0x000000FF)
 		boxf Scale(211), drawColorPos + Scale(22) + 1, Scale(349), drawColorPos + Scale(21 + 22)
-		color ((fontColorThirdFleet&0x00FF0000)>>16),((fontColorThirdFleet&0x0000FF00)>>8),(fontColorThirdFleet&0x000000FF)
+		color ((fontColorThirdFleet&0x00FF0000)>>16), ((fontColorThirdFleet&0x0000FF00)>>8), (fontColorThirdFleet&0x000000FF)
 		boxf Scale(211), drawColorPos + Scale(44) + 1, Scale(349), drawColorPos + Scale(21 + 44)
-		color ((fontColorFourthFleet&0x00FF0000)>>16),((fontColorFourthFleet&0x0000FF00)>>8),(fontColorFourthFleet&0x000000FF)
+		color ((fontColorFourthFleet&0x00FF0000)>>16), ((fontColorFourthFleet&0x0000FF00)>>8), (fontColorFourthFleet&0x000000FF)
 		boxf Scale(211), drawColorPos + Scale(66) + 1, Scale(349), drawColorPos + Scale(21 + 66)
 		nidPop
 	}
@@ -277,7 +277,7 @@ return
 
 	color 255, 0, 0: boxf
 
-	font "メイリオ", Scale(13) ,1
+	font "メイリオ", Scale(13) , 1
 	mes "キャプチャ　艦娘一覧　攻略編成　その他一覧"
 
 	tempx = 0, ginfo_mesx+Scale(20), ginfo_mesx+Scale(13), Scale(7)

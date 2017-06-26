@@ -2,10 +2,10 @@
 //設定――――――――――――――――――――――――――――――――――
 *listsavedialog
 	
-	BrowseFolder "一覧の保存先",(dir_exe)
-	if stat = 1{
+	BrowseFolder "一覧の保存先", (dir_exe)
+	if ( stat == 1 ){
 		listsavedir = refstr
-		objprm listsdid,listsavedir
+		objprm listsdid, listsavedir
 	}
 	
 return
@@ -13,9 +13,9 @@ return
 *sssavedialog
 	
 	BrowseFolder "SSキャプチャの保存先", (dir_exe+"\\ScreenShots")
-	if stat = 1{
+	if ( stat == 1 ){
 		sssavedir = refstr
-		objprm sssdid,sssavedir
+		objprm sssdid, sssavedir
 	}
 
 return
@@ -23,9 +23,9 @@ return
 *intervalshotsavedialog
 	
 	BrowseFolder "連続撮影の保存先", (dir_exe+"\\ScreenShots")
-	if stat = 1{
+	if ( stat == 1 ){
 		intervalShotDir = refstr
-		objprm intervalShotDirsdid,intervalShotDir
+		objprm intervalShotDirsdid, intervalShotDir
 	}
 
 return
@@ -33,7 +33,7 @@ return
 *videoCapSaveDialog
 
 	BrowseFolder "動画キャプチャの保存先", dir_exe
-	if stat = 1{
+	if ( stat == 1 ){
 		videoCapSaveDir = refstr
 		objprm videoCapSaveDirIId, videoCapSaveDir
 	}
@@ -42,10 +42,10 @@ return
 
 *yabumiuploaderdialog
 	
-	dialog "exe",16,"YabumiUpLoader"
-	if stat = 1{
+	dialog "exe", 16, "YabumiUpLoader"
+	if ( stat == 1 ){
 		yabumidir = refstr
-		objprm yabumiid,yabumidir
+		objprm yabumiid, yabumidir
 	}
 
 return
@@ -76,9 +76,9 @@ return
 	nidPush
 
 
-	if (hotkeycap == 1 && hotkeystr != hotkeystr_temp) {
-		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID
-		RegisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID,(MOD_ALT*hotkeycapalt)|(MOD_CONTROL*hotkeycapctrl)|(MOD_SHIFT*hotkeycapshift)|(MOD_WIN*hotkeycapwin),hotkeycode
+	if ( hotkeycap == 1 && hotkeystr != hotkeystr_temp ) {
+		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
+		RegisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID, (MOD_ALT*hotkeycapalt)|(MOD_CONTROL*hotkeycapctrl)|(MOD_SHIFT*hotkeycapshift)|(MOD_WIN*hotkeycapwin), hotkeycode
 		hotkeystr_temp = hotkeystr
 		if (stat == 0){
 			hotkeyset = 0
@@ -91,7 +91,7 @@ return
 
 	
 	if ( hotkeycap == 0 && hotkeyset == 1 ){
-		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE),HOTKEYID
+		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
 		hotkeyset = 0
 		logmessage = "ホットキーを解除しました"
 		hotkeystr_temp = ""
@@ -99,7 +99,7 @@ return
 
 	if (mode != MODE_OPTION){
 		gsel WND_MAIN
-		objprm logid,logmessage: await
+		objprm logid, logmessage: await
 	}
 
 	if ( hotkeyset && availablecap ) {
@@ -129,7 +129,7 @@ return
 return
 
 *Amazon
-	dialog "Amazonのほしい物リストだよ！\nぜひポチって支援してね！！！",2,"でちでち"
-	if stat = 6:exec "http://www.amazon.co.jp/wishlist/181BGDSFXZC6M/?sort=priority",16
+	dialog "Amazonのほしい物リストだよ！\nぜひポチって支援してね！！！", 2, "でちでち"
+	if stat = 6:exec "http://www.amazon.co.jp/wishlist/181BGDSFXZC6M/?sort=priority", 16
 return
 
