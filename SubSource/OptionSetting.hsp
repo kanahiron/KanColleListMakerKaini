@@ -58,6 +58,20 @@ return
 	exec sssavedir, 16
 return
 
+
+*videoCapSaveFOpen
+	exec videoCapSaveDir, 16
+return
+
+*seqCapSaveFOpen
+
+	if (intervalsavedir == "" || PathIsDirectory(intervalShotDir+"\\"+intervalsavedir) == 0 ){
+		dialog "連続キャプチャがまだ開始されていません"
+	} else {
+		exec intervalShotDir+"\\"+intervalsavedir, 16
+	}
+return
+
 *hotkeycapsetting
 	nidPush
 

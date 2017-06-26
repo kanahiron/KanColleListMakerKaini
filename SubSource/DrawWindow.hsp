@@ -163,24 +163,30 @@
 		createSemiAutoBId  = stat
 		//*/
 
-		pos Scale(7+((enableSeqCap^1)*-175)), mesy + scale3
+		pos Scale(3+((enableSeqCap^1)*-175)), mesy + scale3
 		mes "連続キャプチャ"
-		objsize Scale(75), Scale(25)
-		pos Scale(100+((enableSeqCap^1)*175)), mesy
-		if enableSeqCap: mesy += Scale(25)
+		objsize Scale(55), Scale(25)
+		pos Scale(95+((enableSeqCap^1)*175)), mesy
 		button gosub seqcapmes, *seqcap
 		seqCapBId  = stat
 
-		pos Scale(7+((enableVideoCap^1)*-175)), mesy + scale3
+		objsize Scale(25), Scale(25)
+		pos Scale(150+((enableVideoCap^1)*175)), mesy
+		button gosub "開",*seqCapSaveFOpen
+		fopenBId  = stat
+
+		if enableSeqCap: mesy += Scale(25)
+
+		pos Scale(3+((enableVideoCap^1)*-175)), mesy + scale3
 		mes "動画キャプチャ"
-		objsize Scale(50), Scale(25)
-		pos Scale(100+((enableVideoCap^1)*175)), mesy
+		objsize Scale(55), Scale(25)
+		pos Scale(95+((enableVideoCap^1)*175)), mesy
 		button gosub videoCapMes, *VideoCap
 		videoCapBId  = stat
 
 		objsize Scale(25), Scale(25)
 		pos Scale(150+((enableVideoCap^1)*175)), mesy
-		button gosub "開",*sssavefopen
+		button gosub "開",*VideoCapSaveFOpen
 		fopenBId  = stat
 
 		if enableVideoCap : mesy += Scale(25)

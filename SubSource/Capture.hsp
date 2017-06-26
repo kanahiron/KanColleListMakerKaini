@@ -370,7 +370,6 @@ return
 		objprm seqcapBId, seqcapmes
 		
 		objenable comboxId, 0
-		//objenable sscapBId, 0
 		objenable sscapIId, 0
 		objenable videoCapBId, 0
 		objenable yabumiBId, 0
