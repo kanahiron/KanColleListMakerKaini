@@ -16,7 +16,7 @@
 		sendmsg hCombox, $147
 		mode_ = stat
 		optionMode = 0
-		optionModePrev = 0
+		optionModePrev = -1
 
 		switch mode_
 			case 0
@@ -39,15 +39,12 @@
 				swbreak
 		swend
 
-		if (mode != modePrev || listMode != listModePrev){
+		if (mode != modePrev || listMode != listModePrev || optionMode != optionModePrev){
 			gosub *CalcCapPosAndWinSize
 			gosub *DrawMainWindow
 			
 		}
-		modePrev = mode
-		listmodePrev = listmode
-		
-		
+
 	}
 
 	//オプションモード切替コンボボックスによるオプションモード切替の発生

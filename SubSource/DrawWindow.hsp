@@ -767,6 +767,10 @@
 		//オプションここまで//オプションここまで//オプションここまで//オプションここまで
 	}
 
+	modePrev = mode
+	listModePrev = listMode
+	optionModePrev = optionMode
+
 	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
 
 	nidPop

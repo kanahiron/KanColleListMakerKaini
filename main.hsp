@@ -211,7 +211,8 @@
 	if (wparam == WND_GRID){
 		mode = MODE_SSCAP
 		gosub *drawMainWindow
-		objprm comboxid,0
+		gsel WND_MAIN, 1+frontRow
+		objprm comboxid, 0
 		return
 	}
 	
