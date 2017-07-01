@@ -63,13 +63,28 @@
 		videoCapSizeX = int((0.125*sscapwh(0))+0.9999999)*8
 		videoCapSizeY = int((0.125*sscapwh(1))+0.9999999)*8
 
+		noAudioFlg = FALSE
+
+		if (audioDeviceName == "音声なし"): noAudioFlg = TRUE
+
 		fname = strf("%s\\%s", videoCapSaveDir, DateAndTimeFormat2(saveNameVideoCapture))
-		cmdv = strf("\"%s\" -an -r 20/1 -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s_v.mp4\"", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY, fname)
-		cmda = strf("\"%s\" -vn -f dshow -i audio=\"%s\" -acodec aac -b:a 96k \"%s_a.aac\"", ffmpegdir, audioDeviceName, fname)
+		
+
+		if (noAudioFlg^1){
+			cmda = strf("\"%s\" -vn -f dshow -i audio=\"%s\" -acodec aac -b:a 96k \"%s_a.aac\"", ffmpegdir, audioDeviceName, fname)
+			cmdv = strf("\"%s\" -an -r 20/1 -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s_v.mp4\"", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY, fname)
+		} else {
+			cmda = strf("cmd")
+			cmdv = strf("\"%s\" -an -r 20/1 -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s.mp4\"", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY, fname)
+		}
+		
 		cmdm = strf("\"%s\" -i \"%s_v.mp4\" -i \"%s_a.aac\" -c:v copy -c:a copy \"%s.mp4\"", ffmpegdir, fname, fname, fname)
 
 		//gsel WND_FFMPEG, 1
 		gsel WND_MAIN
+
+		apid = 0
+		vpid = 0
 
 		pipe2exec cmda
 		apid = stat
@@ -84,7 +99,7 @@
 			return
 		}
 
-		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID, 500, 0
+		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID, 400, 0
 
 		videoCapFlg = TRUE
 		videoCapMes = "停止"
@@ -99,7 +114,11 @@
 		videoCapFlg = FALSE
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
 
-		pipe2put apid, "q" //録音の停止
+		if (noAudioFlg^1){
+			pipe2put apid, "q" //録音の停止
+		} else {
+			pipe2put apid, "exit\n"
+		}
 		pipe2put vpid, "q" //動画キャプチャの停止
 	
 		exf = 0
@@ -112,41 +131,45 @@
 				if stat & 2: pipe2get vpid, buf
 				if stat & 4: pipe2err vpid, buf
 			}
-	
 			if (exfa == 0){
 				pipe2check apid
 				if stat == 0:exfa = 1
 				if stat & 2: pipe2get apid, buf
 				if stat & 4: pipe2err apid, buf
 			}
-			if exfv && exfa: break
+			if (exfv && exfa): break
 			wait 10
 		loop
 
 		pipe2term vpid
 		pipe2term apid
+
+		if (noAudioFlg^1){
+			//動画結合処理
+			
+			pipe2exec cmdm
+			mpid = stat
+			
+			repeat
+				pipe2check mpid
+				if stat == 0:break
+				if stat & 2: pipe2get mpid, buf
+				if stat & 4: pipe2err mpid, buf
 		
-		pipe2exec cmdm
-		mpid = stat
-		
-		repeat
-			pipe2check mpid
-			if stat == 0:break
-			if stat & 2: pipe2get mpid, buf
-			if stat & 4: pipe2err mpid, buf
+				await 16
+			loop
 	
-			await 16
-		loop
+			pipe2term mpid
+	
+			exist fname+"_v.mp4"
+			if (strsize != -1): delete fname+"_v.mp4"
+			exist fname+"_a.aac"
+			if (strsize != -1): delete fname+"_a.aac"
 
-		pipe2term mpid
-
-		exist fname+"_v.mp4"
-		if (strsize != -1): delete fname+"_v.mp4"
-		exist fname+"_a.aac"
-		if (strsize != -1): delete fname+"_a.aac"
+		}
 
 		gsel WND_MAIN
-		logmessage = "動画キャプチャを停止しました"
+		logmessage = strf("%s.mp4を保存しました。", getpath(fname, 8))
 		objprm logid, logmessage
 
 		videoCapMes = "開始"
@@ -183,17 +206,20 @@ return
 	gsel WND_MAIN
 	
 	if (exfv || exfa){
-		gosub *VideoCap
+		gosub *VideoCapEmgStop
 		
 		gsel WND_MAIN
-		logmessage = "動画キャプチャが異常停止しました"
+		logmessage =  "Error-動画キャプチャを停止しました\n"
+		if (exfv): logmessage += "動画プロセスが異常停止しました\n"
+		if (exfa): logmessage += "音声プロセスが異常停止しました\n"
+		
 		objprm logId, logmessage: await
 		nidPop
 		return
 	}
 
 	elapsedTime = timeGetTime() - videoCapStartTime
-	elapsedTimeStr =  "動画をキャプチャ中…\n"
+	elapsedTimeStr = "動画をキャプチャ中…\n"
 	elapsedTimeStr += strf("  経過時間 %02d:%02d.%03d", (elapsedTime/1000/60), (elapsedTime/1000\60), (elapsedTime\1000))
 
 	gsel WND_MAIN
@@ -203,12 +229,37 @@ return
 	oncmd 1
 return
 
+*VideoCapEmgStop
+
+	logmes "異常停止の発生"
+
+	videoCapFlg = FALSE
+	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
+
+	pipe2term apid
+	pipe2term vpid
+	wait 50
+	exist fname+"_v.mp4"
+	if (strsize != -1): delete fname+"_v.mp4"
+	exist fname+"_a.aac"
+	if (strsize != -1): delete fname+"_a.aac"
+	exist fname+".mp4"
+	if (strsize != -1): delete fname+".mp4"
+
+	gsel WND_MAIN, 1+frontRow
+	videoCapMes = "開始"
+	objprm videoCapBId, videoCapMes
+		
+	gosub *SSModeControlEnable
+
+return
+
 *VideoCapSetting
 	//audioDeviceNameからaudioDeviceListNumを取得するためのサブルーチン
 	//起動時に一度だけ呼び出される
 
-	sdim audioDeviceList, 1024*2
 	GetAudioDevice ffmpegdir, audioDeviceList
+	audioDeviceList += "音声なし"
 	audioDeviceListNum = -1
 	if (audioDeviceName != ""){
 		notesel audioDeviceList
@@ -260,6 +311,7 @@ return
 	objprm ffmpegDirIId, ffmpegdir: await
 
 	GetAudioDevice ffmpegdir, audioDeviceList
+	audioDeviceList += "音声なし"
 	objprm audioDeviceLBId, audioDeviceList: await
 	audioDeviceListNum = -1
 	audioDeviceName = ""

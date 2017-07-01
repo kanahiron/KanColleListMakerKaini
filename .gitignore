@@ -12,3 +12,5 @@ SubSource/key.hsp
 SubSource/GridWindowOperation_old.hsp
 *.bak
 SubSource/WindowControlManagement.hsp
+*.i
+*.mp4

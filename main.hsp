@@ -219,7 +219,7 @@
 	if (wparam == WND_TWITTER){
 		gsel WND_TWITTER, -1
 		enableTweetWindow = FALSE
-		gsel WND_MAIN
+		gsel WND_MAIN, 1+frontRow
 		if (mode != MODE_OPTION){
 			objprm enabletweetwindowcid, 0
 		} 
