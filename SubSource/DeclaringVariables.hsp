@@ -145,6 +145,9 @@
 
 	sdim videoCapSaveDir, 1024
 
+	x264presetNum = 0
+	x264presetList = "ultrafast\nveryfast\nfaster\nfast\nmedium\nslow\nslower\nveryslow"
+
 return
 
 

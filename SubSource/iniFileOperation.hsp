@@ -41,11 +41,15 @@
 	GetIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink, "\"íºê⁄òAåã_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 
 	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
+	GetIni "VideoCapture", "lateEncode", lateEncode, "1"
+	GetIni "VideoCapture", "VideoCapFrameRate", videoCapFR, "20"
+	GetIni "VideoCapture", "VideoCapCRF", videoCapCRF, "22"
+	GetIni "VideoCapture", "x264presetNum", x264presetNum, "1"
 	GetIni "VideoCapture", "ffmpegDir", ffmpegDir, "\"\""
 	GetIni "VideoCapture", "AudioDeviceName", AudioDeviceName, "\"\""
 	GetIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir, "\"\""
 	GetIni "VideoCapture", "SaveNameVideoCapture", SaveNameVideoCapture, "\"KCVideo_<yyyy><MM><dd>-<HH><mm><ss>\""
-	
+
 	
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
@@ -157,8 +161,14 @@ return
 	if (addOrderNum != 0) & (addOrderNum != 1):addOrderNum=1
 
 	if (airStationTab != 0) & (airStationTab != 1):airStationTab=1
+
 	
 	if (enableVideoCap != 0) & (enableVideoCap != 1):enableVideoCap=1
+	if (lateEncode != 0) & (lateEncode != 1):lateEncode=1
+	if (videoCapFR < 5) | ( 30 < videoCapFR):videoCapFR=20
+	if (videoCapCRF < 16) | ( 30 < videoCapCRF):videoCapCRF=22
+	if (x264presetNum < 0) | ( 7 < x264presetNum):x264presetNum=22
+
 
 	fontColorFirstFleet = int("$"+fontcolorFirstFleetstr)
 	fontColorSecondFleet = int("$"+fontcolorSecondFleetstr)
@@ -360,6 +370,10 @@ return
 	WriteIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink
 
 	WriteIni "VideoCapture", "enableVideoCap", enableVideoCap
+	WriteIni "VideoCapture", "lateEncode", lateEncode
+	WriteIni "VideoCapture", "VideoCapFrameRate", videoCapFR
+	WriteIni "VideoCapture", "VideoCapCRF", videoCapCRF
+	WriteIni "VideoCapture", "x264presetNum", x264presetNum
 	WriteIni "VideoCapture", "AudioDeviceName", AudioDeviceName
 	WriteIni "VideoCapture", "ffmpegDir", ffmpegDir
 	WriteIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir

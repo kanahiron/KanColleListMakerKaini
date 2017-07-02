@@ -699,6 +699,43 @@
 			objsize Scale(350), scale20
 			pos scale5, mesy
 			chkbox "動画キャプチャを有効にする", enableVideoCap: mesy += scale20
+			pos scale5, mesy
+			chkbox "録画時のCPU負荷を軽減した動画キャプチャ", lateEncode: mesy += scale20
+
+
+			pos Scale(5), mesy+Scale(2)
+			mes "フレームレート(5～30fps)"
+			pos Scale(222), mesy+Scale(2)
+			mes "fps"
+			pos Scale(250), mesy+Scale(2)
+			mes "標準: 20fps"
+			pos Scale(180), mesy
+			input videoCapFR, Scale(40),  Scale(24), 2: mesy += Scale(24)
+			videoCapFRIId = stat
+			GetWindowLong objinfo(videoCapFRIId,2), -16
+			SetWindowLong objinfo(videoCapFRIId,2), -16, stat | $2
+
+
+			pos Scale(5), mesy+Scale(2)
+			mes "x264の品質(crf=16～30)"
+			pos Scale(250), mesy+Scale(2)
+			mes "標準: crf=22"
+			pos Scale(180), mesy
+			input videoCapCRF, Scale(40),  Scale(24), 2: mesy += Scale(24)
+			videoCapCRFIId = stat
+			GetWindowLong objinfo(videoCapCRFIId,2), -16
+			SetWindowLong objinfo(videoCapCRFIId,2), -16, stat | $2
+
+			
+			pos Scale(5), mesy+Scale(3)
+			mes "x264のプリセット"
+			pos Scale(250), mesy+Scale(3)
+			mes "標準: veryfast"
+			pos Scale(140), mesy
+			objsize Scale(80), Scale(25)
+			combox x264presetNum, , "ultrafast\nveryfast\nfaster\nfast\nmedium\nslow\nslower\nveryslow"
+			mesy += ComBoxH
+	
 
 			objsize Scale(350), Scale(50)
 			pos scale5, mesy
