@@ -72,10 +72,10 @@
 
 		if (noAudioFlg^1){
 			cmda = strf("\"%s\" -vn -f dshow -i audio=\"%s\" -acodec aac -b:a 96k \"%s_a.aac\"", ffmpegdir, audioDeviceName, fname)
-			cmdv = strf("\"%s\" -an -r 20/1 -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s_v.mp4\"", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY, fname)
+			cmdv = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s_v.mp4\"", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY, fname)
 		} else {
 			cmda = strf("cmd")
-			cmdv = strf("\"%s\" -an -r 20/1 -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s.mp4\"", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY, fname)
+			cmdv = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d -framerate 20/1 -i desktop -pix_fmt yuv420p -c:v libx264 -crf 18 -preset fast \"%s.mp4\"", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY, fname)
 		}
 		
 		cmdm = strf("\"%s\" -i \"%s_v.mp4\" -i \"%s_a.aac\" -c:v copy -c:a copy \"%s.mp4\"", ffmpegdir, fname, fname, fname)
