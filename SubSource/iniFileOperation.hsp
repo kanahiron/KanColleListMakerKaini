@@ -162,12 +162,11 @@ return
 
 	if (airStationTab != 0) & (airStationTab != 1):airStationTab=1
 
-	
 	if (enableVideoCap != 0) & (enableVideoCap != 1):enableVideoCap=1
 	if (lateEncode != 0) & (lateEncode != 1):lateEncode=1
 	if (videoCapFR < 5) | ( 30 < videoCapFR):videoCapFR=20
 	if (videoCapCRF < 16) | ( 30 < videoCapCRF):videoCapCRF=22
-	if (x264presetNum < 0) | ( 7 < x264presetNum):x264presetNum=22
+	if (x264presetNum < 0) | ( 7 < x264presetNum):x264presetNum=1
 
 
 	fontColorFirstFleet = int("$"+fontcolorFirstFleetstr)
