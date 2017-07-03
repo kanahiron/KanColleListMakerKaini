@@ -8,7 +8,7 @@
 			swbreak
 			
 		case WM_COMMAND
-			gosub *setmode
+			gosub *WM_COMMAND_Proc
 			swbreak
 
 		case WM_HOTKEY
@@ -61,7 +61,7 @@ return
 
 
 
-*setmode
+*WM_COMMAND_Proc
 	logmes "WM_COMMAND"
 
 	//コンボボックスによるモード切替の発生
