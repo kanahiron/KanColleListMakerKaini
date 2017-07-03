@@ -11,99 +11,93 @@
 			SET_WND_INFO
 	
 		gsel WND_GRID
-			
-			dragdata = 0
-			repeat
-				stick sti, 256
-				//左クリック用の処理ここから-----
-				if sti = 256{
-
-					//------
-
-					//mes (mousey\cellh+10)\cellh
-					if ( (listMode == LISTMODE_LIST) and (cliFlag == FALSE) ){
-						if (mousey > (cellsize(1)-10)){
-							temph = (mousey\cellsize(1)+10)\cellsize(1)
-							if ( (0 <= temph) and (temph <= 20) ){
-								listModeHNum = (mousey+10)/cellsize(1)
-								gosub *ChangeListModeHNum
-								gosub *draw
-								sti = 0
-								cliflag = 0
-							}
-						}
-					}
-
-
-					//------
-
-					
-					//mxy はドラッグを話した時点の座標
-					//mxy_ はドラッグ開始の座標
-					mxy(0) = limit(kmmousex/cellsize(0), 0, cellnum(0)) , limit(kmmousey/cellsize(1), 0, cellnum(1))
-					if (bufIDPos(mxy(0), mxy(1))) >= 100 & cliflag = 0{				
-						cliflag = 1
-						mxy_(0) = mxy(0), mxy(1)
-						mindexxy(0) = (mousex-(mxy_(0)*(cellsize(0)-1))), (mousey-(mxy_(1)*(cellsize(1)-1)))				
-						gsel WND_TEMP2
-						pos 0, 0
-						gcopy 1, 0, 0, maxScrSize(0), maxScrSize(1)
-						gsel WND_TEMP1
-						pos 0, 0
-						gzoom cellsize(0), cellsize(1), bufIDPos(mxy_(0), mxy_(1)), cutRange(0), cutRange(1), cutRange(2), cutRange(3), 1
-						gsel WND_GRID, 0
-					}
-				
-				}
-			
-				if cliflag = 1{
-					redraw 0
-					pos 0, 0
-					gcopy WND_TEMP2, 0, 0, maxScrSize(0), maxScrSize(1)
-					gmode 4, cellsize(0), cellsize(1), 100
-					pos mousex-mindexxy(0), mousey-mindexxy(1)
-					gcopy WND_TEMP1, 0, 0, cellsize(0), cellsize(1)
-					gmode 0
-					redraw 1
-				}
-				
-				if (sti == 0 and cliflag == 1){
-					if (kmmousex < 0) | (kmmousex > scrsize(0)) | (kmmousey < 0) | (kmmousey > scrsize(1)){
-						//マウス座標がウィンドウ外のとき
-						if bufIDPos(mxy_(0), mxy_(1)) >= 100{
-							loadPicBufID( bufIDPos(mxy_(0), mxy_(1)) - 100 ) = 0
-							bufIDPos(mxy_(0), mxy_(1)) = 0
-							gsel WND_MAIN
-							logmessage = "セル("+mxy_(0)+", "+mxy_(1)+")を削除しました"
-							objprm logid, logmessage
-							gsel WND_GRID		
-						}
-					} else {
-						temp = bufIDPos(mxy_(0), mxy_(1)) 
-						bufIDPos(mxy_(0), mxy_(1)) = bufIDPos(mxy(0), mxy(1))
-						bufIDPos(mxy(0), mxy(1)) = temp
-						gsel WND_MAIN
-						logmessage = "セル("+mxy_(0)+", "+mxy_(1)+")をセル("+mxy(0)+", "+mxy(1)+")に移動しました"
-						objprm logid, logmessage
-						gsel WND_GRID
-					}
-			
-					mxy(0) = 0, 0
-					mxy_(0) = 0, 0
-					temp = 0
-					cliflag = 0
-					gosub *draw
-				}
-			
-				if sti = 0 & cliflag = 0{
-					break
-				}
-				//左クリック用の処理ここまで-----
-
-				
 		
-				await 16
-			loop
+		dragdata = 0
+		repeat
+		
+			stick sti, 256
+			
+			//左クリック用の処理ここから-----
+			if (sti == 256){
+
+				if ( (listMode == LISTMODE_LIST) and (cliFlag == FALSE) ){
+					if (mousey > (cellsize(1)-10)){
+						temph = (mousey\cellsize(1)+10)\cellsize(1)
+						if ( (0 <= temph) and (temph <= 20) ){
+							listModeHNum = (mousey+10)/cellsize(1)
+							gosub *ChangeListModeHNum
+							gosub *draw
+							sti = 0
+							cliflag = 0
+						}
+					}
+				}
+				
+				//mxy はドラッグを話した時点の座標
+				//mxy_ はドラッグ開始の座標
+				mxy(0) = limit(kmmousex/cellsize(0), 0, cellnum(0)) , limit(kmmousey/cellsize(1), 0, cellnum(1))
+				if ( bufIDPos(mxy(0), mxy(1) )>=100 && cliflag==0){
+					cliflag = 1
+					mxy_(0) = mxy(0), mxy(1)
+					mindexxy(0) = (mousex-(mxy_(0)*(cellsize(0)-1))), (mousey-(mxy_(1)*(cellsize(1)-1)))
+					gsel WND_TEMP2
+					pos 0, 0
+					gcopy 1, 0, 0, maxScrSize(0), maxScrSize(1)
+					gsel WND_TEMP1
+					pos 0, 0
+					gzoom cellsize(0), cellsize(1), bufIDPos(mxy_(0), mxy_(1)), cutRange(0), cutRange(1), cutRange(2), cutRange(3), 1
+					gsel WND_GRID, 0
+				}
+				
+			}
+
+		
+			if (cliflag == 1){
+				redraw 0
+				pos 0, 0
+				gcopy WND_TEMP2, 0, 0, maxScrSize(0), maxScrSize(1)
+				gmode 4, cellsize(0), cellsize(1), 100
+				pos mousex-mindexxy(0), mousey-mindexxy(1)
+				gcopy WND_TEMP1, 0, 0, cellsize(0), cellsize(1)
+				gmode 0
+				redraw 1
+			}
+			
+			if (sti == 0 && cliflag == 1){
+				if (kmmousex < 0) | (kmmousex > scrsize(0)) | (kmmousey < 0) | (kmmousey > scrsize(1)){
+					//マウス座標がウィンドウ外のとき
+					if bufIDPos(mxy_(0), mxy_(1)) >= 100{
+						loadPicBufID( bufIDPos(mxy_(0), mxy_(1)) - 100 ) = 0
+						bufIDPos(mxy_(0), mxy_(1)) = 0
+						gsel WND_MAIN
+						logmessage = "セル("+mxy_(0)+", "+mxy_(1)+")を削除しました"
+						objprm logid, logmessage
+						gsel WND_GRID		
+					}
+				} else {
+					temp = bufIDPos(mxy_(0), mxy_(1)) 
+					bufIDPos(mxy_(0), mxy_(1)) = bufIDPos(mxy(0), mxy(1))
+					bufIDPos(mxy(0), mxy(1)) = temp
+					gsel WND_MAIN
+					logmessage = "セル("+mxy_(0)+", "+mxy_(1)+")をセル("+mxy(0)+", "+mxy(1)+")に移動しました"
+					objprm logid, logmessage
+					gsel WND_GRID
+				}
+			
+				mxy(0) = 0, 0
+				mxy_(0) = 0, 0
+				temp = 0
+				cliflag = 0
+				gosub *draw
+			}
+		
+			if ( sti==0 && cliflag==0 ){
+				break
+			}
+			//左クリック用の処理ここまで-----
+		
+			await 16
+		loop
 
 	}
 	
