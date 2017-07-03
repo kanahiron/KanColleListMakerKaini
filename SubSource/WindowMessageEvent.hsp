@@ -1,3 +1,66 @@
+*MainWindowProc
+	oncmd 0
+
+	switch iparam
+
+		case WM_DROPFILES
+			gosub *OnDropFiles
+			swbreak
+			
+		case WM_COMMAND
+			gosub *setmode
+			swbreak
+
+		case WM_HOTKEY
+			gosub *hotkey
+			swbreak
+
+		case WM_TIMER
+			gosub *L_WM_TIMER
+			swbreak
+
+		case WM_VSCROLL
+			gosub *vscroll
+			swbreak
+
+		case WM_DPICHANGED
+			gosub *DPICHANGED
+			swbreak
+
+		case WM_LBUTTONDOWN
+			gosub *mainWndMove
+			swbreak
+
+	swend
+
+	oncmd 1
+return
+
+
+*GridWindowProc
+	oncmd 0
+
+	switch iparam
+	
+		case WM_DROPFILES
+			gosub *OnDropFiles
+			swbreak
+			
+		case WM_SIZING
+			gosub *windowsize
+			swbreak
+
+		case WM_LBUTTONDOWN
+			gosub *ListDrag
+			swbreak
+
+	swend
+
+	oncmd 1
+return 
+
+
+
 *setmode
 	logmes "WM_COMMAND"
 
@@ -230,8 +293,7 @@ return
 
 
 *windowsize
-	oncmd 0
-	
+
 	dupptr left,   lparam,    4
 	dupptr top,    lparam+4,  4
 	dupptr right,  lparam+8,  4
@@ -259,7 +321,6 @@ return
 	
 	gosub *draw
 	
-	oncmd 1
 return
 
 //ドロップ処理――――――――――――――――――――――――――――――――――
@@ -444,7 +505,6 @@ return
 		case timer2ID
 
 			/////////////
-			oncmd 0
 			nidPush
 
 			if availableCap{
@@ -482,7 +542,6 @@ return
 			}
 
 			nidPop
-			oncmd 1
 			/////////////
 			swbreak
 

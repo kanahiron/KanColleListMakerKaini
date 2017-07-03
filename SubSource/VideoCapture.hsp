@@ -204,7 +204,6 @@
 return
 
 *VideoCapTimerProcessing
-	oncmd 0
 
 	nidPush
 
@@ -248,7 +247,6 @@ return
 	objprm logId, elapsedTimeStr: await
 	
 	nidPop
-	oncmd 1
 return
 
 *VideoCapEmgStop

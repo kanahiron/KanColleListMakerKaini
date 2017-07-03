@@ -57,14 +57,12 @@ return
 	userdata = ""
 	ACCESS_TOKEN = ""
 	ACCESS_SECRET = ""
-	oncmd 0
 		publishAccessToken ACCESS_TOKEN,ACCESS_SECRET,userdata,PIN
 		if stat != 200{
 			dialog "Twitter”FØ‚É¸”s‚µ‚Ü‚µ‚½\n‚à‚¤ˆê“x‚¨‚µ‚­‚¾‚³‚¢"
 		} else {
 			gosub *twiinit
 		}
-	oncmd 1
 	
 return
 

@@ -69,21 +69,21 @@
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 1
-		oncmd gosub *OnDropFiles, WM_DROPFILES
-		oncmd gosub *setmode, WM_COMMAND
-		oncmd gosub *hotkey, WM_HOTKEY
-		oncmd gosub *L_WM_TIMER, WM_TIMER
-		oncmd gosub *vscroll, WM_VSCROLL
-		oncmd gosub *DPICHANGED, WM_DPICHANGED
-		oncmd gosub *mainWndMove, WM_LBUTTONDOWN
+		oncmd gosub *MainWindowProc, WM_DROPFILES
+		oncmd gosub *MainWindowProc, WM_COMMAND
+		oncmd gosub *MainWindowProc, WM_HOTKEY
+		oncmd gosub *MainWindowProc, WM_TIMER
+		oncmd gosub *MainWindowProc, WM_VSCROLL
+		oncmd gosub *MainWindowProc, WM_DPICHANGED
+		oncmd gosub *MainWindowProc, WM_LBUTTONDOWN
 		objmode 2
 	
 	screen WND_GRID, disInfo(2), disInfo(3), 2:title "•\Ž¦‚³‚¹‚½‚¢ƒZƒ‹‚ÉD&D"
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 1
-		oncmd gosub *OnDropFiles, WM_DROPFILES
-		oncmd gosub *windowsize, WM_SIZING
-		oncmd gosub *ListDrag, WM_LBUTTONDOWN
+		oncmd gosub *GridWindowProc, WM_DROPFILES
+		oncmd gosub *GridWindowProc, WM_SIZING
+		oncmd gosub *GridWindowProc, WM_LBUTTONDOWN
 		//oncmd gosub *ListRelocation, WM_RBUTTONDOWN
 		framesx = ginfo_sizex - ginfo_winx
 		framesy = ginfo_sizey - ginfo_winy
