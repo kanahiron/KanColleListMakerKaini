@@ -57,12 +57,13 @@ return
 	userdata = ""
 	ACCESS_TOKEN = ""
 	ACCESS_SECRET = ""
-		publishAccessToken ACCESS_TOKEN,ACCESS_SECRET,userdata,PIN
-		if stat != 200{
-			dialog "Twitter認証に失敗しました\nもう一度お試しください"
-		} else {
-			gosub *twiinit
-		}
+	publishAccessToken ACCESS_TOKEN,ACCESS_SECRET,userdata,PIN
+	
+	if stat != 200{
+		dialog "Twitter認証に失敗しました\nもう一度お試しください"
+	} else {
+		gosub *twiinit
+	}
 	
 return
 
