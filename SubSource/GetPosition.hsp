@@ -127,7 +127,7 @@ return
 
 	//艦これのあるウィンドウのハンドル
 	hClient = WindowFromPoint(scrPosX, scrPosY)
-
+	
 	cliPoint(0) = scrPoint(0), scrPoint(1)
 
 	ScreenToClient hClient, varptr(cliPoint)
@@ -144,60 +144,85 @@ return
 	GetWindowRect hClient, varptr(rect)
 	clientScrX = rect(0)
 	clientScrY = rect(1)
-	
-	
+
+	//buffer WND_TEMP1, clientSize(0), clientSize(1)
 	buffer WND_TEMP1, clientSize(0), clientSize(1)
+
+	buffer WND_TEMP2, sscapwh(0), sscapwh(1)
+	mref temp2vram, 66
 	
-	cls
+	
+	gsel WND_TEMP1
 	PrintWindow hClient, hdc, 1: redraw
-	CheckKanCollePos WND_TEMP1, cliPosX, cliPosY
-	if (stat){
-		sscap(0) = cliPoint(0)
-		sscap(1) = cliPoint(1)
-		sscap(2) = sscap(0)+sscapwh(0)
-		sscap(3) = sscap(1)+sscapwh(1)
+	
+	gsel WND_TEMP2
+	gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
 
-		captureMethod = CM_PRINTWINDOW
-		positionType = PT_RELATIVE
-		nidPop
-		return
+	isfilled temp2vram, sscapwh(0), sscapwh(1)
+	if (stat==0){
+		CheckKanCollePos WND_TEMP1, cliPosX, cliPosY
+		if (stat){
+			sscap(0) = cliPoint(0)
+			sscap(1) = cliPoint(1)
+			sscap(2) = sscap(0)+sscapwh(0)
+			sscap(3) = sscap(1)+sscapwh(1)
+		
+			captureMethod = CM_PRINTWINDOW
+			positionType = PT_RELATIVE
+			nidPop
+			return
+		}
 	}
+	
 
-	cls
 	dcClient = GetDC(hClient)
+	
+	gsel WND_TEMP1
 	BitBlt hdc, 0, 0, clientSize(0), clientSize(1), dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
-	CheckKanCollePos WND_TEMP1, cliPosX, cliPosY
-	if (stat){
-		sscap(0) = cliPoint(0)
-		sscap(1) = cliPoint(1)
-		sscap(2) = sscap(0)+sscapwh(0)
-		sscap(3) = sscap(1)+sscapwh(1)
 
-		captureMethod = CM_BITBLT
-		positionType = PT_RELATIVE
-		nidPop
-		return
-	} else {
-		ReleaseDC dcClient 
+	gsel WND_TEMP2
+	gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
+	
+	isfilled temp2vram, sscapwh(0), sscapwh(1)
+	if (stat==0){
+		CheckKanCollePos WND_TEMP1, cliPosX, cliPosY
+		if (stat){
+			sscap(0) = cliPoint(0)
+			sscap(1) = cliPoint(1)
+			sscap(2) = sscap(0)+sscapwh(0)
+			sscap(3) = sscap(1)+sscapwh(1)
+		
+			captureMethod = CM_BITBLT
+			positionType = PT_RELATIVE
+			nidPop
+			return
+		}
 	}
+	ReleaseDC dcClient
 
-	cls
+
+	gsel WND_TEMP1
 	BitBlt hdc, 0, 0, clientSize(0), clientSize(1), hdcScreen, clientScrX, clientScrY, SRCCOPY | CAPTUREBLT: redraw
-	CheckKanCollePos WND_TEMP1, cliPosX, cliPosY
-	if (stat){
-		sscap(0) = cliPoint(0)
-		sscap(1) = cliPoint(1)
-		sscap(2) = sscap(0)+sscapwh(0)
-		sscap(3) = sscap(1)+sscapwh(1)
 
-		captureMethod = CM_BITBLT
-		positionType = PT_WNDABSOLUTE
-		nidPop
-		return
+	gsel WND_TEMP2
+	gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
+
+	isfilled temp2vram, sscapwh(0), sscapwh(1)
+	if (stat==0){
+		CheckKanCollePos WND_TEMP1, cliPosX, cliPosY
+		if (stat){
+			sscap(0) = cliPoint(0)
+			sscap(1) = cliPoint(1)
+			sscap(2) = sscap(0)+sscapwh(0)
+			sscap(3) = sscap(1)+sscapwh(1)
+		
+			captureMethod = CM_BITBLT
+			positionType = PT_WNDABSOLUTE
+			nidPop
+			return
+		}
 	}
 
-	captureMethod = CM_BITBLT
-	positionType = PT_ABSOLUTE
 	nidPop
 return
 

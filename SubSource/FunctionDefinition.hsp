@@ -92,6 +92,7 @@
 #enum WND_TEMP_SCR1
 #enum WND_FFMPEG
 #enum WND_DEBUG
+#enum WND_DEBUG2
 
 #const MODE_SSCAP	0
 #const MODE_LIST	1
