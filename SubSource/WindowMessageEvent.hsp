@@ -4,30 +4,37 @@
 	switch iparam
 
 		case WM_DROPFILES
+			logmes "WM_DROPFILES"
 			gosub *OnDropFiles
 			swbreak
 			
 		case WM_COMMAND
+			logmes "WM_COMMAND"
 			gosub *WM_COMMAND_Proc
 			swbreak
 
 		case WM_HOTKEY
+			logmes "WM_TIMER"
 			gosub *hotkey
 			swbreak
 
 		case WM_TIMER
+			logmes "WM_TIMER"
 			gosub *L_WM_TIMER
 			swbreak
 
 		case WM_VSCROLL
+			logmes "WM_VSCROLL"
 			gosub *vscroll
 			swbreak
 
 		case WM_DPICHANGED
+			logmes "WM_DPICHANGED"
 			gosub *DPICHANGED
 			swbreak
 
 		case WM_LBUTTONDOWN
+			logmes "WM_LBUTTONDOWN"
 			gosub *mainWndMove
 			swbreak
 
@@ -62,7 +69,7 @@ return
 
 
 *WM_COMMAND_Proc
-	logmes "WM_COMMAND"
+	
 
 	//コンボボックスによるモード切替の発生
 	if (lparam = hComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
@@ -105,7 +112,6 @@ return
 		if (mode != modePrev || listMode != listModePrev || optionMode != optionModePrev){
 			gosub *CalcCapPosAndWinSize
 			gosub *DrawMainWindow
-			
 		}
 
 	}
@@ -121,8 +127,6 @@ return
 		if (optionMode != optionModePrev){
 			gosub *drawMainWindow
 		}
-
-		optionModePrev = optionMode
 		
 	}
 
@@ -143,23 +147,28 @@ return
 			
 		}
 
-		//一覧作成モードでチェックボックスのオンオフで動的に画面を切り替えるための判定処理
-		logmes "リストチェンジ前判定 Index" + DAControlIndex
-		listChangef = FALSE
-		repeat DAControlIndex
-			if (lparam == DAControlArr(cnt)){
-				logmes "ヒット cnt:"+cnt
-				listChangef = TRUE
-				break
-			}
-		loop
-		if listChangef: gosub *listchange
+		if (mode == MODE_LIST){
+
+			//一覧作成モードでチェックボックスのオンオフで動的に画面を切り替えるための判定処理
+			logmes "リストチェンジ前判定 Index" + DAControlIndex
+			listChangef = FALSE
+			repeat DAControlIndex
+				if (lparam == DAControlArr(cnt)){
+					logmes "ヒット cnt:"+cnt
+					listChangef = TRUE
+					break
+				}
+			loop
+			if listChangef: gosub *listchange
+		}
 		
-	} else {
+	}
+
+	if (mode == MODE_OPTION){
 		//オプションモードのとき
 		
 		//UIスケールの自動設定周り
-		if (optionMode == 0){
+		if (optionMode == OPMODE_CONFIG){
 			if (lparam = autoUIScaleCh){
 				sendmsg autoUIScaleCh, $F2
 				autoUIScale = stat & 0x01
@@ -173,15 +182,15 @@ return
 
 			}
 		}
+
+		if (optionMode == OPMODE_VIDEOCAPTURE){
+			if ( (lparam == hAudioDeviceLB) && (((wparam>>16) & 0x0000FFFF) == 1) ){
+				gosub *SetAudioDeviceName
+			}
+		}
+		
 	}
 
-	if (mode==MODE_OPTION && optionMode==OPMODE_VIDEOCAPTURE){
-		if ( (lparam == hAudioDeviceLB) && (((wparam>>16) & 0x0000FFFF) == 1) ){
-			gosub *SetAudioDeviceName
-		}
-	}
-	
-	logmes ""
 return
 
 *listchange

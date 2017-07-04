@@ -2,6 +2,9 @@
 *drawMainWindow
 	nidPush
 
+	mainWndW = 0
+	mainWndH = 0
+
 	if (mode == MODE_LIST){
 		gsel WND_GRID, 1
 	} else {
@@ -9,39 +12,35 @@
 	}
 
 	gsel WND_MAIN, 1+frontrow
-	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
-	
-	pos 0,0
+	cls
 	syscolor 15: boxf: syscolor 8
 
-	if ( (mode == MODE_OPTION) & (modePrev == MODE_OPTION) ){
-		clrobj 2, -1
-	} else {
+	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
 	
-		clrobj
-		font "メイリオ", Scale(13)
-		mref BMSCR, 67
-		hFontMain = BMSCR(38)
 	
-		objsize Scale(175), Scale(30)
+	font "メイリオ", Scale(13)
+	mref BMSCR, 67
+	hFontMain = BMSCR(38)
+	
+	objsize Scale(175), Scale(30)
 		
-		combox dummy, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
-		comboxId = stat
-		hCombox = objinfo_hwnd(comboxId)
-		await: GetClientRect hComBox, varptr(rect)
-		ComBoxH = rect(3)
+	combox dummy, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+	comboxId = stat
+	hCombox = objinfo_hwnd(comboxId)
+	await: GetClientRect hComBox, varptr(rect)
+	ComBoxH = rect(3)
 	
-		if (mode == MODE_OPTION){
-			pos Scale(175), 0
-			combox optionMode, Scale(100), " 環境設定\n キャプチャ・作成設定\n 動画キャプチャ設定\n Twitter設定\n その他設定"
-			hOptionComBox = objinfo(stat, 2)
-		}
+	if (mode == MODE_OPTION){
+		pos Scale(175), 0
+		combox optionMode, Scale(100), " 環境設定\n キャプチャ・作成設定\n 動画キャプチャ設定\n Twitter設定\n その他設定"
+		optionCBId = stat
+		hOptionComBox = objinfo(optionCBId, 2)
 	}
 
 	if (mode == MODE_SSCAP){
 		objprm comboxId, 0
 		modemes = "SSキャプチャ"
-	} else : if(mode == MODE_LIST){
+	} else: if(mode == MODE_LIST){
 		switch listmode
 			case LISTMODE_LIST
 				objprm comboxId, 1
@@ -56,7 +55,7 @@
 				modemes = "その他一覧作成"
 				swbreak
 		swend
-	} else :if(mode == MODE_OPTION){
+	} else: if(mode == MODE_OPTION){
 		objprm comboxId, 4
 		modemes = "オプション"
 	}
@@ -213,10 +212,10 @@
 		logid = stat
 
 		gosub *SSModeControlEnable
-		
-		width Scale(175), mesy
+
+		mainWndW = Scale(175)
+		mainWndH = mesy
 	
-		debugLog "SSモード 描画終了"
 		//SSキャプチャモード　ここまで//SSキャプチャモード　ここまで//SSキャプチャモード　ここまで
 	}
 
@@ -237,8 +236,9 @@
 		if (listmode == LISTMODE_LIST){
 	
 			DAControlInit
-		
-			width Scale(175)
+
+			mainWndW = Scale(175)
+
 			mesy_ = mesy
 			pos scale5, mesy
 			chkbox "シーン: 編成→変更", ichiranMode1: mesy += Scale(100)
@@ -306,8 +306,8 @@
 		if (listmode == LISTMODE_FLEET){
 	
 			DAControlInit
-		
-			width Scale(350)
+
+			mainWndW = Scale(350)
 			
 			mesy2 = ComBoxh + scale3
 		
@@ -439,8 +439,8 @@
 		if (listmode == LISTMODE_OTHER){
 	
 			DAControlInit
-		
-			width  Scale(175)
+
+			mainWndW = Scale(175)
 			
 			objsize Scale(175), Scale(20)
 			
@@ -505,18 +505,18 @@
 		pos 0, mesy
 		mesbox logmessage, Scale(175), Scale(70), 0: mesy += Scale(70)
 		logId = stat
-		
-		width , mesy-(Scale(70)*hideLog_)
+
+		mainWndH = mesy-(Scale(70)*hideLog_)
 		
 		if IsWindowVisible(WND_INFO(WND_GRID, WI_HANDLE)) = 0{
-			gsel WND_GRID,1
+			gsel WND_GRID, 1
 		} else {
-			gsel WND_GRID,0
+			gsel WND_GRID, 0
 		}
-		title modemes+"モード - 表示させたいセルにD&D"
 		width scrsize(0), scrsize(1)
-		
+		title modemes+"モード - 表示させたいセルにD&D"
 		gosub *draw
+		
 		//一覧作成モードここまで//一覧作成モードここまで//一覧作成モードここまで//一覧作成モードここまで
 	}
 
@@ -525,6 +525,8 @@
 		//オプション//オプション//オプション//オプション//オプション
 		mesy = ComBoxH+3
 		syscolor 15: boxf: syscolor 8
+
+		objprm optionCBId, optionMode
 	
 		if (optionMode == OPMODE_CONFIG){
 	
@@ -799,8 +801,11 @@
 		pos 0, mesy + Scale(100)
 		mesbox logmessage, Scale(175), Scale(70), 0
 		logid = stat
-	
-		width Scale(350), mesy
+
+
+		mainWndW = Scale(350)
+		mainWndH = mesy
+
 		//オプションここまで//オプションここまで//オプションここまで//オプションここまで
 	}
 
@@ -808,9 +813,11 @@
 	listModePrev = listMode
 	optionModePrev = optionMode
 
+	gsel WND_MAIN, 1+frontRow
+	width mainWndW, mainWndH
+	
 	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
 
-	nidPop
 return
 
 *windowsSizeChange
