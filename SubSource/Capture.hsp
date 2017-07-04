@@ -197,7 +197,7 @@ return 0
 			}
 			
 		}
-		objprm logid, logmessage
+		objprm logid, logmessage: await
 	}
 
 	nidPop

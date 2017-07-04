@@ -520,7 +520,7 @@ return 0
 return
 
 
-#deffunc CheckKanCollePos int imageid, int posX, int posY
+#deffunc CheckKanCollePos int imageid, int posX, int posY, int sizeX, int sizeY
 
 	nid = ginfo(3)
 
@@ -580,8 +580,8 @@ return
 			if ( pccX != tccX(0) && pccY != tccY(0)){
 				as = absf(1.0*(y)/(x) - 0.6)
 				if (as <= 0.021){
-					po2(0) = x + po(0)-1
-					po2(1) = y + po(1)-1
+					po2(0) = x + po(0)
+					po2(1) = y + po(1)
 					success = TRUE
 					break
 				}
@@ -591,11 +591,10 @@ return
 		await
 	loop
 
-
 	gsel nid
 
 
-return success
+return ( success && (po2(0)-po(0)) == sizex )
 
 	
 ;#defcfunc getbufid
