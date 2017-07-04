@@ -87,9 +87,9 @@
 		nidPop
 		return 1
 	}
-		
 
-	buffer WND_CAPTURE, sscapwh(0), sscapwh(1)
+	
+	buffer WND_TEMP1, sscapwh(0), sscapwh(1)
 
 	switch captureMethod
 	
@@ -114,15 +114,35 @@
 			swbreak
 			
 		case CM_PRINTWINDOW
-			buffer WND_TEMP1, clientSize(0), clientSize(1)
+			buffer WND_TEMP2, clientSize(0), clientSize(1)
 			PrintWindow hClient, hdc, 1
 			redraw
 	
-			gsel WND_CAPTURE
-			gcopy WND_TEMP1, sscap(0), sscap(1), sscapwh(0), sscapwh(1)
+			gsel WND_TEMP1
+			gcopy WND_TEMP2, sscap(0), sscap(1), sscapwh(0), sscapwh(1)
 			swbreak
 
 	swend
+
+	if (hidename && isHomeport(WND_TEMP1)){
+		if (namecut){
+			//バッファを初期化し直し上部をカット
+			buffer WND_CAPTURE, sscapwh(0), int(0.9375*sscapwh(1)+0.5)
+			gcopy WND_TEMP1, 0, int(0.0625*sscapwh(1)+0.5), sscapwh(0), int(0.9375*sscapwh(1)+0.5)
+		} else {
+			//提督名とレベルを隠す処理
+			buffer WND_CAPTURE, sscapwh(0), sscapwh(1)
+			gcopy WND_TEMP1, 0, 0, sscapwh(0), sscapwh(1)
+			
+			pos 0.14125*sscapwh(0), 0
+			gzoom 0.20375*sscapwh(0), 0.05*sscapwh(1), WND_IMAGE_BUF, 0, 0, 163, 24, 1
+			pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
+			gzoom 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, WND_IMAGE_BUF, 0, 24, 100, 16, 1
+		}
+	} else {
+		buffer WND_CAPTURE, sscapwh(0), sscapwh(1)
+		gcopy WND_TEMP1, 0, 0, sscapwh(0), sscapwh(1)
+	}
 
 	nidPop
 	
@@ -137,25 +157,7 @@ return 0
 	gosub *SSCaptureOnMemory
 	if (stat): return
 
-	buffer WND_TEMP1, sscapwh(0), sscapwh(1)
-	gcopy WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1) 
-
-	if (hidename && isHomeport(WND_TEMP1)){
-
-		if (namecut){
-			//バッファを初期化し直し上部をカット
-			buffer WND_TEMP1, sscapwh(0), int(0.9375*sscapwh(1)+0.5)
-			gcopy WND_CAPTURE, 0, 0, sscapwh(0), int(0.9375*sscapwh(1)+0.5)
-		} else {
-			//提督名とレベルを隠す処理
-			pos 0.14125*sscapwh(0), 0
-			gzoom 0.20375*sscapwh(0), 0.05*sscapwh(1), WND_IMAGE_BUF, 0, 0, 163, 24, 1
-			pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
-			gzoom 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, WND_IMAGE_BUF, 0, 24, 100, 16, 1
-			
-		}
-	
-	}
+	gsel WND_CAPTURE
 
 	saveName = strf("%s%s", DateAndTimeFormat2(saveNameCapture), savekind(jpgsave))
 	
@@ -176,7 +178,7 @@ return 0
 			logmessage = savename+"を保存しました"
 			if dispcap & (mode == MODE_SSCAP){
 				pos 0, dispcapy
-				gzoom Scale(175), Scale(105), WND_TEMP1, 0, 0, sscapwh(0), sscapwh(1), 1
+				gzoom Scale(175), Scale(105), WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1), 1
 			}
 			
 			if (seqcapf^1) {
@@ -282,29 +284,36 @@ return
 		gsel WND_CAPTURE
 		picx = ginfo_winx
 		picy = ginfo_winy
+		ratio = 1.0*picy/picx
+		
 		buffer bufid, 800, 480
-		gzoom 800, 480, WND_CAPTURE, 0, 0, picx, picy, 1
+
+		if ( absf(ratio-(450.0/800.0)) <= 0.01 ){
+			pos 30, 0
+			gzoom 800, 450, WND_CAPTURE, 0, 0, picx, picy, 1
+		} else {
+			pos 0, 0
+			gzoom 800, 480, WND_CAPTURE, 0, 0, picx, picy, 1
+		}
+
 		logmessage = strf("画像をセル(%d, %d)に読み込みました", dmxy(0), dmxy(1))
 		
 	} else {
 		
-		ImgF_GetPicSize addFileName, picx, picy
-	
-		if ( (picx != 480) & (picy != 450) ){
-			buffer bufid, limit(picx, 800, picx), limit(picy, 480, picy)
-			ImgF_PicloadEx addFileName, 1
-			gzoom 800, 480, bufid, 0, 0, picx, picy, 1
+		gsel WND_TEMP1
+		ImgF_PicloadEx addFileName
+		picx = ginfo_winx
+		picy = ginfo_winy
+		ratio = 1.0*picy/picx
+		
+		buffer bufid, 800, 480
+
+		if ( absf(ratio-(450.0/800.0)) <= 0.01 ){
+			pos 0, 30
+			gzoom 800, 450, WND_TEMP1, 0, 0, picx, picy, 1
 		} else {
-			if (picy == 480){
-				buffer bufid, 800, 480
-				pos 0, 0
-				ImgF_PicloadEx addFileName, 1
-			}
-			if (picy == 450){
-				buffer bufid, 800, 480
-				pos 0, 30
-				ImgF_PicloadEx addFileName, 1
-			}
+			pos 0, 0
+			gzoom 800, 480, WND_TEMP1, 0, 0, picx, picy, 1
 		}
 		logmessage = strf("%sをセル(%d, %d)に読み込みました", getpath(addfilename, 11), dmxy(0), dmxy(1))
 		
