@@ -162,12 +162,15 @@
 #define ctype Scale(%1) int(UIScale*(%1)+0.5)
 #define ctype round(%1) int(strf("%%0.0f", %1))
 
+#define LogOut(%1) sendmsg hLog, WM_SETTEXT, 0, (%1)
+
 
 //ヘッダファイルで定義されてるもの
 
 //ウィンドウメッセージ
 #const WM_ACTIVATE		0x0006
 #const WM_SETREDRAW		0x000B
+#const WM_SETTEXT		0x000C
 #const WM_GETMINMAXINFO	0x0024
 #const WM_SETFONT		0x0030
 #const WM_NCLBUTTONDOWN 0x00A1

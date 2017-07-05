@@ -207,7 +207,8 @@
 		}
 		
 		mesbox logmessage, Scale(175), Scale(70), 0
-		logid = stat
+		logId = stat
+		hLog = objinfo_hwnd(logId)
 
 		gosub *SSModeControlEnable
 
@@ -503,6 +504,7 @@
 		pos 0, mesy
 		mesbox logmessage, Scale(175), Scale(70), 0: mesy += Scale(70)
 		logId = stat
+		hLog = objinfo_hwnd(logId)
 
 		mainWndH = mesy-(Scale(70)*hideLog_)
 		
@@ -798,8 +800,8 @@
 		
 		pos 0, mesy + Scale(100)
 		mesbox logmessage, Scale(175), Scale(70), 0
-		logid = stat
-
+		logId = stat
+		hLog = objinfo_hwnd(logId)
 
 		mainWndW = Scale(350)
 		mainWndH = mesy
