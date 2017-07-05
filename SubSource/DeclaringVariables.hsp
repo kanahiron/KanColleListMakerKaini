@@ -148,6 +148,12 @@
 	x264presetNum = 0
 	x264presetList = "ultrafast\nveryfast\nfaster\nfast\nmedium\nslow\nslower\nveryslow"
 
+	maxSearchLevelStr = "–³‚µ", "A", "S"
+	maxSearchLevelPrev = -1
+
+	captureMethod = CM_BITBLT
+	positionType = PT_ABSOLUTE
+
 return
 
 

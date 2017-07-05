@@ -25,7 +25,7 @@
 
 		case WM_VSCROLL
 			logmes "WM_VSCROLL"
-			gosub *vscroll
+			gosub *WM_VSCROLL_Proc
 			swbreak
 
 		case WM_DPICHANGED
@@ -404,17 +404,14 @@ return
 	debugLog "ドロップ処理 終了"
 return
 
-*vscroll
+*WM_VSCROLL_Proc
 	//トラックバーを動かしたときの処理
-	logmes "トラックバーを動かしたときの処理 開始"
 	nidPush
 	
 	if (lparam == hTrackbar) {
 		
 		sendmsg hTrackbar, TBM_GETPOS
 		tempint = stat
-
-		debugLog "    トラックバーの位置 :" + tempInt
 		
 		sendmsg hTrackBarScale, $C ,, strf("%d%% ",tempint)
 		UIScale = (0.01 * tempint)
@@ -430,9 +427,36 @@ return
 			twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
 		loop
 	}
+
+	if (lparam == hMaxSearchLevelTrackbar && wparam == 0x0008) {
+		
+		sendmsg hMaxSearchLevelTrackbar, TBM_GETPOS
+		maxSearchLevel = stat
+
+		if (maxSearchLevelPrev != maxSearchLevel){
+			
+			maxSearchLevelPrev = maxSearchLevel
+			sendmsg hMaxSearchLevelStatic , WM_SETTEXT, , maxSearchLevelStr(maxSearchLevel)
+			autoSearchFailureCount = 0
+
+			if (availableCap){
+
+				if (positionType != PT_ABSOLUTE){
+					scrPoint = sscap(0), sscap(1)
+					ClientToScreen hClient, varptr(scrPoint)
+					sscap(0) = scrPoint(0)
+					sscap(1) = scrPoint(1)
+					sscap(2) = scrPoint(0)+sscapwh(0)
+					sscap(3) = scrPoint(1)+sscapwh(1)
+				}
+			
+				gosub *CaptureMethodDecide
+				gosub *SSSettingCheck
+			}
+		}
+	}
 	
 	nidPop
-	debugLog "トラックバーを動かしたときの処理 終了"
 return
 
 *DPICHANGED

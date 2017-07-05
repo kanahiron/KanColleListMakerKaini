@@ -70,6 +70,26 @@
 		button gosub SSCapMes,*SSSetting
 		sscapIId = stat
 		mesy += Scale(22)
+
+		pos Scale(2), mesy
+		mes "ç≈çÇí«ê’ÉåÉxÉã"
+
+		pos Scale(95), mesy
+		winobj "msctls_trackbar32", "", , $50000000 | $1, Scale(45), Scale(20)
+		hMaxSearchLevelTrackbar = objinfo(stat, 2)
+	
+		sendmsg hMaxSearchLevelTrackbar, TBM_SETRANGE, 1, (2<<16) | 0
+		sendmsg hMaxSearchLevelTrackbar, TBM_SETPAGESIZE, 0, 0
+		sendmsg hMaxSearchLevelTrackbar, TBM_SETTICFREQ, 1, 0
+		sendmsg hMaxSearchLevelTrackbar, TBM_SETPOS, 1, maxSearchLevel
+
+		pos Scale(140), mesy
+		winobj "static", maxSearchLevelStr(maxSearchLevel), , $50001001, Scale(35), Scale(20)
+		hMaxSearchLevelStatic = objinfo(stat, 2)
+		sendmsg hMaxSearchLevelStatic, WM_SETFONT, hFontMain, 1
+
+		mesy += scale20
+		
 	
 		pos Scale(84+((manualpos^1) * 175)), mesy + scale5
 		mes "x"

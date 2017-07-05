@@ -26,6 +26,7 @@
 	GetIni "Configuration", "YabumiExeDir", yabumidir, "\"\""
 
 	GetIni "CaptureAndMaking", "NameCut", namecut, "0"
+	GetIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel, "2"
 	GetIni "CaptureAndMaking", "HotkeyCapture", hotkeycap, "1"
 	GetIni "CaptureAndMaking", "HotkeyStr", hotkeystr, "\"A___Z\""
 	GetIni "CaptureAndMaking", "AutoAddCapture", autoaddCapture, "1"
@@ -167,6 +168,9 @@ return
 	if (videoCapFR < 5) | ( 30 < videoCapFR):videoCapFR=20
 	if (videoCapCRF < 16) | ( 30 < videoCapCRF):videoCapCRF=22
 	if (x264presetNum < 0) | ( 7 < x264presetNum):x264presetNum=1
+
+	if (maxSearchLevel < 0) | ( 2 < maxSearchLevel): maxSearchLevel=2
+	
 
 
 	fontColorFirstFleet = int("$"+fontcolorFirstFleetstr)
@@ -354,6 +358,7 @@ return
 	WriteIni "Configuration", "YabumiExeDir", yabumidir
 	
 	WriteIni "CaptureAndMaking", "NameCut", namecut
+	WriteIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel
 	WriteIni "CaptureAndMaking", "HotkeyCapture", hotkeycap
 	WriteIni "CaptureAndMaking", "HotkeyStr", hotkeystr
 	WriteIni "CaptureAndMaking", "AutoAddCapture", autoaddCapture

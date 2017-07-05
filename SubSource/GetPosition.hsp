@@ -116,6 +116,8 @@ return
 
 	if (sscapwh(0) < 50) || (sscapwh(1) < 30): return
 
+	if (dcClient): ReleaseDC dcClient
+
 	dim rect, 4
 	dim scrPoint, 2
 	dim cliPoint, 2
@@ -150,76 +152,80 @@ return
 
 	buffer WND_TEMP2, sscapwh(0), sscapwh(1)
 	mref temp2vram, 66
-	
-	
-	gsel WND_TEMP1
-	PrintWindow hClient, hdc, 1: redraw
-	
-	gsel WND_TEMP2
-	gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
 
-	isfilled temp2vram, sscapwh(0), sscapwh(1)
-	if (stat==0){
-		CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
-		if (stat){
-			sscap(0) = cliPoint(0)
-			sscap(1) = cliPoint(1)
-			sscap(2) = sscap(0)+sscapwh(0)
-			sscap(3) = sscap(1)+sscapwh(1)
+	if (maxSearchLevel >= 2){
 		
-			captureMethod = CM_PRINTWINDOW
-			positionType = PT_RELATIVE
-			nidPop
-			return
+		gsel WND_TEMP1
+		PrintWindow hClient, hdc, 1: redraw
+		
+		gsel WND_TEMP2
+		gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
+	
+		isfilled temp2vram, sscapwh(0), sscapwh(1)
+		if (stat==0){
+			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
+			if (stat){
+				sscap(0) = cliPoint(0)
+				sscap(1) = cliPoint(1)
+				sscap(2) = sscap(0)+sscapwh(0)
+				sscap(3) = sscap(1)+sscapwh(1)
+			
+				captureMethod = CM_PRINTWINDOW
+				positionType = PT_RELATIVE
+				nidPop
+				return
+			}
 		}
-	}
-	
 
-	dcClient = GetDC(hClient)
-	
-	gsel WND_TEMP1
-	BitBlt hdc, 0, 0, clientSize(0), clientSize(1), dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
-
-	gsel WND_TEMP2
-	gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
-	
-	isfilled temp2vram, sscapwh(0), sscapwh(1)
-	if (stat==0){
-		CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
-		if (stat){
-			sscap(0) = cliPoint(0)
-			sscap(1) = cliPoint(1)
-			sscap(2) = sscap(0)+sscapwh(0)
-			sscap(3) = sscap(1)+sscapwh(1)
+		dcClient = GetDC(hClient)
 		
-			captureMethod = CM_BITBLT
-			positionType = PT_RELATIVE
-			nidPop
-			return
+		gsel WND_TEMP1
+		BitBlt hdc, 0, 0, clientSize(0), clientSize(1), dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
+	
+		gsel WND_TEMP2
+		gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
+		
+		isfilled temp2vram, sscapwh(0), sscapwh(1)
+		if (stat==0){
+			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
+			if (stat){
+				sscap(0) = cliPoint(0)
+				sscap(1) = cliPoint(1)
+				sscap(2) = sscap(0)+sscapwh(0)
+				sscap(3) = sscap(1)+sscapwh(1)
+			
+				captureMethod = CM_BITBLT
+				positionType = PT_RELATIVE
+				nidPop
+				return
+			}
 		}
-	}
-	ReleaseDC dcClient
-
-
-	gsel WND_TEMP1
-	BitBlt hdc, 0, 0, clientSize(0), clientSize(1), hdcScreen, clientScrX, clientScrY, SRCCOPY | CAPTUREBLT: redraw
-
-	gsel WND_TEMP2
-	gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
-
-	isfilled temp2vram, sscapwh(0), sscapwh(1)
-	if (stat==0){
-		CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
-		if (stat){
-			sscap(0) = cliPoint(0)
-			sscap(1) = cliPoint(1)
-			sscap(2) = sscap(0)+sscapwh(0)
-			sscap(3) = sscap(1)+sscapwh(1)
+		ReleaseDC dcClient
 		
-			captureMethod = CM_BITBLT
-			positionType = PT_WNDABSOLUTE
-			nidPop
-			return
+	}
+
+	if (maxSearchLevel >= 1){
+
+		gsel WND_TEMP1
+		BitBlt hdc, 0, 0, clientSize(0), clientSize(1), hdcScreen, clientScrX, clientScrY, SRCCOPY | CAPTUREBLT: redraw
+	
+		gsel WND_TEMP2
+		gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
+	
+		isfilled temp2vram, sscapwh(0), sscapwh(1)
+		if (stat==0){
+			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
+			if (stat){
+				sscap(0) = cliPoint(0)
+				sscap(1) = cliPoint(1)
+				sscap(2) = sscap(0)+sscapwh(0)
+				sscap(3) = sscap(1)+sscapwh(1)
+			
+				captureMethod = CM_BITBLT
+				positionType = PT_WNDABSOLUTE
+				nidPop
+				return
+			}
 		}
 	}
 
