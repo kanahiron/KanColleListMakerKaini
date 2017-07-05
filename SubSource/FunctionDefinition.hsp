@@ -76,7 +76,7 @@
 
 #define ctype round(%1) int(strf("%%0.0f", %1))
 
-
+//自分で定義した定数
 #enum WND_MAIN = 0
 #enum WND_GRID
 #enum WND_TWITTER		//元19
@@ -95,30 +95,78 @@
 #enum WND_DEBUG
 #enum WND_DEBUG2
 
+//フォントサイズ(未使用)
+#define FONT_SIZE_GRID_STRING 25
+#define FONT_SIZE_MANUAL_GETPOS_STRING 30
+#define FONT_SIZE_ALL 13
+
+
+//Mode
 #const MODE_SSCAP	0
 #const MODE_LIST	1
 #const MODE_OPTION	2
+
+//ListMode
 #const LISTMODE_LIST		0
 #const LISTMODE_FLEET		1
 #const LISTMODE_OTHER		2
 
+//ListModeOther
 #const LISTMODEOTHER_DIRECT		0
 #const LISTMODEOTHER_AIRBASE	1
 #const LISTMODEOTHER_ITEM		2
 
+//OptionMode
 #const OPMODE_CONFIG		0
 #const OPMODE_CAPTURE		1
 #const OPMODE_VIDEOCAPTURE	2
 #const OPMODE_TWITTER		3
 #const OPMODE_OTHER			4
 
-//レイヤードウィンドウ周り
-#const LWA_COLORKEY 1
-#const LWA_ALPHA 0x0002
+//captureMethod
+#const CM_BITBLT		0
+#const CM_PRINTWINDOW	1
 
-// bitblt
-#const SRCCOPY		0x00CC0020
-#const CAPTUREBLT	0x40000000
+//positionType
+#const PT_ABSOLUTE		1
+#const PT_RELATIVE		2
+#const PT_WNDABSOLUTE	3
+
+//WindowInfo
+#const WI_HANDLE	0
+#const WI_DC		1
+
+//rect構造体用
+#const CR_X 0
+#const CR_Y 1
+#const CR_W 2
+#const CR_H 3
+
+//自作マクロ
+#define ctype MAKELPARAM(%1,%2)	(%1 | %2<<16)
+#define ctype HIWORD(%1) (%1>>16) and 0x0000FFFFF
+#define ctype LOWORD(%1) %1 and 0x0000FFFFF
+
+#define nidStackInit dim nidStack, 100: nidIndex = 0
+#define nidPush nidindex++:nidstack(nidindex) = ginfo(3)
+#define nidPop gsel nidstack(nidindex), 0:nidindex--
+
+#define wndInfoInit dim wndInfoArr, 100, 2
+#define SET_WND_INFO wndInfoArr(ginfo(3), WI_HANDLE) = hwnd: wndInfoArr(ginfo(3), WI_DC) = hdc
+#define ctype WND_INFO(%1, %2) wndInfoArr(%1, %2)
+
+#define ctype RGBtoBGR(%1) (((%1<<16)&0xFF0000) | ((%1>>16)&0xFF) | (%1&0xFF00))
+
+//DynamicActionControl 
+#define DAControlInit dim DAControlArr, 20: DAControlIndex = 0
+#define SetDAControl(%1) DAControlArr(DAControlIndex) = (%1): DAControlIndex++
+
+#define ctype Scale(%1) int(UIScale*(%1)+0.5)
+
+
+
+//ヘッダファイルで定義されてるもの
+
 
 //ウィンドウメッセージ
 #const WM_ACTIVATE		0x0006
@@ -144,34 +192,33 @@
 #define LB_GETTEXT		$00000189
 #define LB_GETCOUNT		$0000018B
 
+//レイヤードウィンドウ周り
+#const LWA_COLORKEY		0x0001
+#const LWA_ALPHA		0x0002
 
 //コンボボックス周り
 #const CB_GETCURSEL		0x0147
 
-#define HTCAPTION 2
-
+//WM_ACTIVATE周り
 #const WA_INACTIVE		0
 #const WA_ACTIVE		1
 #const WA_CLICKACTIVE	2
 
-
-
 //ホットキー周り
-#const MOD_ALT		0x0001
-#const MOD_CONTROL	0x0002
-#const MOD_SHIFT	0x0004
-#const MOD_WIN	0x0008
+#const MOD_ALT			0x0001
+#const MOD_CONTROL		0x0002
+#const MOD_SHIFT		0x0004
+#const MOD_WIN			0x0008
 
-#const PBS_MARQUEE		0x08
-#const PBM_SETMARQUEE	0x040A
+//GetWindowLpng
 #const GWL_STYLE		(-16)
-#const WS_CHILD			0x40000000
-#const WS_VISIBLE		0x10000000
+
+//プログレスパー周り
+#const PBS_MARQUEE		0x0008
+
+#const PBM_SETMARQUEE	0x040A
 #const PBM_SETRANGE		0x0401
 #const PBM_SETPOS		0x0402
-#define ctype MAKELPARAM(%1,%2)	(%1 | %2<<16)
-#define ctype HIWORD(%1) (%1>>16) and 0x0000FFFFF
-#define ctype LOWORD(%1) %1 and 0x0000FFFFF
 
 //GetAncestor用
 #const GA_PARENT		1
@@ -179,7 +226,7 @@
 #const GA_ROOTOWNER		3
 
 //トラックバーコントロール用
-#enum TBM_GETPOS         = 0x0400
+#enum TBM_GETPOS		= 0x0400
 #enum TBM_GETRANGEMIN
 #enum TBM_GETRANGEMAX
 #enum TBM_GETTIC
@@ -219,42 +266,22 @@
 #const CC_SHOWHELP				0x00000008
 #const CC_SOLIDCOLOR			0x00000080
 
-#const SW_HIDE					1
-#const SW_SHOW					5
+//ShowWindow周り
+#const SW_HIDE		0x0001
+#const SW_SHOW		0x0005
 
-#const CM_BITBLT				0
-#const CM_PRINTWINDOW			1
+//ウインドウスタイル
+#const WS_CHILD		0x40000000
+#const WS_VISIBLE	0x10000000
 
-#const PT_ABSOLUTE 1
-#const PT_RELATIVE 2
-#const PT_WNDABSOLUTE 3
+//なんだろう
+#define HTCAPTION 2
 
-
-#const CR_X 0
-#const CR_Y 1
-#const CR_W 2
-#const CR_H 3
-
-#define WI_HANDLE	0
-#define WI_DC		1
-
-#define nidStackInit dim nidStack, 100: nidIndex = 0
-#define nidPush nidindex++:nidstack(nidindex) = ginfo(3)
-#define nidPop gsel nidstack(nidindex), 0:nidindex--
-
-#define wndInfoInit dim wndInfoArr, 100, 2
-#define SET_WND_INFO wndInfoArr(ginfo(3), WI_HANDLE) = hwnd: wndInfoArr(ginfo(3), WI_DC) = hdc
-#define ctype WND_INFO(%1, %2) wndInfoArr(%1, %2)
-
-#define ctype RGBtoBGR(%1) (((%1<<16)&0xFF0000) | ((%1>>16)&0xFF) | (%1&0xFF00))
-
-//DynamicActionControl 
-#define DAControlInit dim DAControlArr, 20: DAControlIndex = 0
-#define SetDAControl(%1) DAControlArr(DAControlIndex) = (%1): DAControlIndex++
+//BitBltのオプション
+#const SRCCOPY		0x00CC0020
+#const CAPTUREBLT	0x40000000
 
 
-#define FONT_SIZE_GRID_STRING 25
-#define FONT_SIZE_MANUAL_GETPOS_STRING 30
-#define FONT_SIZE_ALL 13
 
-#define ctype Scale(%1) int(UIScale*(%1)+0.5)
+
+
