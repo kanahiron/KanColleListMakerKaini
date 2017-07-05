@@ -83,10 +83,9 @@ return
 			gosub *twiinit
 		}
 
-		sendmsg hCombox, $147
+		sendmsg hCombox, CB_GETCURSEL
 		mode_ = stat
 		optionMode = 0
-		optionModePrev = -1
 
 		switch mode_
 			case 0
@@ -121,7 +120,7 @@ return
 		
 		logmes "OptionComBox"
 		
-		sendmsg hOptionComBox, $147
+		sendmsg hOptionComBox, CB_GETCURSEL
 		optionMode = stat
 
 		if (optionMode != optionModePrev){

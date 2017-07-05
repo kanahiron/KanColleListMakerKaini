@@ -77,6 +77,16 @@
 		oncmd gosub *MainWindowProc, WM_DPICHANGED
 		oncmd gosub *MainWindowProc, WM_LBUTTONDOWN
 		objmode 2
+		
+		combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+		comboxId = stat
+		hCombox = objinfo_hwnd(comboxId)
+		
+		combox dummy, 100, " 環境設定\n キャプチャ・作成設定\n 動画キャプチャ設定\n Twitter設定\n その他設定"
+		optionCBId = stat
+		hOptionComBox = objinfo(optionCBId, 2)
+
+		chkbox "dummy", dummy
 	
 	screen WND_GRID, disInfo(2), disInfo(3), 2:title "表示させたいセルにD&D"
 		SET_WND_INFO

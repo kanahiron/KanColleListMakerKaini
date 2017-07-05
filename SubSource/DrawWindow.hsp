@@ -12,30 +12,27 @@
 	}
 
 	gsel WND_MAIN, 1+frontrow
-	cls
+	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
+	
+	clrobj 2, -1 
 	syscolor 15: boxf: syscolor 8
 
-	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
-	
-	
 	font "メイリオ", Scale(13)
 	mref BMSCR, 67
 	hFontMain = BMSCR(38)
 	
-	objsize Scale(175), Scale(30)
-		
-	combox dummy, Scale(100), "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
-	comboxId = stat
-	hCombox = objinfo_hwnd(comboxId)
-	await: GetClientRect hComBox, varptr(rect)
+	sendmsg hComBox, WM_SETFONT, hFontMain, 1
+	MoveWindow hComBox, 0, 0, Scale(175), Scale(30), 1
+	GetClientRect hComBox, varptr(rect)
 	ComBoxH = rect(3)
-	
+
 	if (mode == MODE_OPTION){
-		pos Scale(175), 0
-		combox optionMode, Scale(100), " 環境設定\n キャプチャ・作成設定\n 動画キャプチャ設定\n Twitter設定\n その他設定"
-		optionCBId = stat
-		hOptionComBox = objinfo(optionCBId, 2)
+		sendmsg hOptionComBox, WM_SETFONT, hFontMain, 1
+		MoveWindow hOptionComBox, Scale(175), 0, Scale(175), Scale(30), 1
+	} else {
+		MoveWindow hOptionComBox, Scale(350), 0, Scale(175), Scale(30), 1
 	}
+		
 
 	if (mode == MODE_SSCAP){
 		objprm comboxId, 0
@@ -208,6 +205,7 @@
 		} else {
 			pos Scale(175), mesy
 		}
+		
 		mesbox logmessage, Scale(175), Scale(70), 0
 		logid = stat
 
@@ -816,7 +814,7 @@
 	gsel WND_MAIN, 1+frontRow
 	width mainWndW, mainWndH
 	
-	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
+	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
 
 return
 

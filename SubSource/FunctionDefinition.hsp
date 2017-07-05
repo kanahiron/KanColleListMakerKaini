@@ -52,6 +52,7 @@
 #func  SetWindowText "SetWindowTextW" int, wptr
 #func  UpdateWindow "UpdateWindow" int
 #func  InvalidateRect "InvalidateRect" int, int, int
+#func  ShowWindow "ShowWindow" int, int
 
 #uselib "kernel32.dll"
 #func  MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
@@ -123,6 +124,7 @@
 #const WM_ACTIVATE		0x0006
 #const WM_SETREDRAW		0x000B
 #const WM_GETMINMAXINFO	0x0024
+#const WM_SETFONT		0x0030
 #const WM_NCLBUTTONDOWN 0x00A1
 #const WM_COMMAND		0x0111
 #const WM_TIMER			0x0113
@@ -143,11 +145,16 @@
 #define LB_GETCOUNT		$0000018B
 
 
+//コンボボックス周り
+#const CB_GETCURSEL		0x0147
+
 #define HTCAPTION 2
 
 #const WA_INACTIVE		0
 #const WA_ACTIVE		1
 #const WA_CLICKACTIVE	2
+
+
 
 //ホットキー周り
 #const MOD_ALT		0x0001
@@ -211,6 +218,9 @@
 #const CC_RGBINIT				0x00000001
 #const CC_SHOWHELP				0x00000008
 #const CC_SOLIDCOLOR			0x00000080
+
+#const SW_HIDE					1
+#const SW_SHOW					5
 
 #const CM_BITBLT				0
 #const CM_PRINTWINDOW			1
