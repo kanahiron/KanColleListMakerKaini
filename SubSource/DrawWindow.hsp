@@ -834,6 +834,8 @@ return
 
 
 *SSModeControlDisable
+	nidPush
+	gsel WND_MAIN
 
 	objenable comBoxId, 0
 	
@@ -861,9 +863,12 @@ return
 		objenable yabumiBId, 0
 	}
 
+	nidPop
 return
 
 *SSModeControlEnable
+	nidPush
+	gsel WND_MAIN
 
 	if ( (seqCapF^1) && (videoCapFlg^1) ){
 	
@@ -888,7 +893,7 @@ return
 		}
 	
 		if (mode == MODE_SSCAP && availableCap){
-			if (ffmpegDir != ""): objenable videoCapBId, 1
+			if ( (ffmpegDir != "") && (lateEncodeFlg^1) ): objenable videoCapBId, 1
 			if (yabumiautoupload = 1) & (availableyabumi = 1){
 				objenable yabumibid, 1
 			}
@@ -915,4 +920,5 @@ return
 
 	}
 
+	nidPop
 return

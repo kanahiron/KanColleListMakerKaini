@@ -20,7 +20,7 @@
 
 		case WM_TIMER
 			logmes "WM_TIMER"
-			gosub *L_WM_TIMER
+			gosub *WM_TIMER_Proc
 			swbreak
 
 		case WM_VSCROLL
@@ -504,12 +504,13 @@ return
 	
 return
 
-*L_WM_TIMER
+*WM_TIMER_Proc
 
 	switch wparam
 		case timerID
 			gosub *ssCapture
 			swbreak
+			
 		case timer2ID
 
 			/////////////
@@ -555,6 +556,10 @@ return
 
 		case VideoCapTimerID
 			gosub *VideoCapTimerProcessing
+			swbreak
+
+		case LateEncodeTimerID
+			gosub *LateEncodeTimerProcessing
 			swbreak
 	swend
 
