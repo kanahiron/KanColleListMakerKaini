@@ -289,14 +289,14 @@ return
 		buffer bufid, 800, 480
 
 		if ( absf(ratio-(450.0/800.0)) <= 0.01 ){
-			pos 30, 0
+			pos 0, 30
 			gzoom 800, 450, WND_CAPTURE, 0, 0, picx, picy, 1
 		} else {
 			pos 0, 0
 			gzoom 800, 480, WND_CAPTURE, 0, 0, picx, picy, 1
 		}
 
-		logmessage = strf("画像をセル(%d, %d)に読み込みました", dmxy(0), dmxy(1))
+		LogOut strf("画像をセル(%d, %d)に読み込みました", dmxy(0), dmxy(1))
 		
 	} else {
 		
@@ -315,18 +315,14 @@ return
 			pos 0, 0
 			gzoom 800, 480, WND_TEMP1, 0, 0, picx, picy, 1
 		}
-		logmessage = strf("%sをセル(%d, %d)に読み込みました", getpath(addfilename, 11), dmxy(0), dmxy(1))
+		LogOut strf("%sをセル(%d, %d)に読み込みました", getpath(addfilename, 11), dmxy(0), dmxy(1))
 		
 	}
 
 
 	gsel WND_GRID
 	gosub *draw
-	
-	gsel WND_MAIN
-	objprm logid, logmessage
-	
-	gsel WND_GRID
+
 
 return
 
