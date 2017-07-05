@@ -331,9 +331,9 @@ return
 	nidPush
 
 	exist fname+"_v.mp4"
-	//if (strsize != -1): delete fname+"_v.mp4"
+	if (strsize != -1): delete fname+"_v.mp4"
 	exist fname+"_a.aac"
-	//if (strsize != -1): delete fname+"_a.aac"
+	if (strsize != -1): delete fname+"_a.aac"
 
 	gsel WND_MAIN
 	LogOut strf("%s.mp4Çï€ë∂ÇµÇ‹ÇµÇΩÅB", getpath(fname, 8))
