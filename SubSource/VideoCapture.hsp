@@ -104,7 +104,7 @@
 				cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, fname)
 			}
 		}
-		dialog ""+cmdv
+		//dialog ""+cmdv
 
 		gsel WND_FFMPEG, 1
 		gsel WND_MAIN
@@ -122,6 +122,8 @@
 			return
 		}
 
+		videoCapStartTime = timeGetTime()
+
 		gsel WND_MAIN, 0
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID, 400, 0
 
@@ -131,7 +133,7 @@
 		
 		gosub *SSModeControlDisable
 
-		videoCapStartTime = timeGetTime()
+		
 	
 	} else {
 
@@ -140,6 +142,8 @@
 		
 		videoCapFlg = FALSE
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
+
+		videoCapTime = timeGetTime() - videoCapStartTime
 
 		if (noAudioFlg^1){
 			pipe2put apid, "q" //録音の停止
@@ -193,7 +197,7 @@
 				return
 			}
 			
-			SetTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID, 500, 0
+			SetTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID, 1500, 0
 			
 		}
 
@@ -221,13 +225,13 @@ return
 	if (stat == 0):exfv = 1
 	if (stat & 2): pipe2get vpid, buf1
 	if (stat & 4): pipe2err vpid, buf1
-	objprm 0, buf1: await
+	//objprm 0, buf1: await
 
 	pipe2check apid
 	if (stat == 0):exfa = 1
 	if (stat & 2): pipe2get apid, buf2
 	if (stat & 4): pipe2err apid, buf2
-	objprm 1, buf2: await
+	//objprm 1, buf2: await
 
 	gsel WND_MAIN
 	
@@ -265,7 +269,15 @@ return
 	if (stat == 0): exfm = 1
 	if (stat & 2): pipe2get mpid, buf1
 	if (stat & 4): pipe2err mpid, buf1
-	objprm 0, buf1: await
+	//objprm 0, buf1: await
+
+	strrep buf1, "\r", "\n"
+	strrep buf1, "\r\r", "\r"
+
+	lastStr = ""
+	notesel buf1
+	noteget lastStr, notemax-1
+	noteunsel
 
 
 	gsel WND_MAIN
@@ -289,9 +301,25 @@ return
 		*/
 	}
 
+	getstr lastStr, lastStr, instr(lastStr, 0, "time=")+5, ' '
+	encodeElapsedTime = int(strmid(lastStr, 0, 2))*3600000 + int(strmid(lastStr, 3, 2))*60000 + int(double(strmid(lastStr, 6, 5))*1000.0)
+	//↑エンコード側の経過時間(ms)
 	encodeTime = timeGetTime() - lateEncodeStartTime
+	//↑リアルタイムの経過時間
+
+	encodeSpeed = 1.0*encodeElapsedTime/encodeTime
+
+	//予想エンコード時間
+	estimatedTime = 1.0*videoCapTime/(encodeSpeed+0.00000000001)
+
+	remainingTime = estimatedTime-encodeTime
+
+	if (remainingTime < 0.0): remainingTime = 0.0
+
+	
 	lateEncodeStr = "動画をエンコード中…\n"
-	lateEncodeStr += strf("  経過時間 %02d:%02d.%03d", (encodeTime/1000/60), (encodeTime/1000\60), (encodeTime\1000))
+	lateEncodeStr += strf("  経過時間 %02d:%02d.%03d\n", (encodeTime/1000/60), (encodeTime/1000\60), (encodeTime\1000))
+	lateEncodeStr += strf("  推定残り %02d:%02d.%03d", (remainingTime/1000/60), (remainingTime/1000\60), (remainingTime\1000))
 
 	LogOut lateEncodeStr
 	
