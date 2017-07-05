@@ -45,7 +45,7 @@
 	GetIni "VideoCapture", "lateEncode", lateEncode, "1"
 	GetIni "VideoCapture", "VideoCapFrameRate", videoCapFR, "20"
 	GetIni "VideoCapture", "VideoCapCRF", videoCapCRF, "22"
-	GetIni "VideoCapture", "x264presetNum", x264presetNum, "4"
+	GetIni "VideoCapture", "x264presetNum", x264presetNum, "1"
 	GetIni "VideoCapture", "ffmpegDir", ffmpegDir, "\"\""
 	GetIni "VideoCapture", "AudioDeviceName", AudioDeviceName, "\"\""
 	GetIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir, "\"\""
