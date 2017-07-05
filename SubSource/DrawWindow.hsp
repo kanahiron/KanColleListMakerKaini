@@ -752,7 +752,7 @@
 			pos Scale(5), mesy+Scale(3)
 			mes "x264のプリセット"
 			pos Scale(250), mesy+Scale(3)
-			mes "標準: veryfast"
+			mes "標準: medium"
 			pos Scale(140), mesy
 			objsize Scale(80), Scale(25)
 			combox x264presetNum, , "ultrafast\nveryfast\nfaster\nfast\nmedium\nslow\nslower\nveryslow"
