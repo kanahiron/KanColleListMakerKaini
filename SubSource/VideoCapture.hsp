@@ -106,7 +106,7 @@
 		}
 		//dialog ""+cmdv
 
-		gsel WND_FFMPEG, 1
+		//gsel WND_FFMPEG, 1
 		gsel WND_MAIN
 
 		apid = 0
