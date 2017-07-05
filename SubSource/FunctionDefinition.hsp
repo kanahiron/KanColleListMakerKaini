@@ -74,8 +74,6 @@
 #define timer2ID		102
 #define VideoCapTimerID	103
 
-#define ctype round(%1) int(strf("%%0.0f", %1))
-
 //自分で定義した定数
 #enum WND_MAIN = 0
 #enum WND_GRID
@@ -96,10 +94,9 @@
 #enum WND_DEBUG2
 
 //フォントサイズ(未使用)
-#define FONT_SIZE_GRID_STRING 25
-#define FONT_SIZE_MANUAL_GETPOS_STRING 30
-#define FONT_SIZE_ALL 13
-
+#const FONT_SIZE_GRID_STRING 25
+#const FONT_SIZE_MANUAL_GETPOS_STRING 30
+#const FONT_SIZE_ALL 13
 
 //Mode
 #const MODE_SSCAP	0
@@ -142,6 +139,7 @@
 #const CR_W 2
 #const CR_H 3
 
+
 //自作マクロ
 #define ctype MAKELPARAM(%1,%2)	(%1 | %2<<16)
 #define ctype HIWORD(%1) (%1>>16) and 0x0000FFFFF
@@ -162,11 +160,10 @@
 #define SetDAControl(%1) DAControlArr(DAControlIndex) = (%1): DAControlIndex++
 
 #define ctype Scale(%1) int(UIScale*(%1)+0.5)
-
+#define ctype round(%1) int(strf("%%0.0f", %1))
 
 
 //ヘッダファイルで定義されてるもの
-
 
 //ウィンドウメッセージ
 #const WM_ACTIVATE		0x0006
