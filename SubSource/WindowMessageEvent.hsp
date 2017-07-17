@@ -14,7 +14,7 @@
 			swbreak
 
 		case WM_HOTKEY
-			logmes "WM_TIMER"
+			logmes "WM_HOTKEY"
 			gosub *hotkey
 			swbreak
 

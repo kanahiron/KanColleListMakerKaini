@@ -155,7 +155,9 @@ return 0
 	nidPush
 	
 	gosub *SSCaptureOnMemory
-	if (stat): return
+	if (stat): return 1
+
+	successFlg = FALSE
 
 	gsel WND_CAPTURE
 
@@ -173,8 +175,10 @@ return 0
 	
 	if (mode != MODE_OPTION){
 		if kmexist(savenamepath) <= 0{
+			successFlg = FALSE
 			logmessage = savename+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
 		} else {
+			successFlg = TRUE
 			logmessage = savename+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
 			if dispcap & (mode == MODE_SSCAP){
 				pos 0, dispcapy
@@ -201,7 +205,7 @@ return 0
 	}
 
 	nidPop
-return
+return (successFlg^1)
 
 
 *addCapture

@@ -146,7 +146,7 @@
 	
 	screen WND_TWITTER, disInfo(2), disInfo(3), 2 | 4
 		SET_WND_INFO
-		oncmd gosub *twiwindowimage,0x0201
+		oncmd gosub *TwiWindowSelectImage, WM_LBUTTONDOWN
 		oncmd gosub *rideCursor,WM_MOUSEMOVE
 		oncmd gosub *getText ,WM_COMMAND
 		oncmd gosub *OnDropFiles, WM_DROPFILES

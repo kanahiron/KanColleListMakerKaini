@@ -1,71 +1,20 @@
 
-*twiWindowImage
-	
-	if (ginfo(24) == WND_TWITTER) {
 
-		debugLog "ツイートウィンドウの画像描画処理 開始"
+*TweetWindow
+
+	if (ACCESS_TOKEN != "" & ACCESS_SECRET != ""){
 		nidPush
-		
-		mx = lParam & 0x0000FFFF			// カーソルx座標
-		my = (lParam >> 16) & 0x0000FFFF	// カーソルy座標
-	
 		gsel WND_TWITTER
-	
-		twiOrderPos = -1
-		repeat 4
-			if ((twiPicFrameXL(cnt)<mx) & (twiPicFrameXR(cnt)>mx) & (twiPicFrameYU(cnt)<my) & (twiPicFrameYD(cnt)>my)){
-				twiOrderPos = cnt
-			}
-		loop
-	
-		if twiOrderPos != -1{
-				
-			if twiOrder(twiOrderPos) = 0{
-				twiOrderCount++
-				twiOrder(twiOrderPos) = twiOrderCount
-			} else {
-				temp = twiOrder(twiOrderPos)
-				twiOrder(twiOrderPos) = 0
-				twiOrderCount--
-				repeat 4
-					if temp <= twiOrder(cnt):twiOrder(cnt)--
-				loop		
-			}
-		}
+		gosub *TweetWindowDraw
 
-		gosub *TweetWindow
-	
+		sendmsg stackCounth ,$C , , strf("%3d/%3d",picHistoryNum+1, picHistoryCount)
+		
 		nidPop
-		debugLog "ツイートウィンドウの画像描画処理 終了"
-	}
-return
-
-
-*openbrowser
-
-	address = getAuthorizeAddress()
-	if address != "Error"{
-		exec "rundll32.exe url.dll,FileProtocolHandler \""+address+"\""
-	} else {
-		dialog "認証に失敗しました\nインターネットに繋がっているか確認しもう一度お試しください"
 	}
 
 return
 
-*twioauthok
-	
-	userdata = ""
-	ACCESS_TOKEN = ""
-	ACCESS_SECRET = ""
-	publishAccessToken ACCESS_TOKEN,ACCESS_SECRET,userdata,PIN
-	
-	if stat != 200{
-		dialog "Twitter認証に失敗しました\nもう一度お試しください"
-	} else {
-		gosub *twiinit
-	}
-	
-return
+
 
 *twiinit
 	
@@ -92,29 +41,41 @@ return
 		mesbox tweettext, Scale(180), Scale(217), 1
 		ttid = stat
 		tth = objinfo(ttid,2)
+
+		font "メイリオ",Scale(20)
+		
 		objsize Scale(140), Scale(32)
 		pos 0, Scale(218)
-		
-		font "メイリオ",Scale(20)
 		button gosub "ツイート",*tweet_
 		tweetbid = stat
 
-		objsize Scale(40), Scale(30)
-		pos Scale(184), Scale(220)
-		button gosub "<<",*picHistoryTop
+		objsize Scale(25), Scale(32)
+		pos Scale(184), Scale(218)
+		button gosub "<",*picHistoryTop
 	
-		objsize Scale(65), Scale(30)
-		pos Scale(224), Scale(220)
+		objsize Scale(50), Scale(32)
+		pos Scale(209), Scale(218)
 		button gosub "←",*picHistoryBack
 		picHistoryBackBId = stat
-		objsize Scale(105), Scale(30)
-		pos Scale(341), Scale(220)
+		objsize Scale(50), Scale(32)
+		pos Scale(299), Scale(218)
 		button gosub "→",*picHistoryNext
 		picHistoryNextBId = stat
 		
-		objsize Scale(53), Scale(40)
-		pos Scale(288), Scale(210)
-		button gosub "↑",*picHistoryAddStack
+		objsize Scale(40), Scale(40)
+		pos Scale(259), Scale(210)
+		button gosub "↑", *picHistoryAddStack
+
+		objsize Scale(32), Scale(40)
+		
+		pos Scale(350), Scale(210)
+		button gosub "撮", *TwiCapture
+		
+		pos Scale(382), Scale(210)
+		button gosub "「」", *TwiCaptureSelect
+		
+		pos Scale(414), Scale(210)
+		button gosub "［］", *TwiCaptureSelectNonCut
 	
 		picHistoryNum = 0
 	
@@ -251,69 +212,26 @@ return
 return
 
 
-*TweetWindow
 
-	if (ACCESS_TOKEN != "" & ACCESS_SECRET != ""){
-		nidPush
-		gsel WND_TWITTER
-		gosub *TweetWindowDraw
+*TwiCapture
 
-		sendmsg stackCounth ,$C , , strf("%3d/%3d",picHistoryNum+1, picHistoryCount)
-		
-		nidPop
-	}
+	gosub *SSCapture
+	if (stat): return
+	
+	gosub *picHistoryTop
+	gosub *picHistoryAddStack
 
 return
 
-*rideCursor
 
-	if ( ACCESS_TOKEN != "" && ACCESS_SECRET != "" ){
+*TwiCaptureSelect
 	
-		mx = lparam&0x0000FFFF
-		my = (lparam&0xFFFF0000)>>16
-		flag = -1
-	
-		repeat 4
-			if PicStack(cnt) = "":break
-			if ((twiPicFrameXL(cnt)<mx) & (twiPicFrameXR(cnt)>mx) & (twiPicFrameYU(cnt)<my) & (twiPicFrameYD(cnt)>my)){
-				flag = cnt
-				break
-			}
-		loop
-		
-		if flag != flag_ {
-			
-			nidpush
-			flag_ = flag 
-	
-			if flag > -1{
-				
-				buffer WND_TEMP1
-				picload PicStack(flag)
-				
-				gsel WND_TWITTER
-				
-				color 200,200,200
-				boxf
-				syscolor 8
-	
-				pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
-				gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TEMP1, 0, 0, 800, 480
-				pos twiPicFrameXL(flag)+1,twiPicFrameYU(flag)+1
-				gzoom Scale(62), Scale(38), WND_TEMP1, 0, 0, 800, 480
-	
-				sendmsg stackCounth ,$C , , strf("プレビュ")
-			
-			} else {
-				
-				gsel WND_TWITTER
-				gosub *TweetWindowDraw
-				sendmsg stackCounth ,$C , , strf("%3d/%3d",picHistoryNum+1, picHistoryCount)
-			}
-			nidpop
-		}
-	}
+*TwiCaptureSelectNonCut
+
+
 return
+
+
 
 
 *TweetWindowDraw
@@ -367,6 +285,111 @@ return
 	redraw 1
 
 return
+
+
+*rideCursor
+
+	if ( ACCESS_TOKEN != "" && ACCESS_SECRET != "" ){
+	
+		mx = lparam&0x0000FFFF
+		my = (lparam&0xFFFF0000)>>16
+		rcFlg = -1
+	
+		repeat 4
+			if PicStack(cnt) = "":break
+			if ((twiPicFrameXL(cnt)<mx) & (twiPicFrameXR(cnt)>mx) & (twiPicFrameYU(cnt)<my) & (twiPicFrameYD(cnt)>my)){
+				rcFlg = cnt
+				break
+			}
+		loop
+		
+		if rcFlg != rcFlg_ {
+
+			logmes "選択が変わった"
+			
+			nidpush
+			rcFlg_ = rcFlg 
+	
+			if (rcFlg > -1){
+
+				logmes "拡大表示"
+				
+				buffer WND_TEMP1
+				picload PicStack(rcFlg)
+				
+				gsel WND_TWITTER
+				
+				color 200,200,200
+				boxf
+				syscolor 8
+	
+				pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
+				gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TEMP1, 0, 0, 800, 480
+				pos twiPicFrameXL(rcFlg)+1,twiPicFrameYU(rcFlg)+1
+				gzoom Scale(62), Scale(38), WND_TEMP1, 0, 0, 800, 480
+	
+				sendmsg stackCounth ,$C , , strf("プレビュ")
+			
+			} else {
+
+				logmes "元表示"
+				
+				gsel WND_TWITTER
+				gosub *TweetWindowDraw
+				sendmsg stackCounth ,$C , , strf("%3d/%3d",picHistoryNum+1, picHistoryCount)
+			}
+			nidpop
+		}
+	}
+return
+
+///*
+	
+*TwiWindowSelectImage
+
+	if (ginfo(24) == WND_TWITTER) {
+
+		debugLog "ツイートウィンドウの画像描画処理 開始"
+		nidPush
+		
+		mx = lParam & 0x0000FFFF			// カーソルx座標
+		my = (lParam >> 16) & 0x0000FFFF	// カーソルy座標
+	
+		gsel WND_TWITTER
+	
+		twiOrderPos = -1
+		repeat 4
+			if ((twiPicFrameXL(cnt)<mx) & (twiPicFrameXR(cnt)>mx) & (twiPicFrameYU(cnt)<my) & (twiPicFrameYD(cnt)>my)){
+				twiOrderPos = cnt
+			}
+		loop
+	
+		if twiOrderPos != -1{
+				
+			if twiOrder(twiOrderPos) = 0{
+				twiOrderCount++
+				twiOrder(twiOrderPos) = twiOrderCount
+			} else {
+				temp = twiOrder(twiOrderPos)
+				twiOrder(twiOrderPos) = 0
+				twiOrderCount--
+				repeat 4
+					if temp <= twiOrder(cnt):twiOrder(cnt)--
+				loop		
+			}
+		}
+
+		gosub *TweetWindow
+	
+		nidPop
+		debugLog "ツイートウィンドウの画像描画処理 終了"
+	}
+
+
+return
+
+//*/
+
 
 *tweet_
 	
@@ -492,6 +515,35 @@ return
 	ACCESS_SECRET = ""
 	gosub *twiinit
 return
+
+
+*openbrowser
+
+	address = getAuthorizeAddress()
+	if address != "Error"{
+		exec "rundll32.exe url.dll,FileProtocolHandler \""+address+"\""
+	} else {
+		dialog "認証に失敗しました\nインターネットに繋がっているか確認しもう一度お試しください"
+	}
+
+return
+
+
+*twioauthok
+	
+	userdata = ""
+	ACCESS_TOKEN = ""
+	ACCESS_SECRET = ""
+	publishAccessToken ACCESS_TOKEN,ACCESS_SECRET,userdata,PIN
+	
+	if stat != 200{
+		dialog "Twitter認証に失敗しました\nもう一度お試しください"
+	} else {
+		gosub *twiinit
+	}
+	
+return
+
 
 *getText
 	//ツイートウィンドウのテキストボックスに入力された文字数のカウント
