@@ -155,6 +155,8 @@ return
 	if picHistoryNum < 99{
 		if ( picHistory(picHistoryNum+1) != "" ){
 			picHistoryNum++
+			gsel WND_TWIBUF
+			picload picHistory(picHistoryNum)
 		}
 	}
 	
@@ -169,6 +171,8 @@ return
 	
 	if (0 < picHistoryNum){
 		picHistoryNum--
+		gsel WND_TWIBUF
+		picload picHistory(picHistoryNum)
 	}
 	
 	nidPop
@@ -182,6 +186,9 @@ return
 	gsel WND_TWITTER
 
 	picHistoryNum = 0
+	gsel WND_TWIBUF
+	picload picHistory(picHistoryNum)
+		
 	nidPop
 	
 	gosub *tweetWindow
@@ -206,7 +213,16 @@ return
 			twiOrderCount++
 			twiOrder(0) = twiOrderCount
 		}
-	
+
+		repeat 4
+			if PicStack(cnt) = "":break
+			if kmexist(PicStack(cnt)) < 1:break
+			
+			gsel WND_TWIBUF1+cnt
+			picload PicStack(cnt)
+			
+		loop
+
 	}
 	gosub *TweetWindow
 return
@@ -257,21 +273,27 @@ return
 	color
 	
 	if kmexist(picHistory(picHistoryNum)) > 0{
-		buffer WND_TEMP1
-		picload picHistory(picHistoryNum)
-		gsel WND_TWITTER
+		//=========================================
+
+		/*
+		if (picHistoryNum != picHistoryNumPrev){
+			gsel WND_TWIBUF: title ""+gettime(7)
+			picload picHistory(picHistoryNum)
+			gsel WND_TWITTER
+			picHistoryNumPrev = picHistoryNum
+		}
+		//*/
+				
 		pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
-		gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TEMP1, 0, 0, 800, 480, 1
+		gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TWIBUF, 0, 0, 800, 480, 1
 	}
 	
 	repeat 4
 		if PicStack(cnt) = "":break
 		if kmexist(PicStack(cnt)) < 1:break
-		buffer WND_TEMP1
-		picload PicStack(cnt)
-		gsel WND_TWITTER
+		
 		pos twiPicFrameXL(cnt)+1, twiPicFrameYU(cnt)+1
-		gzoom Scale(62), Scale(38), WND_TEMP1, 0, 0, 800, 480
+		gzoom Scale(62), Scale(38), WND_TWIBUF1+cnt, 0, 0, Scale(62), Scale(38)
 	loop
 
 	gmode 2
@@ -314,9 +336,6 @@ return
 
 				logmes "Šg‘å•\Ž¦"
 				
-				buffer WND_TEMP1
-				picload PicStack(rcFlg)
-				
 				gsel WND_TWITTER
 				
 				color 200,200,200
@@ -324,9 +343,9 @@ return
 				syscolor 8
 	
 				pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
-				gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TEMP1, 0, 0, 800, 480
+				gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TWIBUF1+rcFlg, 0, 0, 800, 480
 				pos twiPicFrameXL(rcFlg)+1,twiPicFrameYU(rcFlg)+1
-				gzoom Scale(62), Scale(38), WND_TEMP1, 0, 0, 800, 480
+				gzoom Scale(62), Scale(38), WND_TWIBUF1+rcFlg, 0, 0, 800, 480
 	
 				sendmsg stackCounth ,$C , , strf("ƒvƒŒƒrƒ…")
 			
@@ -438,6 +457,7 @@ return
 		if (twijpg == TRUE & jpgsave == FALSE){
 			repeat count
 				buffer WND_TEMP1
+				//=========================================
 				picload tempsdim(cnt)
 				saveNamed = strf("%s\\temp_%d.jpg", ssSaveDir, cnt)
 				GDIImageSave saveNamed, jpgQuality

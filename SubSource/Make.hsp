@@ -285,6 +285,10 @@
 				i--
 			loop
 			PicHistory(0) = listsavedir +"\\"+ savename
+
+			gsel WND_TWIBUF
+			picload picHistory(picHistoryNum)
+			
 			gosub *TweetWindow
 	
 		}

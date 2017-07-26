@@ -452,5 +452,15 @@ return
 			}
 		loop
 	}
+
+	if (picHistoryCount > 0){
+		nidPush
+		buffer WND_TWIBUF
+		picload picHistory(picHistoryNum)
+
+		nidPop
+	}
+	
+
 	chdir currentdir
 return

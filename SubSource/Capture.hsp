@@ -186,6 +186,8 @@ return 0
 			}
 			
 			if (seqcapf^1) {
+
+				//‚Ù‚Ú“¯‚¶ˆ—‚Ímake.hsp‚É‚à‚ ‚é‚æI
 					
 				picHistoryCount++
 				if picHistoryCount > 100: picHistoryCount = 100
@@ -197,11 +199,15 @@ return 0
 					i--
 				loop
 				PicHistory(0) = savenamepath 
+
+				gsel WND_TWIBUF
+				picload picHistory(picHistoryNum)
+
 				gosub *TweetWindow
 			}
 			
 		}
-		objprm logid, logmessage: await
+		logOut logmessage
 	}
 
 	nidPop

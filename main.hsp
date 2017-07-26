@@ -63,7 +63,6 @@
 	gosub *iniLoad
 	gosub *dataCheck
 	gosub *iniSave
-	gosub *loadHistory
 	gosub *VideoCapSetting
 	
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
@@ -160,10 +159,24 @@
 		mesbox Buf1, 1024, 256
 		mesbox Buf2, 1024, 256
 		mesbox Buf, 1024, 256
+
+
+	buffer WND_TWIBUF
+		SET_WND_INFO
+	buffer WND_TWIBUF1
+		SET_WND_INFO
+	buffer WND_TWIBUF2
+		SET_WND_INFO
+	buffer WND_TWIBUF3
+		SET_WND_INFO
+	buffer WND_TWIBUF4
+		SET_WND_INFO
 		
+
 
 	gsel WND_MAIN
 
+	gosub *loadHistory
 	gosub *calcUIScale
 	gosub *drawMainWindow
 	gosub *hotkeyCapSetting
