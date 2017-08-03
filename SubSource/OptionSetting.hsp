@@ -5,7 +5,7 @@
 	BrowseFolder "一覧の保存先", (dir_exe)
 	if ( stat == 1 ){
 		listsavedir = refstr
-		objprm listsdid, listsavedir
+		objprm listSaveDirIId, listsavedir
 	}
 	
 return
@@ -15,7 +15,7 @@ return
 	BrowseFolder "SSキャプチャの保存先", (dir_exe+"\\ScreenShots")
 	if ( stat == 1 ){
 		sssavedir = refstr
-		objprm sssdid, sssavedir
+		objprm SSSaveDiriid, sssavedir
 	}
 
 return
@@ -25,7 +25,7 @@ return
 	BrowseFolder "連続撮影の保存先", (dir_exe+"\\ScreenShots")
 	if ( stat == 1 ){
 		intervalShotDir = refstr
-		objprm intervalShotDirsdid, intervalShotDir
+		objprm intervalShotDirIId, intervalShotDir
 	}
 
 return
@@ -40,12 +40,22 @@ return
 
 return
 
+*selectCapSaveDialog
+
+	BrowseFolder "範囲選択キャプチャの保存先", dir_exe
+	if ( stat == 1 ){
+		selectCapSaveDir = refstr
+		objprm selectCapSaveDirIId, selectCapSaveDir
+	}
+
+return
+
 *yabumiuploaderdialog
 	
 	dialog "exe", 16, "YabumiUpLoader"
 	if ( stat == 1 ){
 		yabumidir = refstr
-		objprm yabumiid, yabumidir
+		objprm yabumIId, yabumidir
 	}
 
 return

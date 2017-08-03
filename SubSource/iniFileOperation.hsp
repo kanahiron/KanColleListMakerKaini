@@ -18,11 +18,13 @@
 	GetIni "Configuration", "ManualPos", manualpos, "0"
 	GetIni "Configuration", "Senden", senden, "1"
 	GetIni "Configuration", "AutoVersionCheck", autoVersionCheck, "1"
+	GetIni "Configuration", "ConfirmCompletion", confirmCompletion, "1"
 	GetIni "Configuration", "AutoUIScale", autoUIScale, "1"
 	GetIni "Configuration", "UIScale", UIScale, "1.0"
 	GetIni "Configuration", "ScreenShotSaveDir", sssavedir, "\"\""
 	GetIni "Configuration", "ListSaveDir", listsavedir, "\"\""
 	GetIni "Configuration", "IntervalShotSaveDir",intervalShotDir, "\"\""
+	GetIni "Configuration", "SelectCapSaveDir", selectCapSaveDir, "\"\""
 	GetIni "Configuration", "YabumiExeDir", yabumidir, "\"\""
 
 	GetIni "CaptureAndMaking", "NameCut", namecut, "0"
@@ -36,6 +38,7 @@
 	GetIni "CaptureAndMaking", "EnableIntervalCap", enableSeqCap, "0"
 	GetIni "CaptureAndMaking", "IntervalTime", timersec, "5"
 	GetIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "saveNameSelectCapture", saveNameSelectCapture, "\"selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameList", saveNameList, "\"艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameFormation", saveNameFormation, "\"攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation, "\"基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
@@ -60,6 +63,7 @@
 	GetIni "TwitterSetting", "Twi_ACCESS_SECRET", temp, "\"00\""
 	if stat = 0: ACCESS_SECRET = decstr(temp)
 
+	GetIni "TwitterSetting", "TwiFrontRow", twiFrontRow, "1"
 	GetIni "TwitterSetting", "TwiJpg",twijpg, "1"
 
 
@@ -171,8 +175,9 @@ return
 
 	if (maxSearchLevel < 0) | ( 2 < maxSearchLevel): maxSearchLevel=2
 	
-
-
+	if (ConfirmCompletion != 0) & (ConfirmCompletion != 1): ConfirmCompletion=1
+	if (twiFrontRow != 0) & (twiFrontRow != 1):twiFrontRow=1
+	
 	fontColorFirstFleet = int("$"+fontcolorFirstFleetstr)
 	fontColorSecondFleet = int("$"+fontcolorSecondFleetstr)
 	fontColorThirdFleet = int("$"+fontcolorThirdFleetstr)
@@ -193,7 +198,12 @@ return
 		}
 		sssavedir = dir_exe+"\\ScreenShots"
 	}
-	
+
+	if PathIsDirectory(selectCapSaveDir) = 0{
+		savelogtext += "Info - 範囲選択キャプチャ保存先が存在しません。デフォルトに変更しました。\n"
+		selectCapSaveDir = dir_exe+"\\ScreenShots"
+	}
+
 	if PathIsDirectory(intervalShotDir) = 0{
 		savelogtext += "Info - 連続撮影保存先が存在しません。デフォルトに変更しました。\n"
 		intervalShotDir = sssavedir
@@ -247,7 +257,13 @@ return
 	isValidFileName DateAndTimeFormat2(saveNameCapture)
 	if (stat == FALSE){
 		saveNameCapture = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-		savelogtext += "Info - キャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+		savelogtext += "Info - SSキャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+	}
+
+	isValidFileName DateAndTimeFormat2(saveNameSelectCapture)
+	if (stat == FALSE){
+		saveNameSelectCapture = "selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+		savelogtext += "Info - 範囲選択キャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
 
 	isValidFileName DateAndTimeFormat2(saveNameList)
@@ -350,11 +366,13 @@ return
 	WriteIni "Configuration", "ManualPos", manualpos
 	WriteIni "Configuration", "Senden", senden
 	WriteIni "Configuration", "AutoVersionCheck", autoVersionCheck
+	WriteIni "Configuration", "ConfirmCompletion", confirmCompletion
 	WriteIni "Configuration", "AutoUIScale", autoUIScale
 	WriteIni "Configuration", "UIScale", UIScale
 	WriteIni "Configuration", "ScreenShotSaveDir", sssavedir
 	WriteIni "Configuration", "ListSaveDir", listsavedir
 	WriteIni "Configuration", "IntervalShotSaveDir",intervalShotDir
+	WriteIni "Configuration", "SelectCapSaveDir",selectCapSaveDir
 	WriteIni "Configuration", "YabumiExeDir", yabumidir
 	
 	WriteIni "CaptureAndMaking", "NameCut", namecut
@@ -368,6 +386,7 @@ return
 	WriteIni "CaptureAndMaking", "EnableIntervalCap", enableSeqCap
 	WriteIni "CaptureAndMaking", "IntervalTime", timersec
 	WriteIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture
+	WriteIni "CaptureAndMaking", "saveNameSelectCapture", saveNameSelectCapture
 	WriteIni "CaptureAndMaking", "SaveNameList", saveNameList
 	WriteIni "CaptureAndMaking", "SaveNameFormation", saveNameFormation
 	WriteIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation
@@ -391,6 +410,7 @@ return
 	temp = encstr(ACCESS_SECRET)
 	WriteIni "TwitterSetting", "Twi_ACCESS_SECRET", temp
 
+	WriteIni "TwitterSetting", "TwiFrontRow", twiFrontRow
 	WriteIni "TwitterSetting", "TwiJpg",twijpg
 
 

@@ -569,6 +569,8 @@
 			pos scale5, mesy
 			chkbox "起動時にバージョンチェックを行う", autoVersionCheck: mesy += scale20
 			autoVersionCheckCh = objinfo(stat, 2)
+			pos scale5, mesy
+			chkbox "終了時に確認のダイアログを出す", confirmCompletion: mesy += scale20
 	
 			pos scale5, mesy
 			chkbox "UI拡大率を自動で設定する", autoUIScale: mesy += scale20
@@ -594,32 +596,41 @@
 			sendmsg hTrackBarScale, $30, hFontMain
 	
 			enableWindow hTrackBarScale, autoUIScale^1
-	
-	
+
 			objsize Scale(150), scale20
-			pos Scale(14), mesy
-			mes "一覧保存先"
-			pos Scale(200), mesy
-			button gosub "一覧保存先変更", *listSaveDialog: mesy += scale20
-			pos 0,mesy
-			mesbox listsaveDir, Scale(350), Scale(45), 5, 259 :mesy += Scale(45)
-			listsdid = stat
-			
+
 			pos Scale(14), mesy
 			mes "SS保存先"
 			pos Scale(200), mesy
-			button gosub "SS保存先変更", *ssSaveDialog: mesy += scale20
+			button gosub "保存先変更", *ssSaveDialog: mesy += scale20
 			pos 0, mesy
 			mesbox sssaveDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
-			sssdid = stat
+			SSSaveDiriid = stat
+	
+			pos Scale(14), mesy
+			mes "一覧保存先"
+			pos Scale(200), mesy
+			button gosub "保存先変更", *listSaveDialog: mesy += scale20
+			pos 0,mesy
+			mesbox listSaveDir, Scale(350), Scale(45), 5, 259 :mesy += Scale(45)
+			listSaveDirIId = stat
 			
 			pos Scale(14), mesy
-			mes "連続撮影保存先"
+			mes "連続キャプチャ保存先"
 			pos Scale(200), mesy
-			button gosub "連続撮影保存先変更", *intervalshotSaveDialog: mesy += scale20
+			button gosub "保存先変更", *intervalshotSaveDialog: mesy += scale20
 			pos 0, mesy
 			mesbox intervalShotDir, Scale(350), Scale(45),5,259:mesy += Scale(45)
-			intervalShotDirsdid = stat
+			intervalShotDirIId = stat
+
+			pos Scale(14), mesy
+			mes "範囲選択キャプチャ保存先"
+			pos Scale(200), mesy
+			button gosub "保存先変更", *selectCapSaveDialog: mesy += scale20
+			pos 0, mesy
+			mesbox selectCapSaveDir, Scale(350), Scale(45),5,259:mesy += Scale(45)
+			selectCapSaveDirIId = stat
+			
 			
 			pos Scale(14), mesy
 			mes "YabumiUploader.exeの場所"
@@ -639,7 +650,7 @@
 			pos scale5, mesy
 			chkbox "ホットキーでSSをキャプチャする", hotkeycap: mesy += scale20
 		
-			objsize Scale(50), scale20
+			objsize Scale(50), Scale(24)
 			pos Scale(30), mesy
 			chkbox "Alt", hotkeycapalt
 			pos Scale(80), mesy
@@ -649,9 +660,9 @@
 			pos Scale(180), mesy
 			chkbox "Win", hotkeycapwin
 			pos Scale(240), mesy
-			input hotkeycapchar, scale20, scale20, 1
-			pos Scale(265), mesy
-			mes "キー": mesy += scale20
+			input hotkeycapchar, Scale(20), Scale(24), 1
+			pos Scale(265), mesy+2
+			mes "キー": mesy += Scale(24)
 			
 			objsize Scale(350), scale20
 			pos scale5, mesy
@@ -661,12 +672,12 @@
 			pos scale5, mesy
 			chkbox "jpgで保存する", jpgsave: mesy += scale20
 			
-			pos scale5, mesy
+			pos scale5, mesy+2
 			mes "jpg保存品質"
-			pos Scale(155), mesy
+			pos Scale(155), mesy+2
 			mes "1～100(大きいほど高画質)"
 			pos Scale(100), mesy
-			input jpgquality,Scale(50), scale20, 3: mesy += scale20
+			input jpgquality,Scale(50), Scale(24), 3: mesy += Scale(24)
 			jpgqualityIId = stat
 			GetWindowLong objinfo(jpgqualityIId,2), -16
 			SetWindowLong objinfo(jpgqualityIId,2), -16, stat | $2
@@ -674,12 +685,12 @@
 			pos 5, mesy
 			chkbox "連続キャプチャを有効にする", enableSeqCap: mesy += scale20
 		
-			pos 5, mesy
+			pos 5, mesy+2
 			mes "連続キャプチャの間隔"
-			pos Scale(205), mesy
+			pos Scale(205), mesy+2
 			mes "x0.1秒 (0.1～99.9秒)"
 			pos Scale(150), mesy
-			input timersec, Scale(50), scale20, 3: mesy += scale20
+			input timersec, Scale(50), Scale(24), 3: mesy += Scale(24)
 			timersecIId = stat
 			GetWindowLong objinfo(timersecIId,2), -16
 			SetWindowLong objinfo(timersecIId,2), -16, stat | $2
@@ -688,29 +699,34 @@
 			mes "保存名": mesy += scale20
 	
 			pos scale5, mesy
-			mes "キャプチャ"
-			pos Scale(80), mesy
-			mesbox saveNameCapture, Scale(270), Scale(45), 5, 259: mesy += Scale(45)
+			mes "SSキャプチャ"
+			pos Scale(100), mesy
+			mesbox saveNameCapture, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
+
+			pos scale5, mesy
+			mes "範囲選択\n キャプチャ"
+			pos Scale(100), mesy
+			mesbox saveNameSelectCapture, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
 	
 			pos scale5,mesy
 			mes "艦娘一覧"
-			pos Scale(80), mesy
-			mesbox saveNameList, Scale(270), Scale(45), 5, 259: mesy += Scale(45)
+			pos Scale(100), mesy
+			mesbox saveNameList, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
 	
 			pos 5,mesy
 			mes "攻略編成"
-			pos Scale(80), mesy
-			mesbox saveNameFormation, Scale(270), Scale(45), 5, 259: mesy += Scale(45)
+			pos Scale(100), mesy
+			mesbox saveNameFormation, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
 	
 			pos 5,mesy
 			mes "直接連結"
-			pos Scale(80), mesy
-			mesbox saveNameDirectLink, Scale(270), Scale(45), 5, 259: mesy += Scale(45)
+			pos Scale(100), mesy
+			mesbox saveNameDirectLink, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
 			
 			pos 5,mesy
 			mes "基地航空隊"
-			pos Scale(80), mesy
-			mesbox saveNameAirStation, Scale(270), Scale(45), 5, 259: mesy += Scale(45)
+			pos Scale(100), mesy
+			mesbox saveNameAirStation, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
 	
 		}
 
@@ -803,10 +819,13 @@
 			pos Scale(100), mesy
 			button gosub "認証情報をリセット", *twireset
 			mesy += Scale(25)
+
+			pos scale5, mesy
+			chkbox "常にツイートウィンドウを最前列表示", twiFrontRow: mesy += scale20
 			
 			objsize Scale(350), scale20
 			pos scale5, mesy
-			chkbox "Twitterにはjpgで投稿する", twijpg: mesy += scale20
+			chkbox "pngをjpgに変換して投稿する", twijpg: mesy += scale20
 		}
 	
 		if (optionMode == OPMODE_OTHER){
@@ -884,6 +903,15 @@ return
 		objenable yabumiBId, 0
 	}
 
+	if (enableTweetWindow == TRUE){
+		if ( ACCESS_TOKEN != "" && ACCESS_SECRET != "" ){
+			gsel WND_TWITTER
+			if ( (seqCapF^1) && (videoCapFlg^1) ): objenable TwiWndCapBId, 0
+			objenable twiCaptureSelectBId , 0
+			objenable twiCaptureSelectNonCutBid, 0
+		}
+	}
+
 	nidPop
 return
 
@@ -939,7 +967,16 @@ return
 				}
 			}
 		}
+	}
 
+
+	if (enableTweetWindow == TRUE){
+		if ( ACCESS_TOKEN != "" && ACCESS_SECRET != "" ){
+			gsel WND_TWITTER
+			if (availableCap | manualPos): objenable TwiWndCapBId, 1
+			objenable twiCaptureSelectBId , 1
+			objenable twiCaptureSelectNonCutBid, 1
+		}
 	}
 
 	nidPop

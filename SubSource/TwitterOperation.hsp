@@ -1,3 +1,33 @@
+		
+*TweetWindowProc
+	oncmd 0
+
+	switch iparam
+
+		case WM_LBUTTONDOWN
+			logmes "WM_LBUTTONDOWN"
+			gosub *TwiWindowSelectImage
+			swbreak
+			
+		case WM_MOUSEMOVE
+			logmes "WM_MOUSEMOVE"
+			gosub *RideCursor
+			swbreak
+
+		case WM_COMMAND
+			logmes "WM_COMMAND"
+			gosub *GetText
+			swbreak
+
+		case WM_DROPFILES
+			logmes "WM_DROPFILES"
+			gosub *OnDropFiles
+			swbreak
+
+	swend
+
+	oncmd 1
+return
 
 
 *TweetWindow
@@ -24,10 +54,6 @@ return
 		
 		setAccessToken ACCESS_TOKEN, ACCESS_SECRET
 
-		gsel WND_MAIN
-		logmessage = "Twitter連携が有効です"
-		objprm logid, logmessage
-	
 		gsel WND_TWITTER
 		DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 1
 		clrobj
@@ -70,12 +96,15 @@ return
 		
 		pos Scale(350), Scale(210)
 		button gosub "撮", *TwiCapture
+		TwiWndCapBId = stat
 		
 		pos Scale(382), Scale(210)
 		button gosub "「」", *TwiCaptureSelect
+		twiCaptureSelectBId = stat 
 		
 		pos Scale(414), Scale(210)
 		button gosub "［］", *TwiCaptureSelectNonCut
+		twiCaptureSelectNonCutBid = stat
 	
 		picHistoryNum = 0
 	
@@ -295,9 +324,9 @@ return
 		BitBlt hdc, 0, 0, selcapwh(0), selcapwh(1), hdcScreen,  selcap(0), selcap(1),SRCCOPY | CAPTUREBLT: redraw
 
 
-		selCapSaveName = strf("%s%s", DateAndTimeFormat2(saveNameCapture), savekind(jpgsave))
+		selCapSaveName = strf("%s%s", DateAndTimeFormat2(saveNameSelectCapture), savekind(jpgsave))
 
-		selCapPath = ssSaveDir +"\\"+ selCapSaveName
+		selCapPath = selectCapSaveDir +"\\"+ selCapSaveName
 		gdiImageSave selCapPath, jpgQuality
 
 	
@@ -578,7 +607,7 @@ return
 				tweettext = ""
 				twiOrder = 0,0,0,0
 				twiOrderCount = 0
-				objprm ttid,tweettext
+				objprm ttid, tweettext
 	
 				sendmsg hProgress, $402, 0
 			

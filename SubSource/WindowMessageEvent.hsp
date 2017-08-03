@@ -139,7 +139,7 @@ return
 			enableTweetWindow = stat & 0x01
 			
 			if enabletweetwindow {
-				gsel WND_TWITTER, 1+frontrow
+				gsel WND_TWITTER, 1+twiFrontRow
 			} else {
 				gsel WND_TWITTER, -1
 			}

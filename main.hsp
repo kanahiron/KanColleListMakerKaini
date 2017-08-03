@@ -145,10 +145,10 @@
 	
 	screen WND_TWITTER, disInfo(2), disInfo(3), 2 | 4
 		SET_WND_INFO
-		oncmd gosub *TwiWindowSelectImage, WM_LBUTTONDOWN
-		oncmd gosub *rideCursor,WM_MOUSEMOVE
-		oncmd gosub *getText ,WM_COMMAND
-		oncmd gosub *OnDropFiles, WM_DROPFILES
+		oncmd gosub *TweetWindowProc, WM_LBUTTONDOWN
+		oncmd gosub *TweetWindowProc, WM_MOUSEMOVE
+		oncmd gosub *TweetWindowProc, WM_COMMAND
+		oncmd gosub *TweetWindowProc, WM_DROPFILES
 
 	screen WND_FFMPEG, 1024, 768, 2 | 4
 		SET_WND_INFO
@@ -177,11 +177,10 @@
 
 	gosub *loadHistory
 	gosub *calcUIScale
+	gosub *twiInit
 	gosub *drawMainWindow
 	gosub *hotkeyCapSetting
 	gsel WND_MAIN,1+frontRow
-
-	gosub *twiInit
 
 	if enableTweetWindow {
 		gsel WND_TWITTER, 1+frontrow
@@ -248,8 +247,10 @@
 		return
 	}
 
-	dialog "艦これ一覧めいかー改二を終了しますか？", 2, "終了確認"
-	if (stat != 6):return
+	if (confirmCompletion){
+		dialog "艦これ一覧めいかー改二を終了しますか？", 2, "終了確認"
+		if (stat != 6):return
+	}
 
 	onexit 0
 	onerror 0
