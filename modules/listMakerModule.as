@@ -13,7 +13,7 @@
 
 #deffunc chgbm int bpp
 	mref bm, 67
-	if bpp = = 0{
+	if (bpp == 0){
 		GetDC 0
 		hdisp = stat
 		CreateCompatibleBitmap hdisp, bm.1, bm.2
@@ -48,7 +48,7 @@ return
 #define MEM_DECOMMIT			0x00004000
 #define MEM_RELEASE				0x00008000
 #deffunc R4HBGC_destructor onexit
-	if(NULL ! = getkancollewindowposauto_C_ptr) {
+	if(NULL != getkancollewindowposauto_C_ptr) {
 		VirtualFreeR4HBGC getkancollewindowposauto_C_ptr, 184, MEM_DECOMMIT
 		VirtualFreeR4HBGC getkancollewindowposauto_C_ptr, 0, MEM_RELEASE
 		getkancollewindowposauto_C_ptr = NULL
@@ -90,13 +90,13 @@ R4HBGC_constructor
 #define FALSE 0
 
 //CompArrays 配列同士を比較し全て一致すれば真を返す
-#define CompArrays(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) ! = %3(cnt){%1 = FALSE: break}: loop
+#define CompArrays(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) != %3(cnt){%1 = FALSE: break}: loop
 //CompArrays2 配列同士を比較し全て一致しなければ真を返す
-#define CompArrays2(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) = = %3(cnt){%1 = FALSE: break}: loop
+#define CompArrays2(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) == %3(cnt){%1 = FALSE: break}: loop
 //CompArrayAndValue 配列と値を比較し全て一致すれば真を返す
-#define CompArrayAndValue(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) ! = %3{%1 = FALSE: break}: loop
+#define CompArrayAndValue(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) != %3{%1 = FALSE: break}: loop
 //CompArrayAndValue2 配列と値を比較し全て一致しなければ真を返す
-#define CompArrayAndValue2(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) = = %3{%1 = FALSE: break}: loop
+#define CompArrayAndValue2(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) == %3{%1 = FALSE: break}: loop
 
 
 #deffunc init_ListMakerMod array disinfo_
@@ -164,7 +164,7 @@ return
 	
 	//右側x座標
 	repeat 2400, 125
-		if (cx+cnt = = sw+1): break
+		if (cx+cnt == sw+1): break
 		
 		_cx = cx+cnt
 
@@ -174,16 +174,16 @@ return
 		flag = TRUE
 		repeat 5
 			//pset _cx-2, (cy-70+35*cnt)-2
-			if tempColor ! = GetRGB(vram, sw, sh, _cx, (cy-70+35*cnt)): flag = FALSE: break		 
+			if tempColor != GetRGB(vram, sw, sh, _cx, (cy-70+35*cnt)): flag = FALSE: break		 
 		loop
 
-		if (flag = = TRUE){
+		if (flag == TRUE){
 			rx = cx+cnt
 			break
 		}
 		
 	loop
-	if (rx = = -1): logmes "省略1 rx": goto *en
+	if (rx == -1): logmes "省略1 rx": goto *en
 
 	//下側y座標
 	repeat 1440, 70
@@ -197,20 +197,20 @@ return
 		flag = TRUE
 		repeat 6
 			//pset (cx-125+50*cnt)-2, _cy-2
-			if tempColor ! = GetRGB(vram, sw, sh, (cx-125+50*cnt), _cy): flag = FALSE: break		 
+			if tempColor != GetRGB(vram, sw, sh, (cx-125+50*cnt), _cy): flag = FALSE: break		 
 		loop
 
-		if (flag = = TRUE){
+		if (flag == TRUE){
 			ry = cy+cnt
 			break
 		}
 		
 	loop
-	if (ry = = -1): logmes "省略2 ry": goto *en
+	if (ry == -1): logmes "省略2 ry": goto *en
 
 	//上側y座標(0の可能性アリ)
 	repeat 1440, 70
-		if (cy-cnt) = = -1: break
+		if (cy-cnt) == -1: break
 
 		_cy = cy - cnt
 
@@ -220,9 +220,9 @@ return
 		flag = TRUE
 		repeat 6
 			//pset (cx-125+50*cnt)-2, _cy-2
-			if tempColor ! = GetRGB(vram, sw, sh, (cx-125+50*cnt), _cy): flag = FALSE: break		 
+			if tempColor != GetRGB(vram, sw, sh, (cx-125+50*cnt), _cy): flag = FALSE: break		 
 		loop
-		if (flag = = TRUE){
+		if (flag == TRUE){
 			ly = cy-cnt+1
 			break
 		}
@@ -237,7 +237,7 @@ return
 	//左側x座標(0の可能性アリ)
 	repeat 2400, 125
 	
-		if (cx-cnt) = = -1: break
+		if (cx-cnt) == -1: break
 		
 		_cx = cx-cnt
 
@@ -247,10 +247,10 @@ return
 		flag = TRUE
 		repeat 5
 			//pset _cx-2, (cy-70+35*cnt)-2
-			if tempColor ! = GetRGB(vram, sw, sh, _cx, (cy-70+35*cnt)): flag = FALSE: break		 
+			if tempColor != GetRGB(vram, sw, sh, _cx, (cy-70+35*cnt)): flag = FALSE: break		 
 		loop
 
-		if (flag = = TRUE){
+		if (flag == TRUE){
 			lx = cx-cnt+1
 			break
 		}
@@ -265,7 +265,7 @@ return
 	
 	logmes " x "+cx+" y "+cy+" w "+w+" h "+h+"\n"
 
-	if ((w = = 0) | (h = = 0)): return 0
+	if ((w == 0) | (h == 0)): return 0
 
 	if (absf(1.6666666666666667 - (1.0*w/h)) < 0.002){
 		posArray = lx-2, ly-2, rx-2, ry-2
@@ -298,7 +298,7 @@ return 0
 	gsel nid
 	
 	getkancollewindowposauto_C vram, sw*sh, homeportdata
-	if stat ! = -1{
+	if stat != -1{
 		//homeportdata 33, 106
 		sscap(0) = (stat\sw)+disinfo(0)-33, ((sh-1)-stat/sw)+disinfo(1)-106
 		sscap(2) = sscap(0)+800, sscap(1)+480
@@ -308,7 +308,7 @@ return 0
 	}
 
 	getkancollewindowposauto_C vram, sw*sh, resultdata
-	if stat ! = -1{
+	if stat != -1{
 		//resultdata 0, 122
 		sscap(0) = (stat\sw)+disinfo(0)-0, ((sh-1)-stat/sw)+disinfo(1)-122
 		sscap(2) = sscap(0)+800, sscap(1)+480
@@ -318,7 +318,7 @@ return 0
 	}
 	
 	getkancollewindowposauto_C vram, sw*sh, mapmovedata
-	if stat ! = -1{
+	if stat != -1{
 		//mapmovedata 167, 479
 		sscap(0) = (stat\sw)+disinfo(0)-167, ((sh-1)-stat/sw)+disinfo(1)-479
 		sscap(2) = sscap(0)+800, sscap(1)+480
@@ -420,7 +420,7 @@ return 0
 			repeat mwh(0)/2, 1
 				ccnt = cnt
 				pget tsscap(0)+cnt, tsscap(1)+mwh(1)/2
-				if (ccolor(0) ! = ginfo_r) | (ccolor(1) ! = ginfo_g) | (ccolor(2) ! = ginfo_b) {
+				if (ccolor(0) != ginfo_r) | (ccolor(1) != ginfo_g) | (ccolor(2) != ginfo_b) {
 					sscap(0) = tsscap(0)+cnt + disinfo(0)
 					break
 				}
@@ -431,7 +431,7 @@ return 0
 			repeat mwh(0)/2, 1
 				ccnt = cnt
 				pget tsscap(2)-cnt, tsscap(3)-mwh(1)/2
-				if (ccolor(0) ! = ginfo_r) | (ccolor(1) ! = ginfo_g) | (ccolor(2) ! = ginfo_b) {
+				if (ccolor(0) != ginfo_r) | (ccolor(1) != ginfo_g) | (ccolor(2) != ginfo_b) {
 					sscap(2) = tsscap(2)-cnt + disinfo(0)+1
 					break
 				}
@@ -442,7 +442,7 @@ return 0
 			repeat mwh(1)/2
 				ccnt = cnt
 				pget tsscap(0)+mwh(0)/2, tsscap(1)+cnt
-				if (ccolor(0) ! = ginfo_r) | (ccolor(1) ! = ginfo_g) | (ccolor(2) ! = ginfo_b) {
+				if (ccolor(0) != ginfo_r) | (ccolor(1) != ginfo_g) | (ccolor(2) != ginfo_b) {
 					sscap(1) = tsscap(1)+cnt + disinfo(1)
 					break
 				}
@@ -453,7 +453,7 @@ return 0
 			repeat mwh(1)/2
 				ccnt = cnt
 				pget tsscap(2)-mwh(0)/2, tsscap(3)-cnt
-				if (ccolor(0) ! = ginfo_r) | (ccolor(1) ! = ginfo_g) | (ccolor(2) ! = ginfo_b) {
+				if (ccolor(0) != ginfo_r) | (ccolor(1) != ginfo_g) | (ccolor(2) != ginfo_b) {
 					sscap(3) = tsscap(3)-cnt+1 + disinfo(1)
 					break
 				}
@@ -461,7 +461,7 @@ return 0
 			/////////////////////
 	
 			sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
-			if sscapwh(0) > = 99 & sscapwh(1) > = 59{
+			if sscapwh(0) >= 99 & sscapwh(1) >= 59{
 				/*
 				screen imageid5, sscapwh(0), sscapwh(1),, (ginfo(20)-sscapwh(0))/2, (ginfo(21)-sscapwh(1))/2
 				gsel imageid5, 1
@@ -501,7 +501,7 @@ return 0
 			MoveWindow imagehwnd3, 0, 0, 0, 0, 1
 		}
 			
-		if (sti = = 128 || sti = = 512){
+		if (sti == 128 || sti == 512){
 			gsel imageid3, -1
 			gsel imageid4
 			LoadCursor 0, 32512
@@ -612,7 +612,7 @@ return
 				repeat mwh(0)/2, 1
 					ccnt = cnt
 					pget tsscap(0)+cnt, tsscap(1)+mwh(1)/2
-					if (ccolor(0) ! = ginfo_r) | (ccolor(1) ! = ginfo_g) | (ccolor(2) ! = ginfo_b) {
+					if (ccolor(0) != ginfo_r) | (ccolor(1) != ginfo_g) | (ccolor(2) != ginfo_b) {
 						sscap(0) = tsscap(0)+cnt + disinfo(0)
 						break
 					}
@@ -623,7 +623,7 @@ return
 				repeat mwh(0)/2, 1
 					ccnt = cnt
 					pget tsscap(2)-cnt, tsscap(3)-mwh(1)/2
-					if (ccolor(0) ! = ginfo_r) | (ccolor(1) ! = ginfo_g) | (ccolor(2) ! = ginfo_b) {
+					if (ccolor(0) != ginfo_r) | (ccolor(1) != ginfo_g) | (ccolor(2) != ginfo_b) {
 						sscap(2) = tsscap(2)-cnt + disinfo(0)+1
 						break
 					}
@@ -634,7 +634,7 @@ return
 				repeat mwh(1)/2
 					ccnt = cnt
 					pget tsscap(0)+mwh(0)/2, tsscap(1)+cnt
-					if (ccolor(0) ! = ginfo_r) | (ccolor(1) ! = ginfo_g) | (ccolor(2) ! = ginfo_b) {
+					if (ccolor(0) != ginfo_r) | (ccolor(1) != ginfo_g) | (ccolor(2) != ginfo_b) {
 						sscap(1) = tsscap(1)+cnt + disinfo(1)
 						break
 					}
@@ -645,7 +645,7 @@ return
 				repeat mwh(1)/2
 					ccnt = cnt
 					pget tsscap(2)-mwh(0)/2, tsscap(3)-cnt
-					if (ccolor(0) ! = ginfo_r) | (ccolor(1) ! = ginfo_g) | (ccolor(2) ! = ginfo_b) {
+					if (ccolor(0) != ginfo_r) | (ccolor(1) != ginfo_g) | (ccolor(2) != ginfo_b) {
 						sscap(3) = tsscap(3)-cnt+1 + disinfo(1)
 						break
 					}
@@ -664,7 +664,7 @@ return
 			/////////////////////
 	
 			sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
-			if sscapwh(0) > = 99 & sscapwh(1) > = 59{
+			if sscapwh(0) >= 99 & sscapwh(1) >= 59{
 			
 				gsel imageid3, 2
 				MoveWindow imagehwnd3, sscap(0), sscap(1), sscap(2)-sscap(0), sscap(3)-sscap(1), 1		
@@ -696,7 +696,7 @@ return
 			MoveWindow imagehwnd3, 0, 0, 0, 0, 1
 		}
 			
-		if (sti = = 128 || sti = = 512){
+		if (sti == 128 || sti == 512){
 			gsel imageid3, -1
 			gsel imageid4
 			LoadCursor 0, 32512
@@ -777,9 +777,9 @@ return
 			//デバッグ用
 			//title strf("%4d %4d %4d %4d %4d %4d %4d %f", x, y, pccX, tccX(0), pccY, tccY(0), topCnt, absf(1.0*(y)/(x) - 0.6))
 			//wait 120
-			if ( pccX ! = tccX(0) && pccY ! = tccY(0)){
+			if ( pccX != tccX(0) && pccY != tccY(0)){
 				as = absf(1.0*(y)/(x) - 0.6)
-				if (as < = 0.021){
+				if (as <= 0.021){
 					po2(0) = x + po(0)
 					po2(1) = y + po(1)
 					success = TRUE
@@ -794,7 +794,7 @@ return
 	gsel nid
 
 
-return ( success && (po2(0)-po(0)) = = sizex )
+return ( success && (po2(0)-po(0)) == sizex )
 
 	
 ;#defcfunc getbufid
@@ -807,7 +807,7 @@ return ( success && (po2(0)-po(0)) = = sizex )
 
 	sdim output, 1024*4
 
-	if (ffmpegpath = = ""): return
+	if (ffmpegpath == ""): return
 
 	sdim buf, 1024*10
 	sdim buf1, 1024*10
@@ -818,30 +818,30 @@ return ( success && (po2(0)-po(0)) = = sizex )
 	
 	pipe2exec cmdm
 	pid = stat
-	if(pid = = -1): dialog "実行失敗": return
+	if(pid == -1): dialog "実行失敗": return
 	
 	repeat
 		pipe2check pid
 		if stat & 2: pipe2get pid, buf: buf1 + = buf
 		if stat & 4: pipe2err pid, buf: buf2 + = buf
-		if (stat = = 0): break
+		if (stat == 0): break
 		
 		wait 10
 	loop
 
 	pipe2term pid
 	
-	if strlen(buf1) ! = 0: buf = buf1
-	if strlen(buf2) ! = 0: buf = buf2
+	if strlen(buf1) != 0: buf = buf1
+	if strlen(buf2) != 0: buf = buf2
 
 	sdim tempBuf, 1024*10
 	
 	notesel buf
 	repeat notemax
 		noteget temp, cnt
-		if (strmid(temp, 0, 1) = = "["){
+		if (strmid(temp, 0, 1) == "["){
 			getstr temp, temp, instr(temp, 0, "] ")+2, 0
-			if (strmid(temp, 0, 2) = = " \""){
+			if (strmid(temp, 0, 2) == " \""){
 				getstr temp, temp, instr(temp, 0, "\"")+1, '\"'
 				tempBuf + = temp+"\n"
 			}
