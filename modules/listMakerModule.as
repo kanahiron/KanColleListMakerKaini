@@ -501,7 +501,7 @@ return 0
 			MoveWindow imagehwnd3,0,0,0,0,1
 		}
 			
-		if (sti = 128){
+		if (sti == 128 || sti == 512){
 			gsel imageid3,-1
 			gsel imageid4
 			LoadCursor 0, 32512
@@ -556,7 +556,7 @@ return
 		ginfo0 = int(ginfo(0))
 		ginfo1 = int(ginfo(1))
 		
-		stick sti,256,0
+		stick sti, 256, 0
 		if sti = 256{
 			if cliflag = 0{
 				cliflag = 1
@@ -696,7 +696,7 @@ return
 			MoveWindow imagehwnd3,0,0,0,0,1
 		}
 			
-		if (sti = 128){
+		if (sti == 128 || sti == 512){
 			gsel imageid3,-1
 			gsel imageid4
 			LoadCursor 0, 32512
