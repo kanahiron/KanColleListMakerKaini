@@ -223,7 +223,7 @@
 	//mode = MODE_OPTION
 	//optionMode = OPMODE_VIDEOCAPTURE
 	//gosub *drawMainWindow
-	
+
 	
 	stop
 

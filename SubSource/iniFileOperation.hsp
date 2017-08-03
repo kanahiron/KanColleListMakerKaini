@@ -455,8 +455,9 @@ return
 
 	if (picHistoryCount > 0){
 		nidPush
-		buffer WND_TWIBUF
-		picload picHistory(picHistoryNum)
+		gsel WND_TWIBUF
+		pos 0, 0: syscolor 15: boxf
+		picload picHistory(picHistoryNum), 1
 
 		nidPop
 	}

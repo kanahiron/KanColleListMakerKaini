@@ -206,8 +206,7 @@ return
 					break
 				}
 			loop
-		}
-				
+		}	
 		
 		i = 3
 		repeat 3
@@ -225,7 +224,7 @@ return
 		loop
 		PicStack(0) = picHistory(picHistoryNum)
 
-		gsel WND_TWIBUF1+cnt
+		gsel WND_TWIBUF1
 		pos 0, 0: syscolor 15: boxf
 		picload PicStack(0), 1
 
@@ -246,7 +245,6 @@ return
 	gosub *SSCapture
 	if (stat): return
 
-	
 	gosub *picHistoryAddStack
 
 return

@@ -395,7 +395,8 @@ return
 		PicHistory(0) = dropfile
 
 		gsel WND_TWIBUF
-		picload picHistory(picHistoryNum)
+		pos 0, 0: syscolor 15: boxf
+		picload picHistory(picHistoryNum), 1
 
 		gosub *picHistoryTop
 		gosub *picHistoryAddStack
