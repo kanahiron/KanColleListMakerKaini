@@ -320,9 +320,8 @@ return
 
 	if ( selcapwh(0) > 1 && selcapwh(1) > 1){
 
-		buffer WND_TEMP1, selcapwh(0), selcapwh(1)
-		BitBlt hdc, 0, 0, selcapwh(0), selcapwh(1), hdcScreen,  selcap(0), selcap(1),SRCCOPY | CAPTUREBLT: redraw
-
+		buffer WND_TEMP2, selcapwh(0), selcapwh(1)
+		gcopy WND_TEMP1, selcap(0)+abs(disInfo(0)), selcap(1)+abs(disInfo(1)), selcapwh(0), selcapwh(1)
 
 		selCapSaveName = strf("%s%s", DateAndTimeFormat2(saveNameSelectCapture), savekind(jpgsave))
 
