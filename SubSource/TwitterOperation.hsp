@@ -252,10 +252,98 @@ return
 
 
 *TwiCaptureSelect
+
+	marginCutFlg = TRUE
 	
 *TwiCaptureSelectNonCut
 
+	nidPush
 
+
+	dim selcap, 4
+
+
+	buffer WND_TEMP1, disinfo(2), disinfo(3)
+	BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen, disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
+
+	bgscr WND_TEMP_SCR1, disinfo(2), disinfo(3), 2: SET_WND_INFO
+	font "メイリオ", 30
+	
+	gcopy WND_TEMP1, 0, 0, disinfo(2), disinfo(3)
+	color 128,128,128
+	repeat (disinfo(3) / 120)+1
+		ycnt = cnt
+		repeat (disinfo(2) / 500)+2
+			pos (cnt*600)+(ycnt*70)-800,ycnt*200
+			mes "範囲選択キャプチャ"
+		loop
+	loop
+	color 255,255,255
+	boxf abs(disinfo(0)), abs(disinfo(1)), abs(disinfo(0))+970, abs(disinfo(1))+45
+	color
+	pos abs(disinfo(0))+5, abs(disinfo(1))+2
+	mes "キャプチャ範囲をドラッグして下さい Escキーでキャンセル"
+
+	dim selcap, 4
+
+	SelectCapturePos WND_TEMP1, selcap, WND_OVERLAY, WND_TEMP_SCR1, marginCutFlg
+
+	selcapwh(0) = selcap(2)-selcap(0), selcap(3)-selcap(1)
+
+	if ( selcapwh(0) > 1 && selcapwh(1) > 1){
+
+		buffer WND_TEMP1, selcapwh(0), selcapwh(1)
+		BitBlt hdc, 0, 0, selcapwh(0), selcapwh(1), hdcScreen,  selcap(0), selcap(1),SRCCOPY | CAPTUREBLT: redraw
+
+
+		selCapSaveName = strf("%s%s", DateAndTimeFormat2(saveNameCapture), savekind(jpgsave))
+
+		selCapPath = ssSaveDir +"\\"+ selCapSaveName
+		gdiImageSave selCapPath, jpgQuality
+
+	
+		gsel WND_MAIN
+		
+		if (mode != MODE_OPTION){
+			if kmexist(selCapPath) <= 0{
+				successFlg = FALSE
+				logmessage = selCapSaveName+"の保存に失敗しました"
+			} else {
+				successFlg = TRUE
+				logmessage = selCapSaveName+"を保存しました"
+				if dispcap & (mode == MODE_SSCAP){
+					pos 0, dispcapy
+					gzoom Scale(175), Scale(105), WND_TEMP1, 0, 0, selcapwh(0), selcapwh(1), 1
+				}
+				
+				if (seqcapf^1) {
+	
+					picHistoryCount++
+					if picHistoryCount > 100: picHistoryCount = 100
+					
+					i = picHistoryCount
+					repeat picHistoryCount
+						PicHistory(i) = PicHistory(i-1)
+						i--
+					loop
+					PicHistory(0) = selCapPath
+	
+					gsel WND_TWIBUF
+					pos 0, 0: syscolor 15: boxf
+					picload picHistory(picHistoryNum), 1
+				}
+				
+			}
+			logOut logmessage
+		}
+		
+		gosub *picHistoryAddStack
+	}
+
+	
+	marginCutFlg = FALSE
+
+	nidPop
 return
 
 
