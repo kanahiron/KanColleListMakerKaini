@@ -408,7 +408,7 @@ return
 		//if kmexist(PicStack(cnt)) < 1:break
 		
 		pos twiPicFrameXL(cnt)+1, twiPicFrameYU(cnt)+1
-		gzoom Scale(62), Scale(38), WND_TWIBUF1+cnt, 0, 0, Scale(62), Scale(38)
+		gzoom Scale(62), Scale(38), WND_TWIBUF1+cnt, 0, 0, 800, 480
 	loop
 
 	gmode 2
