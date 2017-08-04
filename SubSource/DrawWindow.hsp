@@ -820,10 +820,10 @@
 			button gosub "認証情報をリセット", *twireset
 			mesy += Scale(25)
 
+			objsize Scale(350), scale20
+
 			pos scale5, mesy
 			chkbox "常にツイートウィンドウを最前列表示", twiFrontRow: mesy += scale20
-			
-			objsize Scale(350), scale20
 			pos scale5, mesy
 			chkbox "pngをjpgに変換して投稿する", twijpg: mesy += scale20
 		}

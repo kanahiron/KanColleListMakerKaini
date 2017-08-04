@@ -497,24 +497,25 @@ return
 				twiOrderPos = cnt
 			}
 		loop
-	
-		if twiOrderPos != -1{
-				
-			if twiOrder(twiOrderPos) = 0{
-				twiOrderCount++
-				twiOrder(twiOrderPos) = twiOrderCount
-			} else {
-				temp = twiOrder(twiOrderPos)
-				twiOrder(twiOrderPos) = 0
-				twiOrderCount--
-				repeat 4
-					if temp <= twiOrder(cnt):twiOrder(cnt)--
-				loop		
+
+		if (twiOrderPos != -1){
+			if (picStack(twiOrderPos) != ""){
+		
+				if twiOrder(twiOrderPos) = 0{
+					twiOrderCount++
+					twiOrder(twiOrderPos) = twiOrderCount
+				} else {
+					temp = twiOrder(twiOrderPos)
+					twiOrder(twiOrderPos) = 0
+					twiOrderCount--
+					repeat 4
+						if temp <= twiOrder(cnt):twiOrder(cnt)--
+					loop		
+				}
+				gosub *TweetWindow
 			}
 		}
 
-		gosub *TweetWindow
-	
 		nidPop
 		debugLog "ツイートウィンドウの画像描画処理 終了"
 	}

@@ -24,7 +24,7 @@
 #packopt name "艦これ一覧めいかー改二"
 #packopt hide 1
 
-#define SOFTNAME "一覧めいかー改二 Ver0.2.9.3"
+#define SOFTNAME "一覧めいかー改二 Ver0.2.9.4"
 #define klm2ver	2903
 
 
@@ -187,6 +187,13 @@
 		gsel WND_MAIN, 1+frontrow
 	}
 
+	if initialActivation {
+		dialog "艦これ一覧めいかー改二へようこそ！\n自動バージョンチェック機能を有効にしますか？\n※設定からいつでも切り替えができます", 2, "初回起動"
+		if (stat != 6){
+			autoVersionCheck = FALSE
+		}
+	}
+
 	if autoSearch {
 	} else {
 		if ((SSCap_temp(2)-SSCap_temp(0)) != 0) | ((SSCap_temp(3)-SSCap_temp(1)) != 0){
@@ -208,12 +215,7 @@
 		}
 	}
 
-	if initialActivation {
-		dialog "艦これ一覧めいかー改二へようこそ！\n自動バージョンチェック機能を有効にしますか？\n※設定からいつでも切り替えができます", 2, "初回起動"
-		if (stat != 6){
-			autoVersionCheck = FALSE
-		}
-	}
+
 	
 	gosub *VerCheck
 	
