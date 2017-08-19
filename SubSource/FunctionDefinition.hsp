@@ -56,6 +56,7 @@
 
 #uselib "kernel32.dll"
 #func  MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
+#func  CreateProcess "CreateProcessW" wptr, wptr, int, int, int, int, int, int, int, int	
 
 #uselib "winmm.dll"
 #cfunc timeGetTime "timeGetTime"

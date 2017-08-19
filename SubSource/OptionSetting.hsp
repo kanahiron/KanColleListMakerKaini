@@ -129,11 +129,13 @@ return
 	
 	if (mode == MODE_SSCAP) {	
 		gosub *ssCapture
-		exec yabumidir+" \""+(sssavedir +"\\"+ savename)+"\""
+		execw yabumidir, "\""+(sssavedir +"\\"+ savename)+"\""
+		//exec yabumidir+" \""+(sssavedir +"\\"+ savename)+"\""
 	} else {
 		gosub *make
 		if savename != ""{
-			exec yabumidir+" \""+(listsavedir +"\\"+ savename)+"\""
+			execw yabumidir, "\""+(listsavedir +"\\"+ savename)+"\""
+			//exec yabumidir+" \""+(listsavedir +"\\"+ savename)+"\""
 		}
 	}
 return
