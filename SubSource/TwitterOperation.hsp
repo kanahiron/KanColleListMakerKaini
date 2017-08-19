@@ -450,14 +450,11 @@ return
 	boxf twiPicFrameXL(4)+2,twiPicFrameYU(4)+2,twiPicFrameXR(4)-2,twiPicFrameYD(4)-2
 	color
 	
-	//if kmexist(picHistory(picHistoryNum)) > 0{
 	pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
 	gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TWIBUF, 0, 0, 800, 480, 1
-	//}
 	
 	repeat 4
 		if PicStack(cnt) = "":break
-		//if kmexist(PicStack(cnt)) < 1:break
 		
 		pos twiPicFrameXL(cnt)+1, twiPicFrameYU(cnt)+1
 		gzoom Scale(62), Scale(38), WND_TWIBUF1+cnt, 0, 0, 800, 480
