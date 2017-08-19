@@ -173,6 +173,16 @@
 	buffer WND_TWIBUF4, 2400, 1440
 		SET_WND_INFO
 
+	buffer WND_NOIMAGE, 800, 480
+		SET_WND_INFO
+		color
+		boxf
+		color 255, 255, 255
+		boxf 8, 8, 791, 471
+		color
+		font "ÉÅÉCÉäÉI", 130
+		pos 100, 150
+		mes "No image"
 
 	gsel WND_MAIN
 

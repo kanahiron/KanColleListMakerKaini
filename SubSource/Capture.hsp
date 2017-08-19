@@ -188,22 +188,8 @@ return 0
 			if (seqcapf^1) {
 
 				//‚Ù‚Ú“¯‚¶ˆ—‚Ímake.hsp‚É‚à‚ ‚é‚æI
-					
-				picHistoryCount++
-				if picHistoryCount > 100: picHistoryCount = 100
 
-				
-				i = picHistoryCount
-				repeat picHistoryCount
-					PicHistory(i) = PicHistory(i-1)
-					i--
-				loop
-				PicHistory(0) = savenamepath 
-
-				gsel WND_TWIBUF
-				pos 0, 0: syscolor 15: boxf
-				picload picHistory(picHistoryNum), 1
-
+				picHistoryLoad savenamepath
 				gosub *TweetWindow
 			}
 			

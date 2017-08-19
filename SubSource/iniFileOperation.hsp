@@ -473,14 +473,18 @@ return
 		loop
 	}
 
+	nidPush
+	gsel WND_TWIBUF
+
 	if (picHistoryCount > 0){
-		nidPush
-		gsel WND_TWIBUF
 		pos 0, 0: syscolor 15: boxf
 		picload picHistory(picHistoryNum), 1
-
-		nidPop
+	} else {
+		pos 0, 0
+		gcopy WND_NOIMAGE, 0, 0, 800, 480
 	}
+
+	nidPop
 	
 
 	chdir currentdir

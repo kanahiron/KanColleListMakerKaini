@@ -99,7 +99,7 @@
 #enum WND_FFMPEG
 #enum WND_DEBUG
 #enum WND_DEBUG2
-
+#enum WND_NOIMAGE
 //フォントサイズ(未使用)
 #const FONT_SIZE_GRID_STRING 25
 #const FONT_SIZE_MANUAL_GETPOS_STRING 30

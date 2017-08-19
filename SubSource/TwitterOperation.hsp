@@ -180,12 +180,29 @@ return
 	nidPush
 	
 	if picHistoryNum < 99{
+
+		if (picHistoryCount > picHistoryNum+1){
+			picHistoryNum++
+			gsel WND_TWIBUF
+			if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
+				pos 0, 0: syscolor 15: boxf
+				picload picHistory(picHistoryNum), 1
+			} else {
+				pos 0, 0
+				gcopy WND_NOIMAGE, 0, 0, 800, 480
+			}
+		}
+
+		
+
+		/*
 		if ( picHistory(picHistoryNum+1) != "" ){
 			picHistoryNum++
 			gsel WND_TWIBUF
 			pos 0, 0: syscolor 15: boxf
 			picload picHistory(picHistoryNum), 1
 		}
+		*/
 	}
 	
 	nidPop
@@ -199,8 +216,13 @@ return
 	if (0 < picHistoryNum){
 		picHistoryNum--
 		gsel WND_TWIBUF
-		pos 0, 0: syscolor 15: boxf
-		picload picHistory(picHistoryNum), 1
+		if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
+			pos 0, 0: syscolor 15: boxf
+			picload picHistory(picHistoryNum), 1
+		} else {
+			pos 0, 0
+			gcopy WND_NOIMAGE, 0, 0, 800, 480
+		}
 	}
 	
 	nidPop
@@ -214,12 +236,42 @@ return
 	
 	picHistoryNum = 0
 	gsel WND_TWIBUF
-	pos 0, 0: syscolor 15: boxf
-	picload picHistory(picHistoryNum), 1
+	if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
+		pos 0, 0: syscolor 15: boxf
+		picload picHistory(picHistoryNum), 1
+	} else {
+		pos 0, 0
+		gcopy WND_NOIMAGE, 0, 0, 800, 480
+	}
 		
 	nidPop
 	
 	gosub *tweetWindow
+return
+
+#deffunc picHistoryLoad str picHistoryLoadImageName
+	nidPush
+
+	picHistoryCount++
+	if picHistoryCount > 100: picHistoryCount = 100
+
+	i = picHistoryCount
+	repeat picHistoryCount
+		PicHistory(i) = PicHistory(i-1)
+		i--
+	loop
+	PicHistory(0) = picHistoryLoadImageName 
+
+	gsel WND_TWIBUF
+	if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
+		pos 0, 0: syscolor 15: boxf
+		picload picHistory(picHistoryNum), 1
+	} else {
+		pos 0, 0
+		gcopy WND_NOIMAGE, 0, 0, 800, 480
+	}
+
+	nidPop
 return
 
 *picHistoryAddStack

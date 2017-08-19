@@ -275,20 +275,8 @@
 		} else {
 			logmessage = savename+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
 			objprm logid, logmessage: await
-	
-			picHistoryCount++
-			if picHistoryCount > 100: picHistoryCount = 100
 
-			i = picHistoryCount
-			repeat picHistoryCount
-				PicHistory(i) = PicHistory(i-1)
-				i--
-			loop
-			PicHistory(0) = listsavedir +"\\"+ savename
-
-			gsel WND_TWIBUF
-			pos 0, 0: syscolor 15: boxf
-			picload picHistory(picHistoryNum), 1
+			picHistoryLoad (listsavedir +"\\"+ savename)
 			
 			gosub *TweetWindow
 	
