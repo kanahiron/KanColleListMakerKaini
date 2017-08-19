@@ -244,9 +244,17 @@
 
 	if (wparam == WND_GRID){
 		mode = MODE_SSCAP
+		IsIconicFlg = FALSE
+		if (IsIconic(WND_INFO(WMD_MAIN, WI_HANDLE)) != 0){
+			ShowWindow WND_INFO(WMD_MAIN, WI_HANDLE), SW_RESTORE
+			IsIconicFlg = TRUE
+		}
 		gosub *drawMainWindow
 		gsel WND_MAIN, 1+frontRow
 		objprm comboxid, 0
+		if (IsIconicFlg){
+			ShowWindow WND_INFO(WMD_MAIN, WI_HANDLE), SW_MINIMIZE
+		}
 		return
 	}
 	

@@ -53,6 +53,7 @@
 #func  UpdateWindow "UpdateWindow" int
 #func  InvalidateRect "InvalidateRect" int, int, int
 #func  ShowWindow "ShowWindow" int, int
+#func  IsIconic "IsIconic" int
 
 #uselib "kernel32.dll"
 #func  MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
@@ -276,7 +277,8 @@
 //ShowWindow周り
 #const SW_HIDE		0x0001
 #const SW_SHOW		0x0005
-
+#const SW_MINIMIZE	0x0006
+#const SW_RESTORE	0x0009
 //ウインドウスタイル
 #const WS_CHILD		0x40000000
 #const WS_VISIBLE	0x10000000
