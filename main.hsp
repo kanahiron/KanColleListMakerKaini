@@ -194,8 +194,8 @@
 	gsel WND_MAIN,1+frontRow
 
 	if enableTweetWindow {
-		gsel WND_TWITTER, 1+frontrow
-		gsel WND_MAIN, 1+frontrow
+		gsel WND_TWITTER, 1+twiFrontRow
+		gsel WND_MAIN, 1+frontRow
 	}
 
 	if initialActivation {
