@@ -381,7 +381,7 @@ return
 				logmessage = selCapSaveName+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
 				if dispcap & (mode == MODE_SSCAP){
 					pos 0, dispcapy
-					gzoom Scale(175), Scale(105), WND_TEMP1, 0, 0, selcapwh(0), selcapwh(1), 1
+					gzoom Scale(175), Scale(105), WND_TEMP2, 0, 0, selcapwh(0), selcapwh(1), 1
 				}
 				
 				if (seqcapf^1) {

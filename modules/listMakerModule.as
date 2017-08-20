@@ -669,13 +669,13 @@ return
 				gsel imageid3, 2
 				MoveWindow imagehwnd3, sscap(0), sscap(1), sscap(2)-sscap(0), sscap(3)-sscap(1), 1		
 							
-				dialog "正しく取得できていますか？", 2, "確認"
+				dialog "この範囲をキャプチャしますか？", 2, "確認"
 				if stat = 6{
 					gsel imageid3, -1
 					break
 				}
 			} else {
-				dialog "取得に失敗しました\n再度選択しますか？", 2, "確認"
+				dialog "余白詰めに失敗しました。\n再度選択しますか？", 2, "確認"
 				if stat = 7{
 					gsel imageid3, -1
 					break

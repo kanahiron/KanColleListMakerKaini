@@ -829,8 +829,8 @@
 		}
 	
 		if (optionMode == OPMODE_OTHER){
-			
-			pos 0,mesy
+
+			pos 0, mesy
 			objsize Scale(350), scale20
 			button gosub "Amazon‚Ù‚µ‚¢•¨ƒŠƒXƒg", *Amazon: mesy += scale20
 			//http://www.amazon.co.jp/wishlist/181BGDSFXZC6M/?sort=priority
