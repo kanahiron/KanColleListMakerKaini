@@ -205,6 +205,8 @@
 		}
 	}
 
+	gosub *VerCheck
+
 	if autoSearch {
 	} else {
 		if ((SSCap_temp(2)-SSCap_temp(0)) != 0) | ((SSCap_temp(3)-SSCap_temp(1)) != 0){
@@ -226,9 +228,6 @@
 		}
 	}
 
-
-	
-	gosub *VerCheck
 	
 	//SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 1000, 0
 
