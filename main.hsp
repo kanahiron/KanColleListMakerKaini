@@ -25,8 +25,8 @@
 #packopt name "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ"
 #packopt hide 1
 
-#define SOFTNAME "ˆê——‚ß‚¢‚©[‰ü“ñ Ver0.2.9.4"
-#define klm2ver	2904
+#define SOFTNAME "ˆê——‚ß‚¢‚©[‰ü“ñ Ver0.2.9.5(‰¼)"
+#define klm2ver	2945
 
 
 #ifdef _debug

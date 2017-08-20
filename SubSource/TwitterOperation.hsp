@@ -192,17 +192,6 @@ return
 				gcopy WND_NOIMAGE, 0, 0, 800, 480
 			}
 		}
-
-		
-
-		/*
-		if ( picHistory(picHistoryNum+1) != "" ){
-			picHistoryNum++
-			gsel WND_TWIBUF
-			pos 0, 0: syscolor 15: boxf
-			picload picHistory(picHistoryNum), 1
-		}
-		*/
 	}
 	
 	nidPop
@@ -277,7 +266,7 @@ return
 *picHistoryAddStack
 
 	//‰æ‘œ—š—ð‚É•\Ž¦‚³‚ê‚Ä‚¢‚é‰æ‘œ‚ª‘¶Ý‚·‚ê‚Î
-	if kmexist(picHistory(picHistoryNum)) > 0{
+	if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
 
 		if (twiOrderCount == 4){
 			repeat 4
