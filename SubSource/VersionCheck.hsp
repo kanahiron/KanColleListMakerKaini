@@ -1,21 +1,5 @@
 #module VersionCheck
 
-#uselib "advapi32.dll"
-#cfunc _CryptAcquireContext "CryptAcquireContextW" int, int, int, int, int
-#cfunc _CryptCreateHash "CryptCreateHash" int, int, int, int, int
-#cfunc _CryptHashData "CryptHashData" int, int, int, int
-#cfunc _CryptSetHashParam "CryptSetHashParam" int, int, int, int
-#cfunc _CryptGetHashParam "CryptGetHashParam" int, int, int, int, int
-#cfunc _CryptImportKey "CryptImportKey" int, int, int, int, int, int
-#func _CryptDestroyKey "CryptDestroyKey" int
-#func _CryptDestroyHash "CryptDestroyHash" int
-#func _CryptReleaseContext "CryptReleaseContext" int, int
-#cfunc _CryptDeriveKey "CryptDeriveKey" int, int, int, int, var
-#cfunc _CryptEncrypt "CryptEncrypt" int, int, int, int, int, var, int
-#cfunc _CryptDecrypt "CryptDecrypt" int, int, int, int, var, var
-//---------------
-//  wininet.dll
-//---------------
 #uselib "wininet.dll"
 #cfunc _InternetOpen "InternetOpenW" int, int, int, int, int
 #func _InternetReadFile "InternetReadFile" int, int, int, int
@@ -29,6 +13,7 @@
 #func _InternetQueryDataAvailable "InternetQueryDataAvailable" int, int, int, int
 #func _InternetSetOption "InternetSetOptionW" int, int, int, int
 
+#define INTERNET_OPEN_TYPE_PRECONFIG            0
 #define INTERNET_OPEN_TYPE_DIRECT               1
 #define INTERNET_OPTION_CONNECT_TIMEOUT         2
 #define INTERNET_OPTION_HTTP_DECODING           65
@@ -98,37 +83,6 @@
 #define HTTP_QUERY_HEADER_MASK (~HTTP_QUERY_MODIFIER_FLAGS_MASK)
 
 
-//============================================================
-/*  [HDL symbol infomation]
-
-%index
-tCupInit
-TsubuyakiSoupの初期化
-
-%prm
-p1, p2, p3
-p1 = 文字列      : ユーザエージェント
-p2 = 文字列      : Consumer Key
-p3 = 文字列      : Consumer Secret
-p4 = 0～(30)     : タイムアウトの時間(秒)
-
-%inst
-TsubyakiSoupモジュールの初期化をします。Twitter操作命令の使用前に呼び出す必要があります。
-
-p1にユーザエージェントを指定します。ユーザエージェントを指定していないとSearchAPIなどで厳しいAPI制限を受けることがあります。
-
-p2にConsumer Keyを、p3にConsumer Secretを指定してください。Consumer KeyとConsumer Secretは、Twitterから取得する必要があります。詳しくは、リファレンスをご覧ください。
-
-p4にはTwitterと通信する際のタイムアウトの時間を秒単位で指定してください。
-
-%href
-TS_End
-
-%group
-TwitterAPI操作命令
-
-%*/
-//------------------------------------------------------------
 #deffunc VerCheckInit
 	//各種変数の初期化
 	responseHeader = ""
@@ -136,45 +90,19 @@ TwitterAPI操作命令
 	timeOutTime = 5000
 	gzipFlag = 1 // true /-------------------
 	//インターネットオープン
-	hInet = _InternetOpen( p1, INTERNET_OPEN_TYPE_DIRECT, 0, 0, 0)
+	hInet = _InternetOpen( p1, INTERNET_OPEN_TYPE_PRECONFIG, 0, 0, 0)
 	if hInet = 0:return -1
 	_InternetSetOption hInet, INTERNET_OPTION_CONNECT_TIMEOUT, varptr(timeOutTime), 4
 	_InternetSetOption hInet, INTERNET_OPTION_HTTP_DECODING, varptr(gzipFlag), 4
 return 0
-//============================================================
 
-
-
-
-//============================================================
-/*  [HDL symbol infomation]
-
-%index
-tCupWash
-TsubuyakiSoupの終了処理
-
-%inst
-TsubyakiSoupモジュールの終了処理を行ないます。
-プログラム終了時に自動的に呼び出されるので明示的に呼び出す必要はありません。
-
-%href
-TS_Init
-
-%group
-TwitterAPI操作命令
-
-%*/
-//------------------------------------------------------------
 #deffunc VerCheckWash
 	//ハンドルの破棄
 	if (hRequest) : _InternetCloseHandle hRequest
 	if (hConnect) : _InternetCloseHandle hConnect
 	if (hInet) : _InternetCloseHandle hInet
 return
-//============================================================
-// str   p1 API
-// array p2 argument
-// int   p3 http method
+
 #deffunc execVerCheck
 
 	hConnect = 0	// InternetConnectのハンドル
@@ -248,18 +176,20 @@ return
 				if (headerTokenPos != -1) : responseBodyLength = int(strmid(headerLine, -1, strlen(headerLine)-(headerTokenPos+16)))
 			loop
 			noteunsel
-			logmes "responseBodyLength :"+responseBodyLength
-			//入手可能なデータ量を取得
-			_InternetQueryDataAvailable hRequest, varptr(rsize), 0, 0
-			//バッファの初期化
-			logmes "srize : "+ rsize
-			sdim responseBuffer, rsize+1
-			sdim responseBody, responseBodyLength+1
-			repeat 
-				_InternetReadFile hRequest, varptr(responseBuffer), rsize, varptr(hsize)
-				if (hsize = 0) : break 
-				responseBody += strmid(responseBuffer, 0, hsize)
-			loop
+			if (statCode == 200 && responseBodyLength > 0){
+				logmes "responseBodyLength :"+responseBodyLength
+				//入手可能なデータ量を取得
+				_InternetQueryDataAvailable hRequest, varptr(rsize), 0, 0
+				//バッファの初期化
+				logmes "srize : "+ rsize
+				sdim responseBuffer, rsize+1
+				sdim responseBody, responseBodyLength+1
+				repeat 
+					_InternetReadFile hRequest, varptr(responseBuffer), rsize, varptr(hsize)
+					if (hsize = 0) : break 
+					responseBody += strmid(responseBuffer, 0, hsize)
+				loop
+			}
 		} else {
 			//ヘッダの取得ができなかった場合
 			return -1
@@ -271,8 +201,6 @@ return
 		return -2
 	}
 return statcode
-
-//===========================================================
 
 #defcfunc getResponse
 return responseBody
