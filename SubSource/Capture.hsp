@@ -297,7 +297,7 @@ return (successFlg^1)
 		
 	} else {
 		
-		gsel WND_TEMP1
+		buffer WND_TEMP1
 		ImgF_PicloadEx addFileName
 		picx = ginfo_winx
 		picy = ginfo_winy
