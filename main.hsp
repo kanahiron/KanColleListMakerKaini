@@ -35,11 +35,15 @@
 	if (strsize != -1): delete "./SubSource/hsptmp"
 	exist "./SubSource/obj"
 	if (strsize != -1): delete "./SubSource/obj"
+	exist "./SubSource/packfile"
+	if (strsize != -1): delete "./SubSource/packfile"
 	
 	exist "./modules/hsptmp"
 	if (strsize != -1): delete "./modules/hsptmp"
 	exist "./modules/obj"
 	if (strsize != -1): delete "./modules/obj"
+	exist "./modules/packfile"
+	if (strsize != -1): delete "./modules/packfile"
 
 	exist "./hsptmp"
 	if (strsize != -1): delete "./hsptmp"
