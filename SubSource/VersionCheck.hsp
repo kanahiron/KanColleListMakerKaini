@@ -87,7 +87,7 @@
 	//各種変数の初期化
 	responseHeader = ""
 	responseBody = ""
-	timeOutTime = 5000
+	timeOutTime = 2000
 	gzipFlag = 1 // true /-------------------
 	//インターネットオープン
 	hInet = _InternetOpen( p1, INTERNET_OPEN_TYPE_PRECONFIG, 0, 0, 0)
