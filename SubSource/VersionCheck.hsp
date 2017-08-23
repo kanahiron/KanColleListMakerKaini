@@ -1,12 +1,12 @@
 #module VersionCheck
 
 #uselib "advapi32.dll"
-#cfunc _CryptAcquireContext "CryptAcquireContextA" var, sptr, sptr, int, int
-#cfunc _CryptCreateHash "CryptCreateHash" sptr, int, int, int, var
-#cfunc _CryptHashData "CryptHashData" sptr, sptr, int, int
-#cfunc _CryptSetHashParam "CryptSetHashParam" sptr, int, var, int
-#cfunc _CryptGetHashParam "CryptGetHashParam" sptr, int, sptr, var, int
-#cfunc _CryptImportKey "CryptImportKey" sptr, var, int, int, int, var
+#cfunc _CryptAcquireContext "CryptAcquireContextW" int, int, int, int, int
+#cfunc _CryptCreateHash "CryptCreateHash" int, int, int, int, int
+#cfunc _CryptHashData "CryptHashData" int, int, int, int
+#cfunc _CryptSetHashParam "CryptSetHashParam" int, int, int, int
+#cfunc _CryptGetHashParam "CryptGetHashParam" int, int, int, int, int
+#cfunc _CryptImportKey "CryptImportKey" int, int, int, int, int, int
 #func _CryptDestroyKey "CryptDestroyKey" int
 #func _CryptDestroyHash "CryptDestroyHash" int
 #func _CryptReleaseContext "CryptReleaseContext" int, int
@@ -17,16 +17,17 @@
 //  wininet.dll
 //---------------
 #uselib "wininet.dll"
-#cfunc _InternetOpen "InternetOpenA" sptr, int, sptr, sptr, int
-#cfunc _InternetOpenUrl "InternetOpenUrlA" int, str, sptr, int, int, int
-#func _InternetReadFile "InternetReadFile" int, var, int, var
+#cfunc _InternetOpen "InternetOpenW" int, int, int, int, int
+#func _InternetReadFile "InternetReadFile" int, int, int, int
+#func _InternetWriteFile "InternetWriteFile" int, int, int, int
 #func _InternetCloseHandle "InternetCloseHandle" int
-#cfunc _InternetConnect "InternetConnectA" int, str, int, sptr, sptr, int, int, int
-#cfunc _HttpOpenRequest "HttpOpenRequestA" int, sptr, str, sptr, sptr, sptr, int, int
-#cfunc _HttpSendRequest "HttpSendRequestA" int, sptr, int, sptr, int
-#cfunc _HttpQueryInfo "HttpQueryInfoA" int, int, var, var, int
-#func _InternetQueryDataAvailable "InternetQueryDataAvailable" int, var, int, int
-#func _InternetSetOption "InternetSetOptionA" int, int, int, int
+#cfunc _InternetConnect "InternetConnectW" int, wptr, int, int, int, int, int, int
+#cfunc _HttpOpenRequest "HttpOpenRequestW" int, wptr, wptr, wptr, wptr, wptr, int, int
+#cfunc _HttpSendRequest "HttpSendRequestW" int, wptr, int, wptr, int
+#cfunc _HttpEndRequest "HttpEndRequestW" int, int, int, int
+#cfunc _HttpQueryInfo "HttpQueryInfoW" int, int, wptr, int, int
+#func _InternetQueryDataAvailable "InternetQueryDataAvailable" int, int, int, int
+#func _InternetSetOption "InternetSetOptionW" int, int, int, int
 
 #define INTERNET_OPEN_TYPE_DIRECT               1
 #define INTERNET_OPTION_CONNECT_TIMEOUT         2
@@ -130,13 +131,9 @@ TwitterAPI操作命令
 //------------------------------------------------------------
 #deffunc VerCheckInit
 	//各種変数の初期化
-;	rateLimit(0) = -1		// 15分間にAPIを実行できる回数
-;	rateLimit(1) = -1		// APIを実行できる残り回数
-;	rateLimit(2) = -1		// リセットする時間
-
 	responseHeader = ""
 	responseBody = ""
-	timeOutTime = 2000
+	timeOutTime = 5000
 	gzipFlag = 1 // true /-------------------
 	//インターネットオープン
 	hInet = _InternetOpen( p1, INTERNET_OPEN_TYPE_DIRECT, 0, 0, 0)
@@ -168,7 +165,7 @@ TwitterAPI操作命令
 
 %*/
 //------------------------------------------------------------
-#deffunc VerCheckWash onexit
+#deffunc VerCheckWash
 	//ハンドルの破棄
 	if (hRequest) : _InternetCloseHandle hRequest
 	if (hConnect) : _InternetCloseHandle hConnect
@@ -188,8 +185,12 @@ return
 	hsize = 0		// 取得したバイト数が代入される変数
 	
 	RequestURL = "drive.google.com"
+	sdim RequestURLWide, 1024
+	cnvstow RequestURLWide, RequestURL
 
 	apiUrl = "uc?export=download&id=0BxC9-Nilt2alT1JlVG9MNlE4OWM"
+	sdim apiUrlWide, 1024
+	cnvstow apiUrlWide, apiUrl
 	
 	usePort = 443
 	requestFlag  = INTERNET_FLAG_RELOAD
@@ -198,20 +199,30 @@ return
 	requestFlag |= INTERNET_FLAG_IGNORE_CERT_CN_INVALID
 	requestFlag |= INTERNET_FLAG_SECURE
 
+	method = "GET"
+	sdim methodWide, 1024
+	cnvstow methodWide, method
+
+	httpVer = "HTTP/1.1"
+	sdim httpVerWide, 1024
+	cnvstow httpVerWide, httpVer
+
 	RequestHeader = "Accept-Encoding: gzip, deflate;\nContent-Type: application/x-www-form-urlencoded"
-	RequestHeaderLength = strlen(RequestHeader)
-	PostData = 0
-	PostDataLength = 0
+	sdim RequestHeaderWide, 1024
+	cnvstow RequestHeaderWide, RequestHeader
+	RequestHeaderWideLength = stat
+	PostDataWide = ""
+	PostDataWideLength = 0
 	
 	//サーバへ接続
-	hConnect = _InternetConnect(hInet, RequestURL, INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
+	hConnect = _InternetConnect(hInet, varptr(RequestURLWide), INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
 	if (hConnect = 0) {
 		//Connectハンドルを取得できなかった場合
 		return -4
 	}
 	
 	//リクエストの初期化
-	hRequest = _HttpOpenRequest(hConnect, method, apiUrl, "HTTP/1.1", 0, 0, requestFlag, 0)
+	hRequest = _HttpOpenRequest(hConnect, varptr(methodWide), varptr(apiUrlWide), varptr(httpVerWide), 0, 0, requestFlag, 0)
 	if (hRequest = 0) {
 		//Requestハンドルを取得できなかった場合
 		_InternetCloseHandle hConnect
@@ -219,31 +230,33 @@ return
 	}
 	
 	//サーバへリクエスト送信
-	if ( _HttpSendRequest(hRequest, RequestHeader, RequestHeaderLength, PostData, PostDataLength)) {
+	if ( _HttpSendRequest(hRequest, varptr(RequestHeaderWide), RequestHeaderWideLength, varptr(PostDataWide), PostDataWideLength)) {
 		//ヘッダを取得する変数の初期化
-		responseHeaderSize = 3000
-		sdim responseHeader, responseHeaderSize
+		responseHeaderSize = 1024*4
+		sdim responseHeaderWide, responseHeaderSize*2+2
 		//ヘッダの取得
-		if ( _HttpQueryInfo(hRequest, HTTP_QUERY_RAW_HEADERS_CRLF, responseHeader, responseHeaderSize, 0) ) {
+		if ( _HttpQueryInfo(hRequest, HTTP_QUERY_RAW_HEADERS_CRLF, varptr(responseHeaderWide), varptr(responseHeaderSize), 0) ) {
 			//ヘッダの解析
+			sdim responseHeader, responseHeaderSize
+			responseHeader = cnvwtos(responseHeaderWide)
 			notesel responseHeader
 			repeat notemax
 				noteget headerLine, cnt
 				headerTokenPos = instr(headerLine, 0, "HTTP/1.1 ")				//ステータスコード
 				if (headerTokenPos != -1) : statcode = int(strmid(headerLine, headerTokenPos+9, 3))
-				headerTokenPos = instr(headerLine, 0, "content-length: ")		//長さ
-				if (headerTokenPos != -1) : responseBodyLength = int(strmid(headerLine, -1, strlen(headerLine)-headerTokenPos+16))
+				headerTokenPos = instr(headerLine, 0, "Content-Length: ")		//長さ
+				if (headerTokenPos != -1) : responseBodyLength = int(strmid(headerLine, -1, strlen(headerLine)-(headerTokenPos+16)))
 			loop
 			noteunsel
-			logmes ""+responseBodyLength
+			logmes "responseBodyLength :"+responseBodyLength
 			//入手可能なデータ量を取得
-			_InternetQueryDataAvailable hRequest, rsize, 0, 0
+			_InternetQueryDataAvailable hRequest, varptr(rsize), 0, 0
 			//バッファの初期化
 			logmes "srize : "+ rsize
 			sdim responseBuffer, rsize+1
-			sdim responseBody, 10240
+			sdim responseBody, responseBodyLength+1
 			repeat 
-				_InternetReadFile hRequest, responseBuffer, rsize, hsize
+				_InternetReadFile hRequest, varptr(responseBuffer), rsize, varptr(hsize)
 				if (hsize = 0) : break 
 				responseBody += strmid(responseBuffer, 0, hsize)
 			loop
@@ -271,25 +284,18 @@ return responseBody
 
 	if autoVersionCheck {
 
-		debugLog "バージョンチェック 開始"
-		
 		VerCheckInit
-
-		if (mode == MODE_SSCAP){
-			logmessage = "バージョンチェック中です。"
-			objprm logId, logMessage:await 
-		}
+		logOut "バージョンチェック中です。":await
 		
 		execVerCheck
-		if stat = 200{
+		if (stat == 200){
 			logmes "アップデートファイルの取得成功"
 			sdim json,1024*4
 			json = getResponse()
 			json_sel json
 			
 			logmes "取得したバージョン " + json_val("[0].version")
-			debugLog "    取得したバージョン" + json_val("[0].version")
-			if klm2ver < int(json_val("[0].version")){
+			if (klm2ver < int(json_val("[0].version"))){
 				
 				sdim text,1024
 				text =  "艦これ一覧めいかー改二の最新版"+json_val("[0].versionstr")+"が公開されています\n"
