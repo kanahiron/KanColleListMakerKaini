@@ -31,6 +31,7 @@
 			if bufIDPos(cnt, ycnt) >= 100{
 				pos cnt*cutRange(CR_W), ycnt*cutRange(CR_H)
 				gcopy bufIDPos(cnt, ycnt), cutRange(CR_X) , cutRange(CR_Y), cutRange(CR_W), cutRange(CR_H) 
+				buffer bufIDPos(cnt, ycnt), 1, 1
 				drawcount++
 			}
 		loop
@@ -289,7 +290,7 @@
 	}
 
 
-	dim bufIDPos, CELL_MAX_W, CELL_MAX_H, modeNum
+	dim bufIDPos, CELL_MAX_W, CELL_MAX_H
 	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
 	
 	nidPop
