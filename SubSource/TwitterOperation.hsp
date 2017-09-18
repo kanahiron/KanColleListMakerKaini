@@ -572,7 +572,7 @@ return
 
 		gsel WND_MAIN
 		gosub *SSModeControlDisable
-		objenable enableTweetWindowCId, 0
+		if (mode != MODE_OPTION): objenable enableTweetWindowCId, 0
 
 		
 		gsel WND_TWITTER
@@ -671,7 +671,7 @@ return
 	
 		gsel WND_MAIN
 		gosub *SSModeControlEnable
-		objenable enableTweetWindowCId, 1
+		if (mode != MODE_OPTION): objenable enableTweetWindowCId, 1
 
 		LogOut logmessage
 		
