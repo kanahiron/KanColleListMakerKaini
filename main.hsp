@@ -126,11 +126,11 @@
 	//âÊëúì«Ç›çûÇ›óp
 	buffer WND_IMAGE_BUF
 		SET_WND_INFO
-		picload "data2.png"
+		ImgF_PicloadEx "data2.png"
 
 	bgscr WND_IMAGE_BUF2,,,2
 		SET_WND_INFO
-		picload "huki.png"
+		ImgF_PicloadEx "huki.png"
 		GetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20
 		SetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20, stat | $80000
 		SetLayeredWindowAttributes WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), 0x000000FF, 192, LWA_COLORKEY | LWA_ALPHA

@@ -186,7 +186,7 @@ return
 			gsel WND_TWIBUF
 			if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
 				pos 0, 0: syscolor 15: boxf
-				picload picHistory(picHistoryNum), 1
+				ImgF_PicloadEx picHistory(picHistoryNum), 1
 			} else {
 				pos 0, 0
 				gcopy WND_NOIMAGE, 0, 0, 800, 480
@@ -207,7 +207,7 @@ return
 		gsel WND_TWIBUF
 		if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
 			pos 0, 0: syscolor 15: boxf
-			picload picHistory(picHistoryNum), 1
+			ImgF_PicloadEx picHistory(picHistoryNum), 1
 		} else {
 			pos 0, 0
 			gcopy WND_NOIMAGE, 0, 0, 800, 480
@@ -227,7 +227,7 @@ return
 	gsel WND_TWIBUF
 	if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
 		pos 0, 0: syscolor 15: boxf
-		picload picHistory(picHistoryNum), 1
+		ImgF_PicloadEx picHistory(picHistoryNum), 1
 	} else {
 		pos 0, 0
 		gcopy WND_NOIMAGE, 0, 0, 800, 480
@@ -254,7 +254,7 @@ return
 	gsel WND_TWIBUF
 	if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
 		pos 0, 0: syscolor 15: boxf
-		picload picHistory(picHistoryNum), 1
+		ImgF_PicloadEx picHistory(picHistoryNum), 1
 	} else {
 		pos 0, 0
 		gcopy WND_NOIMAGE, 0, 0, 800, 480
@@ -296,7 +296,7 @@ return
 
 		gsel WND_TWIBUF1
 		pos 0, 0: syscolor 15: boxf
-		picload PicStack(0), 1
+		ImgF_PicloadEx PicStack(0), 1
 
 		if twiOrder(0) = 0{
 			twiOrderCount++
@@ -398,7 +398,7 @@ return
 	
 					gsel WND_TWIBUF
 					pos 0, 0: syscolor 15: boxf
-					picload picHistory(picHistoryNum), 1
+					ImgF_PicloadEx picHistory(picHistoryNum), 1
 				}
 				
 			}
@@ -612,7 +612,7 @@ return
 			repeat count
 				buffer WND_TEMP1
 				//=========================================
-				picload tempsdim(cnt)
+				ImgF_PicloadEx tempsdim(cnt)
 				saveNamed = strf("%s\\temp_%d.jpg", ssSaveDir, cnt)
 				GDIImageSave saveNamed, jpgQuality
 				if kmexist(saveNamed) > 0{
