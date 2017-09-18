@@ -270,8 +270,9 @@
 		} 
 		return
 	}
-
-	if (confirmCompletion){
+	
+	if (confirmCompletion && iparam == 0){
+		//iparamが1のときはシャットダウンなので確認せずに終了する
 		dialog "艦これ一覧めいかー改二を終了しますか？", 2, "終了確認"
 		if (stat != 6):return
 	}
