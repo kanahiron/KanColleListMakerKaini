@@ -372,40 +372,24 @@ return
 	
 		gsel WND_MAIN
 		
-		if (mode != MODE_OPTION){
-			if kmexist(selCapPath) <= 0{
-				successFlg = FALSE
-				logmessage = selCapSaveName+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
-			} else {
-				successFlg = TRUE
-				logmessage = selCapSaveName+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
-				if dispcap & (mode == MODE_SSCAP){
-					pos 0, dispcapy
-					gzoom Scale(175), Scale(105), WND_TEMP2, 0, 0, selcapwh(0), selcapwh(1), 1
-				}
-				
-				if (seqcapf^1) {
+		if kmexist(selCapPath) <= 0{
+			successFlg = FALSE
+			logOut selCapSaveName+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
+		} else {
+			successFlg = TRUE
+			logOut selCapSaveName+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
 	
-					picHistoryCount++
-					if picHistoryCount > 100: picHistoryCount = 100
-					
-					i = picHistoryCount
-					repeat picHistoryCount
-						PicHistory(i) = PicHistory(i-1)
-						i--
-					loop
-					PicHistory(0) = selCapPath
-	
-					gsel WND_TWIBUF
-					pos 0, 0: syscolor 15: boxf
-					ImgF_PicloadEx picHistory(picHistoryNum), 1
-				}
-				
+			if dispcap & (mode == MODE_SSCAP){
+				pos 0, dispcapy
+				gzoom Scale(175), Scale(105), WND_TEMP2, 0, 0, selcapwh(0), selcapwh(1), 1
 			}
-			logOut logmessage
+			
+			picHistoryLoad selCapPath
+			gosub *picHistoryAddStack
+				
 		}
+				
 		
-		gosub *picHistoryAddStack
 	}
 
 	
