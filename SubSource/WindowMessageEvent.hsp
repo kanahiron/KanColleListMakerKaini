@@ -109,6 +109,18 @@ return
 		swend
 
 		if (mode != modePrev || listMode != listModePrev || optionMode != optionModePrev){
+
+			if (mode = MODE_OPTION){
+				if enabletweetwindow {
+					gsel WND_TWITTER, -1
+				}
+			} else {
+				if enabletweetwindow {
+					gsel WND_TWITTER, 1+twiFrontRow
+				}
+
+			}
+					
 			gosub *CalcCapPosAndWinSize
 			gosub *DrawMainWindow
 		}
