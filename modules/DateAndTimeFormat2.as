@@ -129,3 +129,12 @@ return 1
 	stop
 
 #endif
+
+
+#module
+
+#defcfunc cnvMilliSecondToMMSSMS int _ms
+	ms = limit(_ms, 0, 5999999)
+return strf("%02d:%02d.%03d", (ms/1000/60), (ms/1000\60), (ms\1000))
+
+#global
