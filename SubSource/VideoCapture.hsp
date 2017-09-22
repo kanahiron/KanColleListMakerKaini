@@ -249,7 +249,7 @@ return
 
 	elapsedTime = timeGetTime() - videoCapStartTime
 	elapsedTimeStr = "動画をキャプチャ中…\n"
-	elapsedTimeStr += strf("  経過時間 %02d:%02d.%03d", (elapsedTime/1000/60), (elapsedTime/1000\60), (elapsedTime\1000))
+	elapsedTimeStr += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(elapsedTime))
 
 	gsel WND_MAIN
 	objprm logId, elapsedTimeStr: await
@@ -279,7 +279,6 @@ return
 	noteget lastStr, notemax-1
 	noteunsel
 
-
 	gsel WND_MAIN
 	
 	if (exfm){
@@ -289,37 +288,36 @@ return
 		
 		gosub *VidepCapFinish
 		return
-		/*
-		gosub *VideoCapEmgStop
-		
-		logmessage =  "Error-動画キャプチャを停止しました\n"
-		logmessage += "エンコードプロセスが異常停止しました\n"
-		
-		LogOut logmessage
-		nidPop
-		return
-		*/
+
 	}
 
-	getstr lastStr, lastStr, instr(lastStr, 0, "time=")+5, ' '
-	encodeElapsedTime = int(strmid(lastStr, 0, 2))*3600000 + int(strmid(lastStr, 3, 2))*60000 + int(double(strmid(lastStr, 6, 5))*1000.0)
-	//↑エンコード側の経過時間(ms)
+	timeStrIndex = instr(lastStr, 0, "time=")
+	if ( timeStrIndex != -1){
+		getstr lastStr, lastStr, timeStrIndex+5, ' '
+		if (instr(lastStr, 0, ":") == -1){
+			encodeElapsedTime = int(double(lastStr)*1000.0)
+		} else {
+			encodeElapsedTime = int(strmid(lastStr, 0, 2))*3600000 + int(strmid(lastStr, 3, 2))*60000 + int(double(strmid(lastStr, 6, 5))*1000.0)
+		}
+	} else {
+		encodeElapsedTime = 0.0000001
+	}
+	//encodeElapsedTime エンコード側の経過時間(ms)
+	
 	encodeTime = timeGetTime() - lateEncodeStartTime
-	//↑リアルタイムの経過時間
+	//encodeTime リアルタイムの経過時間
 
 	encodeSpeed = 1.0*encodeElapsedTime/encodeTime
 
 	//予想エンコード時間
-	estimatedTime = 1.0*videoCapTime/(encodeSpeed+0.00000000001)
-
+	estimatedTime = 1.0*videoCapTime/encodeSpeed
+	
 	remainingTime = estimatedTime-encodeTime
-
 	if (remainingTime < 0.0): remainingTime = 0.0
-
 	
 	lateEncodeStr = "動画をエンコード中…\n"
-	lateEncodeStr += strf("  経過時間 %02d:%02d.%03d\n", (encodeTime/1000/60), (encodeTime/1000\60), (encodeTime\1000))
-	lateEncodeStr += strf("  推定残り %02d:%02d.%03d", (remainingTime/1000/60), (remainingTime/1000\60), (remainingTime\1000))
+	lateEncodeStr += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(encodeTime))
+	lateEncodeStr += strf("  推定残り %s", cnvMilliSecondToMMSSMS(remainingTime))
 
 	LogOut lateEncodeStr
 	
