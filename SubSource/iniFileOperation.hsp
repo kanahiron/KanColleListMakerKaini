@@ -27,6 +27,7 @@
 	GetIni "Configuration", "SelectCapSaveDir", selectCapSaveDir, "\"\""
 	GetIni "Configuration", "YabumiExeDir", yabumidir, "\"\""
 
+	GetIni "CaptureAndMaking", "noHideLv", noHideLv, "0"
 	GetIni "CaptureAndMaking", "NameCut", namecut, "0"
 	GetIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel, "2"
 	GetIni "CaptureAndMaking", "HotkeyCapture", hotkeycap, "1"
@@ -126,6 +127,7 @@ return
 	if (page != 0) & (page != 1):page = 0
 	if (autosearch != 0) & (autosearch != 1):autosearch = 1
 	if (hidename != 0) & (hidename != 1):hidename = 0
+	if (noHideLv != 0) & (noHideLv != 1):noHideLv=0
 	if (namecut != 0) & (namecut != 1):namecut=0
 	if (frontrow != 0) & (frontrow != 1):frontrow=1
 	if (hidelog != 0) & (hidelog != 1):hidelog = 0
@@ -375,6 +377,7 @@ return
 	WriteIni "Configuration", "SelectCapSaveDir",selectCapSaveDir
 	WriteIni "Configuration", "YabumiExeDir", yabumidir
 	
+	WriteIni "CaptureAndMaking", "noHideLv", noHideLv
 	WriteIni "CaptureAndMaking", "NameCut", namecut
 	WriteIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel
 	WriteIni "CaptureAndMaking", "HotkeyCapture", hotkeycap

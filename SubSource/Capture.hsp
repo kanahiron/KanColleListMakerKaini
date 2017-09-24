@@ -136,8 +136,10 @@
 			
 			pos 0.14125*sscapwh(0), 0
 			gzoom 0.20375*sscapwh(0), 0.05*sscapwh(1), WND_IMAGE_BUF, 0, 0, 163, 24, 1
-			pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
-			gzoom 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, WND_IMAGE_BUF, 0, 24, 100, 16, 1
+			if (noHideLv^1){
+				pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
+				gzoom 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, WND_IMAGE_BUF, 0, 24, 100, 16, 1
+			}
 		}
 	} else {
 		buffer WND_CAPTURE, sscapwh(0), sscapwh(1)
