@@ -24,6 +24,9 @@
 #pack "huki.png"
 #packopt name "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ"
 #packopt hide 1
+#packopt manifest "KanColleListMakerKaini.manifest"
+#packopt icon "KanColleListMakerKaini.ico"
+#packopt lang "1041"
 
 #define SOFTNAME "ˆê——‚ß‚¢‚©[‰ü“ñ Ver0.2.9.6"
 #define klm2ver	2960
