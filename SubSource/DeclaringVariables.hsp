@@ -156,6 +156,11 @@
 
 	marginCutFlg = FALSE
 
+
+	sceneKaiso = 1
+	sceneHaikiCId = 0
+	includeDetails = 1
+
 return
 
 
@@ -230,7 +235,20 @@ return
 				capx = 575
 				capy = 131
 			}
-			
+		}
+		if equipmentList {
+
+			if sceneKaiso {
+
+
+			}
+
+			if sceneHaiki {
+
+
+			}
+
+
 		}
 	
 	}

@@ -481,36 +481,40 @@
 			airStationTabCh = objinfo_hwnd(airStationTabCId)
 
 			pos Scale(7), mesy
-			chkbox "ëïîı", airStation: mesy += scale20
-			QQCId = stat
-			QQCh = objinfo_hwnd(QQCId)
-			sendmsg QQCh, $F4, $9
+			chkbox "ëïîıàÍóó", equipmentList: mesy += scale20
+			equipmentListCId = stat
+			equipmentListCh = objinfo_hwnd(equipmentListCId)
+			sendmsg equipmentListCh, $F4, $9
 
-			
+	
 			objsize Scale(70), Scale(20)
 
 			pos Scale(22), mesy
-			chkbox "â¸ëïâÊñ ", directLink
-			AACId = stat
-			AACh = objinfo_hwnd(AACId)
-			SetWindowLong AACh, -16, $50000009 | $20000
+			chkbox "â¸ëïâÊñ ", sceneKaiso
+			sceneKaisoCId = stat
+			sceneKaisoCh = objinfo_hwnd(sceneKaisoCId)
+			SetWindowLong sceneKaisoCh, -16, $50000009 | $20000
 	
-			pos Scale(100), mesy
-			chkbox "îpä¸âÊñ ", airStation: mesy += scale20
-			BBCId = stat
-			BBCh = objinfo_hwnd(BBCId)
-			sendmsg BBCh, $F4, $9
+			pos Scale(95), mesy
+			chkbox "îpä¸âÊñ ", sceneHaiki: mesy += scale20
+			sceneHaikiCId = stat
+			sceneHaikiCh = objinfo_hwnd(sceneHaikiCId)
+			sendmsg sceneHaikiCh, $F4, $9
 
 			objsize Scale(175), Scale(20)
 			
 			pos Scale(22), mesy
-			chkbox "è⁄ç◊Ç‹Ç≈ì¸ÇÍÇÈ", airStationTab: mesy += scale20
-			WWCId = stat
-			WWCh = objinfo_hwnd(WWCId)
+			chkbox "è⁄ç◊Ç‹Ç≈ì¸ÇÍÇÈ", includeDetails: mesy += scale20
+			includeDetailsCId = stat
+			includeDetailsCh = objinfo_hwnd(includeDetailsCId)
 	
 			SetDAControl directLinkCh
 			SetDAControl airStationCh
 			SetDAControl airStationTabCh
+			SetDAControl equipmentListCh
+			SetDAControl sceneKaisoCh
+			SetDAControl sceneHaikiCh
+			SetDAControl includeDetailsCh
 	
 	
 		}
@@ -883,6 +887,7 @@
 	optionModePrev = optionMode
 
 	gsel WND_MAIN, 1+frontRow
+	gosub *listchange
 	width mainWndW, mainWndH
 	
 	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1

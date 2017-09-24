@@ -291,12 +291,35 @@ return
 		airStation = stat & 0x01
 		sendmsg airStationTabCh, $F2
 		airStationTab = stat & 0x01
+		
+		sendmsg equipmentListCh, $F2
+		equipmentList = stat & 0x01
+		sendmsg sceneKaisoCh, $F2
+		sceneKaiso = stat & 0x01
+		sendmsg sceneHaikiCh, $F2
+		sceneHaiki = stat & 0x01
+		sendmsg includeDetailsCh, $F2
+		includeDetails = stat & 0x01
 
-		if directLink {
-			objenable airStationTabCId,0
+
+		if (airStation) {
+			objenable airStationTabCId, 1
 		} else {
-			objenable airStationTabCId,1
+			objenable airStationTabCId, 0
 		}
+
+		if (equipmentList) {
+			objenable sceneKaisoCId, 1
+			objenable sceneHaikiCId, 1
+			objenable includeDetailsCId, 1
+		} else {
+			objenable sceneKaisoCId, 0
+			objenable sceneHaikiCId, 0
+			objenable includeDetailsCId, 0
+
+		}
+
+		
 	}
 
 
