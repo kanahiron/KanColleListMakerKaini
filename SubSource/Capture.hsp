@@ -176,21 +176,34 @@ return 0
 	gsel WND_MAIN
 	
 	if (mode != MODE_OPTION){
-		if kmexist(savenamepath) <= 0{
+		exist savenamepath
+		savedPicSize = strsize
+		if (savedPicSize == -1){
 			successFlg = FALSE
 			logmessage = savename+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
 		} else {
-			successFlg = TRUE
-			logmessage = savename+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
 			if dispcap & (mode == MODE_SSCAP){
 				pos 0, dispcapy
-				gzoom Scale(175), Scale(105), WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1), 1
+				gzoom Scale(175), Scale(105), WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1)
 			}
 			
 			if (seqcapf^1) {
+
+				successFlg = TRUE
+				logmessage = savename+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
 				
 				picHistoryLoad savenamepath
 				gosub *TweetWindow
+			} else {
+
+				seqCapCnt++
+				seqCapSize +=savedPicSize
+				seqCapElapsedTime = timeGetTime() - seqCapStartTime
+
+				logmessage = "˜A‘±ƒLƒƒƒvƒ`ƒƒ’†c\n"
+				logmessage += strf("  Œo‰ßŽžŠÔ %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
+				logmessage += strf("  –‡” %6d–‡(%4dMB)",seqCapCnt, seqCapSize/1024/1024)
+	
 			}
 			
 		}
@@ -365,6 +378,10 @@ return
 	if (seqcapf == FALSE){
 		
 		seqcapf = TRUE
+
+		seqCapCnt = 0
+		seqCapSize = 0
+		seqCapStartTime = timeGetTime()
 		
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID, 100*timersec, 0
 		seqcapmes = "’âŽ~"
@@ -383,6 +400,11 @@ return
 	} else {
 		
 		seqcapf = FALSE
+
+		logmessage = "˜A‘±ŽB‰e‚ð’âŽ~‚µ‚Ü‚µ‚½\n"
+		logmessage += strf("  ŽB‰eŽžŠÔ %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
+		logmessage += strf("  –‡” %6d–‡(%4dMB)",seqCapCnt, seqCapSize/1024/1024)
+		LogOut logmessage
 		
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID
 		seqcapmes = "ŠJŽn"
