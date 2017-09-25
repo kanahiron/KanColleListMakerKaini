@@ -148,26 +148,27 @@
 			color
 		}
 	
-		objsize Scale(130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), Scale(30)
+		objsize Scale(120-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), Scale(30)
 		pos 0, mesy
 		button gosub "SSキャプチャ", *ssCapture
 		sscapBId = stat
 	
-		objsize Scale(25), Scale(30)
-		pos Scale(130-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), mesy
+		objsize Scale(30), Scale(30)
+		pos Scale(120-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), mesy
 		button gosub "開", *ssSaveFOpen
 		fopenBId = stat
 		
 		if ((yabumiautoupload = 1) & (availableyabumi = 1)) {
-			pos Scale(130), mesy
+			pos Scale(125), mesy
 		} else {
 			pos Scale(200), mesy
-		}	
+		}
+		objsize Scale(25), Scale(30)
 		button gosub "UP", *yabumiUpload
 		yabumiBId = stat
 		
-		pos Scale(155), mesy
-		objsize Scale(20), Scale(30)
+		pos Scale(150), mesy
+		objsize Scale(25), Scale(30)
 		button gosub windowsSizeChangeBMes(mainWindowSmall), *windowsSizeChange
 		windowsSizeChangeBId = stat
 		mesy += Scale(30)
