@@ -5,13 +5,11 @@ packfile
 *.txt
 *.exe
 *.ini
-ScreenShots/
-ScreenShots2/
-SubSource/key.hsp
 *.zip
-SubSource/GridWindowOperation_old.hsp
 *.bak
-SubSource/WindowControlManagement.hsp
 *.i
 *.mp4
 *.png
+ScreenShots/
+ScreenShots2/
+SubSource/key.hsp
