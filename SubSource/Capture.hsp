@@ -167,10 +167,10 @@ return 0
 	
 	if (seqCapf == FALSE){
 		saveNamePath = ssSaveDir +"\\"+ saveName
-		gdiImageSave ssSaveDir +"\\"+ saveName, jpgQuality
+		ImgF_ImageSave ssSaveDir +"\\"+ saveName, jpgQuality
 	} else {
 		saveNamePath = intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName
-		gdiImageSave intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName, jpgQuality
+		ImgF_ImageSave intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName, jpgQuality
 	}
 
 	gsel WND_MAIN

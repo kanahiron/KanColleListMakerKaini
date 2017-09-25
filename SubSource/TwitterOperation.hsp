@@ -367,7 +367,7 @@ return
 		selCapSaveName = strf("%s%s", DateAndTimeFormat2(saveNameSelectCapture), savekind(jpgsave))
 
 		selCapPath = selectCapSaveDir +"\\"+ selCapSaveName
-		gdiImageSave selCapPath, jpgQuality
+		ImgF_ImageSave selCapPath, jpgQuality
 
 	
 		gsel WND_MAIN
@@ -598,7 +598,7 @@ return
 				//=========================================
 				ImgF_PicloadEx tempsdim(cnt)
 				saveNamed = strf("%s\\temp_%d.jpg", ssSaveDir, cnt)
-				GDIImageSave saveNamed, jpgQuality
+				ImgF_ImageSave saveNamed, jpgQuality
 				if kmexist(saveNamed) > 0{
 					tempSdim(cnt) = saveNamed
 				}

@@ -266,7 +266,7 @@
 		}
 		
 		savename = strf("%s%s", tempstr, savekind(jpgsave))
-		gdiimagesave listsavedir +"\\"+ savename, jpgquality
+		ImgF_ImageSave listsavedir +"\\"+ savename, jpgquality
 
 		gsel WND_MAIN, 1+frontRow
 			

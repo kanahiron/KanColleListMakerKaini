@@ -429,8 +429,8 @@ Option‚ÅPNG‚âGIFƒtƒ@ƒCƒ‹‚Ì‚Â“§‰ßƒsƒNƒZƒ‹/ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh‚Ìˆµ‚¢‚àw’è‰Â”\‚Å‚·
 
 /*-------------------------------------------------------------------------------------------------------
 %index
-ImgF_jpgsave
-‰æ–ÊƒCƒ[ƒWƒZ[ƒu.JPG•Ò(GDI+)
+ImgF_ImageSave
+‰æ–ÊƒCƒ[ƒWƒZ[ƒu.PNG,JPG•Ò(GDI+)
 %prm
 Path, Quality
 Path    [•¶š]•Û‘¶‚·‚éƒtƒ@ƒCƒ‹–¼(ƒpƒX)
@@ -438,21 +438,22 @@ Quality [”’l]•i¿
     0:‚ˆ³k(‘e‚¢)`100:’áˆ³k(‚«‚ß×‚â‚©)
 %inst
 HSP•W€‚Ìbmpsave–½—ß‚İ‚½‚¢‚È‚à‚Ì‚Å‚·BGDI+‚ğg—p‚µ‚ÄJPGŒ`®‚Åƒtƒ@ƒCƒ‹•Û‘¶‚µ‚Ü‚·B•i¿w’è•t‚«B
+Šg’£q‚É‚æ‚Á‚ÄJPEG‚ÆPNG‚ğØ‚è‘Ö‚¦‚Ü‚·
 %href
 ImgP_Memsave
 %------------------------------------------------------------------------------------------------------*/
-#deffunc gdiimagesave str s, int p
+#deffunc ImgF_ImageSave str s, int p
 	if getpath(s,18) = ".png" {
-		ib     = 100,0,$557CF406,$11D31A04,$0000739A,$2EF31EF8,1,$1D5BE4B5,$452DFA4A,$B35DDD9C,$EBE70551,1,4,0
+		ib = 100, 0, $557CF406, $11D31A04, $0000739A, $2EF31EF8, 1, $1D5BE4B5, $452DFA4A, $B35DDD9C, $EBE70551, 1, 4, 0
 	} else {
-		ib     = p,0,$557CF401,$11D31A04,$0000739A,$2EF31EF8,1,$1D5BE4B5,$452DFA4A,$B35DDD9C,$EBE70551,1,4,0
+		ib = p, 0, $557CF401, $11D31A04, $0000739A, $2EF31EF8, 1, $1D5BE4B5, $452DFA4A, $B35DDD9C, $EBE70551, 1, 4, 0
 	}
     ib(13) = varptr(ib)                 ; ”z—ñ©“®Šm•Û‚ª‚³‚ê‚Ä‚à‚¢‚¢‚æ‚¤‚ÉŠm’è‚µ‚Ä‚©‚ç‘ã“ü
     ImgM_CreateH ImchMode_ImageFromWindow  : ib(1) = stat
     GdipSaveImageToFile ib(1), s, ib(2), ib(6)
 
     ImgM_CloseH
-return ayy                              ; HSP“¯«‚ÌGDI+ƒCƒ[ƒW•Û‘¶‚Éjpegˆ³k—¦w’è‚ª–³‚¢‚±‚Æ‚É‘Î‚·‚é‘[’u
+return                               ; HSP“¯«‚ÌGDI+ƒCƒ[ƒW•Û‘¶‚Éjpegˆ³k—¦w’è‚ª–³‚¢‚±‚Æ‚É‘Î‚·‚é‘[’u
 
 /*=======================================================================================================
 %index                                                                          ; ‹Œ "ImagePrintModule"
