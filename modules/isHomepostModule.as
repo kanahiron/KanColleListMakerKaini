@@ -46,14 +46,16 @@ return
 	#deffunc isHomeport_init int wndId
 
 		homeportBufId = wndId
-		homeportArr = 0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,1,1,0,0
-		homeportArrLen = length(homeportArr)
-	
-		wRatio = 0.03125
-		hRatio = 0.0625
-		sx1Ratio = 0.821875
-		sx2Ratio = 0.9125
-		syRatio = 0.067709
+		basisAHash = 25663381, -1212828160
+
+		sxRatio = 1.0* (280)/800
+		syRatio = 1.0* (41)	/480
+		wRatio =  1.0* (240)/800
+		hRatio =  1.0* (20)	/480
+
+		buffer homeportBufId, 8, 9
+		chgbm 32
+		mref homeportVram, 66
 
 
 	return
@@ -61,59 +63,24 @@ return
 	#defcfunc isHomeport int wndId
 
 		nid = ginfo(3)
-
-		buffer homeportBufId, 10, 3
-		chgbm 32
-		mref homeportVram, 66
-
-		avg = 0
-		dim arr, 24
-
+		
 		gsel wndId
 		sx = ginfo_winx
 		sy = ginfo_winy
 
 		gsel homeportBufId
-		pos 0,0
-		gzoom 5, 3, wndId, int(sx1Ratio*sx), int(syRatio*sy), int(wRatio*sx), int(hRatio*sy), 1
-		pos 5,0
-		gzoom 5, 3, wndId, int(sx2Ratio*sx), int(syRatio*sy), int(wRatio*sx), int(hRatio*sy), 1
+		pos 0, 1
+		gzoom 8, 8, wndId, int(sxRatio*sx), int(syRatio*sy), int(wRatio*sx), int(hRatio*sy), 1
 		
-		repeat homeportArrLen
-			arr(cnt) = (( (homeportVram(cnt)&0xFF)*29 + ((homeportVram(cnt)>>8)&0xFF)*150 + ((homeportVram(cnt)>>16)&0xFF)*77 ) >> 8) & 0xFF
-			avg += arr(cnt)
-		loop
-
-		avg /= homeportArrLen
-
-		count = 0
-		repeat homeportArrLen
-			 if (avg < arr(cnt)) != homeportArr(cnt):count++
-		loop
-
 		gsel nid
 
-		if (count < 4){
+		CmptAHash aHash, homeportVram
+		dist = HammingDist(aHash, basisHash)
+		
+		if (dist < 16){
 			return 1
 		} else {
 			return 0
 		}
 
 #global
-
-/*
-
-	screen 0
-
-
-	loadArr = "40", "n1", "n2", "n3", "100+" 
-
-	isHomeport_init 2
-
-	repeat length(loadArr)
-		buffer 1
-		picload loadArr(cnt)+".png"
-		gsel 0
-		mes isHomeport(1)
-	loop
-//*/
