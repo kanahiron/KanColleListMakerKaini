@@ -15,7 +15,6 @@
 	GetIni "Configuration", "YabumiAutoUpload", yabumiautoupload, "1"
 	GetIni "Configuration", "OtherGame", othergame, "1"
 	GetIni "Configuration", "DisplayCapture", dispcap, "1"
-	GetIni "Configuration", "ManualPos", manualpos, "0"
 	GetIni "Configuration", "Senden", senden, "1"
 	GetIni "Configuration", "AutoVersionCheck", autoVersionCheck, "1"
 	GetIni "Configuration", "ConfirmCompletion", confirmCompletion, "1"
@@ -140,7 +139,6 @@ return
 	if (jpgquality < 1) | (jpgquality > 100):jpgquality = 90
 	if (enableSeqCap != 0) & (enableSeqCap != 1):enableSeqCap = 0
 	if (timersec < 0) | (timersec > 999):timersec = 5
-	if (manualpos != 0) & (manualpos != 1):manualpos=0
 	if (lvname != 0) & (lvname != 1):lvname=0
 	if (tuika1 != 0) & (tuika1 != 1):tuika1=1
 	if (tuika2 != 0) & (tuika2 != 1):tuika2=0
@@ -365,7 +363,6 @@ return
 	WriteIni "Configuration", "YabumiAutoUpload", yabumiautoupload
 	WriteIni "Configuration", "OtherGame", othergame
 	WriteIni "Configuration", "DisplayCapture", dispcap
-	WriteIni "Configuration", "ManualPos", manualpos
 	WriteIni "Configuration", "Senden", senden
 	WriteIni "Configuration", "AutoVersionCheck", autoVersionCheck
 	WriteIni "Configuration", "ConfirmCompletion", confirmCompletion
