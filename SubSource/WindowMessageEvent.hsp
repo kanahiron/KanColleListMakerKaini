@@ -38,6 +38,11 @@
 			gosub *mainWndMove
 			swbreak
 
+		case WM_LBUTTONDBLCLK
+			logmes "WM_LBUTTONDBLCLK"
+			gosub *windowsSizeChange
+			swbreak
+
 	swend
 
 	oncmd 1

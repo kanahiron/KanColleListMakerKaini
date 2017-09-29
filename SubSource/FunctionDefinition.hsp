@@ -24,6 +24,8 @@
 #func  MoveWindow "MoveWindow" int, int, int, int, int, int
 #func  GetWindowLong "GetWindowLongW" int, int
 #func  SetWindowLong "SetWindowLongW" int, int, int
+#func  SetClassLong "SetClassLongW" int, int, int
+#func  GetClassLong "GetClassLongW" int, int
 #func  SetLayeredWindowAttributes "SetLayeredWindowAttributes" int, int, int, int
 #func  GetCursorPos "GetCursorPos" int
 #func  SetCursorPos "SetCursorPos" int, int
@@ -36,7 +38,6 @@
 #func  UnregisterHotKey "UnregisterHotKey" int, int
 #cfunc IsWindowVisible "IsWindowVisible" int
 #cfunc GetSystemMetrics "GetSystemMetrics" int
-#func  SetClassLong "SetClassLongW" int, int, int
 #func  LoadCursor "LoadCursorW" int, int
 #func  SetTimer "SetTimer" int, int, int, sptr
 #func  KillTimer "KillTimer" int, int
@@ -186,12 +187,18 @@
 #const WM_TIMER			0x0113
 #const WM_VSCROLL		0x0114
 #const WM_MOUSEMOVE		0x0200
-#const WM_LBUTTONDOWN	0x0201
-#const WM_RBUTTONDOWN	0x0204
+#const WM_LBUTTONDOWN   0x0201
+#const WM_LBUTTONDBLCLK 0x0203
+#const WM_RBUTTONDOWN   0x0204
+#const WM_RBUTTONDBLCLK 0x0206
+#const WM_MBUTTONDOWN   0x0207
+#const WM_MBUTTONDBLCLK 0x0209
 #const WM_SIZING		0x0214
 #const WM_DROPFILES		0x0233
 #const WM_DPICHANGED	0x02E0
 #const WM_HOTKEY		0x0312
+
+
 
 //リストボックス周り
 #define LB_ADDSTRING	$00000180

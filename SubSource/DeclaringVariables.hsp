@@ -112,7 +112,6 @@
 	picHistoryCount = 0
 	mainWindowSmall = 0
 	
-	windowsSizeChangeBMes = "ª", "«"
 	autoSearchFailureCount = 0
 
 	UIScale = 1.0

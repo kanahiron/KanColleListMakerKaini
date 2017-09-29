@@ -76,6 +76,8 @@
 	
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
+		GetClassLong WND_INFO(WND_MAIN, WI_HANDLE), -26
+		SetClassLong WND_INFO(WND_MAIN, WI_HANDLE), -26, stat | $0008
 		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 1
 		oncmd gosub *MainWindowProc, WM_DROPFILES
 		oncmd gosub *MainWindowProc, WM_COMMAND
@@ -84,6 +86,7 @@
 		oncmd gosub *MainWindowProc, WM_VSCROLL
 		oncmd gosub *MainWindowProc, WM_DPICHANGED
 		oncmd gosub *MainWindowProc, WM_LBUTTONDOWN
+		oncmd gosub *MainWindowProc, WM_LBUTTONDBLCLK
 		objmode 2
 		
 		combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
