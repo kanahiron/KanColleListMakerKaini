@@ -52,7 +52,7 @@ return
 
 *yabumiuploaderdialog
 	
-	dialog "exe", 16, "YabumiUpLoader"
+	dialog "exe", 16, ""
 	if ( stat == 1 ){
 		yabumidir = refstr
 		objprm yabumIId, yabumidir

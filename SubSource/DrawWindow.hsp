@@ -545,7 +545,7 @@
 			pos scale5, mesy
 			chkbox "ログを非表示", hidelog: mesy+=scale20
 			pos scale5, mesy
-			chkbox "yabumiに自動でアップロードする", yabumiautoupload: mesy += scale20
+			chkbox "外部ソフトと連携してアップロードする(Gazyoなど)", yabumiautoupload: mesy += scale20
 			pos scale5, mesy
 			chkbox "艦これが等倍でなくも取得できるようにする(手動のみ)", othergame: mesy += scale20
 			pos scale5, mesy
@@ -619,7 +619,7 @@
 			
 			
 			pos Scale(14), mesy
-			mes "YabumiUploader.exeの場所"
+			mes "外部ソフトの場所"
 			pos Scale(200), mesy
 			button gosub "変更", *yabumiUploaderDialog: mesy += scale20
 			pos 0, mesy
@@ -841,7 +841,6 @@
 	optionModePrev = optionMode
 
 	gsel WND_MAIN, 1+frontRow
-	gosub *listchange
 	width mainWndW, mainWndH
 	
 	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
