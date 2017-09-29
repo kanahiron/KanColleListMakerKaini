@@ -75,7 +75,7 @@ return
 		gsel nid
 
 		CmptAHash aHash, homeportVram
-		dist = HammingDist(aHash, basisHash)
+		dist = HammingDist(aHash, basisAHash)
 		
 		if (dist < 16){
 			return 1

@@ -12,6 +12,7 @@
 #include "./modules/TsubuyakiSoup_mod_utf.hsp"
 #include "./modules/jsonParse_utf.as"
 #include "./modules/listMakerModule.as"
+#include "./modukes/PerceptualHashMod.as"
 #include "./modules/isHomepostModule.as"
 #include "./modules/DateAndTimeFormat2.as"
 #include "./modules/isfilled.hsp"
