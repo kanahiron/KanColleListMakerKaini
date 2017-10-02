@@ -95,7 +95,11 @@
 	
 	seqCapMes = "開始"
 	videoCapMes = "開始"
-
+	
+	luposx = 0
+	luposy = 0
+	rdposx = 0
+	rdposy = 0
 	twijpg = 1
 	timersec = 5
 	dropwindowid = 0

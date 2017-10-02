@@ -89,6 +89,33 @@
 		sendmsg hMaxSearchLevelStatic, WM_SETFONT, hFontMain, 1
 
 		mesy += scale20
+		
+	
+		pos Scale(84+((manualpos^1) * 175)), mesy + scale5
+		mes "x"
+		pos Scale(0+((manualpos^1) * 175)), mesy
+		input luposx, Scale(40), Scale(23), 5
+		luposxIId = stat
+		pos Scale(40+((manualpos^1) * 175)), mesy
+		input luposy, Scale(40), Scale(23), 5
+		luposyIId = stat
+		pos Scale(95+((manualpos^1) * 175)), mesy
+		input rdposx, Scale(40), Scale(23), 5
+		rdposxIId = stat
+		pos Scale(135+((manualpos^1) * 175)), mesy
+		input rdposy, Scale(40), Scale(23), 5
+		rdposyIId = stat
+		
+		GetWindowLong objinfo(luposxIId, 2), -16
+		SetWindowLong objinfo(luposxIId, 2), -16, stat | $2
+		GetWindowLong objinfo(luposyIId, 2), -16
+		SetWindowLong objinfo(luposyIId, 2), -16, stat | $2
+		GetWindowLong objinfo(rdposxIId, 2), -16
+		SetWindowLong objinfo(rdposxIId, 2), -16, stat | $2
+		GetWindowLong objinfo(rdposyIId, 2), -16
+		SetWindowLong objinfo(rdposyIId, 2), -16, stat | $2
+	
+		if manualpos: mesy += Scale(23)
 	
 		if mainWindowSmall {
 			mesaddx = Scale(500)
@@ -136,6 +163,24 @@
 		pos Scale(150), mesy
 		button gosub "開", *ssSaveFOpen: mesy += Scale(30)
 		fopenBId = stat
+
+
+		/*
+		pos Scale(150), mesy
+		objsize Scale(25), Scale(30)
+		button gosub windowsSizeChangeBMes(mainWindowSmall), *windowsSizeChange
+		windowsSizeChangeBId = stat
+		mesy += Scale(30)
+		*/
+
+		/*
+		pos Scale(2), mesy + scale3
+		mes "セミオート作成"
+		objsize Scale(70), Scale(30)
+		pos Scale(105), mesy
+		button gosub "開始", *StartCreateSemiAuto: mesy += Scale(30)
+		createSemiAutoBId = stat
+		//*/
 
 		pos Scale(3+((enableSeqCap^1)*-175)), mesy + scale3
 		mes "連続キャプチャ"
@@ -551,6 +596,8 @@
 			pos scale5, mesy
 			chkbox "キャプチャのプレビューを有効にする", dispcap: mesy += scale20
 			pos scale5, mesy
+			chkbox "取得座標を手動で入力できるようにする", manualpos: mesy += scale20
+			pos scale5, mesy
 			chkbox "画像の右下に艦これ一覧めいかーの名前を入れる", senden: mesy += scale20
 			pos scale5, mesy
 			chkbox "起動時にバージョンチェックを行う", autoVersionCheck: mesy += scale20
@@ -872,12 +919,18 @@ return
 	
 	if (mode == MODE_SSCAP){
 
+		objenable windowsSizeChangeBId, 0
 		enableWindow hMaxSearchLevelTrackBar, 0
 		
 		if ( (seqCapF^1) && (videoCapFlg^1) ): objenable sscapbid, 0
 		if seqcapf^1: objenable seqcapbid, 0
 		if videoCapFlg^1: objenable videoCapbid, 0
 		objenable yabumibid, 0
+
+		objenable luposxIId, 0
+		objenable luposyIId, 0
+		objenable rdposxIId, 0
+		objenable rdposyIId, 0
 	}
 
 	if ( mode == MODE_LIST ){
@@ -910,8 +963,14 @@ return
 		}
 		
 		if (mode == MODE_SSCAP){
-
+	
+			objenable windowsSizeChangeBId, 1
+			objenable luposxIId, 1
+			objenable luposyIId, 1
+			objenable rdposxIId, 1
+			objenable rdposyIId, 1
 			enableWindow hMaxSearchLevelTrackBar, 1
+	
 			if (availableCap | manualPos){
 				objenable sscapbid, 1
 				objenable seqcapbid, 1

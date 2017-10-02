@@ -47,6 +47,13 @@
 		}
 			
 	}
+	
+	//b’è”’l’¼Ú“ü—Í
+	sscap(0) = luposx
+	sscap(1) = luposy
+	sscap(2) = rdposx
+	sscap(3) = rdposy
+	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
 
 	switch positionType
 		case PT_ABSOLUTE
