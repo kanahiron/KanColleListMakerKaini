@@ -75,36 +75,23 @@
 
 
 		fname = strf("%s\\%s", videoCapSaveDir, DateAndTimeFormat2(saveNameVideoCapture))
-
-
+		
 		if (noAudioFlg^1){
 			//オーデイオあり
-			cmda = strf("\"%s\" -vn -f dshow -i audio=\"%s\" -acodec aac -b:a 96k \"%s_a.aac\"", ffmpegdir, audioDeviceName, fname)
-			if (lateEncode){
-				//オーデイオ有り負荷軽減動画キャプチャ
-				cmdv  = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d ", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY)
-				cmdv += strf("-framerate %d -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf 12 -preset ultrafast \"%s_v.mp4\"", videoCapFR,videoCapFR, fname)
-				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -i \"%s_a.aac\" -c:v libx264 -crf %d -preset %s -c:a copy \"%s.mp4\"", ffmpegdir, fname, fname, videoCapCRF, x264presetStr, fname)
-			} else {
-				//オーデイオ有り従来の動画キャプチャ
-				cmdv  = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d ", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY)
-				cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, fname)
-				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -i \"%s_a.aac\" -c:v copy -c:a copy \"%s.mp4\"", ffmpegdir, fname, fname, fname)
-			}
+			cmda = strf("\"%s\" -vn -f dshow -i audio=\"%s\" -acodec pcm_s16le -ac 2 -ar 44100 \"%s_a.wav\"", ffmpegdir, audioDeviceName, fname)
 		} else {
 			cmda = strf("cmd")
-			if (lateEncode){
-				//オーデイオ無し負荷軽減動画キャプチャ
-				cmdv  = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d ", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY)
-				cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf 12 -preset ultrafast \"%s_v.mp4\"", videoCapFR, videoCapFR, fname)
-				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -c:v libx264 -crf %d -preset %s \"%s.mp4\"", ffmpegdir, fname, videoCapCRF, x264presetStr, fname)
-			} else {
-				//オーデイオなし従来の動画キャプチャ
-				cmdv  = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d ", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY)
-				cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, fname)
-			}
 		}
-		//dialog ""+cmdv
+
+		if (lateEncode){
+			//負荷軽減動画キャプチャ
+			cmdv  = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d ", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY)
+			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, 12, "ultrafast", fname)
+		} else {
+			cmdv  = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d ", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY)
+			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, fname)
+		}
+
 
 		//gsel WND_FFMPEG, 1
 		gsel WND_MAIN
@@ -114,8 +101,11 @@
 
 		pipe2exec cmda
 		apid = stat
+		aStartTime = 0.001*(timeGetTime()\60000)
+		wait 20
 		pipe2exec cmdv
 		vpid = stat
+		vStartTime = 0.001*(timeGetTime()\60000)
 
 		if ( (apid == -1) || (vpid == -1) ){
 			LogOut "動画キャプチャの開始に失敗しました"
@@ -174,39 +164,44 @@
 
 		pipe2term vpid
 		pipe2term apid
-		
-		LateEncodeFlg = FALSE
-		
-		if ( (noAudioFlg^1) || lateEncode ){
-			//動画結合処理
+	
+		//動画結合処理
 
-			LateEncodeFlg = TRUE
-			lateEncodeStartTime = timeGetTime()
-			
-			pipe2exec cmdm
-			mpid = stat
+		LateEncodeFlg = TRUE
+		lateEncodeStartTime = timeGetTime()
+		diffTime = 1.0*(vStartTime+60.0-aStartTime)\60.0
 
-			if ( mpid == -1 ){
-				LogOut "エンコードプロセスの開始に失敗しました"
-				
-				gsel WND_MAIN, 1+frontRow
-				videoCapMes = "開始"
-				objprm videoCapBId, videoCapMes
-				
-				nidPop
-				return
+		if (noAudioFlg^1){
+			if (lateEncode){
+				//オーデイオ有り負荷軽減動画キャプチャ
+				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -c:v libx264 -crf %d -preset %s -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, fname, difftime, fname, videoCapCRF, x264presetStr, fname)
+			} else {
+				//オーデイオ有り従来の動画キャプチャ
+				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -c:v copy  -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, fname, difftime, fname, fname)
 			}
-			
-			SetTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID, 1500, 0
-			
+		} else {
+			if (lateEncode){
+				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -c:v libx264 -crf %d -preset %s \"%s.mp4\"", ffmpegdir, fname, videoCapCRF, x264presetStr, fname)
+			} else {
+				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -c:v copy \"%s.mp4\"", ffmpegdir, fname, fname)
+			}
 		}
+		pipe2exec cmdm
+		mpid = stat
 
+		if ( mpid == -1 ){
+			LogOut "エンコードプロセスの開始に失敗しました"
+				
+			gsel WND_MAIN, 1+frontRow
+			videoCapMes = "開始"
+			objprm videoCapBId, videoCapMes
+				
+			nidPop
+			return
+		}
+			
+		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID, 1500, 0
 		gosub *SSModeControlEnable
-
-		if (LateEncodeFlg^1){
-			//エンコード中でないなら
-			gosub *VidepCapFinish
-		}
 
 	}
 	nidPop
