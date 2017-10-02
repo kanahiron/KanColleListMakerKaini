@@ -919,7 +919,6 @@ return
 	
 	if (mode == MODE_SSCAP){
 
-		objenable windowsSizeChangeBId, 0
 		enableWindow hMaxSearchLevelTrackBar, 0
 		
 		if ( (seqCapF^1) && (videoCapFlg^1) ): objenable sscapbid, 0
