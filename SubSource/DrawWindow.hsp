@@ -943,7 +943,16 @@ return
 			if ( (seqCapF^1) && (videoCapFlg^1) ): objenable TwiWndCapBId, 0
 			objenable twiCaptureSelectBId, 0
 			objenable twiCaptureSelectNonCutBid, 0
+			gsel WND_MAIN
 		}
+	}
+
+	if (tweetFlg){
+		if (mode != MODE_OPTION): objenable enableTweetWindowCId, 0
+		gsel WND_TWITTER
+		objenable ttid, 0
+		objenable tweetbid, 0
+		gsel WND_MAIN
 	}
 
 	nidPop
@@ -1010,7 +1019,16 @@ return
 			if (availableCap | manualPos): objenable TwiWndCapBId, 1
 			objenable twiCaptureSelectBId, 1
 			objenable twiCaptureSelectNonCutBid, 1
+			gsel WND_MAIN
 		}
+	}
+
+	if (tweetFlg){
+		if (mode != MODE_OPTION): objenable enableTweetWindowCId, 1
+		gsel WND_TWITTER
+		objenable ttid, 1
+		objenable tweetbid, 1
+		gsel WND_MAIN
 	}
 
 	nidPop

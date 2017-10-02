@@ -553,16 +553,10 @@ return
 	if ( ACCESS_TOKEN != "" ){
 
 		nidpush
-
+		tweetFlg = TRUE
+		
 		gsel WND_MAIN
 		gosub *SSModeControlDisable
-		if (mode != MODE_OPTION): objenable enableTweetWindowCId, 0
-
-		
-		gsel WND_TWITTER
-		objenable ttid, 0
-		objenable tweetbid, 0
-		//wait 50
 		
 		sdim mediaids, 1024
 		sdim tempsdim, 256, 4
@@ -649,16 +643,8 @@ return
 			loop
 		}
 
-		gsel WND_TWITTER
-		objenable ttid,1
-		objenable tweetbid,1
-	
-		gsel WND_MAIN
-		gosub *SSModeControlEnable
-		if (mode != MODE_OPTION): objenable enableTweetWindowCId, 1
-
+		tweetFlg = FALSE
 		LogOut logmessage
-		
 		nidPop
 	}
 	
