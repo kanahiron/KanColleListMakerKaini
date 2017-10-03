@@ -774,6 +774,10 @@
 			chkbox "動画キャプチャを有効にする", enableVideoCap: mesy += scale20
 			pos scale5, mesy
 			chkbox "録画時のCPU負荷を軽減した動画キャプチャ", lateEncode: mesy += scale20
+			pos scale5, mesy
+			chkbox "マウスカーソルを非表示にする", videoCapHideCursor: mesy += scale20
+			pos scale5, mesy
+			chkbox "キャプチャ中に取り込み範囲枠を表示する", videoCapShowFrame: mesy += scale20
 
 
 			pos Scale(5), mesy+Scale(2)

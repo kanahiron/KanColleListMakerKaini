@@ -83,12 +83,17 @@
 			cmda = strf("cmd")
 		}
 
+		//videoCapShowFrame
+		//videoCapHideCursor
+
 		if (lateEncode){
 			//•‰‰×ŒyŒ¸“®‰æƒLƒƒƒvƒ`ƒƒ
-			cmdv  = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d ", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY)
+			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
+			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, capX, capY)
 			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, 12, "ultrafast", fname)
 		} else {
-			cmdv  = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d ", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY)
+			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
+			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, capX, capY)
 			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, fname)
 		}
 
