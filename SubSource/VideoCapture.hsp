@@ -25,6 +25,17 @@
 			return
 		}
 	}
+
+	if (lateEncodeFlg){
+
+		gosub *VideoCapEmgStop
+		
+		LogOut "Info-エンコードを中断\n動画キャプチャを取り消しました"
+				
+		nidPop
+		return
+	}
+		
 	
 	if (videoCapFlg == FALSE){
 		
@@ -133,7 +144,7 @@
 	} else {
 
 		gsel WND_MAIN
-		objenable videoCapBId, 0
+		objprm videoCapBId, "中止"
 		
 		videoCapFlg = FALSE
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
@@ -213,6 +224,8 @@ return
 
 *VideoCapTimerProcessing
 
+	logmes "VideoCapTimerProcessing"
+
 	nidPush
 
 	exfv = 0
@@ -251,7 +264,7 @@ return
 	elapsedTimeStr += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(elapsedTime))
 
 	gsel WND_MAIN
-	objprm logId, elapsedTimeStr: await
+	LogOut elapsedTimeStr
 	
 	nidPop
 return
@@ -352,6 +365,7 @@ return
 	lateEncodeFlg = FALSE
 
 	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
+	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID
 	if (apid != -1): pipe2term apid
 	if (vpid != -1): pipe2term vpid
 	if (mpid != -1): pipe2term mpid
