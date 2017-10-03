@@ -944,6 +944,7 @@ return
 	nidPush
 	gsel WND_MAIN
 
+	//連続キャプチャ中か動画キャプチャ中なら
 	if ( (seqCapF^1) && (videoCapFlg^1) ){
 	
 		objenable comBoxId, 1
