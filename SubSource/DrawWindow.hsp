@@ -300,27 +300,6 @@
 			SetDAControl kantaiCh
 			SetDAControl pageCh
 			SetDAControl lvnameCh
-	
-			if ichiranMode1 {
-				objenable lvnameCId, 1
-				if lvname = 1{
-					objenable yubiwaCId, 0
-					objenable kantaiCId, 0
-					objenable pageCId, 0
-				} else {
-					objenable yubiwaCId, 1
-					objenable kantaiCId, 1
-					objenable pageCId, 1
-				}
-	
-			}
-	
-			if ichiranMode2 {
-				objenable yubiwaCId, 0
-				objenable kantaiCId, 0
-				objenable pageCId, 0
-				objenable lvnameCId, 0
-			}
 		}
 		
 		if (listmode == LISTMODE_FLEET){
@@ -560,6 +539,7 @@
 		hLog = objinfo_hwnd(logId)
 
 		mainWndH = mesy-(Scale(70)*hideLog_)
+		gosub *listchange
 		
 		if IsWindowVisible(WND_INFO(WND_GRID, WI_HANDLE)) = 0{
 			gsel WND_GRID, 1
@@ -663,7 +643,6 @@
 			pos 0, mesy
 			mesbox selectCapSaveDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
 			selectCapSaveDirIId = stat
-			
 			
 			pos Scale(14), mesy
 			mes "外部ソフトの場所"
@@ -778,7 +757,6 @@
 			chkbox "マウスカーソルを非表示にする", videoCapHideCursor: mesy += scale20
 			pos scale5, mesy
 			chkbox "キャプチャ中に取り込み範囲枠を表示する", videoCapShowFrame: mesy += scale20
-
 
 			pos Scale(5), mesy+Scale(2)
 			mes "フレームレート(5～30fps)"
