@@ -598,7 +598,7 @@
 			pos scale5, mesy
 			chkbox "取得座標を手動で入力できるようにする", manualpos: mesy += scale20
 			pos scale5, mesy
-			chkbox "画像の右下に艦これ一覧めいかーの名前を入れる", senden: mesy += scale20
+			chkbox "作成した画像に一覧めいかーのクレジット表記を入れる", senden: mesy += scale20
 			pos scale5, mesy
 			chkbox "起動時にバージョンチェックを行う", autoVersionCheck: mesy += scale20
 			autoVersionCheckCh = objinfo(stat, 2)
