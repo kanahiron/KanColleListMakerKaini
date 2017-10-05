@@ -214,7 +214,6 @@ TwitterAPI操作命令
 %*/
 //------------------------------------------------------------
 #deffunc _Tweet str p1, str p2, str p3, str p4, str p5, str p6
-	debugLog "Tweet 開始"
 	//POST
 	sdim arguments,256
 	tempIndex = 0
@@ -227,16 +226,12 @@ TwitterAPI操作命令
 
 	execRestApi "statuses/update.json", arguments, METHOD_POST
 	tempInt = stat
-	debugLog "Tweet 終了"
 return tempInt
 #define global Tweet(%1, %2="", %3="", %4="", %5="", %6="") _Tweet %1, %2, %3, %4, %5, %6
 //============================================================
 
 #define global media_upload(%1,%2,%3,%4=0) media_upload_ %1,%2,%3,%4
 #deffunc media_upload_ array p1 ,int p3,var p2, int hProgress
-
-	debugLog "media_upload 開始"
-	logmes "media_upload"
 
 	sdim rawtext,512
 	sdim p2,512
@@ -258,7 +253,6 @@ return tempInt
 		wait 10
 	loop
 	p2 = strmid(p2, 0, strlen(p2)-1)
-	debugLog "media_upload 終了"
 return 1
 
 #global
