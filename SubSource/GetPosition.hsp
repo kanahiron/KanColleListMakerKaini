@@ -257,6 +257,13 @@ return
 				swbreak
 		swend
 		objprm SSCapIId,sscapmes
+
+		if (mode == MODE_SSCAP ){
+			objprm luposxIId, luposx
+			objprm luposyIId, luposy
+			objprm rdposxIId, rdposx
+			objprm rdposyIId, rdposy
+		}
 		
 		gosub *SSModeControlEnable
 

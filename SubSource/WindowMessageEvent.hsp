@@ -214,117 +214,119 @@ return
 
 	nidPush
 	gsel WND_MAIN
-	
-	if (listMode == LISTMODE_LIST){
 
-		sendmsg ichiranMode1Ch, $F2
-		ichiranMode1 = stat & 0x01
-		sendmsg ichiranMode2Ch, $F2
-		ichiranMode2 = stat & 0x01
-
-		if ichiranMode1 {
+	if (mode = MODE_LIST){
 		
-			lvnamef = lvname
-			sendmsg yubiwach, $F2
-			yubiwa = stat & 0x01
-			sendmsg kantaich, $F2
-			kantai = stat & 0x01
-			sendmsg pagech, $F2
-			page = stat & 0x01
-			sendmsg lvnamech, $F2
-			lvname = stat & 0x01
+		if (listMode == LISTMODE_LIST){
+	
+			sendmsg ichiranMode1Ch, $F2
+			ichiranMode1 = stat & 0x01
+			sendmsg ichiranMode2Ch, $F2
+			ichiranMode2 = stat & 0x01
+	
+			if ichiranMode1 {
 			
-			objenable lvnamecid,1
-			
-			if lvname = 1{
+				lvnamef = lvname
+				sendmsg yubiwach, $F2
+				yubiwa = stat & 0x01
+				sendmsg kantaich, $F2
+				kantai = stat & 0x01
+				sendmsg pagech, $F2
+				page = stat & 0x01
+				sendmsg lvnamech, $F2
+				lvname = stat & 0x01
+				
+				objenable lvnamecid,1
+				
+				if lvname = 1{
+					objenable yubiwacid,0
+					objenable kantaicid,0
+					objenable pagecid,0
+				} else {
+					objenable yubiwacid,1
+					objenable kantaicid,1
+					objenable pagecid,1
+				}
+				
+			}
+	
+			if ichiranMode2 {
+	
 				objenable yubiwacid,0
 				objenable kantaicid,0
 				objenable pagecid,0
-			} else {
-				objenable yubiwacid,1
-				objenable kantaicid,1
-				objenable pagecid,1
+				objenable lvnamecid,0
+				
 			}
 			
 		}
-
-		if ichiranMode2 {
-
-			objenable yubiwacid,0
-			objenable kantaicid,0
-			objenable pagecid,0
-			objenable lvnamecid,0
+		
+		
+		if (listMode == LISTMODE_FLEET){
+		
+			sosuf = sosu
+			sendmsg sosukach, $F2
+			sosuka = stat & 0x01
+			sendmsg sosuch, $F2
+			sosu = stat & 0x01
+			sendmsg sokach, $F2
+			soka = stat & 0x01
+		
+			sendmsg tuika1ch, $F2
+			tuika1 = stat & 0x01
+			sendmsg tuika2ch, $F2
+			tuika2 = stat & 0x01
+			sendmsg tuika3ch, $F2
+			tuika3 = stat & 0x01
+			sendmsg tuika4ch, $F2
+			tuika4 = stat & 0x01
+		
+			sendmsg listsize1ch, $F2
+			listsize1 = stat & 0x01
+			sendmsg listsize2ch, $F2
+			listsize2 = stat & 0x01
+		
+			sendmsg fleetPunctuationch, $F2
+			fleetPunctuation = stat & 0x01
+		}
+	
+		if (listMode == LISTMODE_OTHER){
+	
+			sendmsg directLinkCh, $F2
+			directLink = stat & 0x01
+			sendmsg airStationCh, $F2
+			airStation = stat & 0x01
+			sendmsg airStationTabCh, $F2
+			airStationTab = stat & 0x01
+			
+			sendmsg equipmentListCh, $F2
+			equipmentList = stat & 0x01
+			sendmsg sceneKaisoCh, $F2
+			sceneKaiso = stat & 0x01
+			sendmsg sceneHaikiCh, $F2
+			sceneHaiki = stat & 0x01
+			sendmsg includeDetailsCh, $F2
+			includeDetails = stat & 0x01
+	
+	
+			if (airStation) {
+				objenable airStationTabCId, 1
+			} else {
+				objenable airStationTabCId, 0
+			}
+	
+			if (equipmentList) {
+				objenable sceneKaisoCId, 1
+				objenable sceneHaikiCId, 1
+				objenable includeDetailsCId, 1
+			} else {
+				objenable sceneKaisoCId, 0
+				objenable sceneHaikiCId, 0
+				objenable includeDetailsCId, 0
+	
+			}
 			
 		}
-		
-	}
-	
-	
-	if (listMode == LISTMODE_FLEET){
-	
-		sosuf = sosu
-		sendmsg sosukach, $F2
-		sosuka = stat & 0x01
-		sendmsg sosuch, $F2
-		sosu = stat & 0x01
-		sendmsg sokach, $F2
-		soka = stat & 0x01
-	
-		sendmsg tuika1ch, $F2
-		tuika1 = stat & 0x01
-		sendmsg tuika2ch, $F2
-		tuika2 = stat & 0x01
-		sendmsg tuika3ch, $F2
-		tuika3 = stat & 0x01
-		sendmsg tuika4ch, $F2
-		tuika4 = stat & 0x01
-	
-		sendmsg listsize1ch, $F2
-		listsize1 = stat & 0x01
-		sendmsg listsize2ch, $F2
-		listsize2 = stat & 0x01
-	
-		sendmsg fleetPunctuationch, $F2
-		fleetPunctuation = stat & 0x01
-	}
-
-	if (listMode == LISTMODE_OTHER){
-
-		sendmsg directLinkCh, $F2
-		directLink = stat & 0x01
-		sendmsg airStationCh, $F2
-		airStation = stat & 0x01
-		sendmsg airStationTabCh, $F2
-		airStationTab = stat & 0x01
-		
-		sendmsg equipmentListCh, $F2
-		equipmentList = stat & 0x01
-		sendmsg sceneKaisoCh, $F2
-		sceneKaiso = stat & 0x01
-		sendmsg sceneHaikiCh, $F2
-		sceneHaiki = stat & 0x01
-		sendmsg includeDetailsCh, $F2
-		includeDetails = stat & 0x01
-
-
-		if (airStation) {
-			objenable airStationTabCId, 1
-		} else {
-			objenable airStationTabCId, 0
-		}
-
-		if (equipmentList) {
-			objenable sceneKaisoCId, 1
-			objenable sceneHaikiCId, 1
-			objenable includeDetailsCId, 1
-		} else {
-			objenable sceneKaisoCId, 0
-			objenable sceneHaikiCId, 0
-			objenable includeDetailsCId, 0
-
-		}
-
-		
 	}
 
 

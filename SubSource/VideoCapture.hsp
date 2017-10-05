@@ -25,6 +25,17 @@
 			return
 		}
 	}
+
+	if (lateEncodeFlg){
+
+		gosub *VideoCapEmgStop
+		
+		LogOut "Info-エンコードを中断\n動画キャプチャを取り消しました"
+				
+		nidPop
+		return
+	}
+		
 	
 	if (videoCapFlg == FALSE){
 		
@@ -83,12 +94,17 @@
 			cmda = strf("cmd")
 		}
 
+		//videoCapShowFrame
+		//videoCapHideCursor
+
 		if (lateEncode){
 			//負荷軽減動画キャプチャ
-			cmdv  = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d ", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY)
+			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
+			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, capX, capY)
 			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, 12, "ultrafast", fname)
 		} else {
-			cmdv  = strf("\"%s\" -an -f gdigrab -video_size %dx%d -offset_x %d -offset_y %d ", ffmpegdir, videoCapSizeX, videoCapSizeY, capX, capY)
+			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
+			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, capX, capY)
 			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, fname)
 		}
 
@@ -128,7 +144,7 @@
 	} else {
 
 		gsel WND_MAIN
-		objenable videoCapBId, 0
+		objprm videoCapBId, "中止"
 		
 		videoCapFlg = FALSE
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
@@ -190,11 +206,10 @@
 		mpid = stat
 
 		if ( mpid == -1 ){
-			LogOut "エンコードプロセスの開始に失敗しました"
-				
-			gsel WND_MAIN, 1+frontRow
-			videoCapMes = "開始"
-			objprm videoCapBId, videoCapMes
+			
+			gosub *VideoCapEmgStop
+			
+			LogOut "Error-エンコードプロセスの開始に失敗しました"
 				
 			nidPop
 			return
@@ -208,6 +223,8 @@
 return
 
 *VideoCapTimerProcessing
+
+	logmes "VideoCapTimerProcessing"
 
 	nidPush
 
@@ -247,7 +264,7 @@ return
 	elapsedTimeStr += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(elapsedTime))
 
 	gsel WND_MAIN
-	objprm logId, elapsedTimeStr: await
+	LogOut elapsedTimeStr
 	
 	nidPop
 return
@@ -325,8 +342,8 @@ return
 
 	exist fname+"_v.mp4"
 	if (strsize != -1): delete fname+"_v.mp4"
-	exist fname+"_a.aac"
-	if (strsize != -1): delete fname+"_a.aac"
+	exist fname+"_a.wav"
+	if (strsize != -1): delete fname+"_a.wav"
 
 	gsel WND_MAIN
 	LogOut strf("%s.mp4を保存しました。", getpath(fname, 8))
@@ -345,15 +362,18 @@ return
 	logmes "異常停止の発生"
 
 	videoCapFlg = FALSE
+	lateEncodeFlg = FALSE
 
 	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
-	pipe2term apid
-	pipe2term vpid
+	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID
+	if (apid != -1): pipe2term apid
+	if (vpid != -1): pipe2term vpid
+	if (mpid != -1): pipe2term mpid
 	wait 50
 	exist fname+"_v.mp4"
 	if (strsize != -1): delete fname+"_v.mp4"
-	exist fname+"_a.aac"
-	if (strsize != -1): delete fname+"_a.aac"
+	exist fname+"_a.wav"
+	if (strsize != -1): delete fname+"_a.wav"
 	exist fname+".mp4"
 	if (strsize != -1): delete fname+".mp4"
 
