@@ -1,67 +1,67 @@
 #uselib "shlwapi.dll"
-#cfunc PathIsDirectory "PathIsDirectoryW" wptr
+#func PathIsDirectory "PathIsDirectoryW" wptr
 
 #uselib "shell32.dll"
-#func  DragAcceptFiles "DragAcceptFiles" int, int
-#func  DragQueryFile   "DragQueryFileW"  int, int, int, int
-#func  DragQueryPoint  "DragQueryPoint"  int, int
-#func  DragFinish      "DragFinish"      int
+#func DragAcceptFiles "DragAcceptFiles" int, int
+#func DragQueryFile   "DragQueryFileW"  int, int, int, int
+#func DragQueryPoint  "DragQueryPoint"  int, int
+#func DragFinish      "DragFinish"      int
 
 #uselib "gdi32.dll"
-#cfunc CreateDC "CreateDCW" wptr, wptr, int, int
-#func  DeleteDC "DeleteDC"  wptr
-#func  BitBlt "BitBlt" int, int, int, int, int, int, int, int, int
-#func  CreateDIBSection "CreateDIBSection" int, int, int, int, int, int
-#func  CreateCompatibleBitmap "CreateCompatibleBitmap" int, int, int
-#func  SelectObject "SelectObject" int, int
-#func  DeleteObject "DeleteObject" int 
-#cfunc GetDeviceCaps "GetDeviceCaps" int, int
-#cfunc CreateFontIndirect "CreateFontIndirectW" int
+#func CreateDC "CreateDCW" wptr, wptr, int, int
+#func DeleteDC "DeleteDC"  wptr
+#func BitBlt "BitBlt" int, int, int, int, int, int, int, int, int
+#func CreateDIBSection "CreateDIBSection" int, int, int, int, int, int
+#func CreateCompatibleBitmap "CreateCompatibleBitmap" int, int, int
+#func SelectObject "SelectObject" int, int
+#func DeleteObject "DeleteObject" int 
+#func GetDeviceCaps "GetDeviceCaps" int, int
+#func CreateFontIndirect "CreateFontIndirectW" int
 
 #uselib "user32.dll"
-#func  GetDC "GetDC" int
-#func  ReleaseDC "ReleaseDC" int, int
-#func  MoveWindow "MoveWindow" int, int, int, int, int, int
-#func  GetWindowLong "GetWindowLongW" int, int
-#func  SetWindowLong "SetWindowLongW" int, int, int
-#func  SetClassLong "SetClassLongW" int, int, int
-#func  GetClassLong "GetClassLongW" int, int
-#func  SetLayeredWindowAttributes "SetLayeredWindowAttributes" int, int, int, int
-#func  GetCursorPos "GetCursorPos" int
-#func  SetCursorPos "SetCursorPos" int, int
-#func  ScreenToClient "ScreenToClient" int , int
-#func  ChildWindowFromPoint "ChildWindowFromPoint" int, int, int
-#func  ChildWindowFromPointEx "ChildWindowFromPointEx" int, int, int, int
-#func  SetFocus "SetFocus" int
-#func  SetParent "SetParent" int , int
-#func  RegisterHotKey "RegisterHotKey" int, int, int, int
-#func  UnregisterHotKey "UnregisterHotKey" int, int
-#cfunc IsWindowVisible "IsWindowVisible" int
-#cfunc GetSystemMetrics "GetSystemMetrics" int
-#func  LoadCursor "LoadCursorW" int, int
-#func  SetTimer "SetTimer" int, int, int, sptr
-#func  KillTimer "KillTimer" int, int
-#cfunc WindowFromPoint "WindowFromPoint" int, int
-#func  GetClientRect "GetClientRect" int, int
-#func  GetWindowRect "GetWindowRect" int, int
-#func  ClientToScreen "ClientToScreen" int, int
-#cfunc GetParent "GetParent" int
-#cfunc GetAncestor "GetAncestor" int, int
-#func  IsWindow "IsWindow" int
-#func  EnableWindow "EnableWindow" int, int
-#func  PrintWindow "PrintWindow" int, int, int
-#func  SetWindowText "SetWindowTextW" int, wptr
-#func  UpdateWindow "UpdateWindow" int
-#func  InvalidateRect "InvalidateRect" int, int, int
-#func  ShowWindow "ShowWindow" int, int
-#func  IsIconic "IsIconic" int
+#func GetDC "GetDC" int
+#func ReleaseDC "ReleaseDC" int, int
+#func MoveWindow "MoveWindow" int, int, int, int, int, int
+#func GetWindowLong "GetWindowLongW" int, int
+#func SetWindowLong "SetWindowLongW" int, int, int
+#func SetClassLong "SetClassLongW" int, int, int
+#func GetClassLong "GetClassLongW" int, int
+#func SetLayeredWindowAttributes "SetLayeredWindowAttributes" int, int, int, int
+#func GetCursorPos "GetCursorPos" int
+#func SetCursorPos "SetCursorPos" int, int
+#func ScreenToClient "ScreenToClient" int , int
+#func ChildWindowFromPoint "ChildWindowFromPoint" int, int, int
+#func ChildWindowFromPointEx "ChildWindowFromPointEx" int, int, int, int
+#func SetFocus "SetFocus" int
+#func SetParent "SetParent" int , int
+#func RegisterHotKey "RegisterHotKey" int, int, int, int
+#func UnregisterHotKey "UnregisterHotKey" int, int
+#func IsWindowVisible "IsWindowVisible" int
+#func GetSystemMetrics "GetSystemMetrics" int
+#func LoadCursor "LoadCursorW" int, int
+#func SetTimer "SetTimer" int, int, int, sptr
+#func KillTimer "KillTimer" int, int
+#func WindowFromPoint "WindowFromPoint" int, int
+#func GetClientRect "GetClientRect" int, int
+#func GetWindowRect "GetWindowRect" int, int
+#func ClientToScreen "ClientToScreen" int, int
+#func GetParent "GetParent" int
+#func GetAncestor "GetAncestor" int, int
+#func IsWindow "IsWindow" int
+#func EnableWindow "EnableWindow" int, int
+#func PrintWindow "PrintWindow" int, int, int
+#func SetWindowText "SetWindowTextW" int, wptr
+#func UpdateWindow "UpdateWindow" int
+#func InvalidateRect "InvalidateRect" int, int, int
+#func ShowWindow "ShowWindow" int, int
+#func IsIconic "IsIconic" int
 
 #uselib "kernel32.dll"
-#func  MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
-#func  CreateProcess "CreateProcessW" wptr, wptr, int, int, int, int, int, int, int, int	
+#func MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
+#func CreateProcess "CreateProcessW" wptr, wptr, int, int, int, int, int, int, int, int	
 
 #uselib "winmm.dll"
-#cfunc timeGetTime "timeGetTime"
+#func timeGetTime "timeGetTime"
 
 #uselib "Comdlg32.dll"
 #func ChooseColor "ChooseColorW" int
