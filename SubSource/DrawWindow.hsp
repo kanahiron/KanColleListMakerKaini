@@ -619,6 +619,7 @@
 			pos 0, mesy
 			mesbox sssaveDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
 			SSSaveDiriid = stat
+			ShowScrollBar objinfo_hwnd(SSSaveDiriid), SB_VERT, FALSE
 	
 			pos Scale(14), mesy
 			mes "一覧保存先"
@@ -627,6 +628,7 @@
 			pos 0, mesy
 			mesbox listSaveDir, Scale(350), Scale(45), 5, 259 :mesy += Scale(45)
 			listSaveDirIId = stat
+			ShowScrollBar objinfo_hwnd(listSaveDirIId), SB_VERT, FALSE
 			
 			pos Scale(14), mesy
 			mes "連続キャプチャ保存先"
@@ -635,6 +637,7 @@
 			pos 0, mesy
 			mesbox intervalShotDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
 			intervalShotDirIId = stat
+			ShowScrollBar objinfo_hwnd(intervalShotDirIId), SB_VERT, FALSE
 
 			pos Scale(14), mesy
 			mes "範囲選択キャプチャ保存先"
@@ -643,6 +646,7 @@
 			pos 0, mesy
 			mesbox selectCapSaveDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
 			selectCapSaveDirIId = stat
+			ShowScrollBar objinfo_hwnd(selectCapSaveDirIId), SB_VERT, FALSE
 			
 			pos Scale(14), mesy
 			mes "外部ソフトの場所"
@@ -651,6 +655,7 @@
 			pos 0, mesy
 			mesbox yabumiDir, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			yabumIId = stat
+			ShowScrollBar objinfo_hwnd(yabumIId), SB_VERT, FALSE
 		}
 	
 		if (optionMode == OPMODE_CAPTURE){
@@ -709,38 +714,65 @@
 			GetWindowLong objinfo(timersecIId, 2), -16
 			SetWindowLong objinfo(timersecIId, 2), -16, stat | $2
 	
-			pos scale5, mesy
-			mes "保存名": mesy += scale20
-	
-			pos scale5, mesy
-			mes "SSキャプチャ"
-			pos Scale(100), mesy
-			mesbox saveNameCapture, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
+			//pos scale5, mesy
+			//mes "保存名": mesy += scale20
 
-			pos scale5, mesy
-			mes "範囲選択\n キャプチャ"
-			pos Scale(100), mesy
-			mesbox saveNameSelectCapture, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
-	
-			pos scale5, mesy
-			mes "艦娘一覧"
-			pos Scale(100), mesy
-			mesbox saveNameList, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
-	
-			pos scale5, mesy
-			mes "攻略編成"
-			pos Scale(100), mesy
-			mesbox saveNameFormation, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
-	
-			pos scale5, mesy
-			mes "直接連結"
-			pos Scale(100), mesy
-			mesbox saveNameDirectLink, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
 			
-			pos scale5, mesy
-			mes "基地航空隊"
-			pos Scale(100), mesy
-			mesbox saveNameAirStation, Scale(250), Scale(45), 5, 259: mesy += Scale(45)
+			objsize Scale(150), scale20
+			pos Scale(14), mesy
+			mes "SSキャプチャ保存名"
+			pos Scale(200), mesy
+			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			pos 0, mesy
+			mesbox saveNameCapture, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+			saveNameCaptureIId = stat
+			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
+
+			pos Scale(14), mesy
+			mes "範囲選択キャプチャ保存名"
+			pos Scale(200), mesy
+			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			pos 0, mesy
+			mesbox saveNameSelectCapture, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+			saveNameSelectCaptureIId = stat
+			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
+
+			pos Scale(14), mesy
+			mes "艦娘一覧モード保存名"
+			pos Scale(200), mesy
+			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			pos 0, mesy
+			mesbox saveNameList, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+			saveNameListIId = stat
+			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
+
+
+			pos Scale(14), mesy
+			mes "攻略編成モード保存名"
+			pos Scale(200), mesy
+			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			pos 0, mesy
+			mesbox saveNameFormation, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+			saveNameFormationIId = stat
+			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
+	
+			pos Scale(14), mesy
+			mes "直接連結保存名"
+			pos Scale(200), mesy
+			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			pos 0, mesy
+			mesbox saveNameDirectLink, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+			saveNameDirectLinkIId = stat
+			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
+			
+			pos Scale(14), mesy
+			mes "基地航空隊保存名"
+			pos Scale(200), mesy
+			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			pos 0, mesy
+			mesbox saveNameAirStation, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+			saveNameAirStationIId = stat
+			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 	
 		}
 
@@ -811,6 +843,7 @@
 			pos 0, mesy
 			mesbox ffmpegDir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
 			ffmpegDirIId = stat
+			ShowScrollBar objinfo_hwnd(ffmpegDirIId), SB_VERT, FALSE
 
 			pos Scale(14), mesy
 			mes "動画キャプチャ保存先"
@@ -819,11 +852,16 @@
 			pos 0, mesy
 			mesbox videoCapSaveDir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
 			videoCapSaveDirIId = stat
+			ShowScrollBar objinfo_hwnd(videoCapSaveDirIId), SB_VERT, FALSE
 
-			pos scale5, mesy
-			mes "動画キャプチャ保存名": mesy += scale20
+			pos Scale(14), mesy
+			mes "動画キャプチャ保存名"
+			pos Scale(200), mesy
+			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
 			pos 0, mesy
 			mesbox saveNameVideoCapture, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+			saveNameVideoCaptureIId = stat
+			ShowScrollBar objinfo_hwnd(saveNameVideoCaptureIId), SB_VERT, FALSE
 			
 		}
 	

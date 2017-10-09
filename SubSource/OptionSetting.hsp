@@ -73,6 +73,50 @@ return
 	exec videoCapSaveDir, 16
 return
 
+*LoadDefaultSaveName
+
+	BId = stat
+	if ( mode == MODE_OPTION ){
+		if (optionMode == OPMODE_CAPTURE){
+			switch BId
+				case saveNameCaptureIId-1
+					saveNameCapture = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+					objprm saveNameCaptureIId, saveNameCapture
+					swbreak
+				case saveNameSelectCaptureIId-1
+					saveNameSelectCapture = "selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+					objprm saveNameSelectCaptureIId, saveNameSelectCapture
+					swbreak
+				case saveNameListIId-1
+					saveNameList = "äÕñ∫àÍóó_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+					objprm saveNameListIId, saveNameList
+					swbreak
+				case saveNameFormationIId-1
+					saveNameFormation = "çUó™ï“ê¨_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+					objprm saveNameFormationIId, saveNameFormation
+					swbreak
+				case saveNameDirectLinkIId-1
+					saveNameAirStation = "äÓínçqãÛë‡_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+					objprm saveNameDirectLinkIId, saveNameDirectLink
+					swbreak
+				case saveNameAirStationIId-1
+					saveNameDirectLink = "íºê⁄òAåã_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+					objprm saveNameAirStationIId, saveNameAirStation
+					swbreak
+			swend
+		}
+		if (optionMode == OPMODE_VIDEOCAPTURE){
+			if (BId == saveNameVideoCaptureIId-1){
+				saveNameVideoCapture = "KCVideo_<yyyy><MM><dd>-<HH><mm><ss>"
+				objprm saveNameVideoCaptureIId, saveNameVideoCapture
+			}
+		}
+	}	
+
+
+return
+	
+
 *seqCapSaveFOpen
 
 	if (intervalsavedir == "" || PathIsDirectory(intervalShotDir+"\\"+intervalsavedir) == 0 ){
