@@ -719,7 +719,7 @@
 
 			
 			objsize Scale(150), scale20
-			pos Scale(14), mesy
+			pos Scale(14), mesy+1
 			mes "SSキャプチャ保存名"
 			pos Scale(200), mesy
 			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
@@ -728,7 +728,7 @@
 			saveNameCaptureIId = stat
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 
-			pos Scale(14), mesy
+			pos Scale(14), mesy+1
 			mes "範囲選択キャプチャ保存名"
 			pos Scale(200), mesy
 			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
@@ -737,7 +737,7 @@
 			saveNameSelectCaptureIId = stat
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 
-			pos Scale(14), mesy
+			pos Scale(14), mesy+1
 			mes "艦娘一覧モード保存名"
 			pos Scale(200), mesy
 			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
@@ -747,7 +747,7 @@
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 
 
-			pos Scale(14), mesy
+			pos Scale(14), mesy+1
 			mes "攻略編成モード保存名"
 			pos Scale(200), mesy
 			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
@@ -756,7 +756,7 @@
 			saveNameFormationIId = stat
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 	
-			pos Scale(14), mesy
+			pos Scale(14), mesy+1
 			mes "直接連結保存名"
 			pos Scale(200), mesy
 			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
@@ -765,7 +765,7 @@
 			saveNameDirectLinkIId = stat
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 			
-			pos Scale(14), mesy
+			pos Scale(14), mesy+1
 			mes "基地航空隊保存名"
 			pos Scale(200), mesy
 			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
@@ -854,7 +854,7 @@
 			videoCapSaveDirIId = stat
 			ShowScrollBar objinfo_hwnd(videoCapSaveDirIId), SB_VERT, FALSE
 
-			pos Scale(14), mesy
+			pos Scale(14), mesy+1
 			mes "動画キャプチャ保存名"
 			pos Scale(200), mesy
 			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
