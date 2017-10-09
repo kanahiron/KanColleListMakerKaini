@@ -19,6 +19,7 @@
 #include "./modules/pipe2_utf.hsp"
 #include "./modules/MemoryMapModule_utf.as"
 #include "./modules/execwMod.as"
+#include "./modules/SaveFileDiag_mod.hsp"
 
 #pack "start.ax"
 #pack "data2.png"

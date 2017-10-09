@@ -264,8 +264,25 @@
 				tempstr = DateAndTimeFormat2(saveNameAirStation)
 			}
 		}
+
+		if (tempStr == ""){
+			if (saveNameCapture != ""){
+				saveName = strf("%s%s", DateAndTimeFormat2(saveNameCapture), savekind(jpgsave))
+			} else {
+				SaveFileDialog saveName, "画像ファイル(*.png)|*.png|画像ファイル( *.jpg)|*.jpg", jpgsave+1, ssSaveDir, strmid(savekind(jpgsave), 1, 3)
+				if (stat){
+					saveName = getpath(saveName ,8)
+				} else {
+					logOut "ファイル保存名が入力されませんでした。"
+					return
+				}
+			}
+		} else {
+			savename = strf("%s%s", tempstr, savekind(jpgsave))
+		}
+
+
 		
-		savename = strf("%s%s", tempstr, savekind(jpgsave))
 		ImgF_ImageSave listsavedir +"\\"+ savename, jpgquality
 
 		gsel WND_MAIN, 1+frontRow

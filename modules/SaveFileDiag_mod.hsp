@@ -1,0 +1,81 @@
+//#include "hsp3utf.as"
+
+#ifndef __hsp3utf__
+	dialog "SaveFileDiag_modはHSP3utf.asのインクルードが必要です"
+	end
+#endif
+
+#module
+
+#uselib "comdlg32"
+#func GetSaveFileName "GetSaveFileNameW" int
+
+#define OFN_OVERWRITEPROMPT		0x00000002
+#define OFN_FILEMUSTEXIST		0x00001000
+
+#define global SaveFileDialog(%1, %2, %3=0, %4="", %5="") SaveFileDialog_ %1, %2, %3, %4, %5
+#deffunc SaveFileDialog_ var filename, str _filter, int nFilterIndex, str currentDir, str fExt
+
+	sdim lpstrFilter, 2050 //
+	sdim lpstrFile, 2050 //ファイルパス全体が入る受取り用バッファ
+	sdim lpstrInitialDir, 2050 //カレントディレクトリ指定用
+	sdim lpstrDefExt
+	sdim filename
+	sdim temp, 1026
+	
+	filter = _filter
+	split filter, "|", filter
+
+	filterIndex = 0
+	repeat length(filter) /2
+		cnvstow temp, filter(cnt*2)
+		tSize = stat //cnvstowの返り値は「変換先文字コードのnull文字を含んだバイト数」
+		memcpy lpstrFilter, temp, tSize, filterIndex, 0
+		filterIndex += tSize
+		
+		cnvstow temp, filter((cnt*2)+1)
+		tSize = stat
+		memcpy lpstrFilter, temp, tSize, filterIndex, 0
+		filterIndex += tSize
+		
+	loop
+	
+	cnvstow lpstrInitialDir, currentDir
+	cnvstow lpstrDefExt, fExt
+
+
+	dim OPENFILENAME, 22
+	OPENFILENAME( 0) = 88
+	OPENFILENAME( 1) = hwnd
+	OPENFILENAME( 3) = varptr(lpstrFilter)
+	OPENFILENAME( 6) = nFilterIndex
+	OPENFILENAME( 7) = varptr(lpstrFile)
+	OPENFILENAME( 8) = 1024
+	OPENFILENAME(11) = varptr(lpstrInitialDir)
+	OPENFILENAME(13) = OFN_OVERWRITEPROMPT | OFN_FILEMUSTEXIST
+	OPENFILENAME(15) = varptr(lpstrDefExt)
+	
+	GetSaveFileName varptr(OPENFILENAME)
+	status = stat
+
+	sdim lpstrFilter
+	sdim lpstrInitialDir
+	sdim temp
+	
+	if (status == 0){
+		sdim lpstrFile
+		return 0
+	} else {
+		sdim filename
+		filename = cnvwtos(lpstrFile)
+		sdim lpstrFile
+		return 1
+	}
+return
+
+#global
+
+#if 0
+	SaveFileDialog dir, "画像ファイル(*.png;*.jpg)|*.png;*.jpg|テキストファイル(*.txt)|*.txt"
+	mes dir
+#endif
