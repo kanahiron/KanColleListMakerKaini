@@ -664,19 +664,20 @@ return
 			/////////////////////
 	
 			sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
-			if sscapwh(0) >= 99 & sscapwh(1) >= 59{
+			if (sscapwh(0) >= 4 && sscapwh(1) >= 4){
 			
 				gsel imageid3, 2
 				MoveWindow imagehwnd3, sscap(0), sscap(1), sscap(2)-sscap(0), sscap(3)-sscap(1), 1		
 							
 				dialog "この範囲をキャプチャしますか？", 2, "確認"
-				if stat = 6{
+				if (stat == 6){
 					gsel imageid3, -1
 					break
 				}
 			} else {
-				dialog "余白詰めに失敗しました。\n再度選択しますか？", 2, "確認"
-				if stat = 7{
+				dialog "選択範囲が小さすぎるか余白詰めに失敗しました\n再度選択しますか？", 2, "確認"
+				if (stat == 7){
+					sscap(0) = 0, 0, 0, 0
 					gsel imageid3, -1
 					break
 				}
