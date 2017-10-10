@@ -173,6 +173,7 @@ return 0
 				nidPop
 				return 1
 			}
+			saveName = getpath(saveNamePath, 8)
 		} else {
 			saveNamePath = ssSaveDir +"\\"+ saveName
 		}
