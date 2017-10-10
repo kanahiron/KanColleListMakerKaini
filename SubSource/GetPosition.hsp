@@ -13,8 +13,10 @@
 		logmessage = "艦これの画面にマウスカーソルを重ねてください。"
 		objprm logid,logmessage
 
+		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0, 0, LWA_ALPHA
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
+		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0, 255, LWA_ALPHA
 
 		getKanCollePosAuto WND_TEMP1, sscap, WND_TEMP2
 		if (stat){
@@ -74,9 +76,11 @@
 		}
 
 	} else {
-		
+
+		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0, 0, LWA_ALPHA
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY | CAPTUREBLT: redraw
+		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0, 255, LWA_ALPHA
 
 		bgscr WND_TEMP_SCR1, disinfo(2), disinfo(3), 2: SET_WND_INFO
 		font "メイリオ", 30

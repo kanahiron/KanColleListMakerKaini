@@ -10,7 +10,8 @@
 			swbreak
 			
 		case WM_MOUSEMOVE
-			logmes "WM_MOUSEMOVE"
+			//うるさいのでコメントアウト
+			//logmes "WM_MOUSEMOVE"
 			gosub *RideCursor
 			swbreak
 
@@ -331,6 +332,9 @@ return
 	dim selcap, 4
 	picHistoryNum = 0
 
+	SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0, 0, LWA_ALPHA
+	SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0, 0, LWA_ALPHA
+
 
 	buffer WND_TEMP1, disinfo(2), disinfo(3)
 	BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen, disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
@@ -357,14 +361,15 @@ return
 
 	SelectCapturePos WND_TEMP1, selcap, WND_OVERLAY, WND_TEMP_SCR1, marginCutFlg
 	marginCutFlg = FALSE
+	SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0, 255, LWA_ALPHA
+	SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0, 255, LWA_ALPHA
 
 	selcapwh(0) = selcap(2)-selcap(0), selcap(3)-selcap(1)
 
-	if ( selcapwh(0) > 1 && selcapwh(1) > 1){
+	if ( selcapwh(0) > 4 && selcapwh(1) > 4){
 
 		buffer WND_TEMP2, selcapwh(0), selcapwh(1)
 		gcopy WND_TEMP1, selcap(0)+abs(disInfo(0)), selcap(1)+abs(disInfo(1)), selcapwh(0), selcapwh(1)
-
 
 		saveName = strf("%s%s", DateAndTimeFormat2(saveNameSelectCapture), savekind(jpgsave))
 
@@ -377,7 +382,7 @@ return
 			}
 			saveName = getpath(saveNamePath, 8)
 		} else {
-			saveNamePath = selectCapSaveDir +"\\"+ selCapSaveName
+			saveNamePath = selectCapSaveDir +"\\"+ saveName
 		}
 		
 		ImgF_ImageSave saveNamePath, jpgQuality
@@ -395,7 +400,6 @@ return
 				pos 0, dispcapy
 				gzoom Scale(175), Scale(105), WND_TEMP2, 0, 0, selcapwh(0), selcapwh(1), 1
 			}
-			
 			picHistoryLoad saveNamePath
 			gosub *picHistoryAddStack
 				
