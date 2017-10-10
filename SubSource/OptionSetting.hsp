@@ -78,28 +78,28 @@ return
 	BId = stat
 	if ( mode == MODE_OPTION ){
 		if (optionMode == OPMODE_CAPTURE){
-			switch BId
-				case saveNameCaptureIId-1
+			switch BId+1
+				case saveNameCaptureIId
 					saveNameCapture = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 					objprm saveNameCaptureIId, saveNameCapture
 					swbreak
-				case saveNameSelectCaptureIId-1
+				case saveNameSelectCaptureIId
 					saveNameSelectCapture = "selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 					objprm saveNameSelectCaptureIId, saveNameSelectCapture
 					swbreak
-				case saveNameListIId-1
+				case saveNameListIId
 					saveNameList = "äÕñ∫àÍóó_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 					objprm saveNameListIId, saveNameList
 					swbreak
-				case saveNameFormationIId-1
+				case saveNameFormationIId
 					saveNameFormation = "çUó™ï“ê¨_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 					objprm saveNameFormationIId, saveNameFormation
 					swbreak
-				case saveNameDirectLinkIId-1
+				case saveNameDirectLinkIId
 					saveNameAirStation = "äÓínçqãÛë‡_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 					objprm saveNameDirectLinkIId, saveNameDirectLink
 					swbreak
-				case saveNameAirStationIId-1
+				case saveNameAirStationIId
 					saveNameDirectLink = "íºê⁄òAåã_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 					objprm saveNameAirStationIId, saveNameAirStation
 					swbreak
@@ -173,14 +173,16 @@ return
 	
 	if (mode == MODE_SSCAP) {	
 		gosub *ssCapture
-		execw yabumidir, "\""+(sssavedir +"\\"+ savename)+"\""
-		//exec yabumidir+" \""+(sssavedir +"\\"+ savename)+"\""
+		if (successFlg){
+			execw yabumidir, "\""+(sssavedir +"\\"+ savename)+"\""
+		}
+		successFlg = FLASE
 	} else {
 		gosub *make
-		if savename != ""{
+		if (successFlg){
 			execw yabumidir, "\""+(listsavedir +"\\"+ savename)+"\""
-			//exec yabumidir+" \""+(listsavedir +"\\"+ savename)+"\""
 		}
+		successFlg = FLASE
 	}
 return
 

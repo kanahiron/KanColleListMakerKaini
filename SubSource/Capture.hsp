@@ -162,27 +162,25 @@ return 0
 	successFlg = FALSE
 
 	gsel WND_CAPTURE
-	
-	if (saveNameCapture != ""){
-		saveName = strf("%s%s", DateAndTimeFormat2(saveNameCapture), savekind(jpgsave))
-	} else {
-		SaveFileDialog saveName, "画像ファイル(*.png)|*.png|画像ファイル( *.jpg)|*.jpg", jpgsave+1, ssSaveDir, strmid(savekind(jpgsave), 1, 3)
-		if (stat){
-			saveName = getpath(saveName ,8)
-		} else {
-			logOut "ファイル保存名が入力されませんでした。"
-			nidPop
-			return 1
-		}
-	}
-	
+
+	saveName = strf("%s%s", DateAndTimeFormat2(saveNameCapture), savekind(jpgsave))
+
 	if (seqCapf == FALSE){
-		saveNamePath = ssSaveDir +"\\"+ saveName
-		ImgF_ImageSave ssSaveDir +"\\"+ saveName, jpgQuality
+		if (confirmSaveNameCapture){
+			SaveFileDialog saveNamePath, "画像ファイル(*.png)|*.png|画像ファイル( *.jpg)|*.jpg", jpgsave+1, saveName, ssSaveDir, strmid(savekind(jpgsave), 1, 3)
+			if (stat == FALSE){
+				logOut "キャンセルされました。"
+				nidPop
+				return 1
+			}
+		} else {
+			saveNamePath = ssSaveDir +"\\"+ saveName
+		}
 	} else {
 		saveNamePath = intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName
-		ImgF_ImageSave intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName, jpgQuality
 	}
+
+	ImgF_ImageSave saveNamePath, jpgQuality
 
 	gsel WND_MAIN
 	
@@ -193,14 +191,16 @@ return 0
 			successFlg = FALSE
 			logmessage = savename+"の保存に失敗しました"
 		} else {
+
+			successFlg = TRUE
+			
 			if dispcap & (mode == MODE_SSCAP){
 				pos 0, dispcapy
 				gzoom Scale(175), Scale(105), WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1)
 			}
 			
 			if (seqcapf^1) {
-
-				successFlg = TRUE
+				
 				logmessage = savename+"を保存しました"
 				
 				picHistoryLoad savenamepath

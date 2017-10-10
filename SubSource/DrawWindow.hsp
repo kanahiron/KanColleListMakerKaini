@@ -716,59 +716,87 @@
 	
 			//pos scale5, mesy
 			//mes "保存名": mesy += scale20
-
 			
-			objsize Scale(150), scale20
-			pos Scale(14), mesy+1
+			pos Scale(5), mesy+1
 			mes "SSキャプチャ保存名"
-			pos Scale(200), mesy
-			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			objsize Scale(50), Scale(18)
+			pos Scale(180), mesy+2
+			chkbox "確認", confirmSaveNameCapture
+			objsize Scale(120), scale20
+			confirmSaveNameCaptureCid = stat
+			pos Scale(230), mesy
+			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
 			pos 0, mesy
 			mesbox saveNameCapture, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameCaptureIId = stat
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 
-			pos Scale(14), mesy+1
+			pos Scale(5), mesy+1
 			mes "範囲選択キャプチャ保存名"
-			pos Scale(200), mesy
-			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			objsize Scale(50), Scale(18)
+			pos Scale(180), mesy+2
+			chkbox "確認", confirSaveNameSelectCapture
+			confirSaveNameSelectCaptureCId = stat
+			objsize Scale(120), scale20
+			pos Scale(230), mesy
+			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
 			pos 0, mesy
 			mesbox saveNameSelectCapture, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameSelectCaptureIId = stat
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 
-			pos Scale(14), mesy+1
+			pos Scale(5), mesy+1
 			mes "艦娘一覧モード保存名"
-			pos Scale(200), mesy
-			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			objsize Scale(50), Scale(18)
+			pos Scale(180), mesy+2
+			chkbox "確認", confirmSaveNameList
+			confirmSaveNameListCId = stat
+			objsize Scale(120), scale20
+			pos Scale(230), mesy
+			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
 			pos 0, mesy
 			mesbox saveNameList, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameListIId = stat
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 
 
-			pos Scale(14), mesy+1
+			pos Scale(5), mesy+1
 			mes "攻略編成モード保存名"
-			pos Scale(200), mesy
-			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			objsize Scale(50), Scale(18)
+			pos Scale(180), mesy+2
+			chkbox "確認", confirmSaveNameFormation
+			confirmSaveNameFormationCId = stat
+			objsize Scale(120), scale20
+			pos Scale(230), mesy
+			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
 			pos 0, mesy
 			mesbox saveNameFormation, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameFormationIId = stat
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 	
-			pos Scale(14), mesy+1
+			pos Scale(5), mesy+1
 			mes "直接連結保存名"
-			pos Scale(200), mesy
-			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			objsize Scale(50), Scale(18)
+			pos Scale(180), mesy+2
+			chkbox "確認", confirmSaveNameDirectLink
+			confirmSaveNameDirectLinkCId = stat
+			objsize Scale(120), scale20
+			pos Scale(230), mesy
+			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
 			pos 0, mesy
 			mesbox saveNameDirectLink, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameDirectLinkIId = stat
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
 			
-			pos Scale(14), mesy+1
+			pos Scale(5), mesy+1
 			mes "基地航空隊保存名"
-			pos Scale(200), mesy
-			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+			objsize Scale(50), Scale(18)
+			pos Scale(180), mesy+2
+			chkbox "確認", confirmSaveNameAirStation
+			confirmSaveNameAirStationCId = stat
+			objsize Scale(120), scale20
+			pos Scale(230), mesy
+			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
 			pos 0, mesy
 			mesbox saveNameAirStation, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameAirStationIId = stat

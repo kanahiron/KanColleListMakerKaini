@@ -4,8 +4,8 @@
 	nidPush
 
 	gosub *drawString
+	successFlg = FALSE
 
-	
 	VNum = 0
 	HNum = 0
 
@@ -255,50 +255,69 @@
 	if drawcount != 0{
 
 		sdim tempstr
-		
-		if listmode = LISTMODE_LIST : tempstr = DateAndTimeFormat2(saveNameList)
-		if listmode = LISTMODE_FLEET: tempstr = DateAndTimeFormat2(saveNameFormation)
+
+		/*
+
+		confirmSaveNameList
+		confirmSaveNameFormation
+		confirmSaveNameDirectLink
+		confirmSaveNameAirStation
+
+
+
+		//*/
+
+		callSaveDiagFlg = FALSE
+		if (listmode == LISTMODE_LIST){
+			tempstr = DateAndTimeFormat2(saveNameList)
+			if (confirmSaveNameList): callSaveDiagFlg = TRUE
+		}
+		if (listmode == LISTMODE_FLEET){
+			tempstr = DateAndTimeFormat2(saveNameFormation)
+			if (confirmSaveNameFormation): callSaveDiagFlg = TRUE
+		}
 		if listmode = LISTMODE_OTHER{
-			if directLink{
-				tempstr = DateAndTimeFormat2(saveNamedirectLink)
-			} else {
+			if (directLink){
+				tempstr = DateAndTimeFormat2(saveNameDirectLink)
+				if (confirmSaveNameDirectLink): callSaveDiagFlg = TRUE
+			}
+			if (airStation){
 				tempstr = DateAndTimeFormat2(saveNameAirStation)
+				if (confirmSaveNameAirStation): callSaveDiagFlg = TRUE
+			}
+			if (equipmentList){
+				tempstr = DateAndTimeFormat2(SaveNameEquipmentList)
+				if (confirmSaveEquipmentList): callSaveDiagFlg = TRUE
 			}
 		}
 
-		if (tempStr == ""){
-			if (saveNameCapture != ""){
-				saveName = strf("%s%s", DateAndTimeFormat2(saveNameCapture), savekind(jpgsave))
-			} else {
-				SaveFileDialog saveName, "画像ファイル(*.png)|*.png|画像ファイル( *.jpg)|*.jpg", jpgsave+1, listSaveDir, strmid(savekind(jpgsave), 1, 3)
-				if (stat){
-					saveName = getpath(saveName ,8)
-				} else {
-					logOut "ファイル保存名が入力されませんでした。"
-					return
-				}
+		if (callSaveDiagFlg){
+			SaveFileDialog saveNamePath, "画像ファイル(*.png)|*.png|画像ファイル( *.jpg)|*.jpg", jpgsave+1, tempStr, listSaveDir, strmid(savekind(jpgsave), 1, 3)
+			if (stat == FALSE){
+				logOut "ファイル保存名が入力されませんでした。"
+				nidPop
+				return
 			}
+			savename = getpath(saveNamePath, 8)
 		} else {
-			savename = strf("%s%s", tempstr, savekind(jpgsave))
+			savename = tempstr + savekind(jpgsave)
+			saveNamePath = listsavedir +"\\"+ savename
 		}
-
-
 		
-		ImgF_ImageSave listsavedir +"\\"+ savename, jpgquality
+		ImgF_ImageSave saveNamePath, jpgquality
 
 		gsel WND_MAIN, 1+frontRow
 			
-		if kmexist(listsavedir +"\\"+ savename) <= 0{
+		if kmexist(saveNamePath) <= 0{
 			logmessage = savename+"の保存に失敗しました"
 			objprm logid, logmessage: await
 		} else {
+			successFlg = TURE
 			logmessage = savename+"を保存しました"
 			objprm logid, logmessage: await
 
-			picHistoryLoad (listsavedir +"\\"+ savename)
-			
+			picHistoryLoad(saveNamePath)
 			gosub *TweetWindow
-	
 		}
 	
 	} else {
