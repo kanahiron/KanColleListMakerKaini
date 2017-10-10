@@ -20,7 +20,7 @@
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
 
 		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0, 255, LWA_ALPHA
-		if (enableTweetWindow): SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 255, 0, LWA_ALPHA
+		if (enableTweetWindow): SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0, 255, LWA_ALPHA
 
 		getKanCollePosAuto WND_TEMP1, sscap, WND_TEMP2
 		if (stat){
