@@ -32,6 +32,7 @@
 				pos cnt*cutRange(CR_W), ycnt*cutRange(CR_H)
 				gcopy bufIDPos(cnt, ycnt), cutRange(CR_X) , cutRange(CR_Y), cutRange(CR_W), cutRange(CR_H) 
 				buffer bufIDPos(cnt, ycnt), 1, 1
+				gsel WND_TEMP1
 				drawcount++
 			}
 		loop
@@ -305,7 +306,6 @@
 		logmessage = "‰æ‘œ‚ªˆê–‡‚à‚ ‚è‚Ü‚¹‚ñ"
 		objprm logid, logmessage
 	}
-
 
 	dim bufIDPos, CELL_MAX_W, CELL_MAX_H
 	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
