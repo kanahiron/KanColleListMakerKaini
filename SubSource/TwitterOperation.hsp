@@ -356,6 +356,7 @@ return
 	dim selcap, 4
 
 	SelectCapturePos WND_TEMP1, selcap, WND_OVERLAY, WND_TEMP_SCR1, marginCutFlg
+	marginCutFlg = FALSE
 
 	selcapwh(0) = selcap(2)-selcap(0), selcap(3)-selcap(1)
 
@@ -402,9 +403,6 @@ return
 				
 		
 	}
-
-	
-	marginCutFlg = FALSE
 
 	nidPop
 return
