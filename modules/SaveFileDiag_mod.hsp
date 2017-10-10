@@ -13,8 +13,8 @@
 #define OFN_OVERWRITEPROMPT		0x00000002
 #define OFN_FILEMUSTEXIST		0x00001000
 
-#define global SaveFileDialog(%1, %2, %3=0, %4="", %5="") SaveFileDialog_ %1, %2, %3, %4, %5
-#deffunc SaveFileDialog_ var filename, str _filter, int nFilterIndex, str currentDir, str fExt
+#define global SaveFileDialog(%1, %2, %3=0, %4="", %5="", %6="") SaveFileDialog_ %1, %2, %3, %4, %5, %6
+#deffunc SaveFileDialog_ var filename, str _filter, int nFilterIndex, str defaultFileName, str currentDir, str fExt
 
 	sdim lpstrFilter, 2050 //
 	sdim lpstrFile, 2050 //ファイルパス全体が入る受取り用バッファ
@@ -42,6 +42,7 @@
 	
 	cnvstow lpstrInitialDir, currentDir
 	cnvstow lpstrDefExt, fExt
+	cnvstow lpstrFile, defaultFileName
 
 
 	dim OPENFILENAME, 22
@@ -58,17 +59,19 @@
 	GetSaveFileName varptr(OPENFILENAME)
 	status = stat
 
-	sdim lpstrFilter
-	sdim lpstrInitialDir
-	sdim temp
+	dim OPENFILENAME
+	dim lpstrFilter
+	dim lpstrInitialDir
+	dim lpstrDefExt
+	dim temp
 	
 	if (status == 0){
-		sdim lpstrFile
+		dim lpstrFile
 		return 0
 	} else {
 		sdim filename
 		filename = cnvwtos(lpstrFile)
-		sdim lpstrFile
+		dim lpstrFile
 		return 1
 	}
 return
@@ -76,6 +79,6 @@ return
 #global
 
 #if 0
-	SaveFileDialog dir, "画像ファイル(*.png;*.jpg)|*.png;*.jpg|テキストファイル(*.txt)|*.txt"
+	SaveFileDialog dir, "画像ファイル(*.png;*.jpg)|*.png;*.jpg|テキストファイル(*.txt)|*.txt",1,"DefFileName","C:\\","jpg"
 	mes dir
 #endif
