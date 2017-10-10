@@ -314,7 +314,14 @@ return
 			} else {
 				objenable airStationTabCId, 0
 			}
-	
+			
+			//‘•”õˆê——ƒ‚[ƒh‚ª–¢À‘•‚Ì‚½‚ß
+			objenable equipmentListCId, 0
+			objenable sceneKaisoCId, 0
+			objenable sceneHaikiCId, 0
+			objenable includeDetailsCId, 0
+			
+			/*
 			if (equipmentList) {
 				objenable sceneKaisoCId, 1
 				objenable sceneHaikiCId, 1
@@ -325,6 +332,7 @@ return
 				objenable includeDetailsCId, 0
 	
 			}
+			//*/
 			
 		}
 	}
