@@ -723,7 +723,6 @@
 			pos Scale(180), mesy+2
 			chkbox "確認", confirmSaveNameCapture
 			objsize Scale(120), scale20
-			confirmSaveNameCaptureCid = stat
 			pos Scale(230), mesy
 			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
 			pos 0, mesy
@@ -735,8 +734,7 @@
 			mes "範囲選択キャプチャ保存名"
 			objsize Scale(50), Scale(18)
 			pos Scale(180), mesy+2
-			chkbox "確認", confirSaveNameSelectCapture
-			confirSaveNameSelectCaptureCId = stat
+			chkbox "確認", confirmSaveNameSelectCapture
 			objsize Scale(120), scale20
 			pos Scale(230), mesy
 			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
@@ -750,7 +748,6 @@
 			objsize Scale(50), Scale(18)
 			pos Scale(180), mesy+2
 			chkbox "確認", confirmSaveNameList
-			confirmSaveNameListCId = stat
 			objsize Scale(120), scale20
 			pos Scale(230), mesy
 			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
@@ -765,7 +762,6 @@
 			objsize Scale(50), Scale(18)
 			pos Scale(180), mesy+2
 			chkbox "確認", confirmSaveNameFormation
-			confirmSaveNameFormationCId = stat
 			objsize Scale(120), scale20
 			pos Scale(230), mesy
 			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
@@ -779,7 +775,6 @@
 			objsize Scale(50), Scale(18)
 			pos Scale(180), mesy+2
 			chkbox "確認", confirmSaveNameDirectLink
-			confirmSaveNameDirectLinkCId = stat
 			objsize Scale(120), scale20
 			pos Scale(230), mesy
 			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
@@ -793,7 +788,6 @@
 			objsize Scale(50), Scale(18)
 			pos Scale(180), mesy+2
 			chkbox "確認", confirmSaveNameAirStation
-			confirmSaveNameAirStationCId = stat
 			objsize Scale(120), scale20
 			pos Scale(230), mesy
 			button gosub "デフォルト", *LoadDefaultSaveName: mesy += scale20
