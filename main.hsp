@@ -30,8 +30,8 @@
 #packopt icon "KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
-#define SOFTNAME "ˆê——‚ß‚¢‚©[‰ü“ñ Ver0.3Beta1"
-#define klm2ver	3000
+#define SOFTNAME "ˆê——‚ß‚¢‚©[‰ü“ñ Ver0.3Beta2"
+#define klm2ver	3002
 
 
 #ifdef _debug
