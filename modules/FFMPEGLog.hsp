@@ -26,7 +26,7 @@
 
 #deffunc MakeFFMPEGLogWindow int wndID
 
-	screen wndID, 1024, 900
+	screen wndID, 1024, 900, 2
 	hffWindow = hwnd
 
 	title "FFMPEGLogWindow"
@@ -46,7 +46,7 @@
 
 return
 
-#deffunc resetFFMPEGLog
+#deffunc ResetFFMPEGLog
 
 	ffLogVideoBufSize = 4096
 	ffLogAudioBufSize = 4096
@@ -61,8 +61,8 @@ return
 return
 
 	
-#define global  addFFMPEGLog( %1="", %2="", %3="") addFFMPEGLog_ %1, %2, %3
-#deffunc addFFMPEGLog_ str vStr, str aStr, str eStr
+#define global  AddFFMPEGLog( %1="", %2="", %3="") addFFMPEGLog_ %1, %2, %3
+#deffunc AddFFMPEGLog_ str vStr, str aStr, str eStr
 
 	//
 	inBuf = vStr
@@ -109,7 +109,13 @@ return
 	}
 return
 
-#deffunc showFFMPEGLog
+#deffunc ShowFFMPEGLog
+	ShowWindow hffWindow, 5
+return
+
+#deffunc HideFFMPEGLog
+	ShowWindow hffWindow, 0
+return
 	
 
 
@@ -119,9 +125,11 @@ return
 
 
 	MakeFFMPEGLogWindow
-	resetFFMPEGLog
+	ResetFFMPEGLog
 
-	pants = "‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â"
+	//ShowFFMPEGLog
+
+	pants = "‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â"
 
 	repeat
 
