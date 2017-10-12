@@ -283,9 +283,10 @@
 #const CC_SOLIDCOLOR			0x00000080
 
 //ShowWindow周り
-#const SW_HIDE		0x0001
+#const SW_HIDE		0x0000
 #const SW_SHOW		0x0005
 #const SW_MINIMIZE	0x0006
+#const SW_SHOWNA	0x0008
 #const SW_RESTORE	0x0009
 //ウインドウスタイル
 #const WS_CHILD		0x40000000
