@@ -20,6 +20,7 @@
 #include "./modules/MemoryMapModule_utf.as"
 #include "./modules/execwMod.as"
 #include "./modules/SaveFileDiag_mod.hsp"
+#include "./modules/FFMPEGLog.hsp"
 
 #pack "start.ax"
 #pack "data2.png"
@@ -169,16 +170,8 @@
 		oncmd gosub *TweetWindowProc, WM_COMMAND
 		oncmd gosub *TweetWindowProc, WM_DROPFILES
 
-	screen WND_FFMPEG, 1024, 768, 2 | 4
-		SET_WND_INFO
-		sdim tempBuf
-		buf1 = ""
-		buf2 = ""
-		buf = ""
-		mesbox Buf1, 1024, 256
-		mesbox Buf2, 1024, 256
-		mesbox Buf, 1024, 256
-
+	MakeFFMPEGLogWindow WND_FFMPEG
+	//ShowFFMPEGLog
 
 	buffer WND_TWIBUF, 2400, 1440
 		SET_WND_INFO

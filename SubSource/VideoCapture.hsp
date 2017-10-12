@@ -66,10 +66,8 @@
 
 		swend
 
-		sdim buf, 1024*10
-		sdim buf1, 1024*10
-		sdim buf2, 1024*10
-		sdim elapsedTimeStr, 1024
+		sdim ffbuf, 1024*10
+		
 
 		videoCapSizeX = int((0.125*sscapwh(0))+0.9999999)*8
 		videoCapSizeY = int((0.125*sscapwh(1))+0.9999999)*8
@@ -114,6 +112,7 @@
 
 		apid = 0
 		vpid = 0
+		ResetFFMPEGLog
 
 		pipe2exec cmda
 		apid = stat
@@ -138,6 +137,9 @@
 		objprm videoCapBId, videoCapMes
 		
 		gosub *SSModeControlDisable
+
+		gosub *VideoCapTimerProcessing
+
 
 		
 	
@@ -165,14 +167,14 @@
 			if (exfv == 0){
 				pipe2check vpid
 				if stat == 0:exfv = 1
-				if stat & 2: pipe2get vpid, buf
-				if stat & 4: pipe2err vpid, buf
+				if stat & 2: pipe2get vpid, ffbuf
+				if stat & 4: pipe2err vpid, ffbuf
 			}
 			if (exfa == 0){
 				pipe2check apid
 				if stat == 0:exfa = 1
-				if stat & 2: pipe2get apid, buf
-				if stat & 4: pipe2err apid, buf
+				if stat & 2: pipe2get apid, ffbuf
+				if stat & 4: pipe2err apid, ffbuf
 			}
 			if (exfv && exfa): break
 			wait 10
@@ -218,6 +220,8 @@
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID, 1500, 0
 		gosub *SSModeControlEnable
 
+		gosub *LateEncodeTimerProcessing
+
 	}
 	nidPop
 return
@@ -235,15 +239,17 @@ return
 
 	pipe2check vpid
 	if (stat == 0):exfv = 1
-	if (stat & 2): pipe2get vpid, buf1
-	if (stat & 4): pipe2err vpid, buf1
-	//objprm 0, buf1: await
+	if (stat & 2): pipe2get vpid, ffbuf
+	if (stat & 4): pipe2err vpid, ffbuf
+
+	AddFFmpegLog ffbuf
 
 	pipe2check apid
 	if (stat == 0):exfa = 1
-	if (stat & 2): pipe2get apid, buf2
-	if (stat & 4): pipe2err apid, buf2
-	//objprm 1, buf2: await
+	if (stat & 2): pipe2get apid, ffbuf
+	if (stat & 4): pipe2err apid, ffbuf
+
+	AddFFmpegLog "", ffbuf
 
 	gsel WND_MAIN
 	
@@ -275,19 +281,19 @@ return
 
 	exfm = 0
 
-	gsel WND_FFMPEG
-
 	pipe2check mpid
 	if (stat == 0): exfm = 1
-	if (stat & 2): pipe2get mpid, buf1
-	if (stat & 4): pipe2err mpid, buf1
-	//objprm 0, buf1: await
+	if (stat & 2): pipe2get mpid, ffbuf
+	if (stat & 4): pipe2err mpid, ffbuf
 
-	strrep buf1, "\r", "\n"
-	strrep buf1, "\r\r", "\r"
+	AddFFMPEGLog "", "", ffbuf
+	
+
+	strrep ffbuf, "\r", "\n"
+	strrep ffbuf, "\r\r", "\r"
 
 	lastStr = ""
-	notesel buf1
+	notesel ffbuf
 	noteget lastStr, notemax-1
 	noteunsel
 
