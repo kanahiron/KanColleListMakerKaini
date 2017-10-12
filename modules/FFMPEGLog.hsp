@@ -5,9 +5,9 @@
 	end
 #endif
 
-#module
+#module FFMPEGLog_mod
 
-#undef sendmsg
+#undef sendmsg@FFMPEGLog_mod
 
 #uselib "user32.dll"
 #func GetWindowLong "GetWindowLongW" int, int
@@ -29,7 +29,7 @@
 	screen wndID, 1024, 900, 2
 	hffWindow = hwnd
 
-	title "FFMPEGLogWindow"
+	title@hsp "FFMPEGLogWindow"
 
 	ffLogVideo = ""
 	ffLogAudio = ""
@@ -56,7 +56,11 @@ return
 	ffLogEncodeSize  = 0
 	sdim ffLogVideo, ffLogVideoBufSize+2
 	sdim ffLogAudio, ffLogAudioBufSize+2
-	sdim ffLogEncode, ffLogEncodeBufSize+2 
+	sdim ffLogEncode, ffLogEncodeBufSize+2
+
+	sendmsg hFfLogVideo, WM_SETTEXT, 0, varptr(ffLogVideo)
+	sendmsg hFfLogAudio, WM_SETTEXT, 0, varptr(ffLogAudio)
+	sendmsg hFfLogEncode, WM_SETTEXT, 0, varptr(ffLogEncode)
 
 return
 
@@ -73,7 +77,7 @@ return
 			ffLogVideoBufSize += addSize*2
 			memexpand ffLogVideo, ffLogVideoBufSize+2
 		}
-		MultiByteToWideChar 65001, 0, varptr(inBuf), strlen(inbuf), varptr(ffLogVideo)+ffLogVideoSize, addSize+2
+		MultiByteToWideChar 65001, 0, varptr(inBuf), strlen(inbuf)+1, varptr(ffLogVideo)+ffLogVideoSize, addSize+2
 		ffLogVideoSize += addSize
 		
 		sendmsg hFfLogVideo, WM_SETTEXT, 0, varptr(ffLogVideo)
@@ -87,7 +91,7 @@ return
 			ffLogAudioBufSize += addSize*2
 			memexpand ffLogAudio, ffLogAudioBufSize+2
 		}
-		MultiByteToWideChar 65001, 0, varptr(inBuf), strlen(inbuf), varptr(ffLogAudio)+ffLogAudioSize, addSize+2
+		MultiByteToWideChar 65001, 0, varptr(inBuf), strlen(inbuf)+1, varptr(ffLogAudio)+ffLogAudioSize, addSize+2
 		ffLogAudioSize += addSize
 
 		sendmsg hFfLogAudio, WM_SETTEXT, 0, varptr(ffLogAudio)
@@ -101,7 +105,7 @@ return
 			ffLogEncodeBufSize += addSize*2
 			memexpand ffLogEncode, ffLogEncodeBufSize+2
 		}
-		MultiByteToWideChar 65001, 0, varptr(inBuf), strlen(inbuf), varptr(ffLogEncode)+ffLogEncodeSize, addSize+2
+		MultiByteToWideChar 65001, 0, varptr(inBuf), strlen(inbuf)+1, varptr(ffLogEncode)+ffLogEncodeSize, addSize+2
 		ffLogEncodeSize += addSize
 
 		sendmsg hFfLogEncode, WM_SETTEXT, 0, varptr(ffLogEncode)
