@@ -32,6 +32,7 @@
 #packopt lang "1041"
 
 #define SOFTNAME "一覧めいかー改二 Ver0.3Beta3"
+#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.3Beta3"
 #define klm2ver	3003
 
 
@@ -63,7 +64,13 @@
 #endif
 	
 	onexit gosub *exit
-	//onerror gosub *err_
+
+#ifndef _debug
+
+	onerror gosub *err_
+	
+#endif
+	
 
 	wndInfoInit
 	nidStackInit
@@ -216,7 +223,7 @@
 			MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SSCap_temp(0), SSCap_temp(1), SSCap_temp(2)-SSCap_temp(0), SSCap_temp(3)-SSCap_temp(1), 1
 			await
 			gsel WND_MAIN
-			dialog "前回起動時の座標を取得しました。\n復元しますか？", 2
+			dialog "前回起動時の座標を取得しました。\n復元しますか？", 2, "確認"
 			dialogStat = stat
 			gsel WND_OVERLAY, -1
 			gsel WND_MAIN, 1+frontrow
@@ -310,11 +317,23 @@
 
 *err_
 	onerror 0
-	dialog "エラー番号"+wparam+"\n"+lparam+"行目"
-	pipe2term vpid
-	pipe2term apid
-	pipe2term mpid
-	gosub *exit
+	
+	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
+	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID
+	if (apid != -1): pipe2term apid
+	if (vpid != -1): pipe2term vpid
+	if (mpid != -1): pipe2term mpid
+	wait 50
+	exist videoFileName+"_v.mp4"
+	if (strsize != -1): delete videoFileName+"_v.mp4"
+	exist videoFileName+"_a.wav"
+	if (strsize != -1): delete videoFileName+"_a.wav"
+	exist videoFileName+".mp4"
+	if (strsize != -1): delete videoFileName+".mp4"
+	
+	dialog "申し訳ありません。致命的なエラーが発生しました。\nエラー番号 :"+wparam+"\n何度も発生する場合作者kanahironまで報告をお願いします", 1, LONGSOFTNAME
+	end
+	end
 
 #include "./SubSource/DeclaringVariables.hsp"
 #include "./SubSource/DrawWindow.hsp"
