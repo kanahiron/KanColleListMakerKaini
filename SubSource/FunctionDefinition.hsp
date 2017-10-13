@@ -71,13 +71,14 @@
 #undef title
 #define title(%1, %2 = hwnd) SetWindowText %2, %1
 
-#define CELL_MAX_W			8
-#define CELL_MAX_H			7
-#define HOTKEYID			7798
-#define timerID				101
-#define timer2ID			102
-#define VideoCapTimerID		103
-#define LateEncodeTimerID	104
+#define CELL_MAX_W				8
+#define CELL_MAX_H				7
+#define HOTKEYID				7798
+#define SeqCapTimerID			101
+#define VideoCapTimerID			103
+#define LateEncodeTimerID		104
+#define SeqCapWriteStatTimerID	105
+
 
 //©•ª‚Å’è‹`‚µ‚½’è”
 #enum WND_MAIN = 0

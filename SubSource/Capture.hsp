@@ -208,13 +208,7 @@ return 0
 				gosub *TweetWindow
 			} else {
 
-				seqCapCnt++
-				seqCapSize +=savedPicSize
-				seqCapElapsedTime = timeGetTime() - seqCapStartTime
-
-				logmessage = "連続キャプチャ中…\n"
-				logmessage += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
-				logmessage += strf("  枚数 %6d枚(%4dMB)",seqCapCnt, seqCapSize/1024/1024)
+				
 	
 			}
 			
@@ -346,6 +340,16 @@ return (successFlg^1)
 
 return
 
+*SeqCapWriteStatTimerProcessing
+	
+	seqCapElapsedTime = timeGetTime() - seqCapStartTime
+
+	logmessage = "連続キャプチャ中…\n"
+	logmessage += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
+	logmessage += strf("  枚数 %d枚(%dMB)",seqCapCnt, seqCapSize/1024/1024)
+	LogOut logmessage
+return
+
 
 //ホットキー――――――――――――――――――――――――――――――――――
 *hotkey
@@ -382,6 +386,9 @@ return
 	nidPop
 return
 
+
+
+
 *seqcap
 
 	nidPush
@@ -395,7 +402,9 @@ return
 		seqCapSize = 0
 		seqCapStartTime = timeGetTime()
 		
-		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID, 100*timersec, 0
+		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapTimerID, 100*timersec, 0
+		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapWriteStatTimerID, 500, 0
+		
 		seqcapmes = "停止"
 		objprm seqcapBId, seqcapmes
 		
@@ -414,11 +423,12 @@ return
 		seqcapf = FALSE
 
 		logmessage = "連続撮影を停止しました\n"
-		logmessage += strf("  撮影時間 %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
-		logmessage += strf("  枚数 %6d枚(%4dMB)",seqCapCnt, seqCapSize/1024/1024)
+		logmessage += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
+		logmessage += strf("  枚数 %d枚(%dMB)",seqCapCnt, seqCapSize/1024/1024)
 		LogOut logmessage
 		
-		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID
+		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapTimerID
+		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapWriteStatTimerID
 		seqcapmes = "開始"
 		objprm seqcapBId, seqcapmes
 

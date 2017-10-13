@@ -573,59 +573,24 @@ return
 *WM_TIMER_Proc
 
 	switch wparam
-		case timerID
+		case SeqCapTimerID
 			gosub *ssCapture
+			if (successFlg){
+				seqCapCnt++
+				seqCapSize +=savedPicSize
+			}
 			swbreak
 			
-		case timer2ID
-
-			/////////////
-			nidPush
-
-			if availableCap{
-				if (sscapwh(0) >= 99) & (sscapwh(1) >= 59){
-
-					logmes "ginfo_act :"+ginfo_act
-
-					if (ginfo_act == -1 || ginfo_act == WND_SUPPORT){
-
-						switch positionType
-						
-							case PT_ABSOLUTE
-								gsel WND_SUPPORT, 2
-								MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), sscap(0)+sscapwh(0)-supportWndW,sscap(1)+sscapwh(1), supportWndW, supportWndH ,1
-								swbreak	
-	
-							case PT_RELATIVE
-								
-								dim point, 2
-								point = ssCap(0), ssCap(1)
-								ClientToScreen hClient, varptr(point)
-				
-								gsel WND_SUPPORT, 2
-								MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), point(0)+sscapwh(0)-supportWndW,point(1)+sscapwh(1), supportWndW, supportWndH ,1
-								swbreak	
-						swend
-					}
-
-				} else {
-					gsel WND_SUPPORT, -1
-				}
-				
-			} else {
-				gsel WND_SUPPORT, -1
-			}
-
-			nidPop
-			/////////////
-			swbreak
-
 		case VideoCapTimerID
 			gosub *VideoCapTimerProcessing
 			swbreak
 
 		case LateEncodeTimerID
 			gosub *LateEncodeTimerProcessing
+			swbreak
+
+		case SeqCapWriteStatTimerID
+			gosub *SeqCapWriteStatTimerProcessing
 			swbreak
 	swend
 
