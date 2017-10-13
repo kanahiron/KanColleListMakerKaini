@@ -41,7 +41,9 @@
 	mesbox ffLogEncode, 1024, 300
 	hFfLogEncode = objinfo_hwnd(stat)
 
-	sdim inBuf, 4096
+	sdim vInBuf, 4096
+	sdim aInBuf, 4096
+	sdim eInBuf, 4096
 	sdim wideCharBuf, 4096
 
 return
@@ -69,47 +71,53 @@ return
 #deffunc AddFFMPEGLog_ str vStr, str aStr, str eStr
 
 	//
-	inBuf = vStr
-	addSize = MultiByteToWideChar( 65001, 0, varptr(inBuf), strlen(inbuf), 0, 0)*2
-	if (addSize) { 
-		
-		if ( (ffLogVideoSize+addSize) > ffLogVideoBufSize ){
-			ffLogVideoBufSize += addSize*2
-			memexpand ffLogVideo, ffLogVideoBufSize+2
+	if (vInBuf != vStr){
+		vInBuf = vStr
+		addSize = MultiByteToWideChar( 65001, 0, varptr(vInBuf), strlen(vInBuf), 0, 0)*2
+		if (addSize) { 
+			
+			if ( (ffLogVideoSize+addSize) > ffLogVideoBufSize ){
+				ffLogVideoBufSize += addSize*2
+				memexpand ffLogVideo, ffLogVideoBufSize+2
+			}
+			MultiByteToWideChar 65001, 0, varptr(vInBuf), strlen(vInBuf)+1, varptr(ffLogVideo)+ffLogVideoSize, addSize+2
+			ffLogVideoSize += addSize
+			
+			sendmsg hFfLogVideo, WM_SETTEXT, 0, varptr(ffLogVideo)
+			sendmsg hFfLogVideo, EM_LINESCROLL, 0, sendmsg(hFfLogVideo, EM_GETLINECOUNT, 0, 0)
 		}
-		MultiByteToWideChar 65001, 0, varptr(inBuf), strlen(inbuf)+1, varptr(ffLogVideo)+ffLogVideoSize, addSize+2
-		ffLogVideoSize += addSize
-		
-		sendmsg hFfLogVideo, WM_SETTEXT, 0, varptr(ffLogVideo)
-		sendmsg hFfLogVideo, EM_LINESCROLL, 0, sendmsg(hFfLogVideo, EM_GETLINECOUNT, 0, 0)
 	}
+
+	if (aInBuf != aStr){
+		aInBuf = aStr
+		addSize = MultiByteToWideChar( 65001, 0, varptr(aInBuf), strlen(aInBuf), 0, 0)*2
+		if (addSize) { 
+			if ( (ffLogAudioSize+addSize) > ffLogAudioBufSize ){
+				ffLogAudioBufSize += addSize*2
+				memexpand ffLogAudio, ffLogAudioBufSize+2
+			}
+			MultiByteToWideChar 65001, 0, varptr(aInBuf), strlen(aInBuf)+1, varptr(ffLogAudio)+ffLogAudioSize, addSize+2
+			ffLogAudioSize += addSize
 	
-	inBuf = aStr
-	addSize = MultiByteToWideChar( 65001, 0, varptr(inBuf), strlen(inbuf), 0, 0)*2
-	if (addSize) { 
-		if ( (ffLogAudioSize+addSize) > ffLogAudioBufSize ){
-			ffLogAudioBufSize += addSize*2
-			memexpand ffLogAudio, ffLogAudioBufSize+2
+			sendmsg hFfLogAudio, WM_SETTEXT, 0, varptr(ffLogAudio)
+			sendmsg hFfLogAudio, EM_LINESCROLL, 0, sendmsg(hFfLogAudio, EM_GETLINECOUNT, 0, 0)
 		}
-		MultiByteToWideChar 65001, 0, varptr(inBuf), strlen(inbuf)+1, varptr(ffLogAudio)+ffLogAudioSize, addSize+2
-		ffLogAudioSize += addSize
-
-		sendmsg hFfLogAudio, WM_SETTEXT, 0, varptr(ffLogAudio)
-		sendmsg hFfLogAudio, EM_LINESCROLL, 0, sendmsg(hFfLogAudio, EM_GETLINECOUNT, 0, 0)
 	}
 
-	inBuf = eStr
-	addSize = MultiByteToWideChar( 65001, 0, varptr(inBuf), strlen(inbuf), 0, 0)*2
-	if (addSize) { 
-		if ( (ffLogEncodeSize+addSize) > ffLogEncodeBufSize ){
-			ffLogEncodeBufSize += addSize*2
-			memexpand ffLogEncode, ffLogEncodeBufSize+2
+	if (eInBuf != eStr){
+		eInBuf = eStr
+		addSize = MultiByteToWideChar( 65001, 0, varptr(eInBuf), strlen(eInBuf), 0, 0)*2
+		if (addSize) { 
+			if ( (ffLogEncodeSize+addSize) > ffLogEncodeBufSize ){
+				ffLogEncodeBufSize += addSize*2
+				memexpand ffLogEncode, ffLogEncodeBufSize+2
+			}
+			MultiByteToWideChar 65001, 0, varptr(eInBuf), strlen(eInBuf)+1, varptr(ffLogEncode)+ffLogEncodeSize, addSize+2
+			ffLogEncodeSize += addSize
+	
+			sendmsg hFfLogEncode, WM_SETTEXT, 0, varptr(ffLogEncode)
+			sendmsg hFfLogEncode, EM_LINESCROLL, 0, sendmsg(hFfLogEncode, EM_GETLINECOUNT, 0, 0)
 		}
-		MultiByteToWideChar 65001, 0, varptr(inBuf), strlen(inbuf)+1, varptr(ffLogEncode)+ffLogEncodeSize, addSize+2
-		ffLogEncodeSize += addSize
-
-		sendmsg hFfLogEncode, WM_SETTEXT, 0, varptr(ffLogEncode)
-		sendmsg hFfLogEncode, EM_LINESCROLL, 0, sendmsg(hFfLogEncode, EM_GETLINECOUNT, 0, 0)
 	}
 return
 
