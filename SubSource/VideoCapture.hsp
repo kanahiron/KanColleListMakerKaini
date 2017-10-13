@@ -38,37 +38,46 @@
 		
 	
 	if (videoCapFlg == FALSE){
+
+		
+		sdim ffbuf, 1024*4
+		ResetFFMPEGLog
+		apid = 0
+		vpid = 0
+		pid = 0
+		encodeElapsedTime = 0
+		encodeSpeed = 0.0
+		estimatedTime = 0
+		remainingTime = 0
+		encodeTime = 0
 		
 		switch captureMethod
-	
-		case CM_BITBLT
-			switch positionType
-				case PT_RELATIVE
-				case PT_WNDABSOLUTE
-					scrPoint = sscap(0), sscap(1)
-					ClientToScreen hClient, varptr(scrPoint)
-					capX = scrPoint(0)
-					capY = scrPoint(1)
-					swbreak
-				case PT_ABSOLUTE
-					capX = sscap(0)
-					capY = sscap(1)
-					swbreak
-			swend
-			swbreak
-			
-		case CM_PRINTWINDOW
-			scrPoint = sscap(0), sscap(1)
-			ClientToScreen hClient, varptr(scrPoint)
-			capX = scrPoint(0)
-			capY = scrPoint(1)
-			swbreak
+		
+			case CM_BITBLT
+				switch positionType
+					case PT_RELATIVE
+					case PT_WNDABSOLUTE
+						scrPoint = sscap(0), sscap(1)
+						ClientToScreen hClient, varptr(scrPoint)
+						capX = scrPoint(0)
+						capY = scrPoint(1)
+						swbreak
+					case PT_ABSOLUTE
+						capX = sscap(0)
+						capY = sscap(1)
+						swbreak
+				swend
+				swbreak
+				
+			case CM_PRINTWINDOW
+				scrPoint = sscap(0), sscap(1)
+				ClientToScreen hClient, varptr(scrPoint)
+				capX = scrPoint(0)
+				capY = scrPoint(1)
+				swbreak
 
 		swend
-
-		sdim ffbuf, 1024*10
-		
-
+		//座標を8のサイズに整形
 		videoCapSizeX = int((0.125*sscapwh(0))+0.9999999)*8
 		videoCapSizeY = int((0.125*sscapwh(1))+0.9999999)*8
 
@@ -81,39 +90,28 @@
 		notesel x264presetList
 		noteget x264presetStr, x264presetNum
 		noteunsel
-
-
-		fname = strf("%s\\%s", videoCapSaveDir, DateAndTimeFormat2(saveNameVideoCapture))
 		
+		videoFileName = strf("%s\\%s", videoCapSaveDir, DateAndTimeFormat2(saveNameVideoCapture))
+
+		//コマンドの組み立て
 		if (noAudioFlg^1){
 			//オーデイオあり
-			cmda = strf("\"%s\" -vn -f dshow -i audio=\"%s\" -acodec pcm_s16le -ac 2 -ar 44100 \"%s_a.wav\"", ffmpegdir, audioDeviceName, fname)
+			cmda = strf("\"%s\" -vn -f dshow -i audio=\"%s\" -acodec pcm_s16le -ac 2 -ar 44100 \"%s_a.wav\"", ffmpegdir, audioDeviceName, videoFileName)
 		} else {
 			cmda = strf("cmd")
 		}
-
-		//videoCapShowFrame
-		//videoCapHideCursor
-
+		
 		if (lateEncode){
 			//負荷軽減動画キャプチャ
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
 			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, capX, capY)
-			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, 12, "ultrafast", fname)
+			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, 12, "ultrafast", videoFileName)
 		} else {
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
 			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, capX, capY)
-			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, fname)
+			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, videoFileName)
 		}
-
-
-		//gsel WND_FFMPEG, 1
-		gsel WND_MAIN
-
-		apid = 0
-		vpid = 0
-		ResetFFMPEGLog
-
+		
 		pipe2exec cmda
 		apid = stat
 		aStartTime = 0.001*(timeGetTime()\60000)
@@ -137,11 +135,7 @@
 		objprm videoCapBId, videoCapMes
 		
 		gosub *SSModeControlDisable
-
 		gosub *VideoCapTimerProcessing
-
-
-		
 	
 	} else {
 
@@ -165,16 +159,28 @@
 		exfa = 0
 		repeat //終了の待機
 			if (exfv == 0){
+				ffbuf = ""
 				pipe2check vpid
 				if stat == 0:exfv = 1
 				if stat & 2: pipe2get vpid, ffbuf
 				if stat & 4: pipe2err vpid, ffbuf
+				if (ffbuf != ""){
+					strrep ffbuf, "\r", "\n"
+					strrep ffbuf, "\r\r", "\r"
+					AddFFmpegLog ffbuf
+				}
 			}
 			if (exfa == 0){
+				ffbuf = ""
 				pipe2check apid
 				if stat == 0:exfa = 1
 				if stat & 2: pipe2get apid, ffbuf
 				if stat & 4: pipe2err apid, ffbuf
+				if (ffbuf != ""){
+					strrep ffbuf, "\r", "\n"
+					strrep ffbuf, "\r\r", "\r"
+					AddFFmpegLog "", ffbuf
+				}
 			}
 			if (exfv && exfa): break
 			wait 10
@@ -182,9 +188,9 @@
 
 		pipe2term vpid
 		pipe2term apid
+
 	
 		//動画結合処理
-
 		LateEncodeFlg = TRUE
 		lateEncodeStartTime = timeGetTime()
 		diffTime = 1.0*(vStartTime+60.0-aStartTime)\60.0
@@ -192,16 +198,16 @@
 		if (noAudioFlg^1){
 			if (lateEncode){
 				//オーデイオ有り負荷軽減動画キャプチャ
-				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -c:v libx264 -crf %d -preset %s -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, fname, difftime, fname, videoCapCRF, x264presetStr, fname)
+				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -c:v libx264 -crf %d -preset %s -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, videoFileName, difftime, videoFileName, videoCapCRF, x264presetStr, videoFileName)
 			} else {
 				//オーデイオ有り従来の動画キャプチャ
-				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -c:v copy  -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, fname, difftime, fname, fname)
+				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -c:v copy  -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, videoFileName, difftime, videoFileName, videoFileName)
 			}
 		} else {
 			if (lateEncode){
-				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -c:v libx264 -crf %d -preset %s \"%s.mp4\"", ffmpegdir, fname, videoCapCRF, x264presetStr, fname)
+				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -c:v libx264 -crf %d -preset %s \"%s.mp4\"", ffmpegdir, videoFileName, videoCapCRF, x264presetStr, videoFileName)
 			} else {
-				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -c:v copy \"%s.mp4\"", ffmpegdir, fname, fname)
+				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -c:v copy \"%s.mp4\"", ffmpegdir, videoFileName, videoFileName)
 			}
 		}
 		pipe2exec cmdm
@@ -217,7 +223,7 @@
 			return
 		}
 			
-		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID, 1500, 0
+		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID, 500, 0
 		gosub *SSModeControlEnable
 
 		gosub *LateEncodeTimerProcessing
@@ -237,19 +243,29 @@ return
 
 	gsel WND_FFMPEG
 
+	ffbuf = ""
 	pipe2check vpid
 	if (stat == 0):exfv = 1
 	if (stat & 2): pipe2get vpid, ffbuf
 	if (stat & 4): pipe2err vpid, ffbuf
 
-	AddFFmpegLog ffbuf
-
+	if (ffbuf != ""){
+		strrep ffbuf, "\r", "\n"
+		strrep ffbuf, "\r\r", "\r"
+		AddFFmpegLog ffbuf
+	}
+	
+	ffbuf = ""
 	pipe2check apid
 	if (stat == 0):exfa = 1
 	if (stat & 2): pipe2get apid, ffbuf
 	if (stat & 4): pipe2err apid, ffbuf
 
-	AddFFmpegLog "", ffbuf
+	if (ffbuf != ""){
+		strrep ffbuf, "\r", "\n"
+		strrep ffbuf, "\r\r", "\r"
+		AddFFmpegLog "", ffbuf
+	}
 
 	gsel WND_MAIN
 	
@@ -281,24 +297,65 @@ return
 
 	exfm = 0
 
+	ffbuf = ""
 	pipe2check mpid
 	if (stat == 0): exfm = 1
 	if (stat & 2): pipe2get mpid, ffbuf
 	if (stat & 4): pipe2err mpid, ffbuf
 
-	AddFFMPEGLog "", "", ffbuf
+	if (ffbuf != ""){
+		strrep ffbuf, "\r", "\n"
+		strrep ffbuf, "\r\r", "\r"
+		AddFFmpegLog "", "", ffbuf
+	}
 	
-
-	strrep ffbuf, "\r", "\n"
-	strrep ffbuf, "\r\r", "\r"
-
 	lastStr = ""
 	notesel ffbuf
 	noteget lastStr, notemax-1
 	noteunsel
 
-	gsel WND_MAIN
+	//encodeTime リアルタイムの経過時間
+	encodeTime = timeGetTime() - lateEncodeStartTime
+
+	if (strmid(lastStr, 0, 5) == "frame"){
+		timeStrIndex = instr(lastStr, 0, "time=")
+		if ( timeStrIndex != -1){
+			TimeStr = ""
+			getstr TimeStr, lastStr, timeStrIndex+5, ' '
+			logmes "TimeStr "+TimeStr
+			if (instr(TimeStr, 0, ":") == -1){
+				encodeElapsedTime = int(double(TimeStr)*1000.0)
+				logmes "ss.ms "+encodeElapsedTime
+			} else {
+				encodeElapsedTime = int(strmid(TimeStr, 0, 2))*3600000 + int(strmid(TimeStr, 3, 2))*60000 + int(double(strmid(TimeStr, 6, 5))*1000.0)
+				logmes "HH:MM:ss.ms "+encodeElapsedTime
+			}
+
+			encodeElapsedTime += 300
+
+			//エンコードスピード
+			encodeSpeed = 1.0*encodeElapsedTime/encodeTime
+
+			logmes "encodeSpeed "+encodeSpeed
+			logmes "ffSpeed     "+ffSpeed
+			//予想合計エンコード時間
+			estimatedTime = 1.0*videoCapTime/encodeSpeed
+
+		
+		}	
+	}
+
+	//予想合計エンコード時間
+	remainingTime = estimatedTime-encodeTime
+	if (remainingTime < 0.0): remainingTime = 0.0
 	
+	lateEncodeStr = "動画をエンコード中…\n"
+	lateEncodeStr += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(encodeTime))
+	lateEncodeStr += strf("  推定残り %s", cnvMilliSecondToMMSSMS(remainingTime))
+
+	LogOut lateEncodeStr
+
+
 	if (exfm){
 
 		lateEncodeFlg = FALSE
@@ -308,36 +365,7 @@ return
 		return
 
 	}
-
-	timeStrIndex = instr(lastStr, 0, "time=")
-	if ( timeStrIndex != -1){
-		getstr lastStr, lastStr, timeStrIndex+5, ' '
-		if (instr(lastStr, 0, ":") == -1){
-			encodeElapsedTime = int(double(lastStr)*1000.0)
-		} else {
-			encodeElapsedTime = int(strmid(lastStr, 0, 2))*3600000 + int(strmid(lastStr, 3, 2))*60000 + int(double(strmid(lastStr, 6, 5))*1000.0)
-		}
-	} else {
-		encodeElapsedTime = 0.0000001
-	}
-	//encodeElapsedTime エンコード側の経過時間(ms)
 	
-	encodeTime = timeGetTime() - lateEncodeStartTime
-	//encodeTime リアルタイムの経過時間
-
-	encodeSpeed = 1.0*encodeElapsedTime/encodeTime
-
-	//予想エンコード時間
-	estimatedTime = 1.0*videoCapTime/encodeSpeed
-	
-	remainingTime = estimatedTime-encodeTime
-	if (remainingTime < 0.0): remainingTime = 0.0
-	
-	lateEncodeStr = "動画をエンコード中…\n"
-	lateEncodeStr += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(encodeTime))
-	lateEncodeStr += strf("  推定残り %s", cnvMilliSecondToMMSSMS(remainingTime))
-
-	LogOut lateEncodeStr
 	
 	nidPop
 return
@@ -346,13 +374,13 @@ return
 *VidepCapFinish
 	nidPush
 
-	exist fname+"_v.mp4"
-	if (strsize != -1): delete fname+"_v.mp4"
-	exist fname+"_a.wav"
-	if (strsize != -1): delete fname+"_a.wav"
+	exist videoFileName+"_v.mp4"
+	if (strsize != -1): delete videoFileName+"_v.mp4"
+	exist videoFileName+"_a.wav"
+	if (strsize != -1): delete videoFileName+"_a.wav"
 
 	gsel WND_MAIN
-	LogOut strf("%s.mp4を保存しました。", getpath(fname, 8))
+	LogOut strf("%s.mp4を保存しました。", getpath(videoFileName, 8))
 
 	videoCapMes = "開始"
 	objprm videoCapBId, videoCapMes
@@ -376,12 +404,12 @@ return
 	if (vpid != -1): pipe2term vpid
 	if (mpid != -1): pipe2term mpid
 	wait 50
-	exist fname+"_v.mp4"
-	if (strsize != -1): delete fname+"_v.mp4"
-	exist fname+"_a.wav"
-	if (strsize != -1): delete fname+"_a.wav"
-	exist fname+".mp4"
-	if (strsize != -1): delete fname+".mp4"
+	exist videoFileName+"_v.mp4"
+	if (strsize != -1): delete videoFileName+"_v.mp4"
+	exist videoFileName+"_a.wav"
+	if (strsize != -1): delete videoFileName+"_a.wav"
+	exist videoFileName+".mp4"
+	if (strsize != -1): delete videoFileName+".mp4"
 
 	gsel WND_MAIN, 1+frontRow
 	videoCapMes = "開始"
