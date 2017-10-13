@@ -1,17 +1,17 @@
 #module VersionCheck
 
 #uselib "wininet.dll"
-#cfunc _InternetOpen "InternetOpenW" int, int, int, int, int
-#func _InternetReadFile "InternetReadFile" int, int, int, int
-#func _InternetWriteFile "InternetWriteFile" int, int, int, int
-#func _InternetCloseHandle "InternetCloseHandle" int
-#cfunc _InternetConnect "InternetConnectW" int, wptr, int, int, int, int, int, int
-#cfunc _HttpOpenRequest "HttpOpenRequestW" int, wptr, wptr, wptr, wptr, wptr, int, int
-#cfunc _HttpSendRequest "HttpSendRequestW" int, wptr, int, wptr, int
-#cfunc _HttpEndRequest "HttpEndRequestW" int, int, int, int
-#cfunc _HttpQueryInfo "HttpQueryInfoW" int, int, wptr, int, int
-#func _InternetQueryDataAvailable "InternetQueryDataAvailable" int, int, int, int
-#func _InternetSetOption "InternetSetOptionW" int, int, int, int
+#func InternetOpen "InternetOpenW" wptr, wptr, wptr, wptr, wptr
+#func InternetConnect "InternetConnectW" wptr, wptr, wptr, wptr, wptr, wptr, wptr, wptr
+#func InternetQueryDataAvailable "InternetQueryDataAvailable" wptr, wptr, wptr, wptr
+#func InternetSetOption "InternetSetOptionW" wptr, wptr, wptr, wptr
+#func InternetQueryOption "InternetQueryOptionW" wptr, wptr, wptr, wptr
+#func InternetReadFile "InternetReadFile" wptr, wptr, wptr, wptr
+#func InternetWriteFile "InternetWriteFile" wptr, wptr, wptr, wptr
+#func InternetCloseHandle "InternetCloseHandle" wptr
+#func HttpOpenRequest "HttpOpenRequestW" wptr, wptr, wptr, wptr, wptr, wptr, wptr, wptr
+#func HttpSendRequest "HttpSendRequestW" wptr, wptr, wptr, wptr, wptr
+#func HttpQueryInfo "HttpQueryInfoW" wptr, wptr, wptr, wptr, wptr
 
 #define INTERNET_OPEN_TYPE_PRECONFIG            0
 #define INTERNET_OPEN_TYPE_DIRECT               1
@@ -82,43 +82,29 @@
 #define HTTP_QUERY_MODIFIER_FLAGS_MASK (HTTP_QUERY_FLAG_REQUEST_HEADERS|HTTP_QUERY_FLAG_SYSTEMTIME|HTTP_QUERY_FLAG_NUMBER|HTTP_QUERY_FLAG_COALESCE)
 #define HTTP_QUERY_HEADER_MASK (~HTTP_QUERY_MODIFIER_FLAGS_MASK)
 
-
-#deffunc VerCheckInit
-	//各種変数の初期化
-	responseHeader = ""
-	responseBody = ""
-	timeOutTime = 2000
-	gzipFlag = 1 // true /-------------------
-	//インターネットオープン
-	hInet = _InternetOpen( p1, INTERNET_OPEN_TYPE_PRECONFIG, 0, 0, 0)
-	if hInet = 0:return -1
-	_InternetSetOption hInet, INTERNET_OPTION_CONNECT_TIMEOUT, varptr(timeOutTime), 4
-	_InternetSetOption hInet, INTERNET_OPTION_HTTP_DECODING, varptr(gzipFlag), 4
-return 0
-
-#deffunc VerCheckWash
-	//ハンドルの破棄
-	if (hRequest) : _InternetCloseHandle hRequest
-	if (hConnect) : _InternetCloseHandle hConnect
-	if (hInet) : _InternetCloseHandle hInet
-return
-
 #deffunc execVerCheck
 
+	sdim RequestHeader
+	sdim responseBody
+	hInet = 0		// InternetOpenのハンドル
 	hConnect = 0	// InternetConnectのハンドル
 	hRequest = 0	// HttpOpenRequestのハンドル
 	statcode = 0	// リクエストの結果コード
-	dataLength = 0	// データ長
 	rsize = 1024	// バッファ初期値
 	hsize = 0		// 取得したバイト数が代入される変数
-	
-	RequestURL = "drive.google.com"
-	sdim RequestURLWide, 1024
-	cnvstow RequestURLWide, RequestURL
+	intSize = 4		// int型の大きさ
+	connTimeOut = 10000
+	connRetry = 2
 
+	method = "GET"
+	httpVer = "HTTP/1.1"
+	serverName = "drive.google.com"
 	apiUrl = "uc?export=download&id=0BxC9-Nilt2alT1JlVG9MNlE4OWM"
-	sdim apiUrlWide, 1024
-	cnvstow apiUrlWide, apiUrl
+
+	RequestHeader  = "Host: "+serverName+"\n"
+	RequestHeader += "Accept: text/json; application/json; charset=UTF-8\n"
+	RequestHeader += "User-Agent: KanColleListMakerKaini\n"
+	RequestHeader += "Connection: close\n"
 	
 	usePort = 443
 	requestFlag  = INTERNET_FLAG_RELOAD
@@ -127,79 +113,46 @@ return
 	requestFlag |= INTERNET_FLAG_IGNORE_CERT_CN_INVALID
 	requestFlag |= INTERNET_FLAG_SECURE
 
-	method = "GET"
-	sdim methodWide, 1024
-	cnvstow methodWide, method
+	//インターネットをオープン
+	hInet = InternetOpen( "KanColleListMakerKaini", INTERNET_OPEN_TYPE_PRECONFIG, 0, 0, 0)
+	if (hInet){
 
-	httpVer = "HTTP/1.1"
-	sdim httpVerWide, 1024
-	cnvstow httpVerWide, httpVer
+		//タイムアウト 10秒 リトライ数2回
+		InternetSetOption hInet, INTERNET_OPTION_CONNECT_TIMEOUT, varptr(connTimeOut), intSize
+		InternetSetOption hInet, INTERNET_OPTION_CONNECT_RETRIES, varptr(connRetry), intSize
 
-	RequestHeader = "Accept-Encoding: gzip, deflate;\nContent-Type: application/x-www-form-urlencoded"
-	sdim RequestHeaderWide, 1024
-	cnvstow RequestHeaderWide, RequestHeader
-	RequestHeaderWideLength = stat
-	PostDataWide = ""
-	PostDataWideLength = 0
-	
-	//サーバへ接続
-	hConnect = _InternetConnect(hInet, varptr(RequestURLWide), INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
-	if (hConnect = 0) {
-		//Connectハンドルを取得できなかった場合
-		return -4
-	}
-	
-	//リクエストの初期化
-	hRequest = _HttpOpenRequest(hConnect, varptr(methodWide), varptr(apiUrlWide), varptr(httpVerWide), 0, 0, requestFlag, 0)
-	if (hRequest = 0) {
-		//Requestハンドルを取得できなかった場合
-		_InternetCloseHandle hConnect
-		return -3
-	}
-	
-	//サーバへリクエスト送信
-	if ( _HttpSendRequest(hRequest, varptr(RequestHeaderWide), RequestHeaderWideLength, varptr(PostDataWide), PostDataWideLength)) {
-		//ヘッダを取得する変数の初期化
-		responseHeaderSize = 1024*4
-		sdim responseHeaderWide, responseHeaderSize*2+2
-		//ヘッダの取得
-		if ( _HttpQueryInfo(hRequest, HTTP_QUERY_RAW_HEADERS_CRLF, varptr(responseHeaderWide), varptr(responseHeaderSize), 0) ) {
-			//ヘッダの解析
-			sdim responseHeader, responseHeaderSize
-			responseHeader = cnvwtos(responseHeaderWide)
-			notesel responseHeader
-			repeat notemax
-				noteget headerLine, cnt
-				headerTokenPos = instr(headerLine, 0, "HTTP/1.1 ")				//ステータスコード
-				if (headerTokenPos != -1) : statcode = int(strmid(headerLine, headerTokenPos+9, 3))
-				headerTokenPos = instr(headerLine, 0, "Content-Length: ")		//長さ
-				if (headerTokenPos != -1) : responseBodyLength = int(strmid(headerLine, -1, strlen(headerLine)-(headerTokenPos+16)))
-			loop
-			noteunsel
-			if (statCode == 200 && responseBodyLength > 0){
-				logmes "responseBodyLength :"+responseBodyLength
-				//入手可能なデータ量を取得
-				_InternetQueryDataAvailable hRequest, varptr(rsize), 0, 0
-				//バッファの初期化
-				logmes "srize : "+ rsize
-				sdim responseBuffer, rsize+1
-				sdim responseBody, responseBodyLength+1
-				repeat 
-					_InternetReadFile hRequest, varptr(responseBuffer), rsize, varptr(hsize)
-					if (hsize = 0) : break 
-					responseBody += strmid(responseBuffer, 0, hsize)
-				loop
-			}
-		} else {
-			//ヘッダの取得ができなかった場合
-			return -1
+		//サーバへ接続
+		hConnect = InternetConnect(hInet, serverName, INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
+		if (hConnect) {
+			//リクエストの初期化
+			hRequest = HttpOpenRequest(hConnect, method, apiUrl, httpVer, 0, 0, requestFlag, 0)
+			if (hRequest) {
+				//リクエスト送信
+				if (HttpSendRequest(hRequest, RequestHeader, -1, 0, 0)) {
+					//ステータスコード取得
+					HttpQueryInfo hRequest, HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER, varptr(statCode), varptr(intSize), 0
+
+					if (statCode == 200){
+						//入手可能なデータ量を取得
+						InternetQueryDataAvailable hRequest, varptr(rsize), 0, 0
+						//バッファの初期化
+						sdim responseBuffer, rsize+1
+						sdim responseBody, rsize+1
+				
+						repeat
+							InternetReadFile hRequest, varptr(responseBuffer), rsize, varptr(hsize)
+							if (hsize = 0) : break 
+							responseBody += strmid(responseBuffer, 0, hsize)
+						loop
+					}
+				}
+				InternetCloseHandle hRequest
+			}	
+			InternetCloseHandle hConnect
 		}
-		//Requestハンドルの破棄
-		_InternetCloseHandle hRequest
-	} else {
-		//サーバへリクエスト送信できなかった場合
-		return -2
+		InternetCloseHandle hInet
 	}
+	
 return statcode
 
 #defcfunc getResponse
@@ -212,13 +165,12 @@ return responseBody
 
 	if autoVersionCheck {
 
-		VerCheckInit
 		logOut "バージョンチェック中です。":await
 		
 		execVerCheck
 		if (stat == 200){
 			logmes "アップデートファイルの取得成功"
-			sdim json,1024*4
+			sdim json
 			json = getResponse()
 			json_sel json
 			
@@ -242,7 +194,6 @@ return responseBody
 			logmes "アップデートファイルの取得失敗"
 			dialog "次の原因が考えられます\nアップデート情報配信サーバーのダウン\nインターネット未接続",0,"アップデート情報の取得に失敗しました"
 		}
-		VerCheckWash
 
 		if (mode == MODE_SSCAP){
 			logmessage = "バージョンチェックが完了しました。"
