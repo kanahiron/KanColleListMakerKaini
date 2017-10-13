@@ -341,9 +341,7 @@ return
 			logmes "encodeSpeed "+encodeSpeed
 			logmes "ffSpeed     "+ffSpeed
 			//予想合計エンコード時間
-			estimatedTime = 1.0*videoCapTime/encodeSpeed
-
-		
+			estimatedTime = 1.0*videoCapTime/encodeSpeed		
 		}	
 	}
 
@@ -357,17 +355,13 @@ return
 
 	LogOut lateEncodeStr
 
-
 	if (exfm){
-
 		lateEncodeFlg = FALSE
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID
 		
 		gosub *VidepCapFinish
 		return
-
 	}
-	
 	
 	nidPop
 return
