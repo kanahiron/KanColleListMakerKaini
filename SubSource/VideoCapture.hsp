@@ -125,23 +125,28 @@
 			return
 		}
 
+		videoCapFlg = TRUE
 		videoCapStartTime = timeGetTime()
 
-		gsel WND_MAIN, 0
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID, 400, 0
 
-		videoCapFlg = TRUE
-		videoCapMes = "停止"
-		objprm videoCapBId, videoCapMes
+		if (mode == MODE_SSCAP){
+			gsel WND_MAIN
+			videoCapMes = "停止"
+			objprm videoCapBId, videoCapMes
+		}
 		
 		gosub *SSModeControlDisable
 		gosub *VideoCapTimerProcessing
 	
 	} else {
 
-		gsel WND_MAIN
-		objprm videoCapBId, "中止"
-		
+		if (mode == MODE_SSCAP){
+			gsel WND_MAIN
+			videoCapMes = "中止"
+			objprm videoCapBId, videoCapMes
+		}
+			
 		videoCapFlg = FALSE
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
 
@@ -188,13 +193,12 @@
 
 		pipe2term vpid
 		pipe2term apid
-
-	
-		//動画結合処理
+		
+		//エンコードの開始
 		LateEncodeFlg = TRUE
 		lateEncodeStartTime = timeGetTime()
 		diffTime = 1.0*(vStartTime+60.0-aStartTime)\60.0
-
+		//コマンド組み立て
 		if (noAudioFlg^1){
 			if (lateEncode){
 				//オーデイオ有り負荷軽減動画キャプチャ
@@ -216,7 +220,6 @@
 		if ( mpid == -1 ){
 			
 			gosub *VideoCapEmgStop
-			
 			LogOut "Error-エンコードプロセスの開始に失敗しました"
 				
 			nidPop
@@ -225,7 +228,6 @@
 			
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID, 500, 0
 		gosub *SSModeControlEnable
-
 		gosub *LateEncodeTimerProcessing
 
 	}
@@ -379,11 +381,13 @@ return
 	exist videoFileName+"_a.wav"
 	if (strsize != -1): delete videoFileName+"_a.wav"
 
-	gsel WND_MAIN
 	LogOut strf("%s.mp4を保存しました。", getpath(videoFileName, 8))
 
-	videoCapMes = "開始"
-	objprm videoCapBId, videoCapMes
+	if (mode == MODE_SSCAP){
+		gsel WND_MAIN
+		videoCapMes = "開始"
+		objprm videoCapBId, videoCapMes
+	}
 
 	gosub *SSModeControlEnable
 	
@@ -411,9 +415,11 @@ return
 	exist videoFileName+".mp4"
 	if (strsize != -1): delete videoFileName+".mp4"
 
-	gsel WND_MAIN, 1+frontRow
-	videoCapMes = "開始"
-	objprm videoCapBId, videoCapMes
+	if (mode == MODE_SSCAP){
+		gsel WND_MAIN
+		videoCapMes = "開始"
+		objprm videoCapBId, videoCapMes
+	}
 		
 	gosub *SSModeControlEnable
 
