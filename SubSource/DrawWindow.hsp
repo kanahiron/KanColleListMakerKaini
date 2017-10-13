@@ -952,7 +952,7 @@ return
 *SSModeControlDisable
 	nidPush
 	gsel WND_MAIN
-
+	
 	objenable comBoxId, 0
 	
 	if (mode != MODE_OPTION){
@@ -996,14 +996,12 @@ return
 		objenable tweetbid, 0
 		gsel WND_MAIN
 	}
-
 	nidPop
 return
 
 *SSModeControlEnable
 	nidPush
 	gsel WND_MAIN
-
 	//連続キャプチャ中か動画キャプチャ中なら
 	if ( (seqCapF^1) && (videoCapFlg^1) ){
 	
@@ -1073,6 +1071,5 @@ return
 		objenable tweetbid, 1
 		gsel WND_MAIN
 	}
-
 	nidPop
 return

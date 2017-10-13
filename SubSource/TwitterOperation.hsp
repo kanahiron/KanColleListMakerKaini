@@ -332,9 +332,8 @@ return
 	dim selcap, 4
 	picHistoryNum = 0
 
-	SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0, 0, LWA_ALPHA
-	SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0, 0, LWA_ALPHA
-
+	ShowWindow WND_INFO(WND_TWITTER, WI_HANDLE), SW_HIDE
+	ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_HIDE
 
 	buffer WND_TEMP1, disinfo(2), disinfo(3)
 	BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen, disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
@@ -361,8 +360,8 @@ return
 
 	SelectCapturePos WND_TEMP1, selcap, WND_OVERLAY, WND_TEMP_SCR1, marginCutFlg
 	marginCutFlg = FALSE
-	SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0, 255, LWA_ALPHA
-	SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0, 255, LWA_ALPHA
+	ShowWindow WND_INFO(WND_TWITTER, WI_HANDLE), SW_SHOW
+	ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_SHOW
 
 	selcapwh(0) = selcap(2)-selcap(0), selcap(3)-selcap(1)
 
