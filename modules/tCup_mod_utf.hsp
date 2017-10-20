@@ -6,7 +6,7 @@
 //----------------------------------------------------------------------
 //  Author : Takaya,kanahiron
 //  CreateDate : 10/07/29
-//  LastUpdate : 16/11/14
+//  LastUpdate : 17/10/20
 //======================================================================
 /*  [HDL module infomation]
 
@@ -14,7 +14,7 @@
 TsubuyakiSoup
 
 %ver
-2.1
+0.1
 
 %date
 2010/11/14
@@ -34,34 +34,34 @@ Win
 #module tCup
 
 #uselib "advapi32.dll"
-#cfunc _CryptAcquireContext "CryptAcquireContextW" int, int, int, int, int
-#cfunc _CryptCreateHash "CryptCreateHash" int, int, int, int, int
-#cfunc _CryptHashData "CryptHashData" int, int, int, int
-#cfunc _CryptSetHashParam "CryptSetHashParam" int, int, int, int
-#cfunc _CryptGetHashParam "CryptGetHashParam" int, int, int, int, int
-#cfunc _CryptImportKey "CryptImportKey" int, int, int, int, int, int
-#func _CryptDestroyKey "CryptDestroyKey" int
-#func _CryptDestroyHash "CryptDestroyHash" int
-#func _CryptReleaseContext "CryptReleaseContext" int, int
-#cfunc _CryptDeriveKey "CryptDeriveKey" int, int, int, int, var
-#cfunc _CryptEncrypt "CryptEncrypt" int, int, int, int, int, var, int
-#cfunc _CryptDecrypt "CryptDecrypt" int, int, int, int, var, var
+#cfunc _CryptAcquireContext "CryptAcquireContextW" wptr, wptr, wptr, wptr, wptr
+#func _CryptCreateHash "CryptCreateHash" wptr, wptr, wptr, wptr, wptr
+#func _CryptHashData "CryptHashData" wptr, wptr, wptr, wptr
+#func _CryptSetHashParam "CryptSetHashParam" wptr, wptr, wptr, wptr
+#func _CryptGetHashParam "CryptGetHashParam" wptr, wptr, wptr, wptr, wptr
+#func _CryptImportKey "CryptImportKey" wptr, wptr, wptr, wptr, wptr, wptr
+#func _CryptDestroyKey "CryptDestroyKey" wptr
+#func _CryptDestroyHash "CryptDestroyHash" wptr
+#func _CryptReleaseContext "CryptReleaseContext" wptr, wptr
+#func _CryptDeriveKey "CryptDeriveKey" wptr, wptr, wptr, wptr, wptr
+#func _CryptEncrypt "CryptEncrypt" wptr, wptr, wptr, wptr, wptr, wptr, wptr
+#func _CryptDecrypt "CryptDecrypt" wptr, wptr, wptr, wptr, wptr, wptr
 //---------------
 //  wininet.dll
 //---------------
 #uselib "wininet.dll"
-#cfunc _InternetOpen "InternetOpenW" int, int, int, int, int
-#func _InternetReadFile "InternetReadFile" int, int, int, int
-#func _InternetWriteFile "InternetWriteFile" int, int, int, int
-#func _InternetCloseHandle "InternetCloseHandle" int
-#cfunc _InternetConnect "InternetConnectW" int, wptr, int, int, int, int, int, int
-#cfunc _HttpOpenRequest "HttpOpenRequestW" int, wptr, wptr, wptr, wptr, wptr, int, nullptr
-#cfunc _HttpSendRequest "HttpSendRequestW" int, wptr, int, int, int
-#cfunc _HttpSendRequestEx "HttpSendRequestExW" int, int, int, int, int
-#cfunc _HttpEndRequest "HttpEndRequestW" int, int, int, int
-#cfunc _HttpQueryInfo "HttpQueryInfoW" int, int, wptr, wptr, int
-#func _InternetQueryDataAvailable "InternetQueryDataAvailable" int, int, int, int
-#func _InternetSetOption "InternetSetOptionW" int, int, int, int
+#func _InternetOpen "InternetOpenW" wptr, wptr, wptr, wptr, wptr
+#func _InternetReadFile "InternetReadFile" wptr, wptr, wptr, wptr
+#func _InternetWriteFile "InternetWriteFile" wptr, wptr, wptr, wptr
+#func _InternetCloseHandle "InternetCloseHandle" wptr
+#func _InternetConnect "InternetConnectW" wptr, wptr, wptr, wptr, wptr, wptr, wptr, wptr
+#func _HttpOpenRequest "HttpOpenRequestW" wptr, wptr, wptr, wptr, wptr, wptr, wptr, nullptr
+#func _HttpSendRequest "HttpSendRequestW" wptr, wptr, wptr, wptr, wptr
+#func _HttpSendRequestEx "HttpSendRequestExW" wptr, wptr, wptr, wptr, wptr
+#func _HttpEndRequest "HttpEndRequestW" wptr, wptr, wptr, wptr
+#func _HttpQueryInfo "HttpQueryInfoW" wptr, wptr, wptr, wptr, wptr
+#func _InternetQueryDataAvailable "InternetQueryDataAvailable" wptr, wptr, wptr, wptr
+#func _InternetSetOption "InternetSetOptionW" wptr, wptr, wptr, wptr
 //---------------
 //  crtdll.dll
 //---------------
@@ -69,8 +69,8 @@ Win
 #func _time "time" var
 
 #uselib "kernel32.dll"
-#cfunc getlastError "GetLastError"
-#func MultiByteToWideChar "MultiByteToWideChar" int,int,sptr,int,int,int
+#func getlastError "GetLastError"
+#func MultiByteToWideChar "MultiByteToWideChar" wptr,wptr,sptr,wptr,wptr,wptr
 
 #define HP_HMAC_INFO                            0x0005
 #define PLAINTEXTKEYBLOB                        0x8
@@ -441,10 +441,8 @@ return form_encode(str(base64HmacSha1), 0)
 
 	hConnect = 0	// InternetConnectのハンドル
 	hRequest = 0	// HttpOpenRequestのハンドル
-	statcode = 0	// リクエストの結果コード
-	dataLength = 0	// データ長
-	rsize = 1024	// バッファ初期値
-	hsize = 0		// 取得したバイト数が代入される変数
+	staCode = 0	// リクエストの結果コード
+	intSize = 4		//int型のバイト数
 
 	apiVersion = "1.1"	// TwitterAPIのバージョン
 	
@@ -454,15 +452,13 @@ return form_encode(str(base64HmacSha1), 0)
 	}
 
 	apiUrl = apiVersion +"/"+ api
+
+	//OAuth1.0a用のシグネチャ作成
 	transStr = method +" https://"+RequestURL+"/"+ apiVersion +"/"+ api +" "
 	if (strmid(api,0,5) = "oauth") {
 		apiUrl = api
 		transStr = method +" https://api.twitter.com/"+ api +" "
 	}
-	
-	usePort = 443
-	requestFlag = INTERNET_FLAG_NO_CACHE_WRITE
-	requestFlag |= INTERNET_FLAG_SECURE
 
 	tokenStr = accessToken
 	sigKey = consumerSecret+" "+accessSecret
@@ -487,17 +483,18 @@ return form_encode(str(base64HmacSha1), 0)
 		loop
 	}
 	
-	_sortStrArray sigArray, 0, sigArrayLength-1
+	sortstr sigArray, 0
 
 	repeat sigArrayLength
 		logmes sigArray(cnt)
 		if sigArray(cnt) = "" : continue
 		transStr += sigArray(cnt) +"&"
 	loop
-	
 	transStr = strmid(transStr, 0, strlen(transStr)-1)
 	signature = sigEncode(transStr, sigKey)
-	
+	//シグネチャ作成ここまで
+
+	//リクエスト作成
 	if (methodType = METHOD_POST) {
 	
 		sdim boundary,128
@@ -528,30 +525,27 @@ return form_encode(str(base64HmacSha1), 0)
 			PostData = strmid(PostData, 0, strlen(PostData)-1) //後ろの&を除去
 			PostDataLength = strlen(PostData)
 		}
-		
 
+		sdim AuthorizationStr
+		AuthorizationStr = "Authorization: OAuth "
+		repeat sigArrayLength
+			AuthorizationStr += sigArray(cnt) +","
+		loop
+		AuthorizationStr += "oauth_signature=" +signature
 
 		sdim RequestHeader,1024*4
-
-		RequestHeader = "Accept-Charset: UTF-8"
-		RequestHeader += "\nAccept-Encoding: gzip, deflate;"
+		RequestHeader  = "Host: "+RequestURL+"\n"
+		RequestHeader += "Accept-Charset: UTF-8\n"
+		RequestHeader += "Accept-Encoding: gzip, deflate\n"
 		if (api = "media/upload.json") {
-			RequestHeader += "\nContent-Type: multipart/form-data; boundary= "+boundary
+			RequestHeader += "Content-Type: multipart/form-data; charset=UTF-8; boundary= "+boundary+"\n"
 		} else {
-			RequestHeader += "\nContent-Type: application/x-www-form-urlencoded"
+			RequestHeader += "Content-Type: application/x-www-form-urlencoded; charset=UTF-8\n"
 		}
-		RequestHeader += "\nContent-Length: "+PostDataLength
-		RequestHeader += "\nAuthorization: OAuth "
-		
-		repeat sigArrayLength
-			RequestHeader += sigArray(cnt)+"," 
-		loop
-		
-		RequestHeader += "oauth_signature=" +signature
-
+		RequestHeader += "Content-Length: "+PostDataLength+"\n"
+		RequestHeader += AuthorizationStr
 	}
 
-	
 	if (methodType = METHOD_GET) {
 		apiUrl += "?"
 		repeat sigArrayLength
@@ -560,131 +554,98 @@ return form_encode(str(base64HmacSha1), 0)
 		apiUrl += "oauth_signature=" +signature
 
 		sdim RequestHeader,1024*4
-		
-		RequestHeader = "\nAccept-Charset: UTF-8"
-		RequestHeader += "\nAccept-Encoding: gzip, deflate;
-		RequestHeader += "\nContent-Type: application/x-www-form-urlencoded;charset=UTF-8;"
+		RequestHeader  = "Host: "+RequestURL+"\n"
+		RequestHeader += "\nAccept-Charset: UTF-8\n"
+		RequestHeader += "\nAccept-Encoding: gzip, deflate\n"
+		RequestHeader += "\nContent-Type: application/x-www-form-urlencoded; charset=UTF-8"
 		PostData = ""
 		PostDataLength = 0
 	}
 
-	//サーバへ接続
-	hConnect = _InternetConnect(hInet, RequestURL, INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
-	if (hConnect = 0) {
-		//Connectハンドルを取得できなかった場合
-		return -4
-	}
-
-	//リクエストの初期化
-	hRequest = _HttpOpenRequest(hConnect, method, apiUrl, "HTTP/1.1", 0, 0, requestFlag)
-	if (hRequest = 0) {
-		//Requestハンドルを取得できなかった場合
-		_InternetCloseHandle hConnect
-		return -3
-	}
-	
-	MultiByteToWideChar 65001, 0, varptr(RequestHeader), -1, 0, 0
-	RequestHeaderWideLength = stat-1						//UTF-16文字列の 文 字 数
-	sdim RequestHeaderWide ,(RequestHeaderWideLength*2)+16	//UTF-16文字列を入れるバッファを確保
+	//ヘッダーをUTF-16LEに変換
+	MultiByteToWideChar 65001, 0, varptr(RequestHeader), strlen(RequestHeader), 0, 0
+	RequestHeaderWideLength = stat						//UTF-16文字列の 文 字 数
+	sdim RequestHeaderWide ,(RequestHeaderWideLength*2)+2	//UTF-16文字列を入れるバッファを確保
 	cnvstow RequestHeaderWide, RequestHeader				//バッファにUTF-8からUTF-16に変換して格納
 
-	sdim INTERNET_BUFFERS, 64
-	lpoke  INTERNET_BUFFERS, 0, 40
-	lpoke  INTERNET_BUFFERS, 4, 0
-	lpoke  INTERNET_BUFFERS, 8, varptr(RequestHeaderWide)
-	lpoke  INTERNET_BUFFERS, 12, RequestHeaderWideLength //文字数なのかバイト数なのか
-	lpoke  INTERNET_BUFFERS, 16, 0
-	lpoke  INTERNET_BUFFERS, 20, 0
-	lpoke  INTERNET_BUFFERS, 24, 0
-	lpoke  INTERNET_BUFFERS, 28, PostDataLength //RequestBodyだけの長さ(サイズ)？？
-	lpoke  INTERNET_BUFFERS, 32, 0
-	lpoke  INTERNET_BUFFERS, 36, 0
-	
-	if _HttpSendRequestEx( hRequest, varptr(INTERNET_BUFFERS), 0, 0, 0) {
-	} else {
-		_InternetCloseHandle hRequest
-		_InternetCloseHandle hConnect
-		return -10 //HttpSendRequestEx 失敗
-	}
+	//HttpSendRequestEx用のNTERNET_BUFFERS構造体を作成
+	dim INTERNET_BUFFERS, 10
+	INTERNET_BUFFERS( 0) = 40
+	INTERNET_BUFFERS( 2) = varptr(RequestHeaderWide)
+	INTERNET_BUFFERS( 3) = RequestHeaderWideLength //リクエストヘッダの文字数
+	INTERNET_BUFFERS( 7) = PostDataLength //RequestBodyだけのサイズ
 
-	if (PostDataLength != 0){
+	requestFlag = INTERNET_FLAG_NO_CACHE_WRITE
+	requestFlag |= INTERNET_FLAG_SECURE
 
-		BytesWritten = 0
-		sentSize = 0
-		unSentSize = PostDataLength
-		tSize = 0
-		repeat
+	//サーバへ接続
+	hConnect = _InternetConnect(hInet, RequestURL, INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
+	if (hConnect) {
+		logmes "hConnect"
+		//リクエストの初期化
+		hRequest = _HttpOpenRequest(hConnect, method, apiURL, httpVer, 0, 0, requestFlag)
+		if (hRequest) {
+			logmes "hRequest"
+			//データ送信準備
+			if _HttpSendRequestEx( hRequest, varptr(INTERNET_BUFFERS), 0, 0, 0) {
+				logmes "HttpSendRequestEx"
+				//リクエストボディの送信
+				sentFailFlg = 0
+				if (PostDataLength != 0){
 	
-			if (unSentSize = 0):break
-			if (unSentSize < 8192):tSize = unSentSize:else:tSize = 8192
-			
-			_InternetWriteFile hRequest, varptr(PostData)+sentSize, tSize, varptr(BytesWritten)
-			if (stat = 0){
-				_InternetCloseHandle hRequest
-				_InternetCloseHandle hConnect
-				return -9 //InternetWriteFile 失敗
+					BytesWritten = 0
+					sentSize = 0
+					unSentSize = PostDataLength
+					tSize = 0
+					repeat
+						if (unSentSize = 0): break
+						if (unSentSize < 2048): tSize = unSentSize: else: tSize = 2048
+						
+						_InternetWriteFile hRequest, varptr(PostData)+sentSize, tSize, varptr(BytesWritten)
+						if (stat == 0){
+							//送信失敗
+							sentFailFlg = 1
+							break
+						}
+						sentSize += BytesWritten
+						unSentSize -= BytesWritten
+						//title@hsp strf("送信バイト数 %d/%dByte %.2f%%", sentSize, PostdataLength, (100.0*sentSize/PostDataLength))
+						if hProgress :sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength+0.9)
+						await
+					loop
+				}
+				if (sentFailFlg == 0){
+					if hProgress: sendmsg hProgress, $402, 100:wait 30
+					if _HttpEndRequest( hRequest, 0, 0, 0){
+						logmes "HttpEndRequest"
+
+						ResponseBodySize = 0
+						readTotalSize = 0
+						readSize = 0
+	
+						_HttpQueryInfo hRequest, HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER, varptr(statCode), varptr(intSize), 0
+
+						logmes "StatCode "+statCode
+
+						//入手可能なデータ量を取得
+						_InternetQueryDataAvailable hRequest, varptr(ResponseBodySize), 0, 0
+	
+						//バッファの初期化
+						sdim responseBuffer, ResponseBodySize + 2
+						sdim responseBody, ResponseBodySize + 2
+						repeat 
+							_InternetReadFile hRequest, varptr(responseBuffer), 1024, varptr(readSize)
+							if (readSize = 0) : break
+							memcpy responseBody, responseBuffer, readSize, readTotalSize, 0
+							readTotalSize += readSize
+						loop
+					}
+				}
 			}
-			sentSize += BytesWritten
-			unSentSize -= BytesWritten
-			//title strf("送信バイト数 %d/%dByte %.2f%%",sentSize,PostdataLength,(100.0*sentSize/PostDataLength))
-			if hProgress :sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength)
-			await
-		loop
-		if hProgress :sendmsg hProgress, $402, 100:wait 20
-	}
-
-	if _HttpEndRequest( hRequest, 0, 0, 0){
-	} else {
-		_InternetCloseHandle hRequest
+			_InternetCloseHandle hRequest
+		}
 		_InternetCloseHandle hConnect
-		return -8 //HttpEndRequest 失敗
 	}
-
-	responseHeaderSize = 1024*4
-	sdim responseHeader, responseHeaderSize+1
-	//ヘッダの取得
-	if ( _HttpQueryInfo(hRequest, HTTP_QUERY_RAW_HEADERS_CRLF, varptr(responseHeader), varptr(responseHeaderSize), 0) ) {
-		//ヘッダの解析
-		responseHeader = cnvwtos(responseHeader)
-		notesel responseHeader
-		repeat notemax
-			noteget headerLine, cnt
-			headerTokenPos = instr(headerLine, 0, "status: ")				//ステータスコード
-			if (headerTokenPos != -1) : statcode = int(strmid(headerLine, headerTokenPos+8, 3))
-			headerTokenPos = instr(headerLine, 0, "content-length: ")		//長さ
-			if (headerTokenPos != -1) : responseBodyLength = int(strmid(headerLine, -1, strlen(headerLine)-headerTokenPos+16))
-;			API_buf = instr(API_BufStr, 0, "X-RateLimit-Limit: ")		//60分間にAPIを実行できる回数
-;			if (API_Buf != -1) : TS_RateLimit(0) = int(strmid(API_BufStr, -1, strlen(API_BufStr)-(API_buf+19)))
-;			API_buf = instr(API_BufStr, 0, "X-RateLimit-Remaining: ")	//APIを実行できる残り回数
-;			if (API_Buf != -1) : TS_RateLimit(1) = int(strmid(API_BufStr, -1, strlen(API_BufStr)-(API_buf+23)))
-;			API_buf = instr(API_BufStr, 0, "X-RateLimit-Reset: ")		//リセットする時間
-;			if (API_Buf != -1) : TS_RateLimit(2) = int(strmid(API_BufStr, -1, strlen(API_BufStr)-(API_buf+19)))
-		loop
-		noteunsel
-		
-		//入手可能なデータ量を取得
-		_InternetQueryDataAvailable hRequest, varptr(rsize), 0, 0
-		
-		//バッファの初期化
-		sdim responseBuffer, rsize + 2
-		sdim responseBody, 1024*4
-
-		repeat 
-			_InternetReadFile hRequest, varptr(responseBuffer), rsize, varptr(hsize)
-
-			if (hsize = 0) : break 
-			responseBody += strmid(responseBuffer, 0, hsize)
-		loop
-	} else {
-		//ヘッダの取得ができなかった場合
-		_InternetCloseHandle hRequest
-		_InternetCloseHandle hConnect
-		return -1
-	}
-
-	//ハンドルの破棄
-	_InternetCloseHandle hRequest
-	_InternetCloseHandle hConnect
 /*
 	#ifdef _debug
 		nid = ginfo(3)
@@ -697,7 +658,7 @@ return form_encode(str(base64HmacSha1), 0)
 	#endif
 */
 
-	sdim requestHeader,800,75,0
+	sdim requestHeader
 	sdim postData
 	sdim picBuf
 
@@ -965,72 +926,12 @@ return (p1>=129 and p1<=159) or (p1>=224 and p1<=252)
 /*------------------------------------------------------------*/
 
 
-
-
-// quick sort
-// http://ja.wikipedia.org/wiki/%E3%82%AF%E3%82%A4%E3%83%83%E3%82%AF%E3%82%BD%E3%83%BC%E3%83%88
-#deffunc _sortStrArray array p1, int p2, int p3
-	p = p1((p2+p3)/2)
-	i = p2
-	j = p3
-
-	repeat
-		// i
-		repeat
-			if strcmp(p1(i), p) >= 0 : break
-			i++
-		loop
-		// j
-		repeat
-			if strcmp(p1(j), p) <= 0 : break
-			j--
-		loop
-
-		// 入れ替え
-
-		if (i < j) {
-			tmp = p1(i)
-			p1(i) = p1(j)
-			p1(j) = tmp
-		} else {
-			break
-		}
-		i++
-		j--
-	loop
-	
-	if ( i-p2 > 1 ) : _sortStrArray p1, p2, i-1
-	if ( p3-j > 1 ) : _sortStrArray p1, j+1, p3
-return
-
-
-
-#defcfunc strcmp str _p1, str _p2
-
-	p1n = _p1
-	p2n = _p2
-	
-	p1v = peek(p1n, 0)
-	p2v = peek(p2n, 0)
-	n = 0
-	while (p1v = p2v)
-		if (p1v = 0 or p2v = 0) : _break
-	
-		n++
-		p1v = peek(p1n, n)
-		p2v = peek(p2n, n)
-	wend
-return p1v - p2v
-
-
-
 #deffunc arrayCopy array ary1, array ary2
 	dimtype ary2, vartype(ary1), length(ary1)
 	foreach ary1
 		ary2(cnt) = ary1(cnt)
 	loop
 return
-
 
 
 /*------------------------------------------------------------*/
@@ -1055,7 +956,6 @@ return
 		trim_num++
 	loop
 return strmid(p1,trim_start,trim_num)
-
 
 
 
