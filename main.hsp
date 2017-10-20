@@ -201,13 +201,10 @@
 	gosub *twiInit
 	gosub *drawMainWindow
 	gosub *hotkeyCapSetting
-	gsel WND_MAIN,1+frontRow
 
-	if enableTweetWindow {
-		gsel WND_TWITTER, 1+twiFrontRow
-		gsel WND_MAIN, 1+frontRow
-	}
-
+	if enableTweetWindow: gsel WND_TWITTER, 1+twiFrontRow
+	if enableFFMPEGLogWindow: ShowFFMPEGLog
+	
 	if initialActivation {
 		dialog "艦これ一覧めいかー改二へようこそ！\n自動バージョンチェック機能を有効にしますか？\n※設定からいつでも切り替えができます", 2, "初回起動"
 		if (stat != 6){
@@ -238,10 +235,7 @@
 		}
 	}
 
-#ifdef _debug
-	ShowFFMPEGLog
-#endif
-
+	gsel WND_MAIN,1+frontRow
 	
 	//SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 1000, 0
 	/*
@@ -279,6 +273,12 @@
 		if (mode != MODE_OPTION){
 			objprm enabletweetwindowcid, 0
 		} 
+		return
+	}
+
+	if (wparam == WND_FFMPEG){
+		enableFFMPEGLogWindow = 0
+		HideFFMPEGLog
 		return
 	}
 	

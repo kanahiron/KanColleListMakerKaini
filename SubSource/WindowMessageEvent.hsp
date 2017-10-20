@@ -116,14 +116,11 @@ return
 		if (mode != modePrev || listMode != listModePrev || optionMode != optionModePrev){
 
 			if (mode = MODE_OPTION){
-				if enabletweetwindow {
-					gsel WND_TWITTER, -1
-				}
+				if enabletweetwindow: gsel WND_TWITTER, -1
+				if enableFFMPEGLogWindow: HideFFMPEGLog
 			} else {
-				if enabletweetwindow {
-					gsel WND_TWITTER, 1+twiFrontRow
-				}
-
+				if enabletweetwindow: gsel WND_TWITTER, 1+twiFrontRow
+				if enableFFMPEGLogWindow: ShowFFMPEGLog
 			}
 					
 			gosub *CalcCapPosAndWinSize

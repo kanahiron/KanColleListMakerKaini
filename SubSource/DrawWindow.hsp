@@ -811,6 +811,8 @@
 			chkbox "マウスカーソルを非表示にする", videoCapHideCursor: mesy += scale20
 			pos scale5, mesy
 			chkbox "キャプチャ中に取り込み範囲枠を表示する", videoCapShowFrame: mesy += scale20
+			pos scale5, mesy
+			chkbox "ffmpegのログウィンドウを表示する", enableFFMPEGLogWindow: mesy += scale20
 
 			pos Scale(5), mesy+Scale(2)
 			mes "フレームレート(5～30fps)"

@@ -55,6 +55,7 @@
 	GetIni "VideoCapture", "lateEncode", lateEncode, "1"
 	GetIni "VideoCapture", "HideCursor", videoCapHideCursor, "0"
 	GetIni "VideoCapture", "ShowFrame", videoCapShowFrame, "0"
+	GetIni "VideoCapture", "EnableFFMPEGLogWindow", enableFFMPEGLogWindow, "0"
 	GetIni "VideoCapture", "VideoCapFrameRate", videoCapFR, "20"
 	GetIni "VideoCapture", "VideoCapCRF", videoCapCRF, "22"
 	GetIni "VideoCapture", "x264presetNum", x264presetNum, "4"
@@ -188,6 +189,7 @@ return
 	if (lateEncode != 0) & (lateEncode != 1):lateEncode=1
 	if (videoCapHideCursor != 0) & (videoCapHideCursor != 1):videoCapHideCursor=0
 	if (videoCapShowFrame != 0) & (videoCapShowFrame != 1):videoCapShowFrame=0
+	if (enableFFMPEGLogWindow != 0) & (enableFFMPEGLogWindow != 1):enableFFMPEGLogWindow=0
 
 	if (videoCapFR < 5) | ( 30 < videoCapFR):videoCapFR=20
 	if (videoCapCRF < 16) | ( 30 < videoCapCRF):videoCapCRF=22
@@ -423,6 +425,7 @@ return
 	WriteIni "VideoCapture", "lateEncode", lateEncode
 	WriteIni "VideoCapture", "HideCursor", videoCapHideCursor
 	WriteIni "VideoCapture", "ShowFrame", videoCapShowFrame
+	WriteIni "VideoCapture", "EnableFFMPEGLogWindow", enableFFMPEGLogWindow
 	WriteIni "VideoCapture", "VideoCapFrameRate", videoCapFR
 	WriteIni "VideoCapture", "VideoCapCRF", videoCapCRF
 	WriteIni "VideoCapture", "x264presetNum", x264presetNum
