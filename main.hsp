@@ -291,7 +291,8 @@
 	onexit 0
 	onerror 0
 
-	if videoCapFlg: gosub *VideoCap
+	if videoCapFlg: gosub *VideoCapEmgStop
+	if lateEncodeFlg: gosub *VideoCapEmgStop
 
 	if hdcScreen: DeleteDC hdcScreen
 	if dcClient: ReleaseDC dcClient
@@ -301,10 +302,9 @@
 	DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 0
 
 	if (seqCapF == TRUE){
-		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timerID
+		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapTimerID
+		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapWriteStatTimerID
 	}
-
-	//KillTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID
 
 	if (hotkeySet == TRUE) {
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
