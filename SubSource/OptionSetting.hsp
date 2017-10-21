@@ -128,17 +128,17 @@ return
 
 *hotkeycapsetting
 	nidPush
-
-
+	
 	if ( hotkeycap == 1 && hotkeystr != hotkeystr_temp ) {
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
 		RegisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID, (MOD_ALT*hotkeycapalt)|(MOD_CONTROL*hotkeycapctrl)|(MOD_SHIFT*hotkeycapshift)|(MOD_WIN*hotkeycapwin), hotkeycode
-		hotkeystr_temp = hotkeystr
 		if (stat == 0){
 			hotkeyset = 0
+			hotkeystr_temp = ""
 			logmessage = "ホットキーの設定に失敗しました"
 		} else {
 			hotkeyset = 1
+			hotkeystr_temp = hotkeystr
 			logmessage = "ホットキーを設定しました"
 		}
 	}
@@ -147,8 +147,8 @@ return
 	if ( hotkeycap == 0 && hotkeyset == 1 ){
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
 		hotkeyset = 0
-		logmessage = "ホットキーを解除しました"
 		hotkeystr_temp = ""
+		logmessage = "ホットキーを解除しました"
 	}
 
 	if (mode != MODE_OPTION){
