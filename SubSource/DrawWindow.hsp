@@ -583,8 +583,11 @@
 			chkbox "起動時にバージョンチェックを行う", autoVersionCheck: mesy += scale20
 			autoVersionCheckCh = objinfo(stat, 2)
 			pos scale5, mesy
+			chkbox "起動時にメインウィンドウの位置を復元する", restoreMainWindowPos: mesy += scale20
+			pos scale5, mesy
+			chkbox "起動時にツイートウィンドウの位置を復元する", restoreTweetWindowPos: mesy += scale20
+			pos scale5, mesy
 			chkbox "終了時に確認のダイアログを出す", confirmCompletion: mesy += scale20
-	
 			pos scale5, mesy
 			chkbox "UI拡大率を自動で設定する", autoUIScale: mesy += scale20
 			autoUIScaleCh = objinfo(stat, 2)

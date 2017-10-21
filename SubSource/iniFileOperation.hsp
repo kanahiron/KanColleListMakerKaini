@@ -19,6 +19,10 @@
 	GetIni "Configuration", "Senden", senden, "1"
 	GetIni "Configuration", "AutoVersionCheck", autoVersionCheck, "1"
 	GetIni "Configuration", "ConfirmCompletion", confirmCompletion, "1"
+	GetIni "Configuration", "restoreMainWindowPos", restoreMainWindowPos, "1"
+	GetIni "Configuration", "restoreTweetWindowPos", restoreTweetWindowPos, "1"
+	GetIni "Configuration", "MainWindowPos", mainWindowPos, "32767\",\"32767"
+	GetIni "Configuration", "TweetWindowPos", tweetWindowPos, "32767\",\"32767"
 	GetIni "Configuration", "AutoUIScale", autoUIScale, "1"
 	GetIni "Configuration", "UIScale", UIScale, "1.0"
 	GetIni "Configuration", "ScreenShotSaveDir", sssavedir, "\"\""
@@ -127,7 +131,6 @@ return
 		
 
 *dataCheck
-	
 	savelogtext = ""
 
 	if (yubiwa != 0) & (yubiwa != 1):yubiwa = 1
@@ -389,6 +392,10 @@ return
 	WriteIni "Configuration", "Senden", senden
 	WriteIni "Configuration", "AutoVersionCheck", autoVersionCheck
 	WriteIni "Configuration", "ConfirmCompletion", confirmCompletion
+	WriteIni "Configuration", "RestoreMainWindowPos", restoreMainWindowPos
+	WriteIni "Configuration", "RestoreTweetWindowPos", restoreTweetWindowPos
+	WriteIni "Configuration", "MainWindowPos", mainWindowPos
+	WriteIni "Configuration", "TweetWindowPos", tweetWindowPos
 	WriteIni "Configuration", "AutoUIScale", autoUIScale
 	WriteIni "Configuration", "UIScale", UIScale
 	WriteIni "Configuration", "ScreenShotSaveDir", sssavedir

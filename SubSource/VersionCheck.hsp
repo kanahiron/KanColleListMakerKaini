@@ -197,7 +197,7 @@ return responseBody
 
 		if (mode == MODE_SSCAP){
 			logmessage = "バージョンチェックが完了しました。"
-			objprm logId, logMessage
+			LogOut logMessage
 		}
 		
 		debugLog "バージョンチェック 終了"

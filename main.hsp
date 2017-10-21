@@ -204,6 +204,15 @@
 
 	if enableTweetWindow: gsel WND_TWITTER, 1+twiFrontRow
 	if enableFFMPEGLogWindow: ShowFFMPEGLog
+
+	if (restoreMainWindowPos && mainWindowPos(0) != 32767){
+		GetWindowRect WND_INFO(WND_MAIN, WI_HANDLE), varptr(rect)
+		MoveWindow WND_INFO(WND_MAIN, WI_HANDLE), mainWindowPos(0), mainWindowPos(1), rect(2)-rect(0), rect(3)-rect(1), 1
+	}
+	if (restoreTweetWindowPos && tweetWindowPos(0) != 32767){
+		GetWindowRect WND_INFO(WND_TWITTER, WI_HANDLE), varptr(rect)
+		MoveWindow WND_INFO(WND_TWITTER, WI_HANDLE), tweetWindowPos(0), tweetWindowPos(1), rect(2)-rect(0), rect(3)-rect(1), 1
+	}
 	
 	if initialActivation {
 		dialog "艦これ一覧めいかー改二へようこそ！\n自動バージョンチェック機能を有効にしますか？\n※設定からいつでも切り替えができます", 2, "初回起動"
@@ -309,7 +318,9 @@
 	if (hotkeySet == TRUE) {
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
 	}
-	
+
+	gsel WND_MAIN: dim mainWindowPos, 2: mainWindowPos = ginfo(4), ginfo(5)
+	gsel WND_TWITTER: dim tweetWindowPos, 2: tweetWindowPos = ginfo(4), ginfo(5)
 	gosub *dataCheck
 	gosub *iniSave
 		
