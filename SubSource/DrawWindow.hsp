@@ -516,20 +516,20 @@
 		pos 0, mesy
 		button gosub "çÏê¨", *make
 		makeBId = stat
-		
+
 		objsize Scale(25), Scale(30)
-		pos Scale(150-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), mesy
-		button gosub "äJ", *listSaveFOpen
-		fOpenBId = stat
-		
+
 		if ((yabumiAutoUpload = 1) & (availableYabumi = 1)) {
-			pos Scale(150), mesy
+			pos Scale(125), mesy
 		} else {
 			pos Scale(350), mesy
 		}	
-		
 		button gosub "UP", *yabumiUpload
 		yabumiBId = stat
+		
+		pos Scale(150), mesy
+		button gosub "äJ", *listSaveFOpen
+		fOpenBId = stat
 		
 		mesy += Scale(30)
 	
