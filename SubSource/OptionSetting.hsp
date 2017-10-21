@@ -78,30 +78,30 @@ return
 	BId = stat
 	if ( mode == MODE_OPTION ){
 		if (optionMode == OPMODE_CAPTURE){
-			switch BId+1
-				case saveNameCaptureIId
+			switch saveNameSel
+				case 0
 					saveNameCapture = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameCaptureIId, saveNameCapture
+					objprm saveNameIId, saveNameCapture
 					swbreak
-				case saveNameSelectCaptureIId
+				case 1
 					saveNameSelectCapture = "selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameSelectCaptureIId, saveNameSelectCapture
+					objprm saveNameIId, saveNameSelectCapture
 					swbreak
-				case saveNameListIId
+				case 2
 					saveNameList = "äÕñ∫àÍóó_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameListIId, saveNameList
+					objprm saveNameIId, saveNameList
 					swbreak
-				case saveNameFormationIId
+				case 3
 					saveNameFormation = "çUó™ï“ê¨_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameFormationIId, saveNameFormation
+					objprm saveNameIId, saveNameFormation
 					swbreak
-				case saveNameDirectLinkIId
+				case 4
 					saveNameAirStation = "äÓínçqãÛë‡_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameDirectLinkIId, saveNameDirectLink
+					objprm saveNameIId, saveNameDirectLink
 					swbreak
-				case saveNameAirStationIId
+				case 5
 					saveNameDirectLink = "íºê⁄òAåã_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameAirStationIId, saveNameAirStation
+					objprm saveNameIId, saveNameAirStation
 					swbreak
 			swend
 		}

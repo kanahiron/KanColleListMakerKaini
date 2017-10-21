@@ -143,6 +143,42 @@ return
 		
 	}
 
+	//オプション→キャプチャ設定の保存名選択コンボボックス
+	if (lparam == saveNameSelCBh) & (((wparam>>16) & 0x0000FFFF) = 1){
+		
+		logmes "saveNameSelComBox"
+		sendmsg saveNameSelCBh, CB_GETCURSEL
+		saveNameSel = stat
+		logmes ""+saveNameSel
+		switch saveNameSel
+			case 0
+				objprm saveNameIId, saveNameCapture
+				objprm confirmSaveNameCId, confirmSaveNameCapture
+				swbreak
+			case 1
+				objprm saveNameIId, saveNameSelectCapture
+				objprm confirmSaveNameCId, confirmSaveNameSelectCapture
+				swbreak
+			case 2
+				objprm saveNameIId, saveNameList
+				objprm confirmSaveNameCId, confirmSaveNameList
+				swbreak
+			case 3
+				objprm saveNameIId, saveNameFormation
+				objprm confirmSaveNameCId, confirmSaveNameFormation
+				swbreak
+			case 4
+				objprm saveNameIId, saveNameDirectLink
+				objprm confirmSaveNameCId, confirmSaveNameDirectLink
+				swbreak
+			case 5
+				objprm saveNameIId, saveNameAirStation
+				objprm confirmSaveNameCId, confirmSaveNameAirStation
+				swbreak
+		swend
+	}
+
+
 	//モードがオプションモードでないとき
 	if (mode != MODE_OPTION){
 		
@@ -199,6 +235,62 @@ return
 		if (optionMode == OPMODE_VIDEOCAPTURE){
 			if ( (lparam == hAudioDeviceLB) && (((wparam>>16) & 0x0000FFFF) == 1) ){
 				gosub *SetAudioDeviceName
+			}
+		}
+
+
+		if (lparam == confirmSaveNameCh){
+			sendmsg confirmSaveNameCh, $F2
+			confirmSaveName = stat & 0x01
+
+			switch saveNameSel
+				case 0
+					confirmSaveNameCapture = confirmSaveName
+					swbreak
+				case 1
+					confirmSaveNameSelectCapture = confirmSaveName
+					swbreak
+				case 2
+					confirmSaveNameList = confirmSaveName
+					swbreak
+				case 3
+					confirmSaveNameFormation = confirmSaveName
+					swbreak
+				case 4
+					confirmSaveNameDirectLink = confirmSaveName
+					swbreak
+				case 5
+					confirmSaveNameAirStation = confirmSaveName
+					swbreak
+			swend
+		}
+
+		if (lparam == saveNameIh){
+			if ( ((wparam >> 16)&0x0000FFFF) == 0x0400 ){
+				sdim tempStr, 1026
+				GetWindowText saveNameIh, varptr(tempStr), 512
+				tempStr = cnvwtos(tempStr)
+				switch saveNameSel
+				case 0
+					SaveNameCapture = tempStr
+					swbreak
+				case 1
+					SaveNameSelectCapture = tempStr
+					swbreak
+				case 2
+					SaveNameList = tempStr
+					swbreak
+				case 3
+					SaveNameFormation = tempStr
+					swbreak
+				case 4
+					SaveNameDirectLink = tempStr
+					swbreak
+				case 5
+					SaveNameAirStation = tempStr
+					swbreak
+			swend
+
 			}
 		}
 		

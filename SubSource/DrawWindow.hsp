@@ -4,6 +4,7 @@
 
 	mainWndW = 0
 	mainWndH = 0
+	dummy = 0
 
 	if (mode == MODE_LIST){
 		gsel WND_GRID, 1
@@ -716,9 +717,47 @@
 			timersecIId = stat
 			GetWindowLong objinfo(timersecIId, 2), -16
 			SetWindowLong objinfo(timersecIId, 2), -16, stat | $2
-	
-			//pos scale5, mesy
-			//mes "保存名": mesy += scale20
+			/*
+			pos scale5, mesy
+			mes "連続キャプチャの制限": mesy += scale20
+			objsize Scale(120), scale20
+			pos scale5, mesy
+			chkbox "枚数", autoaddCapture
+			pos scale5+Scale(120), mesy
+			chkbox "時間", autoaddCapture
+			pos scale5+Scale(240), mesy
+			chkbox "容量", autoaddCapture
+			//*/
+
+			saveNameSelStr = saveNameCapture
+			saveNameSel = 0
+			confirmSaveName = confirmSaveNameCapture
+			
+			pos scale5, mesy+(ComBoxH-scale20)/2
+			mes "保存名"
+			pos Scale(55), mesy
+			objsize Scale(140)
+			combox saveNameSel, 100, "SSキャプチャ\n範囲選択キャプチャ\n艦娘一覧モード\n攻略編成モード\n直接連結\n基地航空隊"
+			saveNameSelCBh = objinfo_hwnd(stat)
+			pos Scale(180), mesy
+			objsize Scale(50), ComBoxH
+			pos Scale(200), mesy
+			chkbox "確認", confirmSaveName
+			confirmSaveNameCId = stat
+			confirmSaveNameCh = objinfo_hwnd(confirmSaveNameCId)
+			objsize Scale(100), ComBoxH
+			pos Scale(250), mesy
+			button gosub "デフォルト", *LoadDefaultSaveName
+			mesy += ComBoxH
+			pos 0, mesy
+			mesbox saveNameSelStr, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+			saveNameIId = stat
+			saveNameIh = objinfo_hwnd(saveNameIId)
+			ShowScrollBar saveNameIh, SB_VERT, FALSE
+/*
+			mesy += ComBoxH
+
+			/*
 			
 			pos Scale(5), mesy+1
 			mes "SSキャプチャ保存名"
@@ -798,6 +837,8 @@
 			mesbox saveNameAirStation, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameAirStationIId = stat
 			ShowScrollBar objinfo_hwnd(stat), SB_VERT, FALSE
+
+			//*/
 	
 		}
 
