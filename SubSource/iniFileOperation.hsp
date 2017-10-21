@@ -67,6 +67,9 @@
 	GetIni "VideoCapture", "AudioDeviceName", AudioDeviceName, "\"\""
 	GetIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir, "\"\""
 	GetIni "VideoCapture", "SaveNameVideoCapture", SaveNameVideoCapture, "\"KCVideo_<yyyy><MM><dd>-<HH><mm><ss>\""
+	GetIni "VideoCapture", "enableVideoCapLimit", enableVideoCapLimit, "0"
+	GetIni "VideoCapture", "VideoCapLimitTimeM", videoCapLimitTimeM, "30"
+	GetIni "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS, "0"
 
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
@@ -361,6 +364,24 @@ return
 		soka = 0
 	}
 
+
+	if (ichiranMode1 + ichiranMode2) != 1{
+		ichiranMode1 = 1
+		ichiranMode2 = 0
+	}
+
+	if (videoCapLimitTimeS > 60): videoCapLimitTimeS \= 60: videoCapLimitTimeM++
+	if (videoCapLimitTimeM > 99): videoCapLimitTimeS = 59: videoCapLimitTimeM = 99
+
+	videoCapLimitTime = (videoCapLimitTimeM*60+videoCapLimitTimeS)*1000
+	if (videoCapLimitTime < 5000){
+		videoCapLimitTimeM = 30
+		videoCapLimitTimeS = 0
+		videoCapLimitTime = 1800000
+		savelogtext += "Info - 動画キャプチャ制限時間が短すぎます。デフォルトに変更しました。\n"
+	}
+
+
 	if savelogtext != ""{
 		if errDialog {
 			dialog savelogtext
@@ -369,10 +390,7 @@ return
 		savelogtext = ""
 	}
 
-	if (ichiranMode1 + ichiranMode2) != 1{
-		ichiranMode1 = 1
-		ichiranMode2 = 0
-	}
+		
 
 	gosub *CalcCapPosAndWinSize
 
@@ -440,6 +458,9 @@ return
 	WriteIni "VideoCapture", "ffmpegDir", ffmpegDir
 	WriteIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir
 	WriteIni "VideoCapture", "SaveNameVideoCapture", SaveNameVideoCapture
+	WriteIni "VideoCapture", "enableVideoCapLimit", enableVideoCapLimit
+	WriteIni "VideoCapture", "VideoCapLimitTimeM", videoCapLimitTimeM
+	WriteIni "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS
 	
 	sdim temp, 256
 	temp = encstr(userdata)

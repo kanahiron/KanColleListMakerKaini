@@ -289,6 +289,13 @@ return
 
 	gsel WND_MAIN
 	LogOut elapsedTimeStr
+
+	if (enableVideoCapLimit){
+		if (videoCapLimitTime < elapsedTime){
+			gosub *VideoCap
+		}
+	}
+		
 	
 	nidPop
 return

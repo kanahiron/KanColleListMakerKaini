@@ -817,6 +817,28 @@
 			pos scale5, mesy
 			chkbox "ffmpegのログウィンドウを表示する", enableFFMPEGLogWindow: mesy += scale20
 
+
+			objsize Scale(174), scale20
+			pos scale5, mesy+Scale(3)
+			chkbox "動画キャプチャ時間の制限", enableVideoCapLimit
+
+			pos Scale(222), mesy
+			mes ":"
+			pos Scale(180), mesy
+			input videoCapLimitTimeM, Scale(40),  Scale(24), 2
+			videoCapLimitTimeMIId = stat
+			GetWindowLong objinfo(videoCapLimitTimeMIId, 2), -16
+			SetWindowLong objinfo(videoCapLimitTimeMIId, 2), -16, stat | $2
+			pos Scale(230), mesy
+			input videoCapLimitTimeS, Scale(40),  Scale(24), 2
+			videoCapLimitTimeSIId = stat
+			GetWindowLong objinfo(videoCapLimitTimeSIId, 2), -16
+			SetWindowLong objinfo(videoCapLimitTimeSIId, 2), -16, stat | $2
+			pos Scale(275), mesy+Scale(3)
+			mes "[ 分]:[ 秒]"
+
+			mesy += Scale(24)
+
 			pos Scale(5), mesy+Scale(2)
 			mes "フレームレート(5～30fps)"
 			pos Scale(222), mesy+Scale(2)
