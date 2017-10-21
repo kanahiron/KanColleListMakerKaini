@@ -570,7 +570,7 @@
 			pos scale5, mesy
 			chkbox "ログを非表示", hidelog: mesy+=scale20
 			pos scale5, mesy
-			chkbox "外部ソフトと連携してアップロードする(Gazyoなど)", yabumiautoupload: mesy += scale20
+			chkbox "外部ソフト連携ボタン[UP]を表示する(Gazyoなど)", yabumiautoupload: mesy += scale20
 			pos scale5, mesy
 			chkbox "艦これが等倍でなくも取得できるようにする(手動のみ)", othergame: mesy += scale20
 			pos scale5, mesy
