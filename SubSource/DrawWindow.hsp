@@ -97,24 +97,19 @@
 		pos Scale(0+((manualpos^1) * 175)), mesy
 		input luposx, Scale(40), Scale(23), 5
 		luposxIId = stat
+		ChgWndowStyle objinfo_hwnd(stat), 0x02
 		pos Scale(40+((manualpos^1) * 175)), mesy
 		input luposy, Scale(40), Scale(23), 5
 		luposyIId = stat
+		ChgWndowStyle objinfo_hwnd(stat), 0x02
 		pos Scale(95+((manualpos^1) * 175)), mesy
 		input rdposx, Scale(40), Scale(23), 5
 		rdposxIId = stat
+		ChgWndowStyle objinfo_hwnd(stat), 0x02
 		pos Scale(135+((manualpos^1) * 175)), mesy
 		input rdposy, Scale(40), Scale(23), 5
 		rdposyIId = stat
-		
-		GetWindowLong objinfo(luposxIId, 2), -16
-		SetWindowLong objinfo(luposxIId, 2), -16, stat | $2
-		GetWindowLong objinfo(luposyIId, 2), -16
-		SetWindowLong objinfo(luposyIId, 2), -16, stat | $2
-		GetWindowLong objinfo(rdposxIId, 2), -16
-		SetWindowLong objinfo(rdposxIId, 2), -16, stat | $2
-		GetWindowLong objinfo(rdposyIId, 2), -16
-		SetWindowLong objinfo(rdposyIId, 2), -16, stat | $2
+		ChgWndowStyle objinfo_hwnd(stat), 0x02
 	
 		if manualpos: mesy += Scale(23)
 	
@@ -164,24 +159,6 @@
 		pos Scale(150), mesy
 		button gosub "開", *ssSaveFOpen: mesy += Scale(30)
 		fopenBId = stat
-
-
-		/*
-		pos Scale(150), mesy
-		objsize Scale(25), Scale(30)
-		button gosub windowsSizeChangeBMes(mainWindowSmall), *windowsSizeChange
-		windowsSizeChangeBId = stat
-		mesy += Scale(30)
-		*/
-
-		/*
-		pos Scale(2), mesy + scale3
-		mes "セミオート作成"
-		objsize Scale(70), Scale(30)
-		pos Scale(105), mesy
-		button gosub "開始", *StartCreateSemiAuto: mesy += Scale(30)
-		createSemiAutoBId = stat
-		//*/
 
 		pos Scale(3+((enableSeqCap^1)*-175)), mesy + scale3
 		mes "連続キャプチャ"
@@ -705,9 +682,7 @@
 			mes "1～100(大きいほど高画質)"
 			pos Scale(100), mesy
 			input jpgquality, Scale(50), Scale(24), 3: mesy += Scale(24)
-			jpgqualityIId = stat
-			GetWindowLong objinfo(jpgqualityIId, 2), -16
-			SetWindowLong objinfo(jpgqualityIId, 2), -16, stat | $2
+			ChgWndowStyle objinfo_hwnd(stat), 0x02
 			
 			pos scale5, mesy
 			chkbox "連続キャプチャを有効にする", enableSeqCap: mesy += scale20
@@ -718,9 +693,7 @@
 			mes "x0.1秒 (0.1～99.9秒)"
 			pos Scale(150), mesy
 			input timersec, Scale(50), Scale(24), 3: mesy += Scale(24)
-			timersecIId = stat
-			GetWindowLong objinfo(timersecIId, 2), -16
-			SetWindowLong objinfo(timersecIId, 2), -16, stat | $2
+			ChgWndowStyle objinfo_hwnd(stat), 0x02
 
 			///*
 			pos scale5, mesy
@@ -807,14 +780,10 @@
 			mes ":"
 			pos Scale(180), mesy
 			input videoCapLimitTimeM, Scale(40),  Scale(24), 2
-			videoCapLimitTimeMIId = stat
-			GetWindowLong objinfo(videoCapLimitTimeMIId, 2), -16
-			SetWindowLong objinfo(videoCapLimitTimeMIId, 2), -16, stat | $2
+			ChgWndowStyle objinfo_hwnd(stat), 0x02
 			pos Scale(230), mesy
 			input videoCapLimitTimeS, Scale(40),  Scale(24), 2
-			videoCapLimitTimeSIId = stat
-			GetWindowLong objinfo(videoCapLimitTimeSIId, 2), -16
-			SetWindowLong objinfo(videoCapLimitTimeSIId, 2), -16, stat | $2
+			ChgWndowStyle objinfo_hwnd(stat), 0x02
 			pos Scale(275), mesy+Scale(3)
 			mes "[ 分]:[ 秒]"
 
@@ -829,8 +798,7 @@
 			pos Scale(180), mesy
 			input videoCapFR, Scale(40),  Scale(24), 2: mesy += Scale(24)
 			videoCapFRIId = stat
-			GetWindowLong objinfo(videoCapFRIId, 2), -16
-			SetWindowLong objinfo(videoCapFRIId, 2), -16, stat | $2
+			ChgWndowStyle objinfo_hwnd(stat), 0x02
 
 
 			pos Scale(5), mesy+Scale(2)
@@ -840,9 +808,7 @@
 			pos Scale(180), mesy
 			input videoCapCRF, Scale(40),  Scale(24), 2: mesy += Scale(24)
 			videoCapCRFIId = stat
-			GetWindowLong objinfo(videoCapCRFIId, 2), -16
-			SetWindowLong objinfo(videoCapCRFIId, 2), -16, stat | $2
-
+			ChgWndowStyle objinfo_hwnd(stat), 0x02
 			
 			pos Scale(5), mesy+Scale(3)
 			mes "x264のプリセット"
@@ -852,7 +818,6 @@
 			objsize Scale(80), Scale(25)
 			combox x264presetNum,, "ultrafast\nveryfast\nfaster\nfast\nmedium\nslow\nslower\nveryslow"
 			mesy += ComBoxH
-	
 
 			objsize Scale(350), Scale(50)
 			pos scale5, mesy
