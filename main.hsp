@@ -64,11 +64,11 @@
 	
 	onexit gosub *exit
 
-#ifndef _debug
+//#ifndef _debug
 
 	onerror gosub *err_
 	
-#endif
+//#endif
 	
 
 	wndInfoInit
