@@ -518,7 +518,7 @@ return form_encode(str(base64HmacSha1), 0)
 			memcpy PostData, PostDataFoot, strlen(PostDataFoot), strlen(PostDataHead)+picLength, 0
 
 		} else {
-			sdim PostData,1024*4
+			sdim PostData, 1024
 			repeat argumentLength
 				PostData += arguments(cnt)+"&"
 			loop
@@ -533,7 +533,7 @@ return form_encode(str(base64HmacSha1), 0)
 		loop
 		AuthorizationStr += "oauth_signature=" +signature
 
-		sdim RequestHeader,1024*4
+		sdim RequestHeader,1024
 		RequestHeader  = "Host: "+RequestURL+"\n"
 		RequestHeader += "Accept-Charset: UTF-8\n"
 		RequestHeader += "Accept-Encoding: gzip, deflate\n"
@@ -553,11 +553,11 @@ return form_encode(str(base64HmacSha1), 0)
 		loop
 		apiUrl += "oauth_signature=" +signature
 
-		sdim RequestHeader,1024*4
+		sdim RequestHeader,1024
 		RequestHeader  = "Host: "+RequestURL+"\n"
-		RequestHeader += "\nAccept-Charset: UTF-8\n"
-		RequestHeader += "\nAccept-Encoding: gzip, deflate\n"
-		RequestHeader += "\nContent-Type: application/x-www-form-urlencoded; charset=UTF-8"
+		RequestHeader += "Accept-Charset: UTF-8\n"
+		RequestHeader += "Accept-Encoding: gzip, deflate\n"
+		RequestHeader += "Content-Type: application/x-www-form-urlencoded; charset=UTF-8"
 		PostData = ""
 		PostDataLength = 0
 	}
@@ -568,7 +568,7 @@ return form_encode(str(base64HmacSha1), 0)
 	sdim RequestHeaderWide ,(RequestHeaderWideLength*2)+2	//UTF-16文字列を入れるバッファを確保
 	cnvstow RequestHeaderWide, RequestHeader				//バッファにUTF-8からUTF-16に変換して格納
 
-	//HttpSendRequestEx用のNTERNET_BUFFERS構造体を作成
+	//HttpSendRequestEx用のINTERNET_BUFFERS構造体を作成
 	dim INTERNET_BUFFERS, 10
 	INTERNET_BUFFERS( 0) = 40
 	INTERNET_BUFFERS( 2) = varptr(RequestHeaderWide)
@@ -602,20 +602,16 @@ return form_encode(str(base64HmacSha1), 0)
 						if (unSentSize < 2048): tSize = unSentSize: else: tSize = 2048
 						
 						_InternetWriteFile hRequest, varptr(PostData)+sentSize, tSize, varptr(BytesWritten)
-						if (stat == 0){
-							//送信失敗
-							sentFailFlg = 1
-							break
-						}
+						if (stat == 0): sentFailFlg = 1: break //送信失敗
+
 						sentSize += BytesWritten
 						unSentSize -= BytesWritten
 						//title@hsp strf("送信バイト数 %d/%dByte %.2f%%", sentSize, PostdataLength, (100.0*sentSize/PostDataLength))
-						if hProgress :sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength+0.9)
+						if hProgress: sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength+0.9)+1: sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength+0.9)
 						await
 					loop
 				}
 				if (sentFailFlg == 0){
-					if hProgress: sendmsg hProgress, $402, 100:wait 30
 					if _HttpEndRequest( hRequest, 0, 0, 0){
 						logmes "HttpEndRequest"
 
@@ -656,7 +652,7 @@ return form_encode(str(base64HmacSha1), 0)
 		mesbox responseBody,1200,75,0
 		gsel nid
 	#endif
-*/
+//*/
 
 	sdim requestHeader
 	sdim postData
