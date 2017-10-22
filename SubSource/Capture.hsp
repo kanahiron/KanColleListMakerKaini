@@ -348,6 +348,10 @@ return
 	logmessage += strf("  Œo‰ßŠÔ %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
 	logmessage += strf("  –‡” %d–‡(%dMB)",seqCapCnt, seqCapSize/1024/1024)
 	LogOut logmessage
+	if (seqcapf && enableSeqCapLimitNum): if (seqCapLimitNum < seqCapCnt): gosub *seqcap
+	if (seqcapf && enableSeqCapLimitTime): if (seqCapLimitTime < seqCapElapsedTime): gosub *seqcap
+	if (seqcapf && enableSeqCapLimitSize): if (seqCapLimitSize < seqCapSize/1024/1024): gosub *seqcap
+	await
 return
 
 
@@ -416,7 +420,8 @@ return
 			mkdir intervalsavedir
 		}
 		chdir currentdir
-		
+
+		gosub *SeqCapWriteStatTimerProcessing
 		gosub *ssCapture
 	} else {
 		

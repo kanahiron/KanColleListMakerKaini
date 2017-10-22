@@ -176,6 +176,9 @@
 
 #define LogOut(%1) sendmsg hLog, WM_SETTEXT, 0, (%1)
 
+//ウィンドウスタイルの変更用マクロ
+#define ChgWndowStyle(%1, %2) SetWindowLong %1, -16, GetWindowLong(%1, -16) | (%2)
+
 
 //ヘッダファイルで定義されてるもの
 

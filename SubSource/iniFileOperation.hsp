@@ -42,6 +42,13 @@
 	GetIni "CaptureAndMaking", "JpgQuality", jpgquality, "90"
 	GetIni "CaptureAndMaking", "EnableIntervalCap", enableSeqCap, "0"
 	GetIni "CaptureAndMaking", "IntervalTime", timersec, "5"
+	GetIni "CaptureAndMaking", "EnableSeqCapLimitNum", enableSeqCapLimitNum, "0"
+	GetIni "CaptureAndMaking", "EnableSeqCapLimitTime", enableSeqCapLimitTime, "0"
+	GetIni "CaptureAndMaking", "EnableSeqCapLimitSize", enableSeqCapLimitSize, "0"
+	GetIni "CaptureAndMaking", "seqCapLimitNum", seqCapLimitNum, "9999"
+	GetIni "CaptureAndMaking", "seqCapLimitTimeM", seqCapLimitTimeM, "99"
+	GetIni "CaptureAndMaking", "seqCapLimitTimeS", seqCapLimitTimeS, "59"
+	GetIni "CaptureAndMaking", "seqCapLimitSize", seqCapLimitSize, "9999"
 	GetIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "saveNameSelectCapture", saveNameSelectCapture, "\"selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameList", saveNameList, "\"艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
@@ -381,6 +388,36 @@ return
 		savelogtext += "Info - 動画キャプチャ制限時間が短すぎます。デフォルトに変更しました。\n"
 	}
 
+	
+	if (seqCapLimitTimeS > 60): seqCapLimitTimeS \= 60: seqCapLimitTimeM++
+	if (seqCapLimitTimeM > 99): seqCapLimitTimeS = 59: seqCapLimitTimeM = 99
+
+	seqCapLimitTime = (seqCapLimitTimeM*60+seqCapLimitTimeS)*1000
+	if (seqCapLimitTime < 1000){
+		seqCapLimitTimeM = 99
+		seqCapLimitTimeS = 59
+		seqCapLimitTime = 5999000
+		savelogtext += "Info - 連続キャプチャ制限時間が短すぎます。デフォルトに変更しました。\n"
+	}
+	
+	if (seqCapLimitSize < 1){
+		seqCapLimitSize = 99999
+		savelogtext += "Info - 連続キャプチャ制限容量が短すぎます。デフォルトに変更しました。\n"
+	}
+
+	if (seqCapLimitNum < 1){
+		seqCapLimitNum = 9999
+		savelogtext += "Info - 連続キャプチャ制限枚数が短すぎます。デフォルトに変更しました。\n"
+	}
+
+	videoCapLimitTime = (videoCapLimitTimeM*60+videoCapLimitTimeS)*1000
+	if (videoCapLimitTime < 5000){
+		videoCapLimitTimeM = 30
+		videoCapLimitTimeS = 0
+		videoCapLimitTime = 1800000
+		savelogtext += "Info - 動画キャプチャ制限時間が短すぎます。デフォルトに変更しました。\n"
+	}
+
 	if savelogtext != ""{
 		if errDialog {
 			dialog savelogtext
@@ -418,8 +455,8 @@ return
 	WriteIni "Configuration", "IntervalShotSaveDir",intervalShotDir
 	WriteIni "Configuration", "SelectCapSaveDir",selectCapSaveDir
 	WriteIni "Configuration", "YabumiExeDir", yabumidir
-	
 	WriteIni "CaptureAndMaking", "noHideLv", noHideLv
+	
 	WriteIni "CaptureAndMaking", "NameCut", namecut
 	WriteIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel
 	WriteIni "CaptureAndMaking", "HotkeyCapture", hotkeycap
@@ -430,6 +467,13 @@ return
 	WriteIni "CaptureAndMaking", "JpgQuality", jpgquality
 	WriteIni "CaptureAndMaking", "EnableIntervalCap", enableSeqCap
 	WriteIni "CaptureAndMaking", "IntervalTime", timersec
+	WriteIni "CaptureAndMaking", "EnableSeqCapLimitNum", enableSeqCapLimitNum
+	WriteIni "CaptureAndMaking", "EnableSeqCapLimitTime", enableSeqCapLimitTime
+	WriteIni "CaptureAndMaking", "EnableSeqCapLimitSize", enableSeqCapLimitSize
+	WriteIni "CaptureAndMaking", "seqCapLimitNum", seqCapLimitNum
+	WriteIni "CaptureAndMaking", "seqCapLimitTimeM", seqCapLimitTimeM
+	WriteIni "CaptureAndMaking", "seqCapLimitTimeS", seqCapLimitTimeS
+	WriteIni "CaptureAndMaking", "seqCapLimitSize", seqCapLimitSize
 	WriteIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture
 	WriteIni "CaptureAndMaking", "saveNameSelectCapture", saveNameSelectCapture
 	WriteIni "CaptureAndMaking", "SaveNameList", saveNameList

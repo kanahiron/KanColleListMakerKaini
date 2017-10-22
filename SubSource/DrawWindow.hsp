@@ -666,6 +666,10 @@
 	
 			objsize Scale(350), scale20
 
+			saveNameSelStr = saveNameCapture
+			saveNameSel = 0
+			confirmSaveName = confirmSaveNameCapture
+
 			pos scale5, mesy
 			chkbox "\"提督名と司令部Lvを隠す\"で司令部Lvは隠さない", noHideLv: mesy += scale20
 			pos scale5, mesy
@@ -721,18 +725,38 @@
 			///*
 			pos scale5, mesy
 			mes "連続キャプチャの制限": mesy += scale20
-			objsize Scale(120), scale20
-			pos scale5, mesy
-			chkbox "枚数", autoaddCapture
-			pos scale5+Scale(120), mesy
-			chkbox "時間", autoaddCapture
-			pos scale5+Scale(240), mesy
-			chkbox "容量", autoaddCapture
-			//*/
+			
+			objsize Scale(44), Scale(24)
+			pos Scale(10), mesy
+			chkbox "枚数", enableSeqCapLimitNum
+			pos Scale(120), mesy
+			chkbox "時間", enableSeqCapLimitTime
+			pos Scale(235), mesy
+			chkbox "容量", enableSeqCapLimitSize
+			
+			pos Scale(55), mesy
+			input seqCapLimitNum, Scale(40), Scale(24), 4
+			ChgWndowStyle objinfo_hwnd(stat), 0x02
+			pos Scale(97), mesy+Scale(2)
+			mes "枚"
 
-			saveNameSelStr = saveNameCapture
-			saveNameSel = 0
-			confirmSaveName = confirmSaveNameCapture
+			pos Scale(165), mesy
+			input seqCapLimitTimeM, Scale(25), Scale(24), 2
+			ChgWndowStyle objinfo_hwnd(stat), 0x02
+			pos Scale(200), mesy
+			input seqCapLimitTimeS, Scale(25), Scale(24), 2
+			ChgWndowStyle objinfo_hwnd(stat), 0x02
+			pos Scale(192), mesy+Scale(2)
+			mes ":"
+			pos Scale(97), mesy+Scale(2)
+
+			pos Scale(280), mesy
+			input seqCapLimitSize, Scale(47), Scale(24), 5
+			ChgWndowStyle objinfo_hwnd(stat), 0x02
+			pos Scale(328), mesy+Scale(2)
+			mes "MB"
+			mesy += Scale(24)
+			//*/
 			
 			pos scale5, mesy+(ComBoxH-scale20)/2
 			mes "保存名"
