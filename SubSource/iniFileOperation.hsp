@@ -21,8 +21,8 @@
 	GetIni "Configuration", "ConfirmCompletion", confirmCompletion, "1"
 	GetIni "Configuration", "restoreMainWindowPos", restoreMainWindowPos, "1"
 	GetIni "Configuration", "restoreTweetWindowPos", restoreTweetWindowPos, "1"
-	GetIni "Configuration", "MainWindowPos", mainWindowPos, "32767\",\"32767"
-	GetIni "Configuration", "TweetWindowPos", tweetWindowPos, "32767\",\"32767"
+	GetIni "Configuration", "MainWindowPos", mainWindowPos, "-32000\",\"-32000"
+	GetIni "Configuration", "TweetWindowPos", tweetWindowPos, "-32000\",\"-32000"
 	GetIni "Configuration", "AutoUIScale", autoUIScale, "1"
 	GetIni "Configuration", "UIScale", UIScale, "1.0"
 	GetIni "Configuration", "ScreenShotSaveDir", sssavedir, "\"\""
@@ -381,7 +381,6 @@ return
 		savelogtext += "Info - 動画キャプチャ制限時間が短すぎます。デフォルトに変更しました。\n"
 	}
 
-
 	if savelogtext != ""{
 		if errDialog {
 			dialog savelogtext
@@ -389,8 +388,6 @@ return
 		}
 		savelogtext = ""
 	}
-
-		
 
 	gosub *CalcCapPosAndWinSize
 

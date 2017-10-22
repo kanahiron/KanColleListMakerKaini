@@ -717,7 +717,8 @@
 			timersecIId = stat
 			GetWindowLong objinfo(timersecIId, 2), -16
 			SetWindowLong objinfo(timersecIId, 2), -16, stat | $2
-			/*
+
+			///*
 			pos scale5, mesy
 			mes "連続キャプチャの制限": mesy += scale20
 			objsize Scale(120), scale20
