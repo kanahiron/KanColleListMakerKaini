@@ -96,7 +96,7 @@
 	GetIni "SSMode", "AutoSearch", autosearch, "1"
 	GetIni "SSMode", "HideName", hidename, "0"
 	GetIni "SSMode", "EnableTweetWindow", enableTweetWindow, "0"
-	GetIni "SSMode", "SSCapturePosition", SSCap_temp, "0\",\"0\",\"0\",\"0"
+	GetIni "SSMode", "SSCapturePosition", ssCap, "0\",\"0\",\"0\",\"0"
 	
 	GetIni "KanmusuListMode", "ichiranMode1", ichiranMode1, "1"
 	GetIni "KanmusuListMode", "yubiwa", yubiwa, "1"
@@ -528,7 +528,7 @@ return
 	WriteIni "SSMode", "AutoSearch", autosearch
 	WriteIni "SSMode", "HideName", hidename
 	WriteIni "SSMode", "EnableTweetWindow",enableTweetWindow
-	WriteIni "SSMode", "SSCapturePosition", SSCap
+	WriteIni "SSMode", "SSCapturePosition", ssCap
 	
 	WriteIni "KanmusuListMode", "ichiranMode1", ichiranMode1
 	WriteIni "KanmusuListMode", "yubiwa", yubiwa

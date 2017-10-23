@@ -226,26 +226,24 @@
 
 	gosub *VerCheck
 
-	if autoSearch {
-	} else {
-		if ((SSCap_temp(2)-SSCap_temp(0)) != 0) | ((SSCap_temp(3)-SSCap_temp(1)) != 0){
-			gsel WND_OVERLAY, 1
-			MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SSCap_temp(0), SSCap_temp(1), SSCap_temp(2)-SSCap_temp(0), SSCap_temp(3)-SSCap_temp(1), 1
-			await
-			gsel WND_MAIN
+	if ((ssCap(2)-ssCap(0)) != 0) | ((ssCap(3)-ssCap(1)) != 0){
+		MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), ssCap(0), ssCap(1), ssCap(2)-SSCap(0), ssCap(3)-ssCap(1), 1
+		gosub *CaptureMethodDecide
+		if (positionType != PT_ABSOLUTE || (autoSearch^1)){
+			ShowWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SW_RESTORE
 			dialog "前回起動時の座標を取得しました。\n復元しますか？", 2, "確認"
 			dialogStat = stat
-			gsel WND_OVERLAY, -1
-			gsel WND_MAIN, 1+frontrow
+			ShowWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SW_HIDE
 			if (dialogStat == 6){
-				repeat 4
-					SSCap(cnt) = SSCap_temp(cnt)
-				loop
-				gosub *CaptureMethodDecide
 				gosub *SSSettingCheck
+			} else {
+				repeat 4: ssCap(cnt) = 0: loop
 			}
+		} else {
+			repeat 4: ssCap(cnt) = 0: loop
 		}
 	}
+	
 
 	gsel WND_MAIN,1+frontRow
 	
@@ -326,6 +324,10 @@
 	ShowWindow WND_INFO(WND_TWITTER, WI_HANDLE), SW_RESTORE
 	gsel WND_MAIN: dim mainWindowPos, 2: mainWindowPos = ginfo(4), ginfo(5)
 	gsel WND_TWITTER: dim tweetWindowPos, 2: tweetWindowPos = ginfo(4), ginfo(5)
+
+	sscap(2) -= ssCap(0): sscap(3) -= ssCap(1)
+	GetAbsPos ssCap(0), ssCap(1)
+	sscap(2) += ssCap(0): sscap(3) += ssCap(1)
 	gosub *dataCheck
 	gosub *iniSave
 		
