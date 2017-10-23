@@ -4,7 +4,7 @@
 	nidPush
 
 	gsel WND_MAKE_STRING
-
+	
 	font fontnum, fontsizenum, 1
 	mes "1,3,4"
 	OSOW = ginfo(15)
@@ -20,6 +20,14 @@
 
 	x = 10
 	y = 10
+
+	color 237, 229, 216
+	boxf 0, 0, 220, 290
+	boxf 500, 0, 540, 340
+	boxf 600, 0, 640, 340
+	boxf 700, 0, 740, 340
+	boxf 800, 0, 840, 340
+	boxf 0, 300, 240, 340
 
 	if enableFirst = 1{
 		x = 10
@@ -178,14 +186,14 @@
 		mes string
 	}
 
-	font "メイリオ", 15, 1
+	font "メイリオ", 12, 1
 	mref BMSCR, 67
-	r = 0.1 * abs(BMSCR.49)
+	r = 0.2 * abs(BMSCR.49)
 	n = int(2.0 * M_PI * r)
 
 	x = 10
 	y = 310
-	string = SOFTNAME
+	string = LONGSOFTNAME
 	color 255, 255, 255
 	repeat n
 		rad = 2.0 * M_PI * cnt / n

@@ -247,7 +247,7 @@
 	if senden & (listmode==LISTMODE_FLEET) & (sosuka|soka){
 		gsel WND_TEMP2
 		gmode 7
-		pos ginfo_winx-237, ginfo_winy-18//225
+		pos ginfo_winx-220, ginfo_winy-14//225
 		gcopy WND_MAKE_STRING, 10, 310, 240, 30
 	}
 		
