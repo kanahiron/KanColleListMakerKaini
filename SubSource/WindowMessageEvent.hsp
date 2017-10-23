@@ -1,5 +1,6 @@
 *MainWindowProc
-	//oncmd 0
+	await
+	oncmd 0
 
 	switch iparam
 
@@ -44,8 +45,7 @@
 			swbreak
 
 	swend
-
-	//oncmd 1
+	oncmd 1
 return
 
 

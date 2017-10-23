@@ -18,9 +18,7 @@
 			nidPop
 			return
 		} else {
-			logmessage = "動画キャプチャを中止しました。"
-			objprm logid, logmessage: await
-			
+			LogOut "動画キャプチャを中止しました。"
 			nidPop
 			return
 		}
@@ -456,11 +454,11 @@ return
 		ffmpegdir = ""
 	}
 	
-	objprm ffmpegDirIId, ffmpegdir: await
+	objprm ffmpegDirIId, ffmpegdir
 
 	GetAudioDevice ffmpegdir, audioDeviceList
 	audioDeviceList += "音声なし"
-	objprm audioDeviceLBId, audioDeviceList: await
+	objprm audioDeviceLBId, audioDeviceList
 	audioDeviceListNum = -1
 	audioDeviceName = ""
 	sendmsg hAudioDeviceLB, LB_SETCURSEL, audioDeviceListNum, 0

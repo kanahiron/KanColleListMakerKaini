@@ -14,8 +14,7 @@
 		//新座標検出===========================================
 
 		gsel WND_MAIN
-		logmessage = "艦これの画面にマウスカーソルを重ねてください。"
-		objprm logid,logmessage
+		LogOut "艦これの画面にマウスカーソルを重ねてください。"
 
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
@@ -278,8 +277,7 @@ return
 		gosub *SSModeControlEnable
 
 		availableCap = TRUE
-		logmessage = "座標の取得に成功しました"
-		objprm logid, logmessage
+		LogOut "座標の取得に成功しました"
 		if autoSearch: autoSearchFailureCount = 0
 		
 	} else {
@@ -291,9 +289,8 @@ return
 
 		if seqcapf: gosub *seqcap
 		
-		logmessage = "座標を取得できません\n詳細はreadmeをお読みください"
-		objprm logid,logmessage
-
+		LogOut "座標を取得できません\n詳細はreadmeをお読みください"
+		
 		gosub *SSModeControlDisable
 		
 		availablecap = FALSE

@@ -256,17 +256,6 @@
 
 		sdim tempstr
 
-		/*
-
-		confirmSaveNameList
-		confirmSaveNameFormation
-		confirmSaveNameDirectLink
-		confirmSaveNameAirStation
-
-
-
-		//*/
-
 		callSaveDiagFlg = FALSE
 		if (listmode == LISTMODE_LIST){
 			tempstr = DateAndTimeFormat2(saveNameList)
@@ -309,21 +298,17 @@
 		gsel WND_MAIN, 1+frontRow
 			
 		if kmexist(saveNamePath) <= 0{
-			logmessage = savename+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
-			objprm logid, logmessage: await
+			LogOut savename+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
 		} else {
 			successFlg = TURE
-			logmessage = savename+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
-			objprm logid, logmessage: await
+			LogOut savename+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
 
 			picHistoryLoad(saveNamePath)
 			gosub *TweetWindow
 		}
 	
 	} else {
-		gsel WND_MAIN, 1+frontRow
-		logmessage = "‰æ‘œ‚ªˆê–‡‚à‚ ‚è‚Ü‚¹‚ñ"
-		objprm logid, logmessage
+		LogOut "‰æ‘œ‚ªˆê–‡‚à‚ ‚è‚Ü‚¹‚ñ"
 	}
 
 	dim bufIDPos, CELL_MAX_W, CELL_MAX_H

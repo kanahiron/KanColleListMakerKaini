@@ -69,19 +69,13 @@
 					if bufIDPos(mxy_(0), mxy_(1)) >= 100{
 						loadPicBufID( bufIDPos(mxy_(0), mxy_(1)) - 100 ) = 0
 						bufIDPos(mxy_(0), mxy_(1)) = 0
-						gsel WND_MAIN
-						logmessage = "セル("+mxy_(0)+", "+mxy_(1)+")を削除しました"
-						objprm logid, logmessage
-						gsel WND_GRID		
+						LogOut "セル("+mxy_(0)+", "+mxy_(1)+")を削除しました"	
 					}
 				} else {
 					temp = bufIDPos(mxy_(0), mxy_(1)) 
 					bufIDPos(mxy_(0), mxy_(1)) = bufIDPos(mxy(0), mxy(1))
 					bufIDPos(mxy(0), mxy(1)) = temp
-					gsel WND_MAIN
-					logmessage = "セル("+mxy_(0)+", "+mxy_(1)+")をセル("+mxy(0)+", "+mxy(1)+")に移動しました"
-					objprm logid, logmessage
-					gsel WND_GRID
+					LogOut "セル("+mxy_(0)+", "+mxy_(1)+")をセル("+mxy(0)+", "+mxy(1)+")に移動しました"
 				}
 			
 				mxy(0) = 0, 0

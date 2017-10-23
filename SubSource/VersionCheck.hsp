@@ -165,7 +165,7 @@ return responseBody
 
 	if autoVersionCheck {
 
-		logOut "バージョンチェック中です。":await
+		logOut "バージョンチェック中です。"
 		
 		execVerCheck
 		if (stat == 200){

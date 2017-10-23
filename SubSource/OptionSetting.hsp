@@ -155,10 +155,7 @@ return
 		logmessage = "ホットキーを解除しました"
 	}
 
-	if (mode != MODE_OPTION){
-		gsel WND_MAIN
-		objprm logid, logmessage: await
-	}
+	LogOut logmessage
 
 	if ( hotkeyset && availablecap ) {
 		gsel WND_MAIN, 0

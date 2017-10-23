@@ -14,12 +14,8 @@
 			if seqCapf: gosub *seqcap
 
 			gosub *ssSettingCheck
-			
-			logmessage = "艦これの画面を見失いました(1)"
-			if (mode != MODE_OPTION){
-				objprm logid, logmessage: await
-			}
 
+			LogOut "艦これの画面を見失いました(1)"
 			nidPop
 			return 1
 		}
@@ -36,11 +32,7 @@
 				
 				gosub *ssSettingCheck
 				
-				logmessage = "艦これの画面を見失いました(2)"
-				if (mode != MODE_OPTION){
-					objprm logid, logmessage: await
-				}
-				
+				LogOut "艦これの画面を見失いました(2)"
 				nidPop
 				return 1
 			}
@@ -74,12 +66,10 @@
 	if ( (sscapwh(0) < 50) | (sscapwh(1) < 30) ){
 		if (mode != MODE_OPTION){
 
-			if seqCapf: gosub *seqcap
-			
+			if seqCapf: gosub *seqcap	
 			positionType = 0
-			logmessage = "取得範囲が小さすぎます"
-			objprm logid, logmessage
 
+			LogOut "取得範囲が小さすぎます"
 			ssCapMes = "取得する"
 			objprm SSCapIId, ssCapMes
 			
@@ -333,14 +323,13 @@ return
 
 	logmessage = "連続キャプチャ中…\n"
 	logmessage += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
-	logmessage += strf("  枚数 %d枚(%dMB)",seqCapCnt, seqCapSize/1024/1024)
+	logmessage += strf("  枚数 %d枚(%dMB)", seqCapCnt, seqCapSize/1024/1024)
 	LogOut logmessage
 	if (seqcapf && enableSeqCapLimitNum): if (seqCapLimitNum < seqCapCnt): gosub *seqcap
 	if (seqcapf && enableSeqCapLimitTime): if (seqCapLimitTime < seqCapElapsedTime): gosub *seqcap
 	if (seqcapf && enableSeqCapLimitSize): if (seqCapLimitSize < seqCapSize/1024/1024): gosub *seqcap
-	await
-return
 
+return
 
 //ホットキー――――――――――――――――――――――――――――――――――
 *hotkey
@@ -376,9 +365,6 @@ return
 	
 	nidPop
 return
-
-
-
 
 *seqcap
 
