@@ -39,7 +39,6 @@
 	
 	if (videoCapFlg == FALSE){
 
-		
 		sdim ffbuf, 1024*4
 		ResetFFMPEGLog
 		apid = 0
@@ -50,33 +49,9 @@
 		estimatedTime = 0
 		remainingTime = 0
 		encodeTime = 0
-		
-		switch captureMethod
-		
-			case CM_BITBLT
-				switch positionType
-					case PT_RELATIVE
-					case PT_WNDABSOLUTE
-						scrPoint = sscap(0), sscap(1)
-						ClientToScreen hClient, varptr(scrPoint)
-						capX = scrPoint(0)
-						capY = scrPoint(1)
-						swbreak
-					case PT_ABSOLUTE
-						capX = sscap(0)
-						capY = sscap(1)
-						swbreak
-				swend
-				swbreak
-				
-			case CM_PRINTWINDOW
-				scrPoint = sscap(0), sscap(1)
-				ClientToScreen hClient, varptr(scrPoint)
-				capX = scrPoint(0)
-				capY = scrPoint(1)
-				swbreak
 
-		swend
+		GetAbsPos videoCapX, videoCapY
+		
 		//座標を8のサイズに整形
 		videoCapSizeX = int((0.125*sscapwh(0))+0.9999999)*8
 		videoCapSizeY = int((0.125*sscapwh(1))+0.9999999)*8
@@ -104,11 +79,11 @@
 		if (lateEncode){
 			//負荷軽減動画キャプチャ
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
-			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, capX, capY)
+			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, videoCapX, videoCapY)
 			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, 12, "ultrafast", videoFileName)
 		} else {
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
-			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, capX, capY)
+			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, videoCapX, videoCapY)
 			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, videoFileName)
 		}
 		
