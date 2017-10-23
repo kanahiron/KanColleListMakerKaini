@@ -49,20 +49,29 @@
 	sdim picStack, 1024, 4
 	sdim tweettext, 200
 	sdim picHistory, 512, 101
+
+	dim twiBufPicSize, 2, 4
 	
 	dim twiPicFrameXL, 5
 	dim twiPicFrameXR, 5
 	dim twiPicFrameYU, 5
 	dim twiPicFrameYD, 5
+	dim twiPicFrameW, 5
+	dim twiPicFrameH, 5
 	dim _twiPicFrameXL, 5
 	dim _twiPicFrameXR, 5
 	dim _twiPicFrameYU, 5
 	dim _twiPicFrameYD, 5
-	
+
 	_twiPicFrameXL = 185, 250, 315, 380, 184
 	_twiPicFrameXR = 248, 313, 378, 443, 444
 	_twiPicFrameYU = 3 , 3 , 3, 3, 45
 	_twiPicFrameYD = 42, 42, 42, 42, 209
+
+	repeat 5
+		twiPicFrameW(cnt) = _twiPicFrameXR(cnt) - _twiPicFrameXL(cnt)
+		twiPicFrameH(cnt) = _twiPicFrameYD(cnt) - _twiPicFrameYU(cnt)
+	loop
 
 	disInfo(0) = GetSystemMetrics(76)
 	disInfo(1) = GetSystemMetrics(77)

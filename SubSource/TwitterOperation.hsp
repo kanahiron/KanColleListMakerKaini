@@ -289,7 +289,7 @@ return
 				gsel WND_TWIBUF1+i
 				pos 0, 0: syscolor 15: boxf
 				gcopy WND_TWIBUF1+i-1, 0, 0, 2400, 1440
-				
+				twiBufPicSize(0, i) = twiBufPicSize(0, i-1), twiBufPicSize(1, i-1) 
 			}
 			i--
 		loop
@@ -297,6 +297,7 @@ return
 
 		gsel WND_TWIBUF1
 		pos 0, 0: syscolor 15: boxf
+		ImgF_GetPicSize PicStack(0), twiBufPicSize(0, 0), twiBufPicSize(1, 0)
 		ImgF_PicloadEx PicStack(0), 1
 
 		if twiOrder(0) = 0{
@@ -316,6 +317,7 @@ return
 	gosub *SSCapture
 	if (stat): return
 
+	if (seqCapf): picHistoryLoad savenamepath
 	gosub *picHistoryAddStack
 
 return
@@ -434,9 +436,10 @@ return
 	loop
 	boxf twiPicFrameXL(4)+2,twiPicFrameYU(4)+2,twiPicFrameXR(4)-2,twiPicFrameYD(4)-2
 	color
-	
+
+	//ど真ん中の大きい所
 	pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
-	gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TWIBUF, 0, 0, 800, 480, 1
+	gzoom twiPicFrameW(4)-3, twiPicFrameH(4)-3, WND_TWIBUF, 0, 0, 800, 480, 0
 	
 	repeat 4
 		if PicStack(cnt) = "":break
@@ -490,11 +493,15 @@ return
 				color 200,200,200
 				boxf
 				syscolor 8
-	
-				pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
-				gzoom (twiPicFrameXR(4)-twiPicFrameXL(4)-3), (twiPicFrameYD(4)-twiPicFrameYU(4)-3), WND_TWIBUF1+rcFlg, 0, 0, 800, 480
+				//詳細表示部
+				ImgP_CalcFitSize tDispW, tDispH, twiBufPicSize(0, rcFlg), twiBufPicSize(1, rcFlg), twiPicFrameW(4)-3, twiPicFrameH(4)-3
+				pos (twiPicFrameXL(4)+2)+((twiPicFrameW(4)-3)-tDispW)/2, twiPicFrameYU(4)+2
+				gzoom tDispW, tDispH, WND_TWIBUF1+rcFlg, 0, 0, twiBufPicSize(0, rcFlg), twiBufPicSize(1, rcFlg), 1
+
+				//サムネイル部
+				ImgP_CalcFitSize tDispW, tDispH, limit(twiBufPicSize(0, rcFlg), 0, Scale(800)), limit(twiBufPicSize(1, rcFlg), 0, Scale(480)), Scale(62), Scale(38)
 				pos twiPicFrameXL(rcFlg)+1,twiPicFrameYU(rcFlg)+1
-				gzoom Scale(62), Scale(38), WND_TWIBUF1+rcFlg, 0, 0, 800, 480
+				gzoom tDispW, tDispH, WND_TWIBUF1+rcFlg, 0, 0, limit(twiBufPicSize(0, rcFlg), 0, Scale(800)), limit(twiBufPicSize(1, rcFlg), 0, Scale(480))
 	
 				sendmsg stackCounth ,$C , , strf("プレビュ")
 			
