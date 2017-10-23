@@ -259,8 +259,8 @@ return (successFlg^1)
 				}
 			}
 			if (listmode == LISTMODE_OTHER){
-				ycnt = cnt\(cellnum(1)+1)
-				xcnt = cnt/(cellnum(1)+1)
+				ycnt = cnt\ListModeHNum
+				xcnt = cnt/ListModeHNum
 			} 
 			xcnt = limit(xcnt, 0, cellnum(0))
 			ycnt = limit(ycnt, 0, cellnum(1))

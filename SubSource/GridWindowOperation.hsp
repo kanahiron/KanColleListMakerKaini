@@ -20,7 +20,7 @@
 			//左クリック用の処理ここから-----
 			if (sti == 256){
 
-				if ( (listMode == LISTMODE_LIST) and (cliFlag == FALSE) ){
+				if ( (listMode != LISTMODE_FLEET) and (cliFlag == FALSE) ){
 					if (mousey > (cellsize(1)-10)){
 						temph = (mousey\cellsize(1)+10)\cellsize(1)
 						if ( (0 <= temph) and (temph <= 20) ){
@@ -184,12 +184,10 @@ return
 		loop
 	loop
 
-	If (listMode == LISTMODE_LIST){
-
+	If (listMode != LISTMODE_FLEET){
 		color 32, 32, 192
 		boxf -1, cellsize(1)*listModeHNum-2, maxScrSize(0)+1, cellsize(1)*listModeHNum
 		color 0, 0, 0
-
 	}
 	
 	if (listMode == LISTMODE_FLEET && fleetPunctuation){
