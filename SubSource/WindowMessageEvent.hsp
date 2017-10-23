@@ -175,6 +175,10 @@ return
 				objprm saveNameIId, saveNameAirStation
 				objprm confirmSaveNameCId, confirmSaveNameAirStation
 				swbreak
+			case 6
+				objprm saveNameIId, saveNameEquipmentList
+				objprm confirmSaveNameCId, confirmSaveNameEquipmentList
+				swbreak
 		swend
 	}
 
@@ -262,6 +266,9 @@ return
 				case 5
 					confirmSaveNameAirStation = confirmSaveName
 					swbreak
+				case 6
+					confirmSaveNameEquipmentList = confirmSaveName
+					swbreak
 			swend
 		}
 
@@ -288,6 +295,9 @@ return
 					swbreak
 				case 5
 					SaveNameAirStation = tempStr
+					swbreak
+				case 6
+					SaveNameEquipmentList = tempStr
 					swbreak
 			swend
 
@@ -404,13 +414,6 @@ return
 				objenable airStationTabCId, 0
 			}
 			
-			//ëïîıàÍóóÉÇÅ[ÉhÇ™ñ¢é¿ëïÇÃÇΩÇﬂ
-			objenable equipmentListCId, 0
-			objenable sceneKaisoCId, 0
-			objenable sceneHaikiCId, 0
-			objenable includeDetailsCId, 0
-			
-			/*
 			if (equipmentList) {
 				objenable sceneKaisoCId, 1
 				objenable sceneHaikiCId, 1
@@ -419,10 +422,7 @@ return
 				objenable sceneKaisoCId, 0
 				objenable sceneHaikiCId, 0
 				objenable includeDetailsCId, 0
-	
 			}
-			//*/
-			
 		}
 	}
 

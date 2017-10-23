@@ -236,17 +236,21 @@ return
 			}
 		}
 		if equipmentList {
+			cellnum(0) = 6, 4
+			w = 190
+			h = 300
 
-			if sceneKaiso {
-
-
+			if (sceneKaiso) {
+				capx = 370
+				capy = 132
+				if (includeDetails): w = 430
 			}
 
-			if sceneHaiki {
-
-
+			if (sceneHaiki) {
+				capx = 204
+				capy = 130
+				if (includeDetails): w = 400
 			}
-
 
 		}
 	

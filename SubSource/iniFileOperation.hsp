@@ -55,12 +55,15 @@
 	GetIni "CaptureAndMaking", "SaveNameFormation", saveNameFormation, "\"攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation, "\"基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink, "\"直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "SaveNameEquipmentList", saveNameEquipmentList, "\"装備一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "ConfirmSaveNameCapture", confirmSaveNameCapture, "0"
 	GetIni "CaptureAndMaking", "ConfirmsaveNameSelectCapture", confirmSaveNameSelectCapture, "0"
 	GetIni "CaptureAndMaking", "ConfirmSaveNameList", confirmSaveNameList, "0"
 	GetIni "CaptureAndMaking", "ConfirmSaveNameFormation", confirmSaveNameFormation, "0"
 	GetIni "CaptureAndMaking", "ConfirmSaveNameAirStation", confirmSaveNameAirStation, "0"
 	GetIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", confirmSaveNameDirectLink, "0"
+	GetIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", confirmSaveNameEquipmentList, "0"
+	
 
 	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
 	GetIni "VideoCapture", "lateEncode", lateEncode, "1"
@@ -324,6 +327,11 @@ return
 		saveNameDirectLink = "直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 		savelogtext += "Info - 直接連結保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
+	isValidFileName DateAndTimeFormat2(saveNameEquipmentList)
+	if (stat == FALSE){
+		saveNameEquipmentList = "装備一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+		savelogtext += "Info - 装備一覧保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+	}
 	//=====
 	
 	fontcolorname = int("$"+fontcolornamestr)
@@ -480,13 +488,15 @@ return
 	WriteIni "CaptureAndMaking", "SaveNameFormation", saveNameFormation
 	WriteIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation
 	WriteIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink
+	WriteIni "CaptureAndMaking", "SaveNameEquipmentList", saveNameEquipmentList
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameCapture", confirmSaveNameCapture
 	WriteIni "CaptureAndMaking", "ConfirmsaveNameSelectCapture", confirmSaveNameSelectCapture
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameList", confirmSaveNameList
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameFormation", confirmSaveNameFormation
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameAirStation", confirmSaveNameAirStation
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", confirmSaveNameDirectLink
-
+	WriteIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", confirmSaveNameEquipmentList
+	
 	WriteIni "VideoCapture", "enableVideoCap", enableVideoCap
 	WriteIni "VideoCapture", "lateEncode", lateEncode
 	WriteIni "VideoCapture", "HideCursor", videoCapHideCursor

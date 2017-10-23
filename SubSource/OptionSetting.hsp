@@ -96,12 +96,16 @@ return
 					objprm saveNameIId, saveNameFormation
 					swbreak
 				case 4
-					saveNameAirStation = "基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+					saveNameDirectLink = "直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 					objprm saveNameIId, saveNameDirectLink
 					swbreak
 				case 5
-					saveNameDirectLink = "直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+					saveNameAirStation = "基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 					objprm saveNameIId, saveNameAirStation
+					swbreak
+				case 6
+					saveNameEquipmentList = "装備一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+					objprm saveNameIId, saveNameEquipmentList
 					swbreak
 			swend
 		}

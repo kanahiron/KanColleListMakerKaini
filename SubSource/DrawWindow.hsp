@@ -735,7 +735,7 @@
 			mes "保存名"
 			pos Scale(55), mesy
 			objsize Scale(140)
-			combox saveNameSel, 100, "SSキャプチャ\n範囲選択キャプチャ\n艦娘一覧モード\n攻略編成モード\n直接連結\n基地航空隊"
+			combox saveNameSel, 100, "SSキャプチャ\n範囲選択キャプチャ\n艦娘一覧モード\n攻略編成モード\n直接連結\n基地航空隊\n装備一覧"
 			saveNameSelCBh = objinfo_hwnd(stat)
 			pos Scale(180), mesy
 			objsize Scale(50), ComBoxH
