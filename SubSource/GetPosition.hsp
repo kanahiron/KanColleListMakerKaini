@@ -171,6 +171,7 @@ return
 		if (stat==0){
 			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
 			if (stat){
+	
 				sscap(0) = cliPoint(0)
 				sscap(1) = cliPoint(1)
 				sscap(2) = sscap(0)+sscapwh(0)
@@ -326,4 +327,30 @@ return
 	}
 	
 	nidPop
+return
+
+#deffunc GetAbsPos var p1_, var p2_
+	switch captureMethod
+		case CM_BITBLT
+			switch positionType
+				case PT_RELATIVE
+				case PT_WNDABSOLUTE
+					scrPoint = sscap(0), sscap(1)
+					ClientToScreen hClient, varptr(scrPoint)
+					p1_ = scrPoint(0)
+					p2_ = scrPoint(1)
+				swbreak
+				case PT_ABSOLUTE
+					p1_ = sscap(0)
+					p2_ = sscap(1)
+				swbreak
+			swend
+		swbreak
+		case CM_PRINTWINDOW
+			scrPoint = sscap(0), sscap(1)
+			ClientToScreen hClient, varptr(scrPoint)
+			p1_ = scrPoint(0)
+			p2_ = scrPoint(1)
+		swbreak
+	swend
 return
