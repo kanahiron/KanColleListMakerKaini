@@ -1,5 +1,10 @@
 /*=======================================================================================================
-                                                                    ‰æ‘œƒtƒ@ƒCƒ‹‚É‚¢‚ë‚¢‚ë‚·‚éƒ‚ƒWƒ…[ƒ‹
+                                                                   ‰æ‘œƒtƒ@ƒCƒ‹‚É‚¢‚ë‚¢‚ë‚·‚éƒ‚ƒWƒ…[ƒ‹‰ü
+
+	–{ƒ‚ƒWƒ…[ƒ‹‚Íˆß“ú˜a‚É‚æ‚Á‚ÄŠJ”­‚³‚ê‚½ImageModule2‚ğkanahiron‚ª‰ü•Ï‚µ‚½ƒ‚ƒWƒ…[ƒ‹‚Å‚·
+	‰ü•Ï‚³‚ê‚½êŠ‚É‘Î‰‚·‚éXV—š—ğ‚âƒhƒLƒ…ƒƒ“ƒg‚Í‘‚¢‚Ä‚¢‚Ü‚¹‚ñ
+
+                                                                   
 HSP3.22         2010.12.30  V‹K»ì
                 2011. 1. 4  ’Ç‰ÁFImgM_GetSize JPG-$C4ˆ—
                         12  ’Ç‰ÁFImgM_SetImageData (b’è)
@@ -430,30 +435,52 @@ Option‚ÅPNG‚âGIFƒtƒ@ƒCƒ‹‚Ì‚Â“§‰ßƒsƒNƒZƒ‹/ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh‚Ìˆµ‚¢‚àw’è‰Â”\‚Å‚·
 /*-------------------------------------------------------------------------------------------------------
 %index
 ImgF_ImageSave
-‰æ–ÊƒCƒ[ƒWƒZ[ƒu.PNG,JPG•Ò(GDI+)
+‰æ–ÊƒCƒ[ƒWƒZ[ƒu.PNG, JPG•Ò(GDI+)
 %prm
-Path, Quality
+Path, Quality, PositionX, PositionY, Width, Height
 Path    [•¶š]•Û‘¶‚·‚éƒtƒ@ƒCƒ‹–¼(ƒpƒX)
 Quality [”’l]•i¿
     0:‚ˆ³k(‘e‚¢)`100:’áˆ³k(‚«‚ß×‚â‚©)
+PositionX   [”’l]•Û‘¶‚·‚é—Ìˆæ‚Ì¶ãÀ•WX
+PositionY   [”’l]•Û‘¶‚·‚é—Ìˆæ‚Ì¶ãÀ•WY
+Width   [”’l]‰¡•
+Height  [”’l]c•
+
 %inst
-HSP•W€‚Ìbmpsave–½—ß‚İ‚½‚¢‚È‚à‚Ì‚Å‚·BGDI+‚ğg—p‚µ‚ÄJPGŒ`®‚Åƒtƒ@ƒCƒ‹•Û‘¶‚µ‚Ü‚·B•i¿w’è•t‚«B
+HSP•W€‚Ìbmpsave–½—ß‚İ‚½‚¢‚È‚à‚Ì‚Å‚·B
 Šg’£q‚É‚æ‚Á‚ÄJPEG‚ÆPNG‚ğØ‚è‘Ö‚¦‚Ü‚·
 %href
 ImgP_Memsave
 %------------------------------------------------------------------------------------------------------*/
-#deffunc ImgF_ImageSave str s, int p
-	if getpath(s,18) = ".png" {
-		ib = 100, 0, $557CF406, $11D31A04, $0000739A, $2EF31EF8, 1, $1D5BE4B5, $452DFA4A, $B35DDD9C, $EBE70551, 1, 4, 0
+#deffunc ImgF_ImageSave str s, int p, int x, int y, int w, int h
+	ib = 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0, 1, 0,0,0,0,0,0,0,0
+    ;   (0)GlobalSize (1)stream (2)image(Œ‹‰Ê) (3)image(works) (4)hGlobal
+    ;   (5)PosX (6)PosY (7)Width (8)Height (9)PixelFormat (10`13)ImageCodec
+    ;   (14)ƒpƒ‰ƒ”(0‚¾‚Æ•Û‘¶‚É¸”s‚·‚é‚Ì‚Å1ˆÈãA1‚±‚à•K—v‚È‚¢ê‡‚Íƒpƒ‰ƒ‚É–³Œø‚È’l‚ğ‚¢‚ê‚é‚Æ‚©...)
+    ;   (15`18)ƒpƒ‰ƒƒGƒ“ƒR[ƒ_ (19)ƒpƒ‰ƒ—v‘f”? (20)ƒpƒ‰ƒŒ^ (21)ƒ|ƒCƒ“ƒ^(‚ÁI)
+    ;   (22`)ƒpƒ‰ƒƒGƒ“ƒR[ƒ_‚©‚çŒJ‚è•Ô‚µ
+    
+    if ( w==0 || h==0): ib(5) = 0, 0, ginfo_winx, ginfo_winy :else: ib(5) = x, y, w, h ; ƒgƒŠƒ~ƒ“ƒO
+
+    mref bb, 67
+    if bb(3)  : ib(9) = PixelFormat8bppIndexed  : else  : ib(9) = PixelFormat24bppRGB   ; ƒsƒNƒtƒHƒ}
+
+	if (getpath(s,18) = ".png") {
+		ib(10) = $557CF406, $11D31A04, $0000739A, $2EF31EF8        ; PNG
 	} else {
-		ib = p, 0, $557CF401, $11D31A04, $0000739A, $2EF31EF8, 1, $1D5BE4B5, $452DFA4A, $B35DDD9C, $EBE70551, 1, 4, 0
-	}
-    ib(13) = varptr(ib)                 ; ”z—ñ©“®Šm•Û‚ª‚³‚ê‚Ä‚à‚¢‚¢‚æ‚¤‚ÉŠm’è‚µ‚Ä‚©‚ç‘ã“ü
-    ImgM_CreateH ImchMode_ImageFromWindow  : ib(1) = stat
-    GdipSaveImageToFile ib(1), s, ib(2), ib(6)
+        ib(22) = p
+        ib(10) = $557CF401, $11D31A04, $0000739A, $2EF31EF8                 ; JPG
+        ib(14) = 1 ,$1D5BE4B5, $452DFA4A, $B35DDD9C, $EBE70551, 1, 4, varptr(ib(22))
+    }
+
+	ImgM_CreateH ImchMode_ImageFromWindow: ib(3) = stat //HSP‚ÌƒEƒBƒ“ƒhƒE‚©‚çGDI+‚Ìimage‚ğì¬H
+    ImgM_CreateH ImchMode_ImageFromImage, ib(3), ib(5), ib(6), ib(7), ib(8), ib(9)  : ib(2) = stat//ª‚Åì‚Á‚½image‚©‚çØ‚èæ‚Á‚½image‚ğì¬
+    //ª‚Åì‚Á‚½image‚ğƒtƒ@ƒCƒ‹‚É•Û‘¶
+    GdipSaveImageToFile ib(2), s, ib(10), ib(14)
 
     ImgM_CloseH
-return                               ; HSP“¯«‚ÌGDI+ƒCƒ[ƒW•Û‘¶‚Éjpegˆ³k—¦w’è‚ª–³‚¢‚±‚Æ‚É‘Î‚·‚é‘[’u
+return
+
 
 /*=======================================================================================================
 %index                                                                          ; ‹Œ "ImagePrintModule"
