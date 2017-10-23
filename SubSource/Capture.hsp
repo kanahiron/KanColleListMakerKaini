@@ -54,7 +54,7 @@
 	sscap(2) = rdposx
 	sscap(3) = rdposy
 	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
-
+/*
 	switch positionType
 		case PT_ABSOLUTE
 			ssCapMes = strf("%d,%d",　sscap(0),　sscap(1))
@@ -70,7 +70,7 @@
 	if (mode != MODE_OPTION){
 		objprm SSCapIId, ssCapMes
 	}
-	
+*/
 	if ( (sscapwh(0) < 50) | (sscapwh(1) < 30) ){
 		if (mode != MODE_OPTION){
 
@@ -88,62 +88,48 @@
 		return 1
 	}
 
-	
-	buffer WND_TEMP1, sscapwh(0), sscapwh(1)
-
 	switch captureMethod
 	
 		case CM_BITBLT
 			switch positionType
 				case PT_RELATIVE
 					logmes "PT_RELATIVE"
-					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), dcClient, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
+					BitBlt WND_INFO(WND_CAPTURE, WI_DC), 0, 0, sscapwh(0), sscapwh(1), dcClient, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
 					swbreak
 				case PT_ABSOLUTE
 					logmes "PT_ABSOLUTE"
-					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
+					BitBlt WND_INFO(WND_CAPTURE, WI_DC), 0, 0, sscapwh(0), sscapwh(1), hdcScreen, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
 					swbreak
 
 				case PT_WNDABSOLUTE
 					logmes "PT_WNDABSOLUTE"
 					scrPoint = sscap(0), sscap(1)
 					ClientToScreen hClient, varptr(scrPoint)
-					BitBlt hdc, 0, 0, sscapwh(0), sscapwh(1), hdcScreen, scrPoint(0), scrPoint(1), SRCCOPY | CAPTUREBLT: redraw
+					BitBlt WND_INFO(WND_CAPTURE, WI_DC), 0, 0, sscapwh(0), sscapwh(1), hdcScreen, scrPoint(0), scrPoint(1), SRCCOPY | CAPTUREBLT: redraw
 					swbreak
 			swend
 			swbreak
 			
 		case CM_PRINTWINDOW
-			buffer WND_TEMP2, clientSize(0), clientSize(1)
-			PrintWindow hClient, hdc, 1
-			redraw
-	
-			gsel WND_TEMP1
-			gcopy WND_TEMP2, sscap(0), sscap(1), sscapwh(0), sscapwh(1)
+			logmes "CM_PRINTWINDOW"
+			PrintWindow hClient, WND_INFO( WND_PRINTWND, WI_DC), 1
+			gsel WND_CAPTURE: pos 0, 0
+			gcopy WND_PRINTWND, sscap(0), sscap(1), sscapwh(0), sscapwh(1)
 			swbreak
 
 	swend
 
-	if (hidename && isHomeport(WND_TEMP1)){
-		if (namecut){
-			//バッファを初期化し直し上部をカット
-			buffer WND_CAPTURE, sscapwh(0), int(0.9375*sscapwh(1)+0.5)
-			gcopy WND_TEMP1, 0, int(0.0625*sscapwh(1)+0.5), sscapwh(0), int(0.9375*sscapwh(1)+0.5)
-		} else {
-			//提督名とレベルを隠す処理
-			buffer WND_CAPTURE, sscapwh(0), sscapwh(1)
-			gcopy WND_TEMP1, 0, 0, sscapwh(0), sscapwh(1)
-			
-			pos 0.14125*sscapwh(0), 0
-			gzoom 0.20375*sscapwh(0), 0.05*sscapwh(1), WND_IMAGE_BUF, 0, 0, 163, 24, 1
-			if (noHideLv^1){
-				pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
-				gzoom 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, WND_IMAGE_BUF, 0, 24, 100, 16, 1
-			}
+	cutPosY = 0
+	if (hidename && isHomeport(WND_CAPTURE, sscapwh(0), sscapwh(1))){
+		if (namecut): cutPosY = round(0.0625*sscapwh(1))
+		//提督名とレベルを隠す処理
+		gsel WND_CAPTURE: pos 0, 0
+		pos 0.14125*sscapwh(0), 0
+		gzoom 0.20375*sscapwh(0), 0.05*sscapwh(1), WND_IMAGE_BUF, 0, 0, 163, 24, 1
+		if (noHideLv^1){
+			pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
+			gzoom 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, WND_IMAGE_BUF, 0, 24, 100, 16, 1
 		}
-	} else {
-		buffer WND_CAPTURE, sscapwh(0), sscapwh(1)
-		gcopy WND_TEMP1, 0, 0, sscapwh(0), sscapwh(1)
 	}
 
 	nidPop
@@ -180,8 +166,9 @@ return 0
 	} else {
 		saveNamePath = intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName
 	}
-
-	ImgF_ImageSave saveNamePath, jpgQuality
+	
+	
+	ImgF_ImageSave saveNamePath, jpgQuality, 0, cutPosY, sscapwh(0), sscapwh(1)-cutPosY
 
 	gsel WND_MAIN
 	

@@ -175,6 +175,9 @@ return
 				sscap(1) = cliPoint(1)
 				sscap(2) = sscap(0)+sscapwh(0)
 				sscap(3) = sscap(1)+sscapwh(1)
+
+				buffer WND_PRINTWND, clientSize(0), clientSize(1)
+				SET_WND_INFO
 			
 				captureMethod = CM_PRINTWINDOW
 				positionType = PT_RELATIVE

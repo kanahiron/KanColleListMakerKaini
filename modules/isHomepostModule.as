@@ -60,14 +60,19 @@ return
 
 	return
 
-	#defcfunc isHomeport int wndId
+	#defcfunc isHomeport int wndId, int sw_, int sh_
 
 		nid = ginfo(3)
-		
-		gsel wndId
-		sx = ginfo_winx
-		sy = ginfo_winy
 
+		if (sw_ == 0 |  sh_ == 0){
+			gsel wndId
+			sx = ginfo_winx
+			sy = ginfo_winy
+		} else {
+			sx = sw_
+			sy = sh_
+		}
+			
 		gsel homeportBufId
 		pos 0, 1
 		gzoom 8, 8, wndId, int(sxRatio*sx), int(syRatio*sy), int(wRatio*sx), int(hRatio*sy), 1
