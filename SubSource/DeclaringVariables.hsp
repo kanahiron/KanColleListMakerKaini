@@ -180,13 +180,14 @@ return
 		cellnum(0) = 6, 4
 
 		if ichiranMode1 {
-			if yubiwa = 0 & kantai = 0 : w = 382 : capx = 392
-			if yubiwa = 1 & kantai = 1 : w = 440 : capx = 360
-			if yubiwa = 1 & kantai = 0 : w = 408 : capx = 392
-			if yubiwa = 0 & kantai = 1 : w = 415 : capx = 360
+			
+			if yubiwa = 0 & kantai = 0 : w = 392 : capx = 386
+			if yubiwa = 1 & kantai = 0 : w = 414 : capx = 386
+			if yubiwa = 0 & kantai = 1 : w = 416 : capx = 362
+			if yubiwa = 1 & kantai = 1 : w = 438 : capx = 362
 			if page = 0:h = 279
 			if page = 1:h = 315
-			if lvname = 1:w = 190: capx = 392:h = 279
+			if lvname = 1:w = 200: capx = 386:h = 279
 			capy = 154
 		}
 
@@ -202,14 +203,13 @@ return
 	if (listMode == LISTMODE_FLEET){
 
 		cellnum(0) = 5, 5
-	
 		if sosuka {
-			w = 460
-			h = 365
+			w = 454
+			h = 362
 		}
 		if sosu {
 			w = 230
-			h = 365	
+			h = 362	
 		}
 		if soka {
 			w = 460
@@ -217,7 +217,6 @@ return
 		}
 		capx = 327
 		capy = 103
-
 	}
 
 	if (listMode == LISTMODE_OTHER){
