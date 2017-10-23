@@ -274,9 +274,8 @@ return (successFlg^1)
 			
 	if (hotKeyFlag && autoAddNonSave) {
 
-		gsel WND_CAPTURE
-		picx = ginfo_winx
-		picy = ginfo_winy
+		picx = ssCapWH(0)
+		picy = ssCapWH(1)
 		ratio = 1.0*picy/picx
 		
 		buffer bufid, 800, 480
