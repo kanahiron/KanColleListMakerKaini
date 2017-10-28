@@ -19,12 +19,41 @@
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
 
-		getKanCollePosAuto WND_TEMP1, sscap, WND_TEMP2
+		dim sscap_, 4
+		getKanCollePosAuto WND_TEMP1, sscap_, WND_TEMP2 //戻り値は見つかった個数
+		logmes "getKanCollePosAuto "+stat
 		if (stat){
 			//成功
+
+			if (length2(sscap_) == 1){
+				//見つけたウィンドウが1つだった時
+				sscap(0) = sscap_(0) + disInfo(0)
+				sscap(1) = sscap_(1) + disInfo(1)
+				sscap(2) = sscap_(2) + disInfo(0)
+				sscap(3) = sscap_(3) + disInfo(1)
+			} else {
+				//見つけたウィンドウ複数だった場合
+				repeat length2(sscap_)
+					sscap_(0, cnt) += disInfo(0)
+					sscap_(1, cnt) += disInfo(1)
+					sscap_(2, cnt) += disInfo(0)
+					sscap_(3, cnt) += disInfo(1)
+				loop
+				sscap(0) = 0
+				sscap(1) = 0
+				sscap(2) = 0
+				sscap(3) = 0
+				dialog "複数の艦これ画面が検出されました。\n緑色の領域の正しいウィンドウをクリックしてください\n", 0, "自動座標取得"
+				ShowSelectWindow sscap_, WND_INFO(WND_MAIN, WI_HANDLE)
+				repeat //本当はこんなことしたくないんだけど…今後改善予定
+					if ( sscap(2)-sscap(0) ) != 0: break
+					await 16
+				loop
+				HideSelectWindow
+			}
+			
 		} else {
 			//失敗
-	
 			dim KCRect, 4
 			successflg = FALSE
 			
@@ -108,6 +137,13 @@
 	
 	gosub *SSSettingCheck
 	nidPop
+return
+
+*AutoPosGetSelWindow
+	sscap(0) += sscap_(0, wparam)
+	sscap(1) += sscap_(1, wparam)
+	sscap(2) += sscap_(2, wparam)
+	sscap(3) += sscap_(3, wparam)
 return
 
 

@@ -1,5 +1,4 @@
 *MainWindowProc
-	await
 	oncmd 0
 
 	switch iparam
@@ -42,6 +41,11 @@
 		case WM_LBUTTONDBLCLK
 			logmes "WM_LBUTTONDBLCLK"
 			gosub *windowsSizeChange
+			swbreak
+
+		case WM_SELWINDOW
+			logmes "WM_SELWINDOW"
+			gosub *AutoPosGetSelWindow
 			swbreak
 
 	swend

@@ -1,4 +1,5 @@
 #include "hsp3utf.as"
+#include "modclbk3.hsp"
 
 #define global debugLog(%1) ;
 
@@ -21,6 +22,8 @@
 #include "./modules/execwMod.as"
 #include "./modules/SaveFileDiag_mod.hsp"
 #include "./modules/FFMPEGLog.hsp"
+#include "./modules/GetKanCollePosMod.hsp"
+#include "./modules/SelectWindowMod.hsp"
 
 #pack "start.ax"
 #pack "data2.png"
@@ -31,9 +34,9 @@
 #packopt icon "KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
-#define SOFTNAME "一覧めいかー改二 Ver0.3Beta4"
-#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.3Beta4"
-#define klm2ver	3004
+#define SOFTNAME "一覧めいかー改二 Ver0.3Beta5"
+#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.3Beta5"
+#define klm2ver	3005
 
 #ifdef _debug
 
@@ -95,6 +98,7 @@
 		oncmd gosub *MainWindowProc, WM_DPICHANGED
 		oncmd gosub *MainWindowProc, WM_LBUTTONDOWN
 		oncmd gosub *MainWindowProc, WM_LBUTTONDBLCLK
+		oncmd gosub *mainWindowProc, WM_SELWINDOW
 		objmode 2
 		
 		combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
@@ -201,9 +205,10 @@
 
 	gosub *loadHistory
 	gosub *calcUIScale
+	gosub *hotkeyCapSetting
 	gosub *twiInit
 	gosub *drawMainWindow
-	gosub *hotkeyCapSetting
+	await
 
 	if enableTweetWindow: gsel WND_TWITTER, 1+twiFrontRow
 	if enableFFMPEGLogWindow: ShowFFMPEGLog
