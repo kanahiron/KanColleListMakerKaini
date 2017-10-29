@@ -137,8 +137,9 @@
 
 	bgscr WND_SUPPORT, 850, 100, 2
 		SET_WND_INFO
+		oncmd gosub *SupportWindowProc, WM_LBUTTONDOWN
 		GetWindowLong WND_INFO(WND_SUPPORT, WI_HANDLE),-20
-		SetWindowLong WND_INFO(WND_SUPPORT, WI_HANDLE),-20, stat | $80000
+		SetWindowLong WND_INFO(WND_SUPPORT, WI_HANDLE),-20, stat | 0x00080008
 		SetLayeredWindowAttributes WND_INFO(WND_SUPPORT, WI_HANDLE), 0x000000FF, 255, LWA_COLORKEY
 		gosub *DrawSupportWnd
 		
@@ -260,6 +261,7 @@
 	gosub *drawMainWindow
 	//*/
 
+	//gsel WND_SUPPORT, 1
 	
 	stop
 
@@ -373,3 +375,4 @@
 #include "./SubSource/Capture.hsp"
 #include "./SubSource/GridWindowOperation.hsp"
 #include "./SubSource/VideoCapture.hsp"
+#include "./SubSource/SupportWindowOperation.hsp"

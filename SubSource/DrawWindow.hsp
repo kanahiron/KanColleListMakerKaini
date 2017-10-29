@@ -904,7 +904,7 @@
 	width mainWndW, mainWndH
 	
 	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
-
+	gosub *SupportWndDisp
 return
 
 *WindowSizeChange
@@ -1026,7 +1026,6 @@ return
 			}
 		}
 	}
-
 
 	if (enableTweetWindow == TRUE){
 		if ( ACCESS_TOKEN != "" && ACCESS_SECRET != "" ){

@@ -57,6 +57,7 @@
 #func IsIconic "IsIconic" int
 #func ShowScrollBar "ShowScrollBar" int, int, int
 #func GetWindowText "GetWindowTextW" int, int, int
+#func SetWindowPos "SetWindowPos" wptr, wptr, wptr, wptr, wptr, wptr, wptr
 
 #uselib "kernel32.dll"
 #func MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int

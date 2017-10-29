@@ -1,0 +1,161 @@
+#module
+
+#define ctype Scale(%1) int(UIScale*(%1)+0.5)
+
+#deffunc DrawSupportWindow double UIScale_
+	UIScale = UIScale_
+
+	font "メイリオ", Scale(15) , 1
+	ts = "[   追加   ]"	
+	ka = "[艦娘]"
+	ko = "[攻略]"
+	so = "[その他]"
+	sp = " "
+
+	mes ts
+	swTsWidth = ginfo_mesx
+	swHeight = ginfo_mesy
+	mes ka
+	swKaWidth = ginfo_mesx
+	mes ko
+	swKoWidth = ginfo_mesx
+	mes so
+	swSoWidth = ginfo_mesx
+	mes sp
+	swSpWidth = ginfo_mesx
+
+	tsPos = Scale(14)
+	kaPos = Scale(14)+swTsWidth+swSpWidth
+	koPos = Scale(14)+swTsWidth+swSpWidth+swKaWidth+swSpWidth
+	soPos = Scale(14)+swTsWidth+swSpWidth+swKaWidth+swSpWidth+swKoWidth+swSpWidth
+	swWidth = swTsWidth + swKaWidth + swKoWidth + swSoWidth + swSpWidth*3
+	
+	tempx = 0, swWidth+Scale(30), swWidth+Scale(20), Scale(10)
+	tempy = 0, 0, swHeight+Scale(5), swHeight+Scale(5)
+
+	supportWndW = swWidth+Scale(30)
+	supportWndH = swHeight+Scale(3)
+	
+	color 255, 0, 0: boxf
+	color 16, 16, 16
+	gsquare -1, tempx, tempy
+	
+	color 210, 210, 210
+	pos tsPos, Scale(2)
+	 mes ts, 1
+	pos kaPos, Scale(2)
+	 mes ka, 1
+	pos koPos, Scale(2)
+	 mes ko, 1
+	pos soPos, Scale(2)
+	 mes so, 1
+return
+
+#defcfunc GetIndexSupportWnd int x_
+	index = -1
+	x = x_
+	if (tsPos <= x && x <= tsPos+swTsWidth): index = 0
+	if (kaPos <= x && x <= kaPos+swKaWidth): index = 1
+	if (koPos <= x && x <= koPos+swKoWidth): index = 2
+	if (soPos <= x && x <= soPos+swSoWidth): index = 3
+return index
+
+#defcfunc SupportWndWidth
+return supportWndW
+
+#defcfunc SupportWndHeight
+return supportWndH
+
+#global
+
+*SupportWindowProc
+	oncmd 0
+
+		switch iparam
+			case WM_LBUTTONDOWN
+				logmes "WM_LBUTTONDOWN"
+				gosub *SupportWndClick
+				swbreak
+				
+		swend
+
+	oncmd 1
+return
+
+*DrawSupportWnd
+
+	nidPush
+
+	gsel WND_SUPPORT, 0
+	DrawSupportWindow UIScale
+
+	nidPop
+return
+
+*SupportWndClick
+
+	PushedX = (lparam&0xFFFF)
+	
+	switch GetIndexSupportWnd(PushedX)
+		case 0
+			//ホットキーと偽ったほうが処理が楽
+			if (availableCap){
+				hotKeyFlag = TRUE
+	
+				if autoAddNonSave{
+					//保存なしの場合
+					gosub *SSCaptureOnMemory
+				} else {
+					//保存ありの場合
+					gosub *SSCapture
+					addFileName = saveNamePath
+				}
+				//追加
+				gosub *addCapture
+				hotKeyFlag = FALSE
+				addfilename = ""
+			} else {
+				LogOut "座標が取得されていません"
+			}
+			swbreak
+		case 1
+			mode = MODE_LIST
+			listmode = LISTMODE_LIST
+			gosub *drawMainWindow
+			swbreak
+		case 2
+			mode = MODE_LIST
+			listmode = LISTMODE_FLEET
+			gosub *drawMainWindow
+			swbreak
+		case 3
+			mode = MODE_LIST
+			listmode = LISTMODE_OTHER
+			gosub *drawMainWindow
+			swbreak
+
+	swend
+return
+
+*SupportWndDisp
+
+	if (mode == MODE_LIST){
+		ssCapWH(0) = ssCap(2)-ssCap(0), ssCap(3)-ssCap(1)
+		if ( 0 < ssCapWH(0) && 0 < ssCapWH(1) ){
+			kcAbsPos = 0, 0
+			GetAbsPos kcAbsPos(0), kcAbsPos(1)
+
+			supportWndPos(0) = kcAbsPos(0)+ssCapWH(0)-SupportWndWidth()
+			supportWndPos(1) = kcAbsPos(1)+ssCapWH(1)
+			
+			MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), supportWndPos(0), supportWndPos(1), SupportWndWidth(), SupportWndHeight(), 1
+			ShowWindow WND_INFO(WND_SUPPORT, WI_HANDLE), SW_SHOW
+			SetWindowPos WND_INFO(WND_SUPPORT, WI_HANDLE), -1, 0, 0, 0, 0, 0x0003
+		} else {
+			ShowWindow WND_INFO(WND_SUPPORT, WI_HANDLE), SW_HIDE
+		}
+	} else {
+		ShowWindow WND_INFO(WND_SUPPORT, WI_HANDLE), SW_HIDE
+	}
+
+return
