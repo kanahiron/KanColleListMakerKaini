@@ -250,19 +250,18 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 		}
 		if equipmentList {
 			cellnum(0) = 6, 4
-			w = 190
 			h = 300
-
 			if (sceneKaiso) {
-				capx = 370
+				w = 208
+				capx = 366
 				capy = 132
-				if (includeDetails): w = 430
+				if (includeDetails): w = 434
 			}
-
 			if (sceneHaiki) {
-				capx = 204
+				w = 198
+				capx = 200
 				capy = 130
-				if (includeDetails): w = 400
+				if (includeDetails): w = 404
 			}
 
 		}
