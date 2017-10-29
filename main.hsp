@@ -213,11 +213,11 @@
 	if enableTweetWindow: gsel WND_TWITTER, 1+twiFrontRow
 	if enableFFMPEGLogWindow: ShowFFMPEGLog
 
-	if (restoreMainWindowPos && mainWindowPos(0) != -32000){
+	if ( restoreMainWindowPos && CheckPosRange(mainWindowPos) ){
 		GetWindowRect WND_INFO(WND_MAIN, WI_HANDLE), varptr(rect)
 		MoveWindow WND_INFO(WND_MAIN, WI_HANDLE), mainWindowPos(0), mainWindowPos(1), rect(2)-rect(0), rect(3)-rect(1), 1
 	}
-	if (restoreTweetWindowPos && tweetWindowPos(0) != -32000){
+	if (restoreTweetWindowPos && CheckPosRange(tweetWindowPos) ){
 		GetWindowRect WND_INFO(WND_TWITTER, WI_HANDLE), varptr(rect)
 		MoveWindow WND_INFO(WND_TWITTER, WI_HANDLE), tweetWindowPos(0), tweetWindowPos(1), rect(2)-rect(0), rect(3)-rect(1), 1
 	}
@@ -231,7 +231,8 @@
 
 	gosub *VerCheck
 
-	if ((ssCap(2)-ssCap(0)) != 0) | ((ssCap(3)-ssCap(1)) != 0){
+	restoreSSCapFlg = FALSE
+	if ( CheckPosRange(ssCap) && ( ssCap(2)-ssCap(0) != 0 || ssCap(3)-ssCap(1) != 0) ){
 		MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), ssCap(0), ssCap(1), ssCap(2)-SSCap(0), ssCap(3)-ssCap(1), 1
 		gosub *CaptureMethodDecide
 		if (positionType != PT_ABSOLUTE || (autoSearch^1)){
@@ -241,15 +242,15 @@
 			ShowWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SW_HIDE
 			if (dialogStat == 6){
 				gosub *SSSettingCheck
-			} else {
-				repeat 4: ssCap(cnt) = 0: loop
+				restoreSSCapFlg = TRUE
 			}
-		} else {
-			repeat 4: ssCap(cnt) = 0: loop
 		}
 	}
-	
 
+	if (restoreSSCapFlg == FALSE){
+		repeat 4: ssCap(cnt) = 0: loop
+	}
+		
 	gsel WND_MAIN,1+frontRow
 	
 	//SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 1000, 0
