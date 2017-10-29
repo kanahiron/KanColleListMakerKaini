@@ -6,6 +6,8 @@
 	gsel WND_MAIN
 	gosub *SSModeControlDisable
 
+	availableCap = FALSE
+
 	ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_HIDE
 	if (enableTweetWindow): ShowWindow WND_INFO(WND_TWITTER, WI_HANDLE), SW_HIDE
 
