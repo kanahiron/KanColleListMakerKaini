@@ -368,9 +368,10 @@ return
 		tuika4 = 0
 	}
 	
-	if (airStation+directLink) != 1{
-		airStation = 0
+	if (directLink+airStation+equipmentList) != 1{
 		directLink = 1
+		airStation = 0
+		equipmentList = 0
 	}
 	
 	if (sosuka+sosu+sosk) != 1{

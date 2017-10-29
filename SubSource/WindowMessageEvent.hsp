@@ -411,7 +411,6 @@ return
 			sendmsg includeDetailsCh, $F2
 			includeDetails = stat & 0x01
 	
-	
 			if (airStation) {
 				objenable airStationTabCId, 1
 			} else {
@@ -434,7 +433,7 @@ return
 	gosub *CalcCapPosAndWinSize
 
 	gsel WND_GRID
-	width scrsize(0),scrsize(1)
+	width scrsize(0), scrsize(1)
 
 	gosub *draw
 
