@@ -48,6 +48,8 @@
 				LogOut "複数の画面を検出\n緑色の領域をクリック！"
 				ShowSelectWindow sscap_, WND_INFO(WND_MAIN, WI_HANDLE)
 				repeat //本当はこんなことしたくないんだけど…今後改善予定
+					stick sti,, 0
+					if sti: break
 					if ( sscap(2)-sscap(0) ) != 0: break
 					await 16
 				loop
