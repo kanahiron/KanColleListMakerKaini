@@ -311,6 +311,7 @@
 		LogOut "‰æ‘œ‚ªˆê–‡‚à‚ ‚è‚Ü‚¹‚ñ"
 	}
 
+	listLoadedNum = 0
 	dim bufIDPos, CELL_MAX_W, CELL_MAX_H
 	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
 	
@@ -323,6 +324,7 @@ return
 
 *listDel
 	nidPush
+	listLoadedNum = 0
 	dim bufIDPos, CELL_MAX_W, CELL_MAX_H
 	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
 	gosub *draw

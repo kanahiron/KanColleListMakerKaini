@@ -163,11 +163,12 @@
 	positionType = PT_ABSOLUTE
 
 	marginCutFlg = FALSE
-
-
+	
 	sceneKaiso = 1
 	sceneHaikiCId = 0
 	includeDetails = 1
+
+	listLoadedNum = 0
 
 return
 

@@ -201,7 +201,7 @@ return (successFlg^1)
 
 	gsel WND_GRID, 0
 
-	if ( dropFlag & (dropWindowId == 1) ){
+	if ( dropFlag && (dropWindowId == WND_GRID) ){
 		xcnt = dragPoint(0)/cellsize(0) 
 		ycnt = dragPoint(1)/cellsize(1)
 		dmxy(0) = xcnt, ycnt
@@ -210,7 +210,15 @@ return (successFlg^1)
 			loadPicBufID(bufIDPos(xcnt, ycnt)-100) = 0
 		}
 		
-	} else: if ( hotKeyFlag && autoAddCapture){
+	} else: if ( (hotKeyFlag && autoAddCapture) || (dropFlag && (dropWindowId == WND_MAIN))){
+
+		logmes "listLoadedNum "+listLoadedNum
+
+		if (0 <= (listLoadedNum+1) && (listLoadedNum+1) < 2): ListModeHNum = 1: gosub *ChangeListModeHNum
+		if (2 <= (listLoadedNum+1) && (listLoadedNum+1) < 7): ListModeHNum = 2: gosub *ChangeListModeHNum
+		if (7 <= (listLoadedNum+1) && (listLoadedNum+1) < 10): ListModeHNum = 3: gosub *ChangeListModeHNum
+		if (10 <= (listLoadedNum+1) && (listLoadedNum+1) < 17): ListModeHNum = 4: gosub *ChangeListModeHNum
+		if (17 <= (listLoadedNum+1) && (listLoadedNum+1) < 37): ListModeHNum = 5: gosub *ChangeListModeHNum
 
 		repeat
 			if (listmode == LISTMODE_LIST){
@@ -287,9 +295,9 @@ return (successFlg^1)
 			pos 0, 0
 			gzoom 800, 480, WND_CAPTURE, 0, 0, picx, picy, 1
 		}
-
-		LogOut strf("‰æ‘œ‚ðƒZƒ‹(%d, %d)‚É“Ç‚Ýž‚Ý‚Ü‚µ‚½", dmxy(0), dmxy(1))
 		
+		LogOut strf("‰æ‘œ‚ðƒZƒ‹(%d, %d)‚É“Ç‚Ýž‚Ý‚Ü‚µ‚½", dmxy(0), dmxy(1))
+		listLoadedNum++
 	} else {
 		
 		buffer WND_TEMP1
@@ -308,7 +316,7 @@ return (successFlg^1)
 			gzoom 800, 480, WND_TEMP1, 0, 0, picx, picy, 1
 		}
 		LogOut strf("%s‚ðƒZƒ‹(%d, %d)‚É“Ç‚Ýž‚Ý‚Ü‚µ‚½", getpath(addfilename, 11), dmxy(0), dmxy(1))
-		
+		listLoadedNum++
 	}
 	gsel WND_GRID
 	gosub *draw

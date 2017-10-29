@@ -69,7 +69,8 @@
 					if bufIDPos(mxy_(0), mxy_(1)) >= 100{
 						loadPicBufID( bufIDPos(mxy_(0), mxy_(1)) - 100 ) = 0
 						bufIDPos(mxy_(0), mxy_(1)) = 0
-						LogOut "ƒZƒ‹("+mxy_(0)+", "+mxy_(1)+")‚ğíœ‚µ‚Ü‚µ‚½"	
+						LogOut "ƒZƒ‹("+mxy_(0)+", "+mxy_(1)+")‚ğíœ‚µ‚Ü‚µ‚½"
+						listLoadedNum--
 					}
 				} else {
 					temp = bufIDPos(mxy_(0), mxy_(1)) 
