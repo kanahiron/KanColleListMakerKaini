@@ -40,7 +40,7 @@
 
 		case WM_LBUTTONDBLCLK
 			logmes "WM_LBUTTONDBLCLK"
-			gosub *windowsSizeChange
+			gosub *WindowSizeChange
 			swbreak
 
 		case WM_SELWINDOW
