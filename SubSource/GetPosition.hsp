@@ -6,7 +6,6 @@
 	gsel WND_MAIN
 	gosub *SSModeControlDisable
 
-	
 	ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_HIDE
 	if (enableTweetWindow): ShowWindow WND_INFO(WND_TWITTER, WI_HANDLE), SW_HIDE
 
@@ -43,7 +42,8 @@
 				sscap(1) = 0
 				sscap(2) = 0
 				sscap(3) = 0
-				dialog "複数の艦これ画面が検出されました。\n緑色の領域の正しいウィンドウをクリックしてください\n", 0, "自動座標取得"
+				ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_SHOW
+				LogOut "複数の画面を検出\n緑色の領域をクリック！"
 				ShowSelectWindow sscap_, WND_INFO(WND_MAIN, WI_HANDLE)
 				repeat //本当はこんなことしたくないんだけど…今後改善予定
 					if ( sscap(2)-sscap(0) ) != 0: break
