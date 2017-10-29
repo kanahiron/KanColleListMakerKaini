@@ -13,7 +13,6 @@
 	GetIni "Configuration", "FrontRow", frontrow, "1"
 	GetIni "Configuration", "HideLog", hidelog, "0"
 	GetIni "Configuration", "YabumiAutoUpload", yabumiautoupload, "1"
-	GetIni "Configuration", "OtherGame", othergame, "1"
 	GetIni "Configuration", "DisplayCapture", dispcap, "1"
 	GetIni "Configuration", "ManualPos", manualpos, "0"
 	GetIni "Configuration", "Senden", senden, "1"
@@ -156,7 +155,6 @@ return
 	if (frontrow != 0) & (frontrow != 1):frontrow=1
 	if (hidelog != 0) & (hidelog != 1):hidelog = 0
 	if (yabumiautoupload != 0) & (yabumiautoupload != 1):yabumiautoupload=1
-	if (othergame != 0) & (othergame != 1):othergame = 1
 	if (dispcap != 0) & (dispcap != 1):dispcap=1
 	if (hotkeycap != 0) & (hotkeycap != 1): hotkeycap = 1
 	if (autoaddCapture != 0) & (autoaddCapture != 1):autoaddCapture=1
@@ -447,7 +445,6 @@ return
 	WriteIni "Configuration", "FrontRow", frontrow
 	WriteIni "Configuration", "HideLog", hidelog
 	WriteIni "Configuration", "YabumiAutoUpload", yabumiautoupload
-	WriteIni "Configuration", "OtherGame", othergame
 	WriteIni "Configuration", "DisplayCapture", dispcap
 	WriteIni "Configuration", "ManualPos", manualpos
 	WriteIni "Configuration", "Senden", senden

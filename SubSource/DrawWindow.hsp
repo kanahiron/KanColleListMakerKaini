@@ -550,8 +550,6 @@
 			pos scale5, mesy
 			chkbox "外部ソフト連携ボタン[UP]を表示する(Gazyoなど)", yabumiautoupload: mesy += scale20
 			pos scale5, mesy
-			chkbox "艦これが等倍でなくも取得できるようにする(手動のみ)", othergame: mesy += scale20
-			pos scale5, mesy
 			chkbox "キャプチャのプレビューを有効にする", dispcap: mesy += scale20
 			pos scale5, mesy
 			chkbox "取得座標を手動で入力できるようにする", manualpos: mesy += scale20

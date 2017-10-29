@@ -288,7 +288,7 @@ return
 	
 	gsel WND_MAIN,1+frontrow
 	
-	if ( (autosearch && (sscapwh(0) != 0)) || (othergame && autosearch^1 && (sscapwh(0) >= 99) & (sscapwh(1) >= 59)) ){
+	if ( sscapwh(0) >= 79 && sscapwh(1) >= 47 ){
 
 		switch positionType
 			case PT_ABSOLUTE
