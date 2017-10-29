@@ -907,23 +907,25 @@
 
 return
 
-*windowsSizeChange
+*WindowSizeChange
 
-	if mainWindowSmall {
-		mainWindowSmall ^= 1
-		if hidelog = 0:hidelog_ = 0
-	} else {
-		mainWindowSmall ^= 1
-		if hidelog = 0:hidelog_ = 1
+	if (disableWindowSizeChange^1){
+		if mainWindowSmall {
+			mainWindowSmall ^= 1
+			if hidelog = 0:hidelog_ = 0
+		} else {
+			mainWindowSmall ^= 1
+			if hidelog = 0:hidelog_ = 1
+		}
+		gosub *drawMainWindow
 	}
-	gosub *drawMainWindow
 return
 
 
 *SSModeControlDisable
 	nidPush
 	gsel WND_MAIN
-	
+
 	objenable comBoxId, 0
 	
 	if (mode != MODE_OPTION){
@@ -967,12 +969,14 @@ return
 		objenable tweetbid, 0
 		gsel WND_MAIN
 	}
+	disableWindowSizeChange = TRUE
 	nidPop
 return
 
 *SSModeControlEnable
 	nidPush
 	gsel WND_MAIN
+	
 	//連続キャプチャ中か動画キャプチャ中なら
 	if ( (seqCapF^1) && (videoCapFlg^1) ){
 	
@@ -1042,5 +1046,6 @@ return
 		objenable tweetbid, 1
 		gsel WND_MAIN
 	}
+	disableWindowSizeChange = FALSE
 	nidPop
 return
