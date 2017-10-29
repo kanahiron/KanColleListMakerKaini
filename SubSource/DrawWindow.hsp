@@ -490,10 +490,15 @@
 		enableTweetWindowCId = stat
 		enableTweetWindowCh = objinfo_hwnd(enableTweetWindowCId)
 				
-		objsize Scale(150-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), Scale(30)
+		objsize Scale(110-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), Scale(30)
 		pos 0, mesy
 		button gosub "çÏê¨", *make
 		makeBId = stat
+
+		objsize Scale(40), Scale(30)
+		pos Scale(110 - (yabumiautoupload && availableyabumi)*25 ), mesy
+		button gosub "çÌèú", *listDel
+		listDelBId = stat
 
 		objsize Scale(25), Scale(30)
 

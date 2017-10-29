@@ -319,3 +319,13 @@
 	gosub *draw
 	debugLog "一覧作成 終了"
 return
+
+
+*listDel
+	nidPush
+	dim bufIDPos, CELL_MAX_W, CELL_MAX_H
+	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
+	gosub *draw
+	LogOut "グリッドウィンドウをクリアしました"
+	nidPop
+return
