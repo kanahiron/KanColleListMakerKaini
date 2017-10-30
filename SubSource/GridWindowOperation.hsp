@@ -223,7 +223,6 @@ return
 
 
 *ChangeListModeHNum
-
 	//配列を複製
 	dim temp_bufIDPos, CELL_MAX_W, CELL_MAX_H
 	repeat CELL_MAX_H
@@ -238,7 +237,6 @@ return
 	//最大配置数を計算
 	maxCount = (cellNum(0)+1)*ListModeHNum
 	count = 0
-
 	repeat (cellNum(0)+1) * (cellNum(1)+1)
 		//順番に見て存在したら再配置
 		if temp_bufIDPos(cnt/(cellnum(1)+1), cnt\(cellnum(1)+1)) >= 100{
@@ -248,5 +246,4 @@ return
 		//最大配置数になったら抜ける
 		if (maxCount == count) :break
 	loop
-
 return

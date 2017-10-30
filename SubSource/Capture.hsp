@@ -212,18 +212,22 @@ return (successFlg^1)
 		
 	} else: if ( (hotKeyFlag && autoAddCapture) || (dropFlag && (dropWindowId == WND_MAIN))){
 
-		logmes "listLoadedNum "+listLoadedNum
-
-		if (0 <= (listLoadedNum+1) && (listLoadedNum+1) < 2): ListModeHNum = 1: gosub *ChangeListModeHNum
-		if (2 <= (listLoadedNum+1) && (listLoadedNum+1) < 7): ListModeHNum = 2: gosub *ChangeListModeHNum
-		if (7 <= (listLoadedNum+1) && (listLoadedNum+1) < 10): ListModeHNum = 3: gosub *ChangeListModeHNum
-		if (10 <= (listLoadedNum+1) && (listLoadedNum+1) < 17): ListModeHNum = 4: gosub *ChangeListModeHNum
-		if (17 <= (listLoadedNum+1) && (listLoadedNum+1) < 37): ListModeHNum = 5: gosub *ChangeListModeHNum
+		//ŠÍ–º•Ò¬ƒ‚[ƒh‚Å‚ÍŽ©“®‰üs‚ª‚È‚¢‚½‚ß
+		if (listmode != LISTMODE_FLEET){
+			ListModeHNumPrev = ListModeHNum
+			if (0 <= (listLoadedNum+1) && (listLoadedNum+1) < 2): ListModeHNum = 1
+			if (2 <= (listLoadedNum+1) && (listLoadedNum+1) < 7): ListModeHNum = 2
+			if (7 <= (listLoadedNum+1) && (listLoadedNum+1) < 10): ListModeHNum = 3
+			if (10 <= (listLoadedNum+1) && (listLoadedNum+1) < 17): ListModeHNum = 4
+			if (17 <= (listLoadedNum+1) && (listLoadedNum+1) < 37): ListModeHNum = 5
+			ListModeHNum = limit(ListModeHNum, 1, cellNum(1)+1)
+			if (ListModeHNumPrev != ListModeHNum): gosub *ChangeListModeHNum
+		}
 
 		repeat
 			if (listmode == LISTMODE_LIST){
-				ycnt = cnt\ListModeHNum
 				xcnt = cnt/ListModeHNum
+				ycnt = cnt\ListModeHNum
 			} 
 			if (listmode == LISTMODE_FLEET){
 				if tuika1{
@@ -244,8 +248,8 @@ return (successFlg^1)
 				}
 			}
 			if (listmode == LISTMODE_OTHER){
-				ycnt = cnt\ListModeHNum
 				xcnt = cnt/ListModeHNum
+				ycnt = cnt\ListModeHNum
 			} 
 			xcnt = limit(xcnt, 0, cellnum(0))
 			ycnt = limit(ycnt, 0, cellnum(1))

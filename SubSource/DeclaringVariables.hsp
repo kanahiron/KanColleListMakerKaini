@@ -184,9 +184,9 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 	if (listMode == LISTMODE_LIST){
 
 		cellnum(0) = 6, 4
+		ListModeHNum = 5
 
 		if ichiranMode1 {
-			
 			if yubiwa = 0 & kantai = 0 : w = 392 : capx = 386
 			if yubiwa = 1 & kantai = 0 : w = 414 : capx = 386
 			if yubiwa = 0 & kantai = 1 : w = 416 : capx = 362
@@ -209,6 +209,7 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 	if (listMode == LISTMODE_FLEET){
 
 		cellnum(0) = 5, 5
+		
 		if sosuka {
 			w = 454
 			h = 362
@@ -227,16 +228,17 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 
 	if (listMode == LISTMODE_OTHER){
 
-		if directLink {
+		if (directLink) {
 			cellnum(0) = 6, 4
+			ListModeHNum = 5
 			w = 800
 			h = 480
 			capx = 0
 			capy = 0
-			
 		}
-		if airStation {
+		if (airStation) {
 			cellnum(0) = 2, 0
+			ListModeHNum = 1
 			if (airStationTab) { 
 				w = 225
 				h = 358
@@ -249,8 +251,9 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 				capy = 131
 			}
 		}
-		if equipmentList {
+		if (equipmentList) {
 			cellnum(0) = 6, 4
+			ListModeHNum = 5
 			h = 300
 			if (sceneKaiso) {
 				w = 208
