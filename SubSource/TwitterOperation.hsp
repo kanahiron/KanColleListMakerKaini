@@ -708,15 +708,12 @@ return
 	
 return
 
-
 *getText
 	//ツイートウィンドウのテキストボックスに入力された文字数のカウント
 	if (lparam = tth){
 		if ( ((wparam >> 16)&0x0000FFFF) == 0x0400 ){
-			MultiByteToWideChar 65001, 0, varptr(tweettext), -1, 0, 0
-			ttCount = stat -1
+			ttCount = GetWindowText(tth, varptr(tweetTextBuf), 512) - SendMessage( tth, EM_GETLINECOUNT, 0, 0)+1
 			sendmsg ttCounth ,$C , , strf("%3d",140-ttCount)
 		}
 	}
-	
 return

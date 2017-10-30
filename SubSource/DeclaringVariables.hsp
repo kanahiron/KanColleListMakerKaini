@@ -47,7 +47,8 @@
 	sdim hotkeystr_temp
 	sdim savelogtext, 1024
 	sdim picStack, 1024, 4
-	sdim tweettext, 200
+	sdim tweettext, 1026
+	sdim tweettextBuf, 1026
 	sdim picHistory, 512, 101
 
 	dim twiBufPicSize, 2, 4

@@ -58,6 +58,7 @@
 #func ShowScrollBar "ShowScrollBar" int, int, int
 #func GetWindowText "GetWindowTextW" int, int, int
 #func SetWindowPos "SetWindowPos" wptr, wptr, wptr, wptr, wptr, wptr, wptr
+#func SendMessage "SendMessageW" wptr, wptr, wptr, wptr
 
 #uselib "kernel32.dll"
 #func MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
@@ -206,7 +207,9 @@
 #const WM_DPICHANGED	0x02E0
 #const WM_HOTKEY		0x0312
 
-
+//エディットコントロール周り
+#define EM_SETSEL		0x00B1
+#define EM_GETLINECOUNT	0x00BA
 
 //リストボックス周り
 #define LB_ADDSTRING	$00000180
