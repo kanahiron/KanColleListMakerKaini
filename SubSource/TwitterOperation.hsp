@@ -38,7 +38,11 @@ return
 		gsel WND_TWITTER
 		gosub *TweetWindowDraw
 
-		sendmsg stackCounth ,$C , , strf("%3d/%3d",picHistoryNum+1, picHistoryCount)
+		if (picHistoryCount == 0){
+			sendmsg stackCounth ,$C , , strf("None")
+		} else {
+			sendmsg stackCounth ,$C , , strf("%3d/%3d", picHistoryNum+1, picHistoryCount)
+		}
 		
 		nidPop
 	}
@@ -120,7 +124,7 @@ return
 		sendmsg ttCounth, $30, hFont
 	
 		pos Scale(379), Scale(189)
-		winobj "static", strf("%3d/%3d ", picHistoryNum+1, picHistoryCount), , $50001002, Scale(65), Scale(20)
+		winobj "static", strf("None"), , $50001002, Scale(65), Scale(20)
 		stackCounth = objinfo(stat, 2)
 		sendmsg stackCounth, $30, hFont
 	
@@ -511,7 +515,11 @@ return
 				
 				gsel WND_TWITTER
 				gosub *TweetWindowDraw
-				sendmsg stackCounth ,$C , , strf("%3d/%3d",picHistoryNum+1, picHistoryCount)
+				if (picHistoryCount == 0){
+					sendmsg stackCounth ,$C , , strf("None")
+				} else {
+					sendmsg stackCounth ,$C , , strf("%3d/%3d", picHistoryNum+1, picHistoryCount)
+				}
 			}
 			nidpop
 		}
@@ -629,7 +637,7 @@ return
 				twiOrder = 0,0,0,0
 				twiOrderCount = 0
 				objprm ttid, tweettext
-	
+				sendmsg ttCounth ,$C , , strf("%3d",140)
 				sendmsg hProgress, $402, 0
 			
 				logmessage = "ツイートを投稿しました"
