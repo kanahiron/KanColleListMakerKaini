@@ -578,32 +578,18 @@ return
 		gosub *SSModeControlDisable
 		
 		sdim mediaids, 1024
-		sdim tempsdim, 256, 4
+		sdim tempsdim, 1024, 4
 
 		count = 0
 		repeat 4
 			if (twiOrder(cnt) == (count+1)) {
-				if picStack(cnt) != "" {
+				if ( 2 <= ImgF_GetFormat(picStack(cnt)) ){
 					tempsdim(count) = picStack(cnt)
 					count++
 					continue 0
 				}
 			}
 		loop
-
-		countCut = 0
-		repeat count
-			ccnt =  cnt
-			if (ImgF_GetFormat(tempSdim(cnt)) == 0){
-				repeat count-cnt-1, cnt
-					debugLog "        "+tempSdim(cnt)+"‚Í‰æ‘œƒtƒ@ƒCƒ‹‚Å‚Í‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½"
-					tempSdim(cnt) = tempSdim(cnt+1)
-					tempSdim(cnt+1) = ""
-					countCut++
-				loop
-			}
-		loop
-		count -= countCut
 					
 		if (twijpg == TRUE & jpgsave == FALSE){
 			repeat count
