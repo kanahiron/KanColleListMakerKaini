@@ -34,13 +34,13 @@
 	dim tempMouse, 2
 
 	ddim AspectRatio, 1
-	sdim sscapmes, 256
-	sdim logmessage, 256
+	sdim sscapmes, 1026
+	sdim logmessage, 1026
 	sdim modemes, 64
 	sdim stemp
-	sdim sssavedir , 260
-	sdim listsavedir , 260
-	sdim yabumidir, 260
+	sdim sssavedir , 1026
+	sdim listsavedir , 1026
+	sdim yabumidir, 1026
 	sdim savekind, 64, modeNum
 	sdim hotkeycapchar
 	sdim hotkeystr

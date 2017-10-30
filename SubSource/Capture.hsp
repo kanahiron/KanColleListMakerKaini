@@ -46,23 +46,7 @@
 	sscap(2) = rdposx
 	sscap(3) = rdposy
 	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
-/*
-	switch positionType
-		case PT_ABSOLUTE
-			ssCapMes = strf("%d,%d",Å@sscap(0),Å@sscap(1))
-			swbreak
-		case PT_RELATIVE
-			ssCapMes = "í«ê’íÜS"
-			swbreak
-		case PT_WNDABSOLUTE
-			ssCapMes = "í«ê’íÜA"
-			swbreak
-	swend
-	
-	if (mode != MODE_OPTION){
-		objprm SSCapIId, ssCapMes
-	}
-*/
+
 	if ( (sscapwh(0) < 50) | (sscapwh(1) < 30) ){
 		if (mode != MODE_OPTION){
 
