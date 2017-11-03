@@ -43,10 +43,8 @@ return
 		} else {
 			sendmsg stackCounth ,$C , , strf("%3d/%3d", picHistoryNum+1, picHistoryCount)
 		}
-		
 		nidPop
 	}
-
 return
 
 
@@ -184,7 +182,7 @@ return
 	
 	nidPush
 	
-	if picHistoryNum < 99{
+	if (picHistoryNum < 99){
 
 		if (picHistoryCount > picHistoryNum+1){
 			picHistoryNum++
@@ -285,8 +283,7 @@ return
 		
 		i = 3
 		repeat 3
-			
-			if twiOrder(i) = 0{
+			if (twiOrder(i) = 0){
 				PicStack(i) = PicStack(i-1)
 				twiOrder(i) = twiOrder(i-1)
 				twiOrder(i-1) = 0
@@ -481,7 +478,7 @@ return
 			}
 		loop
 		
-		if rcFlg != rcFlg_ {
+		if (rcFlg != rcFlg_) {
 
 			logmes "選択が変わった"
 			
@@ -532,7 +529,6 @@ return
 
 	if (ginfo(24) == WND_TWITTER) {
 
-		debugLog "ツイートウィンドウの画像描画処理 開始"
 		nidPush
 		
 		mx = lParam & 0x0000FFFF			// カーソルx座標
@@ -566,7 +562,6 @@ return
 		}
 
 		nidPop
-		debugLog "ツイートウィンドウの画像描画処理 終了"
 	}
 
 
@@ -599,7 +594,7 @@ return
 			}
 		loop
 					
-		if (twijpg == TRUE & jpgsave == FALSE){
+		if (twijpg && jpgsave == FALSE){
 			repeat count
 				buffer WND_TEMP1
 				//=========================================
@@ -625,7 +620,7 @@ return
 			}
 		}
 	
-		if mediaTweetSuccess {
+		if (mediaTweetSuccess) {
 				
 			tweet tweettext, "", mediaids
 			if (stat = 200){
@@ -678,7 +673,7 @@ return
 *openbrowser
 
 	address = getAuthorizeAddress()
-	if address != "Error"{
+	if (address != "Error"){
 		exec "rundll32.exe url.dll,FileProtocolHandler \""+address+"\""
 	} else {
 		dialog "認証に失敗しました\nインターネットに繋がっているか確認しもう一度お試しください"
@@ -694,7 +689,7 @@ return
 	ACCESS_SECRET = ""
 	publishAccessToken ACCESS_TOKEN,ACCESS_SECRET,userdata,PIN
 	
-	if stat != 200{
+	if (stat != 200){
 		dialog "Twitter認証に失敗しました\nもう一度お試しください"
 	} else {
 		gosub *twiinit

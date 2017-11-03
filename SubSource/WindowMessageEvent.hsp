@@ -313,8 +313,6 @@ return
 return
 
 *listchange
-	debugLog "リストチェンジ 開始"
-
 	nidPush
 	gsel WND_MAIN
 
@@ -327,7 +325,7 @@ return
 			sendmsg ichiranMode2Ch, $F2
 			ichiranMode2 = stat & 0x01
 	
-			if ichiranMode1 {
+			if (ichiranMode1) {
 			
 				lvnamef = lvname
 				sendmsg yubiwach, $F2
@@ -341,7 +339,7 @@ return
 				
 				objenable lvnamecid,1
 				
-				if lvname = 1{
+				if (lvname) {
 					objenable yubiwacid,0
 					objenable kantaicid,0
 					objenable pagecid,0
@@ -350,10 +348,9 @@ return
 					objenable kantaicid,1
 					objenable pagecid,1
 				}
-				
 			}
 	
-			if ichiranMode2 {
+			if (ichiranMode2) {
 	
 				objenable yubiwacid,0
 				objenable kantaicid,0
@@ -438,7 +435,6 @@ return
 	gosub *draw
 
 	nidPop
-	debugLog "リストチェンジ 終了"
 return
 
 
@@ -475,15 +471,13 @@ return
 
 //ドロップ処理――――――――――――――――――――――――――――――――――
 *OnDropFiles
-	debugLog "ドロップ処理 開始"
-
+	
 	if ( ginfo_intid == WND_MAIN && mode != MODE_LIST ){
 		return
 	}
 	
 	if ( ginfo_intid == WND_MAIN || ginfo_intid == WND_GRID ){
 
-		debugLog "    メインかグリッドウィンドウにドロップされた"
 		nidPush
 		dropWindowId = ginfo(24)
 		hdrop = wParam
@@ -511,7 +505,6 @@ return
 	
 	if (ginfo_intid == WND_TWITTER){
 
-		debugLog "    ツイートウィンドウにドロップされた"
 		nidPush
 	
 		hdrop = wParam
@@ -535,7 +528,6 @@ return
 	
 	}
 	
-	debugLog "ドロップ処理 終了"
 return
 
 *WM_VSCROLL_Proc
@@ -596,17 +588,13 @@ return
 return
 
 *DPICHANGED
-	debugLog "DPI変更のウィンドウメッセージ 開始"
 	nidPush
 	
-	if autoUIScale {
+	if (autoUIScale) {
 		
 		logmes "WM_DPICHANGED"
 		
 		DPI = HIWORD(wparam)
-
-		debugLog "    変更後DPI:"+DPI
-		
 		UIScale = 1.0 * DPI / 96.0
 	
 		scale3 = Scale(3)
@@ -628,13 +616,9 @@ return
 			gosub *twiInit
 		}
 		gosub *DrawSupportWnd
-	} else {
-		debugLog "    DPI自動設定がOFFの為変更無し"
 	}
 	
 	nidPop
-
-	debugLog "DPI変更のウィンドウメッセージ 終了"
 return
 
 *mainWndMove
@@ -689,6 +673,4 @@ return
 			gosub *SeqCapWriteStatTimerProcessing
 			swbreak
 	swend
-
-
 return 0

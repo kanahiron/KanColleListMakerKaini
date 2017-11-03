@@ -4,12 +4,6 @@
 	SetIni (dir_exe+"\\ListMaker2.ini")
 	if (stat == 2):errDialog = FALSE: initialActivation = TRUE
 
-	sdim intervalShotDir, 512
-	sdim listsavedir, 512
-	sdim sssavedir, 512
-	sdim yabumidir, 512
-	sdim ffmpegdir, 1024
-
 	GetIni "Configuration", "FrontRow", frontrow, "1"
 	GetIni "Configuration", "HideLog", hidelog, "0"
 	GetIni "Configuration", "YabumiAutoUpload", yabumiautoupload, "1"
@@ -126,11 +120,9 @@
 	GetIni "KanmusuFormationMode", "FontSizeName", fontsizename, "30"
 	GetIni "KanmusuFormationMode", "FontSizeNum", fontsizenum, "34"
 
-
 	GetIni "OtherListMode", "AirStation", airStation, "0"
 	GetIni "OtherListMode", "DirectLink", directLink, "1"
 	GetIni "OtherListMode", "AirStationTab", airStationTab, "1"
-
 	
 	if strmid(hotkeystr,0,1) = "A":hotkeycapalt	= 1
 	if strmid(hotkeystr,1,1) = "C":hotkeycapctrl = 1
@@ -441,7 +433,6 @@ return
 
 *inisave
 
-
 	WriteIni "Configuration", "FrontRow", frontrow
 	WriteIni "Configuration", "HideLog", hidelog
 	WriteIni "Configuration", "YabumiAutoUpload", yabumiautoupload
@@ -522,7 +513,6 @@ return
 	WriteIni "TwitterSetting", "TwiFrontRow", twiFrontRow
 	WriteIni "TwitterSetting", "TwiJpg",twijpg
 
-
 	WriteIni "SSMode", "AutoSearch", autosearch
 	WriteIni "SSMode", "HideName", hidename
 	WriteIni "SSMode", "EnableTweetWindow",enableTweetWindow
@@ -561,7 +551,6 @@ return
 	WriteIni "OtherListMode", "DirectLink", directLink
 	WriteIni "OtherListMode", "AirStationTab", airStationTab
 
-
 return
 
 *loadHistory
@@ -596,6 +585,5 @@ return
 
 	nidPop
 	
-
 	chdir currentdir
 return

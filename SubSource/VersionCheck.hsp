@@ -93,7 +93,7 @@
 	rsize = 1024	// バッファ初期値
 	hsize = 0		// 取得したバイト数が代入される変数
 	intSize = 4		// int型の大きさ
-	connTimeOut = 10000
+	connTimeOut = 4000
 	connRetry = 2
 
 	method = "GET"
@@ -117,7 +117,7 @@
 	hInet = InternetOpen( "KanColleListMakerKaini", INTERNET_OPEN_TYPE_PRECONFIG, 0, 0, 0)
 	if (hInet){
 
-		//タイムアウト 10秒 リトライ数2回
+		//タイムアウト 4秒 リトライ数2回
 		InternetSetOption hInet, INTERNET_OPTION_CONNECT_TIMEOUT, varptr(connTimeOut), intSize
 		InternetSetOption hInet, INTERNET_OPTION_CONNECT_RETRIES, varptr(connRetry), intSize
 
@@ -199,8 +199,6 @@ return responseBody
 			logmessage = "バージョンチェックが完了しました。"
 			LogOut logMessage
 		}
-		
-		debugLog "バージョンチェック 終了"
 	}
 
 return

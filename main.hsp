@@ -1,8 +1,6 @@
 #include "hsp3utf.as"
 #include "modclbk3.hsp"
 
-#define global debugLog(%1) ;
-
 #include "./SubSource/FunctionDefinition.hsp"
 #include "./SubSource/key.hsp"
 #include "./modules/kmodule.as"

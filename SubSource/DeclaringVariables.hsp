@@ -41,6 +41,7 @@
 	sdim sssavedir , 1026
 	sdim listsavedir , 1026
 	sdim yabumidir, 1026
+	sdim ffmpegdir, 1026
 	sdim savekind, 64, modeNum
 	sdim hotkeycapchar
 	sdim hotkeystr
