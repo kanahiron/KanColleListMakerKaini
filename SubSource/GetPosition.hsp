@@ -111,10 +111,12 @@
 				loop
 				gsel WND_OVERLAY, -1
 				gsel WND_IMAGE_BUF2, -1
+			//マウスオーバー取得終わり
 			}
+		//新座標検出終わり
 		}
 	} else {
-
+		//手動取得
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY | CAPTUREBLT: redraw
 
