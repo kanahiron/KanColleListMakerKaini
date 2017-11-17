@@ -1,0 +1,36 @@
+
+#module
+
+#deffunc makeBackgroundImage int drawImageId, int tempImageId
+
+	baseColR = 238
+	baseColG = 229
+	baseColB = 216
+
+	buffer drawImageId, 800, 480
+
+	redraw 0
+	repeat 24000
+		color baseColR-5+rnd(11), baseColG-5+rnd(11), baseColB-5+rnd(11)
+		pset cnt\200, cnt/200
+	loop
+	redraw 1
+
+	buffer tempImageId, 800, 480
+	gzoom 800, 480, drawImageId, 0, 0, 200, 120, 10
+
+	gsel drawImageId
+	color baseColR, baseColG, baseColB
+	boxf 
+	gmode 3, 800, 480, 130
+	gcopy tempImageId, 0, 0, 800, 480
+	gmode
+return
+
+#global
+
+#if 0
+	makeBackgroundImage 1, 2
+	screen 0, 800, 480
+	gcopy 1, 0, 0, 800, 480
+#endif

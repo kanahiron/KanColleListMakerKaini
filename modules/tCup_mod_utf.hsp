@@ -462,7 +462,7 @@ return form_encode(str(base64HmacSha1), 0)
 
 	tokenStr = accessToken
 	sigKey = consumerSecret+" "+accessSecret
-	logmes "sigkey="+sigKey
+	//logmes "sigkey="+sigKey
 	if (api = "oauth/access_token") {
 		tokenStr = requestToken
 		sigKey = consumerSecret+" "+requestSecret
@@ -486,7 +486,7 @@ return form_encode(str(base64HmacSha1), 0)
 	sortstr sigArray, 0
 
 	repeat sigArrayLength
-		logmes sigArray(cnt)
+		//logmes sigArray(cnt)
 		if sigArray(cnt) = "" : continue
 		transStr += sigArray(cnt) +"&"
 	loop
@@ -564,7 +564,7 @@ return form_encode(str(base64HmacSha1), 0)
 
 	//ヘッダーをUTF-16LEに変換
 	MultiByteToWideChar 65001, 0, varptr(RequestHeader), strlen(RequestHeader), 0, 0
-	RequestHeaderWideLength = stat						//UTF-16文字列の 文 字 数
+	RequestHeaderWideLength = stat							//UTF-16文字列の 文 字 数
 	sdim RequestHeaderWide ,(RequestHeaderWideLength*2)+2	//UTF-16文字列を入れるバッファを確保
 	cnvstow RequestHeaderWide, RequestHeader				//バッファにUTF-8からUTF-16に変換して格納
 
@@ -580,15 +580,17 @@ return form_encode(str(base64HmacSha1), 0)
 
 	//サーバへ接続
 	hConnect = _InternetConnect(hInet, RequestURL, INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
+	//logmes "1 InternetConnect"
 	if (hConnect) {
-		logmes "hConnect"
+		//logmes "1 hConnect"
 		//リクエストの初期化
 		hRequest = _HttpOpenRequest(hConnect, method, apiURL, httpVer, 0, 0, requestFlag)
+		//logmes "2 HttpOpenRequest"
 		if (hRequest) {
-			logmes "hRequest"
+			//logmes "2 hRequest"
 			//データ送信準備
 			if _HttpSendRequestEx( hRequest, varptr(INTERNET_BUFFERS), 0, 0, 0) {
-				logmes "HttpSendRequestEx"
+				//logmes "3 HttpSendRequestEx"
 				//リクエストボディの送信
 				sentFailFlg = 0
 				if (PostDataLength != 0){
@@ -598,12 +600,15 @@ return form_encode(str(base64HmacSha1), 0)
 					unSentSize = PostDataLength
 					tSize = 0
 					repeat
+						//logmes "unSentSize "+unSentSize
 						if (unSentSize = 0): break
 						if (unSentSize < 2048): tSize = unSentSize: else: tSize = 2048
-						
-						_InternetWriteFile hRequest, varptr(PostData)+sentSize, tSize, varptr(BytesWritten)
-						if (stat == 0): sentFailFlg = 1: break //送信失敗
 
+						//logmes "4 HttpSendRequestEx ST"
+						_InternetWriteFile hRequest, varptr(PostData)+sentSize, tSize, varptr(BytesWritten)
+						//logmes "4 HttpSendRequestEx EN"
+						if (stat == 0): sentFailFlg = 1: break //送信失敗
+						//logmes "BytesWritten "+BytesWritten
 						sentSize += BytesWritten
 						unSentSize -= BytesWritten
 						//title@hsp strf("送信バイト数 %d/%dByte %.2f%%", sentSize, PostdataLength, (100.0*sentSize/PostDataLength))
@@ -613,7 +618,7 @@ return form_encode(str(base64HmacSha1), 0)
 				}
 				if (sentFailFlg == 0){
 					if _HttpEndRequest( hRequest, 0, 0, 0){
-						logmes "HttpEndRequest"
+						//logmes "HttpEndRequest"
 
 						ResponseBodySize = 0
 						readTotalSize = 0
@@ -621,7 +626,7 @@ return form_encode(str(base64HmacSha1), 0)
 	
 						_HttpQueryInfo hRequest, HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER, varptr(statCode), varptr(intSize), 0
 
-						logmes "StatCode "+statCode
+						//logmes "StatCode "+statCode
 
 						//入手可能なデータ量を取得
 						_InternetQueryDataAvailable hRequest, varptr(ResponseBodySize), 0, 0
