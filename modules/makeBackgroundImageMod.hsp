@@ -1,7 +1,7 @@
 
 #module
 
-#deffunc makeBackgroundImage int drawImageId, int tempImageId
+#deffunc MakeBackgroundImage int drawImageId, int tempImageId
 
 	baseColR = 238
 	baseColG = 229
