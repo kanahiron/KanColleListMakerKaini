@@ -184,6 +184,24 @@ return
 		boxf -1, cellsize(1)*listModeHNum-2, maxScrSize(0)+1, cellsize(1)*listModeHNum
 		color 0, 0, 0
 	}
+
+	if (listMode == LISTMODE_FLEET && nishimuraFlg ) {
+		color 0, 0, 0
+		if tuika1 {
+			line cellsize(0)  , cellsize(1)*3  , cellsize(0)*4  , cellsize(1)*4
+			line cellsize(0)+1, cellsize(1)*3  , cellsize(0)*4  , cellsize(1)*4-1
+			line cellsize(0)  , cellsize(1)*3+1, cellsize(0)*4-1, cellsize(1)*4
+		}
+		if tuika4 {
+			line cellsize(0)*3  , 0, cellsize(0)*4  , cellsize(1)
+			line cellsize(0)*3+1, 0, cellsize(0)*4  , cellsize(1)-1
+			line cellsize(0)*3  , 1, cellsize(0)*4-1, cellsize(1)
+
+			line cellsize(0)*3  , cellsize(1)*2  , cellsize(0)*4  , cellsize(1)*4
+			line cellsize(0)*3+1, cellsize(1)*2  , cellsize(0)*4  , cellsize(1)*4-1
+			line cellsize(0)*  3, cellsize(1)*2+1, cellsize(0)*4-1, cellsize(1)*4
+		}
+	}
 	
 	if (listMode == LISTMODE_FLEET && fleetPunctuation){
 		color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
