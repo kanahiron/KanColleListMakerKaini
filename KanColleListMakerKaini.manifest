@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 	<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3"> 
 	<assemblyIdentity 
-		version="0.4.0.0" 
+		version="0.4.0.1" 
 		processorArchitecture="X86" 
 		name="kanahiron.net.KanColleListMakerKaini.exe"
 		type="win32"
