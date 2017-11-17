@@ -130,6 +130,61 @@ R4HBGC_constructor
 return
 
 
+
+#deffunc convGetKanCollePosAuto int imageid, array sscap, int bufid
+
+	nid = ginfo(3)
+
+	gsel imageid
+	sw = ginfo(12)
+	sh = ginfo(13)
+	
+	buffer bufid, sw, sh
+	
+	chgbm 32
+	
+	gcopy imageid, 0, 0, sw, sh
+	mref vram, 66
+	
+	gsel nid
+	
+	getkancollewindowposauto_C vram, sw*sh, homeportdata
+	if stat != -1{
+		//homeportdata 33, 106
+		sscap(0) = (stat\sw)+disinfo(0)-33, ((sh-1)-stat/sw)+disinfo(1)-106
+		sscap(2) = sscap(0)+800, sscap(1)+480
+		gsel bufid: chgbm
+		gsel nid
+		return 1
+	}
+
+	getkancollewindowposauto_C vram, sw*sh, resultdata
+	if stat != -1{
+		//resultdata 0, 122
+		sscap(0) = (stat\sw)+disinfo(0)-0, ((sh-1)-stat/sw)+disinfo(1)-122
+		sscap(2) = sscap(0)+800, sscap(1)+480
+		gsel bufid: chgbm
+		gsel nid
+		return 1
+	}
+	
+	getkancollewindowposauto_C vram, sw*sh, mapmovedata
+	if stat != -1{
+		//mapmovedata 167, 479
+		sscap(0) = (stat\sw)+disinfo(0)-167, ((sh-1)-stat/sw)+disinfo(1)-479
+		sscap(2) = sscap(0)+800, sscap(1)+480
+		gsel bufid: chgbm
+		gsel nid
+		return 1
+	}
+
+	gsel bufid: chgbm
+	gsel nid
+
+return 0
+
+
+
 #deffunc getKanCollePos int winID, int tempWinID, array posArray, int cx_, int cy_
 
 	lx = -1

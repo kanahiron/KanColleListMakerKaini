@@ -20,95 +20,99 @@
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
 
-		dim sscap_, 4
-		getKanCollePosAuto WND_TEMP1, sscap_, WND_TEMP2 //戻り値は見つかった個数
-		logmes "getKanCollePosAuto "+stat
-		if (stat){
-			//成功
-
-			if (length2(sscap_) == 1){
-				//見つけたウィンドウが1つだった時
-				sscap(0) = sscap_(0) + disInfo(0)
-				sscap(1) = sscap_(1) + disInfo(1)
-				sscap(2) = sscap_(2) + disInfo(0)
-				sscap(3) = sscap_(3) + disInfo(1)
-			} else {
-				//見つけたウィンドウ複数だった場合
-				repeat length2(sscap_)
-					sscap_(0, cnt) += disInfo(0)
-					sscap_(1, cnt) += disInfo(1)
-					sscap_(2, cnt) += disInfo(0)
-					sscap_(3, cnt) += disInfo(1)
-				loop
-				sscap(0) = 0
-				sscap(1) = 0
-				sscap(2) = 0
-				sscap(3) = 0
-				ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_SHOW
-				LogOut "複数の画面を検出\n緑色の領域をクリック！"
-				ShowSelectWindow sscap_, WND_INFO(WND_MAIN, WI_HANDLE)
-				repeat //本当はこんなことしたくないんだけど…今後改善予定
-					stick sti,, 0
-					if sti: break
-					if ( sscap(2)-sscap(0) ) != 0: break
-					await 16
-				loop
-				HideSelectWindow
-			}
-			
-		} else {
-			//失敗
-			dim KCRect, 4
-			successflg = FALSE
-			
-			MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), 0, 0, 0, 0, 1
-			gsel WND_OVERLAY, 2
-			gsel WND_IMAGE_BUF2, 2
-			gsel WND_MAIN, 0
+		//昔の取得方法
+		ConvGetKanCollePosAuto WND_TEMP1, sscap, WND_TEMP2
+		if (stat == 0){　//失敗
+		
+			dim sscap_, 4
+			getKanCollePosAuto WND_TEMP1, sscap_, WND_TEMP2 //戻り値は見つかった個数
+			logmes "getKanCollePosAuto "+stat
+			if (stat){
+				//成功
 	
-			repeat
-	
-				MoveWindow WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), ginfo_mx+1, ginfo_my+1, imageBuf2W, imageBuf2H,1
-	
-				getKanCollePos WND_TEMP1, WND_TEMP2, KCRect, ginfo_mx-disInfo(0), ginfo_my-disInfo(1)
-				if (stat == 1){
-					KCRect(0) += disInfo(0)
-					KCRect(1) += disInfo(1)
-					KCRect(2) += disInfo(0)
-					KCRect(3) += disInfo(1)
-					MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), KCRect(0), KCRect(1), KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), 1
-					successflg = TRUE
+				if (length2(sscap_) == 1){
+					//見つけたウィンドウが1つだった時
+					sscap(0) = sscap_(0) + disInfo(0)
+					sscap(1) = sscap_(1) + disInfo(1)
+					sscap(2) = sscap_(2) + disInfo(0)
+					sscap(3) = sscap_(3) + disInfo(1)
 				} else {
-					KCRect(0) = -1, -1, -1, -1
-					MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), 0, 0, 0, 0, 1
-					successflg = FALSE
+					//見つけたウィンドウ複数だった場合
+					repeat length2(sscap_)
+						sscap_(0, cnt) += disInfo(0)
+						sscap_(1, cnt) += disInfo(1)
+						sscap_(2, cnt) += disInfo(0)
+						sscap_(3, cnt) += disInfo(1)
+					loop
+					sscap(0) = 0
+					sscap(1) = 0
+					sscap(2) = 0
+					sscap(3) = 0
+					ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_SHOW
+					LogOut "複数の画面を検出\n緑色の領域をクリック！"
+					ShowSelectWindow sscap_, WND_INFO(WND_MAIN, WI_HANDLE)
+					repeat //本当はこんなことしたくないんだけど…今後改善予定
+						stick sti,, 0
+						if sti: break
+						if ( sscap(2)-sscap(0) ) != 0: break
+						await 16
+					loop
+					HideSelectWindow
 				}
-	
-				stick sti, , 0
-				if (sti & 256){
-					if (successflg){
-						sscap(0) = KCRect(0) 
-						sscap(1) = KCRect(1) 
-						sscap(2) = KCRect(2) 
-						sscap(3) = KCRect(3) 
+				
+			} else {
+				//失敗
+				dim KCRect, 4
+				successflg = FALSE
+				
+				MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), 0, 0, 0, 0, 1
+				gsel WND_OVERLAY, 2
+				gsel WND_IMAGE_BUF2, 2
+				gsel WND_MAIN, 0
+		
+				repeat
+		
+					MoveWindow WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), ginfo_mx+1, ginfo_my+1, imageBuf2W, imageBuf2H,1
+		
+					getKanCollePos WND_TEMP1, WND_TEMP2, KCRect, ginfo_mx-disInfo(0), ginfo_my-disInfo(1)
+					if (stat == 1){
+						KCRect(0) += disInfo(0)
+						KCRect(1) += disInfo(1)
+						KCRect(2) += disInfo(0)
+						KCRect(3) += disInfo(1)
+						MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), KCRect(0), KCRect(1), KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), 1
+						successflg = TRUE
 					} else {
-						sscap(0) = 0, 0, 0, 0
+						KCRect(0) = -1, -1, -1, -1
+						MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), 0, 0, 0, 0, 1
+						successflg = FALSE
 					}
-					
-					break
-				}
-				if (sti & 128){
-					sscap(0) = 0, 0, 0, 0
-					break
-				}
-					
-				await 33
-			
-			loop
-			gsel WND_OVERLAY, -1
-			gsel WND_IMAGE_BUF2, -1
+		
+					stick sti, , 0
+					if (sti & 256){
+						if (successflg){
+							sscap(0) = KCRect(0) 
+							sscap(1) = KCRect(1) 
+							sscap(2) = KCRect(2) 
+							sscap(3) = KCRect(3) 
+						} else {
+							sscap(0) = 0, 0, 0, 0
+						}
+						
+						break
+					}
+					if (sti & 128){
+						sscap(0) = 0, 0, 0, 0
+						break
+					}
+						
+					await 33
+				
+				loop
+				gsel WND_OVERLAY, -1
+				gsel WND_IMAGE_BUF2, -1
+			}
 		}
-
 	} else {
 
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
