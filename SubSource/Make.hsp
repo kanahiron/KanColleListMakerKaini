@@ -21,6 +21,7 @@
 	VNum++
 	HNum++
 	
+	interpolationFlg = listMakeInterpolation && ( ((listMode == LISTMODE_OTHER && directLink) && directLinkDisInterpolation)^1 )
 
 	buffer WND_TEMP1, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
 	drawcount = 0
@@ -33,6 +34,11 @@
 				buffer bufIDPos(cnt, ycnt), 1, 1
 				gsel WND_TEMP1
 				drawcount++
+			} else {
+				if (interpolationFlg){
+					pos cnt*cutRange(CR_W), ycnt*cutRange(CR_H)
+					gcopy WND_KANCOLLEBG, cutRange(CR_X) , cutRange(CR_Y), cutRange(CR_W), cutRange(CR_H)
+				}
 			}
 		loop
 	loop

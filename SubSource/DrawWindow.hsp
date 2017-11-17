@@ -654,6 +654,12 @@
 			chkbox "\"提督名と司令部Lvを隠す\"で司令部Lvは隠さない", noHideLv: mesy += scale20
 			pos scale5, mesy
 			chkbox "\"提督名と司令部Lvを隠す\"で隠すのではなく切り取る", namecut: mesy += scale20
+
+			pos scale5, mesy
+			chkbox "一覧作成モードで背景を補間する", listMakeInterpolation: mesy += scale20
+			pos Scale(5+25), mesy
+			chkbox "直接連結では補間しない", directLinkDisInterpolation: mesy += scale20
+
 			pos scale5, mesy
 			chkbox "ホットキーでSSをキャプチャする", hotkeycap: mesy += scale20
 		
