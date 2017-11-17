@@ -661,6 +661,9 @@
 			chkbox "直接連結では補間しない", directLinkDisInterpolation: mesy += scale20
 
 			pos scale5, mesy
+			chkbox "サポートウィンドウを使用する", enableSupportWindow: mesy += scale20
+
+			pos scale5, mesy
 			chkbox "ホットキーでSSをキャプチャする", hotkeycap: mesy += scale20
 		
 			objsize Scale(50), Scale(24)

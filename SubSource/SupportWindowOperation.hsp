@@ -140,19 +140,21 @@ return
 *SupportWndDisp
 
 	if (mode == MODE_LIST){
-		ssCapWH(0) = ssCap(2)-ssCap(0), ssCap(3)-ssCap(1)
-		if ( 0 < ssCapWH(0) && 0 < ssCapWH(1) ){
-			kcAbsPos = 0, 0
-			GetAbsPos kcAbsPos(0), kcAbsPos(1)
-
-			supportWndPos(0) = kcAbsPos(0)+ssCapWH(0)-SupportWndWidth()
-			supportWndPos(1) = kcAbsPos(1)+ssCapWH(1)
-			
-			MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), supportWndPos(0), supportWndPos(1), SupportWndWidth(), SupportWndHeight(), 1
-			ShowWindow WND_INFO(WND_SUPPORT, WI_HANDLE), SW_SHOW
-			SetWindowPos WND_INFO(WND_SUPPORT, WI_HANDLE), -1, 0, 0, 0, 0, 0x0003
-		} else {
-			ShowWindow WND_INFO(WND_SUPPORT, WI_HANDLE), SW_HIDE
+		if (enableSupportWindow){
+			ssCapWH(0) = ssCap(2)-ssCap(0), ssCap(3)-ssCap(1)
+			if ( 0 < ssCapWH(0) && 0 < ssCapWH(1) ){
+				kcAbsPos = 0, 0
+				GetAbsPos kcAbsPos(0), kcAbsPos(1)
+	
+				supportWndPos(0) = kcAbsPos(0)+ssCapWH(0)-SupportWndWidth()
+				supportWndPos(1) = kcAbsPos(1)+ssCapWH(1)
+				
+				MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), supportWndPos(0), supportWndPos(1), SupportWndWidth(), SupportWndHeight(), 1
+				ShowWindow WND_INFO(WND_SUPPORT, WI_HANDLE), SW_SHOW
+				SetWindowPos WND_INFO(WND_SUPPORT, WI_HANDLE), -1, 0, 0, 0, 0, 0x0003
+			} else {
+				ShowWindow WND_INFO(WND_SUPPORT, WI_HANDLE), SW_HIDE
+			}
 		}
 	} else {
 		ShowWindow WND_INFO(WND_SUPPORT, WI_HANDLE), SW_HIDE
