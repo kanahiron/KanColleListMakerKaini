@@ -411,6 +411,14 @@
 			
 			pos window2x + Scale(7), mesy2
 			button gosub "‘ælŠÍ‘à", *colorCange4: mesy2 += Scale(22)
+			
+			mesy2 += Scale(3)
+			pos window2x + Scale(5), mesy2+Scale(1)
+			mes " ŠÍ‘à‹æØ‚èüF": mesy2 += scale20
+		
+			drawColorPosP = mesy2
+			pos window2x + Scale(7), mesy2
+			button gosub "•ÏX", *colorCange5: mesy2 += Scale(22)
 		
 			gosub *drawColor
 			

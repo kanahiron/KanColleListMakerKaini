@@ -260,6 +260,18 @@ return
 	}
 return
 
+*colorCange5
+	colorRefArr(0) = RGBtoBGR(PunctuationColor)
+	chooseColoerStruct(3) = RGBtoBGR(PunctuationColor)
+	ChooseColor varptr(chooseColoerStruct)
+	if (stat != 0){
+		PunctuationColor = RGBtoBGR(chooseColoerStruct(3))
+		PunctuationColorStr = strf("%06X", PunctuationColor)
+		gosub *drawColor
+		gosub *draw
+	}
+return
+
 *drawColor
 	if (mode = MODE_LIST && listMode == LISTMODE_FLEET){
 		nidPush
@@ -273,6 +285,9 @@ return
 		boxf Scale(211), drawColorPos + Scale(44) + 1, Scale(349), drawColorPos + Scale(21 + 44)
 		color ((fontColorFourthFleet&0x00FF0000)>>16), ((fontColorFourthFleet&0x0000FF00)>>8), (fontColorFourthFleet&0x000000FF)
 		boxf Scale(211), drawColorPos + Scale(66) + 1, Scale(349), drawColorPos + Scale(21 + 66)
+
+		color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
+		boxf Scale(211), drawColorPosP +1, Scale(349), drawColorPosP + Scale(21)
 		nidPop
 	}
 return

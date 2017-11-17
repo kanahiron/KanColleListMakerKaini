@@ -180,13 +180,13 @@ return
 	loop
 
 	If (listMode != LISTMODE_FLEET){
-		color 32, 32, 192
+		color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
 		boxf -1, cellsize(1)*listModeHNum-2, maxScrSize(0)+1, cellsize(1)*listModeHNum
 		color 0, 0, 0
 	}
 	
 	if (listMode == LISTMODE_FLEET && fleetPunctuation){
-		color 32, 32, 192
+		color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
 		if (nishimuraFlg^1){
 			if tuika1 {
 				boxf 2*cellsize(0)-1, -1, 2*cellsize(0)+1, maxScrSize(1)+1
