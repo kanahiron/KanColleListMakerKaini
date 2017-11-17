@@ -74,8 +74,8 @@
 #undef title
 #define title(%1, %2 = hwnd) SetWindowText %2, %1
 
-#define CELL_MAX_W				8
-#define CELL_MAX_H				7
+#define CELL_MAX_W				9
+#define CELL_MAX_H				9
 #define HOTKEYID				7798
 #define SeqCapTimerID			101
 #define VideoCapTimerID			103

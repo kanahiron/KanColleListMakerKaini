@@ -210,6 +210,7 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 	if (listMode == LISTMODE_FLEET){
 
 		cellnum(0) = 5, 5
+		if (nishimuraFlg): cellnum(0) = 3, 3
 		
 		if sosuka {
 			w = 454
@@ -220,7 +221,7 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 			h = 362	
 		}
 		if soka {
-			w = 460
+			w = 454
 			h = 195
 		}
 		capx = 327

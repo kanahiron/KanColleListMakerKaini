@@ -113,7 +113,7 @@
 	
 	if enableFirst = 1{
 		y = 10
-		string = "1\n2\n3\n4\n5\n6"
+		string = "1\n2\n3\n4\n5\n6\n7"
 		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
@@ -132,7 +132,7 @@
 	
 	if enableSecond = 1{
 		y = 10
-		string = "1\n2\n3\n4\n5\n6"
+		string = "1\n2\n3\n4\n5\n6\n7"
 		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
@@ -151,7 +151,7 @@
 	
 	if enableThird = 1{
 		y = 10
-		string = "1\n2\n3\n4\n5\n6"
+		string = "1\n2\n3\n4\n5\n6\n7"
 		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n
@@ -170,7 +170,7 @@
 	
 	if enableFourth = 1{
 		y = 10
-		string = "1\n2\n3\n4\n5\n6"
+		string = "1\n2\n3\n4\n5\n6\n7"
 		color 255, 255, 255
 		repeat n
 			rad = 2.0 * M_PI * cnt / n

@@ -214,21 +214,51 @@ return (successFlg^1)
 				ycnt = cnt\ListModeHNum
 			} 
 			if (listmode == LISTMODE_FLEET){
-				if tuika1{
-					xcnt = (((cnt\(6*(cellnum(0)+1)/2))/6)*2)+(cnt\2)
-					ycnt = ((cnt/((cellnum(0)+1)*3))*3)+((cnt\6)/2)
-				}
-				if tuika4{
-					xcnt = (((cnt\(6*(cellnum(0)+1)/3))/6)*3)+(cnt\3)
-					ycnt = ((cnt/((cellnum(0)+1)*2))*2)+((cnt\6)/3)
-				}
-				if tuika2 {
-					xcnt = cnt\6
-					ycnt = cnt/6
-				}
-				if tuika3{
-					xcnt = cnt/6
-					ycnt = cnt\6
+				if (nishimuraFlg^1){
+					if tuika1{
+						xcnt = (((cnt\(6*(cellnum(0)+1)/2))/6)*2)+(cnt\2)
+						ycnt = ((cnt/((cellnum(0)+1)*3))*3)+((cnt\6)/2)
+					}
+					if tuika4{
+						xcnt = (((cnt\(6*(cellnum(0)+1)/3))/6)*3)+(cnt\3)
+						ycnt = ((cnt/((cellnum(0)+1)*2))*2)+((cnt\6)/3)
+					}
+					if tuika2 {
+						xcnt = cnt\6
+						ycnt = cnt/6
+					}
+					if tuika3{
+						xcnt = cnt/6
+						ycnt = cnt\6
+					}
+				} else {
+					//7êl
+					if tuika1{
+						if (cnt == 13):break
+						if (cnt <= 6){
+							xcnt = cnt\2
+							ycnt = cnt/2
+						} else {
+							xcnt = 2+(cnt-1)\2
+							ycnt = (cnt-1)/2-3
+						}
+						logmes strf("%d %d",xcnt,ycnt)
+					}
+					if tuika4{
+						if (cnt == 13):break
+						if (cnt <= 5){
+							xcnt = cnt\3
+							ycnt = cnt/3
+						}
+						if (cnt == 6){
+							xcnt = 3
+							ycnt = 1
+						}
+						if (cnt >= 7){
+							xcnt = (cnt-1)\3
+							ycnt = (cnt-1)/3
+						}
+					}
 				}
 			}
 			if (listmode == LISTMODE_OTHER){

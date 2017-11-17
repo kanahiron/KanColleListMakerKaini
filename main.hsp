@@ -201,7 +201,7 @@
 		mes "No image"
 
 	buffer WND_KANCOLLEBG, 800, 480
-	 MakeBackgroundImage WND_KANCOLLEBG, WND_TEMP1
+		MakeBackgroundImage WND_KANCOLLEBG, WND_TEMP1
 
 	gsel WND_MAIN
 

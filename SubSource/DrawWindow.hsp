@@ -353,8 +353,12 @@
 			pos Scale(5), mesy
 			chkbox "èáî‘Ç…î‘çÜÇì¸ÇÍÇÈ", addOrderNum: mesy += scale20
 			addOrderNumCId = stat
-	
-	
+
+			pos Scale(5), mesy
+			chkbox "êºë∫äÕë‡(7êl)Ç…ëŒâû", nishimuraFlg: mesy += scale20
+			nishimuraFlgCId = stat
+			nishimuraFlgCh = objinfo_hwnd(nishimuraFlgCId)
+			
 			SetDAControl tuika1Ch
 			SetDAControl tuika2Ch
 			SetDAControl tuika3Ch
@@ -363,8 +367,8 @@
 			SetDAControl sosuCh
 			SetDAControl sokaCh
 			SetDAControl fleetPunctuationCh
+			SetDAControl nishimuraFlgCh
 	
-		
 			window2x = Scale(175)
 		
 			objsize Scale(70), Scale(22)

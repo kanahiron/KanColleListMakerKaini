@@ -388,6 +388,26 @@ return
 		
 			sendmsg fleetPunctuationch, $F2
 			fleetPunctuation = stat & 0x01
+			
+			sendmsg nishimuraFlgCh, $F2
+			nishimuraFlg = stat & 0x01
+
+			if (nishimuraFlg){
+				if (tuika2 + tuika3 == 1){
+					tuika1 = 1
+					tuika2 = 0
+					tuika3 = 0
+					objprm tuika1CId, 1
+					objprm tuika2CId, 0
+					objprm tuika3CId, 0
+				}
+				objenable tuika2CId, 0
+				objenable tuika3CId, 0
+				
+			} else {
+				objenable tuika2CId, 1
+				objenable tuika3CId, 1
+			}
 		}
 	
 		if (listMode == LISTMODE_OTHER){
