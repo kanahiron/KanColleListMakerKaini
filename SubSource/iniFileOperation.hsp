@@ -35,8 +35,6 @@
 	GetIni "CaptureAndMaking", "JpgQuality", jpgquality, "90"
 	GetIni "CaptureAndMaking", "EnableIntervalCap", enableSeqCap, "0"
 	GetIni "CaptureAndMaking", "IntervalTime", timersec, "5"
-	GetIni "CaptureAndMaking", "ListMakeInterpolation", listMakeInterpolation, "1"
-	GetIni "CaptureAndMaking", "DirectLinkDisInterpolation", directLinkDisInterpolation, "1"
 	GetIni "CaptureAndMaking", "EnableSeqCapLimitNum", enableSeqCapLimitNum, "0"
 	GetIni "CaptureAndMaking", "EnableSeqCapLimitTime", enableSeqCapLimitTime, "0"
 	GetIni "CaptureAndMaking", "EnableSeqCapLimitSize", enableSeqCapLimitSize, "0"
@@ -184,9 +182,6 @@ return
 	if (addOrderNum != 0) & (addOrderNum != 1):addOrderNum=1
 
 	if (airStationTab != 0) & (airStationTab != 1):airStationTab=1
-
-	if (listMakeInterpolation != 0) & (listMakeInterpolation != 1):listMakeInterpolation=1
-	if (directLinkDisInterpolation != 0) & (directLinkDisInterpolation != 1):directLinkDisInterpolation=1
 
 	if (confirmSaveNameCapture != 0) & (confirmSaveNameCapture != 1):confirmSaveNameCapture=0
 	if (confirmSaveNameSelectCapture != 0) & (confirmSaveNameSelectCapture != 1):confirmSaveNameSelectCapture=0
@@ -469,8 +464,6 @@ return
 	WriteIni "CaptureAndMaking", "JpgQuality", jpgquality
 	WriteIni "CaptureAndMaking", "EnableIntervalCap", enableSeqCap
 	WriteIni "CaptureAndMaking", "IntervalTime", timersec
-	WriteIni "CaptureAndMaking", "ListMakeInterpolation", listMakeInterpolation
-	WriteIni "CaptureAndMaking", "DirectLinkDisInterpolation", directLinkDisInterpolation
 	WriteIni "CaptureAndMaking", "EnableSeqCapLimitNum", enableSeqCapLimitNum
 	WriteIni "CaptureAndMaking", "EnableSeqCapLimitTime", enableSeqCapLimitTime
 	WriteIni "CaptureAndMaking", "EnableSeqCapLimitSize", enableSeqCapLimitSize

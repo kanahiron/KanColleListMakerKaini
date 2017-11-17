@@ -22,7 +22,6 @@
 #include "./modules/FFMPEGLog.hsp"
 #include "./modules/GetKanCollePosMod.hsp"
 #include "./modules/SelectWindowMod.hsp"
-#include "./modules/makeBackgroundImageMod.hsp"
 
 #pack "start.ax"
 #pack "data2.png"
@@ -199,9 +198,6 @@
 		font "ÉÅÉCÉäÉI", 130
 		pos 100, 150
 		mes "No image"
-
-	buffer WND_KANCOLLEBG, 800, 480
-	 MakeBackgroundImage WND_KANCOLLEBG, WND_TEMP1
 
 	gsel WND_MAIN
 
