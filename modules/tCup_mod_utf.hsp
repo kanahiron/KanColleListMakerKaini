@@ -230,7 +230,7 @@ TwitterAPI操作命令
 	timeOutTime = p4*1000
 	gzipFlag = 1 // true /-------------------
 	sdim userAgent,strlen(p1)*3
-	cnvstow userAgent,p1
+	cnvstow userAgent, p1
 	//インターネットオープン
 	hInet = _InternetOpen( varptr(_userAgent), INTERNET_OPEN_TYPE_PRECONFIG, 0, 0, 0)
 	if hInet = 0:return -1
@@ -453,6 +453,7 @@ return form_encode(str(base64HmacSha1), 0)
 
 	apiUrl = apiVersion +"/"+ api
 
+	sdim transStr, 4096
 	//OAuth1.0a用のシグネチャ作成
 	transStr = method +" https://"+RequestURL+"/"+ apiVersion +"/"+ api +" "
 	if (strmid(api,0,5) = "oauth") {
@@ -566,7 +567,8 @@ return form_encode(str(base64HmacSha1), 0)
 	MultiByteToWideChar 65001, 0, varptr(RequestHeader), strlen(RequestHeader), 0, 0
 	RequestHeaderWideLength = stat							//UTF-16文字列の 文 字 数
 	sdim RequestHeaderWide ,(RequestHeaderWideLength*2)+2	//UTF-16文字列を入れるバッファを確保
-	cnvstow RequestHeaderWide, RequestHeader				//バッファにUTF-8からUTF-16に変換して格納
+	MultiByteToWideChar 65001, 0, varptr(RequestHeader), strlen(RequestHeader), varptr(RequestHeaderWide), RequestHeaderWideLength+1
+	//cnvstow RequestHeaderWide, RequestHeader				//バッファにUTF-8からUTF-16に変換して格納
 
 	//HttpSendRequestEx用のINTERNET_BUFFERS構造体を作成
 	dim INTERNET_BUFFERS, 10
@@ -662,6 +664,7 @@ return form_encode(str(base64HmacSha1), 0)
 	sdim requestHeader
 	sdim postData
 	sdim picBuf
+	sdim transStr
 
 return statcode
 
