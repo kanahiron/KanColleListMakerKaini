@@ -33,9 +33,9 @@
 #packopt icon "KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
-#define SOFTNAME "一覧めいかー改二 Ver0.4.1"
-#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.4.1"
-#define klm2ver	4010
+#define SOFTNAME "一覧めいかー改二 Ver0.4.1.1"
+#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.4.1.1"
+#define klm2ver	4011
 
 #ifdef _debug
 
@@ -331,12 +331,17 @@
 
 	ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_RESTORE
 	ShowWindow WND_INFO(WND_TWITTER, WI_HANDLE), SW_RESTORE
+	await
 	gsel WND_MAIN: dim mainWindowPos, 2: mainWindowPos = ginfo(4), ginfo(5)
 	gsel WND_TWITTER: dim tweetWindowPos, 2: tweetWindowPos = ginfo(4), ginfo(5)
 
-	sscap(2) -= ssCap(0): sscap(3) -= ssCap(1)
-	GetAbsPos ssCap(0), ssCap(1)
-	sscap(2) += ssCap(0): sscap(3) += ssCap(1)
+	if (availableCap){
+		sscap(2) -= ssCap(0): sscap(3) -= ssCap(1)
+		GetAbsPos ssCap(0), ssCap(1)
+		sscap(2) += ssCap(0): sscap(3) += ssCap(1)
+	} else {
+		repeat 4: ssCap(cnt) = 0: loop
+	}
 	gosub *dataCheck
 	gosub *iniSave
 		
