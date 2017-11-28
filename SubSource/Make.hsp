@@ -405,7 +405,7 @@
 		if kmexist(saveNamePath) <= 0{
 			LogOut savename+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
 		} else {
-			successFlg = TURE
+			successFlg = TRUE
 			LogOut savename+"‚ð•Û‘¶‚µ‚Ü‚µ‚½"
 
 			picHistoryLoad(saveNamePath)
