@@ -330,8 +330,6 @@ return
 		availableCap = TRUE
 		LogOut "À•W‚Ìæ“¾‚É¬Œ÷‚µ‚Ü‚µ‚½"
 		if autoSearch: autoSearchFailureCount = 0
-
-		
 		
 	} else {
 

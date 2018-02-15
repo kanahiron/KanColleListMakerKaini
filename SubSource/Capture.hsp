@@ -106,6 +106,12 @@
 		}
 	}
 
+	if (forceResize){
+		gsel WND_CAPTURE: pos 0, 0
+		gzoom 800, 480, WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1), 1
+		sscapwh(0) = 800, 480
+	}
+
 	nidPop
 	
 return 0
