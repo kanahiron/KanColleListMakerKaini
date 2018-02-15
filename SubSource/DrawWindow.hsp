@@ -666,6 +666,9 @@
 			chkbox "\"提督名と司令部Lvを隠す\"で司令部Lvは隠さない", noHideLv: mesy += scale20
 			pos scale5, mesy
 			chkbox "\"提督名と司令部Lvを隠す\"で隠すのではなく切り取る", namecut: mesy += scale20
+			
+			pos scale5, mesy
+			chkbox "\"提督名と司令部Lvを隠す\"をモザイク処理にする", nameMosaic: mesy += scale20
 
 			pos scale5, mesy
 			chkbox "SSを強制的に800x480px(等倍)にリサイズする", forceResize: mesy += scale20

@@ -93,23 +93,38 @@
 
 	swend
 
+	if (forceResize){
+		gsel WND_CAPTURE: pos 0, 0
+		gzoom 800, 480, WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1), 1
+		sscapwh(0) = 800, 480
+	}
+
 	cutPosY = 0
 	if (hidename && isHomeport(WND_CAPTURE, sscapwh(0), sscapwh(1))){
 		if (namecut): cutPosY = round(0.0625*sscapwh(1))
 		//íÒì¬ñºÇ∆ÉåÉxÉãÇâBÇ∑èàóù
 		gsel WND_CAPTURE: pos 0, 0
-		pos 0.14125*sscapwh(0), 0
-		gzoom 0.20375*sscapwh(0), 0.05*sscapwh(1), WND_IMAGE_BUF, 0, 0, 163, 24, 1
-		if (noHideLv^1){
-			pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
-			gzoom 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, WND_IMAGE_BUF, 0, 24, 100, 16, 1
-		}
-	}
+		if (nameMosaic^1){
+			pos 0.14125*sscapwh(0), 0
+			gzoom 0.20375*sscapwh(0), 0.05*sscapwh(1), WND_IMAGE_BUF, 0, 0, 163, 24, 1
+		} else {
+			pos 0.14125*sscapwh(0), 0
+			gzoom 0.20375*sscapwh(0)*0.17, 0.05*sscapwh(1)*0.17, WND_CAPTURE, 0.14125*sscapwh(0), 0, 0.20375*sscapwh(0), 0.05*sscapwh(1), 0
+			pos 0.14125*sscapwh(0), 0
+			gzoom 0.20375*sscapwh(0), 0.05*sscapwh(1), WND_CAPTURE, 0.14125*sscapwh(0), 0, 0.20375*sscapwh(0)*0.17, 0.05*sscapwh(1)*0.17, 0
 
-	if (forceResize){
-		gsel WND_CAPTURE: pos 0, 0
-		gzoom 800, 480, WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1), 1
-		sscapwh(0) = 800, 480
+		}
+		if (noHideLv^1){
+			if (nameMosaic^1){
+				pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
+				gzoom 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, WND_IMAGE_BUF, 0, 24, 100, 16, 1
+			} else {
+				pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
+				gzoom 0.125*sscapwh(0)*0.17, (0.0333333333*sscapwh(1)+0.5)*0.17, WND_CAPTURE, 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9, 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, 0
+				pos 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9
+				gzoom 0.125*sscapwh(0), 0.0333333333*sscapwh(1)+0.5, WND_CAPTURE, 0.49375*sscapwh(0), 0.0208333333*sscapwh(1)+0.9, 0.125*sscapwh(0)*0.17, (0.0333333333*sscapwh(1)+0.5)*0.17, 0
+			}
+		}
 	}
 
 	nidPop

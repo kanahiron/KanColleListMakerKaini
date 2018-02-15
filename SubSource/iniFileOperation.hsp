@@ -24,7 +24,8 @@
 	GetIni "Configuration", "SelectCapSaveDir", selectCapSaveDir, "\"\""
 	GetIni "Configuration", "YabumiExeDir", yabumidir, "\"\""
 
-	GetIni "CaptureAndMaking", "noHideLv", noHideLv, "0"
+	GetIni "CaptureAndMaking", "NoHideLv", noHideLv, "0"
+	GetIni "CaptureAndMaking", "NameMosaic", nameMosaic, "0"
 	GetIni "CaptureAndMaking", "NameCut", namecut, "0"
 	GetIni "CaptureAndMaking", "forceResize", forceResize, "0"
 	GetIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel, "2"
@@ -149,6 +150,7 @@ return
 	if (hidename != 0) & (hidename != 1):hidename = 0
 	if (noHideLv != 0) & (noHideLv != 1):noHideLv=0
 	if (namecut != 0) & (namecut != 1):namecut=0
+	if (nameMosaic != 0) & (nameMosaic != 1):nameMosaic=0
 	if (forceResize != 0) & (forceResize != 1):forceResize=0
 	if (frontrow != 0) & (frontrow != 1):frontrow=1
 	if (hidelog != 0) & (hidelog != 1):hidelog = 0
@@ -466,7 +468,8 @@ return
 	WriteIni "Configuration", "SelectCapSaveDir",selectCapSaveDir
 	WriteIni "Configuration", "YabumiExeDir", yabumidir
 	
-	WriteIni "CaptureAndMaking", "noHideLv", noHideLv
+	WriteIni "CaptureAndMaking", "NoHideLv", noHideLv
+	WriteIni "CaptureAndMaking", "NameMosaic", nameMosaic
 	WriteIni "CaptureAndMaking", "NameCut", namecut
 	WriteIni "CaptureAndMaking", "forceResize", forceResize
 	WriteIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel
