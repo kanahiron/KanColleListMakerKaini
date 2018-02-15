@@ -319,15 +319,29 @@ return
 			objprm rdposxIId, rdposx
 			objprm rdposyIId, rdposy
 		}
+		if (dispcap && (mode == MODE_SSCAP)){
+			gosub *SSCaptureOnMemory
+			pos 0, dispcapy
+			gzoom Scale(175), Scale(105), WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1)
+		}
 		
 		gosub *SSModeControlEnable
 
 		availableCap = TRUE
 		LogOut "À•W‚Ìæ“¾‚É¬Œ÷‚µ‚Ü‚µ‚½"
 		if autoSearch: autoSearchFailureCount = 0
+
+		
 		
 	} else {
 
+		if (dispcap && (mode == MODE_SSCAP)){
+			syscolor 16
+			boxf 0, dispcapy, Scale(175), dispcapy+Scale(105)
+			syscolor 15
+			boxf Scale(3), dispcapy+Scale(3), Scale(171), dispcapy+Scale(101)
+			color
+		}
 		if (mode != MODE_OPTION){
 			sscapmes = "æ“¾‚·‚é"
 			objprm SSCapIId, sscapmes
@@ -336,7 +350,7 @@ return
 		if seqcapf: gosub *seqcap
 		
 		LogOut "À•W‚ğæ“¾‚Å‚«‚Ü‚¹‚ñ\nÚ×‚Íreadme‚ğ‚¨“Ç‚İ‚­‚¾‚³‚¢"
-		
+
 		gosub *SSModeControlDisable
 		
 		availablecap = FALSE
