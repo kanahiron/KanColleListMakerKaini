@@ -674,6 +674,8 @@
 
 			pos scale5, mesy
 			chkbox "サポートウィンドウを使用する", enableSupportWindow: mesy += scale20
+			pos Scale(5+25), mesy
+			mes "※艦これの画面の下に出る補助用の小さいウィンドウ": mesy += scale20
 
 			pos scale5, mesy
 			chkbox "ホットキーでSSをキャプチャする", hotkeycap: mesy += scale20
