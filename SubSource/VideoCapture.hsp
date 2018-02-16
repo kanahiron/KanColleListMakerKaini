@@ -48,6 +48,8 @@
 		remainingTime = 0
 		encodeTime = 0
 
+		sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
+
 		GetAbsPos videoCapX, videoCapY
 		
 		//座標を8のサイズに整形
@@ -171,14 +173,22 @@
 		LateEncodeFlg = TRUE
 		lateEncodeStartTime = timeGetTime()
 		diffTime = 1.0*(vStartTime+60.0-aStartTime)\60.0
+
+		if (audioNormalize){
+			normalizeStr = "-af volumedetect"
+		} else {
+			normalizeStr = ""
+		}
+		volumeStr = str(int(2.56*volume+0.5))
+		
 		//コマンド組み立て
 		if (noAudioFlg^1){
 			if (lateEncode){
 				//オーデイオ有り負荷軽減動画キャプチャ
-				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -c:v libx264 -crf %d -preset %s -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, videoFileName, difftime, videoFileName, videoCapCRF, x264presetStr, videoFileName)
+				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -vol %s %s -c:v libx264 -crf %d -preset %s -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, videoFileName, difftime, videoFileName, volumeStr, normalizeStr, videoCapCRF, x264presetStr, videoFileName)
 			} else {
 				//オーデイオ有り従来の動画キャプチャ
-				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -c:v copy  -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, videoFileName, difftime, videoFileName, videoFileName)
+				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -vol %s %s -c:v copy -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, videoFileName, difftime, videoFileName, volumeStr, normalizeStr, videoFileName)
 			}
 		} else {
 			if (lateEncode){

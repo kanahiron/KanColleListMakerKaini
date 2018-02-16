@@ -603,6 +603,14 @@ return
 			}
 		}
 	}
+
+	if (lparam == hVolumeTrackbar) {
+		
+		sendmsg hVolumeTrackbar, TBM_GETPOS
+		volume = stat
+		sendmsg hVolumeTrackBarScale, $C ,, strf("%d%% ",volume)
+
+	}
 	
 	nidPop
 return

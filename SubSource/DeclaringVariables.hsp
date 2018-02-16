@@ -126,6 +126,7 @@
 	autoSearchFailureCount = 0
 
 	UIScale = 1.0
+	volume = 100
 	
 	userdata = ""
 	ACCESS_TOKEN = ""

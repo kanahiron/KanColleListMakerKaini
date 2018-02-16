@@ -78,6 +78,8 @@
 	GetIni "VideoCapture", "enableVideoCapLimit", enableVideoCapLimit, "0"
 	GetIni "VideoCapture", "VideoCapLimitTimeM", videoCapLimitTimeM, "30"
 	GetIni "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS, "0"
+	GetIni "VideoCapture", "Volume", volume, "100"
+	GetIni "VideoCapture", "AudioNormalize", audioNormalize, "0"
 
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
@@ -214,6 +216,9 @@ return
 	if (videoCapFR < 5) | ( 30 < videoCapFR):videoCapFR=20
 	if (videoCapCRF < 16) | ( 30 < videoCapCRF):videoCapCRF=22
 	if (x264presetNum < 0) | ( 7 < x264presetNum):x264presetNum=1
+
+	if (audioNormalize != 0) & (audioNormalize != 1):audioNormalize=0
+	if (volume < 25) | ( 250 < volume):volume=100
 
 	if (maxSearchLevel < 0) | ( 2 < maxSearchLevel): maxSearchLevel=2
 	
@@ -521,6 +526,9 @@ return
 	WriteIni "VideoCapture", "enableVideoCapLimit", enableVideoCapLimit
 	WriteIni "VideoCapture", "VideoCapLimitTimeM", videoCapLimitTimeM
 	WriteIni "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS
+	WriteIni "VideoCapture", "Volume", volume
+	WriteIni "VideoCapture", "AudioNormalize", audioNormalize
+	
 	
 	sdim temp, 256
 	temp = encstr(userdata)

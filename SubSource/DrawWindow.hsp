@@ -860,8 +860,34 @@
 			hAudioDeviceLB = objinfo_hwnd(audioDeviceLBId)
 			await: GetClientRect hAudioDeviceLB, varptr(rect)
 			mesy += rect(3)+scale5
-			
 
+
+			pos scale5, mesy
+			mes "âπê∫": mesy += scale20
+
+			pos Scale(25+5), mesy+Scale5
+			mes "âπó ÇÃí≤êﬂ"
+	
+			pos Scale(100), mesy
+			winobj "msctls_trackbar32", "",, $50000000 | $1, Scale(175), Scale(30)
+			hVolumeTrackbar = objinfo(stat, 2)
+		
+			sendmsg hVolumeTrackbar, TBM_SETRANGE, 1, (250<<16) | 25
+			sendmsg hVolumeTrackbar, TBM_SETPAGESIZE, 0, 25
+			sendmsg hVolumeTrackbar, TBM_SETTICFREQ, 50, 0
+			sendmsg hVolumeTrackbar, TBM_SETPOS, 1, volume
+	
+			pos Scale(300), mesy
+			winobj "static", strf("%d%% ", volume),, $50000002, Scale(40), Scale(30): mesy += Scale(30)
+			hVolumeTrackBarScale = objinfo(stat, 2)
+			sendmsg hVolumeTrackBarScale, $30, hFontMain
+
+
+			objsize Scale(70), Scale(20)
+			pos Scale(25+5), mesy
+			chkbox "ïWèÄâª", audioNormalize: mesy += scale20
+			
+	
 			objsize Scale(150), scale20
 			pos Scale(14), mesy
 			mes "ffmpeg.exeÇÃèÍèä"
