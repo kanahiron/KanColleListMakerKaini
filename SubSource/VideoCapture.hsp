@@ -97,7 +97,6 @@
 		pipe2exec cmda
 		apid = stat
 		aStartTime = 0.001*(timeGetTime()\60000)
-		wait 20
 		pipe2exec cmdv
 		vpid = stat
 		vStartTime = 0.001*(timeGetTime()\60000)
@@ -169,12 +168,12 @@
 					AddFFmpegLog "", ffbuf
 				}
 			}
+			logmes strf("cnt %d  exfv %d  exfa %d",cnt, exfv, exfa)
 			if (exfv && exfa): break
-			wait 10
 		loop
 
-		pipe2term vpid
-		pipe2term apid
+		apid = -1
+		vpid = -1
 		
 		//エンコードの開始
 		LateEncodeFlg = TRUE
@@ -237,7 +236,7 @@ return
 
 	ffbuf = ""
 	pipe2check vpid
-	if (stat == 0):exfv = 1
+	if (stat == 0): exfv = 1: vpid = -1
 	if (stat & 2): pipe2get vpid, ffbuf
 	if (stat & 4): pipe2err vpid, ffbuf
 
@@ -249,7 +248,7 @@ return
 	
 	ffbuf = ""
 	pipe2check apid
-	if (stat == 0):exfa = 1
+	if (stat == 0): exfa = 1: apid = -1
 	if (stat & 2): pipe2get apid, ffbuf
 	if (stat & 4): pipe2err apid, ffbuf
 
@@ -298,7 +297,7 @@ return
 
 	ffbuf = ""
 	pipe2check mpid
-	if (stat == 0): exfm = 1
+	if (stat == 0): exfm = 1: mpid = -1
 	if (stat & 2): pipe2get mpid, ffbuf
 	if (stat & 4): pipe2err mpid, ffbuf
 
@@ -367,6 +366,10 @@ return
 *VidepCapFinish
 	nidPush
 
+	apid = -1
+	vpid = -1
+	mpid = -1
+
 	exist videoFileName+"_v.mp4"
 	if (strsize != -1): delete videoFileName+"_v.mp4"
 	exist videoFileName+"_a.wav"
@@ -395,10 +398,45 @@ return
 
 	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
 	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID
-	if (apid != -1): pipe2term apid
-	if (vpid != -1): pipe2term vpid
-	if (mpid != -1): pipe2term mpid
-	wait 50
+
+	exfv = 1
+	exfa = 1
+	exfm = 1
+	
+	if (apid != -1): pipe2term apid: exfa = 0: logmes "オーディオプロセスが生きてる"
+	if (vpid != -1): pipe2term vpid: exfv = 0: logmes "ビデオプロセスが生きてる"
+	if (mpid != -1): pipe2term mpid: exfm = 0: logmes "エンコードプロセスが生きてる"
+
+	repeat //終了の待機
+		if (exfv == 0){
+			ffbuf = ""
+			pipe2check vpid
+			if stat == 0:exfv = 1
+			if stat & 2: pipe2get vpid, ffbuf
+			if stat & 4: pipe2err vpid, ffbuf
+		}
+		if (exfa == 0){
+			ffbuf = ""
+			pipe2check apid
+			if stat == 0:exfa = 1
+			if stat & 2: pipe2get apid, ffbuf
+			if stat & 4: pipe2err apid, ffbuf
+		}
+		if (exfm == 0){
+			ffbuf = ""
+			pipe2check mpid
+			if stat == 0:exfm = 1
+			if stat & 2: pipe2get mpid, ffbuf
+			if stat & 4: pipe2err mpid, ffbuf
+		}
+		logmes strf("cnt %d  exfv %d  exfa %d  exfm %d",cnt, exfv, exfa, exfm)
+		if (exfv && exfa && exfm): break
+	loop
+
+	apid = -1
+	vpid = -1
+	mpid = -1
+	
 	exist videoFileName+"_v.mp4"
 	if (strsize != -1): delete videoFileName+"_v.mp4"
 	exist videoFileName+"_a.wav"
