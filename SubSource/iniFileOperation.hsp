@@ -80,6 +80,7 @@
 	GetIni "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS, "0"
 	GetIni "VideoCapture", "Volume", volume, "100"
 	GetIni "VideoCapture", "AudioNormalize", audioNormalize, "0"
+	GetIni "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture, "1"
 
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
@@ -219,6 +220,8 @@ return
 
 	if (audioNormalize != 0) & (audioNormalize != 1):audioNormalize=0
 	if (volume < 25) | ( 250 < volume):volume=100
+
+	if (confirmCancelVideoCapture != 0) & (confirmCancelVideoCapture != 1):confirmCancelVideoCapture=1
 
 	if (maxSearchLevel < 0) | ( 2 < maxSearchLevel): maxSearchLevel=2
 	
@@ -528,6 +531,7 @@ return
 	WriteIni "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS
 	WriteIni "VideoCapture", "Volume", volume
 	WriteIni "VideoCapture", "AudioNormalize", audioNormalize
+	WriteIni "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture
 	
 	
 	sdim temp, 256

@@ -802,7 +802,8 @@
 			chkbox "キャプチャ中に取り込み範囲枠を表示する", videoCapShowFrame: mesy += scale20
 			pos scale5, mesy
 			chkbox "ffmpegのログウィンドウを表示する", enableFFMPEGLogWindow: mesy += scale20
-
+			pos scale5, mesy
+			chkbox "中止時に確認のダイアログを出す", confirmCancelVideoCapture: mesy += scale20
 
 			objsize Scale(174), scale20
 			pos scale5, mesy+Scale(3)
