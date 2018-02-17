@@ -33,9 +33,9 @@
 #packopt icon "KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
-#define SOFTNAME "一覧めいかー改二 Ver0.4.1.1"
-#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.4.1.1"
-#define klm2ver	4011
+#define SOFTNAME "一覧めいかー改二 Ver0.5"
+#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.5"
+#define klm2ver 5000
 
 #ifdef _debug
 
