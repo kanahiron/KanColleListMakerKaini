@@ -111,9 +111,9 @@
 
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID, 400, 0
 
+		videoCapMes = "停止"
 		if (mode == MODE_SSCAP){
 			gsel WND_MAIN
-			videoCapMes = "停止"
 			objprm videoCapBId, videoCapMes
 		}
 		
@@ -122,9 +122,9 @@
 	
 	} else {
 
+		videoCapMes = "中止"
 		if (mode == MODE_SSCAP){
 			gsel WND_MAIN
-			videoCapMes = "中止"
 			objprm videoCapBId, videoCapMes
 		}
 			
@@ -377,9 +377,9 @@ return
 
 	LogOut strf("%s.mp4を保存しました。", getpath(videoFileName, 8))
 
+	videoCapMes = "開始"
 	if (mode == MODE_SSCAP){
 		gsel WND_MAIN
-		videoCapMes = "開始"
 		objprm videoCapBId, videoCapMes
 	}
 
@@ -444,9 +444,9 @@ return
 	exist videoFileName+".mp4"
 	if (strsize != -1): delete videoFileName+".mp4"
 
+	videoCapMes = "開始"
 	if (mode == MODE_SSCAP){
 		gsel WND_MAIN
-		videoCapMes = "開始"
 		objprm videoCapBId, videoCapMes
 	}
 		
