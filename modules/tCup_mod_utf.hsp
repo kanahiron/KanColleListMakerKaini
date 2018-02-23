@@ -176,6 +176,7 @@ Win
 #define global FORMAT_JSON   0
 #define global FORMAT_XML    1
 
+#define BLOCK_SIZE 8192
 
 
 
@@ -414,8 +415,10 @@ return form_encode(str(base64HmacSha1), 0)
 		picLength = strsize
 		sdim picBuf,picLength+1
 		bload era_p2,picBuf
+		sdim arguments
+		argumentLength = 0
 	}
-	
+
 	methodType = era_p3
 	
 	switch methodType
@@ -435,13 +438,21 @@ return form_encode(str(base64HmacSha1), 0)
 			return 0
 			swbreak
 	swend
+
+	logmes "===execRestApi==="
+	logmes "api :"+api
+	logmes "method :"+methodType
+	logmes "arguments :"
+	repeat length(arguments)
+		logmes " "+cnt+" ["+arguments(cnt)+"]"
+	loop
 	
 	sigArrayLength = 6+argumentLength
 	sdim sigArray, 500, sigArrayLength
 
 	hConnect = 0	// InternetConnectのハンドル
 	hRequest = 0	// HttpOpenRequestのハンドル
-	staCode = 0	// リクエストの結果コード
+	statCode = 0	// リクエストの結果コード
 	intSize = 4		//int型のバイト数
 
 	apiVersion = "1.1"	// TwitterAPIのバージョン
@@ -480,6 +491,7 @@ return form_encode(str(base64HmacSha1), 0)
 	
 	if (api != "media/upload.json") {
 		repeat argumentLength
+			if (arguments(cnt) == ""):continue 
 			sigArray(6+cnt) = arguments(cnt)
 		loop
 	}
@@ -487,7 +499,6 @@ return form_encode(str(base64HmacSha1), 0)
 	sortstr sigArray, 0
 
 	repeat sigArrayLength
-		//logmes sigArray(cnt)
 		if sigArray(cnt) = "" : continue
 		transStr += sigArray(cnt) +"&"
 	loop
@@ -525,11 +536,13 @@ return form_encode(str(base64HmacSha1), 0)
 			loop
 			PostData = strmid(PostData, 0, strlen(PostData)-1) //後ろの&を除去
 			PostDataLength = strlen(PostData)
+			logmes "PostData: "+PostData
 		}
 
 		sdim AuthorizationStr
 		AuthorizationStr = "Authorization: OAuth "
 		repeat sigArrayLength
+			if sigArray(cnt) = "" : continue
 			AuthorizationStr += sigArray(cnt) +","
 		loop
 		AuthorizationStr += "oauth_signature=" +signature
@@ -550,6 +563,7 @@ return form_encode(str(base64HmacSha1), 0)
 	if (methodType = METHOD_GET) {
 		apiUrl += "?"
 		repeat sigArrayLength
+			if sigArray(cnt) = "" : continue
 			apiUrl += sigArray(cnt) +"&"
 		loop
 		apiUrl += "oauth_signature=" +signature
@@ -564,10 +578,9 @@ return form_encode(str(base64HmacSha1), 0)
 	}
 
 	//ヘッダーをUTF-16LEに変換
-	RequestHeaderWideLength = MultiByteToWideChar( 65001, 0, varptr(RequestHeader), strlen(RequestHeader), 0, 0)							//UTF-16文字列の 文 字 数
-	sdim RequestHeaderWide ,(RequestHeaderWideLength*2)+2	//UTF-16文字列を入れるバッファを確保
-	MultiByteToWideChar 65001, 0, varptr(RequestHeader), strlen(RequestHeader), varptr(RequestHeaderWide), RequestHeaderWideLength+2
-	//cnvstow RequestHeaderWide, RequestHeader				//バッファにUTF-8からUTF-16に変換して格納
+	RequestHeaderWideLength = MultiByteToWideChar( 65001, 0, varptr(RequestHeader), strlen(RequestHeader), 0, 0) //UTF-16文字列の 文 字 数
+	sdim RequestHeaderWide, (RequestHeaderWideLength*2)+2	//UTF-16文字列を入れるバッファを確保
+	cnvstow RequestHeaderWide, RequestHeader				//バッファにUTF-8からUTF-16に変換して格納
 
 	//HttpSendRequestEx用のINTERNET_BUFFERS構造体を作成
 	dim INTERNET_BUFFERS, 10
@@ -583,12 +596,10 @@ return form_encode(str(base64HmacSha1), 0)
 	hConnect = _InternetConnect(hInet, RequestURL, INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
 	logmes "1 InternetConnect"
 	if (hConnect) {
-		//logmes "1 hConnect"
 		//リクエストの初期化
 		hRequest = _HttpOpenRequest(hConnect, method, apiURL, httpVer, 0, 0, requestFlag)
 		logmes "2 HttpOpenRequest"
 		if (hRequest) {
-			//logmes "2 hRequest"
 			//データ送信準備
 			if _HttpSendRequestEx( hRequest, varptr(INTERNET_BUFFERS), 0, 0, 0) {
 				logmes "3 HttpSendRequestEx"
@@ -599,23 +610,27 @@ return form_encode(str(base64HmacSha1), 0)
 					BytesWritten = 0
 					sentSize = 0
 					unSentSize = PostDataLength
+					logmes "PostDataLength :"+PostDataLength
+					logmes "unSentSize :"+unSentSize
+					logmes "InternetWriteFile :"
 					tSize = 0
 					repeat
 						//logmes "unSentSize "+unSentSize
 						if (unSentSize = 0): break
-						if (unSentSize < 2048): tSize = unSentSize: else: tSize = 2048
-
-						logmes "4 HttpSendRequestEx ST"
+						if (unSentSize < BLOCK_SIZE): tSize = unSentSize: else: tSize = BLOCK_SIZE
+						//logmes " tSize :"+tSize
+						
 						_InternetWriteFile hRequest, varptr(PostData)+sentSize, tSize, varptr(BytesWritten)
-						//logmes "4 HttpSendRequestEx EN"
 						if (stat == 0): sentFailFlg = 1: break //送信失敗
 						//logmes "BytesWritten "+BytesWritten
 						sentSize += BytesWritten
 						unSentSize -= BytesWritten
+						//logmes " unSentSize :"+unSentSize
 						//title@hsp strf("送信バイト数 %d/%dByte %.2f%%", sentSize, PostdataLength, (100.0*sentSize/PostDataLength))
 						if hProgress: sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength+0.9)+1: sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength+0.9)
 						await
 					loop
+					logmes "4 HttpSendRequestEx"
 				}
 				if (sentFailFlg == 0){
 					if _HttpEndRequest( hRequest, 0, 0, 0){
@@ -626,19 +641,20 @@ return form_encode(str(base64HmacSha1), 0)
 						readSize = 0
 	
 						_HttpQueryInfo hRequest, HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER, varptr(statCode), varptr(intSize), 0
-
 						//logmes "StatCode "+statCode
 
 						//入手可能なデータ量を取得
 						_InternetQueryDataAvailable hRequest, varptr(ResponseBodySize), 0, 0
+						logmes "ResponseBodySize :"+ResponseBodySize
 	
 						//バッファの初期化
-						sdim responseBuffer, ResponseBodySize + 2
-						sdim responseBody, ResponseBodySize + 2
+						sdim readBuffer, BLOCK_SIZE+1
+						sdim responseBody, ResponseBodySize+1
 						repeat 
-							_InternetReadFile hRequest, varptr(responseBuffer), 1024, varptr(readSize)
+							_InternetReadFile hRequest, varptr(readBuffer), BLOCK_SIZE, varptr(readSize)
 							if (readSize = 0) : break
-							memcpy responseBody, responseBuffer, readSize, readTotalSize, 0
+							if ((readTotalSize+readSize)>ResponseBodySize): memexpand responseBody, (readTotalSize+readSize+1): logmes "ResBody拡張 :"+(readTotalSize+readSize+1)
+							memcpy responseBody, readBuffer, readSize, readTotalSize, 0
 							readTotalSize += readSize
 						loop
 						logmes "6 InternetReadFile"
@@ -676,38 +692,6 @@ return responseHeader
 #defcfunc getResponseBody
 return responseBody
 
-//============================================================
-/*  [HDL symbol infomation]
-
-%index
-setFormatType
-取得フォーマットの設定
-
-%prm
-p1
-p1 = 0～1(0)     : フラグ
-
-%inst
-TwitterAPI操作命令系で取得するデータのフォーマットを設定します。
-
-p1には以下のフラグが設定できます。
-    0 : JSON形式で取得
-    1 : XML形式で取得
-
-%group
-TwitterAPI操作命令
-
-%*/
-//------------------------------------------------------------
-#deffunc _setFormatType int sft_p1
-	formatType = "json"
-	if sft_p1 = FORMAT_XML : formatType = "xml"
-return
-#define global setFormatType(%1=0) _setFormatType %1
-//============================================================
-
-
-
 
 //============================================================
 /*  [HDL symbol infomation]
@@ -740,7 +724,6 @@ TwitterAPI操作命令
 #deffunc setAccessToken str sat_p1, str sat_p2
 	accessToken = sat_p1
 	accessSecret = sat_p2
-	
 return
 //============================================================
 
