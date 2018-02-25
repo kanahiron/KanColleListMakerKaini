@@ -54,6 +54,7 @@
 	GetIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation, "\"基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink, "\"直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "SaveNameEquipmentList", saveNameEquipmentList, "\"装備一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
+	GetIni "CaptureAndMaking", "SaveNameUserDefList", saveNameUserDefList, "\"ユーザ定義_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
 	GetIni "CaptureAndMaking", "ConfirmSaveNameCapture", confirmSaveNameCapture, "0"
 	GetIni "CaptureAndMaking", "ConfirmsaveNameSelectCapture", confirmSaveNameSelectCapture, "0"
 	GetIni "CaptureAndMaking", "ConfirmSaveNameList", confirmSaveNameList, "0"
@@ -61,8 +62,8 @@
 	GetIni "CaptureAndMaking", "ConfirmSaveNameAirStation", confirmSaveNameAirStation, "0"
 	GetIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", confirmSaveNameDirectLink, "0"
 	GetIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", confirmSaveNameEquipmentList, "0"
+	GetIni "CaptureAndMaking", "ConfirmSaveNameUserDefList", confirmSaveNameUserDefList, "0"
 	
-
 	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
 	GetIni "VideoCapture", "lateEncode", lateEncode, "1"
 	GetIni "VideoCapture", "HideCursor", videoCapHideCursor, "0"
@@ -92,7 +93,6 @@
 
 	GetIni "TwitterSetting", "TwiFrontRow", twiFrontRow, "1"
 	GetIni "TwitterSetting", "TwiJpg",twijpg, "1"
-
 
 	GetIni "SSMode", "AutoSearch", autosearch, "1"
 	GetIni "SSMode", "HideName", hidename, "0"
@@ -129,9 +129,12 @@
 	GetIni "KanmusuFormationMode", "FontSizeNum", fontsizenum, "34"
 	GetIni "KanmusuFormationMode", "PunctuationColorStr", PunctuationColorStr, "\"2020C0\""
 
-	GetIni "OtherListMode", "AirStation", airStation, "0"
 	GetIni "OtherListMode", "DirectLink", directLink, "1"
+	GetIni "OtherListMode", "AirStation", airStation, "0"
 	GetIni "OtherListMode", "AirStationTab", airStationTab, "1"
+	GetIni "OtherListMode", "EquipmentList", equipmentList, "0"
+	GetIni "OtherListMode", "UserDefList", userDefList, "0"
+	GetIni "OtherListMode", "UserDefRect", userDefRect, "0\",\"0\",\"800\",\"480"
 	
 	if strmid(hotkeystr,0,1) = "A":hotkeycapalt	= 1
 	if strmid(hotkeystr,1,1) = "C":hotkeycapctrl = 1
@@ -206,6 +209,8 @@ return
 	if (confirmSaveNameFormation != 0) & (confirmSaveNameFormation != 1):confirmSaveNameFormation=0
 	if (confirmSaveNameAirStation != 0) & (confirmSaveNameAirStation != 1):confirmSaveNameAirStation=0
 	if (confirmSaveNameDirectLink != 0) & (confirmSaveNameDirectLink != 1):confirmSaveNameDirectLink=0
+	if (confirmSaveNameEquipmentList != 0) & (confirmSaveNameEquipmentList != 1):confirmSaveNameEquipmentList=0
+	if (confirmSaveNameUserDefList != 0) & (confirmSaveNameUserDefList != 1):confirmSaveNameUserDefList=0
 
 	//VideoCapture
 	if (enableVideoCap != 0) & (enableVideoCap != 1):enableVideoCap=1
@@ -345,6 +350,11 @@ return
 		saveNameEquipmentList = "装備一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 		savelogtext += "Info - 装備一覧保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
+	isValidFileName DateAndTimeFormat2(saveNameUserDefList)
+	if (stat == FALSE){
+		saveNameUserDefList = "ユーザ定義_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+		savelogtext += "Info - ユーザ定義保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+	}
 	//=====
 	
 	fontcolorname = int("$"+fontcolornamestr)
@@ -381,10 +391,11 @@ return
 		tuika4 = 0
 	}
 	
-	if (directLink+airStation+equipmentList) != 1{
+	if (directLink+airStation+equipmentList+userDefList) != 1{
 		directLink = 1
 		airStation = 0
 		equipmentList = 0
+		userDefList = 0
 	}
 	
 	if (sosuka+sosu+sosk) != 1{
@@ -392,7 +403,6 @@ return
 		sosu = 0
 		soka = 0
 	}
-
 
 	if (ichiranMode1 + ichiranMode2) != 1{
 		ichiranMode1 = 1
@@ -410,7 +420,6 @@ return
 		savelogtext += "Info - 動画キャプチャ制限時間が短すぎます。デフォルトに変更しました。\n"
 	}
 
-	
 	if (seqCapLimitTimeS > 60): seqCapLimitTimeS \= 60: seqCapLimitTimeM++
 	if (seqCapLimitTimeM > 99): seqCapLimitTimeS = 59: seqCapLimitTimeM = 99
 
@@ -506,6 +515,7 @@ return
 	WriteIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation
 	WriteIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink
 	WriteIni "CaptureAndMaking", "SaveNameEquipmentList", saveNameEquipmentList
+	WriteIni "CaptureAndMaking", "SaveNameUserDefList", saveNameUserDefList
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameCapture", confirmSaveNameCapture
 	WriteIni "CaptureAndMaking", "ConfirmsaveNameSelectCapture", confirmSaveNameSelectCapture
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameList", confirmSaveNameList
@@ -513,6 +523,7 @@ return
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameAirStation", confirmSaveNameAirStation
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", confirmSaveNameDirectLink
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", confirmSaveNameEquipmentList
+	WriteIni "CaptureAndMaking", "ConfirmSaveNameUserDefList", confirmSaveNameUserDefList
 	
 	WriteIni "VideoCapture", "enableVideoCap", enableVideoCap
 	WriteIni "VideoCapture", "lateEncode", lateEncode
@@ -532,7 +543,6 @@ return
 	WriteIni "VideoCapture", "Volume", volume
 	WriteIni "VideoCapture", "AudioNormalize", audioNormalize
 	WriteIni "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture
-	
 	
 	sdim temp, 256
 	temp = encstr(userdata)
@@ -580,9 +590,12 @@ return
 	WriteIni "KanmusuFormationMode", "FontSizeNum", fontsizenum
 	WriteIni "KanmusuFormationMode", "PunctuationColorStr", PunctuationColorStr
 
-	WriteIni "OtherListMode", "AirStation", airStation
 	WriteIni "OtherListMode", "DirectLink", directLink
+	WriteIni "OtherListMode", "AirStation", airStation
 	WriteIni "OtherListMode", "AirStationTab", airStationTab
+	WriteIni "OtherListMode", "EquipmentList", equipmentList
+	WriteIni "OtherListMode", "UserDefList", userDefList
+	WriteIni "OtherListMode", "UserDefRect", userDefRect
 
 return
 

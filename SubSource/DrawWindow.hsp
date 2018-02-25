@@ -456,7 +456,44 @@
 			equipmentListCh = objinfo_hwnd(equipmentListCId)
 			sendmsg equipmentListCh, $F4, $9
 
-	
+
+			mesy += Scale(40)
+		
+			pos Scale(7), mesy
+			chkbox "任意範囲(上級者向け)", userDefList: mesy += scale20
+			userDefListCId = stat
+			userDefListCh = objinfo_hwnd(userDefListCId)
+			sendmsg userDefListCh, $F4, $9
+
+			pos Scale(25+32+1), mesy+scale5
+			mes ","
+			pos Scale(25+32+7+32+8+32+0), mesy+scale5
+			mes "x"
+			
+			pos Scale(25+0), mesy
+			input userDefRect(0), Scale(32), Scale(23), 3
+			userDefListXIId = stat
+			userDefListXIh = objinfo_hwnd(userDefListXIId)
+			ChgWndowStyle userDefListXIh, 0x02
+			pos Scale(25+32+7), mesy
+			input userDefRect(1), Scale(32), Scale(23), 3
+			userDefListYIId = stat
+			userDefListYIh = objinfo_hwnd(userDefListYIId)
+			ChgWndowStyle userDefListYIh, 0x02
+			
+			pos Scale(25+32+7+32+8), mesy
+			input userDefRect(2), Scale(32), Scale(23), 3
+			userDefListWIId = stat
+			userDefListWIh = objinfo_hwnd(userDefListWIId)
+			ChgWndowStyle userDefListWIh, 0x02
+			pos Scale(25+32+7+32+8+32+7), mesy
+			input userDefRect(3), Scale(32), Scale(23), 3
+			userDefListHIId = stat
+			userDefListHIh = objinfo_hwnd(userDefListHIId)
+			ChgWndowStyle userDefListHIh, 0x02
+
+			mesy -= Scale(60)
+
 			objsize Scale(70), Scale(20)
 
 			pos Scale(22), mesy
@@ -477,6 +514,8 @@
 			chkbox "詳細まで入れる", includeDetails: mesy += scale20
 			includeDetailsCId = stat
 			includeDetailsCh = objinfo_hwnd(includeDetailsCId)
+
+			mesy += Scale(43)
 	
 			SetDAControl directLinkCh
 			SetDAControl airStationCh
@@ -485,7 +524,11 @@
 			SetDAControl sceneKaisoCh
 			SetDAControl sceneHaikiCh
 			SetDAControl includeDetailsCh
-	
+			SetDAControl userDefListCh
+			SetDAControl userDefListXIh
+			SetDAControl userDefListYIh
+			SetDAControl userDefListWIh
+			SetDAControl userDefListHIh
 	
 		}
 	
@@ -767,7 +810,7 @@
 			mes "保存名"
 			pos Scale(55), mesy
 			objsize Scale(140)
-			combox saveNameSel, 100, "SSキャプチャ\n範囲選択キャプチャ\n艦娘一覧モード\n攻略編成モード\n直接連結\n基地航空隊\n装備一覧"
+			combox saveNameSel, 100, "SSキャプチャ\n範囲選択キャプチャ\n艦娘一覧モード\n攻略編成モード\n直接連結\n基地航空隊\n装備一覧\nユーザ定義"
 			saveNameSelCBh = objinfo_hwnd(stat)
 			pos Scale(180), mesy
 			objsize Scale(50), ComBoxH

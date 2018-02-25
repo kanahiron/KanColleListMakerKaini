@@ -107,6 +107,10 @@ return
 					saveNameEquipmentList = "‘•”õˆê——_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 					objprm saveNameIId, saveNameEquipmentList
 					swbreak
+				case 7
+					saveNameUserDefList = "ƒ†[ƒU’è‹`_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+					objprm saveNameIId, saveNameUserDefList
+					swbreak
 			swend
 		}
 		if (optionMode == OPMODE_VIDEOCAPTURE){

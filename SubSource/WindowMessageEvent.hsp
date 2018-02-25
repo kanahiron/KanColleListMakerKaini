@@ -78,7 +78,6 @@ return
 
 
 *WM_COMMAND_Proc
-	
 
 	//コンボボックスによるモード切替の発生
 	if (lparam = hComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
@@ -183,6 +182,10 @@ return
 				objprm saveNameIId, saveNameEquipmentList
 				objprm confirmSaveNameCId, confirmSaveNameEquipmentList
 				swbreak
+			case 7
+				objprm saveNameIId, saveNameUserDefList
+				objprm confirmSaveNameCId, confirmSaveNameUserDefList
+				swbreak
 		swend
 	}
 
@@ -273,6 +276,9 @@ return
 				case 6
 					confirmSaveNameEquipmentList = confirmSaveName
 					swbreak
+				case 7
+					confirmSaveNameUserDefList = confirmSaveName
+					swbreak
 			swend
 		}
 
@@ -302,6 +308,9 @@ return
 					swbreak
 				case 6
 					SaveNameEquipmentList = tempStr
+					swbreak
+				case 7
+					SaveNameUserDefList = tempStr
 					swbreak
 			swend
 
@@ -351,12 +360,10 @@ return
 			}
 	
 			if (ichiranMode2) {
-	
 				objenable yubiwacid,0
 				objenable kantaicid,0
 				objenable pagecid,0
 				objenable lvnamecid,0
-				
 			}
 			
 		}
@@ -427,6 +434,38 @@ return
 			sceneHaiki = stat & 0x01
 			sendmsg includeDetailsCh, $F2
 			includeDetails = stat & 0x01
+
+			sendmsg userDefListCh, $F2
+			userDefList = stat & 0x01
+
+			sdim tempStr
+			GetWindowText userDefListXIh, varptr(tempStr), 32
+			userDefRect(0) = int(cnvwtos(tempStr))
+			GetWindowText userDefListYIh, varptr(tempStr), 32
+			userDefRect(1) = int(cnvwtos(tempStr))
+			GetWindowText userDefListWIh, varptr(tempStr), 32
+			userDefRect(2) = int(cnvwtos(tempStr))
+			GetWindowText userDefListHIh, varptr(tempStr), 32
+			userDefRect(3) = int(cnvwtos(tempStr))
+
+			if ((userDefRect(0)<0) || (800<userDefRect(0))){
+				userDefRect(0) = 0
+			}
+			if ((userDefRect(1)<0) || (480<userDefRect(1))){
+				userDefRect(1) = 0
+			}
+			if ((userDefRect(2)<=0) || (800<=userDefRect(2))){
+				userDefRect(2) = 800
+			}
+			if ((userDefRect(3)<=0) || (480<=userDefRect(3))){
+				userDefRect(3) = 480
+			}
+			if ( (userDefRect(0)+userDefRect(2)) > 800 ){
+				userDefRect(2) = 800 - userDefRect(0)
+			}
+			if ( (userDefRect(1)+userDefRect(3)) > 480 ){
+				userDefRect(3) = 480 - userDefRect(1)
+			}
 	
 			if (airStation) {
 				objenable airStationTabCId, 1
@@ -443,6 +482,19 @@ return
 				objenable sceneHaikiCId, 0
 				objenable includeDetailsCId, 0
 			}
+
+			if (userDefList){
+				objenable userDefListXIId, 1
+				objenable userDefListYIId, 1
+				objenable userDefListWIId, 1
+				objenable userDefListHIId, 1
+			} else {
+				objenable userDefListXIId, 0
+				objenable userDefListYIId, 0
+				objenable userDefListWIId, 0
+				objenable userDefListHIId, 0
+			}
+			
 		}
 	}
 

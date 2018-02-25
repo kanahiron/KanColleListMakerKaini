@@ -370,7 +370,7 @@
 			tempstr = DateAndTimeFormat2(saveNameFormation)
 			if (confirmSaveNameFormation): callSaveDiagFlg = TRUE
 		}
-		if listmode = LISTMODE_OTHER{
+		if (listmode == LISTMODE_OTHER){
 			if (directLink){
 				tempstr = DateAndTimeFormat2(saveNameDirectLink)
 				if (confirmSaveNameDirectLink): callSaveDiagFlg = TRUE
@@ -381,7 +381,11 @@
 			}
 			if (equipmentList){
 				tempstr = DateAndTimeFormat2(SaveNameEquipmentList)
-				if (confirmSaveEquipmentList): callSaveDiagFlg = TRUE
+				if (confirmSaveNameEquipmentList): callSaveDiagFlg = TRUE
+			}
+			if (userDefList){
+				tempstr = DateAndTimeFormat2(SaveNameUserDefList)
+				if (confirmSaveNameUserDefList): callSaveDiagFlg = TRUE
 			}
 		}
 

@@ -32,6 +32,7 @@
 	dim scrSize, 2
 	dim cellSize, 2
 	dim tempMouse, 2
+	dim userDefRect, 4
 
 	ddim AspectRatio, 1
 	sdim sscapmes, 1026
@@ -270,7 +271,20 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 				capy = 130
 				if (includeDetails): w = 404
 			}
+		}
 
+		if (userDefList) {
+			cellnum(0) = 6, 4
+			ListModeHNum = 5
+			capx = userDefRect(0)
+			capy = userDefRect(1)
+			w = userDefRect(2)
+			h = userDefRect(3)
+			logmes "userDefList"
+			logmes " capx :"+capx
+			logmes " capy :"+capy
+			logmes " w    :"+w
+			logmes " h    :"+h
 		}
 	
 	}
