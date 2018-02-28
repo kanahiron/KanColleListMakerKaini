@@ -608,7 +608,7 @@
 			pos scale5, mesy
 			chkbox "ログを非表示", hidelog: mesy+=scale20
 			pos scale5, mesy
-			chkbox "外部ソフト連携ボタン[UP]を表示する(Gazyoなど)", yabumiautoupload: mesy += scale20
+			chkbox "外部ソフト連携ボタン[UP]を表示する(Gyazoなど)", yabumiautoupload: mesy += scale20
 			pos scale5, mesy
 			chkbox "キャプチャのプレビューを有効にする", dispcap: mesy += scale20
 			pos scale5, mesy
