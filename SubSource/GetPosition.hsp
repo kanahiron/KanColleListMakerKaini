@@ -385,6 +385,43 @@ return
 return
 
 #deffunc GetAbsPos var p1_, var p2_
+
+	if (positionType == PT_RELATIVE || positionType = PT_WNDABSOLUTE){
+		
+		if (IsWindow(hClient) == 0){
+
+			ssCap(0) = 0, 0, 0, 0
+			hClient = 0
+			ReleaseDC dcClient
+			if seqCapf: gosub *seqcap
+
+			gosub *ssSettingCheck
+
+			LogOut "ŠÍ‚±‚ê‚Ì‰æ–Ê‚ðŒ©Ž¸‚¢‚Ü‚µ‚½(1)"
+			nidPop
+			return 1
+		}
+
+		if (positionType==PT_RELATIVE){
+	
+			GetClientRect hClient, varptr(rect)
+			if (clientSize(0) != (rect(2)-rect(0))) | (clientSize(1) != (rect(3)-rect(1))){
+	
+				ssCap(0) = 0, 0, 0, 0
+				hClient = 0
+				ReleaseDC dcClient
+				if seqCapf: gosub *seqcap
+				
+				gosub *ssSettingCheck
+				
+				LogOut "ŠÍ‚±‚ê‚Ì‰æ–Ê‚ðŒ©Ž¸‚¢‚Ü‚µ‚½(2)"
+				nidPop
+				return 1
+			}
+		}
+			
+	}
+
 	switch captureMethod
 		case CM_BITBLT
 			switch positionType
@@ -408,4 +445,4 @@ return
 			p2_ = scrPoint(1)
 		swbreak
 	swend
-return
+return 0
