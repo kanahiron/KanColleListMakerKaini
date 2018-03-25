@@ -588,6 +588,7 @@ return
 						pos capx, capy
 						gcopy WND_TEMP1, (cnt*w), (ycnt*h), w, h
 						bufIDPos(cnt, ycnt) = bufid
+						listLoadedNum++
 					loop
 				loop
 	
