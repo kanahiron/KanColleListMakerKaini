@@ -28,7 +28,7 @@
 
 		if (confirmCancelVideoCapture){
 			dialog "現在エンコード中です\n録画した内容が消えますが、中止してよろしいですか？", 3, "確認"
-			if (stat == 6 && videoCapFlg){
+			if (stat == 6 && videoCapFlg){ // lateEncodeFlg
 				gosub *VideoCapEmgStop
 				LogOut "Info-エンコードを中断\n動画キャプチャを取り消しました"
 				nidPop
@@ -96,10 +96,10 @@
 		
 		pipe2exec cmda
 		apid = stat
-		aStartTime = 0.001*(timeGetTime()\60000)
+		aStartTime2 = 0.001*(timeGetTime()\60000)
 		pipe2exec cmdv
 		vpid = stat
-		vStartTime = 0.001*(timeGetTime()\60000)
+		vStartTime2 = 0.001*(timeGetTime()\60000)
 
 		if ( (apid == -1) || (vpid == -1) ){
 			LogOut "動画キャプチャの開始に失敗しました"
@@ -178,7 +178,33 @@
 		//エンコードの開始
 		LateEncodeFlg = TRUE
 		lateEncodeStartTime = timeGetTime()
-		diffTime = 1.0*(vStartTime+60.0-aStartTime)\60.0
+
+		diffTime = 1.0*(vStartTime2+60.0-aStartTime2)\60.0
+		logmes "vStartTime2 :"+vStartTime2
+		logmes "aStartTime2 :"+aStartTime2
+		logmes "diffTime   :"+diffTime+"s\n"
+
+		ddim vStartTime, 1
+		ddim aStartTime, 1
+		vStartTime = GetVideoStartTime()
+		aStartTime = GetAudioStartTime()
+		logmes "video UNIXTIME   :"+vStartTime
+		logmes "audio SYSTEMTIME :"+aStartTime: mes
+
+		diffTime = 0.0
+
+		if (vStartTime!=0.0 && aStartTime!=0.0){
+			vStartTime = vStartTime+11644473600.0
+			dim FILETIME, 2
+			GetSystemTimeAsFileTime varptr(FILETIME)
+			aStartTime = -0.001*timeGetTime() + aStartTime + (4294967295.0*FILETIME(1) + (FILETIME(0)&0x7FFFFFFF) + -2147483648.0*((d(0)&0x80000000)>>31) )/10000000.0
+			diffTime = (aStartTime-vStartTime)/1000
+		}
+
+		logmes "vStartTime :"+vStartTime
+		logmes "aStartTime :"+aStartTime
+		logmes "diffTime   :"+diffTime+"s\n"
+
 
 		if (audioNormalize){
 			normalizeStr = "-af volumedetect"
@@ -205,6 +231,7 @@
 		}
 		pipe2exec cmdm
 		mpid = stat
+		logmes "cmdm :"+cmdm
 
 		if ( mpid == -1 ){
 			

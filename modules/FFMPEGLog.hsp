@@ -128,8 +128,32 @@ return
 #deffunc HideFFMPEGLog
 	ShowWindow hffWindow, 0
 return
-	
 
+#defcfunc GetVideoStartTime
+	ddim time, 1
+	sdim tbuf
+	tbuf = cnvwtos(ffLogVideo)
+	timeStrIndex = instr(tbuf, 0, "Duration: N/A, start: ")
+	if ( timeStrIndex != -1){
+		TimeStr = ""
+		getstr TimeStr, tbuf, timeStrIndex+22, ' '
+		time = double(TimeStr)
+	}
+	dim tbuf //メモリ使用を抑えるため
+return time
+
+#defcfunc GetAudioStartTime
+	ddim time, 1
+	sdim tbuf
+	tbuf = cnvwtos(ffLogAudio)
+	timeStrIndex = instr(tbuf, 0, "Duration: N/A, start: ")
+	if ( timeStrIndex != -1){
+		TimeStr = ""
+		getstr TimeStr, tbuf, timeStrIndex+22, ' '
+		time = double(TimeStr)
+	}
+	dim tbuf //メモリ使用を抑えるため
+return time
 
 #global
 
