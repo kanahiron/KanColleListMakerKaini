@@ -28,7 +28,7 @@
 
 		if (confirmCancelVideoCapture){
 			dialog "現在エンコード中です\n録画した内容が消えますが、中止してよろしいですか？", 3, "確認"
-			if (stat == 6 && videoCapFlg){ // lateEncodeFlg
+			if (stat == 6 && lateEncodeFlg){
 				gosub *VideoCapEmgStop
 				LogOut "Info-エンコードを中断\n動画キャプチャを取り消しました"
 				nidPop
