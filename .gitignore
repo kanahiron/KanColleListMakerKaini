@@ -13,5 +13,7 @@ packfile
 *.json
 *.mp4
 *.png
+!data2.png
+!huki.png
 *.txt
 *.zip

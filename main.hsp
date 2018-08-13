@@ -115,7 +115,7 @@
 		oncmd gosub *GridWindowProc, WM_DROPFILES
 		oncmd gosub *GridWindowProc, WM_SIZING
 		oncmd gosub *GridWindowProc, WM_LBUTTONDOWN
-		//oncmd gosub *ListRelocation, WM_RBUTTONDOWN
+		oncmd gosub *ListRelocation, WM_RBUTTONDOWN
 		framesx = ginfo_sizex - ginfo_winx
 		framesy = ginfo_sizey - ginfo_winy
 		kmmouse_init

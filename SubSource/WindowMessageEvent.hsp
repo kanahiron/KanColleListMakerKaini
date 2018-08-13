@@ -49,6 +49,12 @@
 			swbreak
 
 	swend
+	if (MultiSelectedFlg){
+		MultiSelectedFlg = FALSE
+		if (mode == MODE_LIST){
+			gosub *draw
+		}
+	}
 	oncmd 1
 return
 
@@ -71,7 +77,12 @@ return
 			swbreak
 
 	swend
-
+	if (MultiSelectedFlg){
+		MultiSelectedFlg = FALSE
+		if (mode == MODE_LIST){
+			gosub *draw
+		}
+	}
 	oncmd 1
 return 
 
