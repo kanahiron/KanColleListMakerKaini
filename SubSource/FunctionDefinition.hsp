@@ -14,7 +14,7 @@
 #func CreateDIBSection "CreateDIBSection" int, int, int, int, int, int
 #func CreateCompatibleBitmap "CreateCompatibleBitmap" int, int, int
 #func SelectObject "SelectObject" int, int
-#func DeleteObject "DeleteObject" int 
+#func DeleteObject "DeleteObject" int
 #func GetDeviceCaps "GetDeviceCaps" int, int
 #func CreateFontIndirect "CreateFontIndirectW" int
 
@@ -157,6 +157,10 @@
 #const CR_W 2
 #const CR_H 3
 
+#define global BASE_SIZE_W 1200
+#define global BASE_SIZE_H 720
+#define global BASE_ASPECT_RATIO 0.6
+
 
 //é©çÏÉ}ÉNÉç
 #define ctype MAKELPARAM(%1,%2)	(%1 | %2<<16)
@@ -173,7 +177,7 @@
 
 #define ctype RGBtoBGR(%1) (((%1<<16)&0xFF0000) | ((%1>>16)&0xFF) | (%1&0xFF00))
 
-//DynamicActionControl 
+//DynamicActionControl
 #define DAControlInit dim DAControlArr, 20: DAControlIndex = 0
 #define SetDAControl(%1) DAControlArr(DAControlIndex) = (%1): DAControlIndex++
 
@@ -316,7 +320,3 @@
 #define SB_BOTH 3
 #define SB_HORZ 0
 #define SB_VERT 1
-
-
-
-
