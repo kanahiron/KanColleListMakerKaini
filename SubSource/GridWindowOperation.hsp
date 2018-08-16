@@ -301,6 +301,7 @@ return
 		gmode 4, selRange(CR_W)*cellsize(0), selRange(CR_H)*cellsize(1), 128
 		pos selRange(CR_X)*cellsize(0), selRange(CR_Y)*cellsize(1)
 		gcopy WND_OVERLAY, 0, 0, selRange(CR_W)*cellsize(0), selRange(CR_H)*cellsize(1)
+		gmode
 	}
 
 	redraw 1

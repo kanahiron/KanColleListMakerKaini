@@ -78,14 +78,13 @@ return
 		case WM_RBUTTONDOWN
 			gosub *ListRelocation
 			swbreak
-
 	swend
-	if (MultiSelectedFlg){
+	/* if (MultiSelectedFlg){
 		MultiSelectedFlg = FALSE
 		if (mode == MODE_LIST){
 			gosub *draw
 		}
-	}
+	} */
 	oncmd 1
 return
 
@@ -580,7 +579,7 @@ return
 			nidPop
 			return
 		}
-		
+
 		dropFlag = TRUE
 		addfilename = dropfile
 		gosub *addCapture
