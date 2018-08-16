@@ -592,8 +592,8 @@ return
 	po = posX, posY
 	po2 = -1, -1
 
-	stX = int(BASE_SIZE_W*ZOOM_MIN)-1
-	stY = int(BASE_SIZE_H*ZOOM_MIN)-1
+	stX = int(1.0*BASE_SIZE_W*ZOOM_MIN)-1
+	stY = int(1.0*BASE_SIZE_H*ZOOM_MIN)-1
 
 	pccX = 0
 	pccY = 0
@@ -640,7 +640,7 @@ return
 			//title strf("%4d %4d %4d %4d %4d %4d %4d %f", x, y, pccX, tccX(0), pccY, tccY(0), topCnt, absf(1.0*(y)/(x) - 0.6))
 			//wait 120
 			if ( pccX != tccX(0) && pccY != tccY(0)){
-				as = absf( BASE_ASPECT_RATIO - 1.0*(y)/(x))
+				as = absf( BASE_ASPECT_RATIO - 1.0*y/x )
 				if (as <= 0.021){
 					po2(0) = x + po(0)
 					po2(1) = y + po(1)

@@ -78,8 +78,8 @@ return
 	contNum = 0 //見つかった対象の個数
 
 	//探し出す対象の最小幅、高さ(MinimumContentWidth)
-	minContW = (BASE_SIZE_W * 0.4)
-	minContH = (BASE_SIZE_H * 0.4)
+	minContW = int(1.0*BASE_SIZE_W * ZOOM_MIN)
+	minContH = int(1.0*BASE_SIZE_H * ZOOM_MIN)
 
 	//探索幅(最低でも矩形に対して3回以上点で当たる間隔)
 	sachW = (minContW-1)/3
