@@ -9,7 +9,7 @@
 	sdim jsontext, strlen(p1)+3
 	jsontext = p1
 	if (strmid(jsontext,0,1) != "["): jsontext = "["+jsontext+"]"
-	
+
 	mssc -> "addCode" "obj = "+ jsontext +";"
 return
 

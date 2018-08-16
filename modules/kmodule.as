@@ -36,7 +36,7 @@ return strf("%02dŽž %02d•ª %02d•b",msec_zi,msec_hun,msec_byou)
 		repeat 5, 1
 			cfps += fpss((asad-cnt)&31)
 		loop
-		
+
 		repeat 20, 1
 			fpss((asad+cnt)&31) = 0
 		loop
@@ -47,21 +47,21 @@ return cfps
 #defcfunc kmflick int sticksign, int flicklen
 
 	mousey_ = mousey
-	
+
 	if sticksign & 256 {
-	
+
 		if flag = 0{
 			flag = 1
 			my = mousey_
 		}
-		
+
 	} else {
 		if flag {
 			flag = 0
 			if (abs(my-mousey_) > flicklen) & (my != 0) {
 				my = 0
 				return 2
-			} 
+			}
 			if (abs(mousey_ - my) > flicklen) & (my != 0) {
 				my = 0
 				return 4
@@ -69,7 +69,7 @@ return cfps
 		} else {
 			return 0
 		}
-		
+
 	}
 
 return -1
@@ -80,7 +80,7 @@ return -1
 	kf_my2 = mousey
 	kf_flicklen = 100
 	kf_clicklen = 5
-	
+
 	if kf_sti & 256{
 		if kf_flag = 0{
 			kf_flag = 1
@@ -90,9 +90,9 @@ return -1
 	} else {
 
 		if kf_flag {
-			
+
 			kf_flag = 0
-			
+
 			if ((kf_mx-kf_mx2) > kf_kflicklen){
 				rv = 1
 			}
@@ -101,26 +101,26 @@ return -1
 			}
 			if ((kf_my-kf_my2) > kf_flicklen){
 				rv = 2
-			} 
+			}
 			if ((kf_my-kf_my2) < (kf_flicklen*-1)){
 				rv = 8
 			}
-			
+
 			kf_mx = kf_mx2
 			kf_my = kf_my2
-			
+
 		} else {
 			rv = -1
 		}
 	}
-	
+
 	if rv != -1{
 		kf_framecount = 0
 		kf_flag2 = 0
 		kf_flag3 = 0
 		kf_clickcount = 0
 	}
-	
+
 	if kf_sti & 256{
 		if kf_flag2 = 0 & kf_framecount = 0{
 			kf_flag2 = 1
@@ -140,10 +140,10 @@ return -1
 			kf_clickcount = 0
 		}
 	}
-	
+
 	if kf_framecount : kf_framecount--
-		
-		
+
+
 return rv
 
 #define global kmkeybd(%1,%2=1) kmkeybd_ %1,%2
@@ -166,7 +166,6 @@ return rv
 return
 
 
-
 #deffunc kmpaste
 
 	keybd_event 17,0,0:await 16
@@ -175,7 +174,6 @@ return
 	keybd_event 17,0,2:await 16
 
 return
-
 
 
 #define global kmkeybd2(%1,%2=0) kmkeybd_2 %1,%2
@@ -195,7 +193,7 @@ return
 
 
 #defcfunc kmexist str p1
-	exist p1 
+	exist p1
 return strsize
 
 #deffunc kmsplit var bun,array db
@@ -275,7 +273,7 @@ return -1
 return getstr2_d
 
 #defcfunc kmcmdstr
-	
+
 	sdim kmcmdstr_ ,256
 	kmcmdstr_ = dirinfo(4)
 	if peek(kmcmdstr_,0) = '"' : getstr kmcmdstr_, kmcmdstr_, 1, '"'
@@ -288,31 +286,31 @@ return kmcmdstr_
 return  kmgetkey_int2
 
 #defcfunc encstr str p1_,local len
-	
+
 	len = strlen(p1_)
 	sdim p1,len+1
 	sdim encdata,int(1.5*len)+3
 	p1 = p1_
-	
+
 	randomize 3141
 	repeat len
 		poke p1,cnt,(peek(p1,cnt) xor rnd(256))
 	loop
-	
+
 	randomize 5926
 	repeat len
 		poke p1,cnt,(peek(p1,cnt) xor rnd(256))
 	loop
-	
+
 	randomize 5358
 	repeat len
 		poke p1,cnt,(peek(p1,cnt) xor rnd(256))
 	loop
-	
+
 	base64encode p1,len,encdata
 	encdata = strf("%02X%s",len,encdata)
 	strrep@encdata,"\n",""
-	
+
 return encdata
 
 #defcfunc decstr var p1_,local len
@@ -321,24 +319,24 @@ return encdata
 	sdim p1,strlen(p1_)+1
 	sdim decdata,len+10
 	p1 = strmid(p1_,2,strlen(p1_)-2)
-	
+
 	base64decode p1,strlen(p1),decdata
-		
+
 	randomize 3141
 	repeat len
 		poke decdata,cnt,(peek(decdata,cnt) xor rnd(256))
 	loop
-	
+
 	randomize 5926
 	repeat len
 		poke decdata,cnt,(peek(decdata,cnt) xor rnd(256))
 	loop
-	
+
 	randomize 5358
 	repeat len
 		poke decdata,cnt,(peek(decdata,cnt) xor rnd(256))
 	loop
-	
+
 return decdata
 
 #global

@@ -1,4 +1,3 @@
-
 #module
 
 #uselib	"user32.dll"
@@ -394,10 +393,6 @@ return 0
 	gsel nid
 
 return
-
-
-
-
 
 
 #deffunc SelectCapturePos int imageid1, array sscap, int imageid3, int imageid4, int marginCutFlg

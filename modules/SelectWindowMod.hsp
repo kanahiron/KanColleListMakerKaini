@@ -12,7 +12,7 @@
 #endif
 #endif
 
-#module 
+#module
 
 #uselib "gdi32.dll"
 #func CreateSolidBrush "CreateSolidBrush" wptr
@@ -47,7 +47,7 @@
 #define WM_MOUSEMOVE	0x0200
 #define WM_LBUTTONDOWN 	0x0201
 #define WM_APP			0x8000
-#define global WM_SELWINDOW	0x8001 
+#define global WM_SELWINDOW	0x8001
 
 #define GWL_WNDPROC		-4
 #define LWA_ALPHA		0x0002
@@ -68,10 +68,10 @@
 	dim windowNum
 	windowNum = length2(sscap)
 	logmes "windowNum :"+windowNum
-	
+
 	dim hWnds, windowNum
 	dim rect
-	dim PAINTSTRUCT, 12 
+	dim PAINTSTRUCT, 12
 
 	defaultWindowProc = GetWindowLong(hwnd, GWL_WNDPROC)
 	newclbk3 pWindowProc, 4, *WindowProc
@@ -102,8 +102,8 @@
 		if hWnds(cnt) == 0: break
 		UpdateWindow hWnds(cnt)
 		SetWindowLong hWnds(cnt), -20, 0x00080000
-		SetLayeredWindowAttributes hWnds(cnt), 0x00000000, 128, LWA_ALPHA 
-		
+		SetLayeredWindowAttributes hWnds(cnt), 0x00000000, 128, LWA_ALPHA
+
 		dc = GetDC(hWnds(cnt))
 		GetClientRect hWindow, varptr(rect)
 		FillRect dc, varptr(rect), hBrush
@@ -179,6 +179,5 @@ return
 	HideSelectWindow
 
 return
-
 
 #endif

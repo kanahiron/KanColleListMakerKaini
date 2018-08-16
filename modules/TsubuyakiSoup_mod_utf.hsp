@@ -24,7 +24,7 @@ TwitterAPI操作関数
 %*/
 //------------------------------------------------------------
 #defcfunc getAuthorizeAddress
-	
+
 	// アクセストークン取得
 	sdim arguments
 	arguments(0) = "oauth_callback=oob"
@@ -43,7 +43,6 @@ TwitterAPI操作関数
 	setRequestToken requestToken, requestSecret
 return "https://api.twitter.com/oauth/authorize?oauth_token="+ requestToken
 //============================================================
-
 
 //============================================================
 /*  [HDL symbol infomation]
@@ -92,7 +91,7 @@ TwitterAPI操作命令
 
 	response = "#####  HEADER  ######\n"+getResponseHeader()+"\n\n#####  BODY  #####\n"+getResponseBody()
 	pat_body = getResponseBody()
-	
+
 	if statcode = 200  {
 		//トークンの取り出し
 		;request_token
@@ -114,16 +113,12 @@ TwitterAPI操作命令
 return statcode
 //============================================================
 
-
-
-
 #deffunc getMentionsTimeline int count
 
 	sdim arguments
 	arguments(0) = "count="+ count
 	execRestApi "statuses/mentions_timeline.json", arguments, METHOD_GET
 return stat
-
 
 #deffunc getUserTimeline str screen_name, int count
 
@@ -132,7 +127,6 @@ return stat
 	arguments(1) = "count="+ count
 	execRestApi "statuses/user_timeline.json", arguments, METHOD_GET
 return stat
-
 
 #deffunc getHomeTimeline int count
 
@@ -170,15 +164,11 @@ return stat
 	execRestApi "statuses/destroy/"+id+".json", arguments, METHOD_POST
 return stat
 
-
-
 #deffunc retweetStatus str id
 
 	sdim arguments
 	execRestApi "statuses/retweet/"+id+".json", arguments, METHOD_POST
 return stat
-
-
 
 //============================================================
 /*  [HDL symbol infomation]
@@ -236,7 +226,7 @@ return tempInt
 	sdim rawtext,512
 	sdim p2,512
 	sdim picname,1024
-	
+
 	repeat p3
 		exist p1(cnt)
 		if strsize <= 0:return 0
@@ -245,7 +235,7 @@ return tempInt
 		picName = p1(cnt)
 		execRestApi "media/upload.json", picName, METHOD_POST, hProgress
 		if (stat != 200) :return 0
-		
+
 		rawtext = "["+getResponseBody()+"]"
 		json_sel rawText
 		p2 += json_val("[0].media_id_string") + ","
@@ -256,4 +246,3 @@ return tempInt
 return 1
 
 #global
-

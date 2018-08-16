@@ -60,7 +60,7 @@
 //プリンタのみを返します。それ以外のアイテムが選択されているときには、OK ボタンは灰色表示になります。
 #define BIF_BROWSEINCLUDEFILES	0x4000
 //Version 4.71 以降： フォルダとファイルを表示します。
-#define BIF_SHAREABLE			0x8000 
+#define BIF_SHAREABLE			0x8000
 //Version 5.0 以降： リモートシステム上にある共有リソースを表示できるようにします。BIF_USENEWUIフラグとともに指定しなければなりません。
 
 #ifndef TRUE
@@ -74,14 +74,14 @@
 #deffunc _BrowseFolder str _szTitle, str _defaultfolder , int flag
 
 	// flagが0の時は「新しいフォルダ」ボタンを非表示、1の時は表示
-	
+
 	sdim retfldr, 1024
 	sdim _retfldr, 1024
 	sdim szTitle, 1024
 	sdim inifldr, 1024
 
 	xdim fncode, 8
-	
+
 	cnvstow szTitle, _szTitle
 	//cnvstow inifldr, _defaultfolder
 	inifldr = _defaultfolder
@@ -90,14 +90,14 @@
 	} else {
 		ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE | BIF_NONEWFOLDERBUTTON
 	}
-	
+
 	fncode = $08247c83,$8b147501,$ff102444,$68016a30,$00000466,$102474ff,$330450ff,$0010c2c0
 	hbdata = varptr(inifldr), varptr(SendMessage)
 	BROWSEINFO = hwnd, 0, varptr(retfldr), varptr(szTitle), ulFlags, varptr(fncode), varptr(hbdata), 0
 	pidl = SHBrowseForFolder(varptr(BROWSEINFO))
 	fret = SHGetPathFromIDList(pidl,varptr(_retfldr))
 	CoTaskMemFree pidl
-	
+
 	retfldr = cnvwtos(_retfldr)
 	mref stt,64 : stt = fret
 return retfldr
@@ -114,7 +114,7 @@ return retfldr
 		poke String,ccnt+1,0x98
 		poke String,ccnt+2,0x80+cnt
 	loop
-	
+
 	BrowseFolder String,"C:\\"			//新しいフォルダボタン有り
 	//BrowseFolder2 String,"C:\\" 		//新しいフォルダボタン無し1
 	//BrowseFolder String,"C:\\",1		//新しいフォルダボタン無し2
@@ -123,5 +123,5 @@ return retfldr
 	} else {
 		mes "未選択"
 	}
-	
+
 #endif

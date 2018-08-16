@@ -11,7 +11,7 @@
 #func CreateDIBSection "CreateDIBSection" int,int,int,int,int,int
 #func CreateCompatibleBitmap "CreateCompatibleBitmap" int,int,int
 #func SelectObject "SelectObject" int,int
-#func DeleteObject "DeleteObject" int 
+#func DeleteObject "DeleteObject" int
 
 #deffunc chgbm int bpp
 	mref bm,67
@@ -39,7 +39,6 @@ return
 
 #endif
 
-
 //ÉxÅ[ÉX AverageHash6.hsp
 #module
 
@@ -56,8 +55,7 @@ return
 		buffer homeportBufId, 8, 9
 		chgbm 32
 		mref homeportVram, 66
-
-
+		
 	return
 
 	#defcfunc isHomeport int wndId, int sw_, int sh_
@@ -72,16 +70,16 @@ return
 			sx = sw_
 			sy = sh_
 		}
-			
+
 		gsel homeportBufId
 		pos 0, 1
 		gzoom 8, 8, wndId, int(sxRatio*sx), int(syRatio*sy), int(wRatio*sx), int(hRatio*sy), 1
-		
+
 		gsel nid
 
 		CmptAHash aHash, homeportVram
 		dist = HammingDist(aHash, basisAHash)
-		
+
 		if (dist < 16){
 			return 1
 		} else {

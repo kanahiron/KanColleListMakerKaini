@@ -30,7 +30,7 @@
 		repeat cellnum(0)+1
 			if bufIDPos(cnt, ycnt) >= 100{
 				pos cnt*cutRange(CR_W), ycnt*cutRange(CR_H)
-				gcopy bufIDPos(cnt, ycnt), cutRange(CR_X) , cutRange(CR_Y), cutRange(CR_W), cutRange(CR_H) 
+				gcopy bufIDPos(cnt, ycnt), cutRange(CR_X) , cutRange(CR_Y), cutRange(CR_W), cutRange(CR_H)
 				buffer bufIDPos(cnt, ycnt), 1, 1
 				gsel WND_TEMP1
 				drawcount++
@@ -42,16 +42,16 @@
 			}
 		loop
 	loop
-	
+
 	if (listmode == LISTMODE_FLEET){
 		if tuika1 {
 			if (nishimuraFlg^1){
 				if sosuka | soka{
 					gsel WND_TEMP1
 					gmode 7
-					
+
 					ccnt = 0
-					repeat 6			
+					repeat 6
 						xcnt_ = (cnt\3)*2
 						ycnt_ = (cnt/3)*3
 						if bufIDPos(xcnt_, ycnt_) >= 100{
@@ -74,7 +74,7 @@
 						if ccnt = 4: break
 					loop
 				}
-		
+
 				if fleetPunctuation {
 					buffer WND_TEMP2, cutRange(CR_W)*VNum+(3*((VNum/2)+(VNum\2)-1)), cutRange(CR_H)*HNum+(3*(HNum/4))
 					pos 0, 0
@@ -85,7 +85,7 @@
 					gcopy WND_TEMP1, cutRange(CR_W)*4, 0, cutRange(CR_W)*2, cutRange(CR_H)*HNum
 					pos 0, cutRange(CR_H)*3+3
 					gcopy WND_TEMP2, 0, cutRange(CR_H)*3, cutRange(CR_W)*6+6, cutRange(CR_H)*3
-			
+
 					color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
 					boxf 0, cutRange(CR_H)*3, cutRange(CR_W)*6+6, cutRange(CR_H)*3+2
 					boxf cutRange(CR_W)*2, 0, cutRange(CR_W)*2+2, cutRange(CR_H)*HNum+3
@@ -98,9 +98,9 @@
 				if sosuka | soka{
 					gsel WND_TEMP1
 					gmode 7
-					
+
 					ccnt = 0
-					repeat 2			
+					repeat 2
 						xcnt_ = cnt*2
 						ycnt_ = 0
 						if bufIDPos(xcnt_, ycnt_) >= 100{
@@ -123,14 +123,14 @@
 						if ccnt = 4: break
 					loop
 				}
-		
+
 				if fleetPunctuation {
 					buffer WND_TEMP2, cutRange(CR_W)*VNum+(3*((VNum/2)+(VNum\2)-1)), cutRange(CR_H)*HNum
 					pos 0, 0
 					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*2, cutRange(CR_H)*HNum
 					pos cutRange(CR_W)*2+3, 0
 					gcopy WND_TEMP1, w*2, 0, cutRange(CR_W)*2, cutRange(CR_H)*HNum
-					
+
 					color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
 					boxf cutRange(CR_W)*2, 0, cutRange(CR_W)*2+2, cutRange(CR_H)*HNum+3
 				} else {
@@ -139,15 +139,15 @@
 				}
 			}
 		}
-	
+
 		if tuika4 {
 			if (nishimuraFlg^1){
 				if sosuka | soka{
 					gsel WND_TEMP1
 					gmode 7
-	
+
 					ccnt = 0
-					repeat 2			
+					repeat 2
 						xcnt_ = 0
 						ycnt_ = cnt*2
 						if bufIDPos(xcnt_, ycnt_) >= 100{
@@ -169,21 +169,21 @@
 						}
 						if ccnt = 4: break
 					loop
-	
+
 				}
-		
+
 				if fleetPunctuation {
-					
+
 					buffer WND_TEMP2, cutRange(CR_W)*VNum+((VNum/4)*3), cutRange(CR_H)*HNum+(((HNum+1)/2)-1)*3
 					pos 0, 0
 					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*3, cutRange(CR_H)*HNum
 					pos cutRange(CR_W)*3+3, 0
-					gcopy WND_TEMP1, cutRange(CR_W)*3, 0, cutRange(CR_W)*3, cutRange(CR_H)*HNum	
+					gcopy WND_TEMP1, cutRange(CR_W)*3, 0, cutRange(CR_W)*3, cutRange(CR_H)*HNum
 					pos 0, cutRange(CR_H)*2+3
 					gcopy WND_TEMP2, 0, cutRange(CR_H)*2, cutRange(CR_W)*6+3, cutRange(CR_H)*4
 					pos 0, cutRange(CR_H)*4+6
 					gcopy WND_TEMP2, 0, cutRange(CR_H)*4+3, cutRange(CR_W)*6+3, cutRange(CR_H)*2
-			
+
 					color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
 					boxf cutRange(CR_W)*3, 0, cutRange(CR_W)*3+2, cutRange(CR_H)*6+6
 					boxf 0, cutRange(CR_H)*2, cutRange(CR_W)*6+6, cutRange(CR_H)*2+2
@@ -196,9 +196,9 @@
 				if sosuka | soka{
 					gsel WND_TEMP1
 					gmode 7
-	
+
 					ccnt = 0
-					repeat 6			
+					repeat 6
 						xcnt_ = (cnt\2)*3
 						ycnt_ = (cnt/2)*2
 						if bufIDPos(xcnt_, ycnt_) >= 100{
@@ -224,21 +224,21 @@
 						}
 						if ccnt = 4: break
 					loop
-	
+
 				}
-		
+
 				if fleetPunctuation {
-					
+
 					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum+(((HNum+1)/2)-1)*3
 					pos 0, 0
 					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*4, cutRange(CR_H)*HNum
 					pos cutRange(CR_W)*3+3, 0
-					//gcopy WND_TEMP1, cutRange(CR_W)*3, 0, cutRange(CR_W)*3, cutRange(CR_H)*HNum	
+					//gcopy WND_TEMP1, cutRange(CR_W)*3, 0, cutRange(CR_W)*3, cutRange(CR_H)*HNum
 					pos 0, cutRange(CR_H)*2+3
 					gcopy WND_TEMP2, 0, cutRange(CR_H)*2, cutRange(CR_W)*4, cutRange(CR_H)*4
 					pos 0, cutRange(CR_H)*4+6
 					//gcopy WND_TEMP2, 0, cutRange(CR_H)*4+3, cutRange(CR_W)*6+3, cutRange(CR_H)*2
-			
+
 					color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
 					//boxf cutRange(CR_W)*3, 0, cutRange(CR_W)*3+2, cutRange(CR_H)*6+6
 					boxf 0, cutRange(CR_H)*2, cutRange(CR_W)*6+6, cutRange(CR_H)*2+2
@@ -248,20 +248,20 @@
 					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
 				}
 			}
-				
+
 		}
-	
+
 		if tuika2 {
 			//
 			//
-			
+
 			if sosuka | soka {
-	
+
 				gsel WND_TEMP1
 				gmode 7
-						
+
 				ccnt = 0
-				repeat 6			
+				repeat 6
 					xcnt_ = 0
 					ycnt_ = cnt
 					if bufIDPos(xcnt_, ycnt_) >= 100{
@@ -271,7 +271,7 @@
 							ccnt2 = 0
 							repeat 6
 								xcnt = xcnt_ + cnt
-								ycnt = ycnt_ 
+								ycnt = ycnt_
 								if bufIDPos(xcnt, ycnt) >= 100{
 									pos 205+cutRange(CR_W)*xcnt+210, cutRange(CR_H)*ycnt+5
 									gcopy WND_MAKE_STRING, 500+(ccnt*100), 10+ccnt2*OSOW, 50, OSOW
@@ -285,13 +285,13 @@
 				loop
 
 			}
-	
+
 			if fleetPunctuation {
 				buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum+(3*(HNum-1))
 				gmode 0
 				color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
 				boxf
-				
+
 				repeat 6
 					pos 0, (cnt*cutRange(CR_H))+(cnt*3)
 					gcopy WND_TEMP1, 0, cutRange(CR_H)*cnt, cutRange(CR_W)*6, cutRange(CR_H)
@@ -302,13 +302,13 @@
 			}
 		}
 		if tuika3 {
-	
+
 			if sosuka | soka {
 				gsel WND_TEMP1
 				gmode 7
-				
+
 				ccnt = 0
-				repeat 6			
+				repeat 6
 					xcnt_ = cnt
 					ycnt_ = 0
 					if bufIDPos(xcnt_, ycnt_) >= 100{
@@ -317,7 +317,7 @@
 						if addOrderNum {
 							ccnt2 = 0
 							repeat 6
-								xcnt = xcnt_ 
+								xcnt = xcnt_
 								ycnt = ycnt_ + cnt
 								if bufIDPos(xcnt, ycnt) >= 100{
 									pos 205+cutRange(CR_W)*xcnt+210, cutRange(CR_H)*ycnt+5
@@ -331,13 +331,13 @@
 					if ccnt = 4: break
 				loop
 			}
-	
+
 			if fleetPunctuation {
 				buffer WND_TEMP2, cutRange(CR_W)*VNum+(3*(VNum-1)), cutRange(CR_H)*HNum
 				gmode 0
 				color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
 				boxf
-				
+
 				repeat 6
 					pos (cnt*cutRange(CR_W))+(cnt*3), 0
 					gcopy WND_TEMP1, cutRange(CR_W)*cnt, 0, cutRange(CR_W), cutRange(CR_H)*6
@@ -348,14 +348,14 @@
 			}
 		}
 	}
-	
+
 	if senden & (listmode==LISTMODE_FLEET) & (sosuka|soka){
 		gsel WND_TEMP2
 		gmode 7
 		pos ginfo_winx-220, ginfo_winy-14//225
 		gcopy WND_MAKE_STRING, 10, 310, 240, 30
 	}
-		
+
 	savename = ""
 	if drawcount != 0{
 
@@ -401,11 +401,11 @@
 			savename = tempstr + savekind(jpgsave)
 			saveNamePath = listsavedir +"\\"+ savename
 		}
-		
+
 		ImgF_ImageSave saveNamePath, jpgquality
 
 		gsel WND_MAIN, 1+frontRow
-			
+
 		if kmexist(saveNamePath) <= 0{
 			LogOut savename+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
 		} else {
@@ -415,7 +415,7 @@
 			picHistoryLoad(saveNamePath)
 			gosub *TweetWindow
 		}
-	
+
 	} else {
 		LogOut "‰æ‘œ‚ªˆê–‡‚à‚ ‚è‚Ü‚¹‚ñ"
 	}
@@ -423,9 +423,9 @@
 	listLoadedNum = 0
 	dim bufIDPos, CELL_MAX_W, CELL_MAX_H
 	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
-	
+
 	nidPop
-	
+
 	gosub *draw
 return
 

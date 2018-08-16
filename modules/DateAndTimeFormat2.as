@@ -13,12 +13,12 @@
 	eDayOfWeekFullArr = "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"											//edddd
 	eDayOfWeekAbbreviationsArr = "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"																//eddd
 
-	jDayOfWeekFullArr = "“ú—j“ú", "Œ—j“ú", "‰Î—j“ú", "…—j“ú", "–Ø—j“ú", "‹à—j“ú", "“y—j“ú"													//jdddd		
+	jDayOfWeekFullArr = "“ú—j“ú", "Œ—j“ú", "‰Î—j“ú", "…—j“ú", "–Ø—j“ú", "‹à—j“ú", "“y—j“ú"													//jdddd
 	jDayOfWeekAbbreviationsArr = "“ú", "Œ", "‰Î", "…", "–Ø", "‹à", "“y"																		//jddd
-	
+
 	eTimeDivisionArr = "AM","PM"		//ett
 	jTimeDivisionArr = "Œß‘O","ŒßŒã"	//jtt
-	
+
 return
 
 #defcfunc DateAndTimeFormat2 str _st
@@ -30,7 +30,7 @@ return
 
 	year4 = ""+ wpeek(localTime(0), 0)					//yyyy
 	year2 = strf("%02d", wpeek(localTime(0), 0)\100)	//yy
-	year1 = ""+ wpeek(localTime(0), 0) \ 100			//y		
+	year1 = ""+ wpeek(localTime(0), 0) \ 100			//y
 
 	month2 = strf("%02d", wpeek(localTime(0), 2))		//MM
 	month1 = ""+ wpeek(localTime(0), 2)					//M
@@ -83,7 +83,7 @@ return
 
 return st
 
-#deffunc isValidFileName str _filename, local filename 
+#deffunc isValidFileName str _filename, local filename
 
 	filename = _filename
 
@@ -102,7 +102,7 @@ return 1
 
 
 #global
-	
+
 	DateAndTimeFormat2_Init
 
 #if 0
@@ -125,7 +125,7 @@ return 1
 
 	isValidFileName "<>"
 	mes stat
-	
+
 	stop
 
 #endif

@@ -5,18 +5,18 @@
 		//縮小処理用
 		buffer WND_TEMP1, maxScrSize(0), maxScrSize(1)
 			SET_WND_INFO
-	
+
 		//背景コピー用
 		buffer WND_TEMP2, maxScrSize(0), maxScrSize(1)
 			SET_WND_INFO
-	
+
 		gsel WND_GRID
-		
+
 		dragdata = 0
 		repeat
-		
+
 			stick sti, 256
-			
+
 			//左クリック用の処理ここから-----
 			if (sti == 256){
 
@@ -33,7 +33,7 @@
 						}
 					}
 				}
-				
+
 				//mxy はドラッグを話した時点の座標
 				//mxy_ はドラッグ開始の座標
 				mxy(0) = limit(kmmousex/cellsize(0), 0, cellnum(0)) , limit(kmmousey/cellsize(1), 0, cellnum(1))
@@ -52,13 +52,13 @@
 						gsel WND_TEMP1
 						pos 0, 0
 						gcopy WND_GRID, selRange(CR_X)*cellsize(0), selRange(CR_Y)*cellsize(1), selRange(CR_W)*cellsize(0), selRange(CR_H)*cellsize(1)
-						gsel WND_GRID, 0	
-						
+						gsel WND_GRID, 0
+
 					} else {
 						MultiSelectedFlg = FALSE
 					}
 				}
-				
+
 				if ( bufIDPos(mxy(0), mxy(1) )>=100 && cliflag==0 && (MultiSelectedFlg^1)){
 					cliflag = 1
 					mxy_(0) = mxy(0), mxy(1)
@@ -72,7 +72,7 @@
 					gsel WND_GRID, 0
 				}
 			}
-		
+
 			if (cliflag == 1){
 				redraw 0
 				pos 0, 0
@@ -88,7 +88,7 @@
 				gmode 0
 				redraw 1
 			}
-			
+
 			if (sti == 0 && cliflag == 1){
 
 				if (MultiSelectedFlg^1){
@@ -101,28 +101,28 @@
 							listLoadedNum--
 						}
 					} else {
-						temp = bufIDPos(mxy_(0), mxy_(1)) 
+						temp = bufIDPos(mxy_(0), mxy_(1))
 						bufIDPos(mxy_(0), mxy_(1)) = bufIDPos(mxy(0), mxy(1))
 						bufIDPos(mxy(0), mxy(1)) = temp
 						LogOut "セル("+mxy_(0)+", "+mxy_(1)+")をセル("+mxy(0)+", "+mxy(1)+")に移動しました"
 					}
 				} else {
-					
+
 					mxy(0) = mxy(0)-mxyi(0), mxy(1)-mxyi(1)
 					repeat selRange(CR_H)
 						ycnt = cnt
 						if ((mxy(1)+ycnt)>cellNum(1)): continue
 						repeat selRange(CR_W)
 							if ((mxy(0)+cnt)>cellNum(0)): continue
-							temp = bufIDPos(mxy_(0)+cnt, mxy_(1)+ycnt) 
+							temp = bufIDPos(mxy_(0)+cnt, mxy_(1)+ycnt)
 							bufIDPos(mxy_(0)+cnt, mxy_(1)+ycnt) = bufIDPos(mxy(0)+cnt, mxy(1)+ycnt)
 							bufIDPos(mxy(0)+cnt, mxy(1)+ycnt) = temp
 						loop
 					loop
 					LogOut "選択範囲を移動しました"
-					
+
 				}
-			
+
 				mxy(0) = 0, 0
 				mxy_(0) = 0, 0
 				mxyi(0) = 0, 0
@@ -131,22 +131,21 @@
 				MultiSelectedFlg = FALSE
 				gosub *draw
 			}
-		
+
 			if ( sti==0 && cliflag==0 ){
 				break
 			}
 			//左クリック用の処理ここまで-----
-		
+
 			await 16
 		loop
 
 	}
 
 	MultiSelectedFlg = FALSE
-	
+
 return
 
-//*
 *ListRelocation
 
 	if (ginfo(24) != WND_GRID) :return
@@ -174,7 +173,7 @@ return
 				if staMPos(CR_Y) < ginfo_my: overRlayWndY = staMPos(1): else: overRlayWndY = ginfo_my
 				if staMPosWnd(CR_X) < mousex: selMPosX = staMPosWnd(0): else: selMPosX = mousex
 				if staMPosWnd(CR_Y) < mousey: selMPosY = staMPosWnd(1): else: selMPosY = mousey
-	
+
 				MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), overRlayWndX, overRlayWndY, dragW, dragH, 1
 			}
 		}
@@ -189,10 +188,10 @@ return
 			selRange(CR_Y) = selMPosY/cellsize(1)
 			selRange(CR_W) = (selMPosX+dragWnd(CR_X)+cellsize(0))/cellsize(0) - selRange(CR_X)
 			selRange(CR_H) = (selMPosY+dragWnd(CR_Y)+cellsize(1))/cellsize(1) - selRange(CR_Y)
-			
+
 			MultiSelectedFlg = FALSE
 			if (selRange(CR_W) == 1 && selRange(CR_H) == 1): break
-			
+
 			MultiSelectedFlg = TRUE
 			gosub *draw
 			break
@@ -205,24 +204,24 @@ return
 
 //描画――――――――――――――――――――――――――――――――――
 *draw
-	
+
 	gsel WND_GRID, 0
 	redraw 0
-	
+
 	color 255, 255, 255
 	boxf
 	color 150, 150, 150
-	
+
 	pos int(0.33333334*scrsize(0)), 20
 	gzoom int(0.66666667*scrsize(0)), int(0.15625*scrsize(0)), WND_GRID_STRING, 0, 0, 640, 150
-	
+
 	repeat cellnum(0), 1
 		line cnt*cellsize(0), -1, cnt*cellsize(0), maxScrSize(1)+1
 	loop
 	repeat cellnum(1), 1
 		line -1, cnt*cellsize(1), maxScrSize(0)+1, cnt*cellsize(1)
 	loop
-	
+
 	repeat cellnum(1)+1
 		ycnt = cnt
 		repeat cellnum(0)+1
@@ -257,7 +256,7 @@ return
 			line cellsize(0)*  3, cellsize(1)*2+1, cellsize(0)*4-1, cellsize(1)*4
 		}
 	}
-	
+
 	if (listMode == LISTMODE_FLEET && fleetPunctuation){
 		color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
 		if (nishimuraFlg^1){
@@ -285,7 +284,7 @@ return
 			boxf -1, cellsize(1)*3-1, maxScrSize(0)+1, cellsize(1)*3+1
 			boxf -1, cellsize(1)*4-1, maxScrSize(0)+1, cellsize(1)*4+1
 			boxf -1, cellsize(1)*5-1, maxScrSize(0)+1, cellsize(1)*5+1
-			
+
 		}
 		if tuika3 {
 			boxf cellsize(0)-1, -1, cellsize(0)+1, maxScrSize(1)+1
@@ -296,16 +295,14 @@ return
 		}
 
 		color 0, 0, 0
-		
 	}
 
-	//
 	if (MultiSelectedFlg) {
 		gmode 4, selRange(CR_W)*cellsize(0), selRange(CR_H)*cellsize(1), 128
 		pos selRange(CR_X)*cellsize(0), selRange(CR_Y)*cellsize(1)
 		gcopy WND_OVERLAY, 0, 0, selRange(CR_W)*cellsize(0), selRange(CR_H)*cellsize(1)
 	}
-	
+
 	redraw 1
 return
 

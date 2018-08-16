@@ -105,7 +105,7 @@
 	RequestHeader += "Accept: text/json; application/json; charset=UTF-8\n"
 	RequestHeader += "User-Agent: KanColleListMakerKaini\n"
 	RequestHeader += "Connection: close\n"
-	
+
 	usePort = 443
 	requestFlag  = INTERNET_FLAG_RELOAD
 	requestFlag |= INTERNET_FLAG_DONT_CACHE
@@ -138,21 +138,21 @@
 						//バッファの初期化
 						sdim responseBuffer, rsize+1
 						sdim responseBody, rsize+1
-				
+
 						repeat
 							InternetReadFile hRequest, varptr(responseBuffer), rsize, varptr(hsize)
-							if (hsize = 0) : break 
+							if (hsize = 0) : break
 							responseBody += strmid(responseBuffer, 0, hsize)
 						loop
 					}
 				}
 				InternetCloseHandle hRequest
-			}	
+			}
 			InternetCloseHandle hConnect
 		}
 		InternetCloseHandle hInet
 	}
-	
+
 return statcode
 
 #defcfunc getResponse
@@ -166,22 +166,22 @@ return responseBody
 	if autoVersionCheck {
 
 		logOut "バージョンチェック中です。"
-		
+
 		execVerCheck
 		if (stat == 200){
 			logmes "アップデートファイルの取得成功"
 			sdim json
 			json = getResponse()
 			json_sel json
-			
+
 			logmes "取得したバージョン " + json_val("[0].version")
 			if (klm2ver < int(json_val("[0].version"))){
-				
+
 				sdim text,1024
 				text =  "艦これ一覧めいかー改二の最新版"+json_val("[0].versionstr")+"が公開されています\n"
 				text += json_val("[0].comment")
 				text += "\nダウンロードページを開きますか？"
-				
+
 				dialog text,2,"最新版が公開されています"
 				if stat = 6{
 					exec ""+json_val("[0].distributionurl"),16

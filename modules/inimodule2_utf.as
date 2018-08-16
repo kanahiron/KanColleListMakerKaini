@@ -2,7 +2,7 @@
 	#uselib "kernel32"
 	#func WritePrivateProfileString "WritePrivateProfileStringW" wstr, wstr, wstr, wstr
 	#func GetPrivateProfileString "GetPrivateProfileStringW" wstr, wstr, wstr, int, int, wstr
-	
+
 	#deffunc SetIni str path
 		inipath = path
 		if instr(inipath, 0, ":") = -1 : inipath = "" : return 1
@@ -18,7 +18,7 @@
 			tempBuf = ""
 			wpoke tempBuf,0,0xFEFF
 			bsave inipath,tempBuf,2
-			
+
 			return 2
 		}
 	return 0
@@ -44,7 +44,7 @@
 			dQuartoParse tempBuf,tempArray
 			if (stat == 1):return 1
 			sdim vari,256,length(tempArray)
-			
+
 			repeat length(tempArray)
 				vari(cnt) = tempArray(cnt)
 			loop
@@ -52,7 +52,7 @@
 			return 0
 		} else {
 			//®”Œ^‚©À”Œ^
-			
+
 			tempBuf = "\""+ tempBuf +"\""
 			dQuartoParse tempBuf,tempArray
 			if (stat == 1):return 1
@@ -72,11 +72,10 @@
 				loop
 				return 0
 			}
-				
 		}
 
 	return 1
-		
+
 	#deffunc WriteIni str sect, str para, array vari
 		if inipath = "" : return 1
 
@@ -91,7 +90,7 @@
 				WritePrivateProfileString sect, para, tempBuf, inipath
 				return 0
 			swbreak
-	
+
 			case 3: case 4 //À”Œ^,®”Œ^
 				repeat length(vari)
 					tempBuf += "\""+str(vari(cnt))+"\", "
@@ -130,7 +129,7 @@
 	index = 0
 
 	repeat
-	
+
 		temp1 = instr(buf,index,"\"") + index
 		temp2 = instr(buf,index+1,"\"") + index
 		repeat
@@ -138,10 +137,10 @@
 			temp2 = instr(buf,temp2+2,"\"") + temp2+1
 		loop
 		vari(cnt) =  strmid(buf,temp1+1,temp2-temp1)
-		
+
 		index = instr(buf,temp2+2,"\"") + temp2+2
 		if (index == (instr(buf,index+1,"\"") + index+1)): break
-	
+
 	loop
 return 0
 

@@ -241,9 +241,6 @@ return 0
 #define global tCupInit(%1,%2,%3,%4=5) _tCupInit %1, %2, %3, %4
 //============================================================
 
-
-
-
 //============================================================
 /*  [HDL symbol infomation]
 
@@ -270,8 +267,6 @@ TwitterAPI操作命令
 	if (hInet) : _InternetCloseHandle hInet
 return
 //============================================================
-
-
 
 //============================================================
 /*  [HDL symbol infomation]
@@ -312,10 +307,10 @@ TsubuyakiSoup補助関数
 	ghc_dataLength = 0
 	sdim hmacInfo,14
 	lpoke hmacInfo, 0, CALG_SHA1
-	
+
 	ghc_p2Length = strlen(ghc_p2)
 	dim keyBlob, 3+(ghc_p2Length/4)+1
-	
+
 	poke keyBlob, 0, PLAINTEXTKEYBLOB
 	poke keyBlob, 1, CUR_BLOB_VERSION
 	wpoke keyBlob, 2, 0
@@ -325,7 +320,7 @@ TsubuyakiSoup補助関数
 
 	sdim ghc_dest, 20
 	ghc_dest = "Error"
-	
+
 	//コンテキストの取得
 	if ( _CryptAcquireContext(varptr(hProv), 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT) ) {
 		//キーのインポート
@@ -349,11 +344,8 @@ TsubuyakiSoup補助関数
 		//ハンドルの破棄
 		_CryptReleaseContext hProv, 0
 	}
-return 
+return
 //============================================================
-
-
-
 
 //============================================================
 /*  [HDL symbol infomation]
@@ -406,7 +398,7 @@ return form_encode(str(base64HmacSha1), 0)
 #deffunc _execRestApi str era_p1, array era_p2, int era_p3, int hProgress
 
 	api = era_p1
-	
+
 	if (api != "media/upload.json") {
 		arrayCopy era_p2, arguments
 		argumentLength = length(arguments)
@@ -420,7 +412,7 @@ return form_encode(str(base64HmacSha1), 0)
 	}
 
 	methodType = era_p3
-	
+
 	switch methodType
 		case METHOD_GET
 			method = "GET"
@@ -446,7 +438,7 @@ return form_encode(str(base64HmacSha1), 0)
 	repeat length(arguments)
 		logmes " "+cnt+" ["+arguments(cnt)+"]"
 	loop
-	
+
 	sigArrayLength = 6+argumentLength
 	sdim sigArray, 500, sigArrayLength
 
@@ -456,7 +448,7 @@ return form_encode(str(base64HmacSha1), 0)
 	intSize = 4		//int型のバイト数
 
 	apiVersion = "1.1"	// TwitterAPIのバージョン
-	
+
 	RequestURL = "api.twitter.com"
 	if (api = "media/upload.json") {
 		RequestURL = "upload.twitter.com"
@@ -479,7 +471,7 @@ return form_encode(str(base64HmacSha1), 0)
 		tokenStr = requestToken
 		sigKey = consumerSecret+" "+requestSecret
 	}
-	
+
 	sigNonce = getRandomString(8, 32)
 	_time sigTime
 	sigArray(0) = "oauth_consumer_key=" + consumerKey
@@ -488,14 +480,14 @@ return form_encode(str(base64HmacSha1), 0)
 	sigArray(3) = "oauth_timestamp=" + sigTime
 	sigArray(4) = "oauth_token="+ tokenStr
 	sigArray(5) = "oauth_version=1.0"
-	
+
 	if (api != "media/upload.json") {
 		repeat argumentLength
-			if (arguments(cnt) == ""):continue 
+			if (arguments(cnt) == ""):continue
 			sigArray(6+cnt) = arguments(cnt)
 		loop
 	}
-	
+
 	sortstr sigArray, 0
 
 	repeat sigArrayLength
@@ -508,10 +500,10 @@ return form_encode(str(base64HmacSha1), 0)
 
 	//リクエスト作成
 	if (methodType = METHOD_POST) {
-	
+
 		sdim boundary,128
 		boundary = "-------------"+getRandomString(24, 32)
-		
+
 		if (api = "media/upload.json") {
 
 			sdim PostDataHead
@@ -606,7 +598,7 @@ return form_encode(str(base64HmacSha1), 0)
 				//リクエストボディの送信
 				sentFailFlg = 0
 				if (PostDataLength != 0){
-	
+
 					BytesWritten = 0
 					sentSize = 0
 					unSentSize = PostDataLength
@@ -619,7 +611,7 @@ return form_encode(str(base64HmacSha1), 0)
 						if (unSentSize = 0): break
 						if (unSentSize < BLOCK_SIZE): tSize = unSentSize: else: tSize = BLOCK_SIZE
 						//logmes " tSize :"+tSize
-						
+
 						_InternetWriteFile hRequest, varptr(PostData)+sentSize, tSize, varptr(BytesWritten)
 						if (stat == 0): sentFailFlg = 1: break //送信失敗
 						//logmes "BytesWritten "+BytesWritten
@@ -639,18 +631,18 @@ return form_encode(str(base64HmacSha1), 0)
 						ResponseBodySize = 0
 						readTotalSize = 0
 						readSize = 0
-	
+
 						_HttpQueryInfo hRequest, HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER, varptr(statCode), varptr(intSize), 0
 						//logmes "StatCode "+statCode
 
 						//入手可能なデータ量を取得
 						_InternetQueryDataAvailable hRequest, varptr(ResponseBodySize), 0, 0
 						logmes "ResponseBodySize :"+ResponseBodySize
-	
+
 						//バッファの初期化
 						sdim readBuffer, BLOCK_SIZE+1
 						sdim responseBody, ResponseBodySize+1
-						repeat 
+						repeat
 							_InternetReadFile hRequest, varptr(readBuffer), BLOCK_SIZE, varptr(readSize)
 							if (readSize = 0) : break
 							if ((readTotalSize+readSize)>ResponseBodySize): memexpand responseBody, (readTotalSize+readSize+1): logmes "ResBody拡張 :"+(readTotalSize+readSize+1)
@@ -727,9 +719,6 @@ TwitterAPI操作命令
 return
 //============================================================
 
-
-
-
 //============================================================
 /*  [HDL symbol infomation]
 
@@ -762,8 +751,6 @@ TwitterAPI操作命令
 return
 //============================================================
 
-
-
 //============================================================
 /*  [HDL symbol infomation]
 
@@ -775,8 +762,6 @@ RequestTokenとSecretを設定
 ()
 
 %inst
-
-
 
 %href
 setAccessToken
@@ -790,9 +775,6 @@ TwitterAPI操作命令
 return requestToken
 //============================================================
 
-
-
-
 //============================================================
 /*  [HDL symbol infomation]
 
@@ -805,8 +787,6 @@ RequestTokenとSecretを設定
 
 %inst
 
-
-
 %href
 setAccessToken
 
@@ -818,9 +798,6 @@ TwitterAPI操作命令
 #defcfunc getRequestSecret
 return requestSecret
 //============================================================
-
-
-
 
 //============================================================
 /*  [HDL symbol infomation]
@@ -852,9 +829,6 @@ TwitterAPI操作命令
 	consumerSecret = sct_p2
 return
 //============================================================
-
-
-
 
 //============================================================
 /*  [HDL symbol infomation]
@@ -890,10 +864,7 @@ TwitterAPI操作命令
 return
 //============================================================
 
-
-
 #global
-
 
 
 #module
@@ -970,8 +941,6 @@ repeat fe_p1Long
 	}
 loop
 return fe_val
-
-
 
 //ランダムな文字列を発生させる
 //p1からp2文字まで

@@ -1,4 +1,3 @@
-
 *drawMainWindow
 	nidPush
 
@@ -33,7 +32,6 @@
 	} else {
 		MoveWindow hOptionComBox, Scale(350), 0, Scale(175), Scale(30), 1
 	}
-
 
 	if (mode == MODE_SSCAP){
 		objprm comboxId, 0
@@ -90,7 +88,6 @@
 		sendmsg hMaxSearchLevelStatic, WM_SETFONT, hFontMain, 1
 
 		mesy += scale20
-
 
 		pos Scale(84+((manualpos^1) * 175)), mesy + scale5
 		mes "x"
@@ -149,7 +146,6 @@
 		pos 0, mesy
 		button gosub "SSキャプチャ", *ssCapture
 		sscapBId = stat
-
 
 		objsize Scale(30), Scale(30)
 		pos Scale(120 + (((yabumiautoupload = 1) && (availableyabumi = 1))^1)*200), mesy
@@ -962,9 +958,7 @@
 			mesbox saveNameVideoCapture, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameVideoCaptureIId = stat
 			ShowScrollBar objinfo_hwnd(saveNameVideoCaptureIId), SB_VERT, FALSE
-
 		}
-
 
 		if (optionMode == OPMODE_TWITTER){
 
@@ -989,7 +983,6 @@
 			objsize Scale(350), scale20
 			button gosub "Amazonほしい物リスト", *Amazon: mesy += scale20
 			//http://www.amazon.co.jp/wishlist/181BGDSFXZC6M/?sort=priority
-
 		}
 
 		pos 0, mesy + Scale(100)

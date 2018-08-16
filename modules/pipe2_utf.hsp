@@ -5,11 +5,11 @@
 //
 // Win32 コンソール向きパイプ通信モジュール
 //      月影とも 2008. 2. 7 v0.02
-// 
+//
 //      パイプを使ったリダイレクトで
 //      標準入力(STDIN), 標準出力(STDOUT), 標準エラー出力(STDERR)
 //      を操作できるモジュール。以下の命令を定義してます。
-// 
+//
 // #deffunc pipe2exec str cmdline
 //      子プロセスをパイプ付き実行。
 //        cmdline : 実行するコマンドライン。
@@ -25,7 +25,7 @@
 //        statの値 : 取得したバイト数
 //        備考 : size 以降を省略した場合、必要なサイズを勝手にbufに確保する(内容はクリアされる)。
 //          取得内容が文字列とわかっている場合は便利。ただしoffsetの指定は無効。
-//        
+//
 // #deffunc pipe2write int procid, var buf, int size, int offset
 //      標準入力へバイナリ書き込み。
 //        procid : pipe2exec の戻り値
@@ -39,7 +39,7 @@
 //        procid : pipe2exec の戻り値
 //        string : 書き込む内容
 //        statの値 : 実際に書き込めたサイズ
-//        
+//
 // #deffunc pipe2check int procid
 //      パイプの状況をチェック。
 //        procid : pipe2exec の戻り値
@@ -79,10 +79,10 @@
 
 #modfunc local _ExecProcessWithPipe str _cmdline
     ret = 0
-    
+
     thisProcess = GetCurrentProcess()
     security_attributes = 12, 0, 1
-    
+
     // for STDOUT
     CreatePipe varptr(hTemp), varptr(hStdout), varptr(security_attributes), 0
     DuplicateHandle thisProcess, hTemp, thisProcess, varptr(m_hStdOut), 0, 0, 2
@@ -220,5 +220,5 @@
         wait 10
     loop
     mes "終了しました。"
-    
+
 #endif

@@ -4,7 +4,7 @@
 	本モジュールは衣日和氏によって開発されたImageModule2をkanahironが改変したモジュールです
 	改変された場所に対応する更新履歴やドキュメントは書いていません
 
-                                                                   
+
 HSP3.22         2010.12.30  新規製作
                 2011. 1. 4  追加：ImgM_GetSize JPG-$C4処理
                         12  追加：ImgM_SetImageData (暫定)
@@ -103,7 +103,7 @@ WinXP以降の環境はGDI+を標準装備してます。
 #const PixelFormatIndexed           $00010000   ; Indexes into a palette
 #const PixelFormatGDI               $00020000   ; Is a GDI-supported format
 #const PixelFormatAlpha             $00040000   ; Has an alpha component
-#const PixelFormatCanonical         $00200000 
+#const PixelFormatCanonical         $00200000
 #const PixelFormat8bppIndexed        3|( 8<<8)|PixelFormatGDI|PixelFormatIndexed
 #const PixelFormat24bppRGB           8|(24<<8)|PixelFormatGDI
 #const PixelFormat32bppARGB         10|(32<<8)|PixelFormatGDI|PixelFormatAlpha|PixelFormatCanonical
@@ -459,7 +459,7 @@ ImgP_Memsave
     ;   (14)パラメ数(0だと保存に失敗するので1以上、1こも必要ない場合はパラメに無効な値をいれるとか...)
     ;   (15～18)パラメエンコーダ (19)パラメ要素数? (20)パラメ型 (21)ポインタ(っ！)
     ;   (22～)パラメエンコーダから繰り返し
-    
+
     if ( w==0 || h==0): ib(5) = 0, 0, ginfo_winx, ginfo_winy :else: ib(5) = x, y, w, h ; トリミング
 
     mref bb, 67
@@ -826,7 +826,7 @@ ImgP_RotateFlip
 
     gsel i  : ImgM_CreateH ImchMode_ImageFromWindow  : ib(12) = stat    ; ib(12) image(元画像)
     gsel ib
-    GdipDrawImageRectRectI ib(11),ib(12),ginfo_cx-ib(8)/2,ginfo_cy-ib(9)/2,ib(8),ib(9),x,y,ib(3),ib(4),2 
+    GdipDrawImageRectRectI ib(11),ib(12),ginfo_cx-ib(8)/2,ginfo_cy-ib(9)/2,ib(8),ib(9),x,y,ib(3),ib(4),2
 
     ImgM_CloseH
     if ib(1) & $FFFF0000  : redraw 1

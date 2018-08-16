@@ -36,7 +36,6 @@ return
 #global
 #endif
 
-
 #module getKanCollePosMod
 
 //CompArrays 配列同士を比較し全て一致すれば真を返す
@@ -149,7 +148,6 @@ return
 	stop
 #endif
 
-
 	//左側の線分が領域をはみ出していた時にそれを引っ込める処理
 	repeat posArrNum
 		topCnt = cnt
@@ -250,7 +248,6 @@ return
 	stop
 #endif
 
-
 	//縦方向に単色が連続しているか確認する処理
 	posArrNum_ = posArrNum
 	posArrNum = 0
@@ -294,7 +291,6 @@ return
 
 	logmes "Finish"
 return contNum
-
 
 //==================================================================
 //
@@ -340,7 +336,7 @@ return contNum
 
 		if ( flagX && flagY ){
 			if ( pccX != tccX(0) && pccY != tccY(0)){
-				as = absf(1.0*(y)/(x) - 0.6)
+				as = absf( BASE_ASPECT_RATIO - 1.0*(y)/(x))
 				if (as <= 0.007){
 					_sizeX = x+po(0)
 					_sizeY = y+po(1)

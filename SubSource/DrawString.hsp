@@ -1,20 +1,20 @@
 
 *drawString
-	
+
 	nidPush
 
 	gsel WND_MAKE_STRING
-	
+
 	font fontnum, fontsizenum, 1
 	mes "1,3,4"
 	OSOW = ginfo(15)
-	
+
 	font fontname, fontsizename, 1
 	mref BMSCR, 67
 	r = 0.1 * abs(BMSCR.49)
 	n = int(2.0 * M_PI * r)
-	
-	mes "Ç¶Ç¶ÅIÅHÇœÇÒÇ¬ÅIÅI<- î¸ì˚ ->"
+
+	mes "ÔøΩÔøΩÔøΩÔøΩÔøΩIÔøΩHÔøΩœÇÔøΩÔøΩ¬ÅIÔøΩI<- ÔøΩÔøΩÔøΩÔøΩ ->"
 	OSOWm = ginfo(15)
 	color :boxf
 
@@ -47,7 +47,7 @@
 		mes string
 		y += 70
 	}
-	
+
 	if enableSecond = 1{
 		x = 10
 		string = SecondFleetName
@@ -66,7 +66,7 @@
 		mes string
 		y += 70
 	}
-	
+
 	if enableThird = 1{
 		x = 10
 		string = ThirdFleetName
@@ -85,7 +85,7 @@
 		mes string
 		y += 70
 	}
-	
+
 	if enableFourth = 1{
 		x = 10
 		string = FourthFleetName
@@ -108,9 +108,9 @@
 	mref BMSCR, 67
 	r = 0.1 * abs(BMSCR.49)
 	n = int(2.0 * M_PI * r)
-	
+
 	x = 510
-	
+
 	if enableFirst = 1{
 		y = 10
 		string = "1\n2\n3\n4\n5\n6\n7"
@@ -129,7 +129,7 @@
 		mes string
 		x += 100
 	}
-	
+
 	if enableSecond = 1{
 		y = 10
 		string = "1\n2\n3\n4\n5\n6\n7"
@@ -148,7 +148,7 @@
 		mes string
 		x += 100
 	}
-	
+
 	if enableThird = 1{
 		y = 10
 		string = "1\n2\n3\n4\n5\n6\n7"
@@ -167,7 +167,7 @@
 		mes string
 		x += 100
 	}
-	
+
 	if enableFourth = 1{
 		y = 10
 		string = "1\n2\n3\n4\n5\n6\n7"
@@ -186,7 +186,7 @@
 		mes string
 	}
 
-	font "ÉÅÉCÉäÉI", 12, 1
+	font "ÔøΩÔøΩÔøΩCÔøΩÔøΩÔøΩI", 12, 1
 	mref BMSCR, 67
 	r = 0.2 * abs(BMSCR.49)
 	n = int(2.0 * M_PI * r)
@@ -215,7 +215,7 @@
 	repeat 16: colorRefArr(cnt) = 0x00FFFFFF: loop
 	dim chooseColoerStruct, 9
 	chooseColoerStruct(0) = 36, hwnd, 0, 0, varptr(colorRefArr), CC_FULLOPEN | CC_RGBINIT
-	
+
 	nidPop
 return
 

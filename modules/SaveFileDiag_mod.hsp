@@ -22,7 +22,7 @@
 	sdim lpstrDefExt
 	sdim filename
 	sdim temp, 1026
-	
+
 	filter = _filter
 	split filter, "|", filter
 
@@ -32,14 +32,14 @@
 		tSize = stat //cnvstowの返り値は「変換先文字コードのnull文字を含んだバイト数」
 		memcpy lpstrFilter, temp, tSize, filterIndex, 0
 		filterIndex += tSize
-		
+
 		cnvstow temp, filter((cnt*2)+1)
 		tSize = stat
 		memcpy lpstrFilter, temp, tSize, filterIndex, 0
 		filterIndex += tSize
-		
+
 	loop
-	
+
 	cnvstow lpstrInitialDir, currentDir
 	cnvstow lpstrDefExt, fExt
 	cnvstow lpstrFile, defaultFileName
@@ -55,7 +55,7 @@
 	OPENFILENAME(11) = varptr(lpstrInitialDir)
 	OPENFILENAME(13) = OFN_OVERWRITEPROMPT | OFN_FILEMUSTEXIST
 	OPENFILENAME(15) = varptr(lpstrDefExt)
-	
+
 	GetSaveFileName varptr(OPENFILENAME)
 	status = stat
 
@@ -64,7 +64,7 @@
 	dim lpstrInitialDir
 	dim lpstrDefExt
 	dim temp
-	
+
 	if (status == 0){
 		dim lpstrFile
 		return 0

@@ -8,7 +8,7 @@
     num = (num & 0x33333333) + (num >> 2 & 0x33333333)
     num = (num & 0x0f0f0f0f) + (num >> 4 & 0x0f0f0f0f)
     num = (num & 0x00ff00ff) + (num >> 8 & 0x00ff00ff)
-    
+
 return (num & 0x0000ffff) + (num >>16 & 0x0000ffff)
 
 #define global ctype HammingDist( %1, %2) PopCnt(%1(0) xor %2(0)) + PopCnt(%1(1) xor %2(1))
@@ -41,7 +41,7 @@ return
 	loop
 
 	avgCol /= 64
-	
+
 	repeat 64
 		hash(cnt/32) <<= 1
 		hash(cnt/32) |= (tCol(cnt) > avgCol)
@@ -49,7 +49,5 @@ return
 
 	dim tCol, 0
 return
-
-
 
 #global

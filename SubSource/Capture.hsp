@@ -192,19 +192,13 @@ return 0
 
 				picHistoryLoad savenamepath
 				gosub *TweetWindow
-			} else {
-
-
-
 			}
-
 		}
 		logOut logmessage
 	}
 
 	nidPop
 return (successFlg^1)
-
 
 *addCapture
 

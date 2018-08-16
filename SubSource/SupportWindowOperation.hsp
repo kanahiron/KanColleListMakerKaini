@@ -6,7 +6,7 @@
 	UIScale = UIScale_
 
 	font "メイリオ", Scale(15) , 1
-	ts = "[   追加   ]"	
+	ts = "[   追加   ]"
 	ka = "[艦娘]"
 	ko = "[攻略]"
 	so = "[その他]"
@@ -35,11 +35,11 @@
 
 	supportWndW = swWidth+Scale(30)
 	supportWndH = swHeight+Scale(3)
-	
+
 	color 255, 0, 0: boxf
 	color 16, 16, 16
 	gsquare -1, tempx, tempy
-	
+
 	color 210, 210, 210
 	pos tsPos, Scale(2)
 	 mes ts, 1
@@ -76,7 +76,7 @@ return supportWndH
 				logmes "WM_LBUTTONDOWN"
 				gosub *SupportWndClick
 				swbreak
-				
+
 		swend
 
 	oncmd 1
@@ -95,13 +95,13 @@ return
 *SupportWndClick
 
 	PushedX = (lparam&0xFFFF)
-	
+
 	switch GetIndexSupportWnd(PushedX)
 		case 0
 			//ホットキーと偽ったほうが処理が楽
 			if (availableCap){
 				hotKeyFlag = TRUE
-	
+
 				if autoAddNonSave{
 					//保存なしの場合
 					gosub *SSCaptureOnMemory
@@ -145,10 +145,10 @@ return
 			if ( 0 < ssCapWH(0) && 0 < ssCapWH(1) ){
 				kcAbsPos = 0, 0
 				GetAbsPos kcAbsPos(0), kcAbsPos(1)
-	
+
 				supportWndPos(0) = kcAbsPos(0)+ssCapWH(0)-SupportWndWidth()
 				supportWndPos(1) = kcAbsPos(1)+ssCapWH(1)
-				
+
 				MoveWindow WND_INFO(WND_SUPPORT, WI_HANDLE), supportWndPos(0), supportWndPos(1), SupportWndWidth(), SupportWndHeight(), 1
 				ShowWindow WND_INFO(WND_SUPPORT, WI_HANDLE), SW_SHOW
 				SetWindowPos WND_INFO(WND_SUPPORT, WI_HANDLE), -1, 0, 0, 0, 0, 0x0003

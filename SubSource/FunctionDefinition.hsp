@@ -84,12 +84,12 @@
 #define SeqCapWriteStatTimerID	105
 
 
-//Ž©•ª‚Å’è‹`‚µ‚½’è”
+//ï¿½ï¿½ï¿½ï¿½ï¿½Å’ï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½è”
 #enum WND_MAIN = 0
 #enum WND_GRID
-#enum WND_TWITTER		//Œ³19
-#enum WND_OVERLAY		//Œ³19
-#enum WND_MAKE_STRING	//Œ³12
+#enum WND_TWITTER		//ï¿½ï¿½19
+#enum WND_OVERLAY		//ï¿½ï¿½19
+#enum WND_MAKE_STRING	//ï¿½ï¿½12
 #enum WND_GRID_STRING
 #enum WND_HOME_PORT_MOD
 #enum WND_SUPPORT
@@ -110,7 +110,7 @@
 #enum WND_NOIMAGE
 #enum WND_PRINTWND
 #enum WND_KANCOLLEBG
-//ƒtƒHƒ“ƒgƒTƒCƒY(–¢Žg—p)
+//ï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Tï¿½Cï¿½Y(ï¿½ï¿½ï¿½gï¿½p)
 #const FONT_SIZE_GRID_STRING 25
 #const FONT_SIZE_MANUAL_GETPOS_STRING 30
 #const FONT_SIZE_ALL 13
@@ -151,7 +151,7 @@
 #const WI_HANDLE	0
 #const WI_DC		1
 
-//rect\‘¢‘Ì—p
+//rectï¿½\ï¿½ï¿½ï¿½Ì—p
 #const CR_X 0
 #const CR_Y 1
 #const CR_W 2
@@ -163,7 +163,7 @@
 #define global ZOOM_MAX 3
 #define global ZOOM_MIN 0.4
 
-//Ž©ìƒ}ƒNƒ
+//ï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½Nï¿½ï¿½
 #define ctype MAKELPARAM(%1,%2)	(%1 | %2<<16)
 #define ctype HIWORD(%1) (%1>>16) and 0x0000FFFFF
 #define ctype LOWORD(%1) %1 and 0x0000FFFFF
@@ -187,13 +187,13 @@
 
 #define LogOut(%1) sendmsg hLog, WM_SETTEXT, 0, (%1)
 
-//ƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹‚Ì•ÏX—pƒ}ƒNƒ
+//ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Xï¿½^ï¿½Cï¿½ï¿½ï¿½Ì•ÏXï¿½pï¿½}ï¿½Nï¿½ï¿½
 #define ChgWndowStyle(%1, %2) SetWindowLong %1, -16, GetWindowLong(%1, -16) | (%2)
 
 
-//ƒwƒbƒ_ƒtƒ@ƒCƒ‹‚Å’è‹`‚³‚ê‚Ä‚é‚à‚Ì
+//ï¿½wï¿½bï¿½_ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Å’ï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½
 
-//ƒEƒBƒ“ƒhƒEƒƒbƒZ[ƒW
+//ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½W
 #const WM_ACTIVATE		0x0006
 #const WM_SETREDRAW		0x000B
 #const WM_SETTEXT		0x000C
@@ -215,30 +215,30 @@
 #const WM_DPICHANGED	0x02E0
 #const WM_HOTKEY		0x0312
 
-//ƒGƒfƒBƒbƒgƒRƒ“ƒgƒ[ƒ‹Žü‚è
+//ï¿½Gï¿½fï¿½Bï¿½bï¿½gï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #define EM_SETSEL		0x00B1
 #define EM_GETLINECOUNT	0x00BA
 
-//ƒŠƒXƒgƒ{ƒbƒNƒXŽü‚è
+//ï¿½ï¿½ï¿½Xï¿½gï¿½{ï¿½bï¿½Nï¿½Xï¿½ï¿½ï¿½ï¿½
 #define LB_ADDSTRING	$00000180
 #define LB_SETCURSEL	$00000186
 #define LB_GETCURSEL	$00000188
 #define LB_GETTEXT		$00000189
 #define LB_GETCOUNT		$0000018B
 
-//ƒŒƒCƒ„[ƒhƒEƒBƒ“ƒhƒEŽü‚è
+//ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½hï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ï¿½ï¿½ï¿½
 #const LWA_COLORKEY		0x0001
 #const LWA_ALPHA		0x0002
 
-//ƒRƒ“ƒ{ƒ{ƒbƒNƒXŽü‚è
+//ï¿½Rï¿½ï¿½ï¿½{ï¿½{ï¿½bï¿½Nï¿½Xï¿½ï¿½ï¿½ï¿½
 #const CB_GETCURSEL		0x0147
 
-//WM_ACTIVATEŽü‚è
+//WM_ACTIVATEï¿½ï¿½ï¿½ï¿½
 #const WA_INACTIVE		0
 #const WA_ACTIVE		1
 #const WA_CLICKACTIVE	2
 
-//ƒzƒbƒgƒL[Žü‚è
+//ï¿½zï¿½bï¿½gï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½
 #const MOD_ALT			0x0001
 #const MOD_CONTROL		0x0002
 #const MOD_SHIFT		0x0004
@@ -247,19 +247,19 @@
 //GetWindowLpng
 #const GWL_STYLE		(-16)
 
-//ƒvƒƒOƒŒƒXƒp[Žü‚è
+//ï¿½vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½Xï¿½pï¿½[ï¿½ï¿½ï¿½ï¿½
 #const PBS_MARQUEE		0x0008
 
 #const PBM_SETMARQUEE	0x040A
 #const PBM_SETRANGE		0x0401
 #const PBM_SETPOS		0x0402
 
-//GetAncestor—p
+//GetAncestorï¿½p
 #const GA_PARENT		1
 #const GA_ROO			2
 #const GA_ROOTOWNER		3
 
-//ƒgƒ‰ƒbƒNƒo[ƒRƒ“ƒgƒ[ƒ‹—p
+//ï¿½gï¿½ï¿½ï¿½bï¿½Nï¿½oï¿½[ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½p
 #enum TBM_GETPOS		= 0x0400
 #enum TBM_GETRANGEMIN
 #enum TBM_GETRANGEMAX
@@ -289,7 +289,7 @@
 #enum TBM_SETTHUMBLENGTH
 #enum TBM_GETTHUMBLENGTH
 
-//Color‚È‚ñ‚Æ‚©
+//Colorï¿½È‚ï¿½ï¿½Æ‚ï¿½
 #const CC_ANYCOLOR				0x00000100
 #const CC_ENABLEHOOK			0x00000010
 #const CC_ENABLETEMPLATE		0x00000020
@@ -300,20 +300,20 @@
 #const CC_SHOWHELP				0x00000008
 #const CC_SOLIDCOLOR			0x00000080
 
-//ShowWindowŽü‚è
+//ShowWindowï¿½ï¿½ï¿½ï¿½
 #const SW_HIDE		0x0000
 #const SW_SHOW		0x0005
 #const SW_MINIMIZE	0x0006
 #const SW_SHOWNA	0x0008
 #const SW_RESTORE	0x0009
-//ƒEƒCƒ“ƒhƒEƒXƒ^ƒCƒ‹
+//ï¿½Eï¿½Cï¿½ï¿½ï¿½hï¿½Eï¿½Xï¿½^ï¿½Cï¿½ï¿½
 #const WS_CHILD		0x40000000
 #const WS_VISIBLE	0x10000000
 
-//‚È‚ñ‚¾‚ë‚¤
+//ï¿½È‚ñ‚¾‚ë‚¤
 #define HTCAPTION 2
 
-//BitBlt‚ÌƒIƒvƒVƒ‡ƒ“
+//BitBltï¿½ÌƒIï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½
 #const SRCCOPY		0x00CC0020
 #const CAPTUREBLT	0x40000000
 

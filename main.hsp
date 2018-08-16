@@ -16,7 +16,6 @@
 #include "./modules/DateAndTimeFormat2.as"
 #include "./modules/isfilled.hsp"
 #include "./modules/pipe2_utf.hsp"
-#include "./modules/MemoryMapModule_utf.as"
 #include "./modules/execwMod.as"
 #include "./modules/SaveFileDiag_mod.hsp"
 #include "./modules/FFMPEGLog.hsp"
@@ -38,7 +37,6 @@
 #define klm2ver 6000
 
 #ifdef _debug
-
 	exist "./SubSource/hsptmp"
 	if (strsize != -1): delete "./SubSource/hsptmp"
 	exist "./SubSource/obj"
@@ -62,15 +60,10 @@
 	exist "./packfile"
 	if (strsize != -1): delete "./packfile"
 
+	onerror gosub *err_
 #endif
 
 	onexit gosub *exit
-
-#ifndef _debug
-
-	onerror gosub *err_
-
-#endif
 
 	wndInfoInit
 	nidStackInit
@@ -255,16 +248,12 @@
 
 	gsel WND_MAIN,1+frontRow
 
-	//SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 1000, 0
 	/*
 	mode = MODE_OPTION
 	optionMode = OPMODE_CAPTURE
 	gosub *drawMainWindow
 	//*/
-
-	//gsel WND_SUPPORT, 1
 	stop
-
 
 *exit
 

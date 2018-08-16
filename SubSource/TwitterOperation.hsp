@@ -46,8 +46,6 @@ return
 	}
 return
 
-
-
 *twiinit
 
 	if ( ACCESS_TOKEN != "" && ACCESS_SECRET != "" ){
@@ -405,15 +403,10 @@ return
 			gosub *picHistoryAddStack
 
 		}
-
-
 	}
 
 	nidPop
 return
-
-
-
 
 *TweetWindowDraw
 
@@ -459,7 +452,6 @@ return
 	redraw 1
 
 return
-
 
 *rideCursor
 
@@ -522,8 +514,6 @@ return
 	}
 return
 
-///*
-
 *TwiWindowSelectImage
 
 	if (ginfo(24) == WND_TWITTER) {
@@ -565,9 +555,6 @@ return
 
 
 return
-
-//*/
-
 
 *tweet_
 
@@ -679,7 +666,6 @@ return
 	}
 
 return
-
 
 *twioauthok
 

@@ -1,17 +1,17 @@
-	
+
 //設定――――――――――――――――――――――――――――――――――
 *listsavedialog
-	
+
 	BrowseFolder "一覧の保存先", (dir_exe)
 	if ( stat == 1 ){
 		listsavedir = refstr
 		objprm listSaveDirIId, listsavedir
 	}
-	
+
 return
 
 *sssavedialog
-	
+
 	BrowseFolder "SSキャプチャの保存先", (dir_exe+"\\ScreenShots")
 	if ( stat == 1 ){
 		sssavedir = refstr
@@ -21,7 +21,7 @@ return
 return
 
 *intervalshotsavedialog
-	
+
 	BrowseFolder "連続撮影の保存先", (dir_exe+"\\ScreenShots")
 	if ( stat == 1 ){
 		intervalShotDir = refstr
@@ -51,7 +51,7 @@ return
 return
 
 *yabumiuploaderdialog
-	
+
 	dialog "exe", 16, ""
 	if ( stat == 1 ){
 		yabumidir = refstr
@@ -119,11 +119,11 @@ return
 				objprm saveNameVideoCaptureIId, saveNameVideoCapture
 			}
 		}
-	}	
+	}
 
 
 return
-	
+
 
 *seqCapSaveFOpen
 
@@ -136,7 +136,7 @@ return
 
 *hotkeycapsetting
 	nidPush
-	
+
 	if ( hotkeycap == 1 && hotkeystr != hotkeystr_temp ) {
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
 		RegisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID, (MOD_ALT*hotkeycapalt)|(MOD_CONTROL*hotkeycapctrl)|(MOD_SHIFT*hotkeycapshift)|(MOD_WIN*hotkeycapwin), hotkeycode
@@ -151,7 +151,7 @@ return
 		}
 	}
 
-	
+
 	if ( hotkeycap == 0 && hotkeyset == 1 ){
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
 		hotkeyset = 0
@@ -168,15 +168,15 @@ return
 		gsel WND_MAIN, 0
 		title SOFTNAME
 	}
-	
+
 	nidPop
 return
 
 
 
 *yabumiupload
-	
-	if (mode == MODE_SSCAP) {	
+
+	if (mode == MODE_SSCAP) {
 		gosub *ssCapture
 		if (successFlg){
 			execw yabumidir, "\""+(sssavedir +"\\"+ savename)+"\""
@@ -195,4 +195,3 @@ return
 	dialog "Amazonのほしい物リストだよ！\nぜひポチって支援してね！！！", 2, "でちでち"
 	if stat = 6:exec "http://www.amazon.co.jp/wishlist/181BGDSFXZC6M/?sort=priority", 16
 return
-

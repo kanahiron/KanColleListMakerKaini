@@ -21,7 +21,7 @@
 	base64enc.48 = 0x4583F633, 0x834F02FC, 0xC87906E9, 0x5FFC458B, 0x0002C65E, 0x10C2C95B
 	prm.0 = varptr(src), size, varptr(dest), varptr(base64)
 	return callfunc(prm, varptr(base64enc), 4)
-	
+
 #deffunc Base64Decode var src, int size, var dest//,var d1,var d2,var d3,var d4
 
 	base64="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
