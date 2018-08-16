@@ -135,7 +135,7 @@
 	GetIni "OtherListMode", "AirStationTab", airStationTab, "1"
 	GetIni "OtherListMode", "EquipmentList", equipmentList, "0"
 	GetIni "OtherListMode", "UserDefList", userDefList, "0"
-	GetIni "OtherListMode", "UserDefRect", userDefRect, "0\",\"0\",\"800\",\"480"
+	GetIni "OtherListMode", "UserDefRect", userDefRect, "0\",\"0\",\""+BASE_SIZE_W+"\",\"+BASE_SIZE_H
 
 	if strmid(hotkeystr,0,1) = "A":hotkeycapalt	= 1
 	if strmid(hotkeystr,1,1) = "C":hotkeycapctrl = 1
@@ -638,7 +638,7 @@ return
 		ImgF_PicloadEx picHistory(picHistoryNum), 1
 	} else {
 		pos 0, 0
-		gcopy WND_NOIMAGE, 0, 0, 800, 480
+		gcopy WND_NOIMAGE, 0, 0, BASE_SIZE_W, BASE_SIZE_H
 	}
 
 	nidPop

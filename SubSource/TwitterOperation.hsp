@@ -1,4 +1,3 @@
-		
 *TweetWindowProc
 	oncmd 0
 
@@ -8,7 +7,7 @@
 			logmes "WM_LBUTTONDOWN"
 			gosub *TwiWindowSelectImage
 			swbreak
-			
+
 		case WM_MOUSEMOVE
 			//うるさいのでコメントアウト
 			//logmes "WM_MOUSEMOVE"
@@ -50,11 +49,11 @@ return
 
 
 *twiinit
-	
+
 	if ( ACCESS_TOKEN != "" && ACCESS_SECRET != "" ){
 
 		nidPush
-		
+
 		setAccessToken ACCESS_TOKEN, ACCESS_SECRET
 
 		gsel WND_TWITTER
@@ -63,16 +62,16 @@ return
 		objmode 2
 		title "ツイートウィンドウ"
 		width Scale(448), Scale(270)
-		
+
 		font "メイリオ", Scale(12)
-		
+
 		pos 1,1
 		mesbox tweettext, Scale(180), Scale(217), 1
 		ttid = stat
 		tth = objinfo(ttid,2)
 
 		font "メイリオ",Scale(20)
-		
+
 		objsize Scale(140), Scale(32)
 		pos 0, Scale(218)
 		button gosub "ツイート",*tweet_
@@ -81,7 +80,7 @@ return
 		objsize Scale(25), Scale(32)
 		pos Scale(184), Scale(218)
 		button gosub "<",*picHistoryTop
-	
+
 		objsize Scale(50), Scale(32)
 		pos Scale(209), Scale(218)
 		button gosub "←",*picHistoryBack
@@ -90,76 +89,76 @@ return
 		pos Scale(299), Scale(218)
 		button gosub "→",*picHistoryNext
 		picHistoryNextBId = stat
-		
+
 		objsize Scale(40), Scale(40)
 		pos Scale(259), Scale(210)
 		button gosub "↑", *picHistoryAddStack
 
 		objsize Scale(32), Scale(40)
-		
+
 		pos Scale(350), Scale(210)
 		button gosub "撮", *TwiCapture
 		TwiWndCapBId = stat
-		
+
 		pos Scale(382), Scale(210)
 		button gosub "「」", *TwiCaptureSelect
-		twiCaptureSelectBId = stat 
-		
+		twiCaptureSelectBId = stat
+
 		pos Scale(414), Scale(210)
 		button gosub "［］", *TwiCaptureSelectNonCut
 		twiCaptureSelectNonCutBid = stat
-	
+
 		picHistoryNum = 0
-	
+
 		////スタティックテキスト
 		font "メイリオ", Scale(14)
 		mref BMSCR, 67
 		hFont = BMSCR.38
-	
+
 		pos Scale(140), Scale(230)
 		winobj "static", strf("%3d", 140-ttCount), , $50000002, Scale(44), Scale(20)
 		ttCounth = objinfo(stat, 2)
 		sendmsg ttCounth, $30, hFont
-	
+
 		pos Scale(379), Scale(189)
 		winobj "static", strf("None"), , $50001002, Scale(65), Scale(20)
 		stackCounth = objinfo(stat, 2)
 		sendmsg stackCounth, $30, hFont
-	
+
 		sendmsg ttCounth, $C , , strf("%3d ", 140-ttCount)
 		//----
 
 		pos 0, Scale(250)
 		winobj "msctls_progress32", "", , $50000000, Scale(448), Scale(20)
-		hProgress = objinfo(stat, 2)	
+		hProgress = objinfo(stat, 2)
 		sendmsg hProgress ,PBM_SETRANGE,0,MAKELPARAM(0,100)
 		//----
 
 		nidPop
 		gosub *TweetWindow
-		
+
 	} else {
-		
+
 		nidPush
-		
+
 		gsel WND_TWITTER
-		
+
 		DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 0
 		clrobj
 		syscolor 15: boxf: color 8
 		objmode 2
 		width Scale(448), Scale(270)
-		
+
 		title "ツイートウィンドウ"
 		font "メイリオ",Scale(14)
 		pos Scale(10), Scale(10)
 		mes "Twitterへの投稿には認証が必要です"
 		mes "次のボタンを押すとブラウザが開くので表示されたコードを入力し、\nOKを押してください"
-	
+
 		pos Scale(10), Scale(80)
 		objsize Scale(428), Scale(40)
 		button gosub "ブラウザを開いて認証する",*openbrowser
-	
+
 		pos Scale(10), Scale(134)
 		mes "PIN"
 		PIN = ""
@@ -175,13 +174,13 @@ return
 
 		nidPop
 	}
-	
+
 return
 
 *picHistoryNext
-	
+
 	nidPush
-	
+
 	if (picHistoryNum < 99){
 
 		if (picHistoryCount > picHistoryNum+1){
@@ -192,19 +191,19 @@ return
 				ImgF_PicloadEx picHistory(picHistoryNum), 1
 			} else {
 				pos 0, 0
-				gcopy WND_NOIMAGE, 0, 0, 800, 480
+				gcopy WND_NOIMAGE, 0, 0, BASE_SIZE_W, BASE_SIZE_H
 			}
 		}
 	}
-	
+
 	nidPop
 	gosub *tweetWindow
 return
 
 *picHistoryBack
-	
+
 	nidPush
-	
+
 	if (0 < picHistoryNum){
 		picHistoryNum--
 		gsel WND_TWIBUF
@@ -213,19 +212,19 @@ return
 			ImgF_PicloadEx picHistory(picHistoryNum), 1
 		} else {
 			pos 0, 0
-			gcopy WND_NOIMAGE, 0, 0, 800, 480
+			gcopy WND_NOIMAGE, 0, 0, BASE_SIZE_W, BASE_SIZE_H
 		}
 	}
-	
+
 	nidPop
-	
+
 	gosub *tweetWindow
 return
 
 *picHistoryTop
-	
+
 	nidPush
-	
+
 	picHistoryNum = 0
 	gsel WND_TWIBUF
 	if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
@@ -233,11 +232,11 @@ return
 		ImgF_PicloadEx picHistory(picHistoryNum), 1
 	} else {
 		pos 0, 0
-		gcopy WND_NOIMAGE, 0, 0, 800, 480
+		gcopy WND_NOIMAGE, 0, 0, BASE_SIZE_W, BASE_SIZE_H
 	}
-		
+
 	nidPop
-	
+
 	gosub *tweetWindow
 return
 
@@ -252,7 +251,7 @@ return
 		PicHistory(i) = PicHistory(i-1)
 		i--
 	loop
-	PicHistory(0) = picHistoryLoadImageName 
+	PicHistory(0) = picHistoryLoadImageName
 
 	gsel WND_TWIBUF
 	if (ImgF_GetFormat(picHistory(picHistoryNum)) != 0){
@@ -260,7 +259,7 @@ return
 		ImgF_PicloadEx picHistory(picHistoryNum), 1
 	} else {
 		pos 0, 0
-		gcopy WND_NOIMAGE, 0, 0, 800, 480
+		gcopy WND_NOIMAGE, 0, 0, BASE_SIZE_W, BASE_SIZE_H
 	}
 
 	nidPop
@@ -279,8 +278,8 @@ return
 					break
 				}
 			loop
-		}	
-		
+		}
+
 		i = 3
 		repeat 3
 			if (twiOrder(i) = 0){
@@ -290,7 +289,7 @@ return
 				gsel WND_TWIBUF1+i
 				pos 0, 0: syscolor 15: boxf
 				gcopy WND_TWIBUF1+i-1, 0, 0, 2400, 1440
-				twiBufPicSize(0, i) = twiBufPicSize(0, i-1), twiBufPicSize(1, i-1) 
+				twiBufPicSize(0, i) = twiBufPicSize(0, i-1), twiBufPicSize(1, i-1)
 			}
 			i--
 		loop
@@ -327,11 +326,11 @@ return
 *TwiCaptureSelect
 
 	marginCutFlg = TRUE
-	
+
 *TwiCaptureSelectNonCut
 
 	nidPush
-	
+
 	dim selcap, 4
 	picHistoryNum = 0
 
@@ -343,13 +342,13 @@ return
 
 	bgscr WND_TEMP_SCR1, disinfo(2), disinfo(3), 2: SET_WND_INFO
 	font "メイリオ", 30
-	
+
 	gcopy WND_TEMP1, 0, 0, disinfo(2), disinfo(3)
 	color 128,128,128
 	repeat (disinfo(3) / 120)+1
 		ycnt = cnt
 		repeat (disinfo(2) / 500)+2
-			pos (cnt*600)+(ycnt*70)-800,ycnt*200
+			pos (cnt*600)+(ycnt*70)-BASE_SIZE_W,ycnt*200
 			mes "範囲選択キャプチャ"
 		loop
 	loop
@@ -386,28 +385,28 @@ return
 		} else {
 			saveNamePath = selectCapSaveDir +"\\"+ saveName
 		}
-		
+
 		ImgF_ImageSave saveNamePath, jpgQuality
 
 		gsel WND_MAIN
-		
+
 		if kmexist(saveNamePath) <= 0{
 			successFlg = FALSE
 			logOut saveName+"の保存に失敗しました"
 		} else {
 			successFlg = TRUE
 			logOut saveName+"を保存しました"
-	
+
 			if dispcap & (mode == MODE_SSCAP){
 				pos 0, dispcapy
 				gzoom Scale(175), Scale(105), WND_TEMP2, 0, 0, selcapwh(0), selcapwh(1), 1
 			}
 			picHistoryLoad saveNamePath
 			gosub *picHistoryAddStack
-				
+
 		}
-				
-		
+
+
 	}
 
 	nidPop
@@ -429,9 +428,9 @@ return
 		boxf twiPicFrameXL(cnt),twiPicFrameYU(cnt),twiPicFrameXR(cnt),twiPicFrameYD(cnt)
 	loop
 	boxf twiPicFrameXL(4),twiPicFrameYU(4),twiPicFrameXR(4),twiPicFrameYD(4)
-	
+
 	syscolor 15 //内側上書き
-	
+
 	repeat 4
 		boxf twiPicFrameXL(cnt)+1,twiPicFrameYU(cnt)+1,twiPicFrameXR(cnt)-1,twiPicFrameYD(cnt)-1
 	loop
@@ -440,13 +439,13 @@ return
 
 	//ど真ん中の大きい所
 	pos twiPicFrameXL(4)+2,twiPicFrameYU(4)+2
-	gzoom twiPicFrameW(4)-3, twiPicFrameH(4)-3, WND_TWIBUF, 0, 0, 800, 480, 0
-	
+	gzoom twiPicFrameW(4)-3, twiPicFrameH(4)-3, WND_TWIBUF, 0, 0, BASE_SIZE_W, BASE_SIZE_H, 0
+
 	repeat 4
 		if PicStack(cnt) = "":break
-		
+
 		pos twiPicFrameXL(cnt)+1, twiPicFrameYU(cnt)+1
-		gzoom Scale(62), Scale(38), WND_TWIBUF1+cnt, 0, 0, 800, 480
+		gzoom Scale(62), Scale(38), WND_TWIBUF1+cnt, 0, 0, BASE_SIZE_W, BASE_SIZE_H
 	loop
 
 	gmode 2
@@ -455,7 +454,7 @@ return
 		pos twiPicFrameXL(cnt)+1, twiPicFrameYU(cnt)+1
 		gcopy WND_IMAGE_BUF, 0, 40+twiOrder(cnt)*120, Scale(62), Scale(38)
 	loop
-	
+
 	gmode 0
 	redraw 1
 
@@ -465,11 +464,11 @@ return
 *rideCursor
 
 	if ( ACCESS_TOKEN != "" && ACCESS_SECRET != "" ){
-	
+
 		mx = lparam&0x0000FFFF
 		my = (lparam&0xFFFF0000)>>16
 		rcFlg = -1
-	
+
 		repeat 4
 			if PicStack(cnt) = "":break
 			if ((twiPicFrameXL(cnt)<mx) & (twiPicFrameXR(cnt)>mx) & (twiPicFrameYU(cnt)<my) & (twiPicFrameYD(cnt)>my)){
@@ -477,20 +476,20 @@ return
 				break
 			}
 		loop
-		
+
 		if (rcFlg != rcFlg_) {
 
 			logmes "選択が変わった"
-			
+
 			nidpush
-			rcFlg_ = rcFlg 
-	
+			rcFlg_ = rcFlg
+
 			if (rcFlg > -1){
 
 				logmes "拡大表示"
-				
+
 				gsel WND_TWITTER
-				
+
 				color 200,200,200
 				boxf
 				syscolor 8
@@ -500,16 +499,16 @@ return
 				gzoom tDispW, tDispH, WND_TWIBUF1+rcFlg, 0, 0, twiBufPicSize(0, rcFlg), twiBufPicSize(1, rcFlg), 1
 
 				//サムネイル部
-				ImgP_CalcFitSize tDispW, tDispH, limit(twiBufPicSize(0, rcFlg), 0, Scale(800)), limit(twiBufPicSize(1, rcFlg), 0, Scale(480)), Scale(62), Scale(38)
+				ImgP_CalcFitSize tDispW, tDispH, limit(twiBufPicSize(0, rcFlg), 0, Scale(BASE_SIZE_W)), limit(twiBufPicSize(1, rcFlg), 0, Scale(BASE_SIZE_H)), Scale(62), Scale(38)
 				pos twiPicFrameXL(rcFlg)+1,twiPicFrameYU(rcFlg)+1
-				gzoom tDispW, tDispH, WND_TWIBUF1+rcFlg, 0, 0, limit(twiBufPicSize(0, rcFlg), 0, Scale(800)), limit(twiBufPicSize(1, rcFlg), 0, Scale(480))
-	
+				gzoom tDispW, tDispH, WND_TWIBUF1+rcFlg, 0, 0, limit(twiBufPicSize(0, rcFlg), 0, Scale(BASE_SIZE_W)), limit(twiBufPicSize(1, rcFlg), 0, Scale(BASE_SIZE_H))
+
 				sendmsg stackCounth ,$C , , strf("プレビュ")
-			
+
 			} else {
 
 				logmes "元表示"
-				
+
 				gsel WND_TWITTER
 				gosub *TweetWindowDraw
 				if (picHistoryCount == 0){
@@ -524,18 +523,18 @@ return
 return
 
 ///*
-	
+
 *TwiWindowSelectImage
 
 	if (ginfo(24) == WND_TWITTER) {
 
 		nidPush
-		
+
 		mx = lParam & 0x0000FFFF			// カーソルx座標
 		my = (lParam >> 16) & 0x0000FFFF	// カーソルy座標
-	
+
 		gsel WND_TWITTER
-	
+
 		twiOrderPos = -1
 		repeat 4
 			if ((twiPicFrameXL(cnt)<mx) & (twiPicFrameXR(cnt)>mx) & (twiPicFrameYU(cnt)<my) & (twiPicFrameYD(cnt)>my)){
@@ -545,7 +544,7 @@ return
 
 		if (twiOrderPos != -1){
 			if (picStack(twiOrderPos) != ""){
-		
+
 				if twiOrder(twiOrderPos) = 0{
 					twiOrderCount++
 					twiOrder(twiOrderPos) = twiOrderCount
@@ -555,7 +554,7 @@ return
 					twiOrderCount--
 					repeat 4
 						if temp <= twiOrder(cnt):twiOrder(cnt)--
-					loop		
+					loop
 				}
 				gosub *TweetWindow
 			}
@@ -571,15 +570,15 @@ return
 
 
 *tweet_
-	
+
 	if ( ACCESS_TOKEN != "" ){
 
 		nidpush
 		tweetFlg = TRUE
-		
+
 		gsel WND_MAIN
 		gosub *SSModeControlDisable
-		
+
 		sdim mediaids, 1024
 		sdim tempsdim, 1024, 4
 
@@ -593,7 +592,7 @@ return
 				}
 			}
 		loop
-					
+
 		if (twijpg && jpgsave == FALSE){
 			repeat count
 				buffer WND_TEMP1
@@ -606,43 +605,43 @@ return
 				}
 			loop
 		}
-		
+
 		gsel WND_TWITTER
-	
+
 		mediaTweetSuccess = TRUE
-	
+
 		if (count != 0){
 			media_upload tempSdim, count,　mediaids, hProgress
 			if (stat = 1){
 			} else {
 				mediaTweetSuccess = FALSE
-				dialog "画像のアップロードに失敗しました"	
+				dialog "画像のアップロードに失敗しました"
 			}
 		}
-	
+
 		if (mediaTweetSuccess) {
-				
+
 			tweet tweettext, "", mediaids
 			if (stat = 200){
 				repeat 4
 					picStack(cnt) = ""
 				loop
-					
+
 				tweettext = ""
 				twiOrder = 0,0,0,0
 				twiOrderCount = 0
 				objprm ttid, tweettext
 				sendmsg ttCounth ,$C , , strf("%3d",140)
 				sendmsg hProgress, $402, 0
-			
+
 				logmessage = "ツイートを投稿しました"
-		
+
 			} else {
 				dialog "ツイートに失敗しました"
 			}
-				
+
 		}
-			
+
 		if (twijpg == TRUE & jpgsave == FALSE){
 			repeat count
 				if kmexist(tempsdim(cnt)) > 0{
@@ -656,7 +655,7 @@ return
 		LogOut logmessage
 		nidPop
 	}
-	
+
 	gosub *TweetWindow
 
 return
@@ -683,18 +682,18 @@ return
 
 
 *twioauthok
-	
+
 	userdata = ""
 	ACCESS_TOKEN = ""
 	ACCESS_SECRET = ""
 	publishAccessToken ACCESS_TOKEN,ACCESS_SECRET,userdata,PIN
-	
+
 	if (stat != 200){
 		dialog "Twitter認証に失敗しました\nもう一度お試しください"
 	} else {
 		gosub *twiinit
 	}
-	
+
 return
 
 *getText

@@ -160,7 +160,8 @@
 #define global BASE_SIZE_W 1200
 #define global BASE_SIZE_H 720
 #define global BASE_ASPECT_RATIO 0.6
-
+#define global ZOOM_MAX 3
+#define global ZOOM_MIN 0.4
 
 //é©çÏÉ}ÉNÉç
 #define ctype MAKELPARAM(%1,%2)	(%1 | %2<<16)

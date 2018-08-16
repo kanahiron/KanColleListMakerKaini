@@ -1,11 +1,11 @@
- 
+
 *SSCaptureOnMemory
 
 	nidPush
 	gsel WND_MAIN
 
 	if (positionType == PT_RELATIVE || positionType = PT_WNDABSOLUTE){
-		
+
 		if (IsWindow(hClient) == 0){
 
 			ssCap(0) = 0, 0, 0, 0
@@ -21,25 +21,25 @@
 		}
 
 		if (positionType==PT_RELATIVE){
-	
+
 			GetClientRect hClient, varptr(rect)
 			if (clientSize(0) != (rect(2)-rect(0))) | (clientSize(1) != (rect(3)-rect(1))){
-	
+
 				ssCap(0) = 0, 0, 0, 0
 				hClient = 0
 				ReleaseDC dcClient
 				if seqCapf: gosub *seqcap
-				
+
 				gosub *ssSettingCheck
-				
+
 				LogOut "艦これの画面を見失いました(2)"
 				nidPop
 				return 1
 			}
 		}
-			
+
 	}
-	
+
 	//暫定数値直接入力
 	sscap(0) = luposx
 	sscap(1) = luposy
@@ -50,20 +50,20 @@
 	if ( (sscapwh(0) < 50) | (sscapwh(1) < 30) ){
 		if (mode != MODE_OPTION){
 
-			if seqCapf: gosub *seqcap	
+			if seqCapf: gosub *seqcap
 			positionType = 0
 
 			LogOut "取得範囲が小さすぎます"
 			ssCapMes = "取得する"
 			objprm SSCapIId, ssCapMes
-			
+
 		}
 		nidPop
 		return 1
 	}
 
 	switch captureMethod
-	
+
 		case CM_BITBLT
 			switch positionType
 				case PT_RELATIVE
@@ -83,7 +83,7 @@
 					swbreak
 			swend
 			swbreak
-			
+
 		case CM_PRINTWINDOW
 			logmes "CM_PRINTWINDOW"
 			PrintWindow hClient, WND_INFO( WND_PRINTWND, WI_DC), 1
@@ -95,11 +95,14 @@
 
 	if (forceResize){
 		gsel WND_CAPTURE: pos 0, 0
-		gzoom 800, 480, WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1), 1
-		sscapwh(0) = 800, 480
+		gzoom BASE_SIZE_W, BASE_SIZE_H, WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1), 1
+		sscapwh(0) = BASE_SIZE_W, BASE_SIZE_H
 	}
 
 	cutPosY = 0
+
+    /*
+    //HTML5移行によりしばらく利用不可能
 	if (hidename && isHomeport(WND_CAPTURE, sscapwh(0), sscapwh(1))){
 		if (namecut): cutPosY = round(0.0625*sscapwh(1))
 		//提督名とレベルを隠す処理
@@ -126,17 +129,18 @@
 			}
 		}
 	}
+    */
 
 	nidPop
-	
+
 return 0
-	
+
 
 //SSキャプチャ――――――――――――――――――――――――――――――――――
 *SSCapture
 
 	nidPush
-	
+
 	gosub *SSCaptureOnMemory
 	if (stat): nidPop: return 1
 
@@ -161,12 +165,12 @@ return 0
 	} else {
 		saveNamePath = intervalShotDir+"\\"+intervalSaveDir+"\\" +saveName
 	}
-	
-	
+
+
 	ImgF_ImageSave saveNamePath, jpgQuality, 0, cutPosY, sscapwh(0), sscapwh(1)-cutPosY
 
 	gsel WND_MAIN
-	
+
 	if (mode != MODE_OPTION){
 		exist savenamepath
 		savedPicSize = strsize
@@ -176,24 +180,24 @@ return 0
 		} else {
 
 			successFlg = TRUE
-			
+
 			if dispcap & (mode == MODE_SSCAP){
 				pos 0, dispcapy
 				gzoom Scale(175), Scale(105), WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1)
 			}
-			
+
 			if (seqcapf^1) {
-				
+
 				logmessage = savename+"を保存しました"
-				
+
 				picHistoryLoad savenamepath
 				gosub *TweetWindow
 			} else {
 
-				
-	
+
+
 			}
-			
+
 		}
 		logOut logmessage
 	}
@@ -207,14 +211,14 @@ return (successFlg^1)
 	gsel WND_GRID, 0
 
 	if ( dropFlag && (dropWindowId == WND_GRID) ){
-		xcnt = dragPoint(0)/cellsize(0) 
+		xcnt = dragPoint(0)/cellsize(0)
 		ycnt = dragPoint(1)/cellsize(1)
 		dmxy(0) = xcnt, ycnt
 		if bufIDPos(xcnt, ycnt) >= 100{
 			dmxy(0) = xcnt, ycnt
 			loadPicBufID(bufIDPos(xcnt, ycnt)-100) = 0
 		}
-		
+
 	} else: if ( (hotKeyFlag && autoAddCapture) || (dropFlag && (dropWindowId == WND_MAIN))){
 
 		//艦娘編成モードでは自動改行がないため
@@ -233,7 +237,7 @@ return (successFlg^1)
 			if (listmode == LISTMODE_LIST){
 				xcnt = cnt/ListModeHNum
 				ycnt = cnt\ListModeHNum
-			} 
+			}
 			if (listmode == LISTMODE_FLEET){
 				if (nishimuraFlg^1){
 					if tuika1{
@@ -285,7 +289,7 @@ return (successFlg^1)
 			if (listmode == LISTMODE_OTHER){
 				xcnt = cnt/ListModeHNum
 				ycnt = cnt\ListModeHNum
-			} 
+			}
 			xcnt = limit(xcnt, 0, cellnum(0))
 			ycnt = limit(ycnt, 0, cellnum(1))
 			if (bufIDPos(xcnt, ycnt) == 0){
@@ -306,7 +310,7 @@ return (successFlg^1)
 				}
 			}
 		loop
-		
+
 	}
 
 	repeat (CELL_MAX_W*CELL_MAX_H)
@@ -316,17 +320,19 @@ return (successFlg^1)
 			break
 		}
 	loop
-	
+
 	bufIDPos(dmxy(0), dmxy(1)) = bufid
-			
+
 	if (hotKeyFlag && autoAddNonSave) {
 
 		picx = ssCapWH(0)
 		picy = ssCapWH(1)
 		ratio = 1.0*picy/picx
-		
-		buffer bufid, 800, 480
 
+		buffer bufid, BASE_SIZE_W, BASE_SIZE_H
+
+        /*
+        //HTML5移行によりしばらく利用不可能
 		if ( absf(ratio-(450.0/800.0)) <= 0.01 ){
 			pos 0, 30
 			gzoom 800, 450, WND_CAPTURE, 0, 0, picx, picy, 1
@@ -334,19 +340,21 @@ return (successFlg^1)
 			pos 0, 0
 			gzoom 800, 480, WND_CAPTURE, 0, 0, picx, picy, 1
 		}
-		
+        */
+
 		LogOut strf("画像をセル(%d, %d)に読み込みました", dmxy(0), dmxy(1))
 		listLoadedNum++
 	} else {
-		
+
 		buffer WND_TEMP1
 		ImgF_PicloadEx addFileName
 		picx = ginfo_winx
 		picy = ginfo_winy
 		ratio = 1.0*picy/picx
-		
-		buffer bufid, 800, 480
 
+		buffer bufid, BASE_SIZE_W, BASE_SIZE_H
+        /*
+        ?HTML5移行によりしばらく利用不可能
 		if ( absf(ratio-(450.0/800.0)) <= 0.01 ){
 			pos 0, 30
 			gzoom 800, 450, WND_TEMP1, 0, 0, picx, picy, 1
@@ -354,6 +362,7 @@ return (successFlg^1)
 			pos 0, 0
 			gzoom 800, 480, WND_TEMP1, 0, 0, picx, picy, 1
 		}
+        */
 		LogOut strf("%sをセル(%d, %d)に読み込みました", getpath(addfilename, 11), dmxy(0), dmxy(1))
 		listLoadedNum++
 	}
@@ -364,7 +373,7 @@ return (successFlg^1)
 return
 
 *SeqCapWriteStatTimerProcessing
-	
+
 	seqCapElapsedTime = timeGetTime() - seqCapStartTime
 
 	logmessage = "連続キャプチャ中…\n"
@@ -380,7 +389,7 @@ return
 //ホットキー――――――――――――――――――――――――――――――――――
 *hotkey
 	nidPush
-	
+
 	if (wparam = HOTKEYID) & (availablecap = 1){
 
 		hotKeyFlag = TRUE
@@ -408,7 +417,7 @@ return
 		hotKeyFlag = FALSE
 		addfilename = ""
 	}
-	
+
 	nidPop
 return
 
@@ -416,23 +425,23 @@ return
 
 	nidPush
 	gsel WND_MAIN, 0
-	
+
 	if (seqcapf == FALSE){
-		
+
 		seqcapf = TRUE
 
 		seqCapCnt = 0
 		seqCapSize = 0
 		seqCapStartTime = timeGetTime()
-		
+
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapTimerID, 100*timersec, 0
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapWriteStatTimerID, 500, 0
-		
+
 		seqcapmes = "停止"
 		objprm seqcapBId, seqcapmes
-		
+
 		gosub *SSModeControlDisable
-	
+
 		chdir intervalShotDir
 		intervalsavedir = strf("IntervalShot%04d%02d%02d-%02d%02d%02d", gettime(0), gettime(1), gettime(3), gettime(4), gettime(5), gettime(6))
 		if PathIsDirectory(intervalShotDir+"\\"+intervalsavedir) = 0 {
@@ -443,14 +452,14 @@ return
 		gosub *SeqCapWriteStatTimerProcessing
 		gosub *ssCapture
 	} else {
-		
+
 		seqcapf = FALSE
 
 		logmessage = "連続撮影を停止しました\n"
 		logmessage += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
 		logmessage += strf("  枚数 %d枚(%dMB)",seqCapCnt, seqCapSize/1024/1024)
 		LogOut logmessage
-		
+
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapTimerID
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapWriteStatTimerID
 		seqcapmes = "開始"

@@ -14,14 +14,14 @@
 
 	gsel WND_MAIN, 1+frontrow
 	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
-	
-	clrobj 2, -1 
+
+	clrobj 2, -1
 	syscolor 15: boxf: syscolor 8
 
 	font "メイリオ", Scale(13)
 	mref BMSCR, 67
 	hFontMain = BMSCR(38)
-	
+
 	sendmsg hComBox, WM_SETFONT, hFontMain, 1
 	MoveWindow hComBox, 0, 0, Scale(175), Scale(30), 1
 	GetClientRect hComBox, varptr(rect)
@@ -33,7 +33,7 @@
 	} else {
 		MoveWindow hOptionComBox, Scale(350), 0, Scale(175), Scale(30), 1
 	}
-		
+
 
 	if (mode == MODE_SSCAP){
 		objprm comboxId, 0
@@ -62,10 +62,10 @@
 
 	if (mode == MODE_SSCAP){
 		//SSキャプチャモード//SSキャプチャモード//SSキャプチャモード//SSキャプチャモード
-		
+
 		pos Scale(2), mesy
 		mes "キャプチャ座標"
-			
+
 		objsize Scale(80), Scale(25)
 		pos Scale(95), mesy - scale3
 		button gosub SSCapMes, *SSSetting
@@ -78,7 +78,7 @@
 		pos Scale(95), mesy
 		winobj "msctls_trackbar32", "",, $50000000 | $1, Scale(45), Scale(20)
 		hMaxSearchLevelTrackbar = objinfo(stat, 2)
-	
+
 		sendmsg hMaxSearchLevelTrackbar, TBM_SETRANGE, 1, (2<<16) | 0
 		sendmsg hMaxSearchLevelTrackbar, TBM_SETPAGESIZE, 0, 0
 		sendmsg hMaxSearchLevelTrackbar, TBM_SETTICFREQ, 1, 0
@@ -90,8 +90,8 @@
 		sendmsg hMaxSearchLevelStatic, WM_SETFONT, hFontMain, 1
 
 		mesy += scale20
-		
-	
+
+
 		pos Scale(84+((manualpos^1) * 175)), mesy + scale5
 		mes "x"
 		pos Scale(0+((manualpos^1) * 175)), mesy
@@ -110,22 +110,22 @@
 		input rdposy, Scale(40), Scale(23), 5
 		rdposyIId = stat
 		ChgWndowStyle objinfo_hwnd(stat), 0x02
-	
+
 		if manualpos: mesy += Scale(23)
-	
+
 		if mainWindowSmall {
 			mesaddx = Scale(500)
 			tempmesy = mesy
-		} else { 
+		} else {
 			mesaddx=0
 		}
-	
+
 		objsize Scale(175), Scale(20)
-		
+
 		pos Scale(5+mesaddx), mesy
 		chkbox "自動座標取得", autoSearch: mesy += scale20
 		autoSearchCId = stat
-		
+
 		pos Scale(5+mesaddx), mesy
 		chkbox "提督名と司令部Lvを隠す", hidename: mesy += scale20
 		hidenameBId = stat
@@ -134,7 +134,7 @@
 		chkbox "ツイートウィンドウ表示", enableTweetWindow: mesy += scale20
 		enableTweetWindowCId = stat
 		enableTweetWindowCh = objinfo_hwnd(enableTweetWindowCId)
-		
+
 		if mainWindowSmall {
 			mesy = tempmesy + 1
 			syscolor 16
@@ -143,13 +143,13 @@
 			mesy += Scale(4)
 			color
 		}
-	
+
 		objsize Scale(150-(((yabumiautoupload = 1) & (availableyabumi = 1))*30)), Scale(30)
 		pos 0, mesy
 		button gosub "SSキャプチャ", *ssCapture
 		sscapBId = stat
-	
-	
+
+
 		objsize Scale(30), Scale(30)
 		pos Scale(120 + (((yabumiautoupload = 1) && (availableyabumi = 1))^1)*200), mesy
 		button gosub "UP", *yabumiUpload
@@ -197,14 +197,14 @@
 			color
 			mesy += Scale(105)
 		}
-	
+
 		if hidelog_ = 0{
 			pos 0, mesy
 			mesy += Scale(70)
 		} else {
 			pos Scale(175), mesy
 		}
-		
+
 		mesbox logmessage, Scale(175), Scale(70), 0
 		logId = stat
 		hLog = objinfo_hwnd(logId)
@@ -213,7 +213,7 @@
 
 		mainWndW = Scale(175)
 		mainWndH = mesy
-	
+
 		//SSキャプチャモード　ここまで//SSキャプチャモード　ここまで//SSキャプチャモード　ここまで
 	}
 
@@ -222,17 +222,17 @@
 
 		pos 2, mesy
 		mes "キャプチャ座標"
-			
+
 		objsize Scale(80), Scale(25)
 		pos Scale(95), mesy - scale3
 		button gosub SSCapMes, *SSSetting
 		sscapIId = stat
 		mesy += Scale(25)
-		
+
 		objsize Scale(175), scale20
-		
+
 		if (listmode == LISTMODE_LIST){
-	
+
 			DAControlInit
 
 			mainWndW = Scale(175)
@@ -243,35 +243,35 @@
 			ichiranMode1Cid = stat
 			ichiranMode1Ch = objinfo_hwnd(ichiranMode1CId)
 			SetWindowLong ichiranMode1Ch, -16, $50000009 | $20000
-	
+
 			pos scale5, mesy
 			chkbox "シーン: 補給", ichiranMode2: mesy += scale20
 			ichiranMode2Cid = stat
 			ichiranMode2Ch = objinfo_hwnd(ichiranMode2CId)
 			sendmsg ichiranMode2Ch, $F4, $9
-	
+
 			mesy_ += scale20
-			
+
 			pos Scale(22), mesy_
 			chkbox "指輪も入れる", yubiwa: mesy_ += scale20
 			yubiwaCId = stat
 			yubiwaCh = objinfo_hwnd(yubiwaCId)
-			
+
 			pos Scale(22), mesy_
 			chkbox "所属艦隊も入れる", kantai: mesy_ += scale20
 			kantaiCId = stat
 			kantaiCh = objinfo_hwnd(kantaiCId)
-			
+
 			pos Scale(22), mesy_
 			chkbox "ページ数も入れる", page: mesy_ += scale20
 			pageCId = stat
 			pageCh = objinfo_hwnd(pageCId)
-	
+
 			pos Scale(17), mesy_
 			chkbox "レベルと艦名のみ", lvname: mesy_ += scale20
 			lvnameCId = stat
 			lvnameCh = objinfo_hwnd(lvnameCId)
-	
+
 			SetDAControl ichiranMode1Ch
 			SetDAControl ichiranMode2Ch
 			SetDAControl yubiwaCh
@@ -279,77 +279,77 @@
 			SetDAControl pageCh
 			SetDAControl lvnameCh
 		}
-		
+
 		if (listmode == LISTMODE_FLEET){
-	
+
 			DAControlInit
 
 			mainWndW = Scale(350)
-			
+
 			mesy2 = ComBoxh + scale3
-		
+
 			pos scale5, mesy+1
 			mes "自動追加の方法": mesy += scale20
-		
+
 			objsize Scale(70), scale20
-			
+
 			pos Scale(7), mesy
 			chkbox "縦3横2", tuika1
 			tuika1CId = stat
 			tuika1Ch = objinfo_hwnd(tuika1CId)
 			SetWindowLong tuika1ch, -16, $50000009 | $20000
-			
+
 			pos Scale(80), mesy
 			chkbox "縦2横3", tuika4
 			tuika4CId = stat
 			tuika4Ch = objinfo_hwnd(tuika4CId)
 			sendmsg tuika4ch, $F4, $9
 			mesy += scale20
-			
+
 			pos Scale(7), mesy
 			chkbox "縦6横1", tuika3
 			tuika3CId = stat
 			tuika3Ch = objinfo_hwnd(tuika3CId)
 			sendmsg tuika3ch, $F4, $9
-			
+
 			pos Scale(80), mesy
 			chkbox "縦1横6", tuika2
 			tuika2CId = stat
 			tuika2Ch = objinfo_hwnd(tuika2CId)
 			sendmsg tuika2ch, $F4, $9
 			mesy += scale20
-	
-		
+
+
 			objsize Scale(175), scale20
-		
+
 			pos Scale(5), mesy+Scale(1)
 			mes "キャプチャ範囲":mesy += Scale(18)
-		
+
 			pos Scale(7), mesy
 			chkbox "装備とステータスと艦娘", sosuka: mesy += scale20
 			sosukaCId = stat
 			sosukaCh = objinfo_hwnd(sosukaCId)
 			SetWindowLong sosukach, -16, $50000009 | $20000
-		
+
 			pos Scale(7), mesy
 			chkbox "装備とステータス", sosu: mesy+= scale20
 			sosuCId = stat
 			sosuCh = objinfo_hwnd(sosuCId)
 			sendmsg sosuch, $F4, $9
-		
+
 			pos Scale(7), mesy
 			chkbox "装備と艦娘の画像", soka: mesy += scale20
 			sokaCId = stat
 			sokaCh = objinfo_hwnd(sokaCId)
 			sendmsg sokach, $F4, $9
-	
+
 			mesy += Scale(1)
-		
+
 			pos Scale(5), mesy
 			chkbox "艦隊区切り線を追加", fleetPunctuation: mesy += scale20
 			fleetPunctuationCId = stat
 			fleetPunctuationCh = objinfo_hwnd(fleetPunctuationCId)
-			
+
 			pos Scale(5), mesy
 			chkbox "順番に番号を入れる", addOrderNum: mesy += scale20
 			addOrderNumCId = stat
@@ -358,7 +358,7 @@
 			chkbox "西村艦隊(7人)に対応", nishimuraFlg: mesy += scale20
 			nishimuraFlgCId = stat
 			nishimuraFlgCh = objinfo_hwnd(nishimuraFlgCId)
-			
+
 			SetDAControl tuika1Ch
 			SetDAControl tuika2Ch
 			SetDAControl tuika3Ch
@@ -368,83 +368,83 @@
 			SetDAControl sokaCh
 			SetDAControl fleetPunctuationCh
 			SetDAControl nishimuraFlgCh
-	
+
 			window2x = Scale(175)
-		
+
 			objsize Scale(70), Scale(22)
-			
+
 			pos window2x + Scale(5), mesy2+Scale(1)
 			mes " 艦隊名": mesy2 += scale20
-			
+
 			pos window2x + Scale(7), mesy2+Scale(1)
 			chkbox "第一艦隊", enableFirst
 			pos window2x + Scale(80), mesy2
 			input FirstFleetName, Scale(95), Scale(22): mesy2 += Scale(22)
-	
+
 			pos window2x + Scale(7), mesy2+Scale(1)
 			chkbox "第二艦隊", enableSecond
 			pos window2x + Scale(80), mesy2
 			input SecondFleetName, Scale(95), Scale(22): mesy2 += Scale(22)
-	
+
 			pos window2x + Scale(7), mesy2+Scale(1)
 			chkbox "第三艦隊", enableThird
 			pos window2x + Scale(80), mesy2
 			input ThirdFleetName, Scale(95), Scale(22): mesy2 += Scale(22)
-	
+
 			pos window2x + Scale(7), mesy2+Scale(1)
 			chkbox "第四艦隊", enableFourth
 			pos window2x + Scale(80), mesy2
 			input FourthFleetName, Scale(95), Scale(22): mesy2 += Scale(25)
-	
+
 			pos window2x + Scale(5), mesy2+Scale(1)
 			mes " 艦隊名文字色": mesy2 += scale20
-		
+
 			drawColorPos = mesy2
 			pos window2x + Scale(7), mesy2
 			button gosub "第一艦隊", *colorCange1: mesy2 += Scale(22)
-	
+
 			pos window2x + Scale(7), mesy2
 			button gosub "第二艦隊", *colorCange2: mesy2 += Scale(22)
-	
+
 			pos window2x + Scale(7), mesy2
 			button gosub "第三艦隊", *colorCange3: mesy2 += Scale(22)
-			
+
 			pos window2x + Scale(7), mesy2
 			button gosub "第四艦隊", *colorCange4: mesy2 += Scale(22)
-			
+
 			mesy2 += Scale(3)
 			pos window2x + Scale(5), mesy2+Scale(1)
 			mes " 艦隊区切り線色": mesy2 += scale20
-		
+
 			drawColorPosP = mesy2
 			pos window2x + Scale(7), mesy2
 			button gosub "変更", *colorCange5: mesy2 += Scale(22)
-		
+
 			gosub *drawColor
-			
-	
+
+
 		}
-	
+
 		if (listmode == LISTMODE_OTHER){
-	
+
 			DAControlInit
 
 			mainWndW = Scale(175)
-			
+
 			objsize Scale(175), Scale(20)
-			
+
 			pos Scale(7), mesy
 			chkbox "直接連結", directLink: mesy += scale20
 			directLinkCId = stat
 			directLinkCh = objinfo_hwnd(directLinkCId)
 			SetWindowLong directLinkCh, -16, $50000009 | $20000
-	
+
 			pos Scale(7), mesy
 			chkbox "基地航空隊", airStation: mesy += scale20
 			airStationCId = stat
 			airStationCh = objinfo_hwnd(airStationCId)
 			sendmsg airStationCh, $F4, $9
-			
+
 			pos Scale(22), mesy
 			chkbox "タブまで入れる", airStationTab: mesy += scale20
 			airStationTabCId = stat
@@ -458,7 +458,7 @@
 
 
 			mesy += Scale(40)
-		
+
 			pos Scale(7), mesy
 			chkbox "任意範囲(上級者向け)", userDefList: mesy += scale20
 			userDefListCId = stat
@@ -469,7 +469,7 @@
 			mes ","
 			pos Scale(25+32+7+32+8+32+0), mesy+scale5
 			mes "x"
-			
+
 			pos Scale(25+0), mesy
 			input userDefRect(0), Scale(32), Scale(23), 3
 			userDefListXIId = stat
@@ -480,7 +480,7 @@
 			userDefListYIId = stat
 			userDefListYIh = objinfo_hwnd(userDefListYIId)
 			ChgWndowStyle userDefListYIh, 0x02
-			
+
 			pos Scale(25+32+7+32+8), mesy
 			input userDefRect(2), Scale(32), Scale(23), 3
 			userDefListWIId = stat
@@ -501,7 +501,7 @@
 			sceneKaisoCId = stat
 			sceneKaisoCh = objinfo_hwnd(sceneKaisoCId)
 			SetWindowLong sceneKaisoCh, -16, $50000009 | $20000
-	
+
 			pos Scale(95), mesy
 			chkbox "廃棄画面", sceneHaiki: mesy += scale20
 			sceneHaikiCId = stat
@@ -509,14 +509,14 @@
 			sendmsg sceneHaikiCh, $F4, $9
 
 			objsize Scale(175), Scale(20)
-			
+
 			pos Scale(22), mesy
 			chkbox "詳細まで入れる", includeDetails: mesy += scale20
 			includeDetailsCId = stat
 			includeDetailsCh = objinfo_hwnd(includeDetailsCId)
 
 			mesy += Scale(43)
-	
+
 			SetDAControl directLinkCh
 			SetDAControl airStationCh
 			SetDAControl airStationTabCh
@@ -529,22 +529,22 @@
 			SetDAControl userDefListYIh
 			SetDAControl userDefListWIh
 			SetDAControl userDefListHIh
-	
+
 		}
-	
+
 		syscolor 16
 		line Scale(3), mesy, Scale(172), mesy
 		color
 		mesy+=3
 		syscolor 15
-		
+
 		objsize Scale(175), Scale(20)
-		
+
 		pos Scale(7), mesy
 		chkbox "ツイートウィンドウ表示", enableTweetWindow: mesy += scale20
 		enableTweetWindowCId = stat
 		enableTweetWindowCh = objinfo_hwnd(enableTweetWindowCId)
-				
+
 		objsize Scale(110-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), Scale(30)
 		pos 0, mesy
 		button gosub "作成", *make
@@ -561,16 +561,16 @@
 			pos Scale(125), mesy
 		} else {
 			pos Scale(350), mesy
-		}	
+		}
 		button gosub "UP", *yabumiUpload
 		yabumiBId = stat
-		
+
 		pos Scale(150), mesy
 		button gosub "開", *listSaveFOpen
 		fOpenBId = stat
-		
+
 		mesy += Scale(30)
-	
+
 		pos 0, mesy
 		mesbox logmessage, Scale(175), Scale(70), 0: mesy += Scale(70)
 		logId = stat
@@ -578,7 +578,7 @@
 
 		mainWndH = mesy-(Scale(70)*hideLog_)
 		gosub *listchange
-		
+
 		if IsWindowVisible(WND_INFO(WND_GRID, WI_HANDLE)) = 0{
 			gsel WND_GRID, 1
 		} else {
@@ -587,7 +587,7 @@
 		width scrsize(0), scrsize(1)
 		title modemes+"モード - 表示させたいセルにD&D"
 		gosub *draw
-		
+
 		//一覧作成モードここまで//一覧作成モードここまで//一覧作成モードここまで//一覧作成モードここまで
 	}
 
@@ -598,11 +598,11 @@
 		syscolor 15: boxf: syscolor 8
 
 		objprm optionCBId, optionMode
-	
+
 		if (optionMode == OPMODE_CONFIG){
-	
+
 			objsize Scale(350), scale20
-			
+
 			pos scale5, mesy
 			chkbox "常にメインウィンドウを最前列表示", frontrow: mesy += scale20
 			pos scale5, mesy
@@ -627,26 +627,26 @@
 			pos scale5, mesy
 			chkbox "UI拡大率を自動で設定する", autoUIScale: mesy += scale20
 			autoUIScaleCh = objinfo(stat, 2)
-					
+
 			pos scale5, mesy
 			mes "UIの拡大率": mesy += scale20
-	
+
 			pos 0, mesy
 			winobj "msctls_trackbar32", "",, $50000000 | $1, Scale(300), Scale(30)
 			hTrackbar = objinfo(stat, 2)
-		
+
 			sendmsg hTrackbar, TBM_SETRANGE, 1, (300<<16) | 100
 			sendmsg hTrackbar, TBM_SETPAGESIZE, 0, 25
 			sendmsg hTrackbar, TBM_SETTICFREQ, 50, 0
 			sendmsg hTrackbar, TBM_SETPOS, 1, int(UIScale*100)
-	
+
 			enableWindow hTrackbar, autoUIScale^1
-			
+
 			pos Scale(300), mesy
 			winobj "static", strf("%d%% ", UIScale*100),, $50000002, Scale(40), Scale(30): mesy += Scale(30)
 			hTrackBarScale = objinfo(stat, 2)
 			sendmsg hTrackBarScale, $30, hFontMain
-	
+
 			enableWindow hTrackBarScale, autoUIScale^1
 
 			objsize Scale(150), scale20
@@ -659,7 +659,7 @@
 			mesbox sssaveDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
 			SSSaveDiriid = stat
 			ShowScrollBar objinfo_hwnd(SSSaveDiriid), SB_VERT, FALSE
-	
+
 			pos Scale(14), mesy
 			mes "一覧保存先"
 			pos Scale(200), mesy
@@ -668,7 +668,7 @@
 			mesbox listSaveDir, Scale(350), Scale(45), 5, 259 :mesy += Scale(45)
 			listSaveDirIId = stat
 			ShowScrollBar objinfo_hwnd(listSaveDirIId), SB_VERT, FALSE
-			
+
 			pos Scale(14), mesy
 			mes "連続キャプチャ保存先"
 			pos Scale(200), mesy
@@ -686,7 +686,7 @@
 			mesbox selectCapSaveDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
 			selectCapSaveDirIId = stat
 			ShowScrollBar objinfo_hwnd(selectCapSaveDirIId), SB_VERT, FALSE
-			
+
 			pos Scale(14), mesy
 			mes "外部ソフトの場所"
 			pos Scale(200), mesy
@@ -696,9 +696,9 @@
 			yabumIId = stat
 			ShowScrollBar objinfo_hwnd(yabumIId), SB_VERT, FALSE
 		}
-	
+
 		if (optionMode == OPMODE_CAPTURE){
-	
+
 			objsize Scale(350), scale20
 
 			saveNameSelStr = saveNameCapture
@@ -709,13 +709,13 @@
 			chkbox "\"提督名と司令部Lvを隠す\"で司令部Lvは隠さない", noHideLv: mesy += scale20
 			pos scale5, mesy
 			chkbox "\"提督名と司令部Lvを隠す\"で隠すのではなく切り取る", namecut: mesy += scale20
-			
+
 			pos scale5, mesy
 			chkbox "\"提督名と司令部Lvを隠す\"をモザイク処理にする", nameMosaic: mesy += scale20
 
 			pos scale5, mesy
-			chkbox "SSを強制的に800x480px(等倍)にリサイズする", forceResize: mesy += scale20
-			
+			chkbox "SSを強制的に等倍にリサイズする", forceResize: mesy += scale20
+
 			pos scale5, mesy
 			chkbox "一覧作成モードで背景を補間する", listMakeInterpolation: mesy += scale20
 			pos Scale(5+25), mesy
@@ -728,7 +728,7 @@
 
 			pos scale5, mesy
 			chkbox "ホットキーでSSをキャプチャする", hotkeycap: mesy += scale20
-		
+
 			objsize Scale(50), Scale(24)
 			pos Scale(30), mesy
 			chkbox "Alt", hotkeycapalt
@@ -742,7 +742,7 @@
 			input hotkeycapchar, Scale(20), Scale(24), 1
 			pos Scale(265), mesy+2
 			mes "キー": mesy += Scale(24)
-			
+
 			objsize Scale(350), scale20
 			pos scale5, mesy
 			chkbox "＊一覧モードでSSを自動追加する", autoaddCapture: mesy += scale20
@@ -750,7 +750,7 @@
 			chkbox "＊自動追加の場合はSSを保存しない", autoAddNonSave: mesy += scale20
 			pos scale5, mesy
 			chkbox "jpgで保存する", jpgsave: mesy += scale20
-			
+
 			pos scale5, mesy+2
 			mes "jpg保存品質"
 			pos Scale(155), mesy+2
@@ -758,10 +758,10 @@
 			pos Scale(100), mesy
 			input jpgquality, Scale(50), Scale(24), 3: mesy += Scale(24)
 			ChgWndowStyle objinfo_hwnd(stat), 0x02
-			
+
 			pos scale5, mesy
 			chkbox "連続キャプチャを有効にする", enableSeqCap: mesy += scale20
-		
+
 			pos scale5, mesy+2
 			mes "連続キャプチャの間隔"
 			pos Scale(205), mesy+2
@@ -773,7 +773,7 @@
 			///*
 			pos scale5, mesy
 			mes "連続キャプチャの制限": mesy += scale20
-			
+
 			objsize Scale(44), Scale(24)
 			pos Scale(10), mesy
 			chkbox "枚数", enableSeqCapLimitNum
@@ -781,7 +781,7 @@
 			chkbox "時間", enableSeqCapLimitTime
 			pos Scale(235), mesy
 			chkbox "容量", enableSeqCapLimitSize
-			
+
 			pos Scale(55), mesy
 			input seqCapLimitNum, Scale(40), Scale(24), 4
 			ChgWndowStyle objinfo_hwnd(stat), 0x02
@@ -805,7 +805,7 @@
 			mes "MB"
 			mesy += Scale(24)
 			//*/
-			
+
 			pos scale5, mesy+(ComBoxH-scale20)/2
 			mes "保存名"
 			pos Scale(55), mesy
@@ -885,7 +885,7 @@
 			input videoCapCRF, Scale(40),  Scale(24), 2: mesy += Scale(24)
 			videoCapCRFIId = stat
 			ChgWndowStyle objinfo_hwnd(stat), 0x02
-			
+
 			pos Scale(5), mesy+Scale(3)
 			mes "x264のプリセット"
 			pos Scale(250), mesy+Scale(3)
@@ -911,16 +911,16 @@
 
 			pos Scale(25+5), mesy+Scale5
 			mes "音量の調節"
-	
+
 			pos Scale(100), mesy
 			winobj "msctls_trackbar32", "",, $50000000 | $1, Scale(175), Scale(30)
 			hVolumeTrackbar = objinfo(stat, 2)
-		
+
 			sendmsg hVolumeTrackbar, TBM_SETRANGE, 1, (250<<16) | 25
 			sendmsg hVolumeTrackbar, TBM_SETPAGESIZE, 0, 25
 			sendmsg hVolumeTrackbar, TBM_SETTICFREQ, 50, 0
 			sendmsg hVolumeTrackbar, TBM_SETPOS, 1, volume
-	
+
 			pos Scale(300), mesy
 			winobj "static", strf("%d%% ", volume),, $50000002, Scale(40), Scale(30): mesy += Scale(30)
 			hVolumeTrackBarScale = objinfo(stat, 2)
@@ -930,8 +930,8 @@
 			objsize Scale(70), Scale(20)
 			pos Scale(25+5), mesy
 			chkbox "標準化", audioNormalize: mesy += scale20
-			
-	
+
+
 			objsize Scale(150), scale20
 			pos Scale(14), mesy
 			mes "ffmpeg.exeの場所"
@@ -959,10 +959,10 @@
 			mesbox saveNameVideoCapture, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameVideoCaptureIId = stat
 			ShowScrollBar objinfo_hwnd(saveNameVideoCaptureIId), SB_VERT, FALSE
-			
+
 		}
-	
-	
+
+
 		if (optionMode == OPMODE_TWITTER){
 
 			pos scale5, mesy + Scale(2)
@@ -979,16 +979,16 @@
 			pos scale5, mesy
 			chkbox "pngをjpgに変換して投稿する", twijpg: mesy += scale20
 		}
-	
+
 		if (optionMode == OPMODE_OTHER){
 
 			pos 0, mesy
 			objsize Scale(350), scale20
 			button gosub "Amazonほしい物リスト", *Amazon: mesy += scale20
 			//http://www.amazon.co.jp/wishlist/181BGDSFXZC6M/?sort=priority
-			
+
 		}
-		
+
 		pos 0, mesy + Scale(100)
 		mesbox logmessage, Scale(175), Scale(70), 0
 		logId = stat
@@ -1006,7 +1006,7 @@
 
 	gsel WND_MAIN, 1+frontRow
 	width mainWndW, mainWndH
-	
+
 	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
 	gosub *SupportWndDisp
 return
@@ -1028,17 +1028,17 @@ return
 *SSModeControlDisable
 	nidPush
 	gsel WND_MAIN
-	
+
 	objenable comBoxId, 0
-	
+
 	if (mode != MODE_OPTION){
 		objenable SSCapIId, 0
 	}
-	
+
 	if (mode == MODE_SSCAP){
 
 		enableWindow hMaxSearchLevelTrackBar, 0
-		
+
 		if ( (seqCapF^1) && (videoCapFlg^1) ): objenable sscapbid, 0
 		if seqcapf^1: objenable seqcapbid, 0
 		if videoCapFlg^1: objenable videoCapbid, 0
@@ -1082,41 +1082,41 @@ return
 
 	//連続キャプチャ中か動画キャプチャ中なら
 	if ( (seqCapF^1) && (videoCapFlg^1) ){
-	
+
 		objenable comBoxId, 1
-	
+
 		if (mode != MODE_OPTION){
 			objenable SSCapIId, 1
 		}
-		
+
 		if (mode == MODE_SSCAP){
-	
+
 			objenable windowsSizeChangeBId, 1
 			objenable luposxIId, 1
 			objenable luposyIId, 1
 			objenable rdposxIId, 1
 			objenable rdposyIId, 1
 			enableWindow hMaxSearchLevelTrackBar, 1
-	
+
 			if (availableCap | manualPos){
 				objenable sscapbid, 1
 				objenable seqcapbid, 1
 			}
 		}
-	
+
 		if (mode == MODE_SSCAP && availableCap){
 			if ( (ffmpegDir != "") && (lateEncodeFlg^1) ): objenable videoCapBId, 1
 			if (yabumiautoupload = 1) & (availableyabumi = 1){
 				objenable yabumibid, 1
 			}
 		}
-	
+
 		if ( mode == MODE_LIST ){
 			objenable makeBId, 1
 			if (availableCap){
 				objenable yabumiBId, 0
 			}
-		
+
 		}
 
 		if ( mode == MODE_SSCAP){

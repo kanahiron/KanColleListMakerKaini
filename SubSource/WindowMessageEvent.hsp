@@ -462,23 +462,23 @@ return
 			GetWindowText userDefListHIh, varptr(tempStr), 32
 			userDefRect(3) = int(cnvwtos(tempStr))
 
-			if ((userDefRect(0)<0) || (800<userDefRect(0))){
+			if ((userDefRect(0)<0) || (BASE_SIZE_W<userDefRect(0))){
 				userDefRect(0) = 0
 			}
-			if ((userDefRect(1)<0) || (480<userDefRect(1))){
+			if ((userDefRect(1)<0) || (BASE_SIZE_H<userDefRect(1))){
 				userDefRect(1) = 0
 			}
-			if ((userDefRect(2)<=0) || (800<=userDefRect(2))){
-				userDefRect(2) = 800
+			if ((userDefRect(2)<=0) || (BASE_SIZE_W<=userDefRect(2))){
+				userDefRect(2) = BASE_SIZE_W
 			}
-			if ((userDefRect(3)<=0) || (480<=userDefRect(3))){
-				userDefRect(3) = 480
+			if ((userDefRect(3)<=0) || (BASE_SIZE_H<=userDefRect(3))){
+				userDefRect(3) = BASE_SIZE_H
 			}
-			if ( (userDefRect(0)+userDefRect(2)) > 800 ){
-				userDefRect(2) = 800 - userDefRect(0)
+			if ( (userDefRect(0)+userDefRect(2)) > BASE_SIZE_W ){
+				userDefRect(2) = BASE_SIZE_W - userDefRect(0)
 			}
-			if ( (userDefRect(1)+userDefRect(3)) > 480 ){
-				userDefRect(3) = 480 - userDefRect(1)
+			if ( (userDefRect(1)+userDefRect(3)) > BASE_SIZE_H ){
+				userDefRect(3) = BASE_SIZE_H - userDefRect(1)
 			}
 
 			if (airStation) {
@@ -580,40 +580,7 @@ return
 			nidPop
 			return
 		}
-
-		/*
-		if (listMode == LISTMODE_FLEET){
-			ImgF_GetPicSize dropFile, pw, ph
-			if (pw\w==0 && ph\h==0){
-				nx = pw/w
-				ny = ph/h
-
-				listLoadedNum = 0
-				dim bufIDPos, CELL_MAX_W, CELL_MAX_H
-				dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
-
-				buffer WND_TEMP1
-				picload dropFile
-
-				repeat ny
-					ycnt = cnt
-					repeat nx
-						bufid = 100+cnt+(ycnt*nx)
-						buffer bufid, 800, 480
-						pos capx, capy
-						gcopy WND_TEMP1, (cnt*w), (ycnt*h), w, h
-						bufIDPos(cnt, ycnt) = bufid
-						listLoadedNum++
-					loop
-				loop
-
-				nidPop
-				gosub *draw
-				return
-			}
-		}
-		//*/
-
+		
 		dropFlag = TRUE
 		addfilename = dropfile
 		gosub *addCapture

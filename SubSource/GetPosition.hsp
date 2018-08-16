@@ -2,7 +2,7 @@
 //SSキャプチャセッティング――――――――――――――――――――――――――――――――――
 *sssetting
 	nidPush
-	
+
 	gsel WND_MAIN
 	gosub *SSModeControlDisable
 
@@ -20,101 +20,97 @@
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
 
-		//昔の取得方法
-		ConvGetKanCollePosAuto WND_TEMP1, sscap, WND_TEMP2
-		if (stat == 0){　//失敗
-		
-			dim sscap_, 4
-			getKanCollePosAuto WND_TEMP1, sscap_, WND_TEMP2 //戻り値は見つかった個数
-			logmes "getKanCollePosAuto "+stat
-			if (stat){
-				//成功
-	
-				if (length2(sscap_) == 1){
-					//見つけたウィンドウが1つだった時
-					sscap(0) = sscap_(0) + disInfo(0)
-					sscap(1) = sscap_(1) + disInfo(1)
-					sscap(2) = sscap_(2) + disInfo(0)
-					sscap(3) = sscap_(3) + disInfo(1)
-				} else {
-					//見つけたウィンドウ複数だった場合
-					repeat length2(sscap_)
-						sscap_(0, cnt) += disInfo(0)
-						sscap_(1, cnt) += disInfo(1)
-						sscap_(2, cnt) += disInfo(0)
-						sscap_(3, cnt) += disInfo(1)
-					loop
-					sscap(0) = 0
-					sscap(1) = 0
-					sscap(2) = 0
-					sscap(3) = 0
-					ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_SHOW
-					LogOut "複数の画面を検出\n緑色の領域をクリック！"
-					ShowSelectWindow sscap_, WND_INFO(WND_MAIN, WI_HANDLE)
-					repeat //本当はこんなことしたくないんだけど…今後改善予定
-						stick sti,, 0
-						if sti: break
-						if ( sscap(2)-sscap(0) ) != 0: break
-						await 16
-					loop
-					HideSelectWindow
-				}
-				
+		dim sscap_, 4
+		getKanCollePosAuto WND_TEMP1, sscap_, WND_TEMP2 //戻り値は見つかった個数
+		logmes "getKanCollePosAuto "+stat
+		if (stat){
+			//成功
+
+			if (length2(sscap_) == 1){
+				//見つけたウィンドウが1つだった時
+				sscap(0) = sscap_(0) + disInfo(0)
+				sscap(1) = sscap_(1) + disInfo(1)
+				sscap(2) = sscap_(2) + disInfo(0)
+				sscap(3) = sscap_(3) + disInfo(1)
 			} else {
-				//失敗
-				dim KCRect, 4
-				successflg = FALSE
-				
-				MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), 0, 0, 0, 0, 1
-				gsel WND_OVERLAY, 2
-				gsel WND_IMAGE_BUF2, 2
-				gsel WND_MAIN, 0
-		
-				repeat
-		
-					MoveWindow WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), ginfo_mx+1, ginfo_my+1, imageBuf2W, imageBuf2H,1
-		
-					getKanCollePos WND_TEMP1, WND_TEMP2, KCRect, ginfo_mx-disInfo(0), ginfo_my-disInfo(1)
-					if (stat == 1){
-						KCRect(0) += disInfo(0)
-						KCRect(1) += disInfo(1)
-						KCRect(2) += disInfo(0)
-						KCRect(3) += disInfo(1)
-						MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), KCRect(0), KCRect(1), KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), 1
-						successflg = TRUE
-					} else {
-						KCRect(0) = -1, -1, -1, -1
-						MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), 0, 0, 0, 0, 1
-						successflg = FALSE
-					}
-		
-					stick sti, , 0
-					if (sti & 256){
-						if (successflg){
-							sscap(0) = KCRect(0) 
-							sscap(1) = KCRect(1) 
-							sscap(2) = KCRect(2) 
-							sscap(3) = KCRect(3) 
-						} else {
-							sscap(0) = 0, 0, 0, 0
-						}
-						
-						break
-					}
-					if (sti & 128){
-						sscap(0) = 0, 0, 0, 0
-						break
-					}
-						
-					await 33
-				
+				//見つけたウィンドウ複数だった場合
+				repeat length2(sscap_)
+					sscap_(0, cnt) += disInfo(0)
+					sscap_(1, cnt) += disInfo(1)
+					sscap_(2, cnt) += disInfo(0)
+					sscap_(3, cnt) += disInfo(1)
 				loop
-				gsel WND_OVERLAY, -1
-				gsel WND_IMAGE_BUF2, -1
-			//マウスオーバー取得終わり
+				sscap(0) = 0
+				sscap(1) = 0
+				sscap(2) = 0
+				sscap(3) = 0
+				ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_SHOW
+				LogOut "複数の画面を検出\n緑色の領域をクリック！"
+				ShowSelectWindow sscap_, WND_INFO(WND_MAIN, WI_HANDLE)
+				repeat //本当はこんなことしたくないんだけど…今後改善予定
+					stick sti,, 0
+					if sti: break
+					if ( sscap(2)-sscap(0) ) != 0: break
+					await 16
+				loop
+				HideSelectWindow
 			}
-		//新座標検出終わり
+
+		} else {
+			//失敗
+			dim KCRect, 4
+			successflg = FALSE
+
+			MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), 0, 0, 0, 0, 1
+			gsel WND_OVERLAY, 2
+			gsel WND_IMAGE_BUF2, 2
+			gsel WND_MAIN, 0
+
+			repeat
+
+				MoveWindow WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), ginfo_mx+1, ginfo_my+1, imageBuf2W, imageBuf2H,1
+
+				getKanCollePos WND_TEMP1, WND_TEMP2, KCRect, ginfo_mx-disInfo(0), ginfo_my-disInfo(1)
+				if (stat == 1){
+					KCRect(0) += disInfo(0)
+					KCRect(1) += disInfo(1)
+					KCRect(2) += disInfo(0)
+					KCRect(3) += disInfo(1)
+					MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), KCRect(0), KCRect(1), KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), 1
+					successflg = TRUE
+				} else {
+					KCRect(0) = -1, -1, -1, -1
+					MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), 0, 0, 0, 0, 1
+					successflg = FALSE
+				}
+
+				stick sti, , 0
+				if (sti & 256){
+					if (successflg){
+						sscap(0) = KCRect(0)
+						sscap(1) = KCRect(1)
+						sscap(2) = KCRect(2)
+						sscap(3) = KCRect(3)
+					} else {
+						sscap(0) = 0, 0, 0, 0
+					}
+
+					break
+				}
+				if (sti & 128){
+					sscap(0) = 0, 0, 0, 0
+					break
+				}
+
+				await 33
+
+			loop
+			gsel WND_OVERLAY, -1
+			gsel WND_IMAGE_BUF2, -1
+		//マウスオーバー取得終わり
 		}
+		//新座標検出終わり
+
 	} else {
 		//手動取得
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
@@ -122,7 +118,7 @@
 
 		bgscr WND_TEMP_SCR1, disinfo(2), disinfo(3), 2: SET_WND_INFO
 		font "メイリオ", 30
-	
+
 		gcopy WND_TEMP1, 0, 0, disinfo(2), disinfo(3)
 		color 128,128,128
 		repeat (disinfo(3) / 120)+1
@@ -144,7 +140,7 @@
 	gosub *CaptureMethodDecide
 	ShowWindow WND_INFO(WND_MAIN, WI_HANDLE), SW_SHOW
 	if (enableTweetWindow): ShowWindow WND_INFO(WND_TWITTER, WI_HANDLE), SW_SHOW
-	
+
 	gosub *SSSettingCheck
 	nidPop
 return
@@ -180,13 +176,13 @@ return
 
 	//艦これのあるウィンドウのハンドル
 	hClient = WindowFromPoint(scrPosX, scrPosY)
-	
+
 	cliPoint(0) = scrPoint(0), scrPoint(1)
 
 	ScreenToClient hClient, varptr(cliPoint)
 	cliPosX = cliPoint(0)
 	cliPosY = cliPoint(1)
-	
+
 	dim clientSize, 2
 	GetClientRect hClient, varptr(rect)
 	clientSize(0) = rect(2)
@@ -205,18 +201,18 @@ return
 	mref temp2vram, 66
 
 	if (maxSearchLevel >= 2){
-		
+
 		gsel WND_TEMP1
 		PrintWindow hClient, hdc, 1: redraw
-		
+
 		gsel WND_TEMP2
 		gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
-	
+
 		isfilled temp2vram, sscapwh(0), sscapwh(1)
 		if (stat==0){
 			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
 			if (stat){
-	
+
 				sscap(0) = cliPoint(0)
 				sscap(1) = cliPoint(1)
 				sscap(2) = sscap(0)+sscapwh(0)
@@ -224,7 +220,7 @@ return
 
 				buffer WND_PRINTWND, clientSize(0), clientSize(1)
 				SET_WND_INFO
-			
+
 				captureMethod = CM_PRINTWINDOW
 				positionType = PT_RELATIVE
 				nidPop
@@ -233,13 +229,13 @@ return
 		}
 
 		dcClient = GetDC(hClient)
-		
+
 		gsel WND_TEMP1
 		BitBlt hdc, 0, 0, clientSize(0), clientSize(1), dcClient, 0, 0, SRCCOPY | CAPTUREBLT: redraw
-	
+
 		gsel WND_TEMP2
 		gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
-		
+
 		isfilled temp2vram, sscapwh(0), sscapwh(1)
 		if (stat==0){
 			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
@@ -248,7 +244,7 @@ return
 				sscap(1) = cliPoint(1)
 				sscap(2) = sscap(0)+sscapwh(0)
 				sscap(3) = sscap(1)+sscapwh(1)
-			
+
 				captureMethod = CM_BITBLT
 				positionType = PT_RELATIVE
 				nidPop
@@ -256,17 +252,17 @@ return
 			}
 		}
 		ReleaseDC dcClient
-		
+
 	}
 
 	if (maxSearchLevel >= 1){
 
 		gsel WND_TEMP1
 		BitBlt hdc, 0, 0, clientSize(0), clientSize(1), hdcScreen, clientScrX, clientScrY, SRCCOPY | CAPTUREBLT: redraw
-	
+
 		gsel WND_TEMP2
 		gcopy WND_TEMP1, cliPoint(0), cliPoint(1), sscapwh(0), sscapwh(1)
-	
+
 		isfilled temp2vram, sscapwh(0), sscapwh(1)
 		if (stat==0){
 			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
@@ -275,7 +271,7 @@ return
 				sscap(1) = cliPoint(1)
 				sscap(2) = sscap(0)+sscapwh(0)
 				sscap(3) = sscap(1)+sscapwh(1)
-			
+
 				captureMethod = CM_BITBLT
 				positionType = PT_WNDABSOLUTE
 				nidPop
@@ -289,15 +285,15 @@ return
 
 *SSSettingCheck
 	nidPush
-	
+
 	luposx = sscap(0)
 	luposy = sscap(1)
 	rdposx = sscap(2)
 	rdposy = sscap(3)
 	sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
-	
+
 	gsel WND_MAIN,1+frontrow
-	
+
 	if ( sscapwh(0) >= 79 && sscapwh(1) >= 47 ){
 
 		switch positionType
@@ -324,13 +320,13 @@ return
 			pos 0, dispcapy
 			gzoom Scale(175), Scale(105), WND_CAPTURE, 0, 0, sscapwh(0), sscapwh(1)
 		}
-		
+
 		gosub *SSModeControlEnable
 
 		availableCap = TRUE
 		LogOut "座標の取得に成功しました"
 		if autoSearch: autoSearchFailureCount = 0
-		
+
 	} else {
 
 		if (dispcap && (mode == MODE_SSCAP)){
@@ -346,13 +342,13 @@ return
 		}
 
 		if seqcapf: gosub *seqcap
-		
+
 		LogOut "座標を取得できません\n詳細はreadmeをお読みください"
 
 		gosub *SSModeControlDisable
-		
+
 		availablecap = FALSE
-	
+
 		if autoSearch{
 			autoSearchFailureCount++
 			if autoSearchFailureCount = 4{
@@ -360,7 +356,7 @@ return
 				if stat = 7:autoSearchFailureCount = 0
 			}
 		}
-		
+
 	}
 
 	gsel WND_MAIN
@@ -387,7 +383,7 @@ return
 #deffunc GetAbsPos var p1_, var p2_
 
 	if (positionType == PT_RELATIVE || positionType = PT_WNDABSOLUTE){
-		
+
 		if (IsWindow(hClient) == 0){
 
 			ssCap(0) = 0, 0, 0, 0
@@ -403,23 +399,23 @@ return
 		}
 
 		if (positionType==PT_RELATIVE){
-	
+
 			GetClientRect hClient, varptr(rect)
 			if (clientSize(0) != (rect(2)-rect(0))) | (clientSize(1) != (rect(3)-rect(1))){
-	
+
 				ssCap(0) = 0, 0, 0, 0
 				hClient = 0
 				ReleaseDC dcClient
 				if seqCapf: gosub *seqcap
-				
+
 				gosub *ssSettingCheck
-				
+
 				LogOut "艦これの画面を見失いました(2)"
 				nidPop
 				return 1
 			}
 		}
-			
+
 	}
 
 	switch captureMethod

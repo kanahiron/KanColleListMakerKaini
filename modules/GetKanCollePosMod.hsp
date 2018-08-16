@@ -9,7 +9,7 @@
 #func CreateDIBSection "CreateDIBSection" int,int,int,int,int,int
 #func CreateCompatibleBitmap "CreateCompatibleBitmap" int,int,int
 #func SelectObject "SelectObject" int,int
-#func DeleteObject "DeleteObject" int 
+#func DeleteObject "DeleteObject" int
 
 #deffunc chgbm int bpp
 	mref bm,67
@@ -65,10 +65,10 @@ return
 	gsel imageid
 	scrH = ginfo_winy
 	scrW = ginfo_winx
-	
+
 	buffer bufid, scrW, scrH
 	chgbm 32
-	mref vram, 66	
+	mref vram, 66
 	gcopy imageid, 0, 0, scrW, scrH
 
 	gsel selID
@@ -79,8 +79,8 @@ return
 	contNum = 0 //見つかった対象の個数
 
 	//探し出す対象の最小幅、高さ(MinimumContentWidth)
-	minContW = 320
-	minContH = 192
+	minContW = (BASE_SIZE_W * 0.4)
+	minContH = (BASE_SIZE_H * 0.4)
 
 	//探索幅(最低でも矩形に対して3回以上点で当たる間隔)
 	sachW = (minContW-1)/3
@@ -116,9 +116,9 @@ return
 		//0行目を上、1行目を下側と見て、比較
 		repeat vSachNum-1
 			posX = cnt
-			//配列に順次代入していく 
+			//配列に順次代入していく
 			vArrBtm(cnt+1) = getCol( (posX+1)*sachW, posY)
-			
+
 			//上側が同じ色　かつ 上側と下側は異なる色 かつ下側は異なる色
 			if ( vArrUp(cnt) == vArrUp(cnt+1) && vArrUp(cnt) != vArrBtm(cnt) && vArrUp(cnt+1) != vArrBtm(cnt+1) && vArrBtm(cnt) != vArrBtm(cnt+1)){
 				//一致したらその座標を左側座標(StartX)として記録
@@ -132,7 +132,7 @@ return
 					posArrNum++
 				}
 				sameCnt = 0
-			}	
+			}
 		loop
 		//何度も同じ配列を参照するのはもったいないので下側として見ていた行を上側に持ってくる
 		memcpy vArrUp, vArrBtm, (4*vSachNum)
@@ -149,7 +149,7 @@ return
 	stop
 #endif
 
-	
+
 	//左側の線分が領域をはみ出していた時にそれを引っ込める処理
 	repeat posArrNum
 		topCnt = cnt
@@ -173,7 +173,7 @@ return
 			x2Col = x3Col
 		loop
 	loop
-	
+
 	logmes "PHASE2 posArrNum "+posArrNum
 #if 0
 	gsel imageid
@@ -224,13 +224,13 @@ return
 		posRight = posArr(1, cnt)
 		repeat limit( sachW, 0, posLeft-1) //探索幅になるか左側にぶつかるまで
 			offsetX =  cnt
-			
+
 			CCCol = getCol( posLeft-offsetX  , posY) //座標そのもの
 			TCCol = getCol( posLeft-offsetX  , posY-1)
 			TRCol = getCol( posLeft-offsetX+sachW-1, posY-1)
 			LCCol = getCol( posLeft-offsetX-1, posY)
 			LBCol = getCol( posLeft-offsetX-1, posY+sachH-1)
-			
+
 			if (TCCol == TRCol && LCCol == LBCol && CCCol != TCCol && CCCol != LCCol){
 				posYArr(posArrNum) = posY
 				posArr(0, posArrNum) = posLeft-offsetX, posRight
@@ -239,7 +239,7 @@ return
 			}
 		loop
 	loop
-	
+
 	logmes "PHASE4 posArrNum "+posArrNum
 #if 0
 	gsel imageid
@@ -259,7 +259,7 @@ return
 		posY = posYArr(cnt)
 		posLeft = posArr(0, cnt)
 		posRight = posArr(1, cnt)
-		
+
 		baseCol = getCol( posLeft-1, posY)
 		repeat minContH-1, 1
 			offsetY = cnt
@@ -291,7 +291,7 @@ return
 			contNum++
 		}
 	loop
-	
+
 	logmes "Finish"
 return contNum
 
@@ -302,7 +302,7 @@ return contNum
 //
 //==================================================================
 #deffunc local SearchFromPoint int _posX, int _posY, var _sizeX, var _sizeY, int _limitX
-	
+
 	dim tccX, 5
 	dim tccY, 5
 	dim po, 2
@@ -322,19 +322,19 @@ return contNum
 
 	repeat _limitX, 1
 		x = cnt
-		y = int(0.6 * cnt + 0.5)
+		y = int(BASE_ASPECT_RATIO * cnt + 0.5)
 
 		if (scrW <= (po(0)+x) || scrH <= (po(1)+y)): break
 
 		pccX = getCol( po(0)+x-1, po(1)+ratio(0)*y )
 		pccY = getCol( po(0)+ratio(0)*x, po(1)+y-1 )
-		
+
 		repeat 5
 			ex =  cnt
 			tccX(cnt) = getCol( po(0)+x, po(1)+ratio(cnt)*y )
 			tccY(cnt) = getCol( po(0)+ratio(cnt)*x, po(1)+y )
 		loop
-		
+
 		CompArrayAndValue flagX, tccX, tccX(0)
 		CompArrayAndValue flagY, tccY, tccY(0)
 
@@ -375,7 +375,7 @@ return (success)^1
 		//gsel 2: boxf sscap(0, cnt), sscap(1, cnt), sscap(2, cnt), sscap(3, cnt): gsel 0
 	loop
 	mes ""+(en-st)+"ms"
-	
+
 	title "fin"
 	stop
 
