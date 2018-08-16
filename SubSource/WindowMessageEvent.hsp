@@ -7,7 +7,7 @@
 			logmes "WM_DROPFILES"
 			gosub *OnDropFiles
 			swbreak
-			
+
 		case WM_COMMAND
 			logmes "WM_COMMAND"
 			gosub *WM_COMMAND_Proc
@@ -63,17 +63,20 @@ return
 	oncmd 0
 
 	switch iparam
-	
 		case WM_DROPFILES
 			gosub *OnDropFiles
 			swbreak
-			
+
 		case WM_SIZING
 			gosub *windowsize
 			swbreak
 
 		case WM_LBUTTONDOWN
 			gosub *ListDrag
+			swbreak
+
+		case WM_RBUTTONDOWN
+			gosub *ListRelocation
 			swbreak
 
 	swend
@@ -84,7 +87,7 @@ return
 		}
 	}
 	oncmd 1
-return 
+return
 
 
 
@@ -94,7 +97,7 @@ return
 	if (lparam = hComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
 
 		logmes "ComBox"
-	
+
 		if (modePrev == MODE_OPTION){
 			gosub *dataCheck
 			gosub *inisave
@@ -136,7 +139,7 @@ return
 				if enabletweetwindow: gsel WND_TWITTER, 1+twiFrontRow
 				if enableFFMPEGLogWindow: ShowFFMPEGLog
 			}
-					
+
 			gosub *CalcCapPosAndWinSize
 			gosub *DrawMainWindow
 		}
@@ -145,21 +148,21 @@ return
 
 	//オプションモード切替コンボボックスによるオプションモード切替の発生
 	if (lparam = hOptionComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
-		
+
 		logmes "OptionComBox"
-		
+
 		sendmsg hOptionComBox, CB_GETCURSEL
 		optionMode = stat
 
 		if (optionMode != optionModePrev){
 			gosub *drawMainWindow
 		}
-		
+
 	}
 
 	//オプション→キャプチャ設定の保存名選択コンボボックス
 	if (lparam == saveNameSelCBh) & (((wparam>>16) & 0x0000FFFF) = 1){
-		
+
 		logmes "saveNameSelComBox"
 		sendmsg saveNameSelCBh, CB_GETCURSEL
 		saveNameSel = stat
@@ -203,19 +206,19 @@ return
 
 	//モードがオプションモードでないとき
 	if (mode != MODE_OPTION){
-		
+
 		//ツイートウィンドウ表示のチェックボックスが押された時
 		if (lparam == enabletweetwindowch && enabletweetwindowch != 0){
-			
+
 			sendmsg enableTweetWindowCh, $F2
 			enableTweetWindow = stat & 0x01
-			
+
 			if enabletweetwindow {
 				gsel WND_TWITTER, 1+twiFrontRow
 			} else {
 				gsel WND_TWITTER, -1
 			}
-			
+
 		}
 
 		if (mode == MODE_LIST){
@@ -232,12 +235,12 @@ return
 			loop
 			if listChangef: gosub *listchange
 		}
-		
+
 	}
 
 	if (mode == MODE_OPTION){
 		//オプションモードのとき
-		
+
 		//UIスケールの自動設定周り
 		if (optionMode == OPMODE_CONFIG){
 			if (lparam = autoUIScaleCh){
@@ -327,7 +330,7 @@ return
 
 			}
 		}
-		
+
 	}
 
 return
@@ -337,16 +340,16 @@ return
 	gsel WND_MAIN
 
 	if (mode = MODE_LIST){
-		
+
 		if (listMode == LISTMODE_LIST){
-	
+
 			sendmsg ichiranMode1Ch, $F2
 			ichiranMode1 = stat & 0x01
 			sendmsg ichiranMode2Ch, $F2
 			ichiranMode2 = stat & 0x01
-	
+
 			if (ichiranMode1) {
-			
+
 				lvnamef = lvname
 				sendmsg yubiwach, $F2
 				yubiwa = stat & 0x01
@@ -356,9 +359,9 @@ return
 				page = stat & 0x01
 				sendmsg lvnamech, $F2
 				lvname = stat & 0x01
-				
+
 				objenable lvnamecid,1
-				
+
 				if (lvname) {
 					objenable yubiwacid,0
 					objenable kantaicid,0
@@ -369,19 +372,19 @@ return
 					objenable pagecid,1
 				}
 			}
-	
+
 			if (ichiranMode2) {
 				objenable yubiwacid,0
 				objenable kantaicid,0
 				objenable pagecid,0
 				objenable lvnamecid,0
 			}
-			
+
 		}
-		
-		
+
+
 		if (listMode == LISTMODE_FLEET){
-		
+
 			sosuf = sosu
 			sendmsg sosukach, $F2
 			sosuka = stat & 0x01
@@ -389,7 +392,7 @@ return
 			sosu = stat & 0x01
 			sendmsg sokach, $F2
 			soka = stat & 0x01
-		
+
 			sendmsg tuika1ch, $F2
 			tuika1 = stat & 0x01
 			sendmsg tuika2ch, $F2
@@ -398,15 +401,15 @@ return
 			tuika3 = stat & 0x01
 			sendmsg tuika4ch, $F2
 			tuika4 = stat & 0x01
-		
+
 			sendmsg listsize1ch, $F2
 			listsize1 = stat & 0x01
 			sendmsg listsize2ch, $F2
 			listsize2 = stat & 0x01
-		
+
 			sendmsg fleetPunctuationch, $F2
 			fleetPunctuation = stat & 0x01
-			
+
 			sendmsg nishimuraFlgCh, $F2
 			nishimuraFlg = stat & 0x01
 
@@ -421,22 +424,22 @@ return
 				}
 				objenable tuika2CId, 0
 				objenable tuika3CId, 0
-				
+
 			} else {
 				objenable tuika2CId, 1
 				objenable tuika3CId, 1
 			}
 		}
-	
+
 		if (listMode == LISTMODE_OTHER){
-	
+
 			sendmsg directLinkCh, $F2
 			directLink = stat & 0x01
 			sendmsg airStationCh, $F2
 			airStation = stat & 0x01
 			sendmsg airStationTabCh, $F2
 			airStationTab = stat & 0x01
-			
+
 			sendmsg equipmentListCh, $F2
 			equipmentList = stat & 0x01
 			sendmsg sceneKaisoCh, $F2
@@ -477,13 +480,13 @@ return
 			if ( (userDefRect(1)+userDefRect(3)) > 480 ){
 				userDefRect(3) = 480 - userDefRect(1)
 			}
-	
+
 			if (airStation) {
 				objenable airStationTabCId, 1
 			} else {
 				objenable airStationTabCId, 0
 			}
-			
+
 			if (equipmentList) {
 				objenable sceneKaisoCId, 1
 				objenable sceneHaikiCId, 1
@@ -505,7 +508,7 @@ return
 				objenable userDefListWIId, 0
 				objenable userDefListHIId, 0
 			}
-			
+
 		}
 	}
 
@@ -545,20 +548,21 @@ return
 		swbreak
 	swend
 
-	scrsize(0) = ginfo_winx ,round(AspectRatio*ginfo_winx)
+	scrSize(0) = ginfo_winx ,round(AspectRatio*ginfo_winx)
+	scrSizeBase(0) = scrSize(0), scrSize(1)
 	cellsize(0) = round(1.0*scrsize(0) / (cellnum(0)+1)) ,round(1.0*scrsize(1) / (cellnum(1)+1))
-	
+
 	gosub *draw
-	
+
 return
 
 //ドロップ処理――――――――――――――――――――――――――――――――――
 *OnDropFiles
-	
+
 	if ( ginfo_intid == WND_MAIN && mode != MODE_LIST ){
 		return
 	}
-	
+
 	if ( ginfo_intid == WND_MAIN || ginfo_intid == WND_GRID ){
 
 		nidPush
@@ -571,12 +575,12 @@ return
 		DragQueryPoint hdrop, varptr(dragPoint)
 		DragFinish hdrop
 		if peek(dropfile,0) = '"' : getstr dropfile, dropfile, 1, '"'
-		
+
 		if ImgF_GetFormat(dropfile) = 0{
 			nidPop
 			return
 		}
-		
+
 		/*
 		if (listMode == LISTMODE_FLEET){
 			ImgF_GetPicSize dropFile, pw, ph
@@ -602,7 +606,7 @@ return
 						listLoadedNum++
 					loop
 				loop
-	
+
 				nidPop
 				gosub *draw
 				return
@@ -618,43 +622,43 @@ return
 		dropFlag = FALSE
 		nidPop
 	}
-	
+
 	if (ginfo_intid == WND_TWITTER){
 
 		nidPush
-	
+
 		hdrop = wParam
 		sdim dropfile,1024
 		DragQueryFile hdrop, 0, varptr(dropfile), 1024
 		DragFinish hdrop
 		dropFile = cnvwtos(dropFile)
 		if peek(dropfile,0) = '"' : getstr dropfile, dropfile, 1, '"'
-		
+
 		if (ImgF_GetFormat(dropfile) == 0){
 			nidPop
 			return
 		}
 
 		picHistoryLoad dropfile
-		
+
 		gosub *picHistoryTop
 		gosub *picHistoryAddStack
-	
+
 		nidPop
-	
+
 	}
-	
+
 return
 
 *WM_VSCROLL_Proc
 	//トラックバーを動かしたときの処理
 	nidPush
-	
+
 	if (lparam == hTrackbar) {
-		
+
 		sendmsg hTrackbar, TBM_GETPOS
 		tempint = stat
-		
+
 		sendmsg hTrackBarScale, $C ,, strf("%d%% ",tempint)
 		UIScale = (0.01 * tempint)
 
@@ -673,12 +677,12 @@ return
 	}
 
 	if (lparam == hMaxSearchLevelTrackbar && wparam == 0x0008) {
-		
+
 		sendmsg hMaxSearchLevelTrackbar, TBM_GETPOS
 		maxSearchLevel = stat
 
 		if (maxSearchLevelPrev != maxSearchLevel){
-			
+
 			maxSearchLevelPrev = maxSearchLevel
 			sendmsg hMaxSearchLevelStatic , WM_SETTEXT, , maxSearchLevelStr(maxSearchLevel)
 			autoSearchFailureCount = 0
@@ -693,7 +697,7 @@ return
 					sscap(2) = scrPoint(0)+sscapwh(0)
 					sscap(3) = scrPoint(1)+sscapwh(1)
 				}
-			
+
 				gosub *CaptureMethodDecide
 				gosub *SSSettingCheck
 			}
@@ -701,30 +705,30 @@ return
 	}
 
 	if (lparam == hVolumeTrackbar) {
-		
+
 		sendmsg hVolumeTrackbar, TBM_GETPOS
 		volume = stat
 		sendmsg hVolumeTrackBarScale, $C ,, strf("%d%% ",volume)
 
 	}
-	
+
 	nidPop
 return
 
 *DPICHANGED
 	nidPush
-	
+
 	if (autoUIScale) {
-		
+
 		logmes "WM_DPICHANGED"
-		
+
 		DPI = HIWORD(wparam)
 		UIScale = 1.0 * DPI / 96.0
-	
+
 		scale3 = Scale(3)
 		scale5 = Scale(5)
 		scale20 = Scale(20)
-	
+
 		repeat 5
 			twiPicFrameXL(cnt) = Scale(_twiPicFrameXL(cnt))
 			twiPicFrameXR(cnt) = Scale(_twiPicFrameXR(cnt))
@@ -741,7 +745,7 @@ return
 		}
 		gosub *DrawSupportWnd
 	}
-	
+
 	nidPop
 return
 
@@ -758,11 +762,11 @@ return
 	if autoUIScale {
 		UIScale = 1.0 * DPI / 96.0
 	}
-				
+
 	scale3 = Scale(3)
 	scale5 = Scale(5)
 	scale20 = Scale(20)
-				
+
 	repeat 5
 		twiPicFrameXL(cnt) = Scale(_twiPicFrameXL(cnt))
 		twiPicFrameXR(cnt) = Scale(_twiPicFrameXR(cnt))
@@ -771,7 +775,7 @@ return
 	loop
 
 	gosub *DrawSupportWnd
-	
+
 return
 
 *WM_TIMER_Proc
@@ -784,7 +788,7 @@ return
 				seqCapSize +=savedPicSize
 			}
 			swbreak
-			
+
 		case VideoCapTimerID
 			gosub *VideoCapTimerProcessing
 			swbreak
