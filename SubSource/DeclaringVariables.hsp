@@ -233,8 +233,8 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 		if (directLink) {
 			cellnum(0) = 6, 4
 			ListModeHNum = 5
-			w = 800
-			h = 480
+			w = BASE_SIZE_W
+			h = BASE_SIZE_H
 			capx = 0
 			capy = 0
 		}
