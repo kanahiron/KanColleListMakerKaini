@@ -1,5 +1,5 @@
 *DeclaringVariables
-	
+
 	saveListName = ""
 	tempint = 0
 	tempstr = ""
@@ -54,7 +54,7 @@
 	sdim picHistory, 512, 101
 
 	dim twiBufPicSize, 2, 4
-	
+
 	dim twiPicFrameXL, 5
 	dim twiPicFrameXR, 5
 	dim twiPicFrameYU, 5
@@ -80,12 +80,12 @@
 	disInfo(1) = GetSystemMetrics(77)
 	disInfo(2) = GetSystemMetrics(78)
 	disInfo(3) = GetSystemMetrics(79)
-	
+
 	init_ListMakerMod disinfo
 
 	twiOrder = 0, 0, 0, 0
 	twiOrdercount = 0
-	
+
 	enableFirst = 1
 	enableSecond = 1
 	enableThird = 0
@@ -93,9 +93,9 @@
 
 	directLink = 1
 	airStation = 0
-	
+
 	loadPicBufID(0) = 0
-	
+
 	mindexxy(0) = 0, 0
 	modemes = ""
 	mxy(0) = 0, 0
@@ -104,10 +104,10 @@
 	seccapf = 0
 	sscapmes = "取得する"
 	savekind = ".png", ".jpg"
-	
+
 	seqCapMes = "開始"
 	videoCapMes = "開始"
-	
+
 	luposx = 0
 	luposy = 0
 	rdposx = 0
@@ -119,16 +119,16 @@
 	intervalsavedir = ""
 	savenamepath = ""
 	intervalShotDir = ""
-	
+
 	picHistoryNum = 0
 	picHistoryCount = 0
 	mainWindowSmall = 0
-	
+
 	autoSearchFailureCount = 0
 
 	UIScale = 1.0
 	volume = 100
-	
+
 	userdata = ""
 	ACCESS_TOKEN = ""
 	ACCESS_SECRET = ""
@@ -145,7 +145,7 @@
 	//グリッドウィンドウの基準サイズ
 	scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.667*ginfo_dispy)
 	//Ver0.2.6時点では未使用
-	scrSizeMin(0) = 700, 500
+	scrSizeMin(0) = 300, 100
 
 	//ListModeHNum 艦娘一覧モードでの縦幅の指定
 	ListModeHNum = 5
@@ -167,7 +167,7 @@
 	positionType = PT_ABSOLUTE
 
 	marginCutFlg = FALSE
-	
+
 	sceneKaiso = 1
 	sceneHaikiCId = 0
 	includeDetails = 1
@@ -207,20 +207,20 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 			capy = 143
 		}
 	}
-	
-	
+
+
 	if (listMode == LISTMODE_FLEET){
 
 		cellnum(0) = 5, 5
 		if (nishimuraFlg): cellnum(0) = 3, 3
-		
+
 		if sosuka {
 			w = 454
 			h = 362
 		}
 		if sosu {
 			w = 230
-			h = 362	
+			h = 362
 		}
 		if soka {
 			w = 454
@@ -243,7 +243,7 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 		if (airStation) {
 			cellnum(0) = 2, 0
 			ListModeHNum = 1
-			if (airStationTab) { 
+			if (airStationTab) {
 				w = 225
 				h = 358
 				capx = 575
@@ -286,7 +286,7 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 			logmes " w    :"+w
 			logmes " h    :"+h
 		}
-	
+
 	}
 
 	cutRange(0) = capx, capy, w, h
@@ -314,13 +314,13 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 		scrSize(0) = round( zoom * scrSize(0) )
 		scrSize(1) = round( zoom * scrSize(1) )
 	}
-		
+
 	if scrSizeBase(1) < scrSize(1){
 		zoom = 1.0 * scrSizeBase(1) / scrSize(1)
 		scrSize(0) = round( zoom * scrSize(0) )
 		scrSize(1) = round( zoom * scrSize(1) )
 	}
-	
+
 	cellsize(0) = scrSize(0)/(cellnum(0)+1), scrSize(1)/(cellnum(1)+1)
 
 return

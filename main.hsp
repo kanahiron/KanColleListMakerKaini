@@ -45,7 +45,7 @@
 	if (strsize != -1): delete "./SubSource/obj"
 	exist "./SubSource/packfile"
 	if (strsize != -1): delete "./SubSource/packfile"
-	
+
 	exist "./modules/hsptmp"
 	if (strsize != -1): delete "./modules/hsptmp"
 	exist "./modules/obj"
@@ -61,17 +61,17 @@
 	if (strsize != -1): delete "./start.ax"
 	exist "./packfile"
 	if (strsize != -1): delete "./packfile"
-	
+
 #endif
-	
+
 	onexit gosub *exit
 
 #ifndef _debug
 
 	onerror gosub *err_
-	
+
 #endif
-	
+
 	wndInfoInit
 	nidStackInit
 	DAControlInit
@@ -82,7 +82,7 @@
 	gosub *dataCheck
 	gosub *iniSave
 	gosub *VideoCapSetting
-	
+
 	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
 		GetClassLong WND_INFO(WND_MAIN, WI_HANDLE), -26
@@ -98,24 +98,24 @@
 		oncmd gosub *MainWindowProc, WM_LBUTTONDBLCLK
 		oncmd gosub *mainWindowProc, WM_SELWINDOW
 		objmode 2
-		
+
 		combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
 		comboxId = stat
 		hCombox = objinfo_hwnd(comboxId)
-		
+
 		combox dummy, 100, " 環境設定\n キャプチャ・作成設定\n 動画キャプチャ設定\n Twitter設定\n その他設定"
 		optionCBId = stat
 		hOptionComBox = objinfo(optionCBId, 2)
 
 		chkbox "dummy", dummy
-	
+
 	screen WND_GRID, disInfo(2), disInfo(3), 2:title "表示させたいセルにD&D"
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 1
 		oncmd gosub *GridWindowProc, WM_DROPFILES
 		oncmd gosub *GridWindowProc, WM_SIZING
 		oncmd gosub *GridWindowProc, WM_LBUTTONDOWN
-		oncmd gosub *ListRelocation, WM_RBUTTONDOWN
+		oncmd gosub *GridWindowProc, WM_RBUTTONDOWN
 		framesx = ginfo_sizex - ginfo_winx
 		framesy = ginfo_sizey - ginfo_winy
 		kmmouse_init
@@ -130,7 +130,7 @@
 		SetLayeredWindowAttributes WND_INFO(WND_OVERLAY, WI_HANDLE), 0x00000000, 128, LWA_ALPHA
 
 	buffer WND_MAKE_STRING, 1000, 340
-		SET_WND_INFO		
+		SET_WND_INFO
 		gosub *drawString
 
 	bgscr WND_SUPPORT, 850, 100, 2
@@ -140,7 +140,7 @@
 		SetWindowLong WND_INFO(WND_SUPPORT, WI_HANDLE),-20, stat | 0x00080008
 		SetLayeredWindowAttributes WND_INFO(WND_SUPPORT, WI_HANDLE), 0x000000FF, 255, LWA_COLORKEY
 		gosub *DrawSupportWnd
-		
+
 	//画像読み込み用
 	buffer WND_IMAGE_BUF
 		SET_WND_INFO
@@ -155,7 +155,7 @@
 		imageBuf2W = ginfo_winx
 		imageBuf2H = ginfo_winy
 		gsel WND_IMAGE_BUF2, -1
-		
+
 	buffer WND_GRID_STRING ,640,150
 		SET_WND_INFO
 		syscolor 16
@@ -165,7 +165,7 @@
 		mes "                                         画像を追加してください"
 		mes "セルの画像はウィンドウ外にドラッグで消去できます"
 		//640,150
-	
+
 	screen WND_TWITTER, disInfo(2), disInfo(3), 2 | 4
 		SET_WND_INFO
 		oncmd gosub *TweetWindowProc, WM_LBUTTONDOWN
@@ -185,7 +185,7 @@
 		SET_WND_INFO
 	buffer WND_TWIBUF4, 2400, 1440
 		SET_WND_INFO
-		
+
 	buffer WND_CAPTURE, 2400, 1440
 		SET_WND_INFO
 
@@ -223,7 +223,7 @@
 		GetWindowRect WND_INFO(WND_TWITTER, WI_HANDLE), varptr(rect)
 		MoveWindow WND_INFO(WND_TWITTER, WI_HANDLE), tweetWindowPos(0), tweetWindowPos(1), rect(2)-rect(0), rect(3)-rect(1), 1
 	}
-	
+
 	if initialActivation {
 		dialog "艦これ一覧めいかー改二へようこそ！\n自動バージョンチェック機能を有効にしますか？\n※設定からいつでも切り替えができます", 2, "初回起動"
 		if (stat != 6){
@@ -252,9 +252,9 @@
 	if (restoreSSCapFlg == FALSE){
 		repeat 4: ssCap(cnt) = 0: loop
 	}
-		
+
 	gsel WND_MAIN,1+frontRow
-	
+
 	//SetTimer WND_INFO(WND_MAIN, WI_HANDLE), timer2ID, 1000, 0
 	/*
 	mode = MODE_OPTION
@@ -263,7 +263,6 @@
 	//*/
 
 	//gsel WND_SUPPORT, 1
-	
 	stop
 
 
@@ -284,14 +283,14 @@
 		}
 		return
 	}
-	
+
 	if (wparam == WND_TWITTER){
 		gsel WND_TWITTER, -1
 		enableTweetWindow = FALSE
 		gsel WND_MAIN, 1+frontRow
 		if (mode != MODE_OPTION){
 			objprm enabletweetwindowcid, 0
-		} 
+		}
 		return
 	}
 
@@ -300,7 +299,7 @@
 		HideFFMPEGLog
 		return
 	}
-	
+
 	if (confirmCompletion && iparam == 0){
 		//iparamが1のときはシャットダウンなので確認せずに終了する
 		dialog "艦これ一覧めいかー改二を終了しますか？", 2, "終了確認"
@@ -315,7 +314,7 @@
 
 	if hdcScreen: DeleteDC hdcScreen
 	if dcClient: ReleaseDC dcClient
-	
+
 	DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 0
 	DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 0
 	DragAcceptFiles WND_INFO(WND_TWITTER, WI_HANDLE), 0
@@ -344,13 +343,13 @@
 	}
 	gosub *dataCheck
 	gosub *iniSave
-		
+
 	end
 	end
 
 *err_
 	onerror 0
-	
+
 	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
 	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID
 	if (apid != -1): pipe2term apid
@@ -363,7 +362,7 @@
 	if (strsize != -1): delete videoFileName+"_a.wav"
 	exist videoFileName+".mp4"
 	if (strsize != -1): delete videoFileName+".mp4"
-	
+
 	dialog "申し訳ありません。致命的なエラーが発生しました。\nエラー番号 :"+wparam+"\n何度も発生する場合作者kanahironまで報告をお願いします", 1, LONGSOFTNAME
 	end
 	end

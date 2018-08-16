@@ -23,6 +23,7 @@
 	GetIni "Configuration", "IntervalShotSaveDir",intervalShotDir, "\"\""
 	GetIni "Configuration", "SelectCapSaveDir", selectCapSaveDir, "\"\""
 	GetIni "Configuration", "YabumiExeDir", yabumidir, "\"\""
+	GetIni "Configuration", "GridScreenSize", scrSizeBase, "-1\",\"-1"
 
 	GetIni "CaptureAndMaking", "NoHideLv", noHideLv, "0"
 	GetIni "CaptureAndMaking", "NameMosaic", nameMosaic, "0"
@@ -63,7 +64,7 @@
 	GetIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", confirmSaveNameDirectLink, "0"
 	GetIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", confirmSaveNameEquipmentList, "0"
 	GetIni "CaptureAndMaking", "ConfirmSaveNameUserDefList", confirmSaveNameUserDefList, "0"
-	
+
 	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
 	GetIni "VideoCapture", "lateEncode", lateEncode, "1"
 	GetIni "VideoCapture", "HideCursor", videoCapHideCursor, "0"
@@ -98,7 +99,7 @@
 	GetIni "SSMode", "HideName", hidename, "0"
 	GetIni "SSMode", "EnableTweetWindow", enableTweetWindow, "0"
 	GetIni "SSMode", "SSCapturePosition", ssCap, "0\",\"0\",\"0\",\"0"
-	
+
 	GetIni "KanmusuListMode", "ichiranMode1", ichiranMode1, "1"
 	GetIni "KanmusuListMode", "yubiwa", yubiwa, "1"
 	GetIni "KanmusuListMode", "kantai", kantai, "1"
@@ -118,7 +119,7 @@
 	GetIni "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"第一艦隊\""
 	GetIni "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"第二艦隊\""
 	GetIni "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"ボス支援\""
-	GetIni "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"道中支援\""	
+	GetIni "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"道中支援\""
 	GetIni "KanmusuFormationMode", "FontColorFirstFleetStr", fontColorFirstFleetStr, "\"FF0000\""
 	GetIni "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
 	GetIni "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr, "\"20AC4C\""
@@ -135,16 +136,16 @@
 	GetIni "OtherListMode", "EquipmentList", equipmentList, "0"
 	GetIni "OtherListMode", "UserDefList", userDefList, "0"
 	GetIni "OtherListMode", "UserDefRect", userDefRect, "0\",\"0\",\"800\",\"480"
-	
+
 	if strmid(hotkeystr,0,1) = "A":hotkeycapalt	= 1
 	if strmid(hotkeystr,1,1) = "C":hotkeycapctrl = 1
 	if strmid(hotkeystr,2,1) = "S":hotkeycapshift = 1
 	if strmid(hotkeystr,3,1) = "W":hotkeycapwin	= 1
 	hotkeycapchar = strmid(hotkeystr,4,1)
-	
+
 	chdir currentdir
 return
-		
+
 
 *dataCheck
 	savelogtext = ""
@@ -185,7 +186,15 @@ return
 	if (fontsizenum < 10) | ( 50 < fontsizenum):fontsizenum=34
 	if FirstFleetName = "":FirstFleetName = "第一艦隊"
 	if SecondFleetName = "":SecondFleetName = "第二艦隊"
-	
+
+	logmes strf("scrSizeBase_ %4d, %4d", scrSizeBase(0), scrSizeBase(1))
+
+	if ( scrSizeMin(0) <= scrSizeBase(0) && scrSizeBase(0) <= maxScrSize(0) && scrSizeMin(1) <= scrSizeBase(1) && scrSizeBase(1) <= maxScrSize(1)){
+
+	} else {
+		scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.667*ginfo_dispy)
+	}
+
 	if fontColorFirstFleetStr = "":fontColorFirstFleetStr = "FF0000"
 	if fontColorSecondFleetStr = "":fontColorSecondFleetStr = "0000FF"
 	if fontColorThirdFleetStr = "":fontColorThirdFleetStr = "20AC4C"
@@ -196,7 +205,7 @@ return
 	if (addOrderNum != 0) & (addOrderNum != 1):addOrderNum=1
 
 	if PunctuationColorStr = "":PunctuationColorStr = "2020C0"
-	
+
 	if (airStationTab != 0) & (airStationTab != 1):airStationTab=1
 
 	if (listMakeInterpolation != 0) & (listMakeInterpolation != 1):listMakeInterpolation=1
@@ -229,18 +238,18 @@ return
 	if (confirmCancelVideoCapture != 0) & (confirmCancelVideoCapture != 1):confirmCancelVideoCapture=1
 
 	if (maxSearchLevel < 0) | ( 2 < maxSearchLevel): maxSearchLevel=2
-	
+
 	if (ConfirmCompletion != 0) & (ConfirmCompletion != 1): ConfirmCompletion=1
 	if (twiFrontRow != 0) & (twiFrontRow != 1):twiFrontRow=1
-	
+
 	fontColorFirstFleet = int("$"+fontcolorFirstFleetstr)
 	fontColorSecondFleet = int("$"+fontcolorSecondFleetstr)
 	fontColorThirdFleet = int("$"+fontcolorThirdFleetstr)
 	fontColorFourthFleet = int("$"+fontcolorFourthFleetstr)
 	PunctuationColor = int("$"+PunctuationColorStr)
-	
+
 	hidelog_ = hidelog
-	
+
 	if PathIsDirectory(listsavedir) = 0 {
 		savelogtext += "Info - 一覧保存先が存在しません。デフォルトに変更しました。\n"
 		listsavedir = dir_exe
@@ -263,7 +272,7 @@ return
 	if PathIsDirectory(intervalShotDir) = 0{
 		savelogtext += "Info - 連続撮影保存先が存在しません。デフォルトに変更しました。\n"
 		intervalShotDir = sssavedir
-	} 
+	}
 
 	if kmexist(yabumidir) = -1{
 		yabumidir = dirinfo(0x10026) +"\\yabumi\\yabumiuploader.exe"
@@ -276,7 +285,7 @@ return
 	} else {
 		availableyabumi = 1
 	}
-	
+
 	if (hotkeycapalt + hotkeycapctrl + hotkeycapshift + hotkeycapwin) = 0{
 		savelogtext += "Info - ホットキーの設定が不適切です。デフォルトに変更しました。\n"
 		hotkeycap = 0
@@ -286,12 +295,12 @@ return
 		hotkeycapwin = 0
 		hotkeystr = ""
 	}
-	
+
 	if hotkeycapalt	= 1	:poke hotkeystr,0,'A':else:poke hotkeystr,0,95
 	if hotkeycapctrl = 1:poke hotkeystr,1,'C':else:poke hotkeystr,1,95
 	if hotkeycapshift= 1:poke hotkeystr,2,'S':else:poke hotkeystr,2,95
 	if hotkeycapwin	= 1	:poke hotkeystr,3,'W':else:poke hotkeystr,3,95
-	
+
 	if (65 <= peek(hotkeycapchar)) & (peek(hotkeycapchar) <= 90){
 		hotkeycode = peek(hotkeycapchar)
 		poke hotkeystr,4,hotkeycode
@@ -356,7 +365,7 @@ return
 		savelogtext += "Info - ユーザ定義保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
 	//=====
-	
+
 	fontcolorname = int("$"+fontcolornamestr)
 	fontcolornum = int("$"+fontcolornumstr)
 
@@ -383,21 +392,21 @@ return
 		saveNameVideoCapture = "KCVideo_<yyyy><MM><dd>-<HH><mm><ss>"
 		savelogtext += "Info - 動画キャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
-	
+
 	if (tuika1+tuika2+tuika3+tuika4) != 1{
 		tuika1 = 1
 		tuika2 = 0
 		tuika3 = 0
 		tuika4 = 0
 	}
-	
+
 	if (directLink+airStation+equipmentList+userDefList) != 1{
 		directLink = 1
 		airStation = 0
 		equipmentList = 0
 		userDefList = 0
 	}
-	
+
 	if (sosuka+sosu+sosk) != 1{
 		sosuka = 1
 		sosu = 0
@@ -430,7 +439,7 @@ return
 		seqCapLimitTime = 5999000
 		savelogtext += "Info - 連続キャプチャ制限時間が短すぎます。デフォルトに変更しました。\n"
 	}
-	
+
 	if (seqCapLimitSize < 1){
 		seqCapLimitSize = 99999
 		savelogtext += "Info - 連続キャプチャ制限容量が短すぎます。デフォルトに変更しました。\n"
@@ -465,6 +474,8 @@ return
 
 *inisave
 
+	logmes strf("scrSizeBase %4d, %4d", scrSizeBase(0), scrSizeBase(1))
+
 	WriteIni "Configuration", "FrontRow", frontrow
 	WriteIni "Configuration", "HideLog", hidelog
 	WriteIni "Configuration", "YabumiAutoUpload", yabumiautoupload
@@ -484,7 +495,8 @@ return
 	WriteIni "Configuration", "IntervalShotSaveDir",intervalShotDir
 	WriteIni "Configuration", "SelectCapSaveDir",selectCapSaveDir
 	WriteIni "Configuration", "YabumiExeDir", yabumidir
-	
+	WriteIni "Configuration", "GridScreenSize", scrSizeBase
+
 	WriteIni "CaptureAndMaking", "NoHideLv", noHideLv
 	WriteIni "CaptureAndMaking", "NameMosaic", nameMosaic
 	WriteIni "CaptureAndMaking", "NameCut", namecut
@@ -524,7 +536,7 @@ return
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", confirmSaveNameDirectLink
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", confirmSaveNameEquipmentList
 	WriteIni "CaptureAndMaking", "ConfirmSaveNameUserDefList", confirmSaveNameUserDefList
-	
+
 	WriteIni "VideoCapture", "enableVideoCap", enableVideoCap
 	WriteIni "VideoCapture", "lateEncode", lateEncode
 	WriteIni "VideoCapture", "HideCursor", videoCapHideCursor
@@ -543,7 +555,7 @@ return
 	WriteIni "VideoCapture", "Volume", volume
 	WriteIni "VideoCapture", "AudioNormalize", audioNormalize
 	WriteIni "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture
-	
+
 	sdim temp, 256
 	temp = encstr(userdata)
 	WriteIni "TwitterSetting", "Twi_userdata", temp
@@ -559,7 +571,7 @@ return
 	WriteIni "SSMode", "HideName", hidename
 	WriteIni "SSMode", "EnableTweetWindow",enableTweetWindow
 	WriteIni "SSMode", "SSCapturePosition", ssCap
-	
+
 	WriteIni "KanmusuListMode", "ichiranMode1", ichiranMode1
 	WriteIni "KanmusuListMode", "yubiwa", yubiwa
 	WriteIni "KanmusuListMode", "kantai", kantai
@@ -630,6 +642,6 @@ return
 	}
 
 	nidPop
-	
+
 	chdir currentdir
 return
