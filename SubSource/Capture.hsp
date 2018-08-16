@@ -348,7 +348,7 @@ return (successFlg^1)
 			gzoom 800, 480, WND_CAPTURE, 0, 0, picx, picy, 1
 		}
         */
-		LogOut strf("画像をセル(%d, %d)に読み込みました", dmxy(0), dmxy(1))
+		LogOut strf("キャプチャをセル(%d, %d)に読み込みました", dmxy(0), dmxy(1))
 		listLoadedNum++
 	} else {
 
