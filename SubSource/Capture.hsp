@@ -37,7 +37,6 @@
 				return 1
 			}
 		}
-
 	}
 
 	//ébíËêîílíºê⁄ì¸óÕ
@@ -60,6 +59,12 @@
 		}
 		nidPop
 		return 1
+	}
+
+	if (hideOnCapture){
+		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
+		SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
+		SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
 	}
 
 	switch captureMethod
@@ -92,6 +97,13 @@
 			swbreak
 
 	swend
+
+
+	if (hideOnCapture){
+		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
+		SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
+		SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
+	}
 
 	if (forceResize){
 		gsel WND_CAPTURE: pos 0, 0

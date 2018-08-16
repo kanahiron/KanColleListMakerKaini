@@ -713,6 +713,9 @@
 			objenable stat, 0 //HTML5移行による暫定対処
 
 			pos scale5, mesy
+			chkbox "SSキャプチャ時に一覧めいかーの映込みを防止する", hideOnCapture: mesy += scale20
+
+			pos scale5, mesy
 			chkbox "SSを強制的に等倍にリサイズする", forceResize: mesy += scale20
 
 			pos scale5, mesy

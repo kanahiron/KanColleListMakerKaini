@@ -28,6 +28,7 @@
 	GetIni "CaptureAndMaking", "NoHideLv", noHideLv, "0"
 	GetIni "CaptureAndMaking", "NameMosaic", nameMosaic, "0"
 	GetIni "CaptureAndMaking", "NameCut", namecut, "0"
+	GetIni "CaptureAndMaking", "HideOnCapture", hideOnCapture, "0"
 	GetIni "CaptureAndMaking", "forceResize", forceResize, "0"
 	GetIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel, "2"
 	GetIni "CaptureAndMaking", "HotkeyCapture", hotkeycap, "1"
@@ -158,6 +159,7 @@ return
 	if (noHideLv != 0) & (noHideLv != 1):noHideLv=0
 	if (namecut != 0) & (namecut != 1):namecut=0
 	if (nameMosaic != 0) & (nameMosaic != 1):nameMosaic=0
+	if (hideOnCapture != 0) & (hideOnCapture != 1):hideOnCapture=0
 	if (forceResize != 0) & (forceResize != 1):forceResize=0
 	if (frontrow != 0) & (frontrow != 1):frontrow=1
 	if (hidelog != 0) & (hidelog != 1):hidelog = 0
@@ -500,6 +502,7 @@ return
 	WriteIni "CaptureAndMaking", "NoHideLv", noHideLv
 	WriteIni "CaptureAndMaking", "NameMosaic", nameMosaic
 	WriteIni "CaptureAndMaking", "NameCut", namecut
+	WriteIni "CaptureAndMaking", "HideOnCapture", hideOnCapture
 	WriteIni "CaptureAndMaking", "forceResize", forceResize
 	WriteIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel
 	WriteIni "CaptureAndMaking", "HotkeyCapture", hotkeycap
