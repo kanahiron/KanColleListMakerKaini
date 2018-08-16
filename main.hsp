@@ -80,6 +80,9 @@
 		SET_WND_INFO
 		GetClassLong WND_INFO(WND_MAIN, WI_HANDLE), -26
 		SetClassLong WND_INFO(WND_MAIN, WI_HANDLE), -26, stat | $0008
+		GetWindowLong WND_INFO(WND_MAIN, WI_HANDLE),-20
+		SetWindowLong WND_INFO(WND_MAIN, WI_HANDLE),-20, stat | $80000
+		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
 		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 1
 		oncmd gosub *MainWindowProc, WM_DROPFILES
 		oncmd gosub *MainWindowProc, WM_COMMAND
@@ -105,6 +108,9 @@
 	screen WND_GRID, disInfo(2), disInfo(3), 2:title "•\Ž¦‚³‚¹‚½‚¢ƒZƒ‹‚ÉD&D"
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 1
+		GetWindowLong WND_INFO(WND_GRID, WI_HANDLE),-20
+		SetWindowLong WND_INFO(WND_GRID, WI_HANDLE),-20, stat | $80000
+		SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
 		oncmd gosub *GridWindowProc, WM_DROPFILES
 		oncmd gosub *GridWindowProc, WM_SIZING
 		oncmd gosub *GridWindowProc, WM_LBUTTONDOWN
@@ -161,6 +167,9 @@
 
 	screen WND_TWITTER, disInfo(2), disInfo(3), 2 | 4
 		SET_WND_INFO
+		GetWindowLong WND_INFO(WND_TWITTER, WI_HANDLE),-20
+		SetWindowLong WND_INFO(WND_TWITTER, WI_HANDLE),-20, stat | $80000
+		SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
 		oncmd gosub *TweetWindowProc, WM_LBUTTONDOWN
 		oncmd gosub *TweetWindowProc, WM_MOUSEMOVE
 		oncmd gosub *TweetWindowProc, WM_COMMAND
