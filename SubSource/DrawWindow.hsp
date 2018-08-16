@@ -12,7 +12,7 @@
 	}
 
 	gsel WND_MAIN, 1+frontrow
-	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
+	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
 
 	clrobj 2, -1
 	syscolor 15: boxf: syscolor 8
@@ -1003,7 +1003,7 @@
 	gsel WND_MAIN, 1+frontRow
 	width mainWndW, mainWndH
 
-	sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
+	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 1
 	gosub *SupportWndDisp
 return
 
