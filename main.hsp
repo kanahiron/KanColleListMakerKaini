@@ -34,7 +34,7 @@
 
 #define SOFTNAME "ˆê——‚ß‚¢‚©[‰ü“ñ Ver0.7"
 #define LONGSOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.7"
-#define klm2ver 6000
+#define klm2ver 7000
 
 #ifdef _debug
 	exist "./SubSource/hsptmp"
