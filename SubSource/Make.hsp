@@ -1,7 +1,7 @@
 //一覧作成――――――――――――――――――――――――――――――――――
 *make
 	nidPush
-	
+
 	successFlg = FALSE
 
 	VNum = 0
@@ -409,9 +409,9 @@
 
 	if senden & (listmode==LISTMODE_FLEET) & (sosuka|soka){
 		gsel WND_TEMP2
-		gmode 7
-		pos ginfo_winx-220, ginfo_winy-13//225
-		gcopy WND_MAKE_STRING, 10, 310, 240, 30
+		font "メイリオ", 12
+		pos ginfo_winx-220, ginfo_winy-19//225
+		fuchimes LONGSOFTNAME, 0x6F5E5A
 	}
 
 	savename = ""
