@@ -111,9 +111,11 @@
 					mxy(0) = mxy(0)-mxyi(0), mxy(1)-mxyi(1)
 					repeat selRange(CR_H)
 						ycnt = cnt
+						if ((mxy(1)+ycnt)<0):continue
 						if ((mxy(1)+ycnt)>cellNum(1)): continue
 						repeat selRange(CR_W)
 							if ((mxy(0)+cnt)>cellNum(0)): continue
+							if ((mxy(0)+cnt)<0):continue
 							temp = bufIDPos(mxy_(0)+cnt, mxy_(1)+ycnt)
 							bufIDPos(mxy_(0)+cnt, mxy_(1)+ycnt) = bufIDPos(mxy(0)+cnt, mxy(1)+ycnt)
 							bufIDPos(mxy(0)+cnt, mxy(1)+ycnt) = temp
