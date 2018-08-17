@@ -1,223 +1,29 @@
+#module
+#deffunc fuchimes str a , int col
 
-*drawString
+bold = 4
+redraw 0
 
-	nidPush
-
-	gsel WND_MAKE_STRING
-
-	font fontnum, fontsizenum, 1
-	mes "1,3,4"
-	OSOW = ginfo(15)
-
-	font fontname, fontsizename, 1
-	mref BMSCR, 67
-	r = 0.1 * abs(BMSCR.49)
-	n = int(2.0 * M_PI * r)
-
-	mes "�����I�H�ς��I�I<- ���� ->"
-	OSOWm = ginfo(15)
-	color :boxf
-
-	x = 10
-	y = 10
-
-	color 237, 229, 216
-	boxf 0, 0, 220, 290
-	boxf 500, 0, 540, 340
-	boxf 600, 0, 640, 340
-	boxf 700, 0, 740, 340
-	boxf 800, 0, 840, 340
-	boxf 0, 300, 240, 340
-
-	if enableFirst = 1{
-		x = 10
-		string = FirstFleetName
-		color 255, 255, 255
-		repeat n
-			rad = 2.0 * M_PI * cnt / n
-			xt = x + int(r * cos(rad))
-			yt = y + int(r * sin(rad))
-			pos xt, yt
-			mes string
-			pos xt+220, yt
-			mes string
-		loop
-		color ((fontColorFirstFleet&0x00FF0000)>>16), ((fontColorFirstFleet&0x0000FF00)>>8), (fontColorFirstFleet&0x000000FF)
-		pos x, y
-		mes string
-		y += 70
-	}
-
-	if enableSecond = 1{
-		x = 10
-		string = SecondFleetName
-		color 255, 255, 255
-		repeat n
-			rad = 2.0 * M_PI * cnt / n
-			xt = x + int(r * cos(rad))
-			yt = y + int(r * sin(rad))
-			pos xt, yt
-			mes string
-			pos xt+220, yt
-			mes string
-		loop
-		color ((fontColorSecondFleet&0x00FF0000)>>16), ((fontColorSecondFleet&0x0000FF00)>>8), (fontColorSecondFleet&0x000000FF)
-		pos x, y
-		mes string
-		y += 70
-	}
-
-	if enableThird = 1{
-		x = 10
-		string = ThirdFleetName
-		color 255, 255, 255
-		repeat n
-			rad = 2.0 * M_PI * cnt / n
-			xt = x + int(r * cos(rad))
-			yt = y + int(r * sin(rad))
-			pos xt, yt
-			mes string
-			pos xt+220, yt
-			mes string
-		loop
-		color ((fontColorThirdFleet&0x00FF0000)>>16), ((fontColorThirdFleet&0x0000FF00)>>8), (fontColorThirdFleet&0x000000FF)
-		pos x, y
-		mes string
-		y += 70
-	}
-
-	if enableFourth = 1{
-		x = 10
-		string = FourthFleetName
-		color 255, 255, 255
-		repeat n
-			rad = 2.0 * M_PI * cnt / n
-			xt = x + int(r * cos(rad))
-			yt = y + int(r * sin(rad))
-			pos xt, yt
-			mes string
-			pos xt+220, yt
-			mes string
-		loop
-		color ((fontColorFourthFleet&0x00FF0000)>>16), ((fontColorFourthFleet&0x0000FF00)>>8), (fontColorFourthFleet&0x000000FF)
-		pos x, y
-		mes string
-	}
-
-	font fontnum, fontsizenum, 1
-	mref BMSCR, 67
-	r = 0.1 * abs(BMSCR.49)
-	n = int(2.0 * M_PI * r)
-
-	x = 510
-
-	if enableFirst = 1{
-		y = 10
-		string = "1\n2\n3\n4\n5\n6\n7"
-		color 255, 255, 255
-		repeat n
-			rad = 2.0 * M_PI * cnt / n
-			xt = x + int(r * cos(rad))
-			yt = y + int(r * sin(rad))
-			pos xt, yt
-			mes string
-			pos xt+50, yt
-			mes string
-		loop
-		color ((fontColorFirstFleet&0x00FF0000)>>16), ((fontColorFirstFleet&0x0000FF00)>>8), (fontColorFirstFleet&0x000000FF)
-		pos x, y
-		mes string
-		x += 100
-	}
-
-	if enableSecond = 1{
-		y = 10
-		string = "1\n2\n3\n4\n5\n6\n7"
-		color 255, 255, 255
-		repeat n
-			rad = 2.0 * M_PI * cnt / n
-			xt = x + int(r * cos(rad))
-			yt = y + int(r * sin(rad))
-			pos xt, yt
-			mes string
-			pos xt+50, yt
-			mes string
-		loop
-		color ((fontColorSecondFleet&0x00FF0000)>>16), ((fontColorSecondFleet&0x0000FF00)>>8), (fontColorSecondFleet&0x000000FF)
-		pos x, y
-		mes string
-		x += 100
-	}
-
-	if enableThird = 1{
-		y = 10
-		string = "1\n2\n3\n4\n5\n6\n7"
-		color 255, 255, 255
-		repeat n
-			rad = 2.0 * M_PI * cnt / n
-			xt = x + int(r * cos(rad))
-			yt = y + int(r * sin(rad))
-			pos xt, yt
-			mes string
-			pos xt+50, yt
-			mes string
-		loop
-		color ((fontColorThirdFleet&0x00FF0000)>>16), ((fontColorThirdFleet&0x0000FF00)>>8), (fontColorThirdFleet&0x000000FF)
-		pos x, y
-		mes string
-		x += 100
-	}
-
-	if enableFourth = 1{
-		y = 10
-		string = "1\n2\n3\n4\n5\n6\n7"
-		color 255, 255, 255
-		repeat n
-			rad = 2.0 * M_PI * cnt / n
-			xt = x + int(r * cos(rad))
-			yt = y + int(r * sin(rad))
-			pos xt, yt
-			mes string
-			pos xt+50, yt
-			mes string
-		loop
-		color ((fontColorFourthFleet&0x00FF0000)>>16), ((fontColorFourthFleet&0x0000FF00)>>8), (fontColorFourthFleet&0x000000FF)
-		pos x, y
-		mes string
-	}
-
-	font "���C���I", 12, 1
-	mref BMSCR, 67
-	r = 0.2 * abs(BMSCR.49)
-	n = int(2.0 * M_PI * r)
-
-	x = 10
-	y = 310
-	string = LONGSOFTNAME
-	color 255, 255, 255
-	repeat n
-		rad = 2.0 * M_PI * cnt / n
-		xt = x + int(r * cos(rad))
-		yt = y + int(r * sin(rad))
-		pos xt, yt
-		color 245, 240, 220
-		mes string
-		pos xt+240, yt
-		color 255, 255, 255
-		mes string
+color 255, 255, 255
+pos ginfo_cx-boid , ginfo_cy-boid
+repeat bold*2+1
+	cposy_x = ginfo_cx : cposy_y = ginfo_cy
+	repeat bold*2+1
+		cposx_x = ginfo_cx : cposx_y = ginfo_cy
+		mes a
+		pos cposx_x+1 , cposx_y
 	loop
-	color 170, 60, 70
-	pos x, y
-	mes string
-	redraw 1
+	pos cposy_x , cposy_y+1
+loop
 
-	dim colorRefArr, 16
-	repeat 16: colorRefArr(cnt) = 0x00FFFFFF: loop
-	dim chooseColoerStruct, 9
-	chooseColoerStruct(0) = 36, hwnd, 0, 0, varptr(colorRefArr), CC_FULLOPEN | CC_RGBINIT
+color ((col&0x00FF0000)>>16), ((col&0x0000FF00)>>8), (col&0x000000FF)
+pos cposy_x+bold , cposx_y-bold
+mes a
 
-	nidPop
+redraw 1
+
 return
+#global
 
 *colorCange1
 	colorRefArr(0) = RGBtoBGR(fontColorFirstFleet)
@@ -275,7 +81,6 @@ return
 *drawColor
 	if (mode = MODE_LIST && listMode == LISTMODE_FLEET){
 		nidPush
-		gosub *drawString
 		gsel WND_MAIN
 		color ((fontColorFirstFleet&0x00FF0000)>>16), ((fontColorFirstFleet&0x0000FF00)>>8), (fontColorFirstFleet&0x000000FF)
 		boxf Scale(211), drawColorPos + 1, Scale(349), drawColorPos + Scale(21)

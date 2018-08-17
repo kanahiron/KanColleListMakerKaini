@@ -189,21 +189,21 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 		ListModeHNum = 5
 
 		if ichiranMode1 {
-			if yubiwa = 0 & kantai = 0 : w = 392 : capx = 386
-			if yubiwa = 1 & kantai = 0 : w = 414 : capx = 386
-			if yubiwa = 0 & kantai = 1 : w = 416 : capx = 362
-			if yubiwa = 1 & kantai = 1 : w = 438 : capx = 362
-			if page = 0:h = 279
-			if page = 1:h = 315
-			if lvname = 1:w = 200: capx = 386:h = 279
-			capy = 154
+			if yubiwa = 0 & kantai = 0 : w = 588 : capx = 586
+			if yubiwa = 1 & kantai = 0 : w = 614 : capx = 586
+			if yubiwa = 0 & kantai = 1 : w = 620 : capx = 552
+			if yubiwa = 1 & kantai = 1 : w = 648 : capx = 552
+			if page = 0:h = 430
+			if page = 1:h = 480
+			if lvname = 1:w = 296: capx = 586:h = 430
+			capy = 221
 		}
 
 		if ichiranMode2 {
-			w = 320
-			h = 310
-			capx = 132
-			capy = 143
+			w = 480
+			h = 465
+			capx = 198
+			capy = 215
 		}
 	}
 
@@ -213,19 +213,19 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 		if (nishimuraFlg): cellnum(0) = 3, 3
 
 		if sosuka {
-			w = 454
-			h = 362
+			w = 684
+			h = 546
 		}
 		if sosu {
-			w = 230
-			h = 362
+			w = 348
+			h = 546
 		}
 		if soka {
-			w = 454
-			h = 195
+			w = 684
+			h = 296
 		}
-		capx = 327
-		capy = 103
+		capx = 488
+		capy = 154
 	}
 
 	if (listMode == LISTMODE_OTHER){
@@ -242,32 +242,32 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 			cellnum(0) = 2, 0
 			ListModeHNum = 1
 			if (airStationTab) {
-				w = 225
-				h = 358
-				capx = 575
-				capy = 109
+				w = int(1.5*225)
+				h = int(1.5*358)
+				capx = int(1.5*575)
+				capy = int(1.5*109)
 			} else {
-				w = 225
-				h = 336
-				capx = 575
-				capy = 131
+				w = int(1.5*225)
+				h = int(1.5*336)
+				capx = int(1.5*575)
+				capy = int(1.5*131)
 			}
 		}
 		if (equipmentList) {
 			cellnum(0) = 6, 4
 			ListModeHNum = 5
-			h = 300
+			h = 460
 			if (sceneKaiso) {
-				w = 208
-				capx = 366
-				capy = 132
-				if (includeDetails): w = 434
+				w = 280
+				capx = 548
+				capy = 195
+				if (includeDetails): w = 652
 			}
 			if (sceneHaiki) {
-				w = 198
-				capx = 200
-				capy = 130
-				if (includeDetails): w = 404
+				w = 260
+				capx = 300
+				capy = 182
+				if (includeDetails): w = 612
 			}
 		}
 
@@ -285,7 +285,6 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 			logmes " h    :"+h
 		}
 	}
-
 	if(pastSize){
 		capx = int(0.6666666667*capx+0.5)
 		capy = int(0.6666666667*capy+0.5)

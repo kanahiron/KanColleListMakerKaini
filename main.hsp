@@ -60,7 +60,7 @@
 	exist "./packfile"
 	if (strsize != -1): delete "./packfile"
 
-	onerror gosub *err_
+	//onerror gosub *err_
 #endif
 
 	onexit gosub *exit
@@ -127,10 +127,6 @@
 		GetWindowLong WND_INFO(WND_OVERLAY, WI_HANDLE),-20
 		SetWindowLong WND_INFO(WND_OVERLAY, WI_HANDLE),-20, stat | $80000
 		SetLayeredWindowAttributes WND_INFO(WND_OVERLAY, WI_HANDLE), 0x00000000, 128, LWA_ALPHA
-
-	buffer WND_MAKE_STRING, 1000, 340
-		SET_WND_INFO
-		gosub *drawString
 
 	bgscr WND_SUPPORT, 850, 100, 2
 		SET_WND_INFO

@@ -462,28 +462,28 @@
 			userDefListCh = objinfo_hwnd(userDefListCId)
 			sendmsg userDefListCh, $F4, $9
 
-			pos Scale(25+32+1), mesy+scale5
+			pos Scale(25+32+1-13), mesy+scale5
 			mes ","
 			pos Scale(25+32+7+32+8+32+0), mesy+scale5
 			mes "x"
 
-			pos Scale(25+0), mesy
+			pos Scale(25+0-13), mesy
 			input userDefRect(0), Scale(32), Scale(23), 3
 			userDefListXIId = stat
 			userDefListXIh = objinfo_hwnd(userDefListXIId)
 			ChgWndowStyle userDefListXIh, 0x02
-			pos Scale(25+32+7), mesy
+			pos Scale(25+32+7-13), mesy
 			input userDefRect(1), Scale(32), Scale(23), 3
 			userDefListYIId = stat
 			userDefListYIh = objinfo_hwnd(userDefListYIId)
 			ChgWndowStyle userDefListYIh, 0x02
 
-			pos Scale(25+32+7+32+8), mesy
-			input userDefRect(2), Scale(32), Scale(23), 3
+			pos Scale(25+32+7+32+8-13), mesy
+			input userDefRect(2), Scale(45), Scale(23), 4
 			userDefListWIId = stat
 			userDefListWIh = objinfo_hwnd(userDefListWIId)
 			ChgWndowStyle userDefListWIh, 0x02
-			pos Scale(25+32+7+32+8+32+7), mesy
+			pos Scale(25+32+7+32+8+45+7-13), mesy
 			input userDefRect(3), Scale(32), Scale(23), 3
 			userDefListHIId = stat
 			userDefListHIh = objinfo_hwnd(userDefListHIId)

@@ -126,10 +126,10 @@
 	GetIni "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
 	GetIni "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr, "\"20AC4C\""
 	GetIni "KanmusuFormationMode", "FontColorFourthFleetStr", fontColorFourthFleetStr, "\"E06020\""
-	GetIni "KanmusuFormationMode", "FontName", fontname, "\"\""
-	GetIni "KanmusuFormationMode", "FontNum", fontnum ,"\"\""
-	GetIni "KanmusuFormationMode", "FontSizeName", fontsizename, "30"
-	GetIni "KanmusuFormationMode", "FontSizeNum", fontsizenum, "34"
+	GetIni "KanmusuFormationMode", "FontName", fontname, "\"メイリオ\""
+	GetIni "KanmusuFormationMode", "FontNum", fontnum ,"\"メイリオ\""
+	GetIni "KanmusuFormationMode", "FontSizeName", fontsizename, "42"
+	GetIni "KanmusuFormationMode", "FontSizeNum", fontsizenum, "44"
 	GetIni "KanmusuFormationMode", "PunctuationColorStr", PunctuationColorStr, "\"2020C0\""
 
 	GetIni "OtherListMode", "DirectLink", directLink, "1"
@@ -184,10 +184,10 @@ return
 	if (soka != 0) & (soka != 1):soka=0
 	if (enableTweetWindow != 0) & (enableTweetWindow != 1):enableTweetWindow=0
 	if (twijpg != 0) & (twijpg != 1):twijpg=1
-	if fontname = "":fontname = "ＭＳ　ゴシック"
-	if fontnum = "":fontnum = "ＭＳ　ゴシック"
-	if (fontsizename < 10) | ( 50 < fontsizename):fontsizename=30
-	if (fontsizenum < 10) | ( 50 < fontsizenum):fontsizenum=34
+	if fontname = "":fontname = "メイリオ"
+	if fontnum = "":fontnum = "メイリオ"
+	if (fontsizename < 10) | ( 70 < fontsizename):fontsizename=42
+	if (fontsizenum < 10) | ( 70 < fontsizenum):fontsizenum=44
 	if FirstFleetName = "":FirstFleetName = "第一艦隊"
 	if SecondFleetName = "":SecondFleetName = "第二艦隊"
 

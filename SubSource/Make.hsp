@@ -1,12 +1,58 @@
 //ˆê——ì¬\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 *make
 	nidPush
-
-	gosub *drawString
+	
 	successFlg = FALSE
 
 	VNum = 0
 	HNum = 0
+
+	nameOffset = 308, 3
+	numOffset =  618, 3
+	FontSizeName_ = FontSizeName
+	FontSizeNum_ = FontSizeNum
+
+	if (pastSize){
+		nameOffset(0) = int(0.66666667*nameOffset(0)), int(0.66666667*nameOffset(1))
+		numOffset(0) = int(0.66666667*numOffset(0)), int(0.66666667*numOffset(1))
+		FontSizeName_ = int(0.73*FontSizeName_)
+		FontSizeNum_ = int(0.73*FontSizeNum_)
+	}
+
+	sdim kantaiMei, 4
+	sdim kantaiNum, 4, 6
+	dim kantaiColor, 4
+	kantaiMei = "", "", "", ""
+	kantaiColor = 0, 0, 0, 0
+	kantaiNum(0, 0) = "","","","","",""
+	kantaiNum(0, 1) = "","","","","",""
+	kantaiNum(0, 2) = "","","","","",""
+	kantaiNum(0, 3) = "","","","","",""
+	dim in, 1
+	if (enableFirst){
+		kantaiMei(in) = FirstFleetName
+		kantaiColor(in) = fontColorFirstFleet
+		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E"
+		in+=1
+	}
+	if (enableSecond){
+		kantaiMei(in) = SecondFleetName
+		kantaiColor(in) = fontColorSecondFleet
+		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E"
+		in+=1
+	}
+	if (enableThird){
+		kantaiMei(in) = ThirdFleetName
+		kantaiColor(in) = fontColorThirdFleet
+		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E"
+		in+=1
+	}
+	if (enableFourth){
+		kantaiMei(in) = FourthFleetName
+		kantaiColor(in) = fontColorFourthFleet
+		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E"
+		in+=1
+	}
 
 	//c‰¡‚Ì‰æ‘œ–‡”‚ðƒJƒEƒ“ƒg
 	repeat cellnum(1)+1
@@ -55,16 +101,18 @@
 						xcnt_ = (cnt\3)*2
 						ycnt_ = (cnt/3)*3
 						if bufIDPos(xcnt_, ycnt_) >= 100{
-							pos 205+cutRange(CR_W)*xcnt_, cutRange(CR_H)*ycnt_+5
-							gcopy WND_MAKE_STRING, 0, 10+ccnt*70, 220, OSOWm+10
+							font fontName, FontSizeName_
+							pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
+							fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
 							if addOrderNum {
 								ccnt2 = 0
 								repeat 6
 									xcnt = xcnt_ + cnt\2
 									ycnt = ycnt_ + cnt/2
 									if bufIDPos(xcnt, ycnt) >= 100{
-										pos 205+cutRange(CR_W)*xcnt+210, cutRange(CR_H)*ycnt+5
-										gcopy WND_MAKE_STRING, 500+(ccnt*100), 10+ccnt2*OSOW, 50, OSOW
+										font fontNum, FontSizeNum_
+										pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
+										fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
 										ccnt2++
 									}
 								loop
@@ -104,16 +152,18 @@
 						xcnt_ = cnt*2
 						ycnt_ = 0
 						if bufIDPos(xcnt_, ycnt_) >= 100{
-							pos 205+cutRange(CR_W)*xcnt_, cutRange(CR_H)*ycnt_+5
-							gcopy WND_MAKE_STRING, 0, 10+ccnt*70, 220, OSOWm+10
+							font fontName, FontSizeName_
+							pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
+							fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
 							if addOrderNum {
 								ccnt2 = 0
 								repeat 7
 									xcnt = xcnt_ + cnt\2
 									ycnt = ycnt_ + cnt/2
 									if bufIDPos(xcnt, ycnt) >= 100{
-										pos 205+cutRange(CR_W)*xcnt+210, cutRange(CR_H)*ycnt+5
-										gcopy WND_MAKE_STRING, 500+(ccnt*100), 10+ccnt2*OSOW, 50, OSOW
+										font fontNum, FontSizeNum_
+										pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
+										fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
 										ccnt2++
 									}
 								loop
@@ -151,16 +201,18 @@
 						xcnt_ = 0
 						ycnt_ = cnt*2
 						if bufIDPos(xcnt_, ycnt_) >= 100{
-							pos 205+cutRange(CR_W)*xcnt_, cutRange(CR_H)*ycnt_+5
-							gcopy WND_MAKE_STRING, 0, 10+ccnt*70, 220, OSOWm+10
+							font fontName, FontSizeName_
+							pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
+							fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
 							if addOrderNum {
 								ccnt2 = 0
 								repeat 6
 									xcnt = xcnt_ + cnt\3
 									ycnt = ycnt_ + cnt/3
 									if bufIDPos(xcnt, ycnt) >= 100{
-										pos 205+cutRange(CR_W)*xcnt+210, cutRange(CR_H)*ycnt+5
-										gcopy WND_MAKE_STRING, 500+(ccnt*100), 10+ccnt2*OSOW, 50, OSOW
+										font fontNum, FontSizeNum_
+										pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
+										fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
 										ccnt2++
 									}
 								loop
@@ -202,8 +254,9 @@
 						xcnt_ = (cnt\2)*3
 						ycnt_ = (cnt/2)*2
 						if bufIDPos(xcnt_, ycnt_) >= 100{
-							pos 205+cutRange(CR_W)*xcnt_, cutRange(CR_H)*ycnt_+5
-							gcopy WND_MAKE_STRING, 0, 10+ccnt*70, 220, OSOWm+10
+							font fontName, FontSizeName_
+							pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
+							fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
 							if addOrderNum {
 								ccnt2 = 0
 								repeat 7
@@ -214,8 +267,9 @@
 										ycnt = ycnt_ + 1
 									}
 									if bufIDPos(xcnt, ycnt) >= 100{
-										pos 205+cutRange(CR_W)*xcnt+210, cutRange(CR_H)*ycnt+5
-										gcopy WND_MAKE_STRING, 500+(ccnt*100), 10+ccnt2*OSOW, 50, OSOW
+										font fontNum, FontSizeNum_
+										pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
+										fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
 										ccnt2++
 									}
 								loop
@@ -265,16 +319,18 @@
 					xcnt_ = 0
 					ycnt_ = cnt
 					if bufIDPos(xcnt_, ycnt_) >= 100{
-						pos 205+cutRange(CR_W)*xcnt_, cutRange(CR_H)*ycnt_+5
-						gcopy WND_MAKE_STRING, 0, 10+ccnt*70, 220, OSOWm+10
+						font fontName, FontSizeName_
+						pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
+						fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
 						if addOrderNum {
 							ccnt2 = 0
 							repeat 6
 								xcnt = xcnt_ + cnt
 								ycnt = ycnt_
 								if bufIDPos(xcnt, ycnt) >= 100{
-									pos 205+cutRange(CR_W)*xcnt+210, cutRange(CR_H)*ycnt+5
-									gcopy WND_MAKE_STRING, 500+(ccnt*100), 10+ccnt2*OSOW, 50, OSOW
+									font fontNum, FontSizeNum_
+									pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
+									fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
 									ccnt2++
 								}
 							loop
@@ -312,16 +368,18 @@
 					xcnt_ = cnt
 					ycnt_ = 0
 					if bufIDPos(xcnt_, ycnt_) >= 100{
-						pos 205+cutRange(CR_W)*xcnt_, cutRange(CR_H)*ycnt_+5
-						gcopy WND_MAKE_STRING, 0, 10+ccnt*70, 220, OSOWm+10
+						font fontName, FontSizeName_
+						pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
+						fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
 						if addOrderNum {
 							ccnt2 = 0
 							repeat 6
 								xcnt = xcnt_
 								ycnt = ycnt_ + cnt
 								if bufIDPos(xcnt, ycnt) >= 100{
-									pos 205+cutRange(CR_W)*xcnt+210, cutRange(CR_H)*ycnt+5
-									gcopy WND_MAKE_STRING, 500+(ccnt*100), 10+ccnt2*OSOW, 50, OSOW
+									font fontNum, FontSizeNum_
+									pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
+									fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
 									ccnt2++
 								}
 							loop
@@ -352,7 +410,7 @@
 	if senden & (listmode==LISTMODE_FLEET) & (sosuka|soka){
 		gsel WND_TEMP2
 		gmode 7
-		pos ginfo_winx-220, ginfo_winy-14//225
+		pos ginfo_winx-220, ginfo_winy-13//225
 		gcopy WND_MAKE_STRING, 10, 310, 240, 30
 	}
 
