@@ -719,6 +719,9 @@
 			chkbox "SSを強制的に等倍にリサイズする", forceResize: mesy += scale20
 
 			pos scale5, mesy
+			chkbox "第一期と同じサイズに縮小する", pastSize: mesy += scale20
+
+			pos scale5, mesy
 			chkbox "一覧作成モードで背景を補間する", listMakeInterpolation: mesy += scale20
 			pos Scale(5+25), mesy
 			chkbox "直接連結では補間しない", directLinkDisInterpolation: mesy += scale20

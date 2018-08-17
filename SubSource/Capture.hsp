@@ -335,8 +335,13 @@ return (successFlg^1)
 		picy = ssCapWH(1)
 		ratio = 1.0*picy/picx
 
-		buffer bufid, BASE_SIZE_W, BASE_SIZE_H
-		gzoom BASE_SIZE_W, BASE_SIZE_H, WND_CAPTURE, 0, 0, picx, picy, 1
+		if (pastSize^1){
+			buffer bufid, BASE_SIZE_W, BASE_SIZE_H
+			gzoom BASE_SIZE_W, BASE_SIZE_H, WND_CAPTURE, 0, 0, picx, picy, 1
+		} else {
+			buffer bufid, int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5)
+			gzoom int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5), WND_CAPTURE, 0, 0, picx, picy, 1
+		}
 
         /*
         //HTML5移行によりしばらく利用不可能
@@ -358,8 +363,13 @@ return (successFlg^1)
 		picy = ginfo_winy
 		ratio = 1.0*picy/picx
 
-		buffer bufid, BASE_SIZE_W, BASE_SIZE_H
-		gzoom BASE_SIZE_W, BASE_SIZE_H, WND_TEMP1, 0, 0, picx, picy, 1
+		if (pastSize^1){
+			buffer bufid, BASE_SIZE_W, BASE_SIZE_H
+			gzoom BASE_SIZE_W, BASE_SIZE_H, WND_TEMP1, 0, 0, picx, picy, 1
+		} else {
+			buffer bufid, int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5)
+			gzoom int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5), WND_TEMP1, 0, 0, picx, picy, 1
+		}
         /*
         ?HTML5移行によりしばらく利用不可能
 		if ( absf(ratio-(450.0/800.0)) <= 0.01 ){
