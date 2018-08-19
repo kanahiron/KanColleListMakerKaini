@@ -173,6 +173,33 @@
 
 	listLoadedNum = 0
 
+
+	dim confirmSaveName, SAVENAME_COUNT
+	dim saveMode, 1
+	saveMode = 0
+
+	sdim defaultSaveName, 1026, SAVENAME_COUNT
+	defaultSaveName(SN_CAPTURE) = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_SELECTCAPTURE) = "selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_LIST) = "艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_FORMATION) = "攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_AIRSTATION) = "基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_DIRECTLINK) = "直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_EQUIPMENT) = "装備一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_USERDEF) = "ユーザ定義_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_VIDEO) = "KCVideo_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+
+	sdim saveNameStr, 64, SAVENAME_COUNT
+	saveNameStr(SN_CAPTURE) = "SSキャプチャ"
+	saveNameStr(SN_SELECTCAPTURE) = "範囲選択キャプチャ"
+	saveNameStr(SN_LIST) = "艦娘一覧"
+	saveNameStr(SN_FORMATION) = "攻略編成"
+	saveNameStr(SN_AIRSTATION) = "基地航空隊"
+	saveNameStr(SN_DIRECTLINK) = "直接連結"
+	saveNameStr(SN_EQUIPMENT) = "装備一覧"
+	saveNameStr(SN_USERDEF) = "ユーザ定義"
+	saveNameStr(SN_VIDEO) = "動画キャプチャ"
+
 return
 
 #defcfunc CheckPosRange array arg

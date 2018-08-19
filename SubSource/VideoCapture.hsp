@@ -72,7 +72,7 @@
 		noteget x264presetStr, x264presetNum
 		noteunsel
 
-		videoFileName = strf("%s\\%s", videoCapSaveDir, DateAndTimeFormat2(saveNameVideoCapture))
+		videoFileName = strf("%s\\%s", videoCapSaveDir, DateAndTimeFormat2(saveName(SN_VIDEO)) )
 
 		//コマンドの組み立て
 		if (noAudioFlg^1){

@@ -78,40 +78,10 @@ return
 	BId = stat
 	if ( mode == MODE_OPTION ){
 		if (optionMode == OPMODE_CAPTURE){
-			switch saveNameSel
-				case 0
-					saveNameCapture = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameIId, saveNameCapture
-					swbreak
-				case 1
-					saveNameSelectCapture = "selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameIId, saveNameSelectCapture
-					swbreak
-				case 2
-					saveNameList = "艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameIId, saveNameList
-					swbreak
-				case 3
-					saveNameFormation = "攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameIId, saveNameFormation
-					swbreak
-				case 4
-					saveNameDirectLink = "直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameIId, saveNameDirectLink
-					swbreak
-				case 5
-					saveNameAirStation = "基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameIId, saveNameAirStation
-					swbreak
-				case 6
-					saveNameEquipmentList = "装備一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameIId, saveNameEquipmentList
-					swbreak
-				case 7
-					saveNameUserDefList = "ユーザ定義_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-					objprm saveNameIId, saveNameUserDefList
-					swbreak
-			swend
+
+			saveName(saveNameSel) = defaultSaveName(saveNameSel)
+			objprm saveNameIId, saveName(saveNameSel)
+
 		}
 		if (optionMode == OPMODE_VIDEOCAPTURE){
 			if (BId == saveNameVideoCaptureIId-1){

@@ -698,9 +698,9 @@
 
 			objsize Scale(350), scale20
 
-			saveNameSelStr = saveNameCapture
+			saveNameSelStr = saveName(SN_CAPTURE)
 			saveNameSel = 0
-			confirmSaveName = confirmSaveNameCapture
+			confirmSaveNameCB = confirmSaveName(SN_CAPTURE)
 
 			pos scale5, mesy
 			chkbox "\"’ñ“Â–¼‚ÆŽi—ß•”Lv‚ð‰B‚·\"‚ÅŽi—ß•”Lv‚Í‰B‚³‚È‚¢", noHideLv: mesy += scale20
@@ -820,7 +820,7 @@
 			pos Scale(180), mesy
 			objsize Scale(50), ComBoxH
 			pos Scale(200), mesy
-			chkbox "Šm”F", confirmSaveName
+			chkbox "Šm”F", confirmSaveNameCB
 			confirmSaveNameCId = stat
 			confirmSaveNameCh = objinfo_hwnd(confirmSaveNameCId)
 			objsize Scale(100), ComBoxH
@@ -961,7 +961,7 @@
 			pos Scale(200), mesy
 			button gosub "ƒfƒtƒHƒ‹ƒg‚É–ß‚·", *LoadDefaultSaveName: mesy += scale20
 			pos 0, mesy
-			mesbox saveNameVideoCapture, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+			mesbox saveName(SN_VIDEO), Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameVideoCaptureIId = stat
 			ShowScrollBar objinfo_hwnd(saveNameVideoCaptureIId), SB_VERT, FALSE
 		}

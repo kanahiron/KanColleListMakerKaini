@@ -4,6 +4,9 @@
 	SetIni (dir_exe+"\\ListMaker2.ini")
 	if (stat == 2):errDialog = FALSE: initialActivation = TRUE
 
+	sdim tempStr, 1026
+	dim tempInt, 1
+
 	GetIni "Configuration", "FrontRow", frontrow, "1"
 	GetIni "Configuration", "HideLog", hidelog, "0"
 	GetIni "Configuration", "YabumiAutoUpload", yabumiautoupload, "1"
@@ -50,22 +53,38 @@
 	GetIni "CaptureAndMaking", "seqCapLimitTimeM", seqCapLimitTimeM, "99"
 	GetIni "CaptureAndMaking", "seqCapLimitTimeS", seqCapLimitTimeS, "59"
 	GetIni "CaptureAndMaking", "seqCapLimitSize", seqCapLimitSize, "9999"
-	GetIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture, "\"kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "saveNameSelectCapture", saveNameSelectCapture, "\"selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "SaveNameList", saveNameList, "\"艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "SaveNameFormation", saveNameFormation, "\"攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation, "\"基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink, "\"直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "SaveNameEquipmentList", saveNameEquipmentList, "\"装備一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "SaveNameUserDefList", saveNameUserDefList, "\"ユーザ定義_<yyyy><MM><dd>-<HH><mm><ss><ms>\""
-	GetIni "CaptureAndMaking", "ConfirmSaveNameCapture", confirmSaveNameCapture, "0"
-	GetIni "CaptureAndMaking", "ConfirmsaveNameSelectCapture", confirmSaveNameSelectCapture, "0"
-	GetIni "CaptureAndMaking", "ConfirmSaveNameList", confirmSaveNameList, "0"
-	GetIni "CaptureAndMaking", "ConfirmSaveNameFormation", confirmSaveNameFormation, "0"
-	GetIni "CaptureAndMaking", "ConfirmSaveNameAirStation", confirmSaveNameAirStation, "0"
-	GetIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", confirmSaveNameDirectLink, "0"
-	GetIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", confirmSaveNameEquipmentList, "0"
-	GetIni "CaptureAndMaking", "ConfirmSaveNameUserDefList", confirmSaveNameUserDefList, "0"
+	GetIni "CaptureAndMaking", "SaveNameCapture", tempStr, "\""+defaultSaveName(SN_CAPTURE)+"\""
+	saveName(SN_CAPTURE) = tempStr
+	GetIni "CaptureAndMaking", "saveNameSelectCapture", tempStr, "\""+defaultSaveName(SN_SELECTCAPTURE)+"\""
+	saveName(SN_SELECTCAPTURE) = tempStr
+	GetIni "CaptureAndMaking", "SaveNameList", tempStr, "\""+defaultSaveName(SN_LIST)+"\""
+	saveName(SN_LIST) = tempStr
+	GetIni "CaptureAndMaking", "SaveNameFormation", tempStr, "\""+defaultSaveName(SN_FORMATION)+"\""
+	saveName(SN_FORMATION) = tempStr
+	GetIni "CaptureAndMaking", "SaveNameAirStation", tempStr, "\""+defaultSaveName(SN_AIRSTATION)+"\""
+	saveName(SN_AIRSTATION) = tempStr
+	GetIni "CaptureAndMaking", "SaveNameDirectLink", tempStr, "\""+defaultSaveName(SN_DIRECTLINK)+"\""
+	saveName(SN_DIRECTLINK) = tempStr
+	GetIni "CaptureAndMaking", "SaveNameEquipmentList", tempStr, "\""+defaultSaveName(SN_EQUIPMENT)+"\""
+	saveName(SN_EQUIPMENT) = tempStr
+	GetIni "CaptureAndMaking", "SaveNameUserDefList", tempStr, "\""+defaultSaveName(SN_USERDEF)+"\""
+	saveName(SN_USERDEF) = tempStr
+	GetIni "CaptureAndMaking", "ConfirmSaveNameCapture", tempInt, "0"
+	comfirmSaveName(SN_CAPTURE) = tempInt
+	GetIni "CaptureAndMaking", "ConfirmSaveNameSelectCapture", tempInt, "0"
+	comfirmSaveName(SN_SELECTCAPTURE) = tempInt
+	GetIni "CaptureAndMaking", "ConfirmSaveNameList", tempInt, "0"
+	comfirmSaveName(SN_LIST) = tempInt
+	GetIni "CaptureAndMaking", "ConfirmSaveNameFormation", tempInt, "0"
+	comfirmSaveName(SN_FORMATION) = tempInt
+	GetIni "CaptureAndMaking", "ConfirmSaveNameAirStation", tempInt, "0"
+	comfirmSaveName(SN_AIRSTATION) = tempInt
+	GetIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", tempInt, "0"
+	comfirmSaveName(SN_DIRECTLINK) = tempInt
+	GetIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", tempInt, "0"
+	comfirmSaveName(SN_EQUIPMENT) = tempInt
+	GetIni "CaptureAndMaking", "ConfirmSaveNameUserDefList", tempInt, "0"
+	comfirmSaveName(SN_USERDEF) = tempInt
 
 	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
 	GetIni "VideoCapture", "lateEncode", lateEncode, "1"
@@ -78,7 +97,8 @@
 	GetIni "VideoCapture", "ffmpegDir", ffmpegDir, "\"\""
 	GetIni "VideoCapture", "AudioDeviceName", AudioDeviceName, "\"\""
 	GetIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir, "\"\""
-	GetIni "VideoCapture", "SaveNameVideoCapture", SaveNameVideoCapture, "\"KCVideo_<yyyy><MM><dd>-<HH><mm><ss>\""
+	GetIni "VideoCapture", "SaveNameVideoCapture", tempStr, "\""+defaultSaveName(SN_VIDEO)+"\""
+	saveName(SN_VIDEO) = tempStr
 	GetIni "VideoCapture", "enableVideoCapLimit", enableVideoCapLimit, "0"
 	GetIni "VideoCapture", "VideoCapLimitTimeM", videoCapLimitTimeM, "30"
 	GetIni "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS, "0"
@@ -194,7 +214,6 @@ return
 	logmes strf("scrSizeBase_ %4d, %4d", scrSizeBase(0), scrSizeBase(1))
 
 	if ( scrSizeMin(0) <= scrSizeBase(0) && scrSizeBase(0) <= maxScrSize(0) && scrSizeMin(1) <= scrSizeBase(1) && scrSizeBase(1) <= maxScrSize(1)){
-
 	} else {
 		scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.667*ginfo_dispy)
 	}
@@ -216,14 +235,9 @@ return
 	if (directLinkDisInterpolation != 0) & (directLinkDisInterpolation != 1):directLinkDisInterpolation=1
 	if (enableSupportWindow != 0) & (enableSupportWindow != 1):enableSupportWindow=1
 
-	if (confirmSaveNameCapture != 0) & (confirmSaveNameCapture != 1):confirmSaveNameCapture=0
-	if (confirmSaveNameSelectCapture != 0) & (confirmSaveNameSelectCapture != 1):confirmSaveNameSelectCapture=0
-	if (confirmSaveNameList != 0) & (confirmSaveNameList != 1):confirmSaveNameList=0
-	if (confirmSaveNameFormation != 0) & (confirmSaveNameFormation != 1):confirmSaveNameFormation=0
-	if (confirmSaveNameAirStation != 0) & (confirmSaveNameAirStation != 1):confirmSaveNameAirStation=0
-	if (confirmSaveNameDirectLink != 0) & (confirmSaveNameDirectLink != 1):confirmSaveNameDirectLink=0
-	if (confirmSaveNameEquipmentList != 0) & (confirmSaveNameEquipmentList != 1):confirmSaveNameEquipmentList=0
-	if (confirmSaveNameUserDefList != 0) & (confirmSaveNameUserDefList != 1):confirmSaveNameUserDefList=0
+	repeat SAVENAME_COUNT
+		if ( confirmSaveName(cnt)!=0 && confirmSaveName(cnt)!=1 ): confirmSaveName(cnt)=0
+	loop
 
 	//VideoCapture
 	if (enableVideoCap != 0) & (enableVideoCap != 1):enableVideoCap=1
@@ -322,53 +336,14 @@ return
 		}
 	}
 
-	//=====
-	isValidFileName DateAndTimeFormat2(saveNameCapture)
-	if (stat == FALSE){
-		saveNameCapture = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-		savelogtext += "Info - SSキャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
-	}
-
-	isValidFileName DateAndTimeFormat2(saveNameSelectCapture)
-	if (stat == FALSE){
-		saveNameSelectCapture = "selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-		savelogtext += "Info - 範囲選択キャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
-	}
-
-	isValidFileName DateAndTimeFormat2(saveNameList)
-	if (stat == FALSE){
-		saveNameList = "艦娘一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-		savelogtext += "Info - 艦娘一覧保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
-	}
-
-	isValidFileName DateAndTimeFormat2(saveNameFormation)
-	if (stat == FALSE){
-		saveNameFormation = "攻略編成_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-		savelogtext += "Info - 攻略編成保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
-	}
-
-	isValidFileName DateAndTimeFormat2(saveNameAirStation)
-	if (stat == FALSE){
-		saveNameAirStation = "基地航空隊_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-		savelogtext += "Info - 基地航空隊保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
-	}
-
-	isValidFileName DateAndTimeFormat2(saveNameDirectLink)
-	if (stat == FALSE){
-		saveNameDirectLink = "直接連結_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-		savelogtext += "Info - 直接連結保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
-	}
-	isValidFileName DateAndTimeFormat2(saveNameEquipmentList)
-	if (stat == FALSE){
-		saveNameEquipmentList = "装備一覧_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-		savelogtext += "Info - 装備一覧保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
-	}
-	isValidFileName DateAndTimeFormat2(saveNameUserDefList)
-	if (stat == FALSE){
-		saveNameUserDefList = "ユーザ定義_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-		savelogtext += "Info - ユーザ定義保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
-	}
-	//=====
+	repeat SAVENAME_COUNT
+		logmes "saveName("+cnt+") :"+saveName(cnt)
+		isValidFileName DateAndTimeFormat2(saveName(cnt))
+		if (stat == FALSE){
+			saveName(cnt) = defaultSaveName(cnt)
+			savelogtext += "Info - "+saveNameStr(cnt)+"保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
+		}
+	loop
 
 	fontcolorname = int("$"+fontcolornamestr)
 	fontcolornum = int("$"+fontcolornumstr)
@@ -389,12 +364,6 @@ return
 			mkdir "VideoCapture"
 		}
 		videoCapSaveDir = dir_exe+"\\VideoCapture"
-	}
-
-	isValidFileName DateAndTimeFormat2(saveNameVideoCapture)
-	if (stat == FALSE){
-		saveNameVideoCapture = "KCVideo_<yyyy><MM><dd>-<HH><mm><ss>"
-		savelogtext += "Info - 動画キャプチャ保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 	}
 
 	if (tuika1+tuika2+tuika3+tuika4) != 1{
@@ -526,22 +495,39 @@ return
 	WriteIni "CaptureAndMaking", "seqCapLimitTimeM", seqCapLimitTimeM
 	WriteIni "CaptureAndMaking", "seqCapLimitTimeS", seqCapLimitTimeS
 	WriteIni "CaptureAndMaking", "seqCapLimitSize", seqCapLimitSize
-	WriteIni "CaptureAndMaking", "SaveNameCapture", saveNameCapture
-	WriteIni "CaptureAndMaking", "saveNameSelectCapture", saveNameSelectCapture
-	WriteIni "CaptureAndMaking", "SaveNameList", saveNameList
-	WriteIni "CaptureAndMaking", "SaveNameFormation", saveNameFormation
-	WriteIni "CaptureAndMaking", "SaveNameAirStation", saveNameAirStation
-	WriteIni "CaptureAndMaking", "SaveNameDirectLink", saveNameDirectLink
-	WriteIni "CaptureAndMaking", "SaveNameEquipmentList", saveNameEquipmentList
-	WriteIni "CaptureAndMaking", "SaveNameUserDefList", saveNameUserDefList
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameCapture", confirmSaveNameCapture
-	WriteIni "CaptureAndMaking", "ConfirmsaveNameSelectCapture", confirmSaveNameSelectCapture
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameList", confirmSaveNameList
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameFormation", confirmSaveNameFormation
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameAirStation", confirmSaveNameAirStation
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", confirmSaveNameDirectLink
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", confirmSaveNameEquipmentList
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameUserDefList", confirmSaveNameUserDefList
+	tempStr = saveName(SN_CAPTURE)
+	WriteIni "CaptureAndMaking", "SaveNameCapture", tempStr
+	tempStr = saveName(SN_SELECTCAPTURE)
+	WriteIni "CaptureAndMaking", "saveNameSelectCapture", tempStr
+	tempStr = saveName(SN_LIST)
+	WriteIni "CaptureAndMaking", "SaveNameList", tempStr
+	tempStr = saveName(SN_FORMATION)
+	WriteIni "CaptureAndMaking", "SaveNameFormation", tempStr
+	tempStr = saveName(SN_AIRSTATION)
+	WriteIni "CaptureAndMaking", "SaveNameAirStation", tempStr
+	tempStr = saveName(SN_DIRECTLINK)
+	WriteIni "CaptureAndMaking", "SaveNameDirectLink", tempStr
+	tempStr = saveName(SN_EQUIPMENT)
+	WriteIni "CaptureAndMaking", "SaveNameEquipmentList", tempStr
+	tempStr = saveName(SN_USERDEF)
+	WriteIni "CaptureAndMaking", "SaveNameUserDefList", tempStr
+
+	tempInt = confirmSaveName(SN_CAPTURE)
+	WriteIni "CaptureAndMaking", "ConfirmSaveNameCapture", tempInt
+	tempInt = confirmSaveName(SN_SELECTCAPTURE)
+	WriteIni "CaptureAndMaking", "ConfirmsaveNameSelectCapture", tempInt
+	tempInt = confirmSaveName(SN_LIST)
+	WriteIni "CaptureAndMaking", "ConfirmSaveNameList", tempInt
+	tempInt = confirmSaveName(SN_FORMATION)
+	WriteIni "CaptureAndMaking", "ConfirmSaveNameFormation", tempInt
+	tempInt = confirmSaveName(SN_AIRSTATION)
+	WriteIni "CaptureAndMaking", "ConfirmSaveNameAirStation", tempInt
+	tempInt = confirmSaveName(SN_DIRECTLINK)
+	WriteIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", tempInt
+	tempInt = confirmSaveName(SN_EQUIPMENT)
+	WriteIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", tempInt
+	tempInt = confirmSaveName(SN_USERDEF)
+	WriteIni "CaptureAndMaking", "ConfirmSaveNameUserDefList", tempInt
 
 	WriteIni "VideoCapture", "enableVideoCap", enableVideoCap
 	WriteIni "VideoCapture", "lateEncode", lateEncode
@@ -554,7 +540,8 @@ return
 	WriteIni "VideoCapture", "AudioDeviceName", AudioDeviceName
 	WriteIni "VideoCapture", "ffmpegDir", ffmpegDir
 	WriteIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir
-	WriteIni "VideoCapture", "SaveNameVideoCapture", SaveNameVideoCapture
+	tempStr = saveName(SN_VIDEO)
+	WriteIni "VideoCapture", "SaveNameVideoCapture", tempStr
 	WriteIni "VideoCapture", "enableVideoCapLimit", enableVideoCapLimit
 	WriteIni "VideoCapture", "VideoCapLimitTimeM", videoCapLimitTimeM
 	WriteIni "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS

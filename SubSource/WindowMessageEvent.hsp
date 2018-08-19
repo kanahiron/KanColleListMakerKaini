@@ -79,16 +79,9 @@ return
 			gosub *ListRelocation
 			swbreak
 	swend
-	/* if (MultiSelectedFlg){
-		MultiSelectedFlg = FALSE
-		if (mode == MODE_LIST){
-			gosub *draw
-		}
-	} */
+
 	oncmd 1
 return
-
-
 
 *WM_COMMAND_Proc
 
@@ -113,22 +106,21 @@ return
 				mode = MODE_SSCAP
 				swbreak
 			case 1
-				listmode = LISTMODE_LIST
 				mode = MODE_LIST
+				listmode = LISTMODE_LIST
 				swbreak
 			case 2
-				listmode = LISTMODE_FLEET
 				mode = MODE_LIST
+				listmode = LISTMODE_FLEET
 				swbreak
 			case 3
-				listmode = LISTMODE_OTHER
 				mode = MODE_LIST
+				listmode = LISTMODE_OTHER
 				swbreak
 			case 4
 				mode = MODE_OPTION
 				swbreak
 		swend
-
 		if (mode != modePrev || listMode != listModePrev || optionMode != optionModePrev){
 
 			if (mode = MODE_OPTION){
@@ -162,50 +154,16 @@ return
 	//オプション→キャプチャ設定の保存名選択コンボボックス
 	if (lparam == saveNameSelCBh) & (((wparam>>16) & 0x0000FFFF) = 1){
 
-		logmes "saveNameSelComBox"
 		sendmsg saveNameSelCBh, CB_GETCURSEL
 		saveNameSel = stat
-		logmes ""+saveNameSel
-		switch saveNameSel
-			case 0
-				objprm saveNameIId, saveNameCapture
-				objprm confirmSaveNameCId, confirmSaveNameCapture
-				swbreak
-			case 1
-				objprm saveNameIId, saveNameSelectCapture
-				objprm confirmSaveNameCId, confirmSaveNameSelectCapture
-				swbreak
-			case 2
-				objprm saveNameIId, saveNameList
-				objprm confirmSaveNameCId, confirmSaveNameList
-				swbreak
-			case 3
-				objprm saveNameIId, saveNameFormation
-				objprm confirmSaveNameCId, confirmSaveNameFormation
-				swbreak
-			case 4
-				objprm saveNameIId, saveNameDirectLink
-				objprm confirmSaveNameCId, confirmSaveNameDirectLink
-				swbreak
-			case 5
-				objprm saveNameIId, saveNameAirStation
-				objprm confirmSaveNameCId, confirmSaveNameAirStation
-				swbreak
-			case 6
-				objprm saveNameIId, saveNameEquipmentList
-				objprm confirmSaveNameCId, confirmSaveNameEquipmentList
-				swbreak
-			case 7
-				objprm saveNameIId, saveNameUserDefList
-				objprm confirmSaveNameCId, confirmSaveNameUserDefList
-				swbreak
-		swend
-	}
 
+		objprm saveNameIId, saveName(saveNameSel)
+		objprm confirmSaveNameCId, confirmSaveName(saveNameSel)
+
+	}
 
 	//モードがオプションモードでないとき
 	if (mode != MODE_OPTION){
-
 		//ツイートウィンドウ表示のチェックボックスが押された時
 		if (lparam == enabletweetwindowch && enabletweetwindowch != 0){
 
@@ -220,6 +178,8 @@ return
 
 		}
 
+		//保存名の切り替えをここで行う(ややリスキー？)
+		gosub *saveModeCalc
 		if (mode == MODE_LIST){
 
 			//一覧作成モードでチェックボックスのオンオフで動的に画面を切り替えるための判定処理
@@ -262,37 +222,9 @@ return
 			}
 		}
 
-
 		if (lparam == confirmSaveNameCh){
 			sendmsg confirmSaveNameCh, $F2
-			confirmSaveName = stat & 0x01
-
-			switch saveNameSel
-				case 0
-					confirmSaveNameCapture = confirmSaveName
-					swbreak
-				case 1
-					confirmSaveNameSelectCapture = confirmSaveName
-					swbreak
-				case 2
-					confirmSaveNameList = confirmSaveName
-					swbreak
-				case 3
-					confirmSaveNameFormation = confirmSaveName
-					swbreak
-				case 4
-					confirmSaveNameDirectLink = confirmSaveName
-					swbreak
-				case 5
-					confirmSaveNameAirStation = confirmSaveName
-					swbreak
-				case 6
-					confirmSaveNameEquipmentList = confirmSaveName
-					swbreak
-				case 7
-					confirmSaveNameUserDefList = confirmSaveName
-					swbreak
-			swend
+			confirmSaveName(saveNameSel) = stat & 0x01
 		}
 
 		if (lparam == saveNameIh){
@@ -300,38 +232,44 @@ return
 				sdim tempStr, 1026
 				GetWindowText saveNameIh, varptr(tempStr), 512
 				tempStr = cnvwtos(tempStr)
-				switch saveNameSel
-				case 0
-					SaveNameCapture = tempStr
-					swbreak
-				case 1
-					SaveNameSelectCapture = tempStr
-					swbreak
-				case 2
-					SaveNameList = tempStr
-					swbreak
-				case 3
-					SaveNameFormation = tempStr
-					swbreak
-				case 4
-					SaveNameDirectLink = tempStr
-					swbreak
-				case 5
-					SaveNameAirStation = tempStr
-					swbreak
-				case 6
-					SaveNameEquipmentList = tempStr
-					swbreak
-				case 7
-					SaveNameUserDefList = tempStr
-					swbreak
-			swend
-
+				saveName(saveNameSel) = tempStr
 			}
 		}
 
 	}
 
+return
+
+*saveModeCalc
+	switch mode
+	 	case MODE_SSCAP
+			saveMode = SN_CAPTURE
+			swbreak
+		case MODE_LIST
+			switch listMode
+				case LISTMODE_LIST
+					saveMode = SN_LIST
+					swbreak
+				case LISTMODE_FLEET
+					saveMode = SN_FORMATION
+					swbreak
+				case LISTMODE_OTHER
+					if (directLink){
+						saveMode = SN_DIRECTLINK
+					}
+					if (airStation){
+						saveMode = SN_AIRSTATION
+					}
+					if (equipmentList){
+						saveMode = SN_EQUIPMENT
+					}
+					if (userDefList){
+						saveMode = SN_USERDEF
+					}
+					swbreak
+			swend
+			swbreak
+	swend
 return
 
 *listchange
@@ -510,7 +448,6 @@ return
 
 		}
 	}
-
 
 	gosub *CalcCapPosAndWinSize
 

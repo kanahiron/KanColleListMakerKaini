@@ -138,6 +138,17 @@
 #const OPMODE_TWITTER		3
 #const OPMODE_OTHER			4
 
+#const SAVENAME_COUNT   9
+#const SN_CAPTURE       0
+#const SN_SELECTCAPTURE 1
+#const SN_LIST          2
+#const SN_FORMATION     3
+#const SN_DIRECTLINK    4
+#const SN_AIRSTATION    5
+#const SN_EQUIPMENT     6
+#const SN_USERDEF       7
+#const SN_VIDEO         8
+
 //captureMethod
 #const CM_BITBLT		0
 #const CM_PRINTWINDOW	1
