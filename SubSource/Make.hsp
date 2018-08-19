@@ -20,39 +20,35 @@
 	}
 
 	sdim kantaiMei, 4
-	sdim kantaiNum, 4, 6
+	sdim kantaiNum, 4, 7
 	dim kantaiColor, 4
-	kantaiMei = "", "", "", ""
-	kantaiColor = 0, 0, 0, 0
-	kantaiNum(0, 0) = "","","","","",""
-	kantaiNum(0, 1) = "","","","","",""
-	kantaiNum(0, 2) = "","","","","",""
-	kantaiNum(0, 3) = "","","","","",""
 	dim in, 1
 	if (enableFirst){
 		kantaiMei(in) = FirstFleetName
 		kantaiColor(in) = fontColorFirstFleet
-		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E"
+		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
 		in+=1
 	}
 	if (enableSecond){
 		kantaiMei(in) = SecondFleetName
 		kantaiColor(in) = fontColorSecondFleet
-		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E"
+		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
 		in+=1
 	}
 	if (enableThird){
 		kantaiMei(in) = ThirdFleetName
 		kantaiColor(in) = fontColorThirdFleet
-		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E"
+		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
 		in+=1
 	}
 	if (enableFourth){
 		kantaiMei(in) = FourthFleetName
 		kantaiColor(in) = fontColorFourthFleet
-		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E"
+		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
 		in+=1
 	}
+
+	dialog "kantaiNum len :"+length(kantaiNum)+" len2 :"+length2(kantaiNum)
 
 	//c‰¡‚Ì‰æ‘œ–‡”‚ðƒJƒEƒ“ƒg
 	repeat cellnum(1)+1
@@ -89,41 +85,64 @@
 		loop
 	loop
 
-	if (listmode == LISTMODE_FLEET){
-		if tuika1 {
-			if (nishimuraFlg^1){
-				if sosuka | soka{
-					gsel WND_TEMP1
-					gmode 7
-
-					ccnt = 0
-					repeat 6
+	//U—ª•Ò¬‚Å
+	if ( listmode==LISTMODE_FLEET ){
+		if (nishimuraFlg^1){
+			if (sosuka|soka){
+				gsel WND_TEMP1
+				gmode 7
+				ccnt = 0
+				repeat 6
+					if (tuika1){
 						xcnt_ = (cnt\3)*2
 						ycnt_ = (cnt/3)*3
-						if bufIDPos(xcnt_, ycnt_) >= 100{
-							font fontName, FontSizeName_
-							pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
-							fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
-							if addOrderNum {
-								ccnt2 = 0
-								repeat 6
+					} else: if (tuika4){
+						xcnt_ = (cnt\2)*3
+						ycnt_ = (cnt/2)*2
+					} else: if (tuika2){
+						xcnt_ = 0
+						ycnt_ = cnt
+					} else: if (tuika3){
+						xcnt_ = cnt
+						ycnt_ = 0
+					}
+					if (bufIDPos(xcnt_, ycnt_) >= 100){
+						font fontName, FontSizeName_
+						pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
+						fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
+						if (addOrderNum) {
+							ccnt2 = 0
+							repeat 6
+								if (tuika1){
 									xcnt = xcnt_ + cnt\2
 									ycnt = ycnt_ + cnt/2
-									if bufIDPos(xcnt, ycnt) >= 100{
-										font fontNum, FontSizeNum_
-										pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
-										fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
-										ccnt2++
-									}
-								loop
-							}
-							ccnt++
+								} else: if (tuika4){
+									xcnt = xcnt_ + cnt\3
+									ycnt = ycnt_ + cnt/3
+								} else: if (tuika2){
+									xcnt = xcnt_ + cnt
+									ycnt = ycnt_
+								} else: if (tuika3){
+									xcnt = xcnt_
+									ycnt = ycnt_ + cnt
+								}
+								if (bufIDPos(xcnt, ycnt) >= 100){
+									font fontNum, FontSizeNum_
+									pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
+									fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
+									ccnt2++
+								}
+							loop
 						}
-						if ccnt = 4: break
-					loop
-				}
+						ccnt++
+					}
+					if ccnt = 4: break
+				loop
+			}
 
-				if fleetPunctuation {
+			if (tuika1){
+				//tuika1 start
+				if (fleetPunctuation) {
 					buffer WND_TEMP2, cutRange(CR_W)*VNum+(3*((VNum/2)+(VNum\2)-1)), cutRange(CR_H)*HNum+(3*(HNum/4))
 					pos 0, 0
 					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*2, cutRange(CR_H)*HNum
@@ -142,90 +161,10 @@
 					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
 					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
 				}
-			} else {
-				if sosuka | soka{
-					gsel WND_TEMP1
-					gmode 7
-
-					ccnt = 0
-					repeat 2
-						xcnt_ = cnt*2
-						ycnt_ = 0
-						if bufIDPos(xcnt_, ycnt_) >= 100{
-							font fontName, FontSizeName_
-							pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
-							fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
-							if addOrderNum {
-								ccnt2 = 0
-								repeat 7
-									xcnt = xcnt_ + cnt\2
-									ycnt = ycnt_ + cnt/2
-									if bufIDPos(xcnt, ycnt) >= 100{
-										font fontNum, FontSizeNum_
-										pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
-										fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
-										ccnt2++
-									}
-								loop
-							}
-							ccnt++
-						}
-						if ccnt = 4: break
-					loop
-				}
-
-				if fleetPunctuation {
-					buffer WND_TEMP2, cutRange(CR_W)*VNum+(3*((VNum/2)+(VNum\2)-1)), cutRange(CR_H)*HNum
-					pos 0, 0
-					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*2, cutRange(CR_H)*HNum
-					pos cutRange(CR_W)*2+3, 0
-					gcopy WND_TEMP1, w*2, 0, cutRange(CR_W)*2, cutRange(CR_H)*HNum
-
-					color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
-					boxf cutRange(CR_W)*2, 0, cutRange(CR_W)*2+2, cutRange(CR_H)*HNum+3
-				} else {
-					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
-					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
-				}
-			}
-		}
-
-		if tuika4 {
-			if (nishimuraFlg^1){
-				if sosuka | soka{
-					gsel WND_TEMP1
-					gmode 7
-
-					ccnt = 0
-					repeat 2
-						xcnt_ = 0
-						ycnt_ = cnt*2
-						if bufIDPos(xcnt_, ycnt_) >= 100{
-							font fontName, FontSizeName_
-							pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
-							fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
-							if addOrderNum {
-								ccnt2 = 0
-								repeat 6
-									xcnt = xcnt_ + cnt\3
-									ycnt = ycnt_ + cnt/3
-									if bufIDPos(xcnt, ycnt) >= 100{
-										font fontNum, FontSizeNum_
-										pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
-										fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
-										ccnt2++
-									}
-								loop
-							}
-							ccnt++
-						}
-						if ccnt = 4: break
-					loop
-
-				}
-
-				if fleetPunctuation {
-
+				//tuika1 end
+			} else: if(tuika4){
+				//tuika4 start
+				if (fleetPunctuation) {
 					buffer WND_TEMP2, cutRange(CR_W)*VNum+((VNum/4)*3), cutRange(CR_H)*HNum+(((HNum+1)/2)-1)*3
 					pos 0, 0
 					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*3, cutRange(CR_H)*HNum
@@ -244,165 +183,115 @@
 					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
 					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
 				}
-			} else {
-				if sosuka | soka{
-					gsel WND_TEMP1
-					gmode 7
-
-					ccnt = 0
+				//tuika4 end
+			} else: if (tuika2){
+				//tuika1 start
+				if (fleetPunctuation) {
+					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum+(3*(HNum-1))
+					gmode 0
+					color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
+					boxf
 					repeat 6
-						xcnt_ = (cnt\2)*3
-						ycnt_ = (cnt/2)*2
-						if bufIDPos(xcnt_, ycnt_) >= 100{
-							font fontName, FontSizeName_
-							pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
-							fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
-							if addOrderNum {
-								ccnt2 = 0
-								repeat 7
+						pos 0, (cnt*cutRange(CR_H))+(cnt*3)
+						gcopy WND_TEMP1, 0, cutRange(CR_H)*cnt, cutRange(CR_W)*6, cutRange(CR_H)
+					loop
+				} else {
+					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
+					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
+				}
+				//tuika2 end
+			} else: if (tuika3){
+				//tuika3 start
+				if (fleetPunctuation) {
+					buffer WND_TEMP2, cutRange(CR_W)*VNum+(3*(VNum-1)), cutRange(CR_H)*HNum
+					gmode 0
+					color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
+					boxf
+
+					repeat 6
+						pos (cnt*cutRange(CR_W))+(cnt*3), 0
+						gcopy WND_TEMP1, cutRange(CR_W)*cnt, 0, cutRange(CR_W), cutRange(CR_H)*6
+					loop
+				} else {
+					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
+					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
+				}
+				//tuika3 end
+			}
+		} else {
+			//¼‘º
+			if (sosuka|soka){
+				gsel WND_TEMP1
+				gmode 7
+				ccnt = 0
+				repeat 2
+					if (tuika1){
+						xcnt_ = cnt*2
+						ycnt_ = 0
+					} else: if(tuika4){
+						xcnt_ = 0
+						ycnt_ = cnt*2
+					}
+					if (bufIDPos(xcnt_, ycnt_) >= 100){
+						font fontName, FontSizeName_
+						pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
+						fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
+						if addOrderNum {
+							ccnt2 = 0
+							repeat 7
+								if (tuika1){
+									xcnt = xcnt_ + cnt\2
+									ycnt = ycnt_ + cnt/2
+								} else: if(tuika4){
 									xcnt = xcnt_ + cnt\3
 									ycnt = ycnt_ + cnt/3
 									if (cnt == 6){
 										xcnt = xcnt_ + 3
 										ycnt = ycnt_ + 1
 									}
-									if bufIDPos(xcnt, ycnt) >= 100{
-										font fontNum, FontSizeNum_
-										pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
-										fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
-										ccnt2++
-									}
-								loop
-							}
-							ccnt++
+								}
+								if (bufIDPos(xcnt, ycnt) >= 100){
+									font fontNum, FontSizeNum_
+									pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
+									fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
+									ccnt2++
+								}
+							loop
 						}
-						if ccnt = 4: break
-					loop
+						ccnt++
+					}
+					if ccnt = 2: break
+				loop
+			}
 
-				}
-
-				if fleetPunctuation {
-
-					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum+(((HNum+1)/2)-1)*3
+			if (tuika1){
+				if (fleetPunctuation) {
+					buffer WND_TEMP2, cutRange(CR_W)*VNum+(3*((VNum/2)+(VNum\2)-1)), cutRange(CR_H)*HNum
 					pos 0, 0
-					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*4, cutRange(CR_H)*HNum
-					pos cutRange(CR_W)*3+3, 0
-					//gcopy WND_TEMP1, cutRange(CR_W)*3, 0, cutRange(CR_W)*3, cutRange(CR_H)*HNum
-					pos 0, cutRange(CR_H)*2+3
-					gcopy WND_TEMP2, 0, cutRange(CR_H)*2, cutRange(CR_W)*4, cutRange(CR_H)*4
-					pos 0, cutRange(CR_H)*4+6
-					//gcopy WND_TEMP2, 0, cutRange(CR_H)*4+3, cutRange(CR_W)*6+3, cutRange(CR_H)*2
-
+					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*2, cutRange(CR_H)*HNum
+					pos cutRange(CR_W)*2+3, 0
+					gcopy WND_TEMP1, w*2, 0, cutRange(CR_W)*2, cutRange(CR_H)*HNum
 					color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
-					//boxf cutRange(CR_W)*3, 0, cutRange(CR_W)*3+2, cutRange(CR_H)*6+6
-					boxf 0, cutRange(CR_H)*2, cutRange(CR_W)*6+6, cutRange(CR_H)*2+2
-					//boxf 0, cutRange(CR_H)*4+3, cutRange(CR_W)*6+6, cutRange(CR_H)*4+5
+					boxf cutRange(CR_W)*2, 0, cutRange(CR_W)*2+2, cutRange(CR_H)*HNum+3
 				} else {
 					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
 					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
 				}
-			}
-
-		}
-
-		if tuika2 {
-			//
-			//
-
-			if sosuka | soka {
-
-				gsel WND_TEMP1
-				gmode 7
-
-				ccnt = 0
-				repeat 6
-					xcnt_ = 0
-					ycnt_ = cnt
-					if bufIDPos(xcnt_, ycnt_) >= 100{
-						font fontName, FontSizeName_
-						pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
-						fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
-						if addOrderNum {
-							ccnt2 = 0
-							repeat 6
-								xcnt = xcnt_ + cnt
-								ycnt = ycnt_
-								if bufIDPos(xcnt, ycnt) >= 100{
-									font fontNum, FontSizeNum_
-									pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
-									fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
-									ccnt2++
-								}
-							loop
-						}
-						ccnt++
-					}
-					if ccnt = 4: break
-				loop
-
-			}
-
-			if fleetPunctuation {
-				buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum+(3*(HNum-1))
-				gmode 0
-				color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
-				boxf
-
-				repeat 6
-					pos 0, (cnt*cutRange(CR_H))+(cnt*3)
-					gcopy WND_TEMP1, 0, cutRange(CR_H)*cnt, cutRange(CR_W)*6, cutRange(CR_H)
-				loop
-			} else {
-				buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
-				gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
-			}
-		}
-		if tuika3 {
-
-			if sosuka | soka {
-				gsel WND_TEMP1
-				gmode 7
-
-				ccnt = 0
-				repeat 6
-					xcnt_ = cnt
-					ycnt_ = 0
-					if bufIDPos(xcnt_, ycnt_) >= 100{
-						font fontName, FontSizeName_
-						pos nameOffset(0)+cutRange(CR_W)*xcnt_, nameOffset(1)+cutRange(CR_H)*ycnt_
-						fuchimes kantaiMei(ccnt), kantaiColor(ccnt)
-						if addOrderNum {
-							ccnt2 = 0
-							repeat 6
-								xcnt = xcnt_
-								ycnt = ycnt_ + cnt
-								if bufIDPos(xcnt, ycnt) >= 100{
-									font fontNum, FontSizeNum_
-									pos numOffset(0)+cutRange(CR_W)*xcnt, numOffset(1)+cutRange(CR_H)*ycnt
-									fuchimes kantaiNum(ccnt2, ccnt), kantaiColor(ccnt)
-									ccnt2++
-								}
-							loop
-						}
-						ccnt++
-					}
-					if ccnt = 4: break
-				loop
-			}
-
-			if fleetPunctuation {
-				buffer WND_TEMP2, cutRange(CR_W)*VNum+(3*(VNum-1)), cutRange(CR_H)*HNum
-				gmode 0
-				color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
-				boxf
-
-				repeat 6
-					pos (cnt*cutRange(CR_W))+(cnt*3), 0
-					gcopy WND_TEMP1, cutRange(CR_W)*cnt, 0, cutRange(CR_W), cutRange(CR_H)*6
-				loop
-			} else {
-				buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
-				gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
+			} else: if(tuika4){
+				if fleetPunctuation {
+					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum+(((HNum+1)/2)-1)*3
+					pos 0, 0
+					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*4, cutRange(CR_H)*HNum
+					pos cutRange(CR_W)*3+3, 0
+					pos 0, cutRange(CR_H)*2+3
+					gcopy WND_TEMP2, 0, cutRange(CR_H)*2, cutRange(CR_W)*4, cutRange(CR_H)*4
+					pos 0, cutRange(CR_H)*4+6
+					color ((PunctuationColor&0x00FF0000)>>16), ((PunctuationColor&0x0000FF00)>>8), (PunctuationColor&0x000000FF)
+					boxf 0, cutRange(CR_H)*2, cutRange(CR_W)*6+6, cutRange(CR_H)*2+2
+				} else {
+					buffer WND_TEMP2, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
+					gcopy WND_TEMP1, 0, 0, cutRange(CR_W)*VNum, cutRange(CR_H)*HNum
+				}
 			}
 		}
 	}
@@ -483,10 +372,8 @@
 	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
 
 	nidPop
-
 	gosub *draw
 return
-
 
 *listDel
 	nidPush
