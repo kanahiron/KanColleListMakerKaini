@@ -210,14 +210,10 @@ return
 	if (fontsizenum < 10) | ( 70 < fontsizenum):fontsizenum=44
 	if FirstFleetName = "":FirstFleetName = "‘æˆêŠÍ‘à"
 	if SecondFleetName = "":SecondFleetName = "‘æ“ñŠÍ‘à"
-
-	logmes strf("scrSizeBase_ %4d, %4d", scrSizeBase(0), scrSizeBase(1))
-
 	if ( scrSizeMin(0) <= scrSizeBase(0) && scrSizeBase(0) <= maxScrSize(0) && scrSizeMin(1) <= scrSizeBase(1) && scrSizeBase(1) <= maxScrSize(1)){
 	} else {
 		scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.667*ginfo_dispy)
 	}
-
 	if fontColorFirstFleetStr = "":fontColorFirstFleetStr = "FF0000"
 	if fontColorSecondFleetStr = "":fontColorSecondFleetStr = "0000FF"
 	if fontColorThirdFleetStr = "":fontColorThirdFleetStr = "20AC4C"
@@ -337,7 +333,6 @@ return
 	}
 
 	repeat SAVENAME_COUNT
-		logmes "saveName("+cnt+") :"+saveName(cnt)
 		isValidFileName DateAndTimeFormat2(saveName(cnt))
 		if (stat == FALSE){
 			saveName(cnt) = defaultSaveName(cnt)
@@ -446,8 +441,6 @@ return
 
 
 *inisave
-
-	logmes strf("scrSizeBase %4d, %4d", scrSizeBase(0), scrSizeBase(1))
 
 	WriteIni "Configuration", "FrontRow", frontrow
 	WriteIni "Configuration", "HideLog", hidelog
