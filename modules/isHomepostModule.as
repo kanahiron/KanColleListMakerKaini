@@ -2,8 +2,12 @@
 	#include "ChangeBitmapDepth.as"
 #endif
 
+// isHomeportModule
+// 艦これのキャプチャから母港か否かを判定する
 #module
 
+    //isHomeport_init
+	//モジュールの初期化命令
 	#deffunc isHomeport_init int wndId
 
 		homeportBufId = wndId
@@ -14,6 +18,7 @@
 		wRatio =  1.0* (240)/800
 		hRatio =  1.0* (20)	/480
 
+		//できるだけ高速に動作させるためバッファの初期化を先に行う
 		buffer homeportBufId, 8, 9
 		chgbm 32
 		mref homeportVram, 66
