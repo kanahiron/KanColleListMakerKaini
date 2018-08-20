@@ -23,6 +23,7 @@
 #include "./modules/GetKanCollePosMod.hsp"
 #include "./modules/SelectWindowMod.hsp"
 #include "./modules/makeBackgroundImageMod.hsp"
+#include "./modules/GetAudioDeviceMod.as"
 
 #pack "start.ax"
 #pack "data2.png"

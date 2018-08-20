@@ -2,6 +2,20 @@
 	#include "ChangeBitmapDepth.as"
 #endif
 
+// listMakerModule
+// 座標取得など雑多な機能が詰まったモジュール(よろしくない)
+
+//命令
+// init_ListMakerMod array p1
+// モジュールの初期化
+// p1 - 要素数4のint型配列 ディスプレイすべてを1枚の仮想ディスプレイに見立てたときの左上x,y 幅w, 高さh
+//
+// getKanCollePos		マウスオーバーで艦これの座標を取得する(自動取得その2)
+// かきとちゅう
+// KanCollePosManual	ドラッグで艦これの座標を取得する(手動取得)
+// かきとちゅう
+// SelectCapturePos		ツイートウィンドウから呼び出されるキャプチャ範囲取得
+// かきとちゅう
 #module "ListMakerModule"
 
 #uselib	"user32.dll"
@@ -37,6 +51,7 @@
 
 	repeat 4
 		disinfo(cnt) = disinfo_(cnt)
+		logmes ""+disinfo(cnt)
 	loop
 
 return
@@ -623,57 +638,5 @@ return
 
 	gsel nid
 return ( success && (po2(0)-po(0)) == sizex )
-
-#global
-
-
-#module "GetAudioDeviceMod"
-
-#deffunc GetAudioDevice str ffmpegpath, var output
-
-	sdim output, 1024*4
-
-	if (ffmpegpath == ""): return
-
-	sdim buf, 1024*10
-	sdim buf1, 1024*10
-	sdim buf2, 1024*10
-
-	cmdm = strf("%s -list_devices true -f dshow -i audio", ffmpegpath)
-
-	pipe2exec cmdm
-	pid = stat
-	if(pid == -1): dialog "実行失敗": return
-
-	repeat
-		pipe2check pid
-		if stat & 2: pipe2get pid, buf: buf1 + = buf
-		if stat & 4: pipe2err pid, buf: buf2 + = buf
-		if (stat == 0): break
-
-		wait 10
-	loop
-
-	pipe2term pid
-
-	if strlen(buf1) != 0: buf = buf1
-	if strlen(buf2) != 0: buf = buf2
-
-	sdim tempBuf, 1024*10
-
-	notesel buf
-	repeat notemax
-		noteget temp, cnt
-		if (strmid(temp, 0, 1) == "["){
-			getstr temp, temp, instr(temp, 0, "] ")+2, 0
-			if (strmid(temp, 0, 2) == " \""){
-				getstr temp, temp, instr(temp, 0, "\"")+1, '\"'
-				tempBuf + = temp+"\n"
-			}
-		}
-	loop
-
-	output = tempBuf
-return
 
 #global
