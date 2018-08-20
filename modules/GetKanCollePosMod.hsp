@@ -53,12 +53,9 @@
 
 	//探索する回数
 	vSachNum = scrW/sachW
-	hSachNum = scrH/sachH
 
 	dim vArrUp, vSachNum
 	dim vArrBtm, vSachNum
-	dim hArrLeft, hSachNum
-	dim hArrRight, hSachNum
 	dim posArr, 2 //startX(SX), posX
 	dim posYArr, 1 //startX(SX), posX
 	//posArrに入る数値は普通にピクセル数なので注意
@@ -282,7 +279,7 @@ return contNum
 
 	if (po(0) < 0 || po(1) < 0):return (success)^1
 
-	repeat _limitX, 1
+	repeat _limitX, int(ZOOM_MIN*BASE_SIZE_W)-2
 		x = cnt
 		y = int(BASE_ASPECT_RATIO * cnt + 0.5)
 
