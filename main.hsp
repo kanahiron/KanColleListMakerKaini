@@ -3,7 +3,7 @@
 
 #include "./SubSource/FunctionDefinition.hsp"
 #include "./SubSource/key.hsp"
-#include "./modules/kmodule.as"
+#include "./modules/kmodule.as"  //OK
 #include "./modules/mbase64.as"
 #include "./modules/ChangeBitmapDepth.as"
 #include "./modules/ImageFileModule2.as"
