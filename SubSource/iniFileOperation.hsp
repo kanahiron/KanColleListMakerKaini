@@ -138,16 +138,16 @@
 	GetIni "KanmusuFormationMode", "soka", soka, "0"
 	GetIni "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation, "1"
 	GetIni "KanmusuFormationMode", "AddOrderNum", addOrderNum, "1"
-	GetIni "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"���͑�\""
-	GetIni "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"���͑�\""
-	GetIni "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"�{�X�x��\""
-	GetIni "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"�����x��\""
+	GetIni "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"第一艦隊\""
+	GetIni "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"第二艦隊\""
+	GetIni "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"ボス支援\""
+	GetIni "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"道中支援\""
 	GetIni "KanmusuFormationMode", "FontColorFirstFleetStr", fontColorFirstFleetStr, "\"FF0000\""
 	GetIni "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
 	GetIni "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr, "\"20AC4C\""
 	GetIni "KanmusuFormationMode", "FontColorFourthFleetStr", fontColorFourthFleetStr, "\"E06020\""
-	GetIni "KanmusuFormationMode", "FontName", fontname, "\"���C���I\""
-	GetIni "KanmusuFormationMode", "FontNum", fontnum ,"\"���C���I\""
+	GetIni "KanmusuFormationMode", "FontName", fontname, "\"メイリオ\""
+	GetIni "KanmusuFormationMode", "FontNum", fontnum ,"\"メイリオ\""
 	GetIni "KanmusuFormationMode", "FontSizeName", fontsizename, "42"
 	GetIni "KanmusuFormationMode", "FontSizeNum", fontsizenum, "44"
 	GetIni "KanmusuFormationMode", "PunctuationColorStr", PunctuationColorStr, "\"2020C0\""
@@ -204,12 +204,12 @@ return
 	if (soka != 0) & (soka != 1):soka=0
 	if (enableTweetWindow != 0) & (enableTweetWindow != 1):enableTweetWindow=0
 	if (twijpg != 0) & (twijpg != 1):twijpg=1
-	if fontname = "":fontname = "���C���I"
-	if fontnum = "":fontnum = "���C���I"
+	if fontname = "":fontname = "メイリオ"
+	if fontnum = "":fontnum = "メイリオ"
 	if (fontsizename < 10) | ( 70 < fontsizename):fontsizename=42
 	if (fontsizenum < 10) | ( 70 < fontsizenum):fontsizenum=44
-	if FirstFleetName = "":FirstFleetName = "���͑�"
-	if SecondFleetName = "":SecondFleetName = "���͑�"
+	if FirstFleetName = "":FirstFleetName = "第一艦隊"
+	if SecondFleetName = "":SecondFleetName = "第二艦隊"
 	if ( scrSizeMin(0) <= scrSizeBase(0) && scrSizeBase(0) <= maxScrSize(0) && scrSizeMin(1) <= scrSizeBase(1) && scrSizeBase(1) <= maxScrSize(1)){
 	} else {
 		scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.667*ginfo_dispy)
@@ -218,8 +218,8 @@ return
 	if fontColorSecondFleetStr = "":fontColorSecondFleetStr = "0000FF"
 	if fontColorThirdFleetStr = "":fontColorThirdFleetStr = "20AC4C"
 	if fontColorFourthFleetStr = "":fontColorFourthFleetStr = "E06020"
-	if ThirdFleetName = "":ThirdFleetName = "�{�X�x��"
-	if FourthFleetName = "":FourthFleetName = "�����x��"
+	if ThirdFleetName = "":ThirdFleetName = "ボス支援"
+	if FourthFleetName = "":FourthFleetName = "道中支援"
 	if (fleetPunctuation != 0) & (fleetPunctuation != 1):fleetPunctuation=1
 	if (addOrderNum != 0) & (addOrderNum != 1):addOrderNum=1
 
@@ -265,12 +265,12 @@ return
 	hidelog_ = hidelog
 
 	if PathIsDirectory(listsavedir) = 0 {
-		savelogtext += "Info - �ꗗ�ۑ��悪���݂��܂���B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - 一覧保存先が存在しません。デフォルトに変更しました。\n"
 		listsavedir = dir_exe
 	}
 
 	if PathIsDirectory(sssavedir) = 0{
-		savelogtext += "Info - SS�ۑ��悪���݂��܂���B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - SS保存先が存在しません。デフォルトに変更しました。\n"
 		chdir dir_exe
 		if PathIsDirectory(dir_exe+"\\ScreenShots") = 0 {
 			mkdir "ScreenShots"
@@ -279,12 +279,12 @@ return
 	}
 
 	if PathIsDirectory(selectCapSaveDir) = 0{
-		savelogtext += "Info - �͈͑I��L���v�`���ۑ��悪���݂��܂���B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - 範囲選択キャプチャ保存先が存在しません。デフォルトに変更しました。\n"
 		selectCapSaveDir = dir_exe+"\\ScreenShots"
 	}
 
 	if PathIsDirectory(intervalShotDir) = 0{
-		savelogtext += "Info - �A���B�e�ۑ��悪���݂��܂���B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - 連続撮影保存先が存在しません。デフォルトに変更しました。\n"
 		intervalShotDir = sssavedir
 	}
 
@@ -301,7 +301,7 @@ return
 	}
 
 	if (hotkeycapalt + hotkeycapctrl + hotkeycapshift + hotkeycapwin) = 0{
-		savelogtext += "Info - �z�b�g�L�[�̐ݒ肪�s�K�؂ł��B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - ホットキーの設定が不適切です。デフォルトに変更しました。\n"
 		hotkeycap = 0
 		hotkeycapalt = 1
 		hotkeycapctrl = 0
@@ -324,7 +324,7 @@ return
 			hotkeycapchar = strf("%c",hotkeycode)
 			poke hotkeystr,4,hotkeycode
 		} else {
-			savelogtext += "Info - �z�b�g�L�[�̐ݒ肪�s�K�؂ł��B�f�t�H���g�ɕύX���܂����B\n"
+			savelogtext += "Info - ホットキーの設定が不適切です。デフォルトに変更しました。\n"
 			hotkeycode = 90
 			hotkeycapchar = strf("%c",hotkeycode)
 			hotkeystr = "A___Z"
@@ -336,7 +336,7 @@ return
 		isValidFileName DateAndTimeFormat2(saveName(cnt))
 		if (stat == FALSE){
 			saveName(cnt) = defaultSaveName(cnt)
-			savelogtext += "Info - "+saveNameStr(cnt)+"�ۑ����Ƀt�@�C�����Ƃ��Ďg���Ȃ�����������܂��B�f�t�H���g�ɕύX���܂����B\n"
+			savelogtext += "Info - "+saveNameStr(cnt)+"保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
 		}
 	loop
 
@@ -351,7 +351,7 @@ return
 	}
 
 	if PathIsDirectory(videoCapSaveDir) = 0{
-		savelogtext += "Info - ����L���v�`���ۑ��悪���݂��܂���B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - 動画キャプチャ保存先が存在しません。デフォルトに変更しました。\n"
 		chdir dir_exe
 		if PathIsDirectory(dir_exe+"\\VideoCapture") = 0 {
 			mkdir "VideoCapture"
@@ -392,7 +392,7 @@ return
 		videoCapLimitTimeM = 30
 		videoCapLimitTimeS = 0
 		videoCapLimitTime = 1800000
-		savelogtext += "Info - ����L���v�`���������Ԃ��Z�����܂��B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - 動画キャプチャ制限時間が短すぎます。デフォルトに変更しました。\n"
 	}
 
 	if (seqCapLimitTimeS > 60): seqCapLimitTimeS \= 60: seqCapLimitTimeM++
@@ -403,17 +403,17 @@ return
 		seqCapLimitTimeM = 99
 		seqCapLimitTimeS = 59
 		seqCapLimitTime = 5999000
-		savelogtext += "Info - �A���L���v�`���������Ԃ��Z�����܂��B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - 連続キャプチャ制限時間が短すぎます。デフォルトに変更しました。\n"
 	}
 
 	if (seqCapLimitSize < 1){
 		seqCapLimitSize = 99999
-		savelogtext += "Info - �A���L���v�`�������e�ʂ��Z�����܂��B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - 連続キャプチャ制限容量が短すぎます。デフォルトに変更しました。\n"
 	}
 
 	if (seqCapLimitNum < 1){
 		seqCapLimitNum = 9999
-		savelogtext += "Info - �A���L���v�`�������������Z�����܂��B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - 連続キャプチャ制限枚数が短すぎます。デフォルトに変更しました。\n"
 	}
 
 	videoCapLimitTime = (videoCapLimitTimeM*60+videoCapLimitTimeS)*1000
@@ -421,7 +421,7 @@ return
 		videoCapLimitTimeM = 30
 		videoCapLimitTimeS = 0
 		videoCapLimitTime = 1800000
-		savelogtext += "Info - ����L���v�`���������Ԃ��Z�����܂��B�f�t�H���g�ɕύX���܂����B\n"
+		savelogtext += "Info - 動画キャプチャ制限時間が短すぎます。デフォルトに変更しました。\n"
 	}
 
 	if savelogtext != ""{
@@ -611,7 +611,7 @@ return
 				picHistoryCount++
 			}
 		loop
-		sdim listarr	//�����ف[
+		sdim listarr	//かいほー
 	}
 
 	nidPush
