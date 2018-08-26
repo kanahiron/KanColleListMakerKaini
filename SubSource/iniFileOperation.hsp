@@ -288,9 +288,9 @@ return
 		intervalShotDir = sssavedir
 	}
 
-	if kmexist(yabumidir) = -1{
+	if _exist(yabumidir) == -1 {
 		yabumidir = dirinfo(0x10026) +"\\yabumi\\yabumiuploader.exe"
-		if kmexist(yabumidir) = -1{
+		if _exist(yabumidir) == -1 {
 			availableyabumi = 0
 			yabumidir = ""
 		} else {
@@ -343,11 +343,9 @@ return
 	fontcolorname = int("$"+fontcolornamestr)
 	fontcolornum = int("$"+fontcolornumstr)
 
-	exist ffmpegDir
-	if (strsize == -1){
+	if (_exist(ffmpegDir) == -1){
 		ffmpegDir == ""
-		exist dir_exe+"\\bin\\ffmpeg.exe"
-		if(strsize != -1){
+		if(_exist(dir_exe+"\\bin\\ffmpeg.exe") != -1){
 			ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
 		}
 	}

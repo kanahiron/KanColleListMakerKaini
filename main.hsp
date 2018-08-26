@@ -39,28 +39,18 @@
 #define klm2ver 7000
 
 #ifdef _debug
-	exist "./SubSource/hsptmp"
-	if (strsize != -1): delete "./SubSource/hsptmp"
-	exist "./SubSource/obj"
-	if (strsize != -1): delete "./SubSource/obj"
-	exist "./SubSource/packfile"
-	if (strsize != -1): delete "./SubSource/packfile"
+	safe_delete@kmodule("./SubSource/hsptmp")
+	safe_delete@kmodule("./SubSource/obj")
+	safe_delete@kmodule("./SubSource/packfile")
 
-	exist "./modules/hsptmp"
-	if (strsize != -1): delete "./modules/hsptmp"
-	exist "./modules/obj"
-	if (strsize != -1): delete "./modules/obj"
-	exist "./modules/packfile"
-	if (strsize != -1): delete "./modules/packfile"
+	safe_delete@kmodule("./modules/hsptmp")
+	safe_delete@kmodule("./modules/obj")
+	safe_delete@kmodule("./modules/packfile")
 
-	exist "./hsptmp"
-	if (strsize != -1): delete "./hsptmp"
-	exist "./obj"
-	if (strsize != -1): delete "./obj"
-	exist "./start.ax"
-	if (strsize != -1): delete "./start.ax"
-	exist "./packfile"
-	if (strsize != -1): delete "./packfile"
+	safe_delete@kmodule("./hsptmp")
+	safe_delete@kmodule("./obj")
+	safe_delete@kmodule("./start.ax")
+	safe_delete@kmodule("./packfile")
 
 	//onerror gosub *err_
 #endif
@@ -119,7 +109,7 @@
 		oncmd gosub *GridWindowProc, WM_RBUTTONDOWN
 		framesx = ginfo_sizex - ginfo_winx
 		framesy = ginfo_sizey - ginfo_winy
-		kmmouse_init
+		init@kmodule
 
 	//範囲選択用レイヤードウィンドウ
 	bgscr WND_OVERLAY, disInfo(2), disInfo(3), 2
@@ -352,12 +342,9 @@
 	if (vpid != -1): pipe2term vpid
 	if (mpid != -1): pipe2term mpid
 	wait 50
-	exist videoFileName+"_v.mp4"
-	if (strsize != -1): delete videoFileName+"_v.mp4"
-	exist videoFileName+"_a.wav"
-	if (strsize != -1): delete videoFileName+"_a.wav"
-	exist videoFileName+".mp4"
-	if (strsize != -1): delete videoFileName+".mp4"
+	safe_delete@kmodule videoFileName+"_v.mp4"
+	safe_delete@kmodule videoFileName+"_a.wav"
+	safe_delete@kmodule videoFileName+".mp4"
 
 	dialog "申し訳ありません。致命的なエラーが発生しました。\nエラー番号 :"+wparam+"\n何度も発生する場合作者kanahironまで報告をお願いします", 1, LONGSOFTNAME
 	end

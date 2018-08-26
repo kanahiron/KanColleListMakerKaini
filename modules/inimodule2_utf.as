@@ -13,8 +13,7 @@
 		chdir fpath
 		inipath = dir_cur + "\\" + fname
 		chdir opath
-		exist inipath
-		if strsize = -1 {
+		if _exist(inipath) == -1 {
 			tempBuf = ""
 			wpoke tempBuf,0,0xFEFF
 			bsave inipath,tempBuf,2

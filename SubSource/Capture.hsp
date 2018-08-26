@@ -184,8 +184,7 @@ return 0
 	gsel WND_MAIN
 
 	if (mode != MODE_OPTION){
-		exist savenamepath
-		savedPicSize = strsize
+		savedPicSize = _exist(savenamepath)
 		if (savedPicSize == -1){
 			successFlg = FALSE
 			logmessage = nSaveName+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"

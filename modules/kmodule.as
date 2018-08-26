@@ -10,37 +10,47 @@
 	#const SM_CYDLGFRAME 8
 
 	/**
-	 * 指定したファイルパスにファイルが存在するかを判定する
+	 * exist命令の関数版
 	 * (※グローバル変数strsizeを変更する)
-	 * @param path 存在しているかを確認したいファイルのパス
-	 * @return ファイルパスがpathの場所にファイルが存在していれば1、そうでない場合は0
+	 * @param file_path 存在しているかを確認したいファイルのパス
+	 * @return ファイルパスがfile_pathの場所にファイルが存在していればファイルサイズ、そうでない場合は-1
 	 */
-	#defcfunc kmexist str file_path
+	#defcfunc _exist str file_path
 		exist file_path
 	return strsize
 
 	/**
-	 * 以下のフィールドの値を初期化する
-	 * menuh : 通常のタイトルバーの高さ＋タイトルバーがあり、サイズが変更できないウィンドウの周囲を囲む枠の高さ
-	 * menuw : タイトルバーがあり、サイズが変更できないウィンドウの周囲を囲む枠の幅
+	 * 指定したパスにあるファイルを安全に削除する
+	 * (存在しないパスに対してdelete命令を実行するとエラーになるため)
+	 * @param file_path ファイルのパス
+	 * @return ファイルパスの先にあるファイルが存在する時にのみファイルを削除
 	 */
-	#deffunc kmmouse_init
-		menuh = GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CYDLGFRAME)
-		menuw = GetSystemMetrics(SM_CXDLGFRAME)
+	#deffunc local safe_delete str file_path
+		if _exist(file_path) >= 0 :delete file_path
+	return
+
+	/**
+	 * 以下のフィールドの値を初期化する
+	 * menu_h : 通常のタイトルバーの高さ＋タイトルバーがあり、サイズが変更できないウィンドウの周囲を囲む枠の高さ
+	 * menu_w : タイトルバーがあり、サイズが変更できないウィンドウの周囲を囲む枠の幅
+	 */
+	#deffunc local init
+		menu_h = GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CYDLGFRAME)
+		menu_w = GetSystemMetrics(SM_CXDLGFRAME)
 	return
 
 	/**
 	 * 先のフィールド値と併せて考えると、
-	 * kmmousex : マウスカーソルのウィンドウに対する相対X座標で、mousexとほぼ同じ意味
-	 * kmmousey : マウスカーソルのウィンドウに対する相対Y座標で、mouseyとほぼ同じ意味
+	 * _mousex : マウスカーソルのウィンドウに対する相対X座標で、mousexとほぼ同じ意味
+	 * _mousey : マウスカーソルのウィンドウに対する相対Y座標で、mouseyとほぼ同じ意味
 	 */
-	#define global kmmousex kmmousex_()
-	#defcfunc kmmousex_
-	return (ginfo_mx - ginfo_wx1 - menuw)
+	#define global _mousex mousex_()
+	#defcfunc mousex_
+	return (ginfo_mx - ginfo_wx1 - menu_w)
 
-	#define global kmmousey kmmousey_()
-	#defcfunc kmmousey_
-	return (ginfo_my - ginfo_wy1 - menuh)
+	#define global _mousey mousey_()
+	#defcfunc mousey_
+	return (ginfo_my - ginfo_wy1 - menu_h)
 
 	/**
 	 * 現在noteselしている文字列型に対し、指定した行の文字列を返す
