@@ -3,9 +3,9 @@
 
 #include "./SubSource/FunctionDefinition.hsp"
 #include "./SubSource/key.hsp"
-#include "./modules/kmodule.as"  //OK
-#include "./modules/encryption.as"  //OK
-#include "./modules/machine_base64.as"  //OK
+#include "./modules/kmodule.as"
+#include "./modules/encryption.as"
+#include "./modules/machine_base64.as"
 #include "./modules/ChangeBitmapDepth.as"
 #include "./modules/ImageFileModule2.as"
 #include "./modules/inimodule2_utf.as"
