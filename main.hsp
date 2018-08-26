@@ -25,7 +25,6 @@
 #include "./modules/makeBackgroundImageMod.hsp"
 #include "./modules/GetAudioDeviceMod.as"
 
-#pack "start.ax"
 #pack "data2.png"
 #pack "huki.png"
 #packopt name "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ"
