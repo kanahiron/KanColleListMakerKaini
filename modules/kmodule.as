@@ -81,7 +81,7 @@
 		repeat len
 			poke p1, cnt, (peek(p1, cnt) xor rnd(256))
 		loop
-		Base64Encode p1, len, encData
+		Encode@machine_base64 p1, len, encData
 		encData = strf("%02X%s", len, encData)
 		strrep encData, "\n", ""
 	return encData
@@ -94,7 +94,7 @@
 		sdim p1, strlen(p1_) + 1
 		sdim decData, len + 10
 		p1 = strmid(p1_, 2, strlen(p1_) - 2)
-		Base64Decode p1, strlen(p1), decData
+		Decode@machine_base64 p1, strlen(p1), decData
 		randomize 3141
 		repeat len
 			poke decData, cnt, (peek(decData, cnt) xor rnd(256))

@@ -20,7 +20,7 @@
 	 * @param size srcのバイト数
 	 * @param dest Base64にエンコードされた文字列をここに返す
 	 */
-	#deffunc Base64Encode var src, int size, var dest
+	#deffunc local Encode var src, int size, var dest
 		base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 		xdim base64enc, 54
 		base64enc.0 = 0x51EC8B55, 0x10558B51, 0xC9335653, 0x33F63357, 0x0C4D39FF, 0x89FC4D89
@@ -41,7 +41,7 @@
 	 * @param size srcのバイト数
 	 * @param dest Base64からデコードされた文字をここに返す
 	 */
-	#deffunc Base64Decode var src, int size, var dest
+	#deffunc local Decode var src, int size, var dest
 		base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 		xdim base64dec, 56
 		base64dec.0 = 0x51EC8B55, 0x8B565351, 0xC0331075, 0x33D23357, 0x0C4539FF, 0x89F84589

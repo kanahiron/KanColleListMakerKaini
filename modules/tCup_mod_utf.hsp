@@ -386,7 +386,7 @@ TsubuyakiSoupï‚èïä÷êî
 	getHmacSha1 SigEnc, SecretEnc, HmacSha1
 	if (HmacSha1 == "Error"): return "Error"
 	sdim base64HmacSha1,40
-	Base64Encode HmacSha1,20,base64HmacSha1
+	Encode@machine_base64 HmacSha1,20,base64HmacSha1
 return form_encode(str(base64HmacSha1), 0)
 //============================================================
 
