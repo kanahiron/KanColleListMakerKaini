@@ -27,14 +27,14 @@
 
 #pack "data2.png"
 #pack "huki.png"
-#packopt name "ï¿½Í‚ï¿½ï¿½ï¿½ê——ï¿½ß‚ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½"
+#packopt name "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ"
 #packopt hide 1
 #packopt manifest "KanColleListMakerKaini.manifest"
 #packopt icon "KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
-#define SOFTNAME "ï¿½ê——ï¿½ß‚ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ Ver0.7"
-#define LONGSOFTNAME "ï¿½Í‚ï¿½ï¿½ï¿½ê——ï¿½ß‚ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ Ver0.7"
+#define SOFTNAME "ˆê——‚ß‚¢‚©[‰ü“ñ Ver0.7"
+#define LONGSOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.7"
 #define klm2ver 7000
 
 #ifdef _debug
@@ -86,17 +86,17 @@
 		oncmd gosub *mainWindowProc, WM_SELWINDOW
 		objmode 2
 
-		combox dummy, 100, "  SSï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½h\n  ï¿½Í–ï¿½ï¿½ê——ï¿½ï¿½ï¿½[ï¿½h\n  ï¿½Uï¿½ï¿½ï¿½Òï¿½ï¿½ï¿½ï¿½[ï¿½h\n  ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½ê——ï¿½ì¬ï¿½ï¿½ï¿½[ï¿½h\n  ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½"
+		combox dummy, 100, "  SSƒLƒƒƒvƒ`ƒƒƒ‚[ƒh\n  ŠÍ–ºˆê——ƒ‚[ƒh\n  U—ª•Ò¬ƒ‚[ƒh\n  ‚»‚Ì‘¼ˆê——ì¬ƒ‚[ƒh\n  ƒIƒvƒVƒ‡ƒ“"
 		comboxId = stat
 		hCombox = objinfo_hwnd(comboxId)
 
-		combox dummy, 100, " ï¿½Â‹ï¿½ï¿½Ý’ï¿½\n ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½Eï¿½ì¬ï¿½Ý’ï¿½\n ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½Ý’ï¿½\n Twitterï¿½Ý’ï¿½\n ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Ý’ï¿½"
+		combox dummy, 100, " ŠÂ‹«Ý’è\n ƒLƒƒƒvƒ`ƒƒEì¬Ý’è\n “®‰æƒLƒƒƒvƒ`ƒƒÝ’è\n TwitterÝ’è\n ‚»‚Ì‘¼Ý’è"
 		optionCBId = stat
 		hOptionComBox = objinfo(optionCBId, 2)
 
 		chkbox "dummy", dummy
 
-	screen WND_GRID, disInfo(2), disInfo(3), 2:title "ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½D&D"
+	screen WND_GRID, disInfo(2), disInfo(3), 2:title "•\Ž¦‚³‚¹‚½‚¢ƒZƒ‹‚ÉD&D"
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 1
 		GetWindowLong WND_INFO(WND_GRID, WI_HANDLE),-20
@@ -110,7 +110,7 @@
 		framesy = ginfo_sizey - ginfo_winy
 		Init@kmodule
 
-	//ï¿½ÍˆÍ‘Iï¿½ï¿½pï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½hï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½E
+	//”ÍˆÍ‘I‘ð—pƒŒƒCƒ„[ƒhƒEƒBƒ“ƒhƒE
 	bgscr WND_OVERLAY, disInfo(2), disInfo(3), 2
 		SET_WND_INFO
 		color 0,255,0
@@ -127,7 +127,7 @@
 		SetLayeredWindowAttributes WND_INFO(WND_SUPPORT, WI_HANDLE), 0x000000FF, 255, LWA_COLORKEY
 		gosub *DrawSupportWnd
 
-	//ï¿½æ‘œï¿½Ç‚Ýï¿½ï¿½Ý—p
+	//‰æ‘œ“Ç‚Ýž‚Ý—p
 	buffer WND_IMAGE_BUF
 		SET_WND_INFO
 		ImgF_PicloadEx "data2.png"
@@ -145,11 +145,11 @@
 	buffer WND_GRID_STRING ,640,150
 		SET_WND_INFO
 		syscolor 16
-		font "ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½I", 25, 1
-		mes "ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ï¿½ï¿½Éƒhï¿½ï¿½ï¿½bï¿½Oï¿½Aï¿½ï¿½ï¿½hï¿½hï¿½ï¿½ï¿½bï¿½v"
-		mes "ï¿½Ü‚ï¿½ï¿½Íƒzï¿½bï¿½gï¿½Lï¿½[(Altï¿½Lï¿½[ï¿½{Zï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½
-		mes "                                         ï¿½æ‘œï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
-		mes "ï¿½Zï¿½ï¿½ï¿½Ì‰æ‘œï¿½ÍƒEï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Oï¿½Éƒhï¿½ï¿½ï¿½bï¿½Oï¿½Åï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½Ü‚ï¿½"
+		font "ƒƒCƒŠƒI", 25, 1
+		mes "ƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒg‚ð‚±‚±‚Éƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒv"
+		mes "‚Ü‚½‚ÍƒzƒbƒgƒL[(AltƒL[{ZƒL[“¯Žž‰Ÿ‚µ)‚Å
+		mes "                                         ‰æ‘œ‚ð’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢"
+		mes "ƒZƒ‹‚Ì‰æ‘œ‚ÍƒEƒBƒ“ƒhƒEŠO‚Éƒhƒ‰ƒbƒO‚ÅÁ‹Ž‚Å‚«‚Ü‚·"
 		//640,150
 
 	screen WND_TWITTER, disInfo(2), disInfo(3), 2 | 4
@@ -185,7 +185,7 @@
 		color 255, 255, 255
 		boxf 8, 8, 791, 471
 		color
-		font "ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½I", 130
+		font "ƒƒCƒŠƒI", 130
 		pos 100, 150
 		mes "No image"
 
@@ -214,7 +214,7 @@
 	}
 
 	if initialActivation {
-		dialog "ï¿½Í‚ï¿½ï¿½ï¿½ê——ï¿½ß‚ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Ö‚æ‚¤ï¿½ï¿½ï¿½ï¿½ï¿½I\nï¿½ï¿½ï¿½ï¿½ï¿½oï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½Nï¿½@ï¿½\ï¿½ï¿½Lï¿½ï¿½ï¿½É‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½H\nï¿½ï¿½ï¿½Ý’è‚©ï¿½ç‚¢ï¿½Â‚Å‚ï¿½Ø‚ï¿½Ö‚ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½Ü‚ï¿½", 2, "ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½"
+		dialog "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ‚Ö‚æ‚¤‚±‚»I\nŽ©“®ƒo[ƒWƒ‡ƒ“ƒ`ƒFƒbƒN‹@”\‚ð—LŒø‚É‚µ‚Ü‚·‚©H\n¦Ý’è‚©‚ç‚¢‚Â‚Å‚àØ‚è‘Ö‚¦‚ª‚Å‚«‚Ü‚·", 2, "‰‰ñ‹N“®"
 		if (stat != 6){
 			autoVersionCheck = FALSE
 		}
@@ -228,7 +228,7 @@
 		gosub *CaptureMethodDecide
 		if (positionType != PT_ABSOLUTE || (autoSearch^1)){
 			ShowWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SW_RESTORE
-			dialog "ï¿½Oï¿½ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Wï¿½ï¿½æ“¾ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½H", 2, "ï¿½mï¿½F"
+			dialog "‘O‰ñ‹N“®Žž‚ÌÀ•W‚ðŽæ“¾‚µ‚Ü‚µ‚½B\n•œŒ³‚µ‚Ü‚·‚©H", 2, "Šm”F"
 			dialogStat = stat
 			ShowWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SW_HIDE
 			if (dialogStat == 6){
@@ -286,8 +286,8 @@
 	}
 
 	if (confirmCompletion && iparam == 0){
-		//iparamï¿½ï¿½1ï¿½Ì‚Æ‚ï¿½ï¿½ÍƒVï¿½ï¿½ï¿½bï¿½gï¿½_ï¿½Eï¿½ï¿½ï¿½È‚Ì‚ÅŠmï¿½Fï¿½ï¿½ï¿½ï¿½ï¿½ÉIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		dialog "ï¿½Í‚ï¿½ï¿½ï¿½ê——ï¿½ß‚ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½H", 2, "ï¿½Iï¿½ï¿½ï¿½mï¿½F"
+		//iparam‚ª1‚Ì‚Æ‚«‚ÍƒVƒƒƒbƒgƒ_ƒEƒ“‚È‚Ì‚ÅŠm”F‚¹‚¸‚ÉI—¹‚·‚é
+		dialog "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ‚ðI—¹‚µ‚Ü‚·‚©H", 2, "I—¹Šm”F"
 		if (stat != 6):return
 	}
 
@@ -345,7 +345,7 @@
 	SafeDelete@kmodule videoFileName+"_a.wav"
 	SafeDelete@kmodule videoFileName+".mp4"
 
-	dialog "ï¿½\ï¿½ï¿½ï¿½ó‚ ‚ï¿½Ü‚ï¿½ï¿½ï¿½Bï¿½vï¿½ï¿½ï¿½Iï¿½ÈƒGï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\nï¿½Gï¿½ï¿½ï¿½[ï¿½Ôï¿½ :"+wparam+"\nï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ï¿½ï¿½kanahironï¿½Ü‚Å•ñ‚ï¿½è‚¢ï¿½ï¿½ï¿½Ü‚ï¿½", 1, LONGSOFTNAME
+	dialog "\‚µ–ó‚ ‚è‚Ü‚¹‚ñB’v–½“I‚ÈƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B\nƒGƒ‰[”Ô† :"+wparam+"\n‰½“x‚à”­¶‚·‚éê‡ìŽÒkanahiron‚Ü‚Å•ñ‚ð‚¨Šè‚¢‚µ‚Ü‚·", 1, LONGSOFTNAME
 	end
 	end
 
