@@ -27,7 +27,7 @@ Win
 
 %*/
 
-#ifndef _machinebase64_
+#ifndef machine_base64
 #include "mbase64.as"
 #endif
 

@@ -2,7 +2,7 @@
  * マシン語でBase64へのエンコード・デコードを行うモジュール
  * 元作者：kanahironさん
  */
-#module "_machinebase64_"
+#module machine_base64
 	/* WinAPI */
 	#uselib "kernel32.dll"
 		#func VirtualProtect "VirtualProtect" var, int, int, var
