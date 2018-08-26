@@ -31,8 +31,8 @@
 
 	/**
 	 * 先のフィールド値と併せて考えると、
-	 * kmmousex : マウスカーソルのウィンドウに対する相対X座標で、mousexと同じ意味
-	 * kmmousey : マウスカーソルのウィンドウに対する相対Y座標で、mouseyと同じ意味
+	 * kmmousex : マウスカーソルのウィンドウに対する相対X座標で、mousexとほぼ同じ意味
+	 * kmmousey : マウスカーソルのウィンドウに対する相対Y座標で、mouseyとほぼ同じ意味
 	 */
 	#define global kmmousex kmmousex_()
 	#defcfunc kmmousex_
