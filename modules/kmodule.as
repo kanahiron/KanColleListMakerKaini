@@ -62,52 +62,50 @@
 	return retval
 
 	/**
-	 * —^‚¦‚ç‚ê‚½•¶š—ñ‚ğˆÃ†‰»‚·‚é‚à‚Ì‚Æv‚í‚ê‚é
-	 * ‚½‚¾Abase64encode–½—ß‚ªgrep‚µ‚Ä‚àŒ©‚Â‚©‚ç‚È‚¢“ä
+	 * —^‚¦‚ç‚ê‚½•¶š—ñ‚ğˆÃ†‰»‚·‚é
 	 */
-	#defcfunc local encstr str p1_,local len
+	#defcfunc local encstr str p1_
 		len = strlen(p1_)
-		sdim p1,len+1
-		sdim encdata,int(1.5*len)+3
+		sdim p1, len + 1
+		sdim encdata, int(1.5 * len) + 3
 		p1 = p1_
 		randomize 3141
 		repeat len
-			poke p1,cnt,(peek(p1,cnt) xor rnd(256))
+			poke p1, cnt, (peek(p1, cnt) xor rnd(256))
 		loop
 		randomize 5926
 		repeat len
-			poke p1,cnt,(peek(p1,cnt) xor rnd(256))
+			poke p1, cnt, (peek(p1, cnt) xor rnd(256))
 		loop
 		randomize 5358
 		repeat len
-			poke p1,cnt,(peek(p1,cnt) xor rnd(256))
+			poke p1, cnt, (peek(p1, cnt) xor rnd(256))
 		loop
-		Base64Encode p1,len,encdata
-		encdata = strf("%02X%s",len,encdata)
-		strrep@encdata,"\n",""
+		Base64Encode p1, len, encdata
+		encdata = strf("%02X%s", len, encdata)
+		strrep@encdata, "\n", ""
 	return encdata
 
 	/**
-	 * —^‚¦‚ç‚ê‚½•¶š—ñ‚ğˆÃ†‰»‚·‚é‚à‚Ì‚Æv‚í‚ê‚é
-	 * ‚½‚¾Abase64decode–½—ß‚ªi‚’‚™
+	 * —^‚¦‚ç‚ê‚½•¶š—ñ‚ğˆÃ†‰»‚·‚é
 	 */
-	#defcfunc local decstr var p1_,local len
-		len = int("$"+strmid(p1_,0,2))
-		sdim p1,strlen(p1_)+1
-		sdim decdata,len+10
-		p1 = strmid(p1_,2,strlen(p1_)-2)
-		Base64Decode p1,strlen(p1),decdata
+	#defcfunc local decstr var p1_
+		len = int("$" + strmid(p1_, 0,2 ))
+		sdim p1, strlen(p1_) + 1
+		sdim decdata, len + 10
+		p1 = strmid(p1_, 2, strlen(p1_) - 2)
+		Base64Decode p1, strlen(p1), decdata
 		randomize 3141
 		repeat len
-			poke decdata,cnt,(peek(decdata,cnt) xor rnd(256))
+			poke decdata, cnt, (peek(decdata, cnt) xor rnd(256))
 		loop
 		randomize 5926
 		repeat len
-			poke decdata,cnt,(peek(decdata,cnt) xor rnd(256))
+			poke decdata, cnt, (peek(decdata, cnt) xor rnd(256))
 		loop
 		randomize 5358
 		repeat len
-			poke decdata,cnt,(peek(decdata,cnt) xor rnd(256))
+			poke decdata, cnt, (peek(decdata, cnt) xor rnd(256))
 		loop
 	return decdata
 #global
