@@ -28,7 +28,7 @@ Win
 %*/
 
 #ifndef machine_base64
-#include "mbase64.as"
+#include "machine_base64.as"
 #endif
 
 #module tCup
