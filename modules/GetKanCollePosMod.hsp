@@ -147,8 +147,10 @@
 #endif
 
 	//線分が単色の連続か確かめ、そうでないなら消す
+	posArrNum_ = posArrNum
 	posArrNum = 0
-	repeat length(posYArr)
+	repeat posArrNum_
+
 		posY = posYArr(cnt)
 		posLeft = posArr(0, cnt)
 		posRight = posArr(1, cnt)
