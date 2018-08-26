@@ -1,6 +1,7 @@
 /**
  * マシン語でBase64へのエンコード・デコードを行うモジュール
- * 元作者：kanahironさん
+ * オリジナルの作者：いのびあ氏
+ * オリジナルコード：https://hsp.moe/#mbase64
  */
 #module machine_base64
 	/* WinAPI */
