@@ -4,7 +4,7 @@
 #module kmodule
 	/* WinAPI */
 	#uselib "user32.dll"
-		#cfunc GetSystemMetrics "GetSystemMetrics" int
+		#func GetSystemMetrics "GetSystemMetrics" int
 	#const SM_CYCAPTION 4
 	#const SM_CXDLGFRAME 7
 	#const SM_CYDLGFRAME 8
