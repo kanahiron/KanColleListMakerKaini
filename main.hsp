@@ -27,29 +27,29 @@
 
 #pack "data2.png"
 #pack "huki.png"
-#packopt name "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ"
+#packopt name "ï¿½Í‚ï¿½ï¿½ï¿½ê——ï¿½ß‚ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½"
 #packopt hide 1
 #packopt manifest "KanColleListMakerKaini.manifest"
 #packopt icon "KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
-#define SOFTNAME "ˆê——‚ß‚¢‚©[‰ü“ñ Ver0.7"
-#define LONGSOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.7"
+#define SOFTNAME "ï¿½ê——ï¿½ß‚ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ Ver0.7"
+#define LONGSOFTNAME "ï¿½Í‚ï¿½ï¿½ï¿½ê——ï¿½ß‚ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ Ver0.7"
 #define klm2ver 7000
 
 #ifdef _debug
-	safe_delete@kmodule("./SubSource/hsptmp")
-	safe_delete@kmodule("./SubSource/obj")
-	safe_delete@kmodule("./SubSource/packfile")
+	SafeDelete@kmodule("./SubSource/hsptmp")
+	SafeDelete@kmodule("./SubSource/obj")
+	SafeDelete@kmodule("./SubSource/packfile")
 
-	safe_delete@kmodule("./modules/hsptmp")
-	safe_delete@kmodule("./modules/obj")
-	safe_delete@kmodule("./modules/packfile")
+	SafeDelete@kmodule("./modules/hsptmp")
+	SafeDelete@kmodule("./modules/obj")
+	SafeDelete@kmodule("./modules/packfile")
 
-	safe_delete@kmodule("./hsptmp")
-	safe_delete@kmodule("./obj")
-	safe_delete@kmodule("./start.ax")
-	safe_delete@kmodule("./packfile")
+	SafeDelete@kmodule("./hsptmp")
+	SafeDelete@kmodule("./obj")
+	SafeDelete@kmodule("./start.ax")
+	SafeDelete@kmodule("./packfile")
 
 	//onerror gosub *err_
 #endif
@@ -86,17 +86,17 @@
 		oncmd gosub *mainWindowProc, WM_SELWINDOW
 		objmode 2
 
-		combox dummy, 100, "  SSƒLƒƒƒvƒ`ƒƒƒ‚[ƒh\n  ŠÍ–ºˆê——ƒ‚[ƒh\n  U—ª•Ò¬ƒ‚[ƒh\n  ‚»‚Ì‘¼ˆê——ì¬ƒ‚[ƒh\n  ƒIƒvƒVƒ‡ƒ“"
+		combox dummy, 100, "  SSï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½h\n  ï¿½Í–ï¿½ï¿½ê——ï¿½ï¿½ï¿½[ï¿½h\n  ï¿½Uï¿½ï¿½ï¿½Òï¿½ï¿½ï¿½ï¿½[ï¿½h\n  ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½ê——ï¿½ì¬ï¿½ï¿½ï¿½[ï¿½h\n  ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½"
 		comboxId = stat
 		hCombox = objinfo_hwnd(comboxId)
 
-		combox dummy, 100, " ŠÂ‹«İ’è\n ƒLƒƒƒvƒ`ƒƒEì¬İ’è\n “®‰æƒLƒƒƒvƒ`ƒƒİ’è\n Twitterİ’è\n ‚»‚Ì‘¼İ’è"
+		combox dummy, 100, " ï¿½Â‹ï¿½ï¿½İ’ï¿½\n ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½Eï¿½ì¬ï¿½İ’ï¿½\n ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½İ’ï¿½\n Twitterï¿½İ’ï¿½\n ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½İ’ï¿½"
 		optionCBId = stat
 		hOptionComBox = objinfo(optionCBId, 2)
 
 		chkbox "dummy", dummy
 
-	screen WND_GRID, disInfo(2), disInfo(3), 2:title "•\¦‚³‚¹‚½‚¢ƒZƒ‹‚ÉD&D"
+	screen WND_GRID, disInfo(2), disInfo(3), 2:title "ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½D&D"
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 1
 		GetWindowLong WND_INFO(WND_GRID, WI_HANDLE),-20
@@ -108,9 +108,9 @@
 		oncmd gosub *GridWindowProc, WM_RBUTTONDOWN
 		framesx = ginfo_sizex - ginfo_winx
 		framesy = ginfo_sizey - ginfo_winy
-		init@kmodule
+		Init@kmodule
 
-	//”ÍˆÍ‘I‘ğ—pƒŒƒCƒ„[ƒhƒEƒBƒ“ƒhƒE
+	//ï¿½ÍˆÍ‘Iï¿½ï¿½pï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½hï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½E
 	bgscr WND_OVERLAY, disInfo(2), disInfo(3), 2
 		SET_WND_INFO
 		color 0,255,0
@@ -127,7 +127,7 @@
 		SetLayeredWindowAttributes WND_INFO(WND_SUPPORT, WI_HANDLE), 0x000000FF, 255, LWA_COLORKEY
 		gosub *DrawSupportWnd
 
-	//‰æ‘œ“Ç‚İ‚İ—p
+	//ï¿½æ‘œï¿½Ç‚İï¿½ï¿½İ—p
 	buffer WND_IMAGE_BUF
 		SET_WND_INFO
 		ImgF_PicloadEx "data2.png"
@@ -145,11 +145,11 @@
 	buffer WND_GRID_STRING ,640,150
 		SET_WND_INFO
 		syscolor 16
-		font "ƒƒCƒŠƒI", 25, 1
-		mes "ƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒg‚ğ‚±‚±‚Éƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒv"
-		mes "‚Ü‚½‚ÍƒzƒbƒgƒL[(AltƒL[{ZƒL[“¯‰Ÿ‚µ)‚Å
-		mes "                                         ‰æ‘œ‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢"
-		mes "ƒZƒ‹‚Ì‰æ‘œ‚ÍƒEƒBƒ“ƒhƒEŠO‚Éƒhƒ‰ƒbƒO‚ÅÁ‹‚Å‚«‚Ü‚·"
+		font "ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½I", 25, 1
+		mes "ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ï¿½ï¿½Éƒhï¿½ï¿½ï¿½bï¿½Oï¿½Aï¿½ï¿½ï¿½hï¿½hï¿½ï¿½ï¿½bï¿½v"
+		mes "ï¿½Ü‚ï¿½ï¿½Íƒzï¿½bï¿½gï¿½Lï¿½[(Altï¿½Lï¿½[ï¿½{Zï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½
+		mes "                                         ï¿½æ‘œï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
+		mes "ï¿½Zï¿½ï¿½ï¿½Ì‰æ‘œï¿½ÍƒEï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Oï¿½Éƒhï¿½ï¿½ï¿½bï¿½Oï¿½Åï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½Ü‚ï¿½"
 		//640,150
 
 	screen WND_TWITTER, disInfo(2), disInfo(3), 2 | 4
@@ -185,7 +185,7 @@
 		color 255, 255, 255
 		boxf 8, 8, 791, 471
 		color
-		font "ƒƒCƒŠƒI", 130
+		font "ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½I", 130
 		pos 100, 150
 		mes "No image"
 
@@ -214,7 +214,7 @@
 	}
 
 	if initialActivation {
-		dialog "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ‚Ö‚æ‚¤‚±‚»I\n©“®ƒo[ƒWƒ‡ƒ“ƒ`ƒFƒbƒN‹@”\‚ğ—LŒø‚É‚µ‚Ü‚·‚©H\n¦İ’è‚©‚ç‚¢‚Â‚Å‚àØ‚è‘Ö‚¦‚ª‚Å‚«‚Ü‚·", 2, "‰‰ñ‹N“®"
+		dialog "ï¿½Í‚ï¿½ï¿½ï¿½ê——ï¿½ß‚ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½Ö‚æ‚¤ï¿½ï¿½ï¿½ï¿½ï¿½I\nï¿½ï¿½ï¿½ï¿½ï¿½oï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½Nï¿½@ï¿½\ï¿½ï¿½Lï¿½ï¿½ï¿½É‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½H\nï¿½ï¿½ï¿½İ’è‚©ï¿½ç‚¢ï¿½Â‚Å‚ï¿½Ø‚ï¿½Ö‚ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½Ü‚ï¿½", 2, "ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½"
 		if (stat != 6){
 			autoVersionCheck = FALSE
 		}
@@ -228,7 +228,7 @@
 		gosub *CaptureMethodDecide
 		if (positionType != PT_ABSOLUTE || (autoSearch^1)){
 			ShowWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SW_RESTORE
-			dialog "‘O‰ñ‹N“®‚ÌÀ•W‚ğæ“¾‚µ‚Ü‚µ‚½B\n•œŒ³‚µ‚Ü‚·‚©H", 2, "Šm”F"
+			dialog "ï¿½Oï¿½ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Wï¿½ï¿½æ“¾ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½H", 2, "ï¿½mï¿½F"
 			dialogStat = stat
 			ShowWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SW_HIDE
 			if (dialogStat == 6){
@@ -286,8 +286,8 @@
 	}
 
 	if (confirmCompletion && iparam == 0){
-		//iparam‚ª1‚Ì‚Æ‚«‚ÍƒVƒƒƒbƒgƒ_ƒEƒ“‚È‚Ì‚ÅŠm”F‚¹‚¸‚ÉI—¹‚·‚é
-		dialog "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ‚ğI—¹‚µ‚Ü‚·‚©H", 2, "I—¹Šm”F"
+		//iparamï¿½ï¿½1ï¿½Ì‚Æ‚ï¿½ï¿½ÍƒVï¿½ï¿½ï¿½bï¿½gï¿½_ï¿½Eï¿½ï¿½ï¿½È‚Ì‚ÅŠmï¿½Fï¿½ï¿½ï¿½ï¿½ï¿½ÉIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		dialog "ï¿½Í‚ï¿½ï¿½ï¿½ê——ï¿½ß‚ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½H", 2, "ï¿½Iï¿½ï¿½ï¿½mï¿½F"
 		if (stat != 6):return
 	}
 
@@ -341,11 +341,11 @@
 	if (vpid != -1): pipe2term vpid
 	if (mpid != -1): pipe2term mpid
 	wait 50
-	safe_delete@kmodule videoFileName+"_v.mp4"
-	safe_delete@kmodule videoFileName+"_a.wav"
-	safe_delete@kmodule videoFileName+".mp4"
+	SafeDelete@kmodule videoFileName+"_v.mp4"
+	SafeDelete@kmodule videoFileName+"_a.wav"
+	SafeDelete@kmodule videoFileName+".mp4"
 
-	dialog "\‚µ–ó‚ ‚è‚Ü‚¹‚ñB’v–½“I‚ÈƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B\nƒGƒ‰[”Ô† :"+wparam+"\n‰½“x‚à”­¶‚·‚éê‡ìÒkanahiron‚Ü‚Å•ñ‚ğ‚¨Šè‚¢‚µ‚Ü‚·", 1, LONGSOFTNAME
+	dialog "ï¿½\ï¿½ï¿½ï¿½ó‚ ‚ï¿½Ü‚ï¿½ï¿½ï¿½Bï¿½vï¿½ï¿½ï¿½Iï¿½ÈƒGï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\nï¿½Gï¿½ï¿½ï¿½[ï¿½Ôï¿½ :"+wparam+"\nï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ï¿½ï¿½kanahironï¿½Ü‚Å•ñ‚ï¿½è‚¢ï¿½ï¿½ï¿½Ü‚ï¿½", 1, LONGSOFTNAME
 	end
 	end
 

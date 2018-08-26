@@ -108,11 +108,11 @@
 
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
-	if stat = 0: userdata = decstr@kmodule(temp)
+	if stat = 0: userdata = DecStr@kmodule(temp)
 	GetIni "TwitterSetting", "Twi_ACCESS_TOKEN", temp, "\"00\""
-	if stat = 0: ACCESS_TOKEN = decstr@kmodule(temp)
+	if stat = 0: ACCESS_TOKEN = DecStr@kmodule(temp)
 	GetIni "TwitterSetting", "Twi_ACCESS_SECRET", temp, "\"00\""
-	if stat = 0: ACCESS_SECRET = decstr@kmodule(temp)
+	if stat = 0: ACCESS_SECRET = DecStr@kmodule(temp)
 
 	GetIni "TwitterSetting", "TwiFrontRow", twiFrontRow, "1"
 	GetIni "TwitterSetting", "TwiJpg",twijpg, "1"
@@ -138,16 +138,16 @@
 	GetIni "KanmusuFormationMode", "soka", soka, "0"
 	GetIni "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation, "1"
 	GetIni "KanmusuFormationMode", "AddOrderNum", addOrderNum, "1"
-	GetIni "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"‘æˆêŠÍ‘à\""
-	GetIni "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"‘æ“ñŠÍ‘à\""
-	GetIni "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"ƒ{ƒXx‰‡\""
-	GetIni "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"“¹’†x‰‡\""
+	GetIni "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"ï¿½ï¿½ï¿½Í‘ï¿½\""
+	GetIni "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"ï¿½ï¿½ï¿½Í‘ï¿½\""
+	GetIni "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"ï¿½{ï¿½Xï¿½xï¿½ï¿½\""
+	GetIni "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½\""
 	GetIni "KanmusuFormationMode", "FontColorFirstFleetStr", fontColorFirstFleetStr, "\"FF0000\""
 	GetIni "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
 	GetIni "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr, "\"20AC4C\""
 	GetIni "KanmusuFormationMode", "FontColorFourthFleetStr", fontColorFourthFleetStr, "\"E06020\""
-	GetIni "KanmusuFormationMode", "FontName", fontname, "\"ƒƒCƒŠƒI\""
-	GetIni "KanmusuFormationMode", "FontNum", fontnum ,"\"ƒƒCƒŠƒI\""
+	GetIni "KanmusuFormationMode", "FontName", fontname, "\"ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½I\""
+	GetIni "KanmusuFormationMode", "FontNum", fontnum ,"\"ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½I\""
 	GetIni "KanmusuFormationMode", "FontSizeName", fontsizename, "42"
 	GetIni "KanmusuFormationMode", "FontSizeNum", fontsizenum, "44"
 	GetIni "KanmusuFormationMode", "PunctuationColorStr", PunctuationColorStr, "\"2020C0\""
@@ -204,12 +204,12 @@ return
 	if (soka != 0) & (soka != 1):soka=0
 	if (enableTweetWindow != 0) & (enableTweetWindow != 1):enableTweetWindow=0
 	if (twijpg != 0) & (twijpg != 1):twijpg=1
-	if fontname = "":fontname = "ƒƒCƒŠƒI"
-	if fontnum = "":fontnum = "ƒƒCƒŠƒI"
+	if fontname = "":fontname = "ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½I"
+	if fontnum = "":fontnum = "ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½I"
 	if (fontsizename < 10) | ( 70 < fontsizename):fontsizename=42
 	if (fontsizenum < 10) | ( 70 < fontsizenum):fontsizenum=44
-	if FirstFleetName = "":FirstFleetName = "‘æˆêŠÍ‘à"
-	if SecondFleetName = "":SecondFleetName = "‘æ“ñŠÍ‘à"
+	if FirstFleetName = "":FirstFleetName = "ï¿½ï¿½ï¿½Í‘ï¿½"
+	if SecondFleetName = "":SecondFleetName = "ï¿½ï¿½ï¿½Í‘ï¿½"
 	if ( scrSizeMin(0) <= scrSizeBase(0) && scrSizeBase(0) <= maxScrSize(0) && scrSizeMin(1) <= scrSizeBase(1) && scrSizeBase(1) <= maxScrSize(1)){
 	} else {
 		scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.667*ginfo_dispy)
@@ -218,8 +218,8 @@ return
 	if fontColorSecondFleetStr = "":fontColorSecondFleetStr = "0000FF"
 	if fontColorThirdFleetStr = "":fontColorThirdFleetStr = "20AC4C"
 	if fontColorFourthFleetStr = "":fontColorFourthFleetStr = "E06020"
-	if ThirdFleetName = "":ThirdFleetName = "ƒ{ƒXx‰‡"
-	if FourthFleetName = "":FourthFleetName = "“¹’†x‰‡"
+	if ThirdFleetName = "":ThirdFleetName = "ï¿½{ï¿½Xï¿½xï¿½ï¿½"
+	if FourthFleetName = "":FourthFleetName = "ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½"
 	if (fleetPunctuation != 0) & (fleetPunctuation != 1):fleetPunctuation=1
 	if (addOrderNum != 0) & (addOrderNum != 1):addOrderNum=1
 
@@ -265,12 +265,12 @@ return
 	hidelog_ = hidelog
 
 	if PathIsDirectory(listsavedir) = 0 {
-		savelogtext += "Info - ˆê——•Û‘¶æ‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ï¿½ê——ï¿½Û‘ï¿½ï¿½æ‚ªï¿½ï¿½ï¿½İ‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 		listsavedir = dir_exe
 	}
 
 	if PathIsDirectory(sssavedir) = 0{
-		savelogtext += "Info - SS•Û‘¶æ‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - SSï¿½Û‘ï¿½ï¿½æ‚ªï¿½ï¿½ï¿½İ‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 		chdir dir_exe
 		if PathIsDirectory(dir_exe+"\\ScreenShots") = 0 {
 			mkdir "ScreenShots"
@@ -279,12 +279,12 @@ return
 	}
 
 	if PathIsDirectory(selectCapSaveDir) = 0{
-		savelogtext += "Info - ”ÍˆÍ‘I‘ğƒLƒƒƒvƒ`ƒƒ•Û‘¶æ‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ï¿½ÍˆÍ‘Iï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½Û‘ï¿½ï¿½æ‚ªï¿½ï¿½ï¿½İ‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 		selectCapSaveDir = dir_exe+"\\ScreenShots"
 	}
 
 	if PathIsDirectory(intervalShotDir) = 0{
-		savelogtext += "Info - ˜A‘±B‰e•Û‘¶æ‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ï¿½Aï¿½ï¿½ï¿½Bï¿½eï¿½Û‘ï¿½ï¿½æ‚ªï¿½ï¿½ï¿½İ‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 		intervalShotDir = sssavedir
 	}
 
@@ -301,7 +301,7 @@ return
 	}
 
 	if (hotkeycapalt + hotkeycapctrl + hotkeycapshift + hotkeycapwin) = 0{
-		savelogtext += "Info - ƒzƒbƒgƒL[‚Ìİ’è‚ª•s“KØ‚Å‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ï¿½zï¿½bï¿½gï¿½Lï¿½[ï¿½Ìİ’è‚ªï¿½sï¿½Kï¿½Ø‚Å‚ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 		hotkeycap = 0
 		hotkeycapalt = 1
 		hotkeycapctrl = 0
@@ -324,7 +324,7 @@ return
 			hotkeycapchar = strf("%c",hotkeycode)
 			poke hotkeystr,4,hotkeycode
 		} else {
-			savelogtext += "Info - ƒzƒbƒgƒL[‚Ìİ’è‚ª•s“KØ‚Å‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+			savelogtext += "Info - ï¿½zï¿½bï¿½gï¿½Lï¿½[ï¿½Ìİ’è‚ªï¿½sï¿½Kï¿½Ø‚Å‚ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 			hotkeycode = 90
 			hotkeycapchar = strf("%c",hotkeycode)
 			hotkeystr = "A___Z"
@@ -336,7 +336,7 @@ return
 		isValidFileName DateAndTimeFormat2(saveName(cnt))
 		if (stat == FALSE){
 			saveName(cnt) = defaultSaveName(cnt)
-			savelogtext += "Info - "+saveNameStr(cnt)+"•Û‘¶–¼‚Éƒtƒ@ƒCƒ‹–¼‚Æ‚µ‚Äg‚¦‚È‚¢•¶š‚ª‚ ‚è‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+			savelogtext += "Info - "+saveNameStr(cnt)+"ï¿½Û‘ï¿½ï¿½ï¿½ï¿½Éƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Ägï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 		}
 	loop
 
@@ -351,7 +351,7 @@ return
 	}
 
 	if PathIsDirectory(videoCapSaveDir) = 0{
-		savelogtext += "Info - “®‰æƒLƒƒƒvƒ`ƒƒ•Û‘¶æ‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½Û‘ï¿½ï¿½æ‚ªï¿½ï¿½ï¿½İ‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 		chdir dir_exe
 		if PathIsDirectory(dir_exe+"\\VideoCapture") = 0 {
 			mkdir "VideoCapture"
@@ -392,7 +392,7 @@ return
 		videoCapLimitTimeM = 30
 		videoCapLimitTimeS = 0
 		videoCapLimitTime = 1800000
-		savelogtext += "Info - “®‰æƒLƒƒƒvƒ`ƒƒ§ŒÀŠÔ‚ª’Z‚·‚¬‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 	}
 
 	if (seqCapLimitTimeS > 60): seqCapLimitTimeS \= 60: seqCapLimitTimeM++
@@ -403,17 +403,17 @@ return
 		seqCapLimitTimeM = 99
 		seqCapLimitTimeS = 59
 		seqCapLimitTime = 5999000
-		savelogtext += "Info - ˜A‘±ƒLƒƒƒvƒ`ƒƒ§ŒÀŠÔ‚ª’Z‚·‚¬‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ï¿½Aï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 	}
 
 	if (seqCapLimitSize < 1){
 		seqCapLimitSize = 99999
-		savelogtext += "Info - ˜A‘±ƒLƒƒƒvƒ`ƒƒ§ŒÀ—e—Ê‚ª’Z‚·‚¬‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ï¿½Aï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½eï¿½Ê‚ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 	}
 
 	if (seqCapLimitNum < 1){
 		seqCapLimitNum = 9999
-		savelogtext += "Info - ˜A‘±ƒLƒƒƒvƒ`ƒƒ§ŒÀ–‡”‚ª’Z‚·‚¬‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ï¿½Aï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 	}
 
 	videoCapLimitTime = (videoCapLimitTimeM*60+videoCapLimitTimeS)*1000
@@ -421,7 +421,7 @@ return
 		videoCapLimitTimeM = 30
 		videoCapLimitTimeS = 0
 		videoCapLimitTime = 1800000
-		savelogtext += "Info - “®‰æƒLƒƒƒvƒ`ƒƒ§ŒÀŠÔ‚ª’Z‚·‚¬‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½Bï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½É•ÏXï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B\n"
 	}
 
 	if savelogtext != ""{
@@ -541,11 +541,11 @@ return
 	WriteIni "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture
 
 	sdim temp, 256
-	temp = encstr@kmodule(userdata)
+	temp = EncStr@kmodule(userdata)
 	WriteIni "TwitterSetting", "Twi_userdata", temp
-	temp = encstr@kmodule(ACCESS_TOKEN)
+	temp = EncStr@kmodule(ACCESS_TOKEN)
 	WriteIni "TwitterSetting", "Twi_ACCESS_TOKEN", temp
-	temp = encstr@kmodule(ACCESS_SECRET)
+	temp = EncStr@kmodule(ACCESS_SECRET)
 	WriteIni "TwitterSetting", "Twi_ACCESS_SECRET", temp
 
 	WriteIni "TwitterSetting", "TwiFrontRow", twiFrontRow
@@ -611,7 +611,7 @@ return
 				picHistoryCount++
 			}
 		loop
-		sdim listarr	//‚©‚¢‚Ù[
+		sdim listarr	//ï¿½ï¿½ï¿½ï¿½ï¿½Ù[
 	}
 
 	nidPush

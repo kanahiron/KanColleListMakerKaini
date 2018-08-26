@@ -25,18 +25,18 @@
 	 * @param file_path ファイルのパス
 	 * @return ファイルパスの先にあるファイルが存在する時にのみファイルを削除
 	 */
-	#deffunc local safe_delete str file_path
+	#deffunc local SafeDelete str file_path
 		if _exist(file_path) >= 0 :delete file_path
 	return
 
 	/**
 	 * 以下のフィールドの値を初期化する
-	 * menu_h : 通常のタイトルバーの高さ＋タイトルバーがあり、サイズが変更できないウィンドウの周囲を囲む枠の高さ
-	 * menu_w : タイトルバーがあり、サイズが変更できないウィンドウの周囲を囲む枠の幅
+	 * menuH : 通常のタイトルバーの高さ＋タイトルバーがあり、サイズが変更できないウィンドウの周囲を囲む枠の高さ
+	 * menuW : タイトルバーがあり、サイズが変更できないウィンドウの周囲を囲む枠の幅
 	 */
-	#deffunc local init
-		menu_h = GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CYDLGFRAME)
-		menu_w = GetSystemMetrics(SM_CXDLGFRAME)
+	#deffunc local Init
+		menuH = GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CYDLGFRAME)
+		menuW = GetSystemMetrics(SM_CXDLGFRAME)
 	return
 
 	/**
@@ -46,25 +46,25 @@
 	 */
 	#define global _mousex mousex_()
 	#defcfunc mousex_
-	return (ginfo_mx - ginfo_wx1 - menu_w)
+	return (ginfo_mx - ginfo_wx1 - menuW)
 
 	#define global _mousey mousey_()
 	#defcfunc mousey_
-	return (ginfo_my - ginfo_wy1 - menu_h)
+	return (ginfo_my - ginfo_wy1 - menuH)
 
 	/**
 	 * 現在noteselしている文字列型に対し、指定した行の文字列を返す
 	 * @param line_number 行数指定
 	 * @return (line_number+1)行目の文字列
 	 */
-	#defcfunc _noteget int line_number
-		noteget retval, line_number
-	return retval
+	#defcfunc _noteget int lineNumber
+		noteget retVal, lineNumber
+	return retVal
 
 	/**
 	 * 与えられた文字列を暗号化する
 	 */
-	#defcfunc local encstr str p1_
+	#defcfunc local EncStr str p1_
 		len = strlen(p1_)
 		sdim p1, len + 1
 		sdim encdata, int(1.5 * len) + 3
@@ -81,31 +81,31 @@
 		repeat len
 			poke p1, cnt, (peek(p1, cnt) xor rnd(256))
 		loop
-		Base64Encode p1, len, encdata
-		encdata = strf("%02X%s", len, encdata)
-		strrep　encdata, "\n", ""
-	return encdata
+		Base64Encode p1, len, encData
+		encData = strf("%02X%s", len, encData)
+		strrep encData, "\n", ""
+	return encData
 
 	/**
 	 * 与えられた文字列を暗号化する
 	 */
-	#defcfunc local decstr var p1_
+	#defcfunc local DecStr var p1_
 		len = int("$" + strmid(p1_, 0,2 ))
 		sdim p1, strlen(p1_) + 1
-		sdim decdata, len + 10
+		sdim decData, len + 10
 		p1 = strmid(p1_, 2, strlen(p1_) - 2)
-		Base64Decode p1, strlen(p1), decdata
+		Base64Decode p1, strlen(p1), decData
 		randomize 3141
 		repeat len
-			poke decdata, cnt, (peek(decdata, cnt) xor rnd(256))
+			poke decData, cnt, (peek(decData, cnt) xor rnd(256))
 		loop
 		randomize 5926
 		repeat len
-			poke decdata, cnt, (peek(decdata, cnt) xor rnd(256))
+			poke decData, cnt, (peek(decData, cnt) xor rnd(256))
 		loop
 		randomize 5358
 		repeat len
-			poke decdata, cnt, (peek(decdata, cnt) xor rnd(256))
+			poke decData, cnt, (peek(decData, cnt) xor rnd(256))
 		loop
-	return decdata
+	return decData
 #global
