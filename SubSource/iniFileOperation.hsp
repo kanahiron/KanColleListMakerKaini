@@ -108,11 +108,11 @@
 
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
-	if stat = 0: userdata = DecStr@kmodule(temp)
+	if stat = 0: userdata = DecStr@encryption(temp)
 	GetIni "TwitterSetting", "Twi_ACCESS_TOKEN", temp, "\"00\""
-	if stat = 0: ACCESS_TOKEN = DecStr@kmodule(temp)
+	if stat = 0: ACCESS_TOKEN = DecStr@encryption(temp)
 	GetIni "TwitterSetting", "Twi_ACCESS_SECRET", temp, "\"00\""
-	if stat = 0: ACCESS_SECRET = DecStr@kmodule(temp)
+	if stat = 0: ACCESS_SECRET = DecStr@encryption(temp)
 
 	GetIni "TwitterSetting", "TwiFrontRow", twiFrontRow, "1"
 	GetIni "TwitterSetting", "TwiJpg",twijpg, "1"
@@ -541,11 +541,11 @@ return
 	WriteIni "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture
 
 	sdim temp, 256
-	temp = EncStr@kmodule(userdata)
+	temp = EncStr@encryption(userdata)
 	WriteIni "TwitterSetting", "Twi_userdata", temp
-	temp = EncStr@kmodule(ACCESS_TOKEN)
+	temp = EncStr@encryption(ACCESS_TOKEN)
 	WriteIni "TwitterSetting", "Twi_ACCESS_TOKEN", temp
-	temp = EncStr@kmodule(ACCESS_SECRET)
+	temp = EncStr@encryption(ACCESS_SECRET)
 	WriteIni "TwitterSetting", "Twi_ACCESS_SECRET", temp
 
 	WriteIni "TwitterSetting", "TwiFrontRow", twiFrontRow
