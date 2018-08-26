@@ -36,7 +36,7 @@
 
 				//mxy はドラッグを話した時点の座標
 				//mxy_ はドラッグ開始の座標
-				mxy(0) = limit(kmmousex/cellsize(0), 0, cellnum(0)) , limit(kmmousey/cellsize(1), 0, cellnum(1))
+				mxy(0) = limit(_mousex/cellsize(0), 0, cellnum(0)) , limit(_mousey/cellsize(1), 0, cellnum(1))
 
 				if (MultiSelectedFlg && cliflag==0 ){
 					if ( selRange(CR_X)<=mxy(0) && mxy(0)<=(selRange(CR_X)+selRange(CR_W)) && selRange(CR_Y)<=mxy(1) && mxy(1)<=(selRange(CR_Y)+selRange(CR_H))){
@@ -92,7 +92,7 @@
 			if (sti == 0 && cliflag == 1){
 
 				if (MultiSelectedFlg^1){
-					if (kmmousex < 0) | (kmmousex > scrsize(0)) | (kmmousey < 0) | (kmmousey > scrsize(1)){
+					if (_mousex < 0) | (_mousex > scrsize(0)) | (_mousey < 0) | (_mousey > scrsize(1)){
 						//マウス座標がウィンドウ外のとき
 						if bufIDPos(mxy_(0), mxy_(1)) >= 100{
 							loadPicBufID( bufIDPos(mxy_(0), mxy_(1)) - 100 ) = 0

@@ -108,11 +108,11 @@
 
 	sdim temp, 256
 	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
-	if stat = 0: userdata = decstr(temp)
+	if stat = 0: userdata = DecStr@kmodule(temp)
 	GetIni "TwitterSetting", "Twi_ACCESS_TOKEN", temp, "\"00\""
-	if stat = 0: ACCESS_TOKEN = decstr(temp)
+	if stat = 0: ACCESS_TOKEN = DecStr@kmodule(temp)
 	GetIni "TwitterSetting", "Twi_ACCESS_SECRET", temp, "\"00\""
-	if stat = 0: ACCESS_SECRET = decstr(temp)
+	if stat = 0: ACCESS_SECRET = DecStr@kmodule(temp)
 
 	GetIni "TwitterSetting", "TwiFrontRow", twiFrontRow, "1"
 	GetIni "TwitterSetting", "TwiJpg",twijpg, "1"
@@ -288,9 +288,9 @@ return
 		intervalShotDir = sssavedir
 	}
 
-	if kmexist(yabumidir) = -1{
+	if _exist(yabumidir) == -1 {
 		yabumidir = dirinfo(0x10026) +"\\yabumi\\yabumiuploader.exe"
-		if kmexist(yabumidir) = -1{
+		if _exist(yabumidir) == -1 {
 			availableyabumi = 0
 			yabumidir = ""
 		} else {
@@ -343,11 +343,9 @@ return
 	fontcolorname = int("$"+fontcolornamestr)
 	fontcolornum = int("$"+fontcolornumstr)
 
-	exist ffmpegDir
-	if (strsize == -1){
+	if (_exist(ffmpegDir) == -1){
 		ffmpegDir == ""
-		exist dir_exe+"\\bin\\ffmpeg.exe"
-		if(strsize != -1){
+		if(_exist(dir_exe+"\\bin\\ffmpeg.exe") != -1){
 			ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
 		}
 	}
@@ -543,11 +541,11 @@ return
 	WriteIni "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture
 
 	sdim temp, 256
-	temp = encstr(userdata)
+	temp = EncStr@kmodule(userdata)
 	WriteIni "TwitterSetting", "Twi_userdata", temp
-	temp = encstr(ACCESS_TOKEN)
+	temp = EncStr@kmodule(ACCESS_TOKEN)
 	WriteIni "TwitterSetting", "Twi_ACCESS_TOKEN", temp
-	temp = encstr(ACCESS_SECRET)
+	temp = EncStr@kmodule(ACCESS_SECRET)
 	WriteIni "TwitterSetting", "Twi_ACCESS_SECRET", temp
 
 	WriteIni "TwitterSetting", "TwiFrontRow", twiFrontRow
@@ -606,7 +604,7 @@ return
 		sdim listarr, 2048, notemax+1
 		repeat limit(notemax, 0, 100)
 
-			temp = sssavedir+"\\"+kmnoteget(cnt)
+			temp = sssavedir + "\\" + _noteget(cnt)
 			imageType = ImgF_GetFormat(temp)
 			if ( (imageType==2) || (imageType==3) || (imageType==4) ){
 				picHistory(picHistoryCount) = temp

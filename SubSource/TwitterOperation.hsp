@@ -388,7 +388,7 @@ return
 
 		gsel WND_MAIN
 
-		if kmexist(saveNamePath) <= 0{
+		if _exist(saveNamePath) <= 0 {
 			successFlg = FALSE
 			logOut saveName+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
 		} else {
@@ -587,7 +587,7 @@ return
 				ImgF_PicloadEx tempsdim(cnt)
 				saveNamed = strf("%s\\temp_%d.jpg", ssSaveDir, cnt)
 				ImgF_ImageSave saveNamed, jpgQuality
-				if kmexist(saveNamed) > 0{
+				if _exist(saveNamed) > 0 {
 					tempSdim(cnt) = saveNamed
 				}
 			loop
@@ -631,7 +631,7 @@ return
 
 		if (twijpg == TRUE & jpgsave == FALSE){
 			repeat count
-				if kmexist(tempsdim(cnt)) > 0{
+				if _exist(tempsdim(cnt)) > 0 {
 					delete tempsdim(cnt)
 				}
 			loop
