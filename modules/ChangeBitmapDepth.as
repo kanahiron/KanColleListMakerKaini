@@ -1,6 +1,6 @@
-// ChangeBitmapDepth 繝｢繧ｸ繝･繝ｼ繝ｫ
-// HSP縺ｮ24bit縺ｪbitmap繧地bit縺ｫ螟画鋤縺吶ｋ(n = 8, 24, 32)
-// 24bit莉･螟悶�ｮ繝薙ャ繝画ｷｱ蠎ｦ縺ｯ荳驛ｨ讓呎ｺ門多莉､縺御ｽｿ逕ｨ荳崎�ｽ(gzoom縺ｪ縺ｩ)
+// ChangeBitmapDepth モジュール
+// HSPの24bitなbitmapをnbitに変換する(n = 8, 24, 32)
+// 24bit以外のビッド深度は一部標準命令が使用不能(gzoomなど)
 
 #module ChangeBitmapDepth
 
