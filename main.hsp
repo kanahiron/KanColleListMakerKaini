@@ -6,6 +6,7 @@
 #include "./modules/kmodule.as"
 #include "./modules/encryption.as"
 #include "./modules/machine_base64.as"
+#include "./modules/i18n.as"
 #include "./modules/ChangeBitmapDepth.as"
 #include "./modules/ImageFileModule2.as"
 #include "./modules/inimodule2_utf.as"
@@ -61,6 +62,7 @@
 	nidStackInit
 	DAControlInit
 	isHomeport_init WND_HOME_PORT_MOD
+	Init@i18n
 
 	gosub *DeclaringVariables
 	gosub *iniLoad
