@@ -63,12 +63,6 @@
 	DAControlInit
 	isHomeport_init WND_HOME_PORT_MOD
 	Init@i18n
-	SetLanguage@i18n "en-US"
-	dialog GetText@i18n("capture")
-	dialog GetText@i18n("auto_search")
-	SetLanguage@i18n "ja"
-	dialog GetText@i18n("capture")
-	dialog GetText@i18n("auto_search")
 
 	gosub *DeclaringVariables
 	gosub *iniLoad
