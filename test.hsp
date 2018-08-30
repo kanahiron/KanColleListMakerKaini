@@ -1,0 +1,26 @@
+#include "./modules/SearchKanCollePos.as"
+
+title "座標取得処理のテスト"
+buffer 1
+picload "./modules/SKP_test.png"
+
+// アルゴリズム1
+dim rectangles //無くてもいいが警告消しに使用
+gsel 1 :count = method1@SearchKanCollePos(1, rectangles, 1059, 1099) :gsel 0
+mes "【アルゴリズム1】"
+gosub *show_result
+
+stop
+
+*show_result
+    mes "個数：" + count
+    sdim textBuffer, 4096
+    for k, 0, count
+        x = rectangles(k, 0)
+        y = rectangles(k, 1)
+        w = rectangles(k, 2)
+        h = rectangles(k, 3)
+        textBuffer += strf("(%d,%d)-%dx%d,", x, y, w, h)
+    next
+    mes "候補：" + textBuffer
+return

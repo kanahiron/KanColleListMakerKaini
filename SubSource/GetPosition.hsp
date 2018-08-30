@@ -70,12 +70,12 @@
 
 				MoveWindow WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), ginfo_mx+1, ginfo_my+1, imageBuf2W, imageBuf2H,1
 
-				getKanCollePos WND_TEMP1, WND_TEMP2, KCRect, ginfo_mx-disInfo(0), ginfo_my-disInfo(1)
-				if (stat == 1){
-					KCRect(0) += disInfo(0)
-					KCRect(1) += disInfo(1)
-					KCRect(2) += disInfo(0)
-					KCRect(3) += disInfo(1)
+				count = method1@SearchKanCollePos(WND_TEMP1, rectangles, ginfo_mx-disInfo(0), ginfo_my-disInfo(1))
+                if (count >= 1){
+                    KCRect(0) = rectangles(0, 0) + disInfo(0)
+                    KCRect(1) = rectangles(0, 1) + disInfo(1)
+                    KCRect(2) = rectangles(0, 0) + rectangles(0, 2) + disInfo(0)
+                    KCRect(3) = rectangles(0, 1) + rectangles(0, 3) + disInfo(1)
 					MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), KCRect(0), KCRect(1), KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), 1
 					successflg = TRUE
 				} else {
