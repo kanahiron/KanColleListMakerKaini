@@ -83,8 +83,8 @@
         next
 
         // 縦幅があまりに小さすぎる際は、候補ではないとして弾く
-        height = _ry - _ly - 1
-        if (height < 100) :return 0
+        _height = _ry - _ly - 1
+        if (_height < 100) :return 0
 
         // 座標1のX座標lxを取得する
         minLeftX = Max(mx - DEFAULT_GAME_WINDOW_WIDTH * MAX_ZOOM_RATIO, -1)
@@ -97,11 +97,15 @@
             if (flg) :logmes "lx = " + px + "(" + tempColor + ")" :_lx = px :_break
         next
 
+        // 縦横比がおかしい場合は、候補ではないとして弾く
+        _width = _rx - _lx - 1
+        if (abs(_height * 5 / 3 - _width) >= 3) :return 0
+
         // 保存用のバッファーを用意
         dim rectangles, 1, 4
         rectangles(0, 0) = _lx + 1
         rectangles(0, 1) = _ly + 1
-        rectangles(0, 2) = _rx - _lx - 1
-        rectangles(0, 3) = _ry - _ly - 1
+        rectangles(0, 2) = _width
+        rectangles(0, 3) = _height
     return 1
 #global
