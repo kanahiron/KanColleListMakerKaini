@@ -333,7 +333,7 @@ return
 	}
 
 	repeat SAVENAME_COUNT
-		isValidFileName DateAndTimeFormat2(saveName(cnt))
+		isValidFileName@DateTimeFormatMod Format@DateTimeFormatMod(saveName(cnt))
 		if (stat == FALSE){
 			saveName(cnt) = defaultSaveName(cnt)
 			savelogtext += "Info - "+saveNameStr(cnt)+"保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"

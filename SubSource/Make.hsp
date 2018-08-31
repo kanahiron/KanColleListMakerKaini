@@ -305,7 +305,7 @@
 	if (drawcount != 0){
 
 		sdim tempstr
-		tempstr = DateAndTimeFormat2(saveName(saveMode))
+		tempstr = Format@DateTimeFormatMod(saveName(saveMode))
 		callSaveDiagFlg = confirmSaveName(saveMode)
 
 		if (callSaveDiagFlg){

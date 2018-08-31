@@ -12,7 +12,7 @@
 #include "./modules/TsubuyakiSoup_mod_utf.hsp"
 #include "./modules/listMakerModule.as"
 #include "./modules/isHomepostModule.as"
-#include "./modules/DateAndTimeFormat2.as"
+#include "./modules/DateTimeFormatMod.as"
 #include "./modules/isfilled.hsp"
 #include "./modules/pipe2_utf.hsp"
 #include "./modules/execwMod.as"

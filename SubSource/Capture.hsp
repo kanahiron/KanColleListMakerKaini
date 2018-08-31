@@ -160,7 +160,7 @@ return 0
 
 	gsel WND_CAPTURE
 
-	nSaveName = strf("%s%s", DateAndTimeFormat2(saveName(SN_CAPTURE)), savekind(jpgsave))
+	nSaveName = strf("%s%s", Format@DateTimeFormatMod(saveName(SN_CAPTURE)), savekind(jpgsave))
 
 	if (seqCapf == FALSE){
 		if (confirmSaveName(SN_CAPTURE)){
@@ -393,7 +393,7 @@ return
 	seqCapElapsedTime = timeGetTime() - seqCapStartTime
 
 	logmessage = "連続キャプチャ中…\n"
-	logmessage += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
+	logmessage += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(seqCapElapsedTime))
 	logmessage += strf("  枚数 %d枚(%dMB)", seqCapCnt, seqCapSize/1024/1024)
 	LogOut logmessage
 	if (seqcapf && enableSeqCapLimitNum): if (seqCapLimitNum < seqCapCnt): gosub *seqcap
@@ -472,7 +472,7 @@ return
 		seqcapf = FALSE
 
 		logmessage = "連続撮影を停止しました\n"
-		logmessage += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(seqCapElapsedTime))
+		logmessage += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(seqCapElapsedTime))
 		logmessage += strf("  枚数 %d枚(%dMB)",seqCapCnt, seqCapSize/1024/1024)
 		LogOut logmessage
 
