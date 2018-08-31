@@ -5,12 +5,7 @@
 		newcom mssc, "MSScriptControl.ScriptControl"
 		mssc("Language") = "JScript"
 	}
-	
-	sdim jsontext, strlen(p1)+3
-	jsontext = p1
-	if (strmid(jsontext,0,1) != "["): jsontext = "["+jsontext+"]"
-
-	mssc -> "addCode" "obj = "+ jsontext +";"
+	mssc -> "addCode" "obj = "+ p1 +";"
 return
 
 #defcfunc json_val str p1

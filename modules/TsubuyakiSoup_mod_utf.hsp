@@ -236,9 +236,9 @@ return tempInt
 		execRestApi "media/upload.json", picName, METHOD_POST, hProgress
 		if (stat != 200) :return 0
 
-		rawtext = "["+getResponseBody()+"]"
+		rawtext = getResponseBody()
 		json_sel rawText
-		p2 += json_val("[0].media_id_string") + ","
+		p2 += json_val(".media_id_string") + ","
 		json_unsel
 		wait 10
 	loop
