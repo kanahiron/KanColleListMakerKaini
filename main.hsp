@@ -12,7 +12,6 @@
 #include "./modules/inimodule2_utf.as"
 #include "./modules/BrowseFolder_kai_utf.as"
 #include "./modules/TsubuyakiSoup_mod_utf.hsp"
-#include "./modules/jsonParse_utf.as"
 #include "./modules/listMakerModule.as"
 #include "./modules/PerceptualHashMod.as"
 #include "./modules/isHomepostModule.as"

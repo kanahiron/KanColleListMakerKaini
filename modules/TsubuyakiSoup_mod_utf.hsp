@@ -1,6 +1,7 @@
 #include "tCup_mod_utf.hsp"
-
-//  LastUpdate : 16/11/14
+#ifndef jParseMod
+	#include "./modules/jParseMod.as"
+#endif
 
 #module
 //============================================================
@@ -223,7 +224,6 @@ return tempInt
 #define global media_upload(%1,%2,%3,%4=0) media_upload_ %1,%2,%3,%4
 #deffunc media_upload_ array p1 ,int p3,var p2, int hProgress
 
-	sdim rawtext,512
 	sdim p2,512
 	sdim picname,1024
 
@@ -236,10 +236,9 @@ return tempInt
 		execRestApi "media/upload.json", picName, METHOD_POST, hProgress
 		if (stat != 200) :return 0
 
-		rawtext = getResponseBody()
-		json_sel rawText
-		p2 += json_val(".media_id_string") + ","
-		json_unsel
+		newmod jObj, jParseMod, getResponseBody()
+		p2 += GetVal@jParseMod(jObj, ".media_id_string") + ","
+		delmod jObj
 		wait 10
 	loop
 	p2 = strmid(p2, 0, strlen(p2)-1)
