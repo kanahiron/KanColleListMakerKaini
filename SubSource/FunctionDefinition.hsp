@@ -59,6 +59,7 @@
 #func GetWindowText "GetWindowTextW" int, int, int
 #func SetWindowPos "SetWindowPos" wptr, wptr, wptr, wptr, wptr, wptr, wptr
 #func SendMessage "SendMessageW" wptr, wptr, wptr, wptr
+#func SetProcessDPIAware "SetProcessDPIAware"
 
 #uselib "kernel32.dll"
 #func MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int

@@ -49,6 +49,8 @@
 	SafeDelete@kmodule("./start.ax")
 	SafeDelete@kmodule("./packfile")
 
+	//デバッグ中でも高DPIに対応させる
+	SetProcessDPIAware
 	//onerror gosub *err_
 #endif
 
