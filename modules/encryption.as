@@ -1,6 +1,11 @@
 /**
  * kmodule‚©‚çˆÃ†‰»‚ÉŠÖ‚·‚éˆ—‚ğØ‚èo‚µ‚½‚à‚Ì
  */
+
+#ifndef machine_base64
+    #include "machine_base64.as"
+#endif
+
 #module encryption
     /**
      * —^‚¦‚ç‚ê‚½•¶š—ñ‚ğˆÃ†‰»‚·‚é

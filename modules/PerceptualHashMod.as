@@ -1,4 +1,4 @@
-#module
+#module PerceptualHashMod
 
 #defcfunc PopCnt int _bit
 

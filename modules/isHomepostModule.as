@@ -1,13 +1,16 @@
-#ifndef chgbm
+#ifndef ChangeBitmapDepth
 	#include "ChangeBitmapDepth.as"
+#endif
+#ifndef PerceptualHashMod
+	#include "PerceptualHashMod.as"
 #endif
 
 // isHomeportModule
-// è‰¦ã“ã‚Œã®ã‚­ãƒ£ãƒ—ãƒãƒ£ã‹ã‚‰æ¯æ¸¯ã‹å¦ã‹ã‚’åˆ¤å®šã™ã‚‹
+// ŠÍ‚±‚ê‚ÌƒLƒƒƒvƒ`ƒƒ‚©‚ç•ê`‚©”Û‚©‚ğ”»’è‚·‚é
 #module
 
     //isHomeport_init
-	//ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®åˆæœŸåŒ–å‘½ä»¤
+	//ƒ‚ƒWƒ…[ƒ‹‚Ì‰Šú‰»–½—ß
 	#deffunc isHomeport_init int wndId
 
 		homeportBufId = wndId
@@ -18,7 +21,7 @@
 		wRatio =  1.0* (240)/800
 		hRatio =  1.0* (20)	/480
 
-		//ã§ãã‚‹ã ã‘é«˜é€Ÿã«å‹•ä½œã•ã›ã‚‹ãŸã‚ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–ã‚’å…ˆã«è¡Œã†
+		//‚Å‚«‚é‚¾‚¯‚‘¬‚É“®ì‚³‚¹‚é‚½‚ßƒoƒbƒtƒ@‚Ì‰Šú‰»‚ğæ‚És‚¤
 		buffer homeportBufId, 8, 9
 		chgbm 32
 		mref homeportVram, 66
