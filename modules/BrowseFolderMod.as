@@ -1,8 +1,6 @@
 /*
-
 **このモジュールはつーさ氏がつーさのくーかん(http://tu3.jp/)にて配布している「フォルダ選択ダイアログモジュール」をkanahironが改変したものです。**
 元配布元 :http://tu3.jp/0110
-
 */
 
 #ifndef __hsp3utf__
@@ -16,7 +14,10 @@
 #define global xdim(%1,%2) dim %1,%2: VirtualProtect@_xdim %1,%2*4,$40,x@_xdim
 #endif
 
-#module __BrowseFolder_kai_utf__
+/**
+ * フォルダ選択ダイアログを出すモジュール
+ */
+#module BrowseFolderMod
 
 #uselib "comdlg32"
 #func GetOpenFileName "GetOpenFileNameW" int
@@ -63,15 +64,13 @@
 #define BIF_SHAREABLE			0x8000
 //Version 5.0 以降： リモートシステム上にある共有リソースを表示できるようにします。BIF_USENEWUIフラグとともに指定しなければなりません。
 
-#ifndef TRUE
-#define global FALSE 0
-#define global TRUE  1
-#endif
-
-#define global BrowseFolder(%1,%2="",%3=0)  _BrowseFolder %1,%2,%3
-#define global BrowseFolder2(%1,%2="",%3=1) _BrowseFolder %1,%2,%3
-
-#deffunc _BrowseFolder str _szTitle, str _defaultfolder , int flag
+/**
+ * フォルダ選択ダイアログを表示する
+ * @param _szTitle ダイアログのタイトル
+ * @param _defaultfolder 初期表示パス
+ * @param flag 「新しいフォルダ」ボタンを表示させるか(0 on, 1 off)
+ */
+#deffunc local Open str _szTitle, str _defaultfolder , int flag
 
 	// flagが0の時は「新しいフォルダ」ボタンを非表示、1の時は表示
 
@@ -85,21 +84,18 @@
 	cnvstow szTitle, _szTitle
 	//cnvstow inifldr, _defaultfolder
 	inifldr = _defaultfolder
-	if flag = FALSE{
-		ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE
-	} else {
-		ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE | BIF_NONEWFOLDERBUTTON
-	}
+	ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE
+	if (flag): ulFlags = ulFlags | BIF_NONEWFOLDERBUTTON
 
-	fncode = $08247c83,$8b147501,$ff102444,$68016a30,$00000466,$102474ff,$330450ff,$0010c2c0
+	fncode = $08247c83, $8b147501, $ff102444, $68016a30, $00000466, $102474ff, $330450ff, $0010c2c0
 	hbdata = varptr(inifldr), varptr(SendMessage)
 	BROWSEINFO = hwnd, 0, varptr(retfldr), varptr(szTitle), ulFlags, varptr(fncode), varptr(hbdata), 0
 	pidl = SHBrowseForFolder(varptr(BROWSEINFO))
-	fret = SHGetPathFromIDList(pidl,varptr(_retfldr))
+	fret = SHGetPathFromIDList(pidl, varptr(_retfldr))
 	CoTaskMemFree pidl
 
 	retfldr = cnvwtos(_retfldr)
-	mref stt,64 : stt = fret
+	mref stt, 64 : stt = fret
 return retfldr
 
 #global
@@ -107,18 +103,18 @@ return retfldr
 //unicode対応サンプルコード
 #if 0
 
-	sdim String,256
+	sdim String, 256
 	repeat 64
 		ccnt = cnt*3
-		poke String,ccnt+0,0xe2
-		poke String,ccnt+1,0x98
-		poke String,ccnt+2,0x80+cnt
+		poke String, ccnt+0, 0xe2
+		poke String, ccnt+1, 0x98
+		poke String, ccnt+2, 0x80+cnt
 	loop
 
-	BrowseFolder String,"C:\\"			//新しいフォルダボタン有り
+	BrowseFolder String, "C:\\"			//新しいフォルダボタン有り
 	//BrowseFolder2 String,"C:\\" 		//新しいフォルダボタン無し1
 	//BrowseFolder String,"C:\\",1		//新しいフォルダボタン無し2
-	if stat = TRUE{
+	if (stat){
 		mes refstr
 	} else {
 		mes "未選択"

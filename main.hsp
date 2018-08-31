@@ -8,7 +8,7 @@
 #include "./modules/i18n.as"
 #include "./modules/ImageFileModule2.as"
 #include "./modules/iniMod.as"
-#include "./modules/BrowseFolder_kai_utf.as"
+#include "./modules/BrowseFolderMod.as"
 #include "./modules/TsubuyakiSoup_mod_utf.hsp"
 #include "./modules/listMakerModule.as"
 #include "./modules/isHomepostModule.as"
