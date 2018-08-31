@@ -76,6 +76,9 @@
 #undef title
 #define title(%1, %2 = hwnd) SetWindowText %2, %1
 
+#define global TRUE 1
+#define global FALSE 0
+
 #define CELL_MAX_W				9
 #define CELL_MAX_H				9
 #define HOTKEYID				7798
