@@ -2,7 +2,7 @@
 //設定――――――――――――――――――――――――――――――――――
 *listsavedialog
 
-	BrowseFolder "一覧の保存先", (dir_exe)
+	Open@BrowseFolderMod "一覧の保存先", (dir_exe)
 	if ( stat == 1 ){
 		listsavedir = refstr
 		objprm listSaveDirIId, listsavedir
@@ -12,7 +12,7 @@ return
 
 *sssavedialog
 
-	BrowseFolder "SSキャプチャの保存先", (dir_exe+"\\ScreenShots")
+	Open@BrowseFolderMod "SSキャプチャの保存先", (dir_exe+"\\ScreenShots")
 	if ( stat == 1 ){
 		sssavedir = refstr
 		objprm SSSaveDiriid, sssavedir
@@ -22,7 +22,7 @@ return
 
 *intervalshotsavedialog
 
-	BrowseFolder "連続撮影の保存先", (dir_exe+"\\ScreenShots")
+	Open@BrowseFolderMod "連続撮影の保存先", (dir_exe+"\\ScreenShots")
 	if ( stat == 1 ){
 		intervalShotDir = refstr
 		objprm intervalShotDirIId, intervalShotDir
@@ -32,7 +32,7 @@ return
 
 *videoCapSaveDialog
 
-	BrowseFolder "動画キャプチャの保存先", dir_exe
+	Open@BrowseFolderMod "動画キャプチャの保存先", dir_exe
 	if ( stat == 1 ){
 		videoCapSaveDir = refstr
 		objprm videoCapSaveDirIId, videoCapSaveDir
@@ -42,7 +42,7 @@ return
 
 *selectCapSaveDialog
 
-	BrowseFolder "範囲選択キャプチャの保存先", dir_exe
+	Open@BrowseFolderMod "範囲選択キャプチャの保存先", dir_exe
 	if ( stat == 1 ){
 		selectCapSaveDir = refstr
 		objprm selectCapSaveDirIId, selectCapSaveDir

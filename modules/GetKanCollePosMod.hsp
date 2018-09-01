@@ -1,4 +1,4 @@
-#ifndef chgbm
+#ifndef ChangeBitmapDepth
 	#include "ChangeBitmapDepth.as"
 #endif
 

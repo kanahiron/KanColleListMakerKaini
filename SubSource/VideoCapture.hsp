@@ -72,7 +72,7 @@
 		noteget x264presetStr, x264presetNum
 		noteunsel
 
-		videoFileName = strf("%s\\%s", videoCapSaveDir, DateAndTimeFormat2(saveName(SN_VIDEO)) )
+		videoFileName = strf("%s\\%s", videoCapSaveDir, Format@DateTimeFormatMod(saveName(SN_VIDEO)) )
 
 		//コマンドの組み立て
 		if (noAudioFlg^1){
@@ -300,7 +300,7 @@ return
 
 	elapsedTime = timeGetTime() - videoCapStartTime
 	elapsedTimeStr = "動画をキャプチャ中…\n"
-	elapsedTimeStr += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(elapsedTime))
+	elapsedTimeStr += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(elapsedTime))
 
 	gsel WND_MAIN
 	LogOut elapsedTimeStr
@@ -371,8 +371,8 @@ return
 	if (remainingTime < 0.0): remainingTime = 0.0
 
 	lateEncodeStr = "動画をエンコード中…\n"
-	lateEncodeStr += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS(encodeTime))
-	lateEncodeStr += strf("  推定残り %s", cnvMilliSecondToMMSSMS(remainingTime))
+	lateEncodeStr += strf("  経過時間 %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(encodeTime))
+	lateEncodeStr += strf("  推定残り %s", cnvMilliSecondToMMSSMS@DateTimeFormatMod(remainingTime))
 
 	LogOut lateEncodeStr
 

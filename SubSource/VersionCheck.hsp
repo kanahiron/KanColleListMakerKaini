@@ -1,3 +1,7 @@
+#ifndef jParseMod
+	#include "./modules/jParseMod.as"
+#endif
+
 #module VersionCheck
 
 #uselib "wininet.dll"
@@ -125,26 +129,23 @@ return responseBody
 		execVerCheck
 		if (stat == 200){
 			logmes "アップデートファイルの取得成功"
-			sdim json
-			json = getResponse()
-			json_sel json
+			newmod jObj, jParseMod, getResponse()
 
-			logmes "取得したバージョン " + json_val("[0].version")
-			if (klm2ver < int(json_val("[0].version"))){
+			logmes "取得したバージョン " + GetVal@jParseMod(jObj, "[0].version")
+			if (klm2ver < int(GetVal@jParseMod(jObj, "[0].version"))){
 
 				sdim text,1024
-				text =  "艦これ一覧めいかー改二の最新版"+json_val("[0].versionstr")+"が公開されています\n"
-				text += json_val("[0].comment")
+				text =  "艦これ一覧めいかー改二の最新版"+GetVal@jParseMod(jObj, "[0].versionstr")+"が公開されています\n"
+				text += GetVal@jParseMod(jObj, "[0].comment")
 				text += "\nダウンロードページを開きますか？"
 
 				dialog text,2,"最新版が公開されています"
 				if stat = 6{
-					exec ""+json_val("[0].distributionurl"),16
+					exec ""+GetVal@jParseMod(jObj, "[0].distributionurl"),16
 				}
 			}
-			json_unsel
-			sdim json
 			sdim text
+			delmod jObj
 		} else {
 			logmes "アップデートファイルの取得失敗"
 			dialog "次の原因が考えられます\nアップデート情報配信サーバーのダウン\nインターネット未接続",0,"アップデート情報の取得に失敗しました"

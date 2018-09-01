@@ -3,30 +3,32 @@
 
 #include "./SubSource/FunctionDefinition.hsp"
 #include "./SubSource/key.hsp"
-#include "./modules/kmodule.as"
-#include "./modules/encryption.as"
-#include "./modules/machine_base64.as"
-#include "./modules/i18n.as"
-#include "./modules/ChangeBitmapDepth.as"
+
+//ライブラリ的なモジュール
+#include "./modules/BrowseFolderMod.as"
 #include "./modules/ImageFileModule2.as"
-#include "./modules/inimodule2_utf.as"
-#include "./modules/BrowseFolder_kai_utf.as"
-#include "./modules/TsubuyakiSoup_mod_utf.hsp"
-#include "./modules/jsonParse_utf.as"
-#include "./modules/SearchKanCollePos.as"
-#include "./modules/listMakerModule.as"
-#include "./modules/PerceptualHashMod.as"
-#include "./modules/isHomepostModule.as"
-#include "./modules/DateAndTimeFormat2.as"
 #include "./modules/isfilled.hsp"
 #include "./modules/pipe2_utf.hsp"
+#include "./modules/TsubuyakiSoup_mod_utf.hsp"
+
+//自分で作ったライブラリ的なモジュール
+#include "./modules/DateTimeFormatMod.as"
+#include "./modules/encryption.as"
 #include "./modules/execwMod.as"
+#include "./modules/i18n.as"
+#include "./modules/iniMod.as"
+#include "./modules/kmodule.as"
 #include "./modules/SaveFileDiag_mod.hsp"
+#include "./modules/SearchKanCollePos.as"
+
+//どちらというとサブソースなモジュール
 #include "./modules/FFMPEGLog.hsp"
-#include "./modules/GetKanCollePosMod.hsp"
-#include "./modules/SelectWindowMod.hsp"
-#include "./modules/makeBackgroundImageMod.hsp"
 #include "./modules/GetAudioDeviceMod.as"
+#include "./modules/GetKanCollePosMod.hsp"
+#include "./modules/isHomepostModule.as"
+#include "./modules/listMakerModule.as"
+#include "./modules/makeBackgroundImageMod.hsp"
+#include "./modules/SelectWindowMod.hsp"
 
 #pack "data2.png"
 #pack "huki.png"
@@ -54,6 +56,8 @@
 	SafeDelete@kmodule("./start.ax")
 	SafeDelete@kmodule("./packfile")
 
+	//デバッグ中でも高DPIに対応させる
+	SetProcessDPIAware
 	//onerror gosub *err_
 #endif
 

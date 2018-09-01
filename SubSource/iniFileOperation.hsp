@@ -1,163 +1,163 @@
 *iniload
 
 	errDialog = TRUE
-	SetIni (dir_exe+"\\ListMaker2.ini")
+	Load@iniMod (dir_exe+"\\ListMaker2.ini")
 	if (stat == 2):errDialog = FALSE: initialActivation = TRUE
 
 	sdim tempStr, 1026
 	dim tempInt, 1
 
-	GetIni "Configuration", "FrontRow", frontrow, "1"
-	GetIni "Configuration", "HideLog", hidelog, "0"
-	GetIni "Configuration", "YabumiAutoUpload", yabumiautoupload, "1"
-	GetIni "Configuration", "DisplayCapture", dispcap, "1"
-	GetIni "Configuration", "ManualPos", manualpos, "0"
-	GetIni "Configuration", "Senden", senden, "1"
-	GetIni "Configuration", "AutoVersionCheck", autoVersionCheck, "1"
-	GetIni "Configuration", "ConfirmCompletion", confirmCompletion, "1"
-	GetIni "Configuration", "restoreMainWindowPos", restoreMainWindowPos, "1"
-	GetIni "Configuration", "restoreTweetWindowPos", restoreTweetWindowPos, "1"
-	GetIni "Configuration", "MainWindowPos", mainWindowPos, "-32000\",\"-32000"
-	GetIni "Configuration", "TweetWindowPos", tweetWindowPos, "-32000\",\"-32000"
-	GetIni "Configuration", "AutoUIScale", autoUIScale, "1"
-	GetIni "Configuration", "UIScale", UIScale, "1.0"
-	GetIni "Configuration", "ScreenShotSaveDir", sssavedir, "\"\""
-	GetIni "Configuration", "ListSaveDir", listsavedir, "\"\""
-	GetIni "Configuration", "IntervalShotSaveDir",intervalShotDir, "\"\""
-	GetIni "Configuration", "SelectCapSaveDir", selectCapSaveDir, "\"\""
-	GetIni "Configuration", "YabumiExeDir", yabumidir, "\"\""
-	GetIni "Configuration", "GridScreenSize", scrSizeBase, "-1\",\"-1"
+	Get@iniMod "Configuration", "FrontRow", frontrow, "1"
+	Get@iniMod "Configuration", "HideLog", hidelog, "0"
+	Get@iniMod "Configuration", "YabumiAutoUpload", yabumiautoupload, "1"
+	Get@iniMod "Configuration", "DisplayCapture", dispcap, "1"
+	Get@iniMod "Configuration", "ManualPos", manualpos, "0"
+	Get@iniMod "Configuration", "Senden", senden, "1"
+	Get@iniMod "Configuration", "AutoVersionCheck", autoVersionCheck, "1"
+	Get@iniMod "Configuration", "ConfirmCompletion", confirmCompletion, "1"
+	Get@iniMod "Configuration", "restoreMainWindowPos", restoreMainWindowPos, "1"
+	Get@iniMod "Configuration", "restoreTweetWindowPos", restoreTweetWindowPos, "1"
+	Get@iniMod "Configuration", "MainWindowPos", mainWindowPos, "-32000\",\"-32000"
+	Get@iniMod "Configuration", "TweetWindowPos", tweetWindowPos, "-32000\",\"-32000"
+	Get@iniMod "Configuration", "AutoUIScale", autoUIScale, "1"
+	Get@iniMod "Configuration", "UIScale", UIScale, "1.0"
+	Get@iniMod "Configuration", "ScreenShotSaveDir", sssavedir, "\"\""
+	Get@iniMod "Configuration", "ListSaveDir", listsavedir, "\"\""
+	Get@iniMod "Configuration", "IntervalShotSaveDir",intervalShotDir, "\"\""
+	Get@iniMod "Configuration", "SelectCapSaveDir", selectCapSaveDir, "\"\""
+	Get@iniMod "Configuration", "YabumiExeDir", yabumidir, "\"\""
+	Get@iniMod "Configuration", "GridScreenSize", scrSizeBase, "-1\",\"-1"
 
-	GetIni "CaptureAndMaking", "NoHideLv", noHideLv, "0"
-	GetIni "CaptureAndMaking", "NameMosaic", nameMosaic, "0"
-	GetIni "CaptureAndMaking", "NameCut", namecut, "0"
-	GetIni "CaptureAndMaking", "HideOnCapture", hideOnCapture, "0"
-	GetIni "CaptureAndMaking", "forceResize", forceResize, "0"
-	GetIni "CaptureAndMaking", "PastSize", pastSize, "0"
-	GetIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel, "2"
-	GetIni "CaptureAndMaking", "HotkeyCapture", hotkeycap, "1"
-	GetIni "CaptureAndMaking", "HotkeyStr", hotkeystr, "\"A___Z\""
-	GetIni "CaptureAndMaking", "AutoAddCapture", autoaddCapture, "1"
-	GetIni "CaptureAndMaking", "AutoAddNonSave", autoaddnonsave, "1"
-	GetIni "CaptureAndMaking", "JpgSave", jpgsave, "0"
-	GetIni "CaptureAndMaking", "JpgQuality", jpgquality, "90"
-	GetIni "CaptureAndMaking", "EnableIntervalCap", enableSeqCap, "0"
-	GetIni "CaptureAndMaking", "IntervalTime", timersec, "5"
-	GetIni "CaptureAndMaking", "ListMakeInterpolation", listMakeInterpolation, "1"
-	GetIni "CaptureAndMaking", "DirectLinkDisInterpolation", directLinkDisInterpolation, "1"
-	GetIni "CaptureAndMaking", "EnableSupportWindow", enableSupportWindow, "1"
-	GetIni "CaptureAndMaking", "EnableSeqCapLimitNum", enableSeqCapLimitNum, "0"
-	GetIni "CaptureAndMaking", "EnableSeqCapLimitTime", enableSeqCapLimitTime, "0"
-	GetIni "CaptureAndMaking", "EnableSeqCapLimitSize", enableSeqCapLimitSize, "0"
-	GetIni "CaptureAndMaking", "seqCapLimitNum", seqCapLimitNum, "9999"
-	GetIni "CaptureAndMaking", "seqCapLimitTimeM", seqCapLimitTimeM, "99"
-	GetIni "CaptureAndMaking", "seqCapLimitTimeS", seqCapLimitTimeS, "59"
-	GetIni "CaptureAndMaking", "seqCapLimitSize", seqCapLimitSize, "9999"
-	GetIni "CaptureAndMaking", "SaveNameCapture", tempStr, "\""+defaultSaveName(SN_CAPTURE)+"\""
+	Get@iniMod "CaptureAndMaking", "NoHideLv", noHideLv, "0"
+	Get@iniMod "CaptureAndMaking", "NameMosaic", nameMosaic, "0"
+	Get@iniMod "CaptureAndMaking", "NameCut", namecut, "0"
+	Get@iniMod "CaptureAndMaking", "HideOnCapture", hideOnCapture, "0"
+	Get@iniMod "CaptureAndMaking", "forceResize", forceResize, "0"
+	Get@iniMod "CaptureAndMaking", "PastSize", pastSize, "0"
+	Get@iniMod "CaptureAndMaking", "maxSearchLevel", maxSearchLevel, "2"
+	Get@iniMod "CaptureAndMaking", "HotkeyCapture", hotkeycap, "1"
+	Get@iniMod "CaptureAndMaking", "HotkeyStr", hotkeystr, "\"A___Z\""
+	Get@iniMod "CaptureAndMaking", "AutoAddCapture", autoaddCapture, "1"
+	Get@iniMod "CaptureAndMaking", "AutoAddNonSave", autoaddnonsave, "1"
+	Get@iniMod "CaptureAndMaking", "JpgSave", jpgsave, "0"
+	Get@iniMod "CaptureAndMaking", "JpgQuality", jpgquality, "90"
+	Get@iniMod "CaptureAndMaking", "EnableIntervalCap", enableSeqCap, "0"
+	Get@iniMod "CaptureAndMaking", "IntervalTime", timersec, "5"
+	Get@iniMod "CaptureAndMaking", "ListMakeInterpolation", listMakeInterpolation, "1"
+	Get@iniMod "CaptureAndMaking", "DirectLinkDisInterpolation", directLinkDisInterpolation, "1"
+	Get@iniMod "CaptureAndMaking", "EnableSupportWindow", enableSupportWindow, "1"
+	Get@iniMod "CaptureAndMaking", "EnableSeqCapLimitNum", enableSeqCapLimitNum, "0"
+	Get@iniMod "CaptureAndMaking", "EnableSeqCapLimitTime", enableSeqCapLimitTime, "0"
+	Get@iniMod "CaptureAndMaking", "EnableSeqCapLimitSize", enableSeqCapLimitSize, "0"
+	Get@iniMod "CaptureAndMaking", "seqCapLimitNum", seqCapLimitNum, "9999"
+	Get@iniMod "CaptureAndMaking", "seqCapLimitTimeM", seqCapLimitTimeM, "99"
+	Get@iniMod "CaptureAndMaking", "seqCapLimitTimeS", seqCapLimitTimeS, "59"
+	Get@iniMod "CaptureAndMaking", "seqCapLimitSize", seqCapLimitSize, "9999"
+	Get@iniMod "CaptureAndMaking", "SaveNameCapture", tempStr, "\""+defaultSaveName(SN_CAPTURE)+"\""
 	saveName(SN_CAPTURE) = tempStr
-	GetIni "CaptureAndMaking", "saveNameSelectCapture", tempStr, "\""+defaultSaveName(SN_SELECTCAPTURE)+"\""
+	Get@iniMod "CaptureAndMaking", "saveNameSelectCapture", tempStr, "\""+defaultSaveName(SN_SELECTCAPTURE)+"\""
 	saveName(SN_SELECTCAPTURE) = tempStr
-	GetIni "CaptureAndMaking", "SaveNameList", tempStr, "\""+defaultSaveName(SN_LIST)+"\""
+	Get@iniMod "CaptureAndMaking", "SaveNameList", tempStr, "\""+defaultSaveName(SN_LIST)+"\""
 	saveName(SN_LIST) = tempStr
-	GetIni "CaptureAndMaking", "SaveNameFormation", tempStr, "\""+defaultSaveName(SN_FORMATION)+"\""
+	Get@iniMod "CaptureAndMaking", "SaveNameFormation", tempStr, "\""+defaultSaveName(SN_FORMATION)+"\""
 	saveName(SN_FORMATION) = tempStr
-	GetIni "CaptureAndMaking", "SaveNameAirStation", tempStr, "\""+defaultSaveName(SN_AIRSTATION)+"\""
+	Get@iniMod "CaptureAndMaking", "SaveNameAirStation", tempStr, "\""+defaultSaveName(SN_AIRSTATION)+"\""
 	saveName(SN_AIRSTATION) = tempStr
-	GetIni "CaptureAndMaking", "SaveNameDirectLink", tempStr, "\""+defaultSaveName(SN_DIRECTLINK)+"\""
+	Get@iniMod "CaptureAndMaking", "SaveNameDirectLink", tempStr, "\""+defaultSaveName(SN_DIRECTLINK)+"\""
 	saveName(SN_DIRECTLINK) = tempStr
-	GetIni "CaptureAndMaking", "SaveNameEquipmentList", tempStr, "\""+defaultSaveName(SN_EQUIPMENT)+"\""
+	Get@iniMod "CaptureAndMaking", "SaveNameEquipmentList", tempStr, "\""+defaultSaveName(SN_EQUIPMENT)+"\""
 	saveName(SN_EQUIPMENT) = tempStr
-	GetIni "CaptureAndMaking", "SaveNameUserDefList", tempStr, "\""+defaultSaveName(SN_USERDEF)+"\""
+	Get@iniMod "CaptureAndMaking", "SaveNameUserDefList", tempStr, "\""+defaultSaveName(SN_USERDEF)+"\""
 	saveName(SN_USERDEF) = tempStr
-	GetIni "CaptureAndMaking", "ConfirmSaveNameCapture", tempInt, "0"
+	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameCapture", tempInt, "0"
 	comfirmSaveName(SN_CAPTURE) = tempInt
-	GetIni "CaptureAndMaking", "ConfirmSaveNameSelectCapture", tempInt, "0"
+	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameSelectCapture", tempInt, "0"
 	comfirmSaveName(SN_SELECTCAPTURE) = tempInt
-	GetIni "CaptureAndMaking", "ConfirmSaveNameList", tempInt, "0"
+	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameList", tempInt, "0"
 	comfirmSaveName(SN_LIST) = tempInt
-	GetIni "CaptureAndMaking", "ConfirmSaveNameFormation", tempInt, "0"
+	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameFormation", tempInt, "0"
 	comfirmSaveName(SN_FORMATION) = tempInt
-	GetIni "CaptureAndMaking", "ConfirmSaveNameAirStation", tempInt, "0"
+	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameAirStation", tempInt, "0"
 	comfirmSaveName(SN_AIRSTATION) = tempInt
-	GetIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", tempInt, "0"
+	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameDirectLink", tempInt, "0"
 	comfirmSaveName(SN_DIRECTLINK) = tempInt
-	GetIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", tempInt, "0"
+	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameEquipmentList", tempInt, "0"
 	comfirmSaveName(SN_EQUIPMENT) = tempInt
-	GetIni "CaptureAndMaking", "ConfirmSaveNameUserDefList", tempInt, "0"
+	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameUserDefList", tempInt, "0"
 	comfirmSaveName(SN_USERDEF) = tempInt
 
-	GetIni "VideoCapture", "enableVideoCap", enableVideoCap, "1"
-	GetIni "VideoCapture", "lateEncode", lateEncode, "1"
-	GetIni "VideoCapture", "HideCursor", videoCapHideCursor, "0"
-	GetIni "VideoCapture", "ShowFrame", videoCapShowFrame, "0"
-	GetIni "VideoCapture", "EnableFFMPEGLogWindow", enableFFMPEGLogWindow, "0"
-	GetIni "VideoCapture", "VideoCapFrameRate", videoCapFR, "20"
-	GetIni "VideoCapture", "VideoCapCRF", videoCapCRF, "22"
-	GetIni "VideoCapture", "x264presetNum", x264presetNum, "4"
-	GetIni "VideoCapture", "ffmpegDir", ffmpegDir, "\"\""
-	GetIni "VideoCapture", "AudioDeviceName", AudioDeviceName, "\"\""
-	GetIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir, "\"\""
-	GetIni "VideoCapture", "SaveNameVideoCapture", tempStr, "\""+defaultSaveName(SN_VIDEO)+"\""
+	Get@iniMod "VideoCapture", "enableVideoCap", enableVideoCap, "1"
+	Get@iniMod "VideoCapture", "lateEncode", lateEncode, "1"
+	Get@iniMod "VideoCapture", "HideCursor", videoCapHideCursor, "0"
+	Get@iniMod "VideoCapture", "ShowFrame", videoCapShowFrame, "0"
+	Get@iniMod "VideoCapture", "EnableFFMPEGLogWindow", enableFFMPEGLogWindow, "0"
+	Get@iniMod "VideoCapture", "VideoCapFrameRate", videoCapFR, "20"
+	Get@iniMod "VideoCapture", "VideoCapCRF", videoCapCRF, "22"
+	Get@iniMod "VideoCapture", "x264presetNum", x264presetNum, "4"
+	Get@iniMod "VideoCapture", "ffmpegDir", ffmpegDir, "\"\""
+	Get@iniMod "VideoCapture", "AudioDeviceName", AudioDeviceName, "\"\""
+	Get@iniMod "VideoCapture", "VideoCapSaveDir", videoCapSaveDir, "\"\""
+	Get@iniMod "VideoCapture", "SaveNameVideoCapture", tempStr, "\""+defaultSaveName(SN_VIDEO)+"\""
 	saveName(SN_VIDEO) = tempStr
-	GetIni "VideoCapture", "enableVideoCapLimit", enableVideoCapLimit, "0"
-	GetIni "VideoCapture", "VideoCapLimitTimeM", videoCapLimitTimeM, "30"
-	GetIni "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS, "0"
-	GetIni "VideoCapture", "Volume", volume, "100"
-	GetIni "VideoCapture", "AudioNormalize", audioNormalize, "0"
-	GetIni "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture, "1"
+	Get@iniMod "VideoCapture", "enableVideoCapLimit", enableVideoCapLimit, "0"
+	Get@iniMod "VideoCapture", "VideoCapLimitTimeM", videoCapLimitTimeM, "30"
+	Get@iniMod "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS, "0"
+	Get@iniMod "VideoCapture", "Volume", volume, "100"
+	Get@iniMod "VideoCapture", "AudioNormalize", audioNormalize, "0"
+	Get@iniMod "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture, "1"
 
 	sdim temp, 256
-	GetIni "TwitterSetting", "Twi_userdata", temp, "\"00\""
+	Get@iniMod "TwitterSetting", "Twi_userdata", temp, "\"00\""
 	if stat = 0: userdata = DecStr@encryption(temp)
-	GetIni "TwitterSetting", "Twi_ACCESS_TOKEN", temp, "\"00\""
+	Get@iniMod "TwitterSetting", "Twi_ACCESS_TOKEN", temp, "\"00\""
 	if stat = 0: ACCESS_TOKEN = DecStr@encryption(temp)
-	GetIni "TwitterSetting", "Twi_ACCESS_SECRET", temp, "\"00\""
+	Get@iniMod "TwitterSetting", "Twi_ACCESS_SECRET", temp, "\"00\""
 	if stat = 0: ACCESS_SECRET = DecStr@encryption(temp)
 
-	GetIni "TwitterSetting", "TwiFrontRow", twiFrontRow, "1"
-	GetIni "TwitterSetting", "TwiJpg",twijpg, "1"
+	Get@iniMod "TwitterSetting", "TwiFrontRow", twiFrontRow, "1"
+	Get@iniMod "TwitterSetting", "TwiJpg",twijpg, "1"
 
-	GetIni "SSMode", "AutoSearch", autosearch, "1"
-	GetIni "SSMode", "HideName", hidename, "0"
-	GetIni "SSMode", "EnableTweetWindow", enableTweetWindow, "0"
-	GetIni "SSMode", "SSCapturePosition", ssCap, "0\",\"0\",\"0\",\"0"
+	Get@iniMod "SSMode", "AutoSearch", autosearch, "1"
+	Get@iniMod "SSMode", "HideName", hidename, "0"
+	Get@iniMod "SSMode", "EnableTweetWindow", enableTweetWindow, "0"
+	Get@iniMod "SSMode", "SSCapturePosition", ssCap, "0\",\"0\",\"0\",\"0"
 
-	GetIni "KanmusuListMode", "ichiranMode1", ichiranMode1, "1"
-	GetIni "KanmusuListMode", "yubiwa", yubiwa, "1"
-	GetIni "KanmusuListMode", "kantai", kantai, "1"
-	GetIni "KanmusuListMode", "page", page, "0"
-	GetIni "KanmusuListMode", "lvname", lvname, "0"
-	GetIni "KanmusuListMode", "ichiranMode2", ichiranMode2, "0"
+	Get@iniMod "KanmusuListMode", "ichiranMode1", ichiranMode1, "1"
+	Get@iniMod "KanmusuListMode", "yubiwa", yubiwa, "1"
+	Get@iniMod "KanmusuListMode", "kantai", kantai, "1"
+	Get@iniMod "KanmusuListMode", "page", page, "0"
+	Get@iniMod "KanmusuListMode", "lvname", lvname, "0"
+	Get@iniMod "KanmusuListMode", "ichiranMode2", ichiranMode2, "0"
 
-	GetIni "KanmusuFormationMode", "tuika1", tuika1, "1"
-	GetIni "KanmusuFormationMode", "tuika2", tuika2, "0"
-	GetIni "KanmusuFormationMode", "tuika3", tuika3, "0"
-	GetIni "KanmusuFormationMode", "tuika4", tuika4, "0"
-	GetIni "KanmusuFormationMode", "sosuka", sosuka, "1"
-	GetIni "KanmusuFormationMode", "sosu", sosu, "0"
-	GetIni "KanmusuFormationMode", "soka", soka, "0"
-	GetIni "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation, "1"
-	GetIni "KanmusuFormationMode", "AddOrderNum", addOrderNum, "1"
-	GetIni "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"第一艦隊\""
-	GetIni "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"第二艦隊\""
-	GetIni "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"ボス支援\""
-	GetIni "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"道中支援\""
-	GetIni "KanmusuFormationMode", "FontColorFirstFleetStr", fontColorFirstFleetStr, "\"FF0000\""
-	GetIni "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
-	GetIni "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr, "\"20AC4C\""
-	GetIni "KanmusuFormationMode", "FontColorFourthFleetStr", fontColorFourthFleetStr, "\"E06020\""
-	GetIni "KanmusuFormationMode", "FontName", fontname, "\"メイリオ\""
-	GetIni "KanmusuFormationMode", "FontNum", fontnum ,"\"メイリオ\""
-	GetIni "KanmusuFormationMode", "FontSizeName", fontsizename, "42"
-	GetIni "KanmusuFormationMode", "FontSizeNum", fontsizenum, "44"
-	GetIni "KanmusuFormationMode", "PunctuationColorStr", PunctuationColorStr, "\"2020C0\""
+	Get@iniMod "KanmusuFormationMode", "tuika1", tuika1, "1"
+	Get@iniMod "KanmusuFormationMode", "tuika2", tuika2, "0"
+	Get@iniMod "KanmusuFormationMode", "tuika3", tuika3, "0"
+	Get@iniMod "KanmusuFormationMode", "tuika4", tuika4, "0"
+	Get@iniMod "KanmusuFormationMode", "sosuka", sosuka, "1"
+	Get@iniMod "KanmusuFormationMode", "sosu", sosu, "0"
+	Get@iniMod "KanmusuFormationMode", "soka", soka, "0"
+	Get@iniMod "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation, "1"
+	Get@iniMod "KanmusuFormationMode", "AddOrderNum", addOrderNum, "1"
+	Get@iniMod "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"第一艦隊\""
+	Get@iniMod "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"第二艦隊\""
+	Get@iniMod "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"ボス支援\""
+	Get@iniMod "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"道中支援\""
+	Get@iniMod "KanmusuFormationMode", "FontColorFirstFleetStr", fontColorFirstFleetStr, "\"FF0000\""
+	Get@iniMod "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
+	Get@iniMod "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr, "\"20AC4C\""
+	Get@iniMod "KanmusuFormationMode", "FontColorFourthFleetStr", fontColorFourthFleetStr, "\"E06020\""
+	Get@iniMod "KanmusuFormationMode", "FontName", fontname, "\"メイリオ\""
+	Get@iniMod "KanmusuFormationMode", "FontNum", fontnum ,"\"メイリオ\""
+	Get@iniMod "KanmusuFormationMode", "FontSizeName", fontsizename, "42"
+	Get@iniMod "KanmusuFormationMode", "FontSizeNum", fontsizenum, "44"
+	Get@iniMod "KanmusuFormationMode", "PunctuationColorStr", PunctuationColorStr, "\"2020C0\""
 
-	GetIni "OtherListMode", "DirectLink", directLink, "1"
-	GetIni "OtherListMode", "AirStation", airStation, "0"
-	GetIni "OtherListMode", "AirStationTab", airStationTab, "1"
-	GetIni "OtherListMode", "EquipmentList", equipmentList, "0"
-	GetIni "OtherListMode", "UserDefList", userDefList, "0"
-	GetIni "OtherListMode", "UserDefRect", userDefRect, "0\",\"0\",\""+BASE_SIZE_W+"\",\"+BASE_SIZE_H
+	Get@iniMod "OtherListMode", "DirectLink", directLink, "1"
+	Get@iniMod "OtherListMode", "AirStation", airStation, "0"
+	Get@iniMod "OtherListMode", "AirStationTab", airStationTab, "1"
+	Get@iniMod "OtherListMode", "EquipmentList", equipmentList, "0"
+	Get@iniMod "OtherListMode", "UserDefList", userDefList, "0"
+	Get@iniMod "OtherListMode", "UserDefRect", userDefRect, "0\",\"0\",\""+BASE_SIZE_W+"\",\"+BASE_SIZE_H
 
 	if strmid(hotkeystr,0,1) = "A":hotkeycapalt	= 1
 	if strmid(hotkeystr,1,1) = "C":hotkeycapctrl = 1
@@ -333,7 +333,7 @@ return
 	}
 
 	repeat SAVENAME_COUNT
-		isValidFileName DateAndTimeFormat2(saveName(cnt))
+		isValidFileName@DateTimeFormatMod Format@DateTimeFormatMod(saveName(cnt))
 		if (stat == FALSE){
 			saveName(cnt) = defaultSaveName(cnt)
 			savelogtext += "Info - "+saveNameStr(cnt)+"保存名にファイル名として使えない文字があります。デフォルトに変更しました。\n"
@@ -440,158 +440,158 @@ return
 
 *inisave
 
-	WriteIni "Configuration", "FrontRow", frontrow
-	WriteIni "Configuration", "HideLog", hidelog
-	WriteIni "Configuration", "YabumiAutoUpload", yabumiautoupload
-	WriteIni "Configuration", "DisplayCapture", dispcap
-	WriteIni "Configuration", "ManualPos", manualpos
-	WriteIni "Configuration", "Senden", senden
-	WriteIni "Configuration", "AutoVersionCheck", autoVersionCheck
-	WriteIni "Configuration", "ConfirmCompletion", confirmCompletion
-	WriteIni "Configuration", "RestoreMainWindowPos", restoreMainWindowPos
-	WriteIni "Configuration", "RestoreTweetWindowPos", restoreTweetWindowPos
-	WriteIni "Configuration", "MainWindowPos", mainWindowPos
-	WriteIni "Configuration", "TweetWindowPos", tweetWindowPos
-	WriteIni "Configuration", "AutoUIScale", autoUIScale
-	WriteIni "Configuration", "UIScale", UIScale
-	WriteIni "Configuration", "ScreenShotSaveDir", sssavedir
-	WriteIni "Configuration", "ListSaveDir", listsavedir
-	WriteIni "Configuration", "IntervalShotSaveDir",intervalShotDir
-	WriteIni "Configuration", "SelectCapSaveDir",selectCapSaveDir
-	WriteIni "Configuration", "YabumiExeDir", yabumidir
-	WriteIni "Configuration", "GridScreenSize", scrSizeBase
+	Write@iniMod "Configuration", "FrontRow", frontrow
+	Write@iniMod "Configuration", "HideLog", hidelog
+	Write@iniMod "Configuration", "YabumiAutoUpload", yabumiautoupload
+	Write@iniMod "Configuration", "DisplayCapture", dispcap
+	Write@iniMod "Configuration", "ManualPos", manualpos
+	Write@iniMod "Configuration", "Senden", senden
+	Write@iniMod "Configuration", "AutoVersionCheck", autoVersionCheck
+	Write@iniMod "Configuration", "ConfirmCompletion", confirmCompletion
+	Write@iniMod "Configuration", "RestoreMainWindowPos", restoreMainWindowPos
+	Write@iniMod "Configuration", "RestoreTweetWindowPos", restoreTweetWindowPos
+	Write@iniMod "Configuration", "MainWindowPos", mainWindowPos
+	Write@iniMod "Configuration", "TweetWindowPos", tweetWindowPos
+	Write@iniMod "Configuration", "AutoUIScale", autoUIScale
+	Write@iniMod "Configuration", "UIScale", UIScale
+	Write@iniMod "Configuration", "ScreenShotSaveDir", sssavedir
+	Write@iniMod "Configuration", "ListSaveDir", listsavedir
+	Write@iniMod "Configuration", "IntervalShotSaveDir",intervalShotDir
+	Write@iniMod "Configuration", "SelectCapSaveDir",selectCapSaveDir
+	Write@iniMod "Configuration", "YabumiExeDir", yabumidir
+	Write@iniMod "Configuration", "GridScreenSize", scrSizeBase
 
-	WriteIni "CaptureAndMaking", "NoHideLv", noHideLv
-	WriteIni "CaptureAndMaking", "NameMosaic", nameMosaic
-	WriteIni "CaptureAndMaking", "NameCut", namecut
-	WriteIni "CaptureAndMaking", "HideOnCapture", hideOnCapture
-	WriteIni "CaptureAndMaking", "forceResize", forceResize
-	WriteIni "CaptureAndMaking", "PastSize", pastSize
-	WriteIni "CaptureAndMaking", "maxSearchLevel", maxSearchLevel
-	WriteIni "CaptureAndMaking", "HotkeyCapture", hotkeycap
-	WriteIni "CaptureAndMaking", "HotkeyStr", hotkeystr
-	WriteIni "CaptureAndMaking", "AutoAddCapture", autoaddCapture
-	WriteIni "CaptureAndMaking", "AutoAddNonSave", autoaddnonsave //Ver0.2.7
-	WriteIni "CaptureAndMaking", "JpgSave", jpgsave
-	WriteIni "CaptureAndMaking", "JpgQuality", jpgquality
-	WriteIni "CaptureAndMaking", "EnableIntervalCap", enableSeqCap
-	WriteIni "CaptureAndMaking", "IntervalTime", timersec
-	WriteIni "CaptureAndMaking", "ListMakeInterpolation", listMakeInterpolation
-	WriteIni "CaptureAndMaking", "DirectLinkDisInterpolation", directLinkDisInterpolation
-	WriteIni "CaptureAndMaking", "EnableSupportWindow", enableSupportWindow
-	WriteIni "CaptureAndMaking", "EnableSeqCapLimitNum", enableSeqCapLimitNum
-	WriteIni "CaptureAndMaking", "EnableSeqCapLimitTime", enableSeqCapLimitTime
-	WriteIni "CaptureAndMaking", "EnableSeqCapLimitSize", enableSeqCapLimitSize
-	WriteIni "CaptureAndMaking", "seqCapLimitNum", seqCapLimitNum
-	WriteIni "CaptureAndMaking", "seqCapLimitTimeM", seqCapLimitTimeM
-	WriteIni "CaptureAndMaking", "seqCapLimitTimeS", seqCapLimitTimeS
-	WriteIni "CaptureAndMaking", "seqCapLimitSize", seqCapLimitSize
+	Write@iniMod "CaptureAndMaking", "NoHideLv", noHideLv
+	Write@iniMod "CaptureAndMaking", "NameMosaic", nameMosaic
+	Write@iniMod "CaptureAndMaking", "NameCut", namecut
+	Write@iniMod "CaptureAndMaking", "HideOnCapture", hideOnCapture
+	Write@iniMod "CaptureAndMaking", "forceResize", forceResize
+	Write@iniMod "CaptureAndMaking", "PastSize", pastSize
+	Write@iniMod "CaptureAndMaking", "maxSearchLevel", maxSearchLevel
+	Write@iniMod "CaptureAndMaking", "HotkeyCapture", hotkeycap
+	Write@iniMod "CaptureAndMaking", "HotkeyStr", hotkeystr
+	Write@iniMod "CaptureAndMaking", "AutoAddCapture", autoaddCapture
+	Write@iniMod "CaptureAndMaking", "AutoAddNonSave", autoaddnonsave //Ver0.2.7
+	Write@iniMod "CaptureAndMaking", "JpgSave", jpgsave
+	Write@iniMod "CaptureAndMaking", "JpgQuality", jpgquality
+	Write@iniMod "CaptureAndMaking", "EnableIntervalCap", enableSeqCap
+	Write@iniMod "CaptureAndMaking", "IntervalTime", timersec
+	Write@iniMod "CaptureAndMaking", "ListMakeInterpolation", listMakeInterpolation
+	Write@iniMod "CaptureAndMaking", "DirectLinkDisInterpolation", directLinkDisInterpolation
+	Write@iniMod "CaptureAndMaking", "EnableSupportWindow", enableSupportWindow
+	Write@iniMod "CaptureAndMaking", "EnableSeqCapLimitNum", enableSeqCapLimitNum
+	Write@iniMod "CaptureAndMaking", "EnableSeqCapLimitTime", enableSeqCapLimitTime
+	Write@iniMod "CaptureAndMaking", "EnableSeqCapLimitSize", enableSeqCapLimitSize
+	Write@iniMod "CaptureAndMaking", "seqCapLimitNum", seqCapLimitNum
+	Write@iniMod "CaptureAndMaking", "seqCapLimitTimeM", seqCapLimitTimeM
+	Write@iniMod "CaptureAndMaking", "seqCapLimitTimeS", seqCapLimitTimeS
+	Write@iniMod "CaptureAndMaking", "seqCapLimitSize", seqCapLimitSize
 	tempStr = saveName(SN_CAPTURE)
-	WriteIni "CaptureAndMaking", "SaveNameCapture", tempStr
+	Write@iniMod "CaptureAndMaking", "SaveNameCapture", tempStr
 	tempStr = saveName(SN_SELECTCAPTURE)
-	WriteIni "CaptureAndMaking", "saveNameSelectCapture", tempStr
+	Write@iniMod "CaptureAndMaking", "saveNameSelectCapture", tempStr
 	tempStr = saveName(SN_LIST)
-	WriteIni "CaptureAndMaking", "SaveNameList", tempStr
+	Write@iniMod "CaptureAndMaking", "SaveNameList", tempStr
 	tempStr = saveName(SN_FORMATION)
-	WriteIni "CaptureAndMaking", "SaveNameFormation", tempStr
+	Write@iniMod "CaptureAndMaking", "SaveNameFormation", tempStr
 	tempStr = saveName(SN_AIRSTATION)
-	WriteIni "CaptureAndMaking", "SaveNameAirStation", tempStr
+	Write@iniMod "CaptureAndMaking", "SaveNameAirStation", tempStr
 	tempStr = saveName(SN_DIRECTLINK)
-	WriteIni "CaptureAndMaking", "SaveNameDirectLink", tempStr
+	Write@iniMod "CaptureAndMaking", "SaveNameDirectLink", tempStr
 	tempStr = saveName(SN_EQUIPMENT)
-	WriteIni "CaptureAndMaking", "SaveNameEquipmentList", tempStr
+	Write@iniMod "CaptureAndMaking", "SaveNameEquipmentList", tempStr
 	tempStr = saveName(SN_USERDEF)
-	WriteIni "CaptureAndMaking", "SaveNameUserDefList", tempStr
+	Write@iniMod "CaptureAndMaking", "SaveNameUserDefList", tempStr
 
 	tempInt = confirmSaveName(SN_CAPTURE)
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameCapture", tempInt
+	Write@iniMod "CaptureAndMaking", "ConfirmSaveNameCapture", tempInt
 	tempInt = confirmSaveName(SN_SELECTCAPTURE)
-	WriteIni "CaptureAndMaking", "ConfirmsaveNameSelectCapture", tempInt
+	Write@iniMod "CaptureAndMaking", "ConfirmsaveNameSelectCapture", tempInt
 	tempInt = confirmSaveName(SN_LIST)
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameList", tempInt
+	Write@iniMod "CaptureAndMaking", "ConfirmSaveNameList", tempInt
 	tempInt = confirmSaveName(SN_FORMATION)
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameFormation", tempInt
+	Write@iniMod "CaptureAndMaking", "ConfirmSaveNameFormation", tempInt
 	tempInt = confirmSaveName(SN_AIRSTATION)
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameAirStation", tempInt
+	Write@iniMod "CaptureAndMaking", "ConfirmSaveNameAirStation", tempInt
 	tempInt = confirmSaveName(SN_DIRECTLINK)
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameDirectLink", tempInt
+	Write@iniMod "CaptureAndMaking", "ConfirmSaveNameDirectLink", tempInt
 	tempInt = confirmSaveName(SN_EQUIPMENT)
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameEquipmentList", tempInt
+	Write@iniMod "CaptureAndMaking", "ConfirmSaveNameEquipmentList", tempInt
 	tempInt = confirmSaveName(SN_USERDEF)
-	WriteIni "CaptureAndMaking", "ConfirmSaveNameUserDefList", tempInt
+	Write@iniMod "CaptureAndMaking", "ConfirmSaveNameUserDefList", tempInt
 
-	WriteIni "VideoCapture", "enableVideoCap", enableVideoCap
-	WriteIni "VideoCapture", "lateEncode", lateEncode
-	WriteIni "VideoCapture", "HideCursor", videoCapHideCursor
-	WriteIni "VideoCapture", "ShowFrame", videoCapShowFrame
-	WriteIni "VideoCapture", "EnableFFMPEGLogWindow", enableFFMPEGLogWindow
-	WriteIni "VideoCapture", "VideoCapFrameRate", videoCapFR
-	WriteIni "VideoCapture", "VideoCapCRF", videoCapCRF
-	WriteIni "VideoCapture", "x264presetNum", x264presetNum
-	WriteIni "VideoCapture", "AudioDeviceName", AudioDeviceName
-	WriteIni "VideoCapture", "ffmpegDir", ffmpegDir
-	WriteIni "VideoCapture", "VideoCapSaveDir", videoCapSaveDir
+	Write@iniMod "VideoCapture", "enableVideoCap", enableVideoCap
+	Write@iniMod "VideoCapture", "lateEncode", lateEncode
+	Write@iniMod "VideoCapture", "HideCursor", videoCapHideCursor
+	Write@iniMod "VideoCapture", "ShowFrame", videoCapShowFrame
+	Write@iniMod "VideoCapture", "EnableFFMPEGLogWindow", enableFFMPEGLogWindow
+	Write@iniMod "VideoCapture", "VideoCapFrameRate", videoCapFR
+	Write@iniMod "VideoCapture", "VideoCapCRF", videoCapCRF
+	Write@iniMod "VideoCapture", "x264presetNum", x264presetNum
+	Write@iniMod "VideoCapture", "AudioDeviceName", AudioDeviceName
+	Write@iniMod "VideoCapture", "ffmpegDir", ffmpegDir
+	Write@iniMod "VideoCapture", "VideoCapSaveDir", videoCapSaveDir
 	tempStr = saveName(SN_VIDEO)
-	WriteIni "VideoCapture", "SaveNameVideoCapture", tempStr
-	WriteIni "VideoCapture", "enableVideoCapLimit", enableVideoCapLimit
-	WriteIni "VideoCapture", "VideoCapLimitTimeM", videoCapLimitTimeM
-	WriteIni "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS
-	WriteIni "VideoCapture", "Volume", volume
-	WriteIni "VideoCapture", "AudioNormalize", audioNormalize
-	WriteIni "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture
+	Write@iniMod "VideoCapture", "SaveNameVideoCapture", tempStr
+	Write@iniMod "VideoCapture", "enableVideoCapLimit", enableVideoCapLimit
+	Write@iniMod "VideoCapture", "VideoCapLimitTimeM", videoCapLimitTimeM
+	Write@iniMod "VideoCapture", "VideoCapLimitTimeS", videoCapLimitTimeS
+	Write@iniMod "VideoCapture", "Volume", volume
+	Write@iniMod "VideoCapture", "AudioNormalize", audioNormalize
+	Write@iniMod "VideoCapture", "ConfirmCancelVideoCapture", confirmCancelVideoCapture
 
 	sdim temp, 256
 	temp = EncStr@encryption(userdata)
-	WriteIni "TwitterSetting", "Twi_userdata", temp
+	Write@iniMod "TwitterSetting", "Twi_userdata", temp
 	temp = EncStr@encryption(ACCESS_TOKEN)
-	WriteIni "TwitterSetting", "Twi_ACCESS_TOKEN", temp
+	Write@iniMod "TwitterSetting", "Twi_ACCESS_TOKEN", temp
 	temp = EncStr@encryption(ACCESS_SECRET)
-	WriteIni "TwitterSetting", "Twi_ACCESS_SECRET", temp
+	Write@iniMod "TwitterSetting", "Twi_ACCESS_SECRET", temp
 
-	WriteIni "TwitterSetting", "TwiFrontRow", twiFrontRow
-	WriteIni "TwitterSetting", "TwiJpg",twijpg
+	Write@iniMod "TwitterSetting", "TwiFrontRow", twiFrontRow
+	Write@iniMod "TwitterSetting", "TwiJpg",twijpg
 
-	WriteIni "SSMode", "AutoSearch", autosearch
-	WriteIni "SSMode", "HideName", hidename
-	WriteIni "SSMode", "EnableTweetWindow",enableTweetWindow
-	WriteIni "SSMode", "SSCapturePosition", ssCap
+	Write@iniMod "SSMode", "AutoSearch", autosearch
+	Write@iniMod "SSMode", "HideName", hidename
+	Write@iniMod "SSMode", "EnableTweetWindow",enableTweetWindow
+	Write@iniMod "SSMode", "SSCapturePosition", ssCap
 
-	WriteIni "KanmusuListMode", "ichiranMode1", ichiranMode1
-	WriteIni "KanmusuListMode", "yubiwa", yubiwa
-	WriteIni "KanmusuListMode", "kantai", kantai
-	WriteIni "KanmusuListMode", "page", page
-	WriteIni "KanmusuListMode", "lvname", lvname
-	WriteIni "KanmusuListMode", "ichiranMode2", ichiranMode2
+	Write@iniMod "KanmusuListMode", "ichiranMode1", ichiranMode1
+	Write@iniMod "KanmusuListMode", "yubiwa", yubiwa
+	Write@iniMod "KanmusuListMode", "kantai", kantai
+	Write@iniMod "KanmusuListMode", "page", page
+	Write@iniMod "KanmusuListMode", "lvname", lvname
+	Write@iniMod "KanmusuListMode", "ichiranMode2", ichiranMode2
 
-	WriteIni "KanmusuFormationMode", "tuika1", tuika1
-	WriteIni "KanmusuFormationMode", "tuika2", tuika2
-	WriteIni "KanmusuFormationMode", "tuika3", tuika3
-	WriteIni "KanmusuFormationMode", "tuika4", tuika4
-	WriteIni "KanmusuFormationMode", "sosuka", sosuka
-	WriteIni "KanmusuFormationMode", "sosu", sosu
-	WriteIni "KanmusuFormationMode", "soka", soka
-	WriteIni "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation
-	WriteIni "KanmusuFormationMode", "AddOrderNum", addOrderNum
-	WriteIni "KanmusuFormationMode", "FirstFleetName", FirstFleetName
-	WriteIni "KanmusuFormationMode", "SecondFleetName", SecondFleetName
-	WriteIni "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName
-	WriteIni "KanmusuFormationMode", "FourthFleetName", FourthFleetName
-	WriteIni "KanmusuFormationMode", "FontColorFirstFleetStr", fontColorFirstFleetStr
-	WriteIni "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr
-	WriteIni "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr
-	WriteIni "KanmusuFormationMode", "FontColorFourthFleetStr", fontColorFourthFleetStr
-	WriteIni "KanmusuFormationMode", "FontName", fontname
-	WriteIni "KanmusuFormationMode", "FontNum", fontnum
-	WriteIni "KanmusuFormationMode", "FontSizeName", fontsizename
-	WriteIni "KanmusuFormationMode", "FontSizeNum", fontsizenum
-	WriteIni "KanmusuFormationMode", "PunctuationColorStr", PunctuationColorStr
+	Write@iniMod "KanmusuFormationMode", "tuika1", tuika1
+	Write@iniMod "KanmusuFormationMode", "tuika2", tuika2
+	Write@iniMod "KanmusuFormationMode", "tuika3", tuika3
+	Write@iniMod "KanmusuFormationMode", "tuika4", tuika4
+	Write@iniMod "KanmusuFormationMode", "sosuka", sosuka
+	Write@iniMod "KanmusuFormationMode", "sosu", sosu
+	Write@iniMod "KanmusuFormationMode", "soka", soka
+	Write@iniMod "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation
+	Write@iniMod "KanmusuFormationMode", "AddOrderNum", addOrderNum
+	Write@iniMod "KanmusuFormationMode", "FirstFleetName", FirstFleetName
+	Write@iniMod "KanmusuFormationMode", "SecondFleetName", SecondFleetName
+	Write@iniMod "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName
+	Write@iniMod "KanmusuFormationMode", "FourthFleetName", FourthFleetName
+	Write@iniMod "KanmusuFormationMode", "FontColorFirstFleetStr", fontColorFirstFleetStr
+	Write@iniMod "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr
+	Write@iniMod "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr
+	Write@iniMod "KanmusuFormationMode", "FontColorFourthFleetStr", fontColorFourthFleetStr
+	Write@iniMod "KanmusuFormationMode", "FontName", fontname
+	Write@iniMod "KanmusuFormationMode", "FontNum", fontnum
+	Write@iniMod "KanmusuFormationMode", "FontSizeName", fontsizename
+	Write@iniMod "KanmusuFormationMode", "FontSizeNum", fontsizenum
+	Write@iniMod "KanmusuFormationMode", "PunctuationColorStr", PunctuationColorStr
 
-	WriteIni "OtherListMode", "DirectLink", directLink
-	WriteIni "OtherListMode", "AirStation", airStation
-	WriteIni "OtherListMode", "AirStationTab", airStationTab
-	WriteIni "OtherListMode", "EquipmentList", equipmentList
-	WriteIni "OtherListMode", "UserDefList", userDefList
-	WriteIni "OtherListMode", "UserDefRect", userDefRect
+	Write@iniMod "OtherListMode", "DirectLink", directLink
+	Write@iniMod "OtherListMode", "AirStation", airStation
+	Write@iniMod "OtherListMode", "AirStationTab", airStationTab
+	Write@iniMod "OtherListMode", "EquipmentList", equipmentList
+	Write@iniMod "OtherListMode", "UserDefList", userDefList
+	Write@iniMod "OtherListMode", "UserDefRect", userDefRect
 
 return
 
