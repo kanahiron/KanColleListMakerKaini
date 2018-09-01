@@ -149,6 +149,7 @@
         rectangles(0, 1) = 0
         rectangles(0, 2) = 0
         rectangles(0, 3) = 0
+        rectangleCount = 0
 
         // ウィンドウ周りの準備を行う
         ;bgWindowIdを最前面表示にして左上を仮想ディスプレイ左上に合わせる
@@ -164,18 +165,32 @@
     	MoveWindow overlayWindowIdHandle, 0, 0, 0, 0, 0
 
         // マウス選択のループ
+        selectFlg = FALSE       //選択中はTRUE
+        selectBeginPos.0 = 0, 0 //選択開始時のマウス座標(スクリーン座標系)
+        selectAreaRect.0 = 0, 0, 0, 0   //選択範囲のRect(スクリーン座標系)
         while (TRUE)
             // キー入力状態を読み取る(左マウスボタンは押しっぱなしも検知)
             stick ky, STICK_LEFTBUTTON, 0
 
             // 左マウスボタンを押していた際の処理
             if (ky & STICK_LEFTBUTTON){
-                // スタブ
+                if (selectFlg == FALSE){
+                    // 選択始めの状態
+                    selectBeginPos(0) = ginfo_mx
+                    selectBeginPos(1) = ginfo_my
+                    selectFlg = TRUE
+                }else{
+                    // 選択中の状態
+                    //selectAreaRectを随時更新しつつ、その結果によってoverlayWindowIdを選択範囲上に表示させている
+                    selectAreaRect(0) = Min(selectBeginPos(0), ginfo_mx)
+                    selectAreaRect(1) = Min(selectBeginPos(1), ginfo_my)
+                    selectAreaRect(2) = Max(selectBeginPos(0), ginfo_mx) - selectAreaRect(0)
+                    selectAreaRect(3) = Max(selectBeginPos(1), ginfo_my) - selectAreaRect(1)
+                    gsel imageid3, 2
+    				MoveWindow overlayWindowIdHandle, selectAreaRect(0), selectAreaRect(1), selectAreaRect(2), selectAreaRect(3), TRUE
+                 }
             }else :if ((ky & STICK_ESCBUTTON) || (ky & STICK_RIGHTBUTTON)){
                 // Escキー or 右マウスボタンを押した際の処理
-                // スタブ
-            }else {
-                // 何も押していないときの処理
                 ; オーバーレイウィンドウを非表示にする
                 gsel overlayWindowId, -1
                 ; bgWindowIdにおけるマウスポインタの設定を元に戻す
@@ -185,9 +200,105 @@
                 ; bgWindowIdを非表示にする
     			gsel bgWindowId, -1
     			_break
+            }else {
+                // 何も押しておらず、選択を外した瞬間ならば、選択範囲についての処理を行う
+                if (selectFlg) {
+                    // 選択状態を解除
+                    selectFlg = FALSE
+
+                    // overlayWindowIdとbgWindowIdを非表示にする
+                    ; オーバーレイウィンドウを非表示にする
+                    gsel overlayWindowId, -1
+                    ; bgWindowIdにおけるマウスポインタの設定を元に戻す
+        			gsel bgWindowId
+        			LoadCursor 0, IDC_ARROW
+        			SetClassLong bgWindowId, GCL_HCURSOR, stat
+                    ; bgWindowIdを非表示にする
+        			gsel bgWindowId, -1
+
+                    // 選択部分から艦これの画面を検出する
+                    gsel windowId
+                    ;初期範囲を算出する
+                    dim tempRect, 4
+                    tempRect(0) = selectAreaRect(0) - VIRTUAL_DISPLAY_X
+                    tempRect(1) = selectAreaRect(1) - VIRTUAL_DISPLAY_Y
+                    tempRect(2) = selectAreaRect(2)
+                    tempRect(3) = selectAreaRect(3)
+                    ;まず左辺から絞る
+                    tempColor = _pget(tempRect(0), tempRect(1) + tempRect(3) / 2)
+                    for px, tempRect(0), tempRect(0) + tempRect(2) / 2
+                        if (_pget(px, tempRect(1) + tempRect(3) / 2) != tempColor) {
+                            rectangles(0, 0) = px
+                            _break
+                        }
+                    next
+                    ;次に右辺
+                    tempColor = _pget(tempRect(0) + tempRect(2), tempRect(1) + tempRect(3) / 2)
+                    for px, tempRect(0) + tempRect(2), tempRect(0) + tempRect(2) / 2, -1
+                        if (_pget(px, tempRect(1) + tempRect(3) / 2) != tempColor) {
+                            rectangles(0, 2) = px - rectangles(0, 0)
+                            _break
+                        }
+                    next
+                    ;次に上辺
+                    tempColor = _pget(tempRect(0) + tempRect(2) / 2, tempRect(1))
+                    for py, tempRect(1), tempRect(1) + tempRect(3) / 2
+                        if (_pget(tempRect(0) + tempRect(2) / 2, py) != tempColor) {
+                            rectangles(0, 1) = py
+                            _break
+                        }
+                    next
+                    ;最後に下辺
+                    tempColor = _pget(tempRect(0) + tempRect(2) / 2, tempRect(1) + tempRect(3))
+                    for py, tempRect(1) + tempRect(3), tempRect(1) + tempRect(3) / 2, -1
+                        if (_pget(tempRect(0) + tempRect(2) / 2, py) != tempColor) {
+                            rectangles(0, 3) = py - rectangles(0, 1)
+                            _break
+                        }
+                    next
+
+                    // 検出できているかを確認する。駄目なら再度選択させる
+                    if (tempRect(2) >= 99 && tempRect(3) >= 59) {
+                        gsel overlayWindowId, 2
+        				MoveWindow overlayWindowIdHandle, tempRect(0) + VIRTUAL_DISPLAY_X, tempRect(1), + VIRTUAL_DISPLAY_Y tempRect(2), tempRect(3), TRUE
+        				dialog "正しく取得できていますか？", 2, "確認"
+        				if (stat == 6) {
+        					gsel overlayWindowId, -1
+                            rectangles(0, 0) = tempRect(0)
+                            rectangles(0, 1) = tempRect(1)
+                            rectangles(0, 2) = tempRect(2)
+                            rectangles(0, 3) = tempRect(3)
+                            rectangleCount = 1
+        					_break
+        				}
+                    }else {
+                        dialog "取得に失敗しました\n再度選択しますか？", 2, "確認"
+        				if (stat == 7) {
+        					gsel overlayWindowId, -1
+        					_break
+        				}
+                    }
+                    ;bgWindowIdを最前面表示にして左上を仮想ディスプレイ左上に合わせる
+                	gsel bgWindowId, 2
+                	bgWindowIdHandle = hwnd
+                	MoveWindow bgWindowIdHandle, VIRTUAL_DISPLAY_X, VIRTUAL_DISPLAY_Y, VIRTUAL_DISPLAY_W, VIRTUAL_DISPLAY_H, TRUE
+                    ;マウスカーソルをクロス状に変更しておく
+                	LoadCursor 0, MAKEINTRESOURCE
+                	SetClassLong bgWindowIdHandle, GCL_HCURSOR, stat
+                    ;overlayWindowIdを非表示にしておく
+                	gsel overlayWindowId, -1
+                	overlayWindowIdHandle = hwnd
+                	MoveWindow overlayWindowIdHandle, 0, 0, 0, 0, TRUE
+                    ;選択範囲をリセット
+                    selectBeginPos.0 = 0, 0 //選択開始時のマウス座標(スクリーン座標系)
+                    selectAreaRect.0 = 0, 0, 0, 0   //選択範囲のRect(スクリーン座標系)
+                }
             }
             await 16
             _break
         wend
-    return 0
+
+        // カレントウィンドウを元に戻す
+        gsel currentWindowId
+    return rectangleCount
 #global
