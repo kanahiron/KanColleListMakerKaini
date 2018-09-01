@@ -137,10 +137,10 @@
 		count = method2@SearchKanCollePos(WND_TEMP1, rectangles, WND_OVERLAY, WND_TEMP_SCR1)
 		if (count >= 1) {
 			dim sscap, 4
-			sscap(0) = rectangles(0) + disinfo(0)
-			sscap(1) = rectangles(1) + disinfo(1)
-			sscap(2) = rectangles(2)
-			sscap(3) = rectangles(3)
+			sscap(0) = rectangles(0, 0) + disinfo(0)
+			sscap(1) = rectangles(0, 1) + disinfo(1)
+			sscap(2) = sscap(0) + rectangles(0, 2) + 1
+			sscap(3) = sscap(1) + rectangles(0, 3) + 1
 		}else{
 			dim sscap, 4
 		}

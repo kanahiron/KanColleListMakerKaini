@@ -186,7 +186,7 @@
                     selectAreaRect(1) = Min(selectBeginPos(1), ginfo_my)
                     selectAreaRect(2) = Max(selectBeginPos(0), ginfo_mx) - selectAreaRect(0)
                     selectAreaRect(3) = Max(selectBeginPos(1), ginfo_my) - selectAreaRect(1)
-                    gsel imageid3, 2
+                    gsel overlayWindowId, 2
     				MoveWindow@ overlayWindowIdHandle, selectAreaRect(0), selectAreaRect(1), selectAreaRect(2), selectAreaRect(3), TRUE
                  }
             }else :if ((ky & STICK_ESCBUTTON) || (ky & STICK_RIGHTBUTTON)){
@@ -196,7 +196,7 @@
                 ; bgWindowIdにおけるマウスポインタの設定を元に戻す
     			gsel bgWindowId
     			LoadCursor@ 0, IDC_ARROW
-    			SetClassLong@ bgWindowId, GCL_HCURSOR, stat
+    			SetClassLong@ bgWindowIdHandle, GCL_HCURSOR, stat
                 ; bgWindowIdを非表示にする
     			gsel bgWindowId, -1
     			_break
@@ -258,16 +258,12 @@
                     next
 
                     // 検出できているかを確認する。駄目なら再度選択させる
-                    if (tempRect(2) >= 99 && tempRect(3) >= 59) {
+                    if (rectangles(0, 2) >= 99 && rectangles(0, 3) >= 59) {
                         gsel overlayWindowId, 2
-        				MoveWindow@ overlayWindowIdHandle, tempRect(0) + VIRTUAL_DISPLAY_X, tempRect(1) + VIRTUAL_DISPLAY_Y, tempRect(2), tempRect(3), TRUE
+        				MoveWindow@ overlayWindowIdHandle, rectangles(0, 0) + VIRTUAL_DISPLAY_X, rectangles(0, 1) + VIRTUAL_DISPLAY_Y, rectangles(0, 2), rectangles(0, 3), TRUE
         				dialog "正しく取得できていますか？", 2, "確認"
         				if (stat == 6) {
         					gsel overlayWindowId, -1
-                            rectangles(0, 0) = tempRect(0)
-                            rectangles(0, 1) = tempRect(1)
-                            rectangles(0, 2) = tempRect(2)
-                            rectangles(0, 3) = tempRect(3)
                             rectangleCount = 1
         					_break
         				}
@@ -295,7 +291,6 @@
                 }
             }
             await 16
-            _break
         wend
 
         // カレントウィンドウを元に戻す
