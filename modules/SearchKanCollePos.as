@@ -21,10 +21,10 @@
     #const MAKEINTRESOURCE 32515
     #const GCL_HCURSOR -12
 
-    #const VIRTUAL_DISPLAY_X GetSystemMetrics(SM_XVIRTUALSCREEN)
-	#const VIRTUAL_DISPLAY_Y GetSystemMetrics(SM_YVIRTUALSCREEN)
-	#const VIRTUAL_DISPLAY_W GetSystemMetrics(SM_CXVIRTUALSCREEN)
-	#const VIRTUAL_DISPLAY_H GetSystemMetrics(SM_CYVIRTUALSCREEN)
+    #define VIRTUAL_DISPLAY_X GetSystemMetrics@(SM_XVIRTUALSCREEN)
+	#define VIRTUAL_DISPLAY_Y GetSystemMetrics@(SM_YVIRTUALSCREEN)
+	#define VIRTUAL_DISPLAY_W GetSystemMetrics@(SM_CXVIRTUALSCREEN)
+	#define VIRTUAL_DISPLAY_H GetSystemMetrics@(SM_CYVIRTUALSCREEN)
 
     /* 最小値を返す */
     #defcfunc local Min int a, int b
@@ -155,14 +155,14 @@
         ;bgWindowIdを最前面表示にして左上を仮想ディスプレイ左上に合わせる
     	gsel bgWindowId, 2
     	bgWindowIdHandle = hwnd
-    	MoveWindow bgWindowIdHandle, VIRTUAL_DISPLAY_X, VIRTUAL_DISPLAY_Y, VIRTUAL_DISPLAY_W, VIRTUAL_DISPLAY_H, TRUE
+    	MoveWindow@ bgWindowIdHandle, VIRTUAL_DISPLAY_X, VIRTUAL_DISPLAY_Y, VIRTUAL_DISPLAY_W, VIRTUAL_DISPLAY_H, TRUE
         ;マウスカーソルをクロス状に変更しておく
-    	LoadCursor 0, MAKEINTRESOURCE
-    	SetClassLong bgWindowIdHandle, GCL_HCURSOR, stat
+    	LoadCursor@ 0, MAKEINTRESOURCE
+    	SetClassLong@ bgWindowIdHandle, GCL_HCURSOR, stat
         ;overlayWindowIdを非表示にしておく
     	gsel overlayWindowId, -1
     	overlayWindowIdHandle = hwnd
-    	MoveWindow overlayWindowIdHandle, 0, 0, 0, 0, 0
+    	MoveWindow@ overlayWindowIdHandle, 0, 0, 0, 0, 0
 
         // マウス選択のループ
         selectFlg = FALSE       //選択中はTRUE
@@ -187,7 +187,7 @@
                     selectAreaRect(2) = Max(selectBeginPos(0), ginfo_mx) - selectAreaRect(0)
                     selectAreaRect(3) = Max(selectBeginPos(1), ginfo_my) - selectAreaRect(1)
                     gsel imageid3, 2
-    				MoveWindow overlayWindowIdHandle, selectAreaRect(0), selectAreaRect(1), selectAreaRect(2), selectAreaRect(3), TRUE
+    				MoveWindow@ overlayWindowIdHandle, selectAreaRect(0), selectAreaRect(1), selectAreaRect(2), selectAreaRect(3), TRUE
                  }
             }else :if ((ky & STICK_ESCBUTTON) || (ky & STICK_RIGHTBUTTON)){
                 // Escキー or 右マウスボタンを押した際の処理
@@ -195,8 +195,8 @@
                 gsel overlayWindowId, -1
                 ; bgWindowIdにおけるマウスポインタの設定を元に戻す
     			gsel bgWindowId
-    			LoadCursor 0, IDC_ARROW
-    			SetClassLong bgWindowId, GCL_HCURSOR, stat
+    			LoadCursor@ 0, IDC_ARROW
+    			SetClassLong@ bgWindowId, GCL_HCURSOR, stat
                 ; bgWindowIdを非表示にする
     			gsel bgWindowId, -1
     			_break
@@ -211,8 +211,8 @@
                     gsel overlayWindowId, -1
                     ; bgWindowIdにおけるマウスポインタの設定を元に戻す
         			gsel bgWindowId
-        			LoadCursor 0, IDC_ARROW
-        			SetClassLong bgWindowId, GCL_HCURSOR, stat
+        			LoadCursor@ 0, IDC_ARROW
+        			SetClassLong@ bgWindowId, GCL_HCURSOR, stat
                     ; bgWindowIdを非表示にする
         			gsel bgWindowId, -1
 
@@ -260,7 +260,7 @@
                     // 検出できているかを確認する。駄目なら再度選択させる
                     if (tempRect(2) >= 99 && tempRect(3) >= 59) {
                         gsel overlayWindowId, 2
-        				MoveWindow overlayWindowIdHandle, tempRect(0) + VIRTUAL_DISPLAY_X, tempRect(1), + VIRTUAL_DISPLAY_Y tempRect(2), tempRect(3), TRUE
+        				MoveWindow@ overlayWindowIdHandle, tempRect(0) + VIRTUAL_DISPLAY_X, tempRect(1) + VIRTUAL_DISPLAY_Y, tempRect(2), tempRect(3), TRUE
         				dialog "正しく取得できていますか？", 2, "確認"
         				if (stat == 6) {
         					gsel overlayWindowId, -1
@@ -281,14 +281,14 @@
                     ;bgWindowIdを最前面表示にして左上を仮想ディスプレイ左上に合わせる
                 	gsel bgWindowId, 2
                 	bgWindowIdHandle = hwnd
-                	MoveWindow bgWindowIdHandle, VIRTUAL_DISPLAY_X, VIRTUAL_DISPLAY_Y, VIRTUAL_DISPLAY_W, VIRTUAL_DISPLAY_H, TRUE
+                	MoveWindow@ bgWindowIdHandle, VIRTUAL_DISPLAY_X, VIRTUAL_DISPLAY_Y, VIRTUAL_DISPLAY_W, VIRTUAL_DISPLAY_H, TRUE
                     ;マウスカーソルをクロス状に変更しておく
-                	LoadCursor 0, MAKEINTRESOURCE
-                	SetClassLong bgWindowIdHandle, GCL_HCURSOR, stat
+                	LoadCursor@ 0, MAKEINTRESOURCE
+                	SetClassLong@ bgWindowIdHandle, GCL_HCURSOR, stat
                     ;overlayWindowIdを非表示にしておく
                 	gsel overlayWindowId, -1
                 	overlayWindowIdHandle = hwnd
-                	MoveWindow overlayWindowIdHandle, 0, 0, 0, 0, TRUE
+                	MoveWindow@ overlayWindowIdHandle, 0, 0, 0, 0, TRUE
                     ;選択範囲をリセット
                     selectBeginPos.0 = 0, 0 //選択開始時のマウス座標(スクリーン座標系)
                     selectAreaRect.0 = 0, 0, 0, 0   //選択範囲のRect(スクリーン座標系)

@@ -134,7 +134,16 @@
 		pos abs(disinfo(0))+5, abs(disinfo(1))+2
 		mes "艦これの画面を覆うようにドラッグしてください Escキーでキャンセル"
 
-		KanCollePosManual WND_TEMP1, sscap, WND_OVERLAY, WND_TEMP_SCR1
+		count = method2@SearchKanCollePos(WND_TEMP1, rectangles, WND_OVERLAY, WND_TEMP_SCR1)
+		if (count >= 1) {
+			dim sscap, 4
+			sscap(0) = rectangles(0) + disinfo(0)
+			sscap(1) = rectangles(1) + disinfo(1)
+			sscap(2) = rectangles(2)
+			sscap(3) = rectangles(3)
+		}else{
+			dim sscap, 4
+		}
 	}
 
 	gosub *CaptureMethodDecide
