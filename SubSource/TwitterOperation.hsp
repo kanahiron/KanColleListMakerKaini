@@ -358,7 +358,16 @@ return
 
 	dim selcap, 4
 
-	SelectCapturePos WND_TEMP1, selcap, WND_OVERLAY, WND_TEMP_SCR1, marginCutFlg
+	count = method2@SearchKanCollePos(WND_TEMP1, rectangles, WND_OVERLAY, WND_TEMP_SCR1, marginCutFlg)
+	if (count >= 1) {
+		dim sscap, 4
+		selcap(0) = rectangles(0, 0) + disinfo(0)
+		selcap(1) = rectangles(0, 1) + disinfo(1)
+		selcap(2) = selcap(0) + rectangles(0, 2) + 1
+		selcap(3) = selcap(1) + rectangles(0, 3) + 1
+	}else{
+		dim sscap, 4
+	}
 	marginCutFlg = FALSE
 	SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
 	SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 255, LWA_ALPHA

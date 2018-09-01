@@ -134,7 +134,7 @@
 		pos abs(disinfo(0))+5, abs(disinfo(1))+2
 		mes "艦これの画面を覆うようにドラッグしてください Escキーでキャンセル"
 
-		count = method2@SearchKanCollePos(WND_TEMP1, rectangles, WND_OVERLAY, WND_TEMP_SCR1)
+		count = method2@SearchKanCollePos(WND_TEMP1, rectangles, WND_OVERLAY, WND_TEMP_SCR1, TRUE)
 		if (count >= 1) {
 			dim sscap, 4
 			sscap(0) = rectangles(0, 0) + disinfo(0)

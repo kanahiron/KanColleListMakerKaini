@@ -126,7 +126,7 @@
     return 1
 
     /**
-     * ListMakerModule#KanCollePosManualで採用されているアルゴリズム
+     * ListMakerModule#KanCollePosManualやListMakerModule#SelectCapturePosで採用されているアルゴリズム
      * ・windowIdは事前に仮想ディスプレイ全体をBitBltされているbuffer
      * ・overlayWindowIdは仮想ディスプレイ全体と同じサイズのレイヤードウィンドウでbgscr
      * ・bgWindowIdは仮想ディスプレイ全体と同じサイズのbgscrで、windowIdの内容がコピーされている
@@ -138,8 +138,9 @@
      * ・この関数の終了時、関数実行前にgselしていたウィンドウIDにgselし直す
      * ・戻り値はRECTが想定されており、選択失敗時はオール0になる。
      * 　Rectangleに変換しても、選択失敗時はオール0になる計算
+     * 　(なお、marginCutFlgがFALSEならば、選択した後のトリミング過程が発生しない)
      */
-    #defcfunc local method2 int windowId, array rectangles, int overlayWindowId, int bgWindowId
+    #defcfunc local method2 int windowId, array rectangles, int overlayWindowId, int bgWindowId, int marginCutFlg
         // 以前のカレントウィンドウIDを記憶
         currentWindowId = ginfo_sel
 
@@ -218,44 +219,51 @@
 
                     // 選択部分から艦これの画面を検出する
                     gsel windowId
-                    ;初期範囲を算出する
-                    dim tempRect, 4
-                    tempRect(0) = selectAreaRect(0) - VIRTUAL_DISPLAY_X
-                    tempRect(1) = selectAreaRect(1) - VIRTUAL_DISPLAY_Y
-                    tempRect(2) = selectAreaRect(2)
-                    tempRect(3) = selectAreaRect(3)
-                    ;まず左辺から絞る
-                    tempColor = _pget(tempRect(0), tempRect(1) + tempRect(3) / 2)
-                    for px, tempRect(0), tempRect(0) + tempRect(2) / 2
-                        if (_pget(px, tempRect(1) + tempRect(3) / 2) != tempColor) {
-                            rectangles(0, 0) = px
-                            _break
-                        }
-                    next
-                    ;次に右辺
-                    tempColor = _pget(tempRect(0) + tempRect(2), tempRect(1) + tempRect(3) / 2)
-                    for px, tempRect(0) + tempRect(2), tempRect(0) + tempRect(2) / 2, -1
-                        if (_pget(px, tempRect(1) + tempRect(3) / 2) != tempColor) {
-                            rectangles(0, 2) = px - rectangles(0, 0)
-                            _break
-                        }
-                    next
-                    ;次に上辺
-                    tempColor = _pget(tempRect(0) + tempRect(2) / 2, tempRect(1))
-                    for py, tempRect(1), tempRect(1) + tempRect(3) / 2
-                        if (_pget(tempRect(0) + tempRect(2) / 2, py) != tempColor) {
-                            rectangles(0, 1) = py
-                            _break
-                        }
-                    next
-                    ;最後に下辺
-                    tempColor = _pget(tempRect(0) + tempRect(2) / 2, tempRect(1) + tempRect(3))
-                    for py, tempRect(1) + tempRect(3), tempRect(1) + tempRect(3) / 2, -1
-                        if (_pget(tempRect(0) + tempRect(2) / 2, py) != tempColor) {
-                            rectangles(0, 3) = py - rectangles(0, 1)
-                            _break
-                        }
-                    next
+                    if (marginCutFlg){
+                        ;初期範囲を算出する
+                        dim tempRect, 4
+                        tempRect(0) = selectAreaRect(0) - VIRTUAL_DISPLAY_X
+                        tempRect(1) = selectAreaRect(1) - VIRTUAL_DISPLAY_Y
+                        tempRect(2) = selectAreaRect(2)
+                        tempRect(3) = selectAreaRect(3)
+                        ;まず左辺から絞る
+                        tempColor = _pget(tempRect(0), tempRect(1) + tempRect(3) / 2)
+                        for px, tempRect(0), tempRect(0) + tempRect(2) / 2
+                            if (_pget(px, tempRect(1) + tempRect(3) / 2) != tempColor) {
+                                rectangles(0, 0) = px
+                                _break
+                            }
+                        next
+                        ;次に右辺
+                        tempColor = _pget(tempRect(0) + tempRect(2), tempRect(1) + tempRect(3) / 2)
+                        for px, tempRect(0) + tempRect(2), tempRect(0) + tempRect(2) / 2, -1
+                            if (_pget(px, tempRect(1) + tempRect(3) / 2) != tempColor) {
+                                rectangles(0, 2) = px - rectangles(0, 0)
+                                _break
+                            }
+                        next
+                        ;次に上辺
+                        tempColor = _pget(tempRect(0) + tempRect(2) / 2, tempRect(1))
+                        for py, tempRect(1), tempRect(1) + tempRect(3) / 2
+                            if (_pget(tempRect(0) + tempRect(2) / 2, py) != tempColor) {
+                                rectangles(0, 1) = py
+                                _break
+                            }
+                        next
+                        ;最後に下辺
+                        tempColor = _pget(tempRect(0) + tempRect(2) / 2, tempRect(1) + tempRect(3))
+                        for py, tempRect(1) + tempRect(3), tempRect(1) + tempRect(3) / 2, -1
+                            if (_pget(tempRect(0) + tempRect(2) / 2, py) != tempColor) {
+                                rectangles(0, 3) = py - rectangles(0, 1)
+                                _break
+                            }
+                        next
+                    }else{
+                        rectangles(0, 0) = selectAreaRect(0) - VIRTUAL_DISPLAY_X
+                        rectangles(0, 1) = selectAreaRect(1) - VIRTUAL_DISPLAY_Y
+                        rectangles(0, 2) = selectAreaRect(2)
+                        rectangles(0, 3) = selectAreaRect(3)
+                    }
 
                     // 検出できているかを確認する。駄目なら再度選択させる
                     if (rectangles(0, 2) >= 99 && rectangles(0, 3) >= 59) {
