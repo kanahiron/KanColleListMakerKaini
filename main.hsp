@@ -24,7 +24,6 @@
 //どちらというとサブソースなモジュール
 #include "./modules/FFMPEGLog.hsp"
 #include "./modules/GetAudioDeviceMod.as"
-#include "./modules/GetKanCollePosMod.hsp"
 #include "./modules/isHomepostModule.as"
 #include "./modules/makeBackgroundImageMod.hsp"
 #include "./modules/SelectWindowMod.hsp"
