@@ -450,7 +450,7 @@
         gsel windowId
         windowWidth = ginfo_sx
         windowHeight = ginfo_sy
-        dim rectYList1, 5 :dim rectXList1, 5 :rectList1Size = 0
+        dim rectXList1, 5 :dim rectYList1, 5 :rectList1Size = 0
         for y, 0, windowHeight - MIN_GAME_WINDOW_HEIGHT - 1
             // まず、Y=yの候補を検索する
             for x, 0, windowWidth - MIN_GAME_WINDOW_WIDTH - 1, STEP_WIDTH
@@ -483,34 +483,135 @@
         next
 
         /**
+         * 上辺を確認(PHASE3相当)
+         * A1～A{STEP_COUNT}が同じ色かを確認する
+         */
+        dim rectXList2, 5 :dim rectYList2, 5 :rectList2Size = 0
+        for k, 0, rectList1Size
+            tempColor = _pget(rectXList1(k), rectYList1(k))
+            flg = TRUE
+            for x, rectXList1(k) + 1, rectXList1(k) + STEP_COUNT * STEP_WIDTH
+                if (_pget(x, rectYList1(k)) != tempColor) :flg = FALSE :_break
+            next
+            if (flg) {
+                // 候補が見つかったので追加
+                rectXList2(rectList2Size) = rectXList1(k)
+                rectYList2(rectList2Size) = rectYList1(k)
+                rectList2Size++
+            }
+        next
+
+        /**
          * 左辺を検出(PHASE4相当)
          * 上辺の候補の左側を走査し、左辺となりうる辺を持ちうるかを調査する
          * ・上記のA1ピクセルより左側STEP_WIDTHピクセルの間に、「左上座標」の候補があると考えられる
          * ・ゆえに順番に1ピクセルづつ見ていき、縦方向の辺を持ちうるかをチェックする
          * ・候補になりうるかの判定には、上辺の検索と同じくステップサーチを用いる
          */
-        dim rectYList2, 5 :dim rectXList2, 5 :rectList2Size = 0
-        for k, 0, rectList1Size
-            tempColor = _pget(rectXList1(k), rectYList1(k))
-            for x, rectXList1(k) - 1, Max(rectXList1(k) - STEP_WIDTH, -1), -1
-                if (_pget(x, rectYList1(k)) != tempColor) :_break
+        dim rectXList3, 5 :dim rectYList3, 5 :rectList3Size = 0
+        for k, 0, rectList2Size
+            tempColor = _pget(rectXList2(k), rectYList2(k))
+            for x, rectXList2(k) - 1, Max(rectXList2(k) - STEP_WIDTH, -1), -1
+                if (_pget(x, rectYList2(k)) != tempColor) :_break
                 // X=xの候補たりうるかを調査し、駄目ならスキップする
                 flg = TRUE
-                for y, rectYList1(k) + STEP_HEIGHT, Min(rectYList1(k) + STEP_HEIGHT * STEP_COUNT, windowHeight), STEP_HEIGHT
+                for y, rectYList2(k) + STEP_HEIGHT, Min(rectYList2(k) + STEP_HEIGHT * STEP_COUNT, windowHeight), STEP_HEIGHT
                     if (_pget(x, y) != tempColor) :flg = FALSE :_break
                 next
                 if (flg == FALSE) :_continue
                 // X=x+1の方もチェックする
                 flg = FALSE
-                for y, rectYList1(k) + STEP_HEIGHT, Min(rectYList1(k) + STEP_HEIGHT * STEP_COUNT, windowHeight), STEP_HEIGHT
+                for y, rectYList2(k) + STEP_HEIGHT, Min(rectYList2(k) + STEP_HEIGHT * STEP_COUNT, windowHeight), STEP_HEIGHT
                     if (_pget(x + 1, y) != tempColor) :flg = TRUE :_break
                 next
                 if (flg) {
                     // 候補が見つかったので追加
-                    rectXList2(rectList2Size) = x
-                    rectYList2(rectList2Size) = rectYList1(k)
-                    rectList2Size++
+                    rectXList3(rectList3Size) = x
+                    rectYList3(rectList3Size) = rectYList2(k)
+                    rectList3Size++
                 }
+            next
+        next
+
+        /**
+         * 左辺を確認(PHASE5相当)
+         * 左辺が同じ色かを確認する
+         */
+        dim rectXList4, 5 :dim rectYList4, 5 :rectList4Size = 0
+        for k, 0, rectList3Size
+            tempColor = _pget(rectXList3(k), rectYList3(k))
+            flg = TRUE
+            for y, rectYList3(k) + 1, rectYList3(k) + STEP_COUNT * STEP_HEIGHT
+                if (_pget(rectXList3(k), y) != tempColor) :flg = FALSE :_break
+            next
+            if (flg) {
+                // 候補が見つかったので追加
+                rectXList4(rectList4Size) = rectXList3(k)
+                rectYList4(rectList4Size) = rectYList3(k)
+                rectList4Size++
+            }
+        next
+
+        /**
+         * 右辺・下辺を確認し、候補に追加する
+         */
+        ddim ratio, 5
+        ratio = 0.9, 0.82, 0.73, 0.5, 0.12
+        dim rectangles_, 4, 5 :rectangleSize = 0
+        for k, 0, rectList4Size
+            // xは枠の右下x座標
+            for x, rectXList4(k) + MIN_GAME_WINDOW_WIDTH + 1, window_width
+                w = x - rectXList4(k) - 1
+                // 枠の右下y座標を算出
+                y = Min(rectYList4(k) + BASE_ASPECT_RATIO * w + 1, window_height - 1)
+                h = y - rectYList4(k) - 1
+                // 枠の色を取得
+                tempColor = _pget(rectXList4(k), rectYList4(k))
+                // 走査(右辺)
+                flg1 = TRUE
+                for j, 0, length(ratio)
+                    if (_pget(x, rectYList4(k) + ratio(j) * h + 1) != tempColor) {
+                        flg1 = FALSE
+                        _break
+                    }
+                next
+                if (flg1 == FALSE){
+                    _continue
+                }
+                flg2 = FALSE
+                for j, 0, length(ratio)
+                    if (_pget(x - 1, rectYList4(k) + ratio(j) * h + 1) != tempColor) {
+                        flg2 = TRUE
+                        _break
+                    }
+                next
+                if (flg2 == FALSE) {
+                    _continue
+                }
+                // 走査(下辺)
+                flg1 = TRUE
+                for j, 0, length(ratio)
+                    if (_pget(rectXList4(k) + ratio(j) * w + 1, y) != tempColor) {
+                        flg1 = FALSE
+                        _break
+                    }
+                next
+                if (flg1 == FALSE) {
+                    _continue
+                }
+                flg2 = FALSE
+                for j, 0, length(ratio)
+                    if (_pget(rectXList4(k) + ratio(j) * w + 1, y - 1) != tempColor) {
+                        flg2 = TRUE
+                        _break
+                    }
+                next
+                if (flg2 == FALSE) {
+                    _continue
+                }
+                // 追記
+                rectangles_(0, rectangleSize) = rectXList4(k) + 1, rectYList4(k) + 1, w, h
+                rectangleSize++
             next
         next
 
