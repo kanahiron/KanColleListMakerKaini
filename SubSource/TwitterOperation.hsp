@@ -358,7 +358,7 @@ return
 
 	dim selcap, 4
 
-	count = method2@SearchKanCollePos(WND_TEMP1, rectangles, WND_OVERLAY, WND_TEMP_SCR1, marginCutFlg)
+	count = Manual@SearchKanCollePos(WND_TEMP1, rectangles, WND_OVERLAY, WND_TEMP_SCR1, marginCutFlg)
 	if (count >= 1) {
 		dim sscap, 4
 		selcap(0) = rectangles(0, 0) + disinfo(0)

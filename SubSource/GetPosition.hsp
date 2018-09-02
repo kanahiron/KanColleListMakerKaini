@@ -21,7 +21,7 @@
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
 
 		dim sscap_, 4
-		count = method3@SearchKanCollePos(WND_TEMP1, sscap_) //戻り値は見つかった個数
+		count = Auto@SearchKanCollePos(WND_TEMP1, sscap_) //戻り値は見つかった個数
 		logmes "getKanCollePosAuto "+count
 		if (count >= 1){
 			//成功
@@ -69,7 +69,7 @@
 
 				MoveWindow WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), ginfo_mx+1, ginfo_my+1, imageBuf2W, imageBuf2H,1
 
-				count = method1@SearchKanCollePos(WND_TEMP1, rectangles, ginfo_mx-disInfo(0), ginfo_my-disInfo(1))
+				count = SemiAuto@SearchKanCollePos(WND_TEMP1, rectangles, ginfo_mx-disInfo(0), ginfo_my-disInfo(1))
                 if (count >= 1){
                     KCRect(0) = rectangles(0, 0) + disInfo(0)
                     KCRect(1) = rectangles(1, 0) + disInfo(1)
@@ -133,7 +133,7 @@
 		pos abs(disinfo(0))+5, abs(disinfo(1))+2
 		mes "艦これの画面を覆うようにドラッグしてください Escキーでキャンセル"
 
-		count = method2@SearchKanCollePos(WND_TEMP1, rectangles, WND_OVERLAY, WND_TEMP_SCR1, TRUE)
+		count = Manual@SearchKanCollePos(WND_TEMP1, rectangles, WND_OVERLAY, WND_TEMP_SCR1, TRUE)
 		if (count >= 1) {
 			dim sscap, 4
 			sscap(0) = rectangles(0, 0) + disinfo(0)

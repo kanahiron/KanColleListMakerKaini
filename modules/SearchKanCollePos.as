@@ -52,7 +52,7 @@
      * ListMakerModule#getKanCollePosで採用されているアルゴリズム
      * (mx, my)は艦これの画面内の(ウィンドウIDに対する)1座標であり、それを含む艦これの画面を検出する
      */
-    #defcfunc local method1 int windowId, array rectangles, int mx, int my
+    #defcfunc local SemiAuto int windowId, array rectangles, int mx, int my
         // 定数設定
         MIN_GAME_WINDOW_WIDTH_HALF = 250 / 2
         MIN_GAME_WINDOW_HEIGHT_HALF = 150 / 2
@@ -144,7 +144,7 @@
      * 　Rectangleに変換しても、選択失敗時はオール0になる計算
      * 　(なお、marginCutFlgがFALSEならば、選択した後のトリミング過程が発生しない)
      */
-    #defcfunc local method2 int windowId, array rectangles, int overlayWindowId, int bgWindowId, int marginCutFlg
+    #defcfunc local Manual int windowId, array rectangles, int overlayWindowId, int bgWindowId, int marginCutFlg
         // 以前のカレントウィンドウIDを記憶
         currentWindowId = ginfo_sel
 
@@ -410,7 +410,7 @@
     /**
      * ListMakerModule#getKanCollePosAutoで採用されているアルゴリズム
      */
-    #defcfunc local method3 int windowId, array rectangles
+    #defcfunc local Auto int windowId, array rectangles
         /* 以前のカレントウィンドウIDを記憶 */
         currentWindowId = ginfo_sel
 
@@ -630,12 +630,12 @@
 
     // アルゴリズム1
     dim rectangles //無くてもいいが警告消しに使用
-    gsel 1 :count = method1@SearchKanCollePos(1, rectangles, 1059, 1099) :gsel 0
+    gsel 1 :count = SemiAuto@SearchKanCollePos(1, rectangles, 1059, 1099) :gsel 0
     mes "【アルゴリズム1】"
     gosub *show_result
 
     // アルゴリズム2
-    gsel 1 :count = method3@SearchKanCollePos(1, rectangles) :gsel 0
+    gsel 1 :count = Auto@SearchKanCollePos(1, rectangles) :gsel 0
     mes "【アルゴリズム3】"
     gosub *show_result
 
