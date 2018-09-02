@@ -2,6 +2,11 @@
  * 艦これの座標を画面から検索するモジュール
  * 基本的には「ウィンドウIDを受け取ると、Rectangleの候補一覧と候補数を返す」ように揃えている
  */
+
+#if 0
+    #include "../SubSource/FunctionDefinition.hsp"
+#endif
+
 #module SearchKanCollePos
     /* 各種定数設定 */
     #const DEFAULT_GAME_WINDOW_WIDTH 1200  //標準的なゲーム画面のXサイズ
@@ -617,3 +622,35 @@
         gsel currentWindowId
     return rectangleSize
 #global
+
+#if 0
+    title "座標取得処理のテスト"
+    buffer 1
+    picload "SKP_test.png"
+
+    // アルゴリズム1
+    dim rectangles //無くてもいいが警告消しに使用
+    gsel 1 :count = method1@SearchKanCollePos(1, rectangles, 1059, 1099) :gsel 0
+    mes "【アルゴリズム1】"
+    gosub *show_result
+
+    // アルゴリズム2
+    gsel 1 :count = method3@SearchKanCollePos(1, rectangles) :gsel 0
+    mes "【アルゴリズム3】"
+    gosub *show_result
+
+    stop
+
+    *show_result
+        mes "個数：" + count
+        sdim textBuffer, 4096
+        for k, 0, count
+            x = rectangles(0, k)
+            y = rectangles(1, k)
+            w = rectangles(2, k)
+            h = rectangles(3, k)
+            textBuffer += strf("(%d,%d)-%dx%d,", x, y, w, h)
+        next
+        mes "候補：" + textBuffer
+    return
+#endif
