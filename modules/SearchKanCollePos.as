@@ -120,11 +120,8 @@
         if (abs(_height * 5 / 3 - _width) >= 3) :return 0
 
         // 保存用のバッファーを用意
-        dim rectangles, 1, 4
-        rectangles(0, 0) = _lx + 1
-        rectangles(0, 1) = _ly + 1
-        rectangles(0, 2) = _width
-        rectangles(0, 3) = _height
+        dim rectangles, 4, 1
+        rectangles(0, 0) = _lx + 1, _ly + 1, _width, _height
     return 1
 
     /**
@@ -147,11 +144,8 @@
         currentWindowId = ginfo_sel
 
         // 保存用のバッファーを用意
-        dim rectangles, 1, 4
-        rectangles(0, 0) = 0
-        rectangles(0, 1) = 0
-        rectangles(0, 2) = 0
-        rectangles(0, 3) = 0
+        dim rectangles, 4, 1
+        rectangles(0, 0) = 0, 0, 0, 0
         rectangleCount = 0
 
         // ウィンドウ周りの準備を行う
@@ -240,7 +234,7 @@
                         tempColor = _pget(tempRect(0) + tempRect(2), tempRect(1) + tempRect(3) / 2)
                         for px, tempRect(0) + tempRect(2), tempRect(0) + tempRect(2) / 2, -1
                             if (_pget(px, tempRect(1) + tempRect(3) / 2) != tempColor) {
-                                rectangles(0, 2) = px - rectangles(0, 0)
+                                rectangles(2, 0) = px - rectangles(0, 0)
                                 _break
                             }
                         next
@@ -248,7 +242,7 @@
                         tempColor = _pget(tempRect(0) + tempRect(2) / 2, tempRect(1))
                         for py, tempRect(1), tempRect(1) + tempRect(3) / 2
                             if (_pget(tempRect(0) + tempRect(2) / 2, py) != tempColor) {
-                                rectangles(0, 1) = py
+                                rectangles(1, 0) = py
                                 _break
                             }
                         next
@@ -256,21 +250,21 @@
                         tempColor = _pget(tempRect(0) + tempRect(2) / 2, tempRect(1) + tempRect(3))
                         for py, tempRect(1) + tempRect(3), tempRect(1) + tempRect(3) / 2, -1
                             if (_pget(tempRect(0) + tempRect(2) / 2, py) != tempColor) {
-                                rectangles(0, 3) = py - rectangles(0, 1)
+                                rectangles(3, 0) = py - rectangles(1, 0)
                                 _break
                             }
                         next
                     }else{
                         rectangles(0, 0) = selectAreaRect(0) - VIRTUAL_DISPLAY_X
-                        rectangles(0, 1) = selectAreaRect(1) - VIRTUAL_DISPLAY_Y
-                        rectangles(0, 2) = selectAreaRect(2)
-                        rectangles(0, 3) = selectAreaRect(3)
+                        rectangles(1, 0) = selectAreaRect(1) - VIRTUAL_DISPLAY_Y
+                        rectangles(2, 0) = selectAreaRect(2)
+                        rectangles(3, 0) = selectAreaRect(3)
                     }
 
                     // 検出できているかを確認する。駄目なら再度選択させる
-                    if (rectangles(0, 2) >= 99 && rectangles(0, 3) >= 59) {
+                    if (rectangles(2, 0) >= 99 && rectangles(3, 0) >= 59) {
                         gsel overlayWindowId, 2
-        				MoveWindow@ overlayWindowIdHandle, rectangles(0, 0) + VIRTUAL_DISPLAY_X, rectangles(0, 1) + VIRTUAL_DISPLAY_Y, rectangles(0, 2), rectangles(0, 3), TRUE
+        				MoveWindow@ overlayWindowIdHandle, rectangles(0, 0) + VIRTUAL_DISPLAY_X, rectangles(1, 0) + VIRTUAL_DISPLAY_Y, rectangles(2, 0), rectangles(3, 0), TRUE
         				dialog "正しく取得できていますか？", 2, "確認"
         				if (stat == 6) {
         					gsel overlayWindowId, -1
@@ -557,7 +551,7 @@
          */
         ddim ratio, 5
         ratio = 0.9, 0.82, 0.73, 0.5, 0.12
-        dim rectangles_, 4, 5 :rectangleSize = 0
+        dim rectangles, 4, 5 :rectangleSize = 0
         for k, 0, rectList4Size
             // xは枠の右下x座標
             for x, rectXList4(k) + MIN_GAME_WINDOW_WIDTH + 1, window_width
@@ -610,12 +604,12 @@
                     _continue
                 }
                 // 追記
-                rectangles_(0, rectangleSize) = rectXList4(k) + 1, rectYList4(k) + 1, w, h
+                rectangles(0, rectangleSize) = rectXList4(k) + 1, rectYList4(k) + 1, w, h
                 rectangleSize++
             next
         next
 
         /* カレントウィンドウを元に戻す */
         gsel currentWindowId
-    return 0
+    return rectangleSize
 #global

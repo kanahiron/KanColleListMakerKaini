@@ -22,10 +22,10 @@ stop
     mes "ŒÂ”F" + count
     sdim textBuffer, 4096
     for k, 0, count
-        x = rectangles(k, 0)
-        y = rectangles(k, 1)
-        w = rectangles(k, 2)
-        h = rectangles(k, 3)
+        x = rectangles(0, k)
+        y = rectangles(1, k)
+        w = rectangles(2, k)
+        h = rectangles(3, k)
         textBuffer += strf("(%d,%d)-%dx%d,", x, y, w, h)
     next
     mes "Œó•âF" + textBuffer
