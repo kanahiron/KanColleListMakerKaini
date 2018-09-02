@@ -551,7 +551,7 @@
          */
         ddim ratio, 5
         ratio = 0.9, 0.82, 0.73, 0.5, 0.12
-        dim rectangles, 4, 5 :rectangleSize = 0
+        dim rectangles, 4 :rectangleSize = 0
         for k, 0, rectList4Size
             // xÇÕògÇÃâEâ∫xç¿ïW
             for x, rectXList4(k) + MIN_GAME_WINDOW_WIDTH + 1, window_width
