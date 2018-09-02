@@ -6,7 +6,8 @@
     /* 各種定数設定 */
     #const DEFAULT_GAME_WINDOW_WIDTH 1200  //標準的なゲーム画面のXサイズ
     #const DEFAULT_GAME_WINDOW_HEIGHT 720  //標準的なゲーム画面のYサイズ
-    #const MAX_ZOOM_RATIO 3  //ゲーム画面がMAX_ZOOM_RATIO倍まで大きくてもOK、といった意味
+    #const MAX_ZOOM_RATIO 3.0  //ゲーム画面がMAX_ZOOM_RATIO倍まで大きくてもOK、といった意味
+    #const MIN_ZOOM_RATIO 0.4  //ゲーム画面がMIN_ZOOM_RATIO倍まで小さくてもOK、といった意味
     #const STICK_ESCBUTTON 128
     #const STICK_LEFTBUTTON 256
     #const STICK_RIGHTBUTTON 512
@@ -406,4 +407,114 @@
         // カレントウィンドウを元に戻す
         gsel currentWindowId
     return result
+
+    /**
+     * ListMakerModule#getKanCollePosAutoで採用されているアルゴリズム
+     */
+    #defcfunc local method3 int windowId, array rectangles
+        /* 以前のカレントウィンドウIDを記憶 */
+        currentWindowId = ginfo_sel
+
+        /* 各種定数を初期化 */
+        ;ゲーム画面として認識する最小サイズ
+        MIN_GAME_WINDOW_WIDTH = int(MIN_ZOOM_RATIO * DEFAULT_GAME_WINDOW_WIDTH)
+        MIN_GAME_WINDOW_HEIGHT = int(MIN_ZOOM_RATIO * DEFAULT_GAME_WINDOW_HEIGHT)
+        ;ゲーム画面として認識する最大サイズ
+        MAX_GAME_WINDOW_WIDTH = int(MAX_ZOOM_RATIO * DEFAULT_GAME_WINDOW_WIDTH)
+        MAX_GAME_WINDOW_HEIGHT = int(MAX_ZOOM_RATIO * DEFAULT_GAME_WINDOW_HEIGHT)
+        ;最小サイズのウィンドウの大きさ-1をSTEP_COUNTで割った間隔で画素を読み取る
+        ;※例えば、ワーストケースでMIN_GAME_WINDOW_WIDTH=301だったとしても、
+        ;　STEP_WIDTHは100になる。すると、横幅がMIN_GAME_WINDOW_WIDTHな画面を
+        ;　STEP_WIDTH間隔で引かれた方眼の上で動かした場合、画面の上辺に少なくとも
+        ;　STEP_COUNT本の方眼の線が通ることが保証される
+        STEP_COUNT = 3
+        STEP_WIDTH = (MIN_GAME_WINDOW_WIDTH - 1) / STEP_COUNT
+        STEP_HEIGHT = (MIN_GAME_WINDOW_HEIGHT - 1) / STEP_COUNT
+
+        /**
+         * 上辺を検出(PHASE1・PHASE2相当)
+         * 1. STEP_WIDTHピクセルごとに画素を読み取る(Y=yとY=y+1)
+         * 2. 以下の2配列の中で、「A1～A{STEP_COUNT}は全部同じ色」かつ
+         *    「B1～B{STEP_COUNT}のどれかはAxと違う色」である箇所を見つける
+         *   Y=y  [..., A1, A2, .., A{STEP_COUNT}, ...]
+         *   Y=y+1[..., B1, B2, .., B{STEP_COUNT}, ...]
+         * STEP_WIDTHを上記計算式にしているのは、Y=yにおいて確実に
+         * 「位置A1～A{STEP_COUNT}」の区間の長さ⊆ゲーム画面の最小横幅(MIN_GAME_WINDOW_WIDTH)
+         * とするためである。「⊆」が満たされないと取りこぼしが発生しかねない。
+         * また、「B1～B{STEP_COUNT}のどれかはAxと違う色」でないと、関数定義における
+         * 「↑の1ピクセル内側に、色Aと異なる色が1ピクセル以上存在する」を満たせない
+         * 可能性が生じる(ステップサーチなので「可能性」で弾いている)。
+         *
+         * なお、rectYList1はY=yの列のy座標、rectXList1はそれぞれにおけるA1のX座標である
+         */
+        gsel windowId
+        windowWidth = ginfo_sx
+        windowHeight = ginfo_sy
+        dim rectYList1, 5 :dim rectXList1, 5 :rectList1Size = 0
+        for y, 0, windowHeight - MIN_GAME_WINDOW_HEIGHT - 1
+            // まず、Y=yの候補を検索する
+            for x, 0, windowWidth - MIN_GAME_WINDOW_WIDTH - 1, STEP_WIDTH
+                // 辺の色の候補を取得
+                tempColor = _pget(x, y)
+                // Y=yの候補たりうるかを調査し、駄目ならスキップする
+                flg = TRUE
+                for x2, x + STEP_WIDTH, x + STEP_COUNT * STEP_WIDTH, STEP_WIDTH
+                    if (_pget(x2, y) != tempColor) {
+                        flg = FALSE
+                        _break
+                    }
+                next
+                if (flg == FALSE) :_continue
+                // Y=y+1の方もチェックする
+                flg = FALSE
+                for x2, x, x + STEP_COUNT * STEP_WIDTH, STEP_WIDTH
+                    if (_pget(x2, y + 1) != tempColor) {
+                        flg = TRUE
+                        _break
+                    }
+                next
+                if (flg) {
+                    // 候補が見つかったので追加
+                    rectYList1(rectList1Size) = y
+                    rectXList1(rectList1Size) = x
+                    rectList1Size++
+                }
+            next
+        next
+
+        /**
+         * 左辺を検出(PHASE4相当)
+         * 上辺の候補の左側を走査し、左辺となりうる辺を持ちうるかを調査する
+         * ・上記のA1ピクセルより左側STEP_WIDTHピクセルの間に、「左上座標」の候補があると考えられる
+         * ・ゆえに順番に1ピクセルづつ見ていき、縦方向の辺を持ちうるかをチェックする
+         * ・候補になりうるかの判定には、上辺の検索と同じくステップサーチを用いる
+         */
+        dim rectYList2, 5 :dim rectXList2, 5 :rectList2Size = 0
+        for k, 0, rectList1Size
+            tempColor = _pget(rectXList1(k), rectYList1(k))
+            for x, rectXList1(k) - 1, Max(rectXList1(k) - STEP_WIDTH, -1), -1
+                if (_pget(x, rectYList1(k)) != tempColor) :_break
+                // X=xの候補たりうるかを調査し、駄目ならスキップする
+                flg = TRUE
+                for y, rectYList1(k) + STEP_HEIGHT, Min(rectYList1(k) + STEP_HEIGHT * STEP_COUNT, windowHeight), STEP_HEIGHT
+                    if (_pget(x, y) != tempColor) :flg = FALSE :_break
+                next
+                if (flg == FALSE) :_continue
+                // X=x+1の方もチェックする
+                flg = FALSE
+                for y, rectYList1(k) + STEP_HEIGHT, Min(rectYList1(k) + STEP_HEIGHT * STEP_COUNT, windowHeight), STEP_HEIGHT
+                    if (_pget(x + 1, y) != tempColor) :flg = TRUE :_break
+                next
+                if (flg) {
+                    // 候補が見つかったので追加
+                    rectXList2(rectList2Size) = x
+                    rectYList2(rectList2Size) = rectYList1(k)
+                    rectList2Size++
+                }
+            next
+        next
+
+        /* カレントウィンドウを元に戻す */
+        gsel currentWindowId
+    return 0
 #global

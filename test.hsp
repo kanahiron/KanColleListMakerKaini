@@ -1,3 +1,4 @@
+#include "./SubSource/FunctionDefinition.hsp"
 #include "./modules/SearchKanCollePos.as"
 
 title "座標取得処理のテスト"
@@ -8,6 +9,11 @@ picload "./modules/SKP_test.png"
 dim rectangles //無くてもいいが警告消しに使用
 gsel 1 :count = method1@SearchKanCollePos(1, rectangles, 1059, 1099) :gsel 0
 mes "【アルゴリズム1】"
+gosub *show_result
+
+// アルゴリズム2
+gsel 1 :count = method3@SearchKanCollePos(1, rectangles) :gsel 0
+mes "【アルゴリズム3】"
 gosub *show_result
 
 stop
