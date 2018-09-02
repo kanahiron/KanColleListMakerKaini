@@ -221,8 +221,8 @@ return
 
 		isfilled temp2vram, sscapwh(0), sscapwh(1)
 		if (stat==0){
-			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
-			if (stat){
+			validRectFlg = isValidRect@SearchKanCollePos(WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1))
+			if (validRectFlg){
 
 				sscap(0) = cliPoint(0)
 				sscap(1) = cliPoint(1)
@@ -249,8 +249,8 @@ return
 
 		isfilled temp2vram, sscapwh(0), sscapwh(1)
 		if (stat==0){
-			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
-			if (stat){
+			validRectFlg = isValidRect@SearchKanCollePos(WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1))
+			if (validRectFlg){
 				sscap(0) = cliPoint(0)
 				sscap(1) = cliPoint(1)
 				sscap(2) = sscap(0)+sscapwh(0)
@@ -276,8 +276,8 @@ return
 
 		isfilled temp2vram, sscapwh(0), sscapwh(1)
 		if (stat==0){
-			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
-			if (stat){
+			validRectFlg = isValidRect@SearchKanCollePos(WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1))
+			if (validRectFlg){
 				sscap(0) = cliPoint(0)
 				sscap(1) = cliPoint(1)
 				sscap(2) = sscap(0)+sscapwh(0)

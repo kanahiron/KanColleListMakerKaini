@@ -12,6 +12,7 @@
     #const STICK_RIGHTBUTTON 512
     #define TRUE 1
     #define FALSE 0
+    #define BASE_ASPECT_RATIO 0.6
 
     #const SM_XVIRTUALSCREEN 76
     #const SM_YVIRTUALSCREEN 77
@@ -36,10 +37,10 @@
         if (a > b) :return a
     return b
 
-    /* 指定した点のRGB値を取得する。(R<<16)+(G<<8)+B */
+    /* 指定した点のRGB値を取得する。(R<<16)|(G<<8)|B */
     #defcfunc local _pget int x, int y
         pget x, y
-    return (ginfo_r << 16) + (ginfo_g << 8) + (ginfo_b)
+    return ((ginfo_r << 16) | (ginfo_g << 8) | (ginfo_b))
 
     /**
      * ListMakerModule#getKanCollePosで採用されているアルゴリズム
@@ -304,4 +305,105 @@
         // カレントウィンドウを元に戻す
         gsel currentWindowId
     return rectangleCount
+
+    /**
+     * ListMakerModule#CheckKanCollePosのコードを斜め読みして再現した
+     * つまり、「縦横比が正しいか」「クロップ枠と1ピクセル内側の色が違うか」を見ている
+     */
+    #defcfunc local isValidRect int windowId, int rectX, int rectY, int rectW, int rectH
+        logmes("isValidRect")
+        /* 縦横比が正しいか？ */
+        aspect_ratio_diff = absf(BASE_ASPECT_RATIO - 1.0 * rectW / rectH)
+        if (aspect_ratio_diff > 0.021) :return FALSE
+
+        /* クロップ枠と1ピクセル内側の色が違うか？ */
+        // 以前のカレントウィンドウIDを記憶
+        currentWindowId = ginfo_sel
+        // 定数を準備
+        ddim ratio, 5
+    	ratio = 0.9, 0.82, 0.73, 0.5, 0.12
+        // 各辺について確認する
+        gsel windowId
+        result = FALSE
+        while(TRUE)
+            // 上枠について確認する
+            flg1 = TRUE
+            tempColor = _pget(rectX + ratio(0) * rectW, rectY - 1)
+            for k, 1, length(ratio)
+                if (_pget(rectX + ratio(k) * rectW, rectY - 1) != tempColor) {
+                    flg1 = FALSE
+                    _break
+                }
+            next
+            if (flg1 == FALSE) :_break
+            flg2 = FALSE
+            for k, 0, length(ratio)
+                if (_pget(rectX + ratio(k) * rectW, rectY) != tempColor) {
+                    flg = TRUE
+                    _break
+                }
+            next
+            if (flg1 == FALSE) :_break
+            // 下枠
+            flg1 = TRUE
+            tempColor = _pget(rectX + ratio(0) * rectW, rectY + rectH)
+            for k, 1, length(ratio)
+                if (_pget(rectX + ratio(k) * rectW, rectY + rectH) != tempColor) {
+                    flg1 = FALSE
+                    _break
+                }
+            next
+            if (flg1 == FALSE) :_break
+            flg2 = FALSE
+            for k, 0, length(ratio)
+                if (_pget(rectX + ratio(k) * rectW, rectY + rectH - 1) != tempColor) {
+                    flg = TRUE
+                    _break
+                }
+            next
+            if (flg1 == FALSE) :_break
+            _break
+            // 左枠
+            flg1 = TRUE
+            tempColor = _pget(rectX - 1, rectY + ratio(0) * rectH)
+            for k, 1, length(ratio)
+                if (_pget(rectX - 1, rectY + ratio(k) * rectH) != tempColor) {
+                    flg1 = FALSE
+                    _break
+                }
+            next
+            if (flg1 == FALSE) :_break
+            flg2 = FALSE
+            for k, 0, length(ratio)
+                if (_pget(rectX, rectY + ratio(k) * rectH) != tempColor) {
+                    flg = TRUE
+                    _break
+                }
+            next
+            if (flg1 == FALSE) :_break
+            // 右枠
+            flg1 = TRUE
+            tempColor = _pget(rectX + rectW, rectY + ratio(0) * rectH)
+            for k, 1, length(ratio)
+                if (_pget(rectX + rectW, rectY + ratio(k) * rectH) != tempColor) {
+                    flg1 = FALSE
+                    _break
+                }
+            next
+            if (flg1 == FALSE) :_break
+            flg2 = FALSE
+            for k, 0, length(ratio)
+                if (_pget(rectX + rectW - 1, rectY + ratio(k) * rectH) != tempColor) {
+                    flg = TRUE
+                    _break
+                }
+            next
+            if (flg1 == FALSE) :_break
+            //
+            result = TRUE
+            _break
+        wend
+        // カレントウィンドウを元に戻す
+        gsel currentWindowId
+    return result
 #global
