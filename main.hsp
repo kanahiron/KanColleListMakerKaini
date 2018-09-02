@@ -19,13 +19,12 @@
 #include "./modules/iniMod.as"
 #include "./modules/kmodule.as"
 #include "./modules/SaveFileDiag_mod.hsp"
+#include "./modules/SearchKanCollePos.as"
 
 //どちらというとサブソースなモジュール
 #include "./modules/FFMPEGLog.hsp"
 #include "./modules/GetAudioDeviceMod.as"
-#include "./modules/GetKanCollePosMod.hsp"
 #include "./modules/isHomepostModule.as"
-#include "./modules/listMakerModule.as"
 #include "./modules/makeBackgroundImageMod.hsp"
 #include "./modules/SelectWindowMod.hsp"
 
