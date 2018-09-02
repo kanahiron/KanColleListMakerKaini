@@ -29,15 +29,15 @@
 				//見つけたウィンドウが1つだった時
 				sscap(0) = sscap_(0) + disInfo(0)
 				sscap(1) = sscap_(1) + disInfo(1)
-				sscap(2) = sscap_(2) + disInfo(0)
-				sscap(3) = sscap_(3) + disInfo(1)
+				sscap(2) = sscap_(0) + sscap_(2) + disInfo(0)
+				sscap(3) = sscap_(1) + sscap_(3) + disInfo(1)
 			} else {
 				//見つけたウィンドウ複数だった場合
 				repeat count
 					sscap_(0, cnt) += disInfo(0)
 					sscap_(1, cnt) += disInfo(1)
-					sscap_(2, cnt) += disInfo(0)
-					sscap_(3, cnt) += disInfo(1)
+					sscap_(2, cnt) += sscap_(0, cnt)
+					sscap_(3, cnt) += sscap_(1, cnt)
 				loop
 				sscap(0) = 0
 				sscap(1) = 0

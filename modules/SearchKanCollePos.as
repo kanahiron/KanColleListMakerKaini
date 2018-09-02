@@ -554,10 +554,10 @@
         dim rectangles, 4 :rectangleSize = 0
         for k, 0, rectList4Size
             // xは枠の右下x座標
-            for x, rectXList4(k) + MIN_GAME_WINDOW_WIDTH + 1, window_width
+            for x, rectXList4(k) + MIN_GAME_WINDOW_WIDTH + 1, windowWidth
                 w = x - rectXList4(k) - 1
                 // 枠の右下y座標を算出
-                y = Min(rectYList4(k) + BASE_ASPECT_RATIO * w + 1, window_height - 1)
+                y = Min(rectYList4(k) + BASE_ASPECT_RATIO * w + 1, windowHeight - 1)
                 h = y - rectYList4(k) - 1
                 // 枠の色を取得
                 tempColor = _pget(rectXList4(k), rectYList4(k))
@@ -570,6 +570,7 @@
                     }
                 next
                 if (flg1 == FALSE){
+                    if (w == 1200) :assert
                     _continue
                 }
                 flg2 = FALSE
@@ -580,6 +581,7 @@
                     }
                 next
                 if (flg2 == FALSE) {
+                    if (w == 1200) :assert
                     _continue
                 }
                 // 走査(下辺)
@@ -591,6 +593,7 @@
                     }
                 next
                 if (flg1 == FALSE) {
+                    if (w == 1200) :assert
                     _continue
                 }
                 flg2 = FALSE
@@ -601,6 +604,7 @@
                     }
                 next
                 if (flg2 == FALSE) {
+                    if (w == 1200) :assert
                     _continue
                 }
                 // 追記
