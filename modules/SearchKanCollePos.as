@@ -7,6 +7,8 @@
     #include "../SubSource/FunctionDefinition.hsp"
 #endif
 
+#include "ChangeBitmapDepth.as"
+
 #module SearchKanCollePos
     /* 各種定数設定 */
     #const DEFAULT_GAME_WINDOW_WIDTH 1200  //標準的なゲーム画面のXサイズ
@@ -19,6 +21,7 @@
     #define TRUE 1
     #define FALSE 0
     #define BASE_ASPECT_RATIO 0.6
+    #const MREF_VRAM 66
 
     #const SM_XVIRTUALSCREEN 76
     #const SM_YVIRTUALSCREEN 77
@@ -47,6 +50,10 @@
     #defcfunc local _pget int x, int y
         pget x, y
     return ((ginfo_r << 16) | (ginfo_g << 8) | (ginfo_b))
+
+    /* 「chggm 32」した状況下で、指定した点のRGB値を取得する。(R<<16)|(G<<8)|B */
+    #defcfunc local _pget2 int x, int y
+    return vram(x + (windowHeight - 1 - y) * windowWidth)
 
     /**
      * ListMakerModule#getKanCollePosで採用されているアルゴリズム
@@ -412,6 +419,7 @@
      */
     #defcfunc local Auto int windowId, array rectangles
         startTime = timeGetTime@()
+
         /* 以前のカレントウィンドウIDを記憶 */
         currentWindowId = ginfo_sel
 
@@ -430,7 +438,9 @@
         STEP_COUNT = 3
         STEP_WIDTH = (MIN_GAME_WINDOW_WIDTH - 1) / STEP_COUNT
         STEP_HEIGHT = (MIN_GAME_WINDOW_HEIGHT - 1) / STEP_COUNT
-        logmes "" + (timeGetTime@() - startTime) + "ms"
+        endTime = timeGetTime@()
+        logmes "" + (endTime - startTime) + "ms"
+        startTime = endTime
 
         /**
          * 上辺を検出(PHASE1・PHASE2相当)
@@ -449,18 +459,22 @@
          * なお、rectYList1はY=yの列のy座標、rectXList1はそれぞれにおけるA1のX座標である
          */
         gsel windowId
-        windowWidth = ginfo_sx
-        windowHeight = ginfo_sy
+        windowWidth = ginfo_winx
+        windowHeight = ginfo_winy
+        buffer 99, windowWidth, windowHeight
+        chgbm@ 32
+        mref vram, MREF_VRAM
+        gcopy windowId, 0, 0, windowWidth, windowHeight
         dim rectXList1, 5 :dim rectYList1, 5 :rectList1Size = 0
         for y, 0, windowHeight - MIN_GAME_WINDOW_HEIGHT - 1
             // まず、Y=yの候補を検索する
             for x, 0, windowWidth - MIN_GAME_WINDOW_WIDTH - 1, STEP_WIDTH
                 // 辺の色の候補を取得
-                tempColor = _pget(x, y)
+                tempColor = _pget2(x, y)
                 // Y=yの候補たりうるかを調査し、駄目ならスキップする
                 flg = TRUE
                 for x2, x + STEP_WIDTH, x + STEP_COUNT * STEP_WIDTH, STEP_WIDTH
-                    if (_pget(x2, y) != tempColor) {
+                    if (_pget2(x2, y) != tempColor) {
                         flg = FALSE
                         _break
                     }
@@ -469,7 +483,7 @@
                 // Y=y+1の方もチェックする
                 flg = FALSE
                 for x2, x, x + STEP_COUNT * STEP_WIDTH, STEP_WIDTH
-                    if (_pget(x2, y + 1) != tempColor) {
+                    if (_pget2(x2, y + 1) != tempColor) {
                         flg = TRUE
                         _break
                     }
@@ -482,7 +496,9 @@
                 }
             next
         next
-        logmes "" + (timeGetTime@() - startTime) + "ms"
+        endTime = timeGetTime@()
+        logmes "" + (endTime - startTime) + "ms"
+        startTime = endTime
 
         /**
          * 上辺を確認(PHASE3相当)
@@ -490,10 +506,10 @@
          */
         dim rectXList2, 5 :dim rectYList2, 5 :rectList2Size = 0
         for k, 0, rectList1Size
-            tempColor = _pget(rectXList1(k), rectYList1(k))
+            tempColor = _pget2(rectXList1(k), rectYList1(k))
             flg = TRUE
             for x, rectXList1(k) + 1, rectXList1(k) + STEP_COUNT * STEP_WIDTH
-                if (_pget(x, rectYList1(k)) != tempColor) :flg = FALSE :_break
+                if (_pget2(x, rectYList1(k)) != tempColor) :flg = FALSE :_break
             next
             if (flg) {
                 // 候補が見つかったので追加
@@ -502,7 +518,9 @@
                 rectList2Size++
             }
         next
-        logmes "" + (timeGetTime@() - startTime) + "ms"
+        endTime = timeGetTime@()
+        logmes "" + (endTime - startTime) + "ms"
+        startTime = endTime
 
         /**
          * 左辺を検出(PHASE4相当)
@@ -513,19 +531,19 @@
          */
         dim rectXList3, 5 :dim rectYList3, 5 :rectList3Size = 0
         for k, 0, rectList2Size
-            tempColor = _pget(rectXList2(k), rectYList2(k))
+            tempColor = _pget2(rectXList2(k), rectYList2(k))
             for x, rectXList2(k) - 1, Max(rectXList2(k) - STEP_WIDTH, -1), -1
-                if (_pget(x, rectYList2(k)) != tempColor) :_break
+                if (_pget2(x, rectYList2(k)) != tempColor) :_break
                 // X=xの候補たりうるかを調査し、駄目ならスキップする
                 flg = TRUE
                 for y, rectYList2(k) + STEP_HEIGHT, Min(rectYList2(k) + STEP_HEIGHT * STEP_COUNT, windowHeight), STEP_HEIGHT
-                    if (_pget(x, y) != tempColor) :flg = FALSE :_break
+                    if (_pget2(x, y) != tempColor) :flg = FALSE :_break
                 next
                 if (flg == FALSE) :_continue
                 // X=x+1の方もチェックする
                 flg = FALSE
                 for y, rectYList2(k) + STEP_HEIGHT, Min(rectYList2(k) + STEP_HEIGHT * STEP_COUNT, windowHeight), STEP_HEIGHT
-                    if (_pget(x + 1, y) != tempColor) :flg = TRUE :_break
+                    if (_pget2(x + 1, y) != tempColor) :flg = TRUE :_break
                 next
                 if (flg) {
                     // 候補が見つかったので追加
@@ -535,7 +553,9 @@
                 }
             next
         next
-        logmes "" + (timeGetTime@() - startTime) + "ms"
+        endTime = timeGetTime@()
+        logmes "" + (endTime - startTime) + "ms"
+        startTime = endTime
 
         /**
          * 左辺を確認(PHASE5相当)
@@ -543,10 +563,10 @@
          */
         dim rectXList4, 5 :dim rectYList4, 5 :rectList4Size = 0
         for k, 0, rectList3Size
-            tempColor = _pget(rectXList3(k), rectYList3(k))
+            tempColor = _pget2(rectXList3(k), rectYList3(k))
             flg = TRUE
             for y, rectYList3(k) + 1, rectYList3(k) + STEP_COUNT * STEP_HEIGHT
-                if (_pget(rectXList3(k), y) != tempColor) :flg = FALSE :_break
+                if (_pget2(rectXList3(k), y) != tempColor) :flg = FALSE :_break
             next
             if (flg) {
                 // 候補が見つかったので追加
@@ -555,7 +575,9 @@
                 rectList4Size++
             }
         next
-        logmes "" + (timeGetTime@() - startTime) + "ms"
+        endTime = timeGetTime@()
+        logmes "" + (endTime - startTime) + "ms"
+        startTime = endTime
 
         /**
          * 右辺・下辺を確認し、候補に追加する
@@ -571,11 +593,11 @@
                 y = Min(rectYList4(k) + BASE_ASPECT_RATIO * w + 1, windowHeight - 1)
                 h = y - rectYList4(k) - 1
                 // 枠の色を取得
-                tempColor = _pget(rectXList4(k), rectYList4(k))
+                tempColor = _pget2(rectXList4(k), rectYList4(k))
                 // 走査(右辺)
                 flg1 = TRUE
                 for j, 0, length(ratio)
-                    if (_pget(x, rectYList4(k) + ratio(j) * h + 1) != tempColor) {
+                    if (_pget2(x, rectYList4(k) + ratio(j) * h + 1) != tempColor) {
                         flg1 = FALSE
                         _break
                     }
@@ -585,7 +607,7 @@
                 }
                 flg2 = FALSE
                 for j, 0, length(ratio)
-                    if (_pget(x - 1, rectYList4(k) + ratio(j) * h + 1) != tempColor) {
+                    if (_pget2(x - 1, rectYList4(k) + ratio(j) * h + 1) != tempColor) {
                         flg2 = TRUE
                         _break
                     }
@@ -596,7 +618,7 @@
                 // 走査(下辺)
                 flg1 = TRUE
                 for j, 0, length(ratio)
-                    if (_pget(rectXList4(k) + ratio(j) * w + 1, y) != tempColor) {
+                    if (_pget2(rectXList4(k) + ratio(j) * w + 1, y) != tempColor) {
                         flg1 = FALSE
                         _break
                     }
@@ -606,7 +628,7 @@
                 }
                 flg2 = FALSE
                 for j, 0, length(ratio)
-                    if (_pget(rectXList4(k) + ratio(j) * w + 1, y - 1) != tempColor) {
+                    if (_pget2(rectXList4(k) + ratio(j) * w + 1, y - 1) != tempColor) {
                         flg2 = TRUE
                         _break
                     }
@@ -619,11 +641,15 @@
                 rectangleSize++
             next
         next
-        logmes "" + (timeGetTime@() - startTime) + "ms"
+        endTime = timeGetTime@()
+        logmes "" + (endTime - startTime) + "ms"
+        startTime = endTime
 
         /* カレントウィンドウを元に戻す */
         gsel currentWindowId
-        logmes "" + (timeGetTime@() - startTime) + "ms"
+        endTime = timeGetTime@()
+        logmes "" + (endTime - startTime) + "ms"
+        startTime = endTime
     return rectangleSize
 #global
 
