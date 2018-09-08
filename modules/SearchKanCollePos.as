@@ -466,14 +466,17 @@
         mref vram, MREF_VRAM
         gcopy windowId, 0, 0, windowWidth, windowHeight
         dim rectXList1, 5 :dim rectYList1, 5 :rectList1Size = 0
-        for y, 0, windowHeight - MIN_GAME_WINDOW_HEIGHT - 1
+        LIMIT_WIDTH = windowWidth - MIN_GAME_WINDOW_WIDTH - 1
+        LIMIT_HEIGHT = windowHeight - MIN_GAME_WINDOW_HEIGHT - 1
+        for y, 0, LIMIT_HEIGHT
             // まず、Y=yの候補を検索する
-            for x, 0, windowWidth - MIN_GAME_WINDOW_WIDTH - 1, STEP_WIDTH
+            for x, 0, LIMIT_WIDTH, STEP_WIDTH
+                xLimit = x + STEP_COUNT * STEP_WIDTH
                 // 辺の色の候補を取得
                 tempColor = _pget2(x, y)
                 // Y=yの候補たりうるかを調査し、駄目ならスキップする
                 flg = TRUE
-                for x2, x + STEP_WIDTH, x + STEP_COUNT * STEP_WIDTH, STEP_WIDTH
+                for x2, x + STEP_WIDTH, xLimit, STEP_WIDTH
                     if (_pget2(x2, y) != tempColor) {
                         flg = FALSE
                         _break
@@ -482,7 +485,7 @@
                 if (flg == FALSE) :_continue
                 // Y=y+1の方もチェックする
                 flg = FALSE
-                for x2, x, x + STEP_COUNT * STEP_WIDTH, STEP_WIDTH
+                for x2, x, xLimit, STEP_WIDTH
                     if (_pget2(x2, y + 1) != tempColor) {
                         flg = TRUE
                         _break
@@ -508,8 +511,10 @@
         for k, 0, rectList1Size
             tempColor = _pget2(rectXList1(k), rectYList1(k))
             flg = TRUE
-            for x, rectXList1(k) + 1, rectXList1(k) + STEP_COUNT * STEP_WIDTH
-                if (_pget2(x, rectYList1(k)) != tempColor) :flg = FALSE :_break
+            xLimit = rectXList1(k) + STEP_COUNT * STEP_WIDTH
+            y = rectYList1(k)
+            for x, rectXList1(k) + 1, xLimit
+                if (_pget2(x, y) != tempColor) :flg = FALSE :_break
             next
             if (flg) {
                 // 候補が見つかったので追加
@@ -532,17 +537,18 @@
         dim rectXList3, 5 :dim rectYList3, 5 :rectList3Size = 0
         for k, 0, rectList2Size
             tempColor = _pget2(rectXList2(k), rectYList2(k))
+            yLimit = Min(rectYList2(k) + STEP_HEIGHT * STEP_COUNT, windowHeight)
             for x, rectXList2(k) - 1, Max(rectXList2(k) - STEP_WIDTH, -1), -1
                 if (_pget2(x, rectYList2(k)) != tempColor) :_break
                 // X=xの候補たりうるかを調査し、駄目ならスキップする
                 flg = TRUE
-                for y, rectYList2(k) + STEP_HEIGHT, Min(rectYList2(k) + STEP_HEIGHT * STEP_COUNT, windowHeight), STEP_HEIGHT
+                for y, rectYList2(k) + STEP_HEIGHT, yLimit, STEP_HEIGHT
                     if (_pget2(x, y) != tempColor) :flg = FALSE :_break
                 next
                 if (flg == FALSE) :_continue
                 // X=x+1の方もチェックする
                 flg = FALSE
-                for y, rectYList2(k) + STEP_HEIGHT, Min(rectYList2(k) + STEP_HEIGHT * STEP_COUNT, windowHeight), STEP_HEIGHT
+                for y, rectYList2(k) + STEP_HEIGHT, yLimit, STEP_HEIGHT
                     if (_pget2(x + 1, y) != tempColor) :flg = TRUE :_break
                 next
                 if (flg) {
@@ -565,7 +571,8 @@
         for k, 0, rectList3Size
             tempColor = _pget2(rectXList3(k), rectYList3(k))
             flg = TRUE
-            for y, rectYList3(k) + 1, rectYList3(k) + STEP_COUNT * STEP_HEIGHT
+            yLimit = rectYList3(k) + STEP_COUNT * STEP_HEIGHT
+            for y, rectYList3(k) + 1, yLimit
                 if (_pget2(rectXList3(k), y) != tempColor) :flg = FALSE :_break
             next
             if (flg) {
@@ -686,7 +693,8 @@
     //gsel 1 :count = Auto@SearchKanCollePos(1, rectangles) :gsel 0
 
     gosub *show_result
-    stop
+    assert
+    end
 
     *show_result
         mes "個数：" + count
