@@ -1,7 +1,7 @@
 /**
- * �}�V�����Base64�ւ̃G���R�[�h�E�f�R�[�h���s�����W���[��
- * �I���W�i���̍�ҁF���̂т���
- * �I���W�i���R�[�h�Fhttps://hsp.moe/#mbase64
+ * マシン語でBase64へのエンコード・デコードを行うモジュール
+ * オリジナルの作者：いのびあ氏
+ * オリジナルコード：https://hsp.moe/#mbase64
  */
 #module machine_base64
 	/* WinAPI */
@@ -10,16 +10,16 @@
 	#const PAGE_EXECUTE_READWRITE $40
 
 	/**
-	 * dim���߂ŗ̈���m�ۂ���Ɠ����ɁAVirtualProtect�ŃA�N�Z�X�ی��ύX����
-	 * (PAGE_EXECUTE_READWRITE��ݒ肵���̈�ł́A�A�Z���u����ǂݏ�������ю��s�ł���)
+	 * dim命令で領域を確保すると同時に、VirtualProtectでアクセス保護を変更する
+	 * (PAGE_EXECUTE_READWRITEを設定した領域では、アセンブラを読み書きおよび実行できる)
 	 */
 	#define xdim(%1, %2) dim %1, %2: VirtualProtect %1, %2 * 4, PAGE_EXECUTE_READWRITE, AZSD
 
 	/**
-	 * Base64�G���R�[�h���s��
-	 * @param src �ϊ��ΏۂƂȂ�A������̕ϐ�
-	 * @param size src�̃o�C�g��
-	 * @param dest Base64�ɃG���R�[�h���ꂽ������������ɕԂ�
+	 * Base64エンコードを行う
+	 * @param src 変換対象となる、文字列の変数
+	 * @param size srcのバイト数
+	 * @param dest Base64にエンコードされた文字列をここに返す
 	 */
 	#deffunc local Encode var src, int size, var dest
 		base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
@@ -37,10 +37,10 @@
 	return callfunc(prm, varptr(base64enc), 4)
 
 	/**
-	 * Base64�f�R�[�h���s��
-	 * @param src �ϊ��ΏۂƂȂ�ABase64�ɃG���R�[�h���ꂽ������̕ϐ�
-	 * @param size src�̃o�C�g��
-	 * @param dest Base64����f�R�[�h���ꂽ�����������ɕԂ�
+	 * Base64デコードを行う
+	 * @param src 変換対象となる、Base64にエンコードされた文字列の変数
+	 * @param size srcのバイト数
+	 * @param dest Base64からデコードされた文字をここに返す
 	 */
 	#deffunc local Decode var src, int size, var dest
 		base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"

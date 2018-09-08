@@ -1,7 +1,7 @@
 //#include "hsp3utf.as"
 
 #ifndef __hsp3utf__
-	dialog "‚±‚Ìƒ‚ƒWƒ…[ƒ‹‚ÍHSP3utf‚ª•K—v‚Å‚·B\nƒƒCƒ“ƒ\[ƒX‚Åinclude‚µ‚Ä‚­‚¾‚³‚¢B\n\nƒ‚ƒWƒ…[ƒ‹:FFMPEGLog",1,"I—¹‚µ‚Ü‚·"
+	dialog "ã“ã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã¯HSP3utfãŒå¿…è¦ã§ã™ã€‚\nãƒ¡ã‚¤ãƒ³ã‚½ãƒ¼ã‚¹ã§includeã—ã¦ãã ã•ã„ã€‚\n\nãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«:FFMPEGLog",1,"çµ‚äº†ã—ã¾ã™"
 	end
 #endif
 
@@ -138,7 +138,7 @@ return
 		getstr TimeStr, tbuf, timeStrIndex+22, ' '
 		time = double(TimeStr)
 	}
-	dim tbuf //ƒƒ‚ƒŠg—p‚ğ—}‚¦‚é‚½‚ß
+	dim tbuf //ãƒ¡ãƒ¢ãƒªä½¿ç”¨ã‚’æŠ‘ãˆã‚‹ãŸã‚
 return time
 
 #defcfunc GetAudioStartTime
@@ -151,7 +151,7 @@ return time
 		getstr TimeStr, tbuf, timeStrIndex+22, ' '
 		time = double(TimeStr)
 	}
-	dim tbuf //ƒƒ‚ƒŠg—p‚ğ—}‚¦‚é‚½‚ß
+	dim tbuf //ãƒ¡ãƒ¢ãƒªä½¿ç”¨ã‚’æŠ‘ãˆã‚‹ãŸã‚
 return time
 
 #global
@@ -162,11 +162,11 @@ return time
 	ResetFFMPEGLog
 
 	//ShowFFMPEGLog
-	pants = "‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â‚Ï‚ñ‚Â"
+	pants = "ã±ã‚“ã¤ã±ã‚“ã¤ã±ã‚“ã¤ã±ã‚“ã¤"
 
 	repeat
 
-		addFFMPEGLog pants+cnt+"\n", pants+"‚Ï‚ñ‚ÂI\n‚Ï‚ñ‚ÂII "+cnt+"\n", pants+"‚Ï‚ñ‚Â\n‚Ï‚ñ‚ÂI\n‚Ï‚ñ‚ÂII "+cnt+"\n"
+		addFFMPEGLog pants+cnt+"\n", pants+"ã±ã‚“ã¤ï¼\nã±ã‚“ã¤ï¼ï¼ "+cnt+"\n", pants+"ã±ã‚“ã¤\nã±ã‚“ã¤ï¼\nã±ã‚“ã¤ï¼ï¼ "+cnt+"\n"
 		await
 
 	loop

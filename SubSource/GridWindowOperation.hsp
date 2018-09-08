@@ -2,11 +2,11 @@
 
 	if (ginfo(24) == WND_GRID) {
 
-		//k¬ˆ——p
+		//ç¸®å°å‡¦ç†ç”¨
 		buffer WND_TEMP1, maxScrSize(0), maxScrSize(1)
 			SET_WND_INFO
 
-		//”wŒiƒRƒs[—p
+		//èƒŒæ™¯ã‚³ãƒ”ãƒ¼ç”¨
 		buffer WND_TEMP2, maxScrSize(0), maxScrSize(1)
 			SET_WND_INFO
 
@@ -17,7 +17,7 @@
 
 			stick sti, 256
 
-			//¶ƒNƒŠƒbƒN—p‚Ìˆ—‚±‚±‚©‚ç-----
+			//å·¦ã‚¯ãƒªãƒƒã‚¯ç”¨ã®å‡¦ç†ã“ã“ã‹ã‚‰-----
 			if (sti == 256){
 
 				if ( (listMode != LISTMODE_FLEET) and (cliFlag == FALSE) ){
@@ -34,8 +34,8 @@
 					}
 				}
 
-				//mxy ‚Íƒhƒ‰ƒbƒO‚ğ˜b‚µ‚½“_‚ÌÀ•W
-				//mxy_ ‚Íƒhƒ‰ƒbƒOŠJn‚ÌÀ•W
+				//mxy ã¯ãƒ‰ãƒ©ãƒƒã‚°ã‚’è©±ã—ãŸæ™‚ç‚¹ã®åº§æ¨™
+				//mxy_ ã¯ãƒ‰ãƒ©ãƒƒã‚°é–‹å§‹ã®åº§æ¨™
 				mxy(0) = limit(_mousex/cellsize(0), 0, cellnum(0)) , limit(_mousey/cellsize(1), 0, cellnum(1))
 
 				if (MultiSelectedFlg && cliflag==0 ){
@@ -93,18 +93,18 @@
 
 				if (MultiSelectedFlg^1){
 					if (_mousex < 0) | (_mousex > scrsize(0)) | (_mousey < 0) | (_mousey > scrsize(1)){
-						//ƒ}ƒEƒXÀ•W‚ªƒEƒBƒ“ƒhƒEŠO‚Ì‚Æ‚«
+						//ãƒã‚¦ã‚¹åº§æ¨™ãŒã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¤–ã®ã¨ã
 						if bufIDPos(mxy_(0), mxy_(1)) >= 100{
 							loadPicBufID( bufIDPos(mxy_(0), mxy_(1)) - 100 ) = 0
 							bufIDPos(mxy_(0), mxy_(1)) = 0
-							LogOut "ƒZƒ‹("+mxy_(0)+", "+mxy_(1)+")‚ğíœ‚µ‚Ü‚µ‚½"
+							LogOut "ã‚»ãƒ«("+mxy_(0)+", "+mxy_(1)+")ã‚’å‰Šé™¤ã—ã¾ã—ãŸ"
 							listLoadedNum--
 						}
 					} else {
 						temp = bufIDPos(mxy_(0), mxy_(1))
 						bufIDPos(mxy_(0), mxy_(1)) = bufIDPos(mxy(0), mxy(1))
 						bufIDPos(mxy(0), mxy(1)) = temp
-						LogOut "ƒZƒ‹("+mxy_(0)+", "+mxy_(1)+")‚ğƒZƒ‹("+mxy(0)+", "+mxy(1)+")‚ÉˆÚ“®‚µ‚Ü‚µ‚½"
+						LogOut "ã‚»ãƒ«("+mxy_(0)+", "+mxy_(1)+")ã‚’ã‚»ãƒ«("+mxy(0)+", "+mxy(1)+")ã«ç§»å‹•ã—ã¾ã—ãŸ"
 					}
 				} else {
 
@@ -121,7 +121,7 @@
 							bufIDPos(mxy(0)+cnt, mxy(1)+ycnt) = temp
 						loop
 					loop
-					LogOut "‘I‘ğ”ÍˆÍ‚ğˆÚ“®‚µ‚Ü‚µ‚½"
+					LogOut "é¸æŠç¯„å›²ã‚’ç§»å‹•ã—ã¾ã—ãŸ"
 
 				}
 
@@ -137,7 +137,7 @@
 			if ( sti==0 && cliflag==0 ){
 				break
 			}
-			//¶ƒNƒŠƒbƒN—p‚Ìˆ—‚±‚±‚Ü‚Å-----
+			//å·¦ã‚¯ãƒªãƒƒã‚¯ç”¨ã®å‡¦ç†ã“ã“ã¾ã§-----
 
 			await 16
 		loop
@@ -204,7 +204,7 @@ return
 return
 //*/
 
-//•`‰æ\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//æç”»â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•
 *draw
 
 	gsel WND_GRID, 0
@@ -311,7 +311,7 @@ return
 
 
 *ChangeListModeHNum
-	//”z—ñ‚ğ•¡»
+	//é…åˆ—ã‚’è¤‡è£½
 	dim temp_bufIDPos, CELL_MAX_W, CELL_MAX_H
 	repeat CELL_MAX_H
 		cntY = cnt
@@ -322,16 +322,16 @@ return
 		loop
 	loop
 
-	//Å‘å”z’u”‚ğŒvZ
+	//æœ€å¤§é…ç½®æ•°ã‚’è¨ˆç®—
 	maxCount = (cellNum(0)+1)*ListModeHNum
 	count = 0
 	repeat (cellNum(0)+1) * (cellNum(1)+1)
-		//‡”Ô‚ÉŒ©‚Ä‘¶İ‚µ‚½‚çÄ”z’u
+		//é †ç•ªã«è¦‹ã¦å­˜åœ¨ã—ãŸã‚‰å†é…ç½®
 		if temp_bufIDPos(cnt/(cellnum(1)+1), cnt\(cellnum(1)+1)) >= 100{
 			bufIDPos(count/ListModeHNum, count\ListModeHNum) = temp_bufIDPos(cnt/(cellnum(1)+1), cnt\(cellnum(1)+1))
 			count++
 		}
-		//Å‘å”z’u”‚É‚È‚Á‚½‚ç”²‚¯‚é
+		//æœ€å¤§é…ç½®æ•°ã«ãªã£ãŸã‚‰æŠœã‘ã‚‹
 		if (maxCount == count) :break
 	loop
 return

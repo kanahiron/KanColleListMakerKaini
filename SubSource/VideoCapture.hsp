@@ -5,7 +5,7 @@
 	if (audioDeviceName == ""){
 		gsel WND_MAIN
 
-		dialog "ƒI[ƒfƒBƒIƒfƒoƒCƒX‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB\nİ’è‰æ–Ê‚ğŠJ‚«‚Ü‚·‚©H",2
+		dialog "ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªãƒ‡ãƒã‚¤ã‚¹ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚\nè¨­å®šç”»é¢ã‚’é–‹ãã¾ã™ã‹ï¼Ÿ",2
 		if (stat == 6){
 			mode = MODE_OPTION
 			optionMode = OPMODE_VIDEOCAPTURE
@@ -17,7 +17,7 @@
 			nidPop
 			return
 		} else {
-			LogOut "“®‰æƒLƒƒƒvƒ`ƒƒ‚ğ’†~‚µ‚Ü‚µ‚½B"
+			LogOut "å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’ä¸­æ­¢ã—ã¾ã—ãŸã€‚"
 			nidPop
 			return
 		}
@@ -26,15 +26,15 @@
 	if (lateEncodeFlg){
 
 		if (confirmCancelVideoCapture){
-			dialog "Œ»İƒGƒ“ƒR[ƒh’†‚Å‚·\n˜^‰æ‚µ‚½“à—e‚ªÁ‚¦‚Ü‚·‚ªA’†~‚µ‚Ä‚æ‚ë‚µ‚¢‚Å‚·‚©H", 3, "Šm”F"
+			dialog "ç¾åœ¨ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ä¸­ã§ã™\néŒ²ç”»ã—ãŸå†…å®¹ãŒæ¶ˆãˆã¾ã™ãŒã€ä¸­æ­¢ã—ã¦ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ", 3, "ç¢ºèª"
 			if (stat == 6 && lateEncodeFlg){
 				gosub *VideoCapEmgStop
-				LogOut "Info-ƒGƒ“ƒR[ƒh‚ğ’†’f\n“®‰æƒLƒƒƒvƒ`ƒƒ‚ğæ‚èÁ‚µ‚Ü‚µ‚½"
+				LogOut "Info-ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã‚’ä¸­æ–­\nå‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’å–ã‚Šæ¶ˆã—ã¾ã—ãŸ"
 				nidPop
 			}
 		} else {
 			gosub *VideoCapEmgStop
-			LogOut "Info-ƒGƒ“ƒR[ƒh‚ğ’†’f\n“®‰æƒLƒƒƒvƒ`ƒƒ‚ğæ‚èÁ‚µ‚Ü‚µ‚½"
+			LogOut "Info-ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã‚’ä¸­æ–­\nå‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’å–ã‚Šæ¶ˆã—ã¾ã—ãŸ"
 			nidPop
 		}
 		return
@@ -58,15 +58,15 @@
 
 		GetAbsPos videoCapX, videoCapY
 
-		//c‰¡‚ğ‚ğ4‚Ì®””{‚É®Œ`
+		//ç¸¦æ¨ªã‚’ã‚’4ã®æ•´æ•°å€ã«æ•´å½¢
 		videoCapSizeX = int((0.25*sscapwh(0))+0.9999999)*4
 		videoCapSizeY = int((0.25*sscapwh(1))+0.9999999)*4
 
-		//‰¹º‚È‚µ‚È‚çƒtƒ‰ƒO‚ğ—§‚Ä‚é
+		//éŸ³å£°ãªã—ãªã‚‰ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 		noAudioFlg = FALSE
-		if (audioDeviceName == "‰¹º‚È‚µ"): noAudioFlg = TRUE
+		if (audioDeviceName == "éŸ³å£°ãªã—"): noAudioFlg = TRUE
 
-		//x264‚ÌƒvƒŠƒZƒbƒg‚ğ•¶š‚Åæ“¾‚·‚é
+		//x264ã®ãƒ—ãƒªã‚»ãƒƒãƒˆã‚’æ–‡å­—ã§å–å¾—ã™ã‚‹
 		x264presetStr = ""
 		notesel x264presetList
 		noteget x264presetStr, x264presetNum
@@ -74,16 +74,16 @@
 
 		videoFileName = strf("%s\\%s", videoCapSaveDir, Format@DateTimeFormatMod(saveName(SN_VIDEO)) )
 
-		//ƒRƒ}ƒ“ƒh‚Ì‘g‚İ—§‚Ä
+		//ã‚³ãƒãƒ³ãƒ‰ã®çµ„ã¿ç«‹ã¦
 		if (noAudioFlg^1){
-			//ƒI[ƒfƒCƒI‚ ‚è
+			//ã‚ªãƒ¼ãƒ‡ã‚¤ã‚ªã‚ã‚Š
 			cmda = strf("\"%s\" -vn -f dshow -i audio=\"%s\" -acodec pcm_s16le -ac 2 -ar 44100 \"%s_a.wav\"", ffmpegdir, audioDeviceName, videoFileName)
 		} else {
 			cmda = strf("cmd")
 		}
 
 		if (lateEncode){
-			//•‰‰×ŒyŒ¸“®‰æƒLƒƒƒvƒ`ƒƒ
+			//è² è·è»½æ¸›å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
 			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, videoCapX, videoCapY)
 			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, 12, "ultrafast", videoFileName)
@@ -101,7 +101,7 @@
 		vStartTime2 = 0.001*(timeGetTime()\60000)
 
 		if ( (apid == -1) || (vpid == -1) ){
-			LogOut "“®‰æƒLƒƒƒvƒ`ƒƒ‚ÌŠJn‚É¸”s‚µ‚Ü‚µ‚½"
+			LogOut "å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ã®é–‹å§‹ã«å¤±æ•—ã—ã¾ã—ãŸ"
 			return
 		}
 
@@ -110,7 +110,7 @@
 
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID, 400, 0
 
-		videoCapMes = "’â~"
+		videoCapMes = "åœæ­¢"
 		if (mode == MODE_SSCAP){
 			gsel WND_MAIN
 			objprm videoCapBId, videoCapMes
@@ -121,7 +121,7 @@
 
 	} else {
 
-		videoCapMes = "’†~"
+		videoCapMes = "ä¸­æ­¢"
 		if (mode == MODE_SSCAP){
 			gsel WND_MAIN
 			objprm videoCapBId, videoCapMes
@@ -133,16 +133,16 @@
 		videoCapTime = timeGetTime() - videoCapStartTime
 
 		if (noAudioFlg^1){
-			pipe2put apid, "q" //˜^‰¹‚Ì’â~
+			pipe2put apid, "q" //éŒ²éŸ³ã®åœæ­¢
 		} else {
 			pipe2put apid, "exit\n"
 		}
-		pipe2put vpid, "q" //“®‰æƒLƒƒƒvƒ`ƒƒ‚Ì’â~
+		pipe2put vpid, "q" //å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ã®åœæ­¢
 
 		exf = 0
 		exfv = 0
 		exfa = 0
-		repeat //I—¹‚Ì‘Ò‹@
+		repeat //çµ‚äº†ã®å¾…æ©Ÿ
 			if (exfv == 0){
 				ffbuf = ""
 				pipe2check vpid
@@ -174,7 +174,7 @@
 		apid = -1
 		vpid = -1
 
-		//ƒGƒ“ƒR[ƒh‚ÌŠJn
+		//ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã®é–‹å§‹
 		LateEncodeFlg = TRUE
 		lateEncodeStartTime = timeGetTime()
 
@@ -212,13 +212,13 @@
 		}
 		volumeStr = str(int(2.56*volume+0.5))
 
-		//ƒRƒ}ƒ“ƒh‘g‚İ—§‚Ä
+		//ã‚³ãƒãƒ³ãƒ‰çµ„ã¿ç«‹ã¦
 		if (noAudioFlg^1){
 			if (lateEncode){
-				//ƒI[ƒfƒCƒI—L‚è•‰‰×ŒyŒ¸“®‰æƒLƒƒƒvƒ`ƒƒ
+				//ã‚ªãƒ¼ãƒ‡ã‚¤ã‚ªæœ‰ã‚Šè² è·è»½æ¸›å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£
 				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -vol %s %s -c:v libx264 -crf %d -preset %s -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, videoFileName, difftime, videoFileName, volumeStr, normalizeStr, videoCapCRF, x264presetStr, videoFileName)
 			} else {
-				//ƒI[ƒfƒCƒI—L‚è]—ˆ‚Ì“®‰æƒLƒƒƒvƒ`ƒƒ
+				//ã‚ªãƒ¼ãƒ‡ã‚¤ã‚ªæœ‰ã‚Šå¾“æ¥ã®å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£
 				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -ss %f -i \"%s_a.wav\" -vol %s %s -c:v copy -c:a aac -b:a 128k \"%s.mp4\"", ffmpegdir, videoFileName, difftime, videoFileName, volumeStr, normalizeStr, videoFileName)
 			}
 		} else {
@@ -235,7 +235,7 @@
 		if ( mpid == -1 ){
 
 			gosub *VideoCapEmgStop
-			LogOut "Error-ƒGƒ“ƒR[ƒhƒvƒƒZƒX‚ÌŠJn‚É¸”s‚µ‚Ü‚µ‚½"
+			LogOut "Error-ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ãƒ—ãƒ­ã‚»ã‚¹ã®é–‹å§‹ã«å¤±æ•—ã—ã¾ã—ãŸ"
 
 			nidPop
 			return
@@ -289,9 +289,9 @@ return
 	if (exfv || exfa){
 		gosub *VideoCapEmgStop
 
-		logmessage =  "Error-“®‰æƒLƒƒƒvƒ`ƒƒ‚ğ’â~‚µ‚Ü‚µ‚½\n"
-		if (exfv): logmessage += "“®‰æƒvƒƒZƒX‚ªˆÙí’â~‚µ‚Ü‚µ‚½\n"
-		if (exfa): logmessage += "‰¹ºƒvƒƒZƒX‚ªˆÙí’â~‚µ‚Ü‚µ‚½\n"
+		logmessage =  "Error-å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’åœæ­¢ã—ã¾ã—ãŸ\n"
+		if (exfv): logmessage += "å‹•ç”»ãƒ—ãƒ­ã‚»ã‚¹ãŒç•°å¸¸åœæ­¢ã—ã¾ã—ãŸ\n"
+		if (exfa): logmessage += "éŸ³å£°ãƒ—ãƒ­ã‚»ã‚¹ãŒç•°å¸¸åœæ­¢ã—ã¾ã—ãŸ\n"
 
 		LogOut logmessage
 		nidPop
@@ -299,8 +299,8 @@ return
 	}
 
 	elapsedTime = timeGetTime() - videoCapStartTime
-	elapsedTimeStr = "“®‰æ‚ğƒLƒƒƒvƒ`ƒƒ’†c\n"
-	elapsedTimeStr += strf("  Œo‰ßŠÔ %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(elapsedTime))
+	elapsedTimeStr = "å‹•ç”»ã‚’ã‚­ãƒ£ãƒ—ãƒãƒ£ä¸­â€¦\n"
+	elapsedTimeStr += strf("  çµŒéæ™‚é–“ %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(elapsedTime))
 
 	gsel WND_MAIN
 	LogOut elapsedTimeStr
@@ -337,7 +337,7 @@ return
 	noteget lastStr, notemax-1
 	noteunsel
 
-	//encodeTime ƒŠƒAƒ‹ƒ^ƒCƒ€‚ÌŒo‰ßŠÔ
+	//encodeTime ãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ ã®çµŒéæ™‚é–“
 	encodeTime = timeGetTime() - lateEncodeStartTime
 
 	if (strmid(lastStr, 0, 5) == "frame"){
@@ -356,23 +356,23 @@ return
 
 			encodeElapsedTime += 300
 
-			//ƒGƒ“ƒR[ƒhƒXƒs[ƒh
+			//ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã‚¹ãƒ”ãƒ¼ãƒ‰
 			encodeSpeed = 1.0*encodeElapsedTime/encodeTime
 
 			logmes "encodeSpeed "+encodeSpeed
 			logmes "ffSpeed     "+ffSpeed
-			//—\‘z‡ŒvƒGƒ“ƒR[ƒhŠÔ
+			//äºˆæƒ³åˆè¨ˆã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ™‚é–“
 			estimatedTime = 1.0*videoCapTime/encodeSpeed
 		}
 	}
 
-	//—\‘z‡ŒvƒGƒ“ƒR[ƒhŠÔ
+	//äºˆæƒ³åˆè¨ˆã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ™‚é–“
 	remainingTime = estimatedTime-encodeTime
 	if (remainingTime < 0.0): remainingTime = 0.0
 
-	lateEncodeStr = "“®‰æ‚ğƒGƒ“ƒR[ƒh’†c\n"
-	lateEncodeStr += strf("  Œo‰ßŠÔ %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(encodeTime))
-	lateEncodeStr += strf("  „’èc‚è %s", cnvMilliSecondToMMSSMS@DateTimeFormatMod(remainingTime))
+	lateEncodeStr = "å‹•ç”»ã‚’ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ä¸­â€¦\n"
+	lateEncodeStr += strf("  çµŒéæ™‚é–“ %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(encodeTime))
+	lateEncodeStr += strf("  æ¨å®šæ®‹ã‚Š %s", cnvMilliSecondToMMSSMS@DateTimeFormatMod(remainingTime))
 
 	LogOut lateEncodeStr
 
@@ -400,9 +400,9 @@ return
 	exist videoFileName+"_a.wav"
 	if (strsize != -1): delete videoFileName+"_a.wav"
 
-	LogOut strf("%s.mp4‚ğ•Û‘¶‚µ‚Ü‚µ‚½B", getpath(videoFileName, 8))
+	LogOut strf("%s.mp4ã‚’ä¿å­˜ã—ã¾ã—ãŸã€‚", getpath(videoFileName, 8))
 
-	videoCapMes = "ŠJn"
+	videoCapMes = "é–‹å§‹"
 	if (mode == MODE_SSCAP){
 		gsel WND_MAIN
 		objprm videoCapBId, videoCapMes
@@ -416,7 +416,7 @@ return
 
 *VideoCapEmgStop
 
-	logmes "ˆÙí’â~‚Ì”­¶"
+	logmes "ç•°å¸¸åœæ­¢ã®ç™ºç”Ÿ"
 
 	videoCapFlg = FALSE
 	lateEncodeFlg = FALSE
@@ -428,11 +428,11 @@ return
 	exfa = 1
 	exfm = 1
 
-	if (apid != -1): pipe2term apid: exfa = 0: logmes "ƒI[ƒfƒBƒIƒvƒƒZƒX‚ª¶‚«‚Ä‚é"
-	if (vpid != -1): pipe2term vpid: exfv = 0: logmes "ƒrƒfƒIƒvƒƒZƒX‚ª¶‚«‚Ä‚é"
-	if (mpid != -1): pipe2term mpid: exfm = 0: logmes "ƒGƒ“ƒR[ƒhƒvƒƒZƒX‚ª¶‚«‚Ä‚é"
+	if (apid != -1): pipe2term apid: exfa = 0: logmes "ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªãƒ—ãƒ­ã‚»ã‚¹ãŒç”Ÿãã¦ã‚‹"
+	if (vpid != -1): pipe2term vpid: exfv = 0: logmes "ãƒ“ãƒ‡ã‚ªãƒ—ãƒ­ã‚»ã‚¹ãŒç”Ÿãã¦ã‚‹"
+	if (mpid != -1): pipe2term mpid: exfm = 0: logmes "ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ãƒ—ãƒ­ã‚»ã‚¹ãŒç”Ÿãã¦ã‚‹"
 
-	repeat //I—¹‚Ì‘Ò‹@
+	repeat //çµ‚äº†ã®å¾…æ©Ÿ
 		if (exfv == 0){
 			ffbuf = ""
 			pipe2check vpid
@@ -469,7 +469,7 @@ return
 	exist videoFileName+".mp4"
 	if (strsize != -1): delete videoFileName+".mp4"
 
-	videoCapMes = "ŠJn"
+	videoCapMes = "é–‹å§‹"
 	if (mode == MODE_SSCAP){
 		gsel WND_MAIN
 		objprm videoCapBId, videoCapMes
@@ -481,11 +481,11 @@ return
 
 
 *VideoCapSetting
-	//audioDeviceName‚©‚çaudioDeviceListNum‚ğæ“¾‚·‚é‚½‚ß‚ÌƒTƒuƒ‹[ƒ`ƒ“
-	//‹N“®‚Éˆê“x‚¾‚¯ŒÄ‚Ño‚³‚ê‚é
+	//audioDeviceNameã‹ã‚‰audioDeviceListNumã‚’å–å¾—ã™ã‚‹ãŸã‚ã®ã‚µãƒ–ãƒ«ãƒ¼ãƒãƒ³
+	//èµ·å‹•æ™‚ã«ä¸€åº¦ã ã‘å‘¼ã³å‡ºã•ã‚Œã‚‹
 
 	GetAudioDevice ffmpegdir, audioDeviceList
-	audioDeviceList += "‰¹º‚È‚µ"
+	audioDeviceList += "éŸ³å£°ãªã—"
 	audioDeviceListNum = -1
 	if (audioDeviceName != ""){
 		notesel audioDeviceList
@@ -505,8 +505,8 @@ return
 return
 
 *SetAudioDeviceName
-	//ƒŠƒXƒgƒ{ƒbƒNƒX‚ğƒNƒŠƒbƒN‚µ‚½‚ÉŒÄ‚Ño‚³‚ê‚éƒTƒuƒ‹[ƒ`ƒ“
-	//WindowMessageEvent‚©‚çƒNƒŠƒbƒN‚·‚é‚½‚Ñ‚ÉŒÄ‚Ño‚³‚ê‚é
+	//ãƒªã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ãŸæ™‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹ã‚µãƒ–ãƒ«ãƒ¼ãƒãƒ³
+	//WindowMessageEventã‹ã‚‰ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ãŸã³ã«å‘¼ã³å‡ºã•ã‚Œã‚‹
 
 	sendmsg hAudioDeviceLB, LB_GETCURSEL
 	audioDeviceListNum = stat
@@ -520,8 +520,8 @@ return
 
 
 *openDialogffmpeg
-	//ffmpeg’T‚·ƒ_ƒCƒAƒƒO‚ğŠJ‚­‚½‚ß‚ÌƒTƒuƒ‹[ƒ`ƒ“
-	//ƒ{ƒ^ƒ“‚ğ‰Ÿ‚·“x‚ÉŒÄ‚Ño‚³‚ê‚é
+	//ffmpegæ¢ã™ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’é–‹ããŸã‚ã®ã‚µãƒ–ãƒ«ãƒ¼ãƒãƒ³
+	//ãƒœã‚¿ãƒ³ã‚’æŠ¼ã™åº¦ã«å‘¼ã³å‡ºã•ã‚Œã‚‹
 
 	nidPush
 
@@ -537,7 +537,7 @@ return
 	objprm ffmpegDirIId, ffmpegdir
 
 	GetAudioDevice ffmpegdir, audioDeviceList
-	audioDeviceList += "‰¹º‚È‚µ"
+	audioDeviceList += "éŸ³å£°ãªã—"
 	objprm audioDeviceLBId, audioDeviceList
 	audioDeviceListNum = -1
 	audioDeviceName = ""

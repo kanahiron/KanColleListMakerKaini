@@ -17,7 +17,7 @@
 	clrobj 2, -1
 	syscolor 15: boxf: syscolor 8
 
-	font "ƒƒCƒŠƒI", Scale(13)
+	font "ãƒ¡ã‚¤ãƒªã‚ª", Scale(13)
 	mref BMSCR, 67
 	hFontMain = BMSCR(38)
 
@@ -35,34 +35,34 @@
 
 	if (mode == MODE_SSCAP){
 		objprm comboxId, 0
-		modemes = "SSƒLƒƒƒvƒ`ƒƒ"
+		modemes = "SSã‚­ãƒ£ãƒ—ãƒãƒ£"
 	} else: if(mode == MODE_LIST){
 		switch listmode
 			case LISTMODE_LIST
 				objprm comboxId, 1
-				modemes = "ŠÍ–ºˆê——"
+				modemes = "è‰¦å¨˜ä¸€è¦§"
 				swbreak
 			case LISTMODE_FLEET
 				objprm comboxId, 2
-				modemes = "U—ª•Ò¬"
+				modemes = "æ”»ç•¥ç·¨æˆ"
 				swbreak
 			case LISTMODE_OTHER
 				objprm comboxId, 3
-				modemes = "‚»‚Ì‘¼ˆê——ì¬"
+				modemes = "ãã®ä»–ä¸€è¦§ä½œæˆ"
 				swbreak
 		swend
 	} else: if(mode == MODE_OPTION){
 		objprm comboxId, 4
-		modemes = "ƒIƒvƒVƒ‡ƒ“"
+		modemes = "ã‚ªãƒ—ã‚·ãƒ§ãƒ³"
 	}
 
 	mesy = rect(3) + scale3
 
 	if (mode == MODE_SSCAP){
-		//SSƒLƒƒƒvƒ`ƒƒƒ‚[ƒh//SSƒLƒƒƒvƒ`ƒƒƒ‚[ƒh//SSƒLƒƒƒvƒ`ƒƒƒ‚[ƒh//SSƒLƒƒƒvƒ`ƒƒƒ‚[ƒh
+		//SSã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ¢ãƒ¼ãƒ‰//SSã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ¢ãƒ¼ãƒ‰//SSã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ¢ãƒ¼ãƒ‰//SSã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ¢ãƒ¼ãƒ‰
 
 		pos Scale(2), mesy
-		mes "ƒLƒƒƒvƒ`ƒƒÀ•W"
+		mes "ã‚­ãƒ£ãƒ—ãƒãƒ£åº§æ¨™"
 
 		objsize Scale(80), Scale(25)
 		pos Scale(95), mesy - scale3
@@ -71,7 +71,7 @@
 		mesy += Scale(22)
 
 		pos Scale(2), mesy
-		mes "Å‚’ÇÕƒŒƒxƒ‹"
+		mes "æœ€é«˜è¿½è·¡ãƒ¬ãƒ™ãƒ«"
 
 		pos Scale(95), mesy
 		winobj "msctls_trackbar32", "",, $50000000 | $1, Scale(45), Scale(20)
@@ -120,16 +120,16 @@
 		objsize Scale(175), Scale(20)
 
 		pos Scale(5+mesaddx), mesy
-		chkbox "©“®À•Wæ“¾", autoSearch: mesy += scale20
+		chkbox "è‡ªå‹•åº§æ¨™å–å¾—", autoSearch: mesy += scale20
 		autoSearchCId = stat
 
 		pos Scale(5+mesaddx), mesy
-		chkbox "’ñ“Â–¼‚Æi—ß•”Lv‚ğ‰B‚·", hidename: mesy += scale20
+		chkbox "æç£åã¨å¸ä»¤éƒ¨Lvã‚’éš ã™", hidename: mesy += scale20
 		hidenameBId = stat
-		objenable hidenameBId, 0 //HTML5ˆÚs‚É‚æ‚éb’è‘Îˆ
+		objenable hidenameBId, 0 //HTML5ç§»è¡Œã«ã‚ˆã‚‹æš«å®šå¯¾å‡¦
 
 		pos Scale(5+mesaddx), mesy
-		chkbox "ƒcƒC[ƒgƒEƒBƒ“ƒhƒE•\¦", enableTweetWindow: mesy += scale20
+		chkbox "ãƒ„ã‚¤ãƒ¼ãƒˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤º", enableTweetWindow: mesy += scale20
 		enableTweetWindowCId = stat
 		enableTweetWindowCh = objinfo_hwnd(enableTweetWindowCId)
 
@@ -144,7 +144,7 @@
 
 		objsize Scale(150-(((yabumiautoupload = 1) & (availableyabumi = 1))*30)), Scale(30)
 		pos 0, mesy
-		button gosub "SSƒLƒƒƒvƒ`ƒƒ", *ssCapture
+		button gosub "SSã‚­ãƒ£ãƒ—ãƒãƒ£", *ssCapture
 		sscapBId = stat
 
 		objsize Scale(30), Scale(30)
@@ -154,11 +154,11 @@
 
 		objsize Scale(25), Scale(30)
 		pos Scale(150), mesy
-		button gosub "ŠJ", *ssSaveFOpen: mesy += Scale(30)
+		button gosub "é–‹", *ssSaveFOpen: mesy += Scale(30)
 		fopenBId = stat
 
 		pos Scale(3+((enableSeqCap^1)*-175)), mesy + scale3
-		mes "˜A‘±ƒLƒƒƒvƒ`ƒƒ"
+		mes "é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£"
 		objsize Scale(55), Scale(25)
 		pos Scale(95+((enableSeqCap^1)*175)), mesy
 		button gosub seqcapmes, *seqcap
@@ -166,13 +166,13 @@
 
 		objsize Scale(25), Scale(25)
 		pos Scale(150+((enableSeqCap^1)*175)), mesy
-		button gosub "ŠJ", *seqCapSaveFOpen
+		button gosub "é–‹", *seqCapSaveFOpen
 		fopenBId = stat
 
 		if enableSeqCap: mesy += Scale(25)
 
 		pos Scale(3+((enableVideoCap^1)*-175)), mesy + scale3
-		mes "“®‰æƒLƒƒƒvƒ`ƒƒ"
+		mes "å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£"
 		objsize Scale(55), Scale(25)
 		pos Scale(95+((enableVideoCap^1)*175)), mesy
 		button gosub videoCapMes, *VideoCap
@@ -180,7 +180,7 @@
 
 		objsize Scale(25), Scale(25)
 		pos Scale(150+((enableVideoCap^1)*175)), mesy
-		button gosub "ŠJ", *VideoCapSaveFOpen
+		button gosub "é–‹", *VideoCapSaveFOpen
 		fopenBId = stat
 
 		if enableVideoCap : mesy += Scale(25)
@@ -211,14 +211,14 @@
 		mainWndW = Scale(175)
 		mainWndH = mesy
 
-		//SSƒLƒƒƒvƒ`ƒƒƒ‚[ƒh@‚±‚±‚Ü‚Å//SSƒLƒƒƒvƒ`ƒƒƒ‚[ƒh@‚±‚±‚Ü‚Å//SSƒLƒƒƒvƒ`ƒƒƒ‚[ƒh@‚±‚±‚Ü‚Å
+		//SSã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ¢ãƒ¼ãƒ‰ã€€ã“ã“ã¾ã§//SSã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ¢ãƒ¼ãƒ‰ã€€ã“ã“ã¾ã§//SSã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ¢ãƒ¼ãƒ‰ã€€ã“ã“ã¾ã§
 	}
 
 	if (mode == MODE_LIST){
-		//ˆê——ì¬ƒ‚[ƒh//ˆê——ì¬ƒ‚[ƒh//ˆê——ì¬ƒ‚[ƒh//ˆê——ì¬ƒ‚[ƒh//ˆê——ì¬ƒ‚[ƒh
+		//ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰//ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰//ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰//ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰//ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰
 
 		pos 2, mesy
-		mes "ƒLƒƒƒvƒ`ƒƒÀ•W"
+		mes "ã‚­ãƒ£ãƒ—ãƒãƒ£åº§æ¨™"
 
 		objsize Scale(80), Scale(25)
 		pos Scale(95), mesy - scale3
@@ -236,13 +236,13 @@
 
 			mesy_ = mesy
 			pos scale5, mesy
-			chkbox "ƒV[ƒ“: •Ò¬¨•ÏX", ichiranMode1: mesy += Scale(100)
+			chkbox "ã‚·ãƒ¼ãƒ³: ç·¨æˆâ†’å¤‰æ›´", ichiranMode1: mesy += Scale(100)
 			ichiranMode1Cid = stat
 			ichiranMode1Ch = objinfo_hwnd(ichiranMode1CId)
 			SetWindowLong ichiranMode1Ch, -16, $50000009 | $20000
 
 			pos scale5, mesy
-			chkbox "ƒV[ƒ“: •â‹‹", ichiranMode2: mesy += scale20
+			chkbox "ã‚·ãƒ¼ãƒ³: è£œçµ¦", ichiranMode2: mesy += scale20
 			ichiranMode2Cid = stat
 			ichiranMode2Ch = objinfo_hwnd(ichiranMode2CId)
 			sendmsg ichiranMode2Ch, $F4, $9
@@ -250,22 +250,22 @@
 			mesy_ += scale20
 
 			pos Scale(22), mesy_
-			chkbox "w—Ö‚à“ü‚ê‚é", yubiwa: mesy_ += scale20
+			chkbox "æŒ‡è¼ªã‚‚å…¥ã‚Œã‚‹", yubiwa: mesy_ += scale20
 			yubiwaCId = stat
 			yubiwaCh = objinfo_hwnd(yubiwaCId)
 
 			pos Scale(22), mesy_
-			chkbox "Š‘®ŠÍ‘à‚à“ü‚ê‚é", kantai: mesy_ += scale20
+			chkbox "æ‰€å±è‰¦éšŠã‚‚å…¥ã‚Œã‚‹", kantai: mesy_ += scale20
 			kantaiCId = stat
 			kantaiCh = objinfo_hwnd(kantaiCId)
 
 			pos Scale(22), mesy_
-			chkbox "ƒy[ƒW”‚à“ü‚ê‚é", page: mesy_ += scale20
+			chkbox "ãƒšãƒ¼ã‚¸æ•°ã‚‚å…¥ã‚Œã‚‹", page: mesy_ += scale20
 			pageCId = stat
 			pageCh = objinfo_hwnd(pageCId)
 
 			pos Scale(17), mesy_
-			chkbox "ƒŒƒxƒ‹‚ÆŠÍ–¼‚Ì‚İ", lvname: mesy_ += scale20
+			chkbox "ãƒ¬ãƒ™ãƒ«ã¨è‰¦åã®ã¿", lvname: mesy_ += scale20
 			lvnameCId = stat
 			lvnameCh = objinfo_hwnd(lvnameCId)
 
@@ -286,31 +286,31 @@
 			mesy2 = ComBoxh + scale3
 
 			pos scale5, mesy+1
-			mes "©“®’Ç‰Á‚Ì•û–@": mesy += scale20
+			mes "è‡ªå‹•è¿½åŠ ã®æ–¹æ³•": mesy += scale20
 
 			objsize Scale(70), scale20
 
 			pos Scale(7), mesy
-			chkbox "c3‰¡2", tuika1
+			chkbox "ç¸¦3æ¨ª2", tuika1
 			tuika1CId = stat
 			tuika1Ch = objinfo_hwnd(tuika1CId)
 			SetWindowLong tuika1ch, -16, $50000009 | $20000
 
 			pos Scale(80), mesy
-			chkbox "c2‰¡3", tuika4
+			chkbox "ç¸¦2æ¨ª3", tuika4
 			tuika4CId = stat
 			tuika4Ch = objinfo_hwnd(tuika4CId)
 			sendmsg tuika4ch, $F4, $9
 			mesy += scale20
 
 			pos Scale(7), mesy
-			chkbox "c6‰¡1", tuika3
+			chkbox "ç¸¦6æ¨ª1", tuika3
 			tuika3CId = stat
 			tuika3Ch = objinfo_hwnd(tuika3CId)
 			sendmsg tuika3ch, $F4, $9
 
 			pos Scale(80), mesy
-			chkbox "c1‰¡6", tuika2
+			chkbox "ç¸¦1æ¨ª6", tuika2
 			tuika2CId = stat
 			tuika2Ch = objinfo_hwnd(tuika2CId)
 			sendmsg tuika2ch, $F4, $9
@@ -320,22 +320,22 @@
 			objsize Scale(175), scale20
 
 			pos Scale(5), mesy+Scale(1)
-			mes "ƒLƒƒƒvƒ`ƒƒ”ÍˆÍ":mesy += Scale(18)
+			mes "ã‚­ãƒ£ãƒ—ãƒãƒ£ç¯„å›²":mesy += Scale(18)
 
 			pos Scale(7), mesy
-			chkbox "‘•”õ‚ÆƒXƒe[ƒ^ƒX‚ÆŠÍ–º", sosuka: mesy += scale20
+			chkbox "è£…å‚™ã¨ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã¨è‰¦å¨˜", sosuka: mesy += scale20
 			sosukaCId = stat
 			sosukaCh = objinfo_hwnd(sosukaCId)
 			SetWindowLong sosukach, -16, $50000009 | $20000
 
 			pos Scale(7), mesy
-			chkbox "‘•”õ‚ÆƒXƒe[ƒ^ƒX", sosu: mesy+= scale20
+			chkbox "è£…å‚™ã¨ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹", sosu: mesy+= scale20
 			sosuCId = stat
 			sosuCh = objinfo_hwnd(sosuCId)
 			sendmsg sosuch, $F4, $9
 
 			pos Scale(7), mesy
-			chkbox "‘•”õ‚ÆŠÍ–º‚Ì‰æ‘œ", soka: mesy += scale20
+			chkbox "è£…å‚™ã¨è‰¦å¨˜ã®ç”»åƒ", soka: mesy += scale20
 			sokaCId = stat
 			sokaCh = objinfo_hwnd(sokaCId)
 			sendmsg sokach, $F4, $9
@@ -343,16 +343,16 @@
 			mesy += Scale(1)
 
 			pos Scale(5), mesy
-			chkbox "ŠÍ‘à‹æØ‚èü‚ğ’Ç‰Á", fleetPunctuation: mesy += scale20
+			chkbox "è‰¦éšŠåŒºåˆ‡ã‚Šç·šã‚’è¿½åŠ ", fleetPunctuation: mesy += scale20
 			fleetPunctuationCId = stat
 			fleetPunctuationCh = objinfo_hwnd(fleetPunctuationCId)
 
 			pos Scale(5), mesy
-			chkbox "‡”Ô‚É”Ô†‚ğ“ü‚ê‚é", addOrderNum: mesy += scale20
+			chkbox "é †ç•ªã«ç•ªå·ã‚’å…¥ã‚Œã‚‹", addOrderNum: mesy += scale20
 			addOrderNumCId = stat
 
 			pos Scale(5), mesy
-			chkbox "¼‘ºŠÍ‘à(7l)‚É‘Î‰", nishimuraFlg: mesy += scale20
+			chkbox "è¥¿æ‘è‰¦éšŠ(7äºº)ã«å¯¾å¿œ", nishimuraFlg: mesy += scale20
 			nishimuraFlgCId = stat
 			nishimuraFlgCh = objinfo_hwnd(nishimuraFlgCId)
 
@@ -371,51 +371,51 @@
 			objsize Scale(70), Scale(22)
 
 			pos window2x + Scale(5), mesy2+Scale(1)
-			mes " ŠÍ‘à–¼": mesy2 += scale20
+			mes " è‰¦éšŠå": mesy2 += scale20
 
 			pos window2x + Scale(7), mesy2+Scale(1)
-			chkbox "‘æˆêŠÍ‘à", enableFirst
+			chkbox "ç¬¬ä¸€è‰¦éšŠ", enableFirst
 			pos window2x + Scale(80), mesy2
 			input FirstFleetName, Scale(95), Scale(22): mesy2 += Scale(22)
 
 			pos window2x + Scale(7), mesy2+Scale(1)
-			chkbox "‘æ“ñŠÍ‘à", enableSecond
+			chkbox "ç¬¬äºŒè‰¦éšŠ", enableSecond
 			pos window2x + Scale(80), mesy2
 			input SecondFleetName, Scale(95), Scale(22): mesy2 += Scale(22)
 
 			pos window2x + Scale(7), mesy2+Scale(1)
-			chkbox "‘æOŠÍ‘à", enableThird
+			chkbox "ç¬¬ä¸‰è‰¦éšŠ", enableThird
 			pos window2x + Scale(80), mesy2
 			input ThirdFleetName, Scale(95), Scale(22): mesy2 += Scale(22)
 
 			pos window2x + Scale(7), mesy2+Scale(1)
-			chkbox "‘ælŠÍ‘à", enableFourth
+			chkbox "ç¬¬å››è‰¦éšŠ", enableFourth
 			pos window2x + Scale(80), mesy2
 			input FourthFleetName, Scale(95), Scale(22): mesy2 += Scale(25)
 
 			pos window2x + Scale(5), mesy2+Scale(1)
-			mes " ŠÍ‘à–¼•¶šF": mesy2 += scale20
+			mes " è‰¦éšŠåæ–‡å­—è‰²": mesy2 += scale20
 
 			drawColorPos = mesy2
 			pos window2x + Scale(7), mesy2
-			button gosub "‘æˆêŠÍ‘à", *colorCange1: mesy2 += Scale(22)
+			button gosub "ç¬¬ä¸€è‰¦éšŠ", *colorCange1: mesy2 += Scale(22)
 
 			pos window2x + Scale(7), mesy2
-			button gosub "‘æ“ñŠÍ‘à", *colorCange2: mesy2 += Scale(22)
+			button gosub "ç¬¬äºŒè‰¦éšŠ", *colorCange2: mesy2 += Scale(22)
 
 			pos window2x + Scale(7), mesy2
-			button gosub "‘æOŠÍ‘à", *colorCange3: mesy2 += Scale(22)
+			button gosub "ç¬¬ä¸‰è‰¦éšŠ", *colorCange3: mesy2 += Scale(22)
 
 			pos window2x + Scale(7), mesy2
-			button gosub "‘ælŠÍ‘à", *colorCange4: mesy2 += Scale(22)
+			button gosub "ç¬¬å››è‰¦éšŠ", *colorCange4: mesy2 += Scale(22)
 
 			mesy2 += Scale(3)
 			pos window2x + Scale(5), mesy2+Scale(1)
-			mes " ŠÍ‘à‹æØ‚èüF": mesy2 += scale20
+			mes " è‰¦éšŠåŒºåˆ‡ã‚Šç·šè‰²": mesy2 += scale20
 
 			drawColorPosP = mesy2
 			pos window2x + Scale(7), mesy2
-			button gosub "•ÏX", *colorCange5: mesy2 += Scale(22)
+			button gosub "å¤‰æ›´", *colorCange5: mesy2 += Scale(22)
 
 			gosub *drawColor
 
@@ -431,24 +431,24 @@
 			objsize Scale(175), Scale(20)
 
 			pos Scale(7), mesy
-			chkbox "’¼Ú˜AŒ‹", directLink: mesy += scale20
+			chkbox "ç›´æ¥é€£çµ", directLink: mesy += scale20
 			directLinkCId = stat
 			directLinkCh = objinfo_hwnd(directLinkCId)
 			SetWindowLong directLinkCh, -16, $50000009 | $20000
 
 			pos Scale(7), mesy
-			chkbox "Šî’nq‹ó‘à", airStation: mesy += scale20
+			chkbox "åŸºåœ°èˆªç©ºéšŠ", airStation: mesy += scale20
 			airStationCId = stat
 			airStationCh = objinfo_hwnd(airStationCId)
 			sendmsg airStationCh, $F4, $9
 
 			pos Scale(22), mesy
-			chkbox "ƒ^ƒu‚Ü‚Å“ü‚ê‚é", airStationTab: mesy += scale20
+			chkbox "ã‚¿ãƒ–ã¾ã§å…¥ã‚Œã‚‹", airStationTab: mesy += scale20
 			airStationTabCId = stat
 			airStationTabCh = objinfo_hwnd(airStationTabCId)
 
 			pos Scale(7), mesy
-			chkbox "‘•”õˆê——", equipmentList: mesy += scale20
+			chkbox "è£…å‚™ä¸€è¦§", equipmentList: mesy += scale20
 			equipmentListCId = stat
 			equipmentListCh = objinfo_hwnd(equipmentListCId)
 			sendmsg equipmentListCh, $F4, $9
@@ -457,7 +457,7 @@
 			mesy += Scale(40)
 
 			pos Scale(7), mesy
-			chkbox "”CˆÓ”ÍˆÍ(ã‹‰ÒŒü‚¯)", userDefList: mesy += scale20
+			chkbox "ä»»æ„ç¯„å›²(ä¸Šç´šè€…å‘ã‘)", userDefList: mesy += scale20
 			userDefListCId = stat
 			userDefListCh = objinfo_hwnd(userDefListCId)
 			sendmsg userDefListCh, $F4, $9
@@ -494,13 +494,13 @@
 			objsize Scale(70), Scale(20)
 
 			pos Scale(22), mesy
-			chkbox "‰ü‘•‰æ–Ê", sceneKaiso
+			chkbox "æ”¹è£…ç”»é¢", sceneKaiso
 			sceneKaisoCId = stat
 			sceneKaisoCh = objinfo_hwnd(sceneKaisoCId)
 			SetWindowLong sceneKaisoCh, -16, $50000009 | $20000
 
 			pos Scale(95), mesy
-			chkbox "”pŠü‰æ–Ê", sceneHaiki: mesy += scale20
+			chkbox "å»ƒæ£„ç”»é¢", sceneHaiki: mesy += scale20
 			sceneHaikiCId = stat
 			sceneHaikiCh = objinfo_hwnd(sceneHaikiCId)
 			sendmsg sceneHaikiCh, $F4, $9
@@ -508,7 +508,7 @@
 			objsize Scale(175), Scale(20)
 
 			pos Scale(22), mesy
-			chkbox "Ú×‚Ü‚Å“ü‚ê‚é", includeDetails: mesy += scale20
+			chkbox "è©³ç´°ã¾ã§å…¥ã‚Œã‚‹", includeDetails: mesy += scale20
 			includeDetailsCId = stat
 			includeDetailsCh = objinfo_hwnd(includeDetailsCId)
 
@@ -538,18 +538,18 @@
 		objsize Scale(175), Scale(20)
 
 		pos Scale(7), mesy
-		chkbox "ƒcƒC[ƒgƒEƒBƒ“ƒhƒE•\¦", enableTweetWindow: mesy += scale20
+		chkbox "ãƒ„ã‚¤ãƒ¼ãƒˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤º", enableTweetWindow: mesy += scale20
 		enableTweetWindowCId = stat
 		enableTweetWindowCh = objinfo_hwnd(enableTweetWindowCId)
 
 		objsize Scale(110-(((yabumiautoupload = 1) & (availableyabumi = 1))*25)), Scale(30)
 		pos 0, mesy
-		button gosub "ì¬", *make
+		button gosub "ä½œæˆ", *make
 		makeBId = stat
 
 		objsize Scale(40), Scale(30)
 		pos Scale(110 - (yabumiautoupload && availableyabumi)*25 ), mesy
-		button gosub "íœ", *listDel
+		button gosub "å‰Šé™¤", *listDel
 		listDelBId = stat
 
 		objsize Scale(25), Scale(30)
@@ -563,7 +563,7 @@
 		yabumiBId = stat
 
 		pos Scale(150), mesy
-		button gosub "ŠJ", *listSaveFOpen
+		button gosub "é–‹", *listSaveFOpen
 		fOpenBId = stat
 
 		mesy += Scale(30)
@@ -582,15 +582,15 @@
 			gsel WND_GRID, 0
 		}
 		width scrsize(0), scrsize(1)
-		title modemes+"ƒ‚[ƒh - •\¦‚³‚¹‚½‚¢ƒZƒ‹‚ÉD&D"
+		title modemes+"ãƒ¢ãƒ¼ãƒ‰ - è¡¨ç¤ºã•ã›ãŸã„ã‚»ãƒ«ã«D&D"
 		gosub *draw
 
-		//ˆê——ì¬ƒ‚[ƒh‚±‚±‚Ü‚Å//ˆê——ì¬ƒ‚[ƒh‚±‚±‚Ü‚Å//ˆê——ì¬ƒ‚[ƒh‚±‚±‚Ü‚Å//ˆê——ì¬ƒ‚[ƒh‚±‚±‚Ü‚Å
+		//ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰ã“ã“ã¾ã§//ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰ã“ã“ã¾ã§//ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰ã“ã“ã¾ã§//ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰ã“ã“ã¾ã§
 	}
 
 
 	if (mode == MODE_OPTION){
-		//ƒIƒvƒVƒ‡ƒ“//ƒIƒvƒVƒ‡ƒ“//ƒIƒvƒVƒ‡ƒ“//ƒIƒvƒVƒ‡ƒ“//ƒIƒvƒVƒ‡ƒ“
+		//ã‚ªãƒ—ã‚·ãƒ§ãƒ³//ã‚ªãƒ—ã‚·ãƒ§ãƒ³//ã‚ªãƒ—ã‚·ãƒ§ãƒ³//ã‚ªãƒ—ã‚·ãƒ§ãƒ³//ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 		mesy = ComBoxH+3
 		syscolor 15: boxf: syscolor 8
 
@@ -601,32 +601,32 @@
 			objsize Scale(350), scale20
 
 			pos scale5, mesy
-			chkbox "í‚ÉƒƒCƒ“ƒEƒBƒ“ƒhƒE‚ğÅ‘O—ñ•\¦", frontrow: mesy += scale20
+			chkbox "å¸¸ã«ãƒ¡ã‚¤ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æœ€å‰åˆ—è¡¨ç¤º", frontrow: mesy += scale20
 			pos scale5, mesy
-			chkbox "ƒƒO‚ğ”ñ•\¦", hidelog: mesy+=scale20
+			chkbox "ãƒ­ã‚°ã‚’éè¡¨ç¤º", hidelog: mesy+=scale20
 			pos scale5, mesy
-			chkbox "ŠO•”ƒ\ƒtƒg˜AŒgƒ{ƒ^ƒ“[UP]‚ğ•\¦‚·‚é(Gyazo‚È‚Ç)", yabumiautoupload: mesy += scale20
+			chkbox "å¤–éƒ¨ã‚½ãƒ•ãƒˆé€£æºãƒœã‚¿ãƒ³[UP]ã‚’è¡¨ç¤ºã™ã‚‹(Gyazoãªã©)", yabumiautoupload: mesy += scale20
 			pos scale5, mesy
-			chkbox "ƒLƒƒƒvƒ`ƒƒ‚ÌƒvƒŒƒrƒ…[‚ğ—LŒø‚É‚·‚é", dispcap: mesy += scale20
+			chkbox "ã‚­ãƒ£ãƒ—ãƒãƒ£ã®ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã‚’æœ‰åŠ¹ã«ã™ã‚‹", dispcap: mesy += scale20
 			pos scale5, mesy
-			chkbox "æ“¾À•W‚ğè“®‚Å“ü—Í‚Å‚«‚é‚æ‚¤‚É‚·‚é", manualpos: mesy += scale20
+			chkbox "å–å¾—åº§æ¨™ã‚’æ‰‹å‹•ã§å…¥åŠ›ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹", manualpos: mesy += scale20
 			pos scale5, mesy
-			chkbox "ì¬‚µ‚½‰æ‘œ‚Éˆê——‚ß‚¢‚©[‚ÌƒNƒŒƒWƒbƒg•\‹L‚ğ“ü‚ê‚é", senden: mesy += scale20
+			chkbox "ä½œæˆã—ãŸç”»åƒã«ä¸€è¦§ã‚ã„ã‹ãƒ¼ã®ã‚¯ãƒ¬ã‚¸ãƒƒãƒˆè¡¨è¨˜ã‚’å…¥ã‚Œã‚‹", senden: mesy += scale20
 			pos scale5, mesy
-			chkbox "‹N“®‚Éƒo[ƒWƒ‡ƒ“ƒ`ƒFƒbƒN‚ğs‚¤", autoVersionCheck: mesy += scale20
+			chkbox "èµ·å‹•æ™‚ã«ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†", autoVersionCheck: mesy += scale20
 			autoVersionCheckCh = objinfo(stat, 2)
 			pos scale5, mesy
-			chkbox "‹N“®‚ÉƒƒCƒ“ƒEƒBƒ“ƒhƒE‚ÌˆÊ’u‚ğ•œŒ³‚·‚é", restoreMainWindowPos: mesy += scale20
+			chkbox "èµ·å‹•æ™‚ã«ãƒ¡ã‚¤ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½®ã‚’å¾©å…ƒã™ã‚‹", restoreMainWindowPos: mesy += scale20
 			pos scale5, mesy
-			chkbox "‹N“®‚ÉƒcƒC[ƒgƒEƒBƒ“ƒhƒE‚ÌˆÊ’u‚ğ•œŒ³‚·‚é", restoreTweetWindowPos: mesy += scale20
+			chkbox "èµ·å‹•æ™‚ã«ãƒ„ã‚¤ãƒ¼ãƒˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½ç½®ã‚’å¾©å…ƒã™ã‚‹", restoreTweetWindowPos: mesy += scale20
 			pos scale5, mesy
-			chkbox "I—¹‚ÉŠm”F‚Ìƒ_ƒCƒAƒƒO‚ğo‚·", confirmCompletion: mesy += scale20
+			chkbox "çµ‚äº†æ™‚ã«ç¢ºèªã®ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’å‡ºã™", confirmCompletion: mesy += scale20
 			pos scale5, mesy
-			chkbox "UIŠg‘å—¦‚ğ©“®‚Åİ’è‚·‚é", autoUIScale: mesy += scale20
+			chkbox "UIæ‹¡å¤§ç‡ã‚’è‡ªå‹•ã§è¨­å®šã™ã‚‹", autoUIScale: mesy += scale20
 			autoUIScaleCh = objinfo(stat, 2)
 
 			pos scale5, mesy
-			mes "UI‚ÌŠg‘å—¦": mesy += scale20
+			mes "UIã®æ‹¡å¤§ç‡": mesy += scale20
 
 			pos 0, mesy
 			winobj "msctls_trackbar32", "",, $50000000 | $1, Scale(300), Scale(30)
@@ -649,45 +649,45 @@
 			objsize Scale(150), scale20
 
 			pos Scale(14), mesy
-			mes "SS•Û‘¶æ"
+			mes "SSä¿å­˜å…ˆ"
 			pos Scale(200), mesy
-			button gosub "•Û‘¶æ•ÏX", *ssSaveDialog: mesy += scale20
+			button gosub "ä¿å­˜å…ˆå¤‰æ›´", *ssSaveDialog: mesy += scale20
 			pos 0, mesy
 			mesbox sssaveDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
 			SSSaveDiriid = stat
 			ShowScrollBar objinfo_hwnd(SSSaveDiriid), SB_VERT, FALSE
 
 			pos Scale(14), mesy
-			mes "ˆê——•Û‘¶æ"
+			mes "ä¸€è¦§ä¿å­˜å…ˆ"
 			pos Scale(200), mesy
-			button gosub "•Û‘¶æ•ÏX", *listSaveDialog: mesy += scale20
+			button gosub "ä¿å­˜å…ˆå¤‰æ›´", *listSaveDialog: mesy += scale20
 			pos 0, mesy
 			mesbox listSaveDir, Scale(350), Scale(45), 5, 259 :mesy += Scale(45)
 			listSaveDirIId = stat
 			ShowScrollBar objinfo_hwnd(listSaveDirIId), SB_VERT, FALSE
 
 			pos Scale(14), mesy
-			mes "˜A‘±ƒLƒƒƒvƒ`ƒƒ•Û‘¶æ"
+			mes "é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£ä¿å­˜å…ˆ"
 			pos Scale(200), mesy
-			button gosub "•Û‘¶æ•ÏX", *intervalshotSaveDialog: mesy += scale20
+			button gosub "ä¿å­˜å…ˆå¤‰æ›´", *intervalshotSaveDialog: mesy += scale20
 			pos 0, mesy
 			mesbox intervalShotDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
 			intervalShotDirIId = stat
 			ShowScrollBar objinfo_hwnd(intervalShotDirIId), SB_VERT, FALSE
 
 			pos Scale(14), mesy
-			mes "”ÍˆÍ‘I‘ğƒLƒƒƒvƒ`ƒƒ•Û‘¶æ"
+			mes "ç¯„å›²é¸æŠã‚­ãƒ£ãƒ—ãƒãƒ£ä¿å­˜å…ˆ"
 			pos Scale(200), mesy
-			button gosub "•Û‘¶æ•ÏX", *selectCapSaveDialog: mesy += scale20
+			button gosub "ä¿å­˜å…ˆå¤‰æ›´", *selectCapSaveDialog: mesy += scale20
 			pos 0, mesy
 			mesbox selectCapSaveDir, Scale(350), Scale(45), 5, 259:mesy += Scale(45)
 			selectCapSaveDirIId = stat
 			ShowScrollBar objinfo_hwnd(selectCapSaveDirIId), SB_VERT, FALSE
 
 			pos Scale(14), mesy
-			mes "ŠO•”ƒ\ƒtƒg‚ÌêŠ"
+			mes "å¤–éƒ¨ã‚½ãƒ•ãƒˆã®å ´æ‰€"
 			pos Scale(200), mesy
-			button gosub "•ÏX", *yabumiUploaderDialog: mesy += scale20
+			button gosub "å¤‰æ›´", *yabumiUploaderDialog: mesy += scale20
 			pos 0, mesy
 			mesbox yabumiDir, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			yabumIId = stat
@@ -703,36 +703,36 @@
 			confirmSaveNameCB = confirmSaveName(SN_CAPTURE)
 
 			pos scale5, mesy
-			chkbox "\"’ñ“Â–¼‚Æi—ß•”Lv‚ğ‰B‚·\"‚Åi—ß•”Lv‚Í‰B‚³‚È‚¢", noHideLv: mesy += scale20
-			objenable stat, 0 //HTML5ˆÚs‚É‚æ‚éb’è‘Îˆ
+			chkbox "\"æç£åã¨å¸ä»¤éƒ¨Lvã‚’éš ã™\"ã§å¸ä»¤éƒ¨Lvã¯éš ã•ãªã„", noHideLv: mesy += scale20
+			objenable stat, 0 //HTML5ç§»è¡Œã«ã‚ˆã‚‹æš«å®šå¯¾å‡¦
 			pos scale5, mesy
-			chkbox "\"’ñ“Â–¼‚Æi—ß•”Lv‚ğ‰B‚·\"‚Å‰B‚·‚Ì‚Å‚Í‚È‚­Ø‚èæ‚é", namecut: mesy += scale20
-			objenable stat, 0 //HTML5ˆÚs‚É‚æ‚éb’è‘Îˆ
+			chkbox "\"æç£åã¨å¸ä»¤éƒ¨Lvã‚’éš ã™\"ã§éš ã™ã®ã§ã¯ãªãåˆ‡ã‚Šå–ã‚‹", namecut: mesy += scale20
+			objenable stat, 0 //HTML5ç§»è¡Œã«ã‚ˆã‚‹æš«å®šå¯¾å‡¦
 			pos scale5, mesy
-			chkbox "\"’ñ“Â–¼‚Æi—ß•”Lv‚ğ‰B‚·\"‚ğƒ‚ƒUƒCƒNˆ—‚É‚·‚é", nameMosaic: mesy += scale20
-			objenable stat, 0 //HTML5ˆÚs‚É‚æ‚éb’è‘Îˆ
+			chkbox "\"æç£åã¨å¸ä»¤éƒ¨Lvã‚’éš ã™\"ã‚’ãƒ¢ã‚¶ã‚¤ã‚¯å‡¦ç†ã«ã™ã‚‹", nameMosaic: mesy += scale20
+			objenable stat, 0 //HTML5ç§»è¡Œã«ã‚ˆã‚‹æš«å®šå¯¾å‡¦
 
 			pos scale5, mesy
-			chkbox "SSƒLƒƒƒvƒ`ƒƒ‚Éˆê——‚ß‚¢‚©[‚Ì‰f‚İ‚ğ–h~‚·‚é", hideOnCapture: mesy += scale20
+			chkbox "SSã‚­ãƒ£ãƒ—ãƒãƒ£æ™‚ã«ä¸€è¦§ã‚ã„ã‹ãƒ¼ã®æ˜ è¾¼ã¿ã‚’é˜²æ­¢ã™ã‚‹", hideOnCapture: mesy += scale20
 
 			pos scale5, mesy
-			chkbox "SS‚ğ‹­§“I‚É“™”{‚ÉƒŠƒTƒCƒY‚·‚é", forceResize: mesy += scale20
+			chkbox "SSã‚’å¼·åˆ¶çš„ã«ç­‰å€ã«ãƒªã‚µã‚¤ã‚ºã™ã‚‹", forceResize: mesy += scale20
 
 			pos scale5, mesy
-			chkbox "‘æˆêŠú‚Æ“¯‚¶ƒTƒCƒY‚Ék¬‚·‚é", pastSize: mesy += scale20
+			chkbox "ç¬¬ä¸€æœŸã¨åŒã˜ã‚µã‚¤ã‚ºã«ç¸®å°ã™ã‚‹", pastSize: mesy += scale20
 
 			pos scale5, mesy
-			chkbox "ˆê——ì¬ƒ‚[ƒh‚Å”wŒi‚ğ•âŠÔ‚·‚é", listMakeInterpolation: mesy += scale20
+			chkbox "ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰ã§èƒŒæ™¯ã‚’è£œé–“ã™ã‚‹", listMakeInterpolation: mesy += scale20
 			pos Scale(5+25), mesy
-			chkbox "’¼Ú˜AŒ‹‚Å‚Í•âŠÔ‚µ‚È‚¢", directLinkDisInterpolation: mesy += scale20
+			chkbox "ç›´æ¥é€£çµã§ã¯è£œé–“ã—ãªã„", directLinkDisInterpolation: mesy += scale20
 
 			pos scale5, mesy
-			chkbox "ƒTƒ|[ƒgƒEƒBƒ“ƒhƒE‚ğg—p‚·‚é", enableSupportWindow: mesy += scale20
+			chkbox "ã‚µãƒãƒ¼ãƒˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½¿ç”¨ã™ã‚‹", enableSupportWindow: mesy += scale20
 			pos Scale(5+25), mesy
-			mes "¦ŠÍ‚±‚ê‚Ì‰æ–Ê‚Ì‰º‚Éo‚é•â•—p‚Ì¬‚³‚¢ƒEƒBƒ“ƒhƒE": mesy += scale20
+			mes "â€»è‰¦ã“ã‚Œã®ç”»é¢ã®ä¸‹ã«å‡ºã‚‹è£œåŠ©ç”¨ã®å°ã•ã„ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦": mesy += scale20
 
 			pos scale5, mesy
-			chkbox "ƒzƒbƒgƒL[‚ÅSS‚ğƒLƒƒƒvƒ`ƒƒ‚·‚é", hotkeycap: mesy += scale20
+			chkbox "ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã§SSã‚’ã‚­ãƒ£ãƒ—ãƒãƒ£ã™ã‚‹", hotkeycap: mesy += scale20
 
 			objsize Scale(50), Scale(24)
 			pos Scale(30), mesy
@@ -746,52 +746,52 @@
 			pos Scale(240), mesy
 			input hotkeycapchar, Scale(20), Scale(24), 1
 			pos Scale(265), mesy+2
-			mes "ƒL[": mesy += Scale(24)
+			mes "ã‚­ãƒ¼": mesy += Scale(24)
 
 			objsize Scale(350), scale20
 			pos scale5, mesy
-			chkbox "–ˆê——ƒ‚[ƒh‚ÅSS‚ğ©“®’Ç‰Á‚·‚é", autoaddCapture: mesy += scale20
+			chkbox "ï¼Šä¸€è¦§ãƒ¢ãƒ¼ãƒ‰ã§SSã‚’è‡ªå‹•è¿½åŠ ã™ã‚‹", autoaddCapture: mesy += scale20
 			pos scale5, mesy
-			chkbox "–©“®’Ç‰Á‚Ìê‡‚ÍSS‚ğ•Û‘¶‚µ‚È‚¢", autoAddNonSave: mesy += scale20
+			chkbox "ï¼Šè‡ªå‹•è¿½åŠ ã®å ´åˆã¯SSã‚’ä¿å­˜ã—ãªã„", autoAddNonSave: mesy += scale20
 			pos scale5, mesy
-			chkbox "jpg‚Å•Û‘¶‚·‚é", jpgsave: mesy += scale20
+			chkbox "jpgã§ä¿å­˜ã™ã‚‹", jpgsave: mesy += scale20
 
 			pos scale5, mesy+2
-			mes "jpg•Û‘¶•i¿"
+			mes "jpgä¿å­˜å“è³ª"
 			pos Scale(155), mesy+2
-			mes "1`100(‘å‚«‚¢‚Ù‚Ç‚‰æ¿)"
+			mes "1ï½100(å¤§ãã„ã»ã©é«˜ç”»è³ª)"
 			pos Scale(100), mesy
 			input jpgquality, Scale(50), Scale(24), 3: mesy += Scale(24)
 			ChgWndowStyle objinfo_hwnd(stat), 0x02
 
 			pos scale5, mesy
-			chkbox "˜A‘±ƒLƒƒƒvƒ`ƒƒ‚ğ—LŒø‚É‚·‚é", enableSeqCap: mesy += scale20
+			chkbox "é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’æœ‰åŠ¹ã«ã™ã‚‹", enableSeqCap: mesy += scale20
 
 			pos scale5, mesy+2
-			mes "˜A‘±ƒLƒƒƒvƒ`ƒƒ‚ÌŠÔŠu"
+			mes "é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£ã®é–“éš”"
 			pos Scale(205), mesy+2
-			mes "x0.1•b (0.1`99.9•b)"
+			mes "x0.1ç§’ (0.1ï½99.9ç§’)"
 			pos Scale(150), mesy
 			input timersec, Scale(50), Scale(24), 3: mesy += Scale(24)
 			ChgWndowStyle objinfo_hwnd(stat), 0x02
 
 			///*
 			pos scale5, mesy
-			mes "˜A‘±ƒLƒƒƒvƒ`ƒƒ‚Ì§ŒÀ": mesy += scale20
+			mes "é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£ã®åˆ¶é™": mesy += scale20
 
 			objsize Scale(44), Scale(24)
 			pos Scale(10), mesy
-			chkbox "–‡”", enableSeqCapLimitNum
+			chkbox "æšæ•°", enableSeqCapLimitNum
 			pos Scale(120), mesy
-			chkbox "ŠÔ", enableSeqCapLimitTime
+			chkbox "æ™‚é–“", enableSeqCapLimitTime
 			pos Scale(235), mesy
-			chkbox "—e—Ê", enableSeqCapLimitSize
+			chkbox "å®¹é‡", enableSeqCapLimitSize
 
 			pos Scale(55), mesy
 			input seqCapLimitNum, Scale(40), Scale(24), 4
 			ChgWndowStyle objinfo_hwnd(stat), 0x02
 			pos Scale(97), mesy+Scale(2)
-			mes "–‡"
+			mes "æš"
 
 			pos Scale(165), mesy
 			input seqCapLimitTimeM, Scale(25), Scale(24), 2
@@ -812,20 +812,20 @@
 			//*/
 
 			pos scale5, mesy+(ComBoxH-scale20)/2
-			mes "•Û‘¶–¼"
+			mes "ä¿å­˜å"
 			pos Scale(55), mesy
 			objsize Scale(140)
-			combox saveNameSel, 100, "SSƒLƒƒƒvƒ`ƒƒ\n”ÍˆÍ‘I‘ğƒLƒƒƒvƒ`ƒƒ\nŠÍ–ºˆê——ƒ‚[ƒh\nU—ª•Ò¬ƒ‚[ƒh\n’¼Ú˜AŒ‹\nŠî’nq‹ó‘à\n‘•”õˆê——\nƒ†[ƒU’è‹`"
+			combox saveNameSel, 100, "SSã‚­ãƒ£ãƒ—ãƒãƒ£\nç¯„å›²é¸æŠã‚­ãƒ£ãƒ—ãƒãƒ£\nè‰¦å¨˜ä¸€è¦§ãƒ¢ãƒ¼ãƒ‰\næ”»ç•¥ç·¨æˆãƒ¢ãƒ¼ãƒ‰\nç›´æ¥é€£çµ\nåŸºåœ°èˆªç©ºéšŠ\nè£…å‚™ä¸€è¦§\nãƒ¦ãƒ¼ã‚¶å®šç¾©"
 			saveNameSelCBh = objinfo_hwnd(stat)
 			pos Scale(180), mesy
 			objsize Scale(50), ComBoxH
 			pos Scale(200), mesy
-			chkbox "Šm”F", confirmSaveNameCB
+			chkbox "ç¢ºèª", confirmSaveNameCB
 			confirmSaveNameCId = stat
 			confirmSaveNameCh = objinfo_hwnd(confirmSaveNameCId)
 			objsize Scale(100), ComBoxH
 			pos Scale(250), mesy
-			button gosub "ƒfƒtƒHƒ‹ƒg", *LoadDefaultSaveName
+			button gosub "ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ", *LoadDefaultSaveName
 			mesy += ComBoxH
 			pos 0, mesy
 			mesbox saveNameSelStr, Scale(350), Scale(45), 5, 259: mesy += Scale(45)
@@ -841,21 +841,21 @@
 
 			objsize Scale(350), scale20
 			pos scale5, mesy
-			chkbox "“®‰æƒLƒƒƒvƒ`ƒƒ‚ğ—LŒø‚É‚·‚é", enableVideoCap: mesy += scale20
+			chkbox "å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’æœ‰åŠ¹ã«ã™ã‚‹", enableVideoCap: mesy += scale20
 			pos scale5, mesy
-			chkbox "˜^‰æ‚ÌCPU•‰‰×‚ğŒyŒ¸‚µ‚½“®‰æƒLƒƒƒvƒ`ƒƒ", lateEncode: mesy += scale20
+			chkbox "éŒ²ç”»æ™‚ã®CPUè² è·ã‚’è»½æ¸›ã—ãŸå‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£", lateEncode: mesy += scale20
 			pos scale5, mesy
-			chkbox "ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ğ”ñ•\¦‚É‚·‚é", videoCapHideCursor: mesy += scale20
+			chkbox "ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã‚’éè¡¨ç¤ºã«ã™ã‚‹", videoCapHideCursor: mesy += scale20
 			pos scale5, mesy
-			chkbox "ƒLƒƒƒvƒ`ƒƒ’†‚Éæ‚è‚İ”ÍˆÍ˜g‚ğ•\¦‚·‚é", videoCapShowFrame: mesy += scale20
+			chkbox "ã‚­ãƒ£ãƒ—ãƒãƒ£ä¸­ã«å–ã‚Šè¾¼ã¿ç¯„å›²æ ã‚’è¡¨ç¤ºã™ã‚‹", videoCapShowFrame: mesy += scale20
 			pos scale5, mesy
-			chkbox "ffmpeg‚ÌƒƒOƒEƒBƒ“ƒhƒE‚ğ•\¦‚·‚é", enableFFMPEGLogWindow: mesy += scale20
+			chkbox "ffmpegã®ãƒ­ã‚°ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤ºã™ã‚‹", enableFFMPEGLogWindow: mesy += scale20
 			pos scale5, mesy
-			chkbox "’†~‚ÉŠm”F‚Ìƒ_ƒCƒAƒƒO‚ğo‚·", confirmCancelVideoCapture: mesy += scale20
+			chkbox "ä¸­æ­¢æ™‚ã«ç¢ºèªã®ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’å‡ºã™", confirmCancelVideoCapture: mesy += scale20
 
 			objsize Scale(174), scale20
 			pos scale5, mesy+Scale(3)
-			chkbox "“®‰æƒLƒƒƒvƒ`ƒƒŠÔ‚Ì§ŒÀ", enableVideoCapLimit
+			chkbox "å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£æ™‚é–“ã®åˆ¶é™", enableVideoCapLimit
 
 			pos Scale(222), mesy
 			mes ":"
@@ -866,16 +866,16 @@
 			input videoCapLimitTimeS, Scale(40),  Scale(24), 2
 			ChgWndowStyle objinfo_hwnd(stat), 0x02
 			pos Scale(275), mesy+Scale(3)
-			mes "[ •ª]:[ •b]"
+			mes "[ åˆ†]:[ ç§’]"
 
 			mesy += Scale(24)
 
 			pos Scale(5), mesy+Scale(2)
-			mes "ƒtƒŒ[ƒ€ƒŒ[ƒg(5`30fps)"
+			mes "ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆ(5ï½30fps)"
 			pos Scale(222), mesy+Scale(2)
 			mes "fps"
 			pos Scale(250), mesy+Scale(2)
-			mes "•W€: 20fps"
+			mes "æ¨™æº–: 20fps"
 			pos Scale(180), mesy
 			input videoCapFR, Scale(40),  Scale(24), 2: mesy += Scale(24)
 			videoCapFRIId = stat
@@ -883,18 +883,18 @@
 
 
 			pos Scale(5), mesy+Scale(2)
-			mes "x264‚Ì•i¿(crf=16`30)"
+			mes "x264ã®å“è³ª(crf=16ï½30)"
 			pos Scale(250), mesy+Scale(2)
-			mes "•W€: crf=22"
+			mes "æ¨™æº–: crf=22"
 			pos Scale(180), mesy
 			input videoCapCRF, Scale(40),  Scale(24), 2: mesy += Scale(24)
 			videoCapCRFIId = stat
 			ChgWndowStyle objinfo_hwnd(stat), 0x02
 
 			pos Scale(5), mesy+Scale(3)
-			mes "x264‚ÌƒvƒŠƒZƒbƒg"
+			mes "x264ã®ãƒ—ãƒªã‚»ãƒƒãƒˆ"
 			pos Scale(250), mesy+Scale(3)
-			mes "•W€: medium"
+			mes "æ¨™æº–: medium"
 			pos Scale(140), mesy
 			objsize Scale(80), Scale(25)
 			combox x264presetNum,, "ultrafast\nveryfast\nfaster\nfast\nmedium\nslow\nslower\nveryslow"
@@ -902,7 +902,7 @@
 
 			objsize Scale(350), Scale(50)
 			pos scale5, mesy
-			mes "g—p‚·‚éƒI[ƒfƒBƒIƒfƒoƒCƒX": mesy += scale20
+			mes "ä½¿ç”¨ã™ã‚‹ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªãƒ‡ãƒã‚¤ã‚¹": mesy += scale20
 			pos 0, mesy
 			listbox audioDeviceListNum, 30, audioDeviceList
 			audioDeviceLBId = stat
@@ -912,10 +912,10 @@
 
 
 			pos scale5, mesy
-			mes "‰¹º": mesy += scale20
+			mes "éŸ³å£°": mesy += scale20
 
 			pos Scale(25+5), mesy+Scale5
-			mes "‰¹—Ê‚Ì’²ß"
+			mes "éŸ³é‡ã®èª¿ç¯€"
 
 			pos Scale(100), mesy
 			winobj "msctls_trackbar32", "",, $50000000 | $1, Scale(175), Scale(30)
@@ -934,32 +934,32 @@
 
 			objsize Scale(70), Scale(20)
 			pos Scale(25+5), mesy
-			chkbox "•W€‰»", audioNormalize: mesy += scale20
+			chkbox "æ¨™æº–åŒ–", audioNormalize: mesy += scale20
 
 
 			objsize Scale(150), scale20
 			pos Scale(14), mesy
-			mes "ffmpeg.exe‚ÌêŠ"
+			mes "ffmpeg.exeã®å ´æ‰€"
 			pos Scale(200), mesy
-			button gosub "•ÏX", *openDialogffmpeg: mesy += scale20
+			button gosub "å¤‰æ›´", *openDialogffmpeg: mesy += scale20
 			pos 0, mesy
 			mesbox ffmpegDir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
 			ffmpegDirIId = stat
 			ShowScrollBar objinfo_hwnd(ffmpegDirIId), SB_VERT, FALSE
 
 			pos Scale(14), mesy
-			mes "“®‰æƒLƒƒƒvƒ`ƒƒ•Û‘¶æ"
+			mes "å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ä¿å­˜å…ˆ"
 			pos Scale(200), mesy
-			button gosub "“®‰æ•Û‘¶æ•ÏX", *videoCapSaveDialog: mesy += scale20
+			button gosub "å‹•ç”»ä¿å­˜å…ˆå¤‰æ›´", *videoCapSaveDialog: mesy += scale20
 			pos 0, mesy
 			mesbox videoCapSaveDir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
 			videoCapSaveDirIId = stat
 			ShowScrollBar objinfo_hwnd(videoCapSaveDirIId), SB_VERT, FALSE
 
 			pos Scale(14), mesy+1
-			mes "“®‰æƒLƒƒƒvƒ`ƒƒ•Û‘¶–¼"
+			mes "å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ä¿å­˜å"
 			pos Scale(200), mesy
-			button gosub "ƒfƒtƒHƒ‹ƒg‚É–ß‚·", *LoadDefaultSaveName: mesy += scale20
+			button gosub "ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™", *LoadDefaultSaveName: mesy += scale20
 			pos 0, mesy
 			mesbox saveName(SN_VIDEO), Scale(350), Scale(45), 5, 259: mesy += Scale(45)
 			saveNameVideoCaptureIId = stat
@@ -969,25 +969,25 @@
 		if (optionMode == OPMODE_TWITTER){
 
 			pos scale5, mesy + Scale(2)
-			mes "Twitter˜AŒg"
+			mes "Twitteré€£æº"
 			objsize Scale(250), Scale(25)
 			pos Scale(100), mesy
-			button gosub "”FØî•ñ‚ğƒŠƒZƒbƒg", *twireset
+			button gosub "èªè¨¼æƒ…å ±ã‚’ãƒªã‚»ãƒƒãƒˆ", *twireset
 			mesy += Scale(25)
 
 			objsize Scale(350), scale20
 
 			pos scale5, mesy
-			chkbox "í‚ÉƒcƒC[ƒgƒEƒBƒ“ƒhƒE‚ğÅ‘O—ñ•\¦", twiFrontRow: mesy += scale20
+			chkbox "å¸¸ã«ãƒ„ã‚¤ãƒ¼ãƒˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’æœ€å‰åˆ—è¡¨ç¤º", twiFrontRow: mesy += scale20
 			pos scale5, mesy
-			chkbox "png‚ğjpg‚É•ÏŠ·‚µ‚Ä“Še‚·‚é", twijpg: mesy += scale20
+			chkbox "pngã‚’jpgã«å¤‰æ›ã—ã¦æŠ•ç¨¿ã™ã‚‹", twijpg: mesy += scale20
 		}
 
 		if (optionMode == OPMODE_OTHER){
 
 			pos 0, mesy
 			objsize Scale(350), scale20
-			button gosub "Amazon‚Ù‚µ‚¢•¨ƒŠƒXƒg", *Amazon: mesy += scale20
+			button gosub "Amazonã»ã—ã„ç‰©ãƒªã‚¹ãƒˆ", *Amazon: mesy += scale20
 			//http://www.amazon.co.jp/wishlist/181BGDSFXZC6M/?sort=priority
 		}
 
@@ -999,7 +999,7 @@
 		mainWndW = Scale(350)
 		mainWndH = mesy
 
-		//ƒIƒvƒVƒ‡ƒ“‚±‚±‚Ü‚Å//ƒIƒvƒVƒ‡ƒ“‚±‚±‚Ü‚Å//ƒIƒvƒVƒ‡ƒ“‚±‚±‚Ü‚Å//ƒIƒvƒVƒ‡ƒ“‚±‚±‚Ü‚Å
+		//ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã“ã“ã¾ã§//ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã“ã“ã¾ã§//ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã“ã“ã¾ã§//ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã“ã“ã¾ã§
 	}
 
 	modePrev = mode
@@ -1082,7 +1082,7 @@ return
 	nidPush
 	gsel WND_MAIN
 
-	//˜A‘±ƒLƒƒƒvƒ`ƒƒ’†‚©“®‰æƒLƒƒƒvƒ`ƒƒ’†‚È‚ç
+	//é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£ä¸­ã‹å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ä¸­ãªã‚‰
 	if ( (seqCapF^1) && (videoCapFlg^1) ){
 
 		objenable comBoxId, 1

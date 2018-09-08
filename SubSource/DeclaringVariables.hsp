@@ -102,11 +102,11 @@
 	mxy_(0) = 0, 0
 	sscapwh = 0, 0
 	seccapf = 0
-	sscapmes = "æ“¾‚·‚é"
+	sscapmes = "å–å¾—ã™ã‚‹"
 	savekind = ".png", ".jpg"
 
-	seqCapMes = "ŠJn"
-	videoCapMes = "ŠJn"
+	seqCapMes = "é–‹å§‹"
+	videoCapMes = "é–‹å§‹"
 
 	luposx = 0
 	luposy = 0
@@ -140,14 +140,14 @@
 	dim scrSizeMin, 2
 	dim scrSizeBase, 2
 
-	//ƒOƒŠƒbƒhƒEƒBƒ“ƒhƒE‚ÌÅ‘åƒTƒCƒY
+	//ã‚°ãƒªãƒƒãƒ‰ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®æœ€å¤§ã‚µã‚¤ã‚º
 	maxScrSize(0) = disInfo(2), disInfo(3)
-	//ƒOƒŠƒbƒhƒEƒBƒ“ƒhƒE‚ÌŠî€ƒTƒCƒY
+	//ã‚°ãƒªãƒƒãƒ‰ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®åŸºæº–ã‚µã‚¤ã‚º
 	scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.667*ginfo_dispy)
-	//Ver0.2.6“_‚Å‚Í–¢g—p
+	//Ver0.2.6æ™‚ç‚¹ã§ã¯æœªä½¿ç”¨
 	scrSizeMin(0) = 300, 100
 
-	//ListModeHNum ŠÍ–ºˆê——ƒ‚[ƒh‚Å‚Ìc•‚Ìw’è
+	//ListModeHNum è‰¦å¨˜ä¸€è¦§ãƒ¢ãƒ¼ãƒ‰ã§ã®ç¸¦å¹…ã®æŒ‡å®š
 	ListModeHNum = 5
 
 	sdim audioDeviceList, 1024*2
@@ -159,7 +159,7 @@
 	x264presetNum = 0
 	x264presetList = "ultrafast\nveryfast\nfaster\nfast\nmedium\nslow\nslower\nveryslow"
 
-	maxSearchLevelStr = "–³‚µ", "A", "S"
+	maxSearchLevelStr = "ç„¡ã—", "A", "S"
 	maxSearchLevelPrev = -1
 
 	captureMethod = CM_BITBLT
@@ -181,24 +181,24 @@
 	sdim defaultSaveName, 1026, SAVENAME_COUNT
 	defaultSaveName(SN_CAPTURE) = "kancolle_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 	defaultSaveName(SN_SELECTCAPTURE) = "selectcap_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	defaultSaveName(SN_LIST) = "ŠÍ–ºˆê——_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	defaultSaveName(SN_FORMATION) = "U—ª•Ò¬_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	defaultSaveName(SN_AIRSTATION) = "Šî’nq‹ó‘à_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	defaultSaveName(SN_DIRECTLINK) = "’¼Ú˜AŒ‹_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	defaultSaveName(SN_EQUIPMENT) = "‘•”õˆê——_<yyyy><MM><dd>-<HH><mm><ss><ms>"
-	defaultSaveName(SN_USERDEF) = "ƒ†[ƒU’è‹`_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_LIST) = "è‰¦å¨˜ä¸€è¦§_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_FORMATION) = "æ”»ç•¥ç·¨æˆ_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_AIRSTATION) = "åŸºåœ°èˆªç©ºéšŠ_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_DIRECTLINK) = "ç›´æ¥é€£çµ_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_EQUIPMENT) = "è£…å‚™ä¸€è¦§_<yyyy><MM><dd>-<HH><mm><ss><ms>"
+	defaultSaveName(SN_USERDEF) = "ãƒ¦ãƒ¼ã‚¶å®šç¾©_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 	defaultSaveName(SN_VIDEO) = "KCVideo_<yyyy><MM><dd>-<HH><mm><ss><ms>"
 
 	sdim saveNameStr, 64, SAVENAME_COUNT
-	saveNameStr(SN_CAPTURE) = "SSƒLƒƒƒvƒ`ƒƒ"
-	saveNameStr(SN_SELECTCAPTURE) = "”ÍˆÍ‘I‘ğƒLƒƒƒvƒ`ƒƒ"
-	saveNameStr(SN_LIST) = "ŠÍ–ºˆê——"
-	saveNameStr(SN_FORMATION) = "U—ª•Ò¬"
-	saveNameStr(SN_AIRSTATION) = "Šî’nq‹ó‘à"
-	saveNameStr(SN_DIRECTLINK) = "’¼Ú˜AŒ‹"
-	saveNameStr(SN_EQUIPMENT) = "‘•”õˆê——"
-	saveNameStr(SN_USERDEF) = "ƒ†[ƒU’è‹`"
-	saveNameStr(SN_VIDEO) = "“®‰æƒLƒƒƒvƒ`ƒƒ"
+	saveNameStr(SN_CAPTURE) = "SSã‚­ãƒ£ãƒ—ãƒãƒ£"
+	saveNameStr(SN_SELECTCAPTURE) = "ç¯„å›²é¸æŠã‚­ãƒ£ãƒ—ãƒãƒ£"
+	saveNameStr(SN_LIST) = "è‰¦å¨˜ä¸€è¦§"
+	saveNameStr(SN_FORMATION) = "æ”»ç•¥ç·¨æˆ"
+	saveNameStr(SN_AIRSTATION) = "åŸºåœ°èˆªç©ºéšŠ"
+	saveNameStr(SN_DIRECTLINK) = "ç›´æ¥é€£çµ"
+	saveNameStr(SN_EQUIPMENT) = "è£…å‚™ä¸€è¦§"
+	saveNameStr(SN_USERDEF) = "ãƒ¦ãƒ¼ã‚¶å®šç¾©"
+	saveNameStr(SN_VIDEO) = "å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£"
 
 return
 
@@ -322,19 +322,19 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 	cutRange(0) = capx, capy, w, h
 	cellratio = 1.0 * cutRange(CR_H) /  cutRange(CR_W)
 
-	//ƒˆ‚È‰æ–Ê‚ÌƒTƒCƒY‚ğŒvZ‚·‚é
+	//ç´”ç²‹ãªç”»é¢ã®ã‚µã‚¤ã‚ºã‚’è¨ˆç®—ã™ã‚‹
 	scrSizeW_ = (cellnum(0)+1) * cutRange(CR_W)
 	scrSizeH_ = (cellnum(1)+1) * cutRange(CR_H)
 
-	//ƒAƒXƒyƒNƒg”ä‚ÌŒvZ
+	//ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ã®è¨ˆç®—
 	AspectRatio = 1.0 * scrSizeH_ / scrSizeW_
 
 	if (AspectRatio >= 1.0){
-		//‰¡’·‚Ì
+		//æ¨ªé•·ã®æ™‚
 		scrSize(0) = round(1.0*scrSizeBase(1) / AspectRatio)
 		scrSize(1) = scrSizeBase(1)
 	} else {
-		//c’·‚Ì
+		//ç¸¦é•·ã®æ™‚
 		scrSize(0) = scrSizeBase(0)
 		scrSize(1) = round(1.0*scrSizeBase(0) * AspectRatio)
 	}

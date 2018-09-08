@@ -88,12 +88,12 @@
 #define SeqCapWriteStatTimerID	105
 
 
-//�����Œ��`�����萔
+//自分で定義した定数
 #enum WND_MAIN = 0
 #enum WND_GRID
-#enum WND_TWITTER		//��19
-#enum WND_OVERLAY		//��19
-#enum WND_MAKE_STRING	//��12
+#enum WND_TWITTER
+#enum WND_OVERLAY
+#enum WND_MAKE_STRING
 #enum WND_GRID_STRING
 #enum WND_HOME_PORT_MOD
 #enum WND_SUPPORT
@@ -114,7 +114,8 @@
 #enum WND_NOIMAGE
 #enum WND_PRINTWND
 #enum WND_KANCOLLEBG
-//�t�H���g�T�C�Y(���g�p)
+
+//フォントサイズ(未使用)
 #const FONT_SIZE_GRID_STRING 25
 #const FONT_SIZE_MANUAL_GETPOS_STRING 30
 #const FONT_SIZE_ALL 13
@@ -142,6 +143,7 @@
 #const OPMODE_TWITTER		3
 #const OPMODE_OTHER			4
 
+//保存名
 #const SAVENAME_COUNT   9
 #const SN_CAPTURE       0
 #const SN_SELECTCAPTURE 1
@@ -166,19 +168,20 @@
 #const WI_HANDLE	0
 #const WI_DC		1
 
-//rect�\���̗p
+//RECT構造体用
 #const CR_X 0
 #const CR_Y 1
 #const CR_W 2
 #const CR_H 3
 
+//ゲームサイズ、拡大率
 #define global BASE_SIZE_W 1200
 #define global BASE_SIZE_H 720
 #define global BASE_ASPECT_RATIO 0.6
 #define global ZOOM_MAX 3
 #define global ZOOM_MIN 0.4
 
-//�����}�N��
+//自作マクロ
 #define ctype MAKELPARAM(%1,%2)	(%1 | %2<<16)
 #define ctype HIWORD(%1) (%1>>16) and 0x0000FFFFF
 #define ctype LOWORD(%1) %1 and 0x0000FFFFF
@@ -202,13 +205,13 @@
 
 #define LogOut(%1) sendmsg hLog, WM_SETTEXT, 0, (%1)
 
-//�E�B���h�E�X�^�C���̕ύX�p�}�N��
+//ウィンドウスタイルの変更用マクロ
 #define ChgWndowStyle(%1, %2) SetWindowLong %1, -16, GetWindowLong(%1, -16) | (%2)
 
 
-//�w�b�_�t�@�C���Œ��`�����Ă�����
+//ヘッダファイルで定義されてるもの
 
-//�E�B���h�E���b�Z�[�W
+//ウィンドウメッセージ
 #const WM_ACTIVATE		0x0006
 #const WM_SETREDRAW		0x000B
 #const WM_SETTEXT		0x000C
@@ -230,30 +233,30 @@
 #const WM_DPICHANGED	0x02E0
 #const WM_HOTKEY		0x0312
 
-//�G�f�B�b�g�R���g���[������
+//エディットコントロール周り
 #define EM_SETSEL		0x00B1
 #define EM_GETLINECOUNT	0x00BA
 
-//���X�g�{�b�N�X����
+//リストボックス周り
 #define LB_ADDSTRING	$00000180
 #define LB_SETCURSEL	$00000186
 #define LB_GETCURSEL	$00000188
 #define LB_GETTEXT		$00000189
 #define LB_GETCOUNT		$0000018B
 
-//���C���[�h�E�B���h�E����
+//レイヤードウィンドウ周り
 #const LWA_COLORKEY		0x0001
 #const LWA_ALPHA		0x0002
 
-//�R���{�{�b�N�X����
+//コンボボックス周り
 #const CB_GETCURSEL		0x0147
 
-//WM_ACTIVATE����
+//WM_ACTIVATE周り
 #const WA_INACTIVE		0
 #const WA_ACTIVE		1
 #const WA_CLICKACTIVE	2
 
-//�z�b�g�L�[����
+//ホットキー周り
 #const MOD_ALT			0x0001
 #const MOD_CONTROL		0x0002
 #const MOD_SHIFT		0x0004
@@ -262,19 +265,19 @@
 //GetWindowLpng
 #const GWL_STYLE		(-16)
 
-//�v���O���X�p�[����
+//プログレスパー周り
 #const PBS_MARQUEE		0x0008
 
 #const PBM_SETMARQUEE	0x040A
 #const PBM_SETRANGE		0x0401
 #const PBM_SETPOS		0x0402
 
-//GetAncestor�p
+//GetAncestor用
 #const GA_PARENT		1
 #const GA_ROO			2
 #const GA_ROOTOWNER		3
 
-//�g���b�N�o�[�R���g���[���p
+//トラックバーコントロール用
 #enum TBM_GETPOS		= 0x0400
 #enum TBM_GETRANGEMIN
 #enum TBM_GETRANGEMAX
@@ -304,7 +307,7 @@
 #enum TBM_SETTHUMBLENGTH
 #enum TBM_GETTHUMBLENGTH
 
-//Color�Ȃ��Ƃ�
+//Colorなんとか
 #const CC_ANYCOLOR				0x00000100
 #const CC_ENABLEHOOK			0x00000010
 #const CC_ENABLETEMPLATE		0x00000020
@@ -315,20 +318,20 @@
 #const CC_SHOWHELP				0x00000008
 #const CC_SOLIDCOLOR			0x00000080
 
-//ShowWindow����
+//ShowWindow周り
 #const SW_HIDE		0x0000
 #const SW_SHOW		0x0005
 #const SW_MINIMIZE	0x0006
 #const SW_SHOWNA	0x0008
 #const SW_RESTORE	0x0009
-//�E�C���h�E�X�^�C��
+//ウインドウスタイル
 #const WS_CHILD		0x40000000
 #const WS_VISIBLE	0x10000000
 
-//�Ȃ񂾂낤
+//なんだろう
 #define HTCAPTION 2
 
-//BitBlt�̃I�v�V����
+//BitBltのオプション
 #const SRCCOPY		0x00CC0020
 #const CAPTUREBLT	0x40000000
 

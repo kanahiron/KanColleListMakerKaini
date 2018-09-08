@@ -1,4 +1,4 @@
-//SSƒLƒƒƒvƒ`ƒƒƒZƒbƒeƒBƒ“ƒO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//SSã‚­ãƒ£ãƒ—ãƒãƒ£ã‚»ãƒƒãƒ†ã‚£ãƒ³ã‚°â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•
 *sssetting
 	nidPush
 
@@ -12,28 +12,28 @@
 	SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
 
 	if autoSearch {
-		//VÀ•WŒŸo===========================================
+		//æ–°åº§æ¨™æ¤œå‡º===========================================
 
 		gsel WND_MAIN
-		LogOut "ŠÍ‚±‚ê‚Ì‰æ–Ê‚Éƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ğd‚Ë‚Ä‚­‚¾‚³‚¢B"
+		LogOut "è‰¦ã“ã‚Œã®ç”»é¢ã«ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã‚’é‡ã­ã¦ãã ã•ã„ã€‚"
 
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
 
 		dim sscap_, 4
-		getKanCollePosAuto WND_TEMP1, sscap_, WND_TEMP2 //–ß‚è’l‚ÍŒ©‚Â‚©‚Á‚½ŒÂ”
+		getKanCollePosAuto WND_TEMP1, sscap_, WND_TEMP2 //æˆ»ã‚Šå€¤ã¯è¦‹ã¤ã‹ã£ãŸå€‹æ•°
 		logmes "getKanCollePosAuto "+stat
 		if (stat){
-			//¬Œ÷
+			//æˆåŠŸ
 
 			if (length2(sscap_) == 1){
-				//Œ©‚Â‚¯‚½ƒEƒBƒ“ƒhƒE‚ª1‚Â‚¾‚Á‚½
+				//è¦‹ã¤ã‘ãŸã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒ1ã¤ã ã£ãŸæ™‚
 				sscap(0) = sscap_(0) + disInfo(0)
 				sscap(1) = sscap_(1) + disInfo(1)
 				sscap(2) = sscap_(2) + disInfo(0)
 				sscap(3) = sscap_(3) + disInfo(1)
 			} else {
-				//Œ©‚Â‚¯‚½ƒEƒBƒ“ƒhƒE•¡”‚¾‚Á‚½ê‡
+				//è¦‹ã¤ã‘ãŸã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¤‡æ•°ã ã£ãŸå ´åˆ
 				repeat length2(sscap_)
 					sscap_(0, cnt) += disInfo(0)
 					sscap_(1, cnt) += disInfo(1)
@@ -45,9 +45,9 @@
 				sscap(2) = 0
 				sscap(3) = 0
 				SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
-				LogOut "•¡”‚Ì‰æ–Ê‚ğŒŸo\n—ÎF‚Ì—Ìˆæ‚ğƒNƒŠƒbƒNI"
+				LogOut "è¤‡æ•°ã®ç”»é¢ã‚’æ¤œå‡º\nç·‘è‰²ã®é ˜åŸŸã‚’ã‚¯ãƒªãƒƒã‚¯ï¼"
 				ShowSelectWindow sscap_, WND_INFO(WND_MAIN, WI_HANDLE)
-				repeat //–{“–‚Í‚±‚ñ‚È‚±‚Æ‚µ‚½‚­‚È‚¢‚ñ‚¾‚¯‚Çc¡Œã‰ü‘P—\’è
+				repeat //æœ¬å½“ã¯ã“ã‚“ãªã“ã¨ã—ãŸããªã„ã‚“ã ã‘ã©â€¦ä»Šå¾Œæ”¹å–„äºˆå®š
 					stick sti,, 0
 					if sti: break
 					if ( sscap(2)-sscap(0) ) != 0: break
@@ -57,7 +57,7 @@
 			}
 
 		} else {
-			//¸”s
+			//å¤±æ•—
 			dim KCRect, 4
 			successflg = FALSE
 
@@ -107,17 +107,17 @@
 			loop
 			gsel WND_OVERLAY, -1
 			gsel WND_IMAGE_BUF2, -1
-		//ƒ}ƒEƒXƒI[ƒo[æ“¾I‚í‚è
+		//ãƒã‚¦ã‚¹ã‚ªãƒ¼ãƒãƒ¼å–å¾—çµ‚ã‚ã‚Š
 		}
-		//VÀ•WŒŸoI‚í‚è
+		//æ–°åº§æ¨™æ¤œå‡ºçµ‚ã‚ã‚Š
 
 	} else {
-		//è“®æ“¾
+		//æ‰‹å‹•å–å¾—
 		buffer WND_TEMP1, disinfo(2), disinfo(3)
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1),SRCCOPY | CAPTUREBLT: redraw
 
 		bgscr WND_TEMP_SCR1, disinfo(2), disinfo(3), 2: SET_WND_INFO
-		font "ƒƒCƒŠƒI", 30
+		font "ãƒ¡ã‚¤ãƒªã‚ª", 30
 
 		gcopy WND_TEMP1, 0, 0, disinfo(2), disinfo(3)
 		color 128,128,128
@@ -125,14 +125,14 @@
 			ycnt = cnt
 			repeat (disinfo(2) / 500)+2
 				pos (cnt*600)+(ycnt*70)-800,ycnt*200
-				mes "ŠÍ‚±‚êˆê——‚ß‚¢‚©[@À•Wæ“¾’†"
+				mes "è‰¦ã“ã‚Œä¸€è¦§ã‚ã„ã‹ãƒ¼ã€€åº§æ¨™å–å¾—ä¸­"
 			loop
 		loop
 		color 255,255,255
 		boxf abs(disinfo(0)), abs(disinfo(1)), abs(disinfo(0))+970, abs(disinfo(1))+45
 		color
 		pos abs(disinfo(0))+5, abs(disinfo(1))+2
-		mes "ŠÍ‚±‚ê‚Ì‰æ–Ê‚ğ•¢‚¤‚æ‚¤‚Éƒhƒ‰ƒbƒO‚µ‚Ä‚­‚¾‚³‚¢ EscƒL[‚ÅƒLƒƒƒ“ƒZƒ‹"
+		mes "è‰¦ã“ã‚Œã®ç”»é¢ã‚’è¦†ã†ã‚ˆã†ã«ãƒ‰ãƒ©ãƒƒã‚°ã—ã¦ãã ã•ã„ Escã‚­ãƒ¼ã§ã‚­ãƒ£ãƒ³ã‚»ãƒ«"
 
 		KanCollePosManual WND_TEMP1, sscap, WND_OVERLAY, WND_TEMP_SCR1
 	}
@@ -176,7 +176,7 @@ return
 	scrPosY = sscap(1)
 	scrPoint(0) = scrPosX, scrPosY
 
-	//ŠÍ‚±‚ê‚Ì‚ ‚éƒEƒBƒ“ƒhƒE‚Ìƒnƒ“ƒhƒ‹
+	//è‰¦ã“ã‚Œã®ã‚ã‚‹ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒãƒ³ãƒ‰ãƒ«
 	hClient = WindowFromPoint(scrPosX, scrPosY)
 
 	cliPoint(0) = scrPoint(0), scrPoint(1)
@@ -300,13 +300,13 @@ return
 
 		switch positionType
 			case PT_ABSOLUTE
-				ssCapMes = strf("%d,%d",@sscap(0),@sscap(1))
+				ssCapMes = strf("%d,%d",ã€€sscap(0),ã€€sscap(1))
 				swbreak
 			case PT_RELATIVE
-				ssCapMes = "’ÇÕ’†S"
+				ssCapMes = "è¿½è·¡ä¸­S"
 				swbreak
 			case PT_WNDABSOLUTE
-				ssCapMes = "’ÇÕ’†A"
+				ssCapMes = "è¿½è·¡ä¸­A"
 				swbreak
 		swend
 		objprm SSCapIId,sscapmes
@@ -326,7 +326,7 @@ return
 		gosub *SSModeControlEnable
 
 		availableCap = TRUE
-		LogOut "À•W‚Ìæ“¾‚É¬Œ÷‚µ‚Ü‚µ‚½"
+		LogOut "åº§æ¨™ã®å–å¾—ã«æˆåŠŸã—ã¾ã—ãŸ"
 		if autoSearch: autoSearchFailureCount = 0
 
 	} else {
@@ -339,13 +339,13 @@ return
 			color
 		}
 		if (mode != MODE_OPTION){
-			sscapmes = "æ“¾‚·‚é"
+			sscapmes = "å–å¾—ã™ã‚‹"
 			objprm SSCapIId, sscapmes
 		}
 
 		if seqcapf: gosub *seqcap
 
-		LogOut "À•W‚ğæ“¾‚Å‚«‚Ü‚¹‚ñ\nÚ×‚Íreadme‚ğ‚¨“Ç‚İ‚­‚¾‚³‚¢"
+		LogOut "åº§æ¨™ã‚’å–å¾—ã§ãã¾ã›ã‚“\nè©³ç´°ã¯readmeã‚’ãŠèª­ã¿ãã ã•ã„"
 
 		gosub *SSModeControlDisable
 
@@ -354,7 +354,7 @@ return
 		if autoSearch{
 			autoSearchFailureCount++
 			if autoSearchFailureCount = 4{
-				dialog "©“®æ“¾‚É˜A‘±‚µ‚Ä¸”s‚µ‚Ü‚µ‚½\nè“®æ“¾‚ÉØ‚è‘Ö‚¦‚à‚¤ˆê“xÀ•Wæ“¾‚µ‚Ü‚·‚©H",2,""
+				dialog "è‡ªå‹•å–å¾—ã«é€£ç¶šã—ã¦å¤±æ•—ã—ã¾ã—ãŸ\næ‰‹å‹•å–å¾—ã«åˆ‡ã‚Šæ›¿ãˆã‚‚ã†ä¸€åº¦åº§æ¨™å–å¾—ã—ã¾ã™ã‹ï¼Ÿ",2,""
 				if stat = 7:autoSearchFailureCount = 0
 			}
 		}
@@ -395,7 +395,7 @@ return
 
 			gosub *ssSettingCheck
 
-			LogOut "ŠÍ‚±‚ê‚Ì‰æ–Ê‚ğŒ©¸‚¢‚Ü‚µ‚½(1)"
+			LogOut "è‰¦ã“ã‚Œã®ç”»é¢ã‚’è¦‹å¤±ã„ã¾ã—ãŸ(1)"
 			nidPop
 			return 1
 		}
@@ -412,7 +412,7 @@ return
 
 				gosub *ssSettingCheck
 
-				LogOut "ŠÍ‚±‚ê‚Ì‰æ–Ê‚ğŒ©¸‚¢‚Ü‚µ‚½(2)"
+				LogOut "è‰¦ã“ã‚Œã®ç”»é¢ã‚’è¦‹å¤±ã„ã¾ã—ãŸ(2)"
 				nidPop
 				return 1
 			}

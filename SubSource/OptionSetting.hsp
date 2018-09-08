@@ -1,8 +1,8 @@
 
-//İ’è\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//è¨­å®šâ€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•â€•
 *listsavedialog
 
-	Open@BrowseFolderMod "ˆê——‚Ì•Û‘¶æ", (dir_exe)
+	Open@BrowseFolderMod "ä¸€è¦§ã®ä¿å­˜å…ˆ", (dir_exe)
 	if ( stat == 1 ){
 		listsavedir = refstr
 		objprm listSaveDirIId, listsavedir
@@ -12,7 +12,7 @@ return
 
 *sssavedialog
 
-	Open@BrowseFolderMod "SSƒLƒƒƒvƒ`ƒƒ‚Ì•Û‘¶æ", (dir_exe+"\\ScreenShots")
+	Open@BrowseFolderMod "SSã‚­ãƒ£ãƒ—ãƒãƒ£ã®ä¿å­˜å…ˆ", (dir_exe+"\\ScreenShots")
 	if ( stat == 1 ){
 		sssavedir = refstr
 		objprm SSSaveDiriid, sssavedir
@@ -22,7 +22,7 @@ return
 
 *intervalshotsavedialog
 
-	Open@BrowseFolderMod "˜A‘±B‰e‚Ì•Û‘¶æ", (dir_exe+"\\ScreenShots")
+	Open@BrowseFolderMod "é€£ç¶šæ’®å½±ã®ä¿å­˜å…ˆ", (dir_exe+"\\ScreenShots")
 	if ( stat == 1 ){
 		intervalShotDir = refstr
 		objprm intervalShotDirIId, intervalShotDir
@@ -32,7 +32,7 @@ return
 
 *videoCapSaveDialog
 
-	Open@BrowseFolderMod "“®‰æƒLƒƒƒvƒ`ƒƒ‚Ì•Û‘¶æ", dir_exe
+	Open@BrowseFolderMod "å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ã®ä¿å­˜å…ˆ", dir_exe
 	if ( stat == 1 ){
 		videoCapSaveDir = refstr
 		objprm videoCapSaveDirIId, videoCapSaveDir
@@ -42,7 +42,7 @@ return
 
 *selectCapSaveDialog
 
-	Open@BrowseFolderMod "”ÍˆÍ‘I‘ğƒLƒƒƒvƒ`ƒƒ‚Ì•Û‘¶æ", dir_exe
+	Open@BrowseFolderMod "ç¯„å›²é¸æŠã‚­ãƒ£ãƒ—ãƒãƒ£ã®ä¿å­˜å…ˆ", dir_exe
 	if ( stat == 1 ){
 		selectCapSaveDir = refstr
 		objprm selectCapSaveDirIId, selectCapSaveDir
@@ -98,7 +98,7 @@ return
 *seqCapSaveFOpen
 
 	if (intervalsavedir == "" || PathIsDirectory(intervalShotDir+"\\"+intervalsavedir) == 0 ){
-		dialog "˜A‘±ƒLƒƒƒvƒ`ƒƒ‚ª‚Ü‚¾ŠJn‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ"
+		dialog "é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£ãŒã¾ã é–‹å§‹ã•ã‚Œã¦ã„ã¾ã›ã‚“"
 	} else {
 		exec intervalShotDir+"\\"+intervalsavedir, 16
 	}
@@ -113,11 +113,11 @@ return
 		if (stat == 0){
 			hotkeyset = 0
 			hotkeystr_temp = ""
-			logmessage = "ƒzƒbƒgƒL[‚Ìİ’è‚É¸”s‚µ‚Ü‚µ‚½"
+			logmessage = "ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã®è¨­å®šã«å¤±æ•—ã—ã¾ã—ãŸ"
 		} else {
 			hotkeyset = 1
 			hotkeystr_temp = hotkeystr
-			logmessage = "ƒzƒbƒgƒL[‚ğİ’è‚µ‚Ü‚µ‚½"
+			logmessage = "ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã‚’è¨­å®šã—ã¾ã—ãŸ"
 		}
 	}
 
@@ -126,7 +126,7 @@ return
 		UnregisterHotKey WND_INFO(WND_MAIN, WI_HANDLE), HOTKEYID
 		hotkeyset = 0
 		hotkeystr_temp = ""
-		logmessage = "ƒzƒbƒgƒL[‚ğ‰ğœ‚µ‚Ü‚µ‚½"
+		logmessage = "ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã‚’è§£é™¤ã—ã¾ã—ãŸ"
 	}
 
 	LogOut logmessage
@@ -162,6 +162,6 @@ return
 return
 
 *Amazon
-	dialog "Amazon‚Ì‚Ù‚µ‚¢•¨ƒŠƒXƒg‚¾‚æI\n‚º‚Ğƒ|ƒ`‚Á‚Äx‰‡‚µ‚Ä‚ËIII", 2, "‚Å‚¿‚Å‚¿"
+	dialog "Amazonã®ã»ã—ã„ç‰©ãƒªã‚¹ãƒˆã ã‚ˆï¼\nãœã²ãƒãƒã£ã¦æ”¯æ´ã—ã¦ã­ï¼ï¼ï¼", 2, "ã§ã¡ã§ã¡"
 	if stat = 6:exec "http://www.amazon.co.jp/wishlist/181BGDSFXZC6M/?sort=priority", 16
 return

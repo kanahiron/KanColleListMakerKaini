@@ -4,13 +4,13 @@
 
 #module getKanCollePosMod
 
-//CompArrays ”z—ñ“¯m‚ğ”äŠr‚µ‘S‚Äˆê’v‚·‚ê‚Î^‚ğ•Ô‚·
+//CompArrays é…åˆ—åŒå£«ã‚’æ¯”è¼ƒã—å…¨ã¦ä¸€è‡´ã™ã‚Œã°çœŸã‚’è¿”ã™
 #define CompArrays(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) != %3(cnt){%1 = FALSE: break}: loop
-//CompArrays2 ”z—ñ“¯m‚ğ”äŠr‚µ‘S‚Äˆê’v‚µ‚È‚¯‚ê‚Î^‚ğ•Ô‚·
+//CompArrays2 é…åˆ—åŒå£«ã‚’æ¯”è¼ƒã—å…¨ã¦ä¸€è‡´ã—ãªã‘ã‚Œã°çœŸã‚’è¿”ã™
 #define CompArrays2(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) == %3(cnt){%1 = FALSE: break}: loop
-//CompArrayAndValue ”z—ñ‚Æ’l‚ğ”äŠr‚µ‘S‚Äˆê’v‚·‚ê‚Î^‚ğ•Ô‚·
+//CompArrayAndValue é…åˆ—ã¨å€¤ã‚’æ¯”è¼ƒã—å…¨ã¦ä¸€è‡´ã™ã‚Œã°çœŸã‚’è¿”ã™
 #define CompArrayAndValue(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) != %3{%1 = FALSE: break}: loop
-//CompArrayAndValue2 ”z—ñ‚Æ’l‚ğ”äŠr‚µ‘S‚Äˆê’v‚µ‚È‚¯‚ê‚Î^‚ğ•Ô‚·
+//CompArrayAndValue2 é…åˆ—ã¨å€¤ã‚’æ¯”è¼ƒã—å…¨ã¦ä¸€è‡´ã—ãªã‘ã‚Œã°çœŸã‚’è¿”ã™
 #define CompArrayAndValue2(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) == %3{%1 = FALSE: break}: loop
 
 #define ctype getCol(%1, %2) vram((%1)+(scrH-1-(%2))*scrW)
@@ -41,53 +41,53 @@
 	sizeX = 0
 	sizeY = 0
 
-	contNum = 0 //Œ©‚Â‚©‚Á‚½‘ÎÛ‚ÌŒÂ”
+	contNum = 0 //è¦‹ã¤ã‹ã£ãŸå¯¾è±¡ã®å€‹æ•°
 
-	//’T‚µo‚·‘ÎÛ‚ÌÅ¬•A‚‚³(MinimumContentWidth)
+	//æ¢ã—å‡ºã™å¯¾è±¡ã®æœ€å°å¹…ã€é«˜ã•(MinimumContentWidth)
 	minContW = int(1.0*BASE_SIZE_W * ZOOM_MIN)
 	minContH = int(1.0*BASE_SIZE_H * ZOOM_MIN)
 
-	//’Tõ•(Å’á‚Å‚à‹éŒ`‚É‘Î‚µ‚Ä3‰ñˆÈã“_‚Å“–‚½‚éŠÔŠu)
+	//æ¢ç´¢å¹…(æœ€ä½ã§ã‚‚çŸ©å½¢ã«å¯¾ã—ã¦3å›ä»¥ä¸Šç‚¹ã§å½“ãŸã‚‹é–“éš”)
 	sachW = (minContW-1)/3
 	sachH = (minContH-1)/3
 
-	//’Tõ‚·‚é‰ñ”
+	//æ¢ç´¢ã™ã‚‹å›æ•°
 	vSachNum = scrW/sachW
 
 	dim vArrUp, vSachNum
 	dim vArrBtm, vSachNum
 	dim posArr, 2 //startX(SX), posX
 	dim posYArr, 1 //startX(SX), posX
-	//posArr‚É“ü‚é”’l‚Í•’Ê‚ÉƒsƒNƒZƒ‹”‚È‚Ì‚Å’ˆÓ
+	//posArrã«å…¥ã‚‹æ•°å€¤ã¯æ™®é€šã«ãƒ”ã‚¯ã‚»ãƒ«æ•°ãªã®ã§æ³¨æ„
 
-	posArrNum = 0 //ŒŸo‚³‚ê‚½ü•ª‚ÌŒÂ”
+	posArrNum = 0 //æ¤œå‡ºã•ã‚ŒãŸç·šåˆ†ã®å€‹æ•°
 
-	//Å‰‚Ì0s–Ú‚ğ‘–¸
+	//æœ€åˆã®0è¡Œç›®ã‚’èµ°æŸ»
 	repeat vSachNum
 		posX = cnt
 		vArrUp(cnt) = getCol( posX*sachW, 0)
 	loop
 
-	//‰¡•ûŒü‚É‹éŒ`‚Ì‹«ŠEü‚ğ’T‚·ƒuƒƒbƒN
+	//æ¨ªæ–¹å‘ã«çŸ©å½¢ã®å¢ƒç•Œç·šã‚’æ¢ã™ãƒ–ãƒ­ãƒƒã‚¯
 	repeat scrH-minContH-1, 1
 		posY = cnt
 
-		//æ“¾‚Æ”äŠr‚ğ“¯‚És‚¤‚½‚ßæ‚Éx=0‚ÌF‚ğ‚ğæ“¾
+		//å–å¾—ã¨æ¯”è¼ƒã‚’åŒæ™‚ã«è¡Œã†ãŸã‚å…ˆã«x=0ã®è‰²ã‚’ã‚’å–å¾—
 		vArrBtm(0) = getCol( 0, posY)
 		sameCnt = 0
-		//0s–Ú‚ğãA1s–Ú‚ğ‰º‘¤‚ÆŒ©‚ÄA”äŠr
+		//0è¡Œç›®ã‚’ä¸Šã€1è¡Œç›®ã‚’ä¸‹å´ã¨è¦‹ã¦ã€æ¯”è¼ƒ
 		repeat vSachNum-1
 			posX = cnt
-			//”z—ñ‚É‡Ÿ‘ã“ü‚µ‚Ä‚¢‚­
+			//é…åˆ—ã«é †æ¬¡ä»£å…¥ã—ã¦ã„ã
 			vArrBtm(cnt+1) = getCol( (posX+1)*sachW, posY)
 
-			//ã‘¤‚ª“¯‚¶F@‚©‚Â ã‘¤‚Æ‰º‘¤‚ÍˆÙ‚È‚éF ‚©‚Â‰º‘¤‚ÍˆÙ‚È‚éF
+			//ä¸Šå´ãŒåŒã˜è‰²ã€€ã‹ã¤ ä¸Šå´ã¨ä¸‹å´ã¯ç•°ãªã‚‹è‰² ã‹ã¤ä¸‹å´ã¯ç•°ãªã‚‹è‰²
 			if ( vArrUp(cnt) == vArrUp(cnt+1) && vArrUp(cnt) != vArrBtm(cnt) && vArrUp(cnt+1) != vArrBtm(cnt+1) && vArrBtm(cnt) != vArrBtm(cnt+1)){
-				//ˆê’v‚µ‚½‚ç‚»‚ÌÀ•W‚ğ¶‘¤À•W(StartX)‚Æ‚µ‚Ä‹L˜^
+				//ä¸€è‡´ã—ãŸã‚‰ãã®åº§æ¨™ã‚’å·¦å´åº§æ¨™(StartX)ã¨ã—ã¦è¨˜éŒ²
 				if (sameCnt == 0): posSX = posX
 				sameCnt++
 			} else {
-				//‚³‚Á‚«‚ÌğŒ‚ª•sˆê’v‚ÌA‘O‚É2‰ñˆÈã˜A‘±‚µ‚Ä‚¢‚½‚ç‹éŒ`‚Ì‹«ŠEü‚Æ”»’f‚µ‹L˜^
+				//ã•ã£ãã®æ¡ä»¶ãŒä¸ä¸€è‡´ã®æ™‚ã€å‰ã«2å›ä»¥ä¸Šé€£ç¶šã—ã¦ã„ãŸã‚‰çŸ©å½¢ã®å¢ƒç•Œç·šã¨åˆ¤æ–­ã—è¨˜éŒ²
 				if (sameCnt >= 2){
 					posYArr(posArrNum) = posY
 					posArr(0, posArrNum) = posSX*sachW, posX*sachW
@@ -96,7 +96,7 @@
 				sameCnt = 0
 			}
 		loop
-		//‰½“x‚à“¯‚¶”z—ñ‚ğQÆ‚·‚é‚Ì‚Í‚à‚Á‚½‚¢‚È‚¢‚Ì‚Å‰º‘¤‚Æ‚µ‚ÄŒ©‚Ä‚¢‚½s‚ğã‘¤‚É‚Á‚Ä‚­‚é
+		//ä½•åº¦ã‚‚åŒã˜é…åˆ—ã‚’å‚ç…§ã™ã‚‹ã®ã¯ã‚‚ã£ãŸã„ãªã„ã®ã§ä¸‹å´ã¨ã—ã¦è¦‹ã¦ã„ãŸè¡Œã‚’ä¸Šå´ã«æŒã£ã¦ãã‚‹
 		memcpy vArrUp, vArrBtm, (4*vSachNum)
 	loop
 
@@ -111,7 +111,7 @@
 	stop
 #endif
 
-	//¶‘¤‚Ìü•ª‚ª—Ìˆæ‚ğ‚Í‚İo‚µ‚Ä‚¢‚½‚É‚»‚ê‚ğˆø‚Á‚ß‚éˆ—
+	//å·¦å´ã®ç·šåˆ†ãŒé ˜åŸŸã‚’ã¯ã¿å‡ºã—ã¦ã„ãŸæ™‚ã«ãã‚Œã‚’å¼•ã£è¾¼ã‚ã‚‹å‡¦ç†
 	repeat posArrNum
 		topCnt = cnt
 		posY = posYArr(cnt)
@@ -146,7 +146,7 @@
 	stop
 #endif
 
-	//ü•ª‚ª’PF‚Ì˜A‘±‚©Šm‚©‚ßA‚»‚¤‚Å‚È‚¢‚È‚çÁ‚·
+	//ç·šåˆ†ãŒå˜è‰²ã®é€£ç¶šã‹ç¢ºã‹ã‚ã€ãã†ã§ãªã„ãªã‚‰æ¶ˆã™
 	posArrNum_ = posArrNum
 	posArrNum = 0
 	repeat posArrNum_
@@ -177,7 +177,7 @@
 	stop
 #endif
 
-	//‹éŒ`‚Ì‹«ŠEü‚©‚ç¶ãÀ•W‚ğZo‚·‚éƒuƒƒbƒN
+	//çŸ©å½¢ã®å¢ƒç•Œç·šã‹ã‚‰å·¦ä¸Šåº§æ¨™ã‚’ç®—å‡ºã™ã‚‹ãƒ–ãƒ­ãƒƒã‚¯
 	posArrNum_ = posArrNum
 	posArrNum = 0
 	repeat posArrNum_
@@ -185,10 +185,10 @@
 		posY = posYArr(cnt)
 		posLeft = posArr(0, cnt)
 		posRight = posArr(1, cnt)
-		repeat limit( sachW, 0, posLeft-1) //’Tõ•‚É‚È‚é‚©¶‘¤‚É‚Ô‚Â‚©‚é‚Ü‚Å
+		repeat limit( sachW, 0, posLeft-1) //æ¢ç´¢å¹…ã«ãªã‚‹ã‹å·¦å´ã«ã¶ã¤ã‹ã‚‹ã¾ã§
 			offsetX =  cnt
 
-			CCCol = getCol( posLeft-offsetX  , posY) //À•W‚»‚Ì‚à‚Ì
+			CCCol = getCol( posLeft-offsetX  , posY) //åº§æ¨™ãã®ã‚‚ã®
 			TCCol = getCol( posLeft-offsetX  , posY-1)
 			TRCol = getCol( posLeft-offsetX+sachW-1, posY-1)
 			LCCol = getCol( posLeft-offsetX-1, posY)
@@ -213,7 +213,7 @@
 	stop
 #endif
 
-	//c•ûŒü‚É’PF‚ª˜A‘±‚µ‚Ä‚¢‚é‚©Šm”F‚·‚éˆ—
+	//ç¸¦æ–¹å‘ã«å˜è‰²ãŒé€£ç¶šã—ã¦ã„ã‚‹ã‹ç¢ºèªã™ã‚‹å‡¦ç†
 	posArrNum_ = posArrNum
 	posArrNum = 0
 	repeat posArrNum_
@@ -281,7 +281,7 @@ return contNum
 
 	if (po(0) < 0 || po(1) < 0):return (success)^1
 
-	//Å¬ŒŸõ•‚Ì­‚µè‘O‚©‚çƒXƒ^[ƒg‚·‚é
+	//æœ€å°æ¤œç´¢å¹…ã®å°‘ã—æ‰‹å‰ã‹ã‚‰ã‚¹ã‚¿ãƒ¼ãƒˆã™ã‚‹
 	repeat _limitX-int(ZOOM_MIN*BASE_SIZE_W)-2, int(ZOOM_MIN*BASE_SIZE_W)-2
 		x = cnt
 		y = int(BASE_ASPECT_RATIO * cnt + 0.5)

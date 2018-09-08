@@ -1,104 +1,104 @@
 /*=======================================================================================================
-                                                                   ‰æ‘œƒtƒ@ƒCƒ‹‚É‚¢‚ë‚¢‚ë‚·‚éƒ‚ƒWƒ…[ƒ‹‰ü
+                                                                   ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã«ã„ã‚ã„ã‚ã™ã‚‹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æ”¹
 
-	–{ƒ‚ƒWƒ…[ƒ‹‚Íˆß“ú˜a‚É‚æ‚Á‚ÄŠJ”­‚³‚ê‚½ImageModule2‚ğkanahiron‚ª‰ü•Ï‚µ‚½ƒ‚ƒWƒ…[ƒ‹‚Å‚·
-	‰ü•Ï‚³‚ê‚½êŠ‚É‘Î‰‚·‚éXV—š—ğ‚âƒhƒLƒ…ƒƒ“ƒg‚Í‘‚¢‚Ä‚¢‚Ü‚¹‚ñ
+	æœ¬ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã¯è¡£æ—¥å’Œæ°ã«ã‚ˆã£ã¦é–‹ç™ºã•ã‚ŒãŸImageModule2ã‚’kanahironãŒæ”¹å¤‰ã—ãŸãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã§ã™
+	æ”¹å¤‰ã•ã‚ŒãŸå ´æ‰€ã«å¯¾å¿œã™ã‚‹æ›´æ–°å±¥æ­´ã‚„ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã¯æ›¸ã„ã¦ã„ã¾ã›ã‚“
 
 
-HSP3.22         2010.12.30  V‹K»ì
-                2011. 1. 4  ’Ç‰ÁFImgM_GetSize JPG-$C4ˆ—
-                        12  ’Ç‰ÁFImgM_SetImageData (b’è)
-                        16  C³FJpeg Endƒ}[ƒJ[–³‚µ‘Îô
-                            »ìFImgF_GdipPicload , ImgM_GdipPicload , ImgM_GdipGzoom
-                            ˆÚAFImgM_CalcFitSize
-                        27  C³FJpeg MarkerSize•s³(NikonD700ƒoƒOH)‘Îô
-HSP3.3ƒÀ1             2.16  C³FJpeg ”j‘¹‰æ‘œ ‘Îô
-HSP3.22(Î)           4. 7  ûŠnB
-                      5. 1  C³FImgM_CalcFitSize 0Š„‚è
-HSP3.3ƒÀ3             7.12  »ìFImgM_GdipJpgsave
-HSP3.3RC1(³®‚Å‚Ä‚é‚Ì‚É)   9.15    »ìFImgM_GdipRotateFlip
-                     11. 3  ã‹Lƒ‚ƒWƒ…[ƒ‹‘S‚Ä”jŠü(Next Stage ‚Ö)
+HSP3.22         2010.12.30  æ–°è¦è£½ä½œ
+                2011. 1. 4  è¿½åŠ ï¼šImgM_GetSize JPG-$C4å‡¦ç†
+                        12  è¿½åŠ ï¼šImgM_SetImageData (æš«å®š)
+                        16  ä¿®æ­£ï¼šJpeg Endãƒãƒ¼ã‚«ãƒ¼ç„¡ã—å¯¾ç­–
+                            è£½ä½œï¼šImgF_GdipPicload , ImgM_GdipPicload , ImgM_GdipGzoom
+                            ç§»æ¤ï¼šImgM_CalcFitSize
+                        27  ä¿®æ­£ï¼šJpeg MarkerSizeä¸æ­£(NikonD700ãƒã‚°ï¼Ÿ)å¯¾ç­–
+HSP3.3Î²1             2.16  ä¿®æ­£ï¼šJpeg ç ´æç”»åƒ å¯¾ç­–
+HSP3.22(ç¬‘)           4. 7  åç©«ã€‚
+                      5. 1  ä¿®æ­£ï¼šImgM_CalcFitSize 0å‰²ã‚Š
+HSP3.3Î²3             7.12  è£½ä½œï¼šImgM_GdipJpgsave
+HSP3.3RC1(æ­£å¼ã§ã¦ã‚‹ã®ã«)   9.15    è£½ä½œï¼šImgM_GdipRotateFlip
+                     11. 3  ä¸Šè¨˜ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å…¨ã¦ç ´æ£„(Next Stage ã¸)
 
-                                                    ‰æ‘œƒtƒ@ƒCƒ‹‘€ìƒ‚ƒWƒ…[ƒ‹‚Q† • ‰æ‘œ‰ÁHƒ‚ƒWƒ…[ƒ‹
-HSP3.3          2011.11. 3  [»ì]ImgF_PicloadEx
-                     12.20  [»ì]ImgF_GetPicSize,ImgF_GetFormat,ImgP_CalcFitSize,ImgP_gzoom
-                2012. 1. 9  [ˆÚA](ƒRƒsƒy)ImgF_jpgsave,ImgP_RotateFlip
-                      1.11  ‘ÌÙAƒ‚ƒWƒ…[ƒ‹‰»
-HSP3.4ƒÀ4       2014. 6. 7  ‚Ó‚½‚Â‚Ìƒ‚ƒWƒ…[ƒ‹‚ğ“‡AHDL‘Î‰
-                `    6.28  [”p~](“à•”ŠÖ”)_ImgF_LoadAndSigCheck Ë ImgF_GetFormat‚É“‡
-                            [»ì](“à•”ŠÖ”)ImgM_CreateH , ImgM_CloseH
-                            [•ÒW]ImgF_PicloadEx ¡‚³‚çMode2A‚â‚ç‚È‚¢‚Á‚ÄŒ¾‚Á‚Ä‚½ƒAƒ‹ƒtƒ@æ“¾
-                            [•ÒW]ImgP_gzoom ÀŒ±’†‚É•ú’u‚µ‚Ä‚½‚ç‚µ‚¢orz
-                            [»ì]ImgP_Memsave , ImgP_FilterPastel/Vivid/Nega/SubAbs , ImgP_grotate
+                                                    ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«æ“ä½œãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ï¼’å· ï¼† ç”»åƒåŠ å·¥ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
+HSP3.3          2011.11. 3  [è£½ä½œ]ImgF_PicloadEx
+                     12.20  [è£½ä½œ]ImgF_GetPicSize,ImgF_GetFormat,ImgP_CalcFitSize,ImgP_gzoom
+                2012. 1. 9  [ç§»æ¤](ã‚³ãƒ”ãƒš)ImgF_jpgsave,ImgP_RotateFlip
+                      1.11  ä½“è£ã€ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åŒ–
+HSP3.4Î²4       2014. 6. 7  ãµãŸã¤ã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’çµ±åˆã€HDLå¯¾å¿œ
+                ï½    6.28  [å»ƒæ­¢](å†…éƒ¨é–¢æ•°)_ImgF_LoadAndSigCheck â‡’ ImgF_GetFormatã«çµ±åˆ
+                            [è£½ä½œ](å†…éƒ¨é–¢æ•°)ImgM_CreateH , ImgM_CloseH
+                            [ç·¨é›†]ImgF_PicloadEx ä»Šã•ã‚‰Mode2ã€ã‚„ã‚‰ãªã„ã£ã¦è¨€ã£ã¦ãŸã‚¢ãƒ«ãƒ•ã‚¡å–å¾—
+                            [ç·¨é›†]ImgP_gzoom å®Ÿé¨“ä¸­ã«æ”¾ç½®ã—ã¦ãŸã‚‰ã—ã„orz
+                            [è£½ä½œ]ImgP_Memsave , ImgP_FilterPastel/Vivid/Nega/SubAbs , ImgP_grotate
 %--------------------------------------------------------------------------------------------------------
-%dll        ;                   HDL(HSP Document Library)‘Î‰ƒtƒ@ƒCƒ‹Bcommon‚É•ú‚è‚Ş‚¾‚¯‚Å‘Î‰‚µ‚Ü‚·B
-˜a‹Ş»ƒ‚ƒWƒ…[ƒ‹
-%port       ;   DLL‚âƒ‚ƒWƒ…[ƒ‹‚ğ•Ê“r—pˆÓ‚·‚é•K—v‚Í‚ ‚è‚Ü‚¹‚ñ‚ªWin32API‚ğg—p‚µ‚Ü‚·‚Ì‚ÅŠÂ‹«‚ÉˆË‘¶‚µ‚Ü‚·B
+%dll        ;                   HDL(HSP Document Library)å¯¾å¿œãƒ•ã‚¡ã‚¤ãƒ«ã€‚commonã«æ”¾ã‚Šè¾¼ã‚€ã ã‘ã§å¯¾å¿œã—ã¾ã™ã€‚
+å’Œè¬¹è£½ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
+%port       ;   DLLã‚„ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’åˆ¥é€”ç”¨æ„ã™ã‚‹å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“ãŒWin32APIã‚’ä½¿ç”¨ã—ã¾ã™ã®ã§ç’°å¢ƒã«ä¾å­˜ã—ã¾ã™ã€‚
 Win
-%author     ;                                       Copyright (C) 2010-2014 ˆß“ú˜a All rights reserved.
-ˆß“ú˜a
-%url        ;                                   ÅV”Å‚Í‚±‚¿‚ç‚©‚çB‚È‚ñ‚©‚Ä‚«‚Æ[WEB Sitew—ª‚µ‚Ä‰¼Bx
+%author     ;                                       Copyright (C) 2010-2014 è¡£æ—¥å’Œ All rights reserved.
+è¡£æ—¥å’Œ
+%url        ;                                   æœ€æ–°ç‰ˆã¯ã“ã¡ã‚‰ã‹ã‚‰ã€‚ãªã‚“ã‹ã¦ãã¨ãƒ¼WEB Siteã€ç•¥ã—ã¦ä»®ã€‚ã€
 http://www.tvg.ne.jp/menyukko/
-%note       ;                                                                           •W€ƒtƒ@ƒCƒ‹–¼
-ImageModule2.hsp ‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚éB
-WinXPˆÈ~‚ÌŠÂ‹«‚ÍGDI+‚ğ•W€‘•”õ‚µ‚Ä‚Ü‚·B
-; com ‚ğg—p‚µ‚Ü‚·B
+%note       ;                                                                           æ¨™æº–ãƒ•ã‚¡ã‚¤ãƒ«å
+ImageModule2.hsp ã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹ã€‚
+WinXPä»¥é™ã®ç’°å¢ƒã¯GDI+ã‚’æ¨™æº–è£…å‚™ã—ã¦ã¾ã™ã€‚
+; com ã‚’ä½¿ç”¨ã—ã¾ã™ã€‚
 %======================================================================================================*/
 
 #ifndef ImageModule2Included
 #define ImageModule2Included
 #module ImageModule2
 
-#uselib "gdiplus"       ; ŸŸ ‚Ó‚Ÿ‚«‚ã‚Ó‚Ÿ‚«‚ã[-. orz
-; Ÿ Gdiplus‚ÌŠî‘b --------------------------------------------------------------------------------------
+#uselib "gdiplus"       ; â—†â—† ãµããã‚…ãµããã‚…ãƒ¼-. orz
+; â—† Gdiplusã®åŸºç¤ --------------------------------------------------------------------------------------
 #func GdiplusStartup    "GdiplusStartup"    var, var, nullptr
-    ; ‚¨‚Ü‚¶‚È‚¢                              [Rtn Token(LoadHandle?)][OpenPrm Struct][Output Struct]
-#func GdiplusShutdown   "GdiplusShutdown"   int                 ; ‚³‚ñ‚«‚ã
-; Ÿ Image‚ÆBitmap‚Æ‚»‚Ìü•Ó ----------------------------------------------------------------------------
-;   [Stream]‚ÍcomobjŒ^‚Å‚àOK!A‚Å‚àcom‚É‚µ‚Ä‚©‚ç“n‚·•K—v‚ª‚ ‚é‚µŠÇ—‚ª–Ê“|‚É‚È‚é‚æB
-;   •Û‘¶ƒpƒ‰ƒ[ƒ^‚Í•s—v‚È‚çnullptr‚©int‚Å’è‹`‚µ‚Ä‚¨‚¯‚Î‚Ì‚¿‚Ì–Ê“|‚Í–³‚¢‚ñ‚¾‚¯‚Ç‚³...
-#func GdipLoadImageFromFile         "GdipLoadImageFromFile"     wstr, var   ; «‚ª‚Å‚«‚½‚Ì‚Å–³—p‚Å‚·B
-#func GdipLoadImageFromStream       "GdipLoadImageFromStream"   int, var    ; [Stream][Rtn Image]
+    ; â—‡ãŠã¾ã˜ãªã„                              [Rtn Token(LoadHandle?)][OpenPrm Struct][Output Struct]
+#func GdiplusShutdown   "GdiplusShutdown"   int                 ; â—‡ã•ã‚“ãã‚…
+; â—† Imageã¨Bitmapã¨ãã®å‘¨è¾º ----------------------------------------------------------------------------
+;   [Stream]ã¯comobjå‹ã§ã‚‚OK!ã€ã§ã‚‚comã«ã—ã¦ã‹ã‚‰æ¸¡ã™å¿…è¦ãŒã‚ã‚‹ã—ç®¡ç†ãŒé¢å€’ã«ãªã‚‹ã‚ˆã€‚
+;   ä¿å­˜ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯ä¸è¦ãªã‚‰nullptrã‹intã§å®šç¾©ã—ã¦ãŠã‘ã°ã®ã¡ã®é¢å€’ã¯ç„¡ã„ã‚“ã ã‘ã©ã•...
+#func GdipLoadImageFromFile         "GdipLoadImageFromFile"     wstr, var   ; â—‡â†“ãŒã§ããŸã®ã§ç„¡ç”¨ã§ã™ã€‚
+#func GdipLoadImageFromStream       "GdipLoadImageFromStream"   int, var    ; â—‡[Stream][Rtn Image]
 #func GdipSaveImageToFile           "GdipSaveImageToFile"       int, wstr, var, var
-    ; ‰æ‘œ‚ğƒtƒ@ƒCƒ‹•Û‘¶                                          [Image][FileName][DataFormat][Param]
+    ; â—‡ç”»åƒã‚’ãƒ•ã‚¡ã‚¤ãƒ«ä¿å­˜                                          [Image][FileName][DataFormat][Param]
 #func GdipSaveImageToStream         "GdipSaveImageToStream"     int, int, var, var
-    ; ‰æ‘œ‚ğ•Ï”‚É•Û‘¶                                            [Image][Stream][DataFormat][Param]
+    ; â—‡ç”»åƒã‚’å¤‰æ•°ã«ä¿å­˜                                            [Image][Stream][DataFormat][Param]
 #func GdipCreateBitmapFromGdiDib    "GdipCreateBitmapFromGdiDib" int, int, var
-    ; HSP‰æ–Ê‚©‚çBitmap»‘¢                    [BitmapInfo(bmscr.6)][BitmapData(bmscr.5)][Rtn Bitmap]
+    ; â—‡HSPç”»é¢ã‹ã‚‰Bitmapè£½é€                     [BitmapInfo(bmscr.6)][BitmapData(bmscr.5)][Rtn Bitmap]
 #func GdipCloneBitmapAreaI          "GdipCloneBitmapAreaI"      int, int, int, int, int, int, var
-    ; Bitmap‚©‚çBitmap»‘¢                    [x][y][Width][Height][PixelFormat][Bitmap][Rtn NewBitmap]
-#func GdipGetImageWidth             "GdipGetImageWidth"         int, var    ; [Image][Rtn Width]
-#func GdipGetImageHeight            "GdipGetImageHeight"        int, var    ; [Image][Rtn Height]
-#func GdipImageRotateFlip           "GdipImageRotateFlip"       int, int    ; [Image][FlipType]
-#func GdipDisposeImage              "GdipDisposeImage"          int         ; Image”jŠü
-; Ÿ ImageAttributes‚Æ‚ä‚©‚¢‚È’‡ŠÔ‚½‚¿ ------------------------------------------------------------------
-#func GdipCreateImageAttributes         "GdipCreateImageAttributes" var     ; [Rtn ImageAttr]
+    ; â—‡Bitmapã‹ã‚‰Bitmapè£½é€                     [x][y][Width][Height][PixelFormat][Bitmap][Rtn NewBitmap]
+#func GdipGetImageWidth             "GdipGetImageWidth"         int, var    ; â—‡[Image][Rtn Width]
+#func GdipGetImageHeight            "GdipGetImageHeight"        int, var    ; â—‡[Image][Rtn Height]
+#func GdipImageRotateFlip           "GdipImageRotateFlip"       int, int    ; â—‡[Image][FlipType]
+#func GdipDisposeImage              "GdipDisposeImage"          int         ; â—‡Imageç ´æ£„
+; â—† ImageAttributesã¨ã‚†ã‹ã„ãªä»²é–“ãŸã¡ ------------------------------------------------------------------
+#func GdipCreateImageAttributes         "GdipCreateImageAttributes" var     ; â—‡[Rtn ImageAttr]
 #func GdipSetImageAttributesColorMatrix "GdipSetImageAttributesColorMatrix" \
                                                                     int, int, int, var, nullptr, nullptr
-    ; Fƒ}ƒgƒŠ [ImageAttr][ColorAdjustType][TRUE=SetCMat/FALSE=ClearCMat][ColorMat][GrayMat][GrayFlag]
+    ; â—‡è‰²ãƒãƒˆãƒª [ImageAttr][ColorAdjustType][TRUE=SetCMat/FALSE=ClearCMat][ColorMat][GrayMat][GrayFlag]
 #func GdipDisposeImageAttributes "GdipDisposeImageAttributes" int
-; Ÿ Matrix‚ÌƒWƒƒƒP‚É‚³‚è‹C‚È‚­‰f‚è‚Ş•–‹w ------------------------------------------------------------
-#func GdipCreateMatrix          "GdipCreateMatrix"      var                 ; ì‚é‚æB
-#func GdipDeleteMatrix          "GdipDeleteMatrix"      int                 ; Ì‚Ä‚é‚æB
+; â—† Matrixã®ã‚¸ãƒ£ã‚±ã«ã•ã‚Šæ°—ãªãæ˜ ã‚Šè¾¼ã‚€é»’å¹•w ------------------------------------------------------------
+#func GdipCreateMatrix          "GdipCreateMatrix"      var                 ; â—‡ä½œã‚‹ã‚ˆã€‚
+#func GdipDeleteMatrix          "GdipDeleteMatrix"      int                 ; â—‡æ¨ã¦ã‚‹ã‚ˆã€‚
 #func GdipTranslateMatrix       "GdipTranslateMatrix"   int, float, float, int
-    ;                                                                     [Matrix][OffsetX][Y][Order]
-#func GdipRotateMatrix          "GdipRotateMatrix"      int, float, int     ; [Matrix][angle][Order]
-; Ÿ Graphics‚ªs‚­ -------------------------------------------------------------------------------------
-#func GdipCreateFromHDC         "GdipCreateFromHDC"     int, var            ; hdc‚©‚çGraphics»‘¢
-#func GdipDeleteGraphics        "GdipDeleteGraphics"    int                 ; Graphics”jŠü
+    ; â—‡                                                                    [Matrix][OffsetX][Y][Order]
+#func GdipRotateMatrix          "GdipRotateMatrix"      int, float, int     ; â—‡[Matrix][angle][Order]
+; â—† GraphicsãŒè¡Œã -------------------------------------------------------------------------------------
+#func GdipCreateFromHDC         "GdipCreateFromHDC"     int, var            ; â—‡hdcã‹ã‚‰Graphicsè£½é€ 
+#func GdipDeleteGraphics        "GdipDeleteGraphics"    int                 ; â—‡Graphicsç ´æ£„
 #func GdipSetWorldTransform     "GdipSetWorldTransform" int, int
-    ; Graphics‚ÉMatrix“K—p                             [Graphics][Matrix]
-; Ÿ Image‚ÆGraphics‚Ì•`‰æŠÖŒW(‚©‚È‚è‚Ç‚ë‚Ç‚ë) ----------------------------------------------------------
-#func GdipDrawImageI            "GdipDrawImageI"        int, int, int, int  ; [Graphics][Image][x][y]
+    ; â—‡Graphicsã«Matrixé©ç”¨                             [Graphics][Matrix]
+; â—† Imageã¨Graphicsã®æç”»é–¢ä¿‚(ã‹ãªã‚Šã©ã‚ã©ã‚) ----------------------------------------------------------
+#func GdipDrawImageI            "GdipDrawImageI"        int, int, int, int  ; â—‡[Graphics][Image][x][y]
 #func GdipDrawImageRectI        "GdipDrawImageRectI"    int, int, int, int, int, int
-    ;                                                         [Graphics][Image][x][y][Width][Height]
+    ; â—‡                                                        [Graphics][Image][x][y][Width][Height]
 #func GdipDrawImageRectRectI    "GdipDrawImageRectRectI" \
                         int, int, int, int, int, int, int, int, int, int, int, int, nullptr, nullptr
-    ; Graphics‚ÉImage‚ğ“]Ê(Šgk•t‚«)
+    ; â—‡Graphicsã«Imageã‚’è»¢å†™(æ‹¡ç¸®ä»˜ã)
                     ; [Graphics][Image][Paste x][y][Width][Height][base x][y][Width][Height]
                     ;                               [UnitPixel][ImageAttributes][Callback][CallbackData]
 
-; ™ ’è”‚È‚Ç
+; â˜† å®šæ•°ãªã©
 ; GdipCloneBitmapAreaI [PixelFormat]
 #const PixelFormatIndexed           $00010000   ; Indexes into a palette
 #const PixelFormatGDI               $00020000   ; Is a GDI-supported format
@@ -116,7 +116,7 @@ WinXPˆÈ~‚ÌŠÂ‹«‚ÍGDI+‚ğ•W€‘•”õ‚µ‚Ä‚Ü‚·B
     ; ColorAdjustTypeDefault, ColorAdjustTypeBitmap, ColorAdjustTypeBrush, ColorAdjustTypePen,
     ; ColorAdjustTypeText, ColorAdjustTypeCount, ColorAdjustTypeAny/*Reserved*/
 
-#uselib "kernel32.dll"      ; ŸŸ ƒJ[ƒlƒ‹
+#uselib "kernel32.dll"      ; â—†â—† ã‚«ãƒ¼ãƒãƒ«
 #func GlobalAlloc   "GlobalAlloc"   int, int
 #func GlobalFree    "GlobalFree"    int
 #func GlobalLock    "GlobalLock"    int
@@ -127,32 +127,32 @@ WinXPˆÈ~‚ÌŠÂ‹«‚ÍGDI+‚ğ•W€‘•”õ‚µ‚Ä‚Ü‚·B
 #define GMEM_SHARE      8192
 #define GHND              66
 
-#uselib "Ole32.dll"         ; ŸŸ ‚¨‚ê
-#func CreateStreamOnHGlobal "CreateStreamOnHGlobal" int, int, var   ; ŸCreate Stream With GlobalMemory
-        ; [GlobalHandle]ƒOƒ[ƒoƒ‹ƒƒ‚ƒŠ‚Ìƒnƒ“ƒhƒ‹(0‚É‚·‚é‚ÆƒXƒgƒŠ[ƒ€‚ª“à•”‚Å—pˆÓ‚µ‚Ä‚­‚ê‚é)
-        ; [DelOnRelease]1‚É‚·‚é‚ÆƒXƒgƒŠ[ƒ€‚Ì‰ğ•ú‚ÉƒOƒ[ƒoƒ‹ƒƒ‚ƒŠ‚àíœ‚µ‚Ä‚­‚ê‚é...‚ç‚µ‚¢
-        ; [Rtn hStream] o—ˆ‚ ‚ª‚Á‚½ƒXƒgƒŠ[ƒ€‚Ìƒnƒ“ƒhƒ‹‚ğó‚¯æ‚é•Ï”
-#func GetHGlobalFromStream  "GetHGlobalFromStream"  int, var  ; ŸƒXƒgƒŠ[ƒ€‚Ì‚ÂƒOƒ[ƒoƒ‹ƒƒ‚ƒŠ‚ğ”qØ
+#uselib "Ole32.dll"         ; â—†â—† ãŠã‚Œ
+#func CreateStreamOnHGlobal "CreateStreamOnHGlobal" int, int, var   ; â—†Create Stream With GlobalMemory
+        ; [GlobalHandle]ã‚°ãƒ­ãƒ¼ãƒãƒ«ãƒ¡ãƒ¢ãƒªã®ãƒãƒ³ãƒ‰ãƒ«(0ã«ã™ã‚‹ã¨ã‚¹ãƒˆãƒªãƒ¼ãƒ ãŒå†…éƒ¨ã§ç”¨æ„ã—ã¦ãã‚Œã‚‹)
+        ; [DelOnRelease]1ã«ã™ã‚‹ã¨ã‚¹ãƒˆãƒªãƒ¼ãƒ ã®è§£æ”¾æ™‚ã«ã‚°ãƒ­ãƒ¼ãƒãƒ«ãƒ¡ãƒ¢ãƒªã‚‚å‰Šé™¤ã—ã¦ãã‚Œã‚‹...ã‚‰ã—ã„
+        ; [Rtn hStream] å‡ºæ¥ã‚ãŒã£ãŸã‚¹ãƒˆãƒªãƒ¼ãƒ ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å—ã‘å–ã‚‹å¤‰æ•°
+#func GetHGlobalFromStream  "GetHGlobalFromStream"  int, var  ; â—†ã‚¹ãƒˆãƒªãƒ¼ãƒ ã®æŒã¤ã‚°ãƒ­ãƒ¼ãƒãƒ«ãƒ¡ãƒ¢ãƒªã‚’æ‹å€Ÿ
 
-#uselib "gdi32.dll"         ; ŸŸ gdi
+#uselib "gdi32.dll"         ; â—†â—† gdi
 #func BitBlt                    "BitBlt"                    int, int, int, int, int, int, int, int, int
 #func SelectObject              "SelectObject"              int, int
 #func CreateCompatibleBitmap    "CreateCompatibleBitmap"    int, int, int
 #func DeleteObject              "DeleteObject"              int
 #func CreateCompatibleDC        "CreateCompatibleDC"        int
 #func DeleteDC                  "DeleteDC"                  int
-; BitBlt‚Ìƒ‚[ƒh
-#define SRCPAINT    $00EE0086       ; ƒRƒs[Œ³‚ÆƒRƒs[æ‚Ìor
-#define SRCCOPY     $00CC0020       ; ’PƒƒRƒs[
-#define PATINVERT   $005A0049       ; ƒuƒ‰ƒV‚Æ‚Ì”r‘¼“I˜_—˜a
-#define DSTINVERT   $00550009       ; ƒlƒKƒ|ƒW”½“]
+; BitBltã®ãƒ¢ãƒ¼ãƒ‰
+#define SRCPAINT    $00EE0086       ; ã‚³ãƒ”ãƒ¼å…ƒã¨ã‚³ãƒ”ãƒ¼å…ˆã®or
+#define SRCCOPY     $00CC0020       ; å˜ç´”ã‚³ãƒ”ãƒ¼
+#define PATINVERT   $005A0049       ; ãƒ–ãƒ©ã‚·ã¨ã®æ’ä»–çš„è«–ç†å’Œ
+#define DSTINVERT   $00550009       ; ãƒã‚¬ãƒã‚¸åè»¢
 
-; GDI+‚ğ’†S‚Éƒnƒ“ƒhƒ‹ŠÇ—‚ª–Ê“|‚È‚Ì‚ÅÀŒ±“I‚É‚¨”C‚¹–½—ß‚ğì‚Á‚Ä‚İ‚é
+; GDI+ã‚’ä¸­å¿ƒã«ãƒãƒ³ãƒ‰ãƒ«ç®¡ç†ãŒé¢å€’ãªã®ã§å®Ÿé¨“çš„ã«ãŠä»»ã›å‘½ä»¤ã‚’ä½œã£ã¦ã¿ã‚‹
 #enum ImchMode_Group01 = 0
-#enum   ImchMode_GdipOpenDll        ; GDI+‚Ì–{‘Ì(©“®‰»‚É”º‚¢–¢g—p‚É)
+#enum   ImchMode_GdipOpenDll        ; GDI+ã®æœ¬ä½“(è‡ªå‹•åŒ–ã«ä¼´ã„æœªä½¿ç”¨ã«)
 #enum ImchMode_Group02
 #enum   ImchMode_ImageFromStream    ; hImage from hStream       hStream
-#enum   ImchMode_ImageFromWindow    ; hImage from CurrentWindow ¦»ì‚Ébbg—pB
+#enum   ImchMode_ImageFromWindow    ; hImage from CurrentWindow â€»è£½ä½œæ™‚ã«bbä½¿ç”¨ã€‚
 #enum   ImchMode_ImageFromImage     ; hImage from hImage        hImage, pos x, pos y, width, height, pf
 #enum ImchMode_Group03
 #enum   ImchMode_GraphicFromWindow  ; hGraphic from CurrentWindow
@@ -161,7 +161,7 @@ WinXPˆÈ~‚ÌŠÂ‹«‚ÍGDI+‚ğ•W€‘•”õ‚µ‚Ä‚Ü‚·B
 #enum ImchMode_Group05
 #enum   ImchMode_ImageAttributes    ; hImageAttr
 #enum ImchMode_Group06
-#enum   ImchMode_StreamWithGM       ; hStream from hGlobal      hGlobal ; ¦‰ğ•ú‚Ébbg—pB
+#enum   ImchMode_StreamWithGM       ; hStream from hGlobal      hGlobal ; â€»è§£æ”¾æ™‚ã«bbä½¿ç”¨ã€‚
 #enum ImchMode_Group07
 #enum   ImchMode_CompBitmapObject   ; hBitmap                   hdc, sizeX, sizeY
 #enum ImchMode_Group08
@@ -170,19 +170,19 @@ WinXPˆÈ~‚ÌŠÂ‹«‚ÍGDI+‚ğ•W€‘•”õ‚µ‚Ä‚Ü‚·B
 #enum   ImchMode_GlobalAlloc        ; hGlobal                   size
 #enum ImchMode_Group10
 
-#define ImchMode_UseGdipFirst   ImchMode_Group02    ; GDI+‚ğg—p‚·‚éÅ‰‚ÌƒOƒ‹[ƒv
-#define ImchMode_UseGdipLast    ImchMode_Group06    ; GDI+‚ğg—p‚µ‚È‚¢Å‰‚ÌƒOƒ‹[ƒv
+#define ImchMode_UseGdipFirst   ImchMode_Group02    ; GDI+ã‚’ä½¿ç”¨ã™ã‚‹æœ€åˆã®ã‚°ãƒ«ãƒ¼ãƒ—
+#define ImchMode_UseGdipLast    ImchMode_Group06    ; GDI+ã‚’ä½¿ç”¨ã—ãªã„æœ€åˆã®ã‚°ãƒ«ãƒ¼ãƒ—
 
-;   ImchHL  ƒnƒ“ƒhƒ‹ƒXƒgƒbƒN—p•ŠÖ”“àg‚¢‰ñ‚µ‚Ì•Ï”(HL:HandleList)
-;       (0)Œ»İ‚ÌƒXƒgƒbƒNƒnƒ“ƒhƒ‹”  (1)GDI+—˜—p‚Ìƒg[ƒNƒ“•‰Šú‰»ƒtƒ‰ƒO  (2`6)©—R—Ìˆæ
-;       (7)CreateH‚Åg‚¤ƒeƒ“ƒ|ƒ‰  (8`‹ô”)ImchMode_xxx  (9`Šï”)handle
+;   ImchHL  ãƒãƒ³ãƒ‰ãƒ«ã‚¹ãƒˆãƒƒã‚¯ç”¨ï¼†é–¢æ•°å†…ä½¿ã„å›ã—ã®å¤‰æ•°(HL:HandleList)
+;       (0)ç¾åœ¨ã®ã‚¹ãƒˆãƒƒã‚¯ãƒãƒ³ãƒ‰ãƒ«æ•°  (1)GDI+åˆ©ç”¨æ™‚ã®ãƒˆãƒ¼ã‚¯ãƒ³ï¼†åˆæœŸåŒ–ãƒ•ãƒ©ã‚°  (2ï½6)è‡ªç”±é ˜åŸŸ
+;       (7)CreateHã§ä½¿ã†ãƒ†ãƒ³ãƒãƒ©  (8ï½å¶æ•°)ImchMode_xxx  (9ï½å¥‡æ•°)handle
 
 #deffunc ImgM_CreateH int m, int a, int b, int c, int d, int e, int f
-    ImchHL(7) = ImchHL * 2 + 9      ; ImchHL‚Ìƒnƒ“ƒhƒ‹Ši”[æ‚ÌIndex     –¢‰Šú‰»•Ï”‘Îô•—‹Lq
-    ImchHL(ImchHL(7) - 1) = m, 0    ; mode‚Æhandle
-    ImchHL ++                       ; ƒXƒgƒbƒN”‚ÌƒJƒEƒ“ƒg
+    ImchHL(7) = ImchHL * 2 + 9      ; ImchHLã®ãƒãƒ³ãƒ‰ãƒ«æ ¼ç´å…ˆã®Index     æœªåˆæœŸåŒ–å¤‰æ•°å¯¾ç­–é¢¨è¨˜è¿°
+    ImchHL(ImchHL(7) - 1) = m, 0    ; modeã¨handle
+    ImchHL ++                       ; ã‚¹ãƒˆãƒƒã‚¯æ•°ã®ã‚«ã‚¦ãƒ³ãƒˆ
 
-    ;if m == ImchMode_GdipOpenDll       ; ©“®‰»‚µ‚Ü‚µ‚½B«
+    ;if m == ImchMode_GdipOpenDll       ; è‡ªå‹•åŒ–ã—ã¾ã—ãŸã€‚â†“
     if (ImchMode_UseGdipFirst < m & m < ImchMode_UseGdipLast) & ImchHL(1) == 0 {    ; GDI+ Startup
         ImchHL(2) = 1, 0, 0, 0  : GdiplusStartup ImchHL(1), ImchHL(2)
     }
@@ -191,13 +191,13 @@ WinXPˆÈ~‚ÌŠÂ‹«‚ÍGDI+‚ğ•W€‘•”õ‚µ‚Ä‚Ü‚·B
         GdipLoadImageFromStream a, ImchHL(ImchHL(7))
     }
     if m == ImchMode_ImageFromWindow {
-        dim bb, 1                               ; ©‚±‚Ìˆ—‚Í“Á‚ÉˆÓ–¡‚Í–³‚¢‚¯‚Ç–¢‰Šú‰»•Ï”‘Îô
+        dim bb, 1                               ; â†ã“ã®å‡¦ç†ã¯ç‰¹ã«æ„å‘³ã¯ç„¡ã„ã‘ã©æœªåˆæœŸåŒ–å¤‰æ•°å¯¾ç­–
         mref bb, 67
         GdipCreateBitmapFromGdiDib bb(6), bb(5), ImchHL(ImchHL(7))
     }
     if m == ImchMode_ImageFromImage {
-        ;   a:Œ³‚ÌhImage  b,c:Ø‚èo‚µˆÊ’uXY  d,e:Ø‚èo‚µƒTƒCƒYWH  f:PixelFormat
-        ImchHL(2) = PixelFormat32bppARGB        ; f‚ÌƒfƒtƒHƒ‹ƒg
+        ;   a:å…ƒã®hImage  b,c:åˆ‡ã‚Šå‡ºã—ä½ç½®XY  d,e:åˆ‡ã‚Šå‡ºã—ã‚µã‚¤ã‚ºWH  f:PixelFormat
+        ImchHL(2) = PixelFormat32bppARGB        ; fã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
         if f  : ImchHL(2) = f
         GdipCloneBitmapAreaI b, c, d, e, ImchHL(2), a, ImchHL(ImchHL(7))
     }
@@ -208,30 +208,30 @@ WinXPˆÈ~‚ÌŠÂ‹«‚ÍGDI+‚ğ•W€‘•”õ‚µ‚Ä‚Ü‚·B
         GdipCreateMatrix ImchHL(ImchHL(7))
     }
     if m == ImchMode_GlobalAlloc {
-        ;   a:Šm•Û‚·‚éƒƒ‚ƒŠƒTƒCƒY
+        ;   a:ç¢ºä¿ã™ã‚‹ãƒ¡ãƒ¢ãƒªã‚µã‚¤ã‚º
         GlobalAlloc GMEM_ZEROINIT | GMEM_SHARE, a  : ImchHL(ImchHL(7)) = stat
     }
     if m == ImchMode_StreamWithGM {
-        ;   a:ƒOƒ[ƒoƒ‹ƒƒ‚ƒŠ‚Ìƒnƒ“ƒhƒ‹
-        if a == 0  : CreateStreamOnHGlobal 0, 1, ImchHL(ImchHL(7))      ; GMw’è‚È‚µ
-        if a != 0  : CreateStreamOnHGlobal a, 0, ImchHL(ImchHL(7))      ; GMw’è‚ ‚è
+        ;   a:ã‚°ãƒ­ãƒ¼ãƒãƒ«ãƒ¡ãƒ¢ãƒªã®ãƒãƒ³ãƒ‰ãƒ«
+        if a == 0  : CreateStreamOnHGlobal 0, 1, ImchHL(ImchHL(7))      ; GMæŒ‡å®šãªã—
+        if a != 0  : CreateStreamOnHGlobal a, 0, ImchHL(ImchHL(7))      ; GMæŒ‡å®šã‚ã‚Š
     }
     if m == ImchMode_ImageAttributes {
         GdipCreateImageAttributes ImchHL(ImchHL(7))
     }
     if m == ImchMode_CompBitmapObject {
-        ;   a:Œ³‚É‚·‚éhDC  b,c:SizeWH
+        ;   a:å…ƒã«ã™ã‚‹hDC  b,c:SizeWH
         CreateCompatibleBitmap a, b, c  : ImchHL(ImchHL(7)) = stat
     }
     if m == ImchMode_CompDC {
-        ;   a:Œ³‚É‚·‚éhDC
+        ;   a:å…ƒã«ã™ã‚‹hDC
         CreateCompatibleDC a  : ImchHL(ImchHL(7)) = stat    ; a:hDC
     }
     return ImchHL(ImchHL(7))
 
 #deffunc ImgM_CloseH
     repeat ImchHL
-        memcpy ImchHL(3), ImchHL((ImchHL - cnt - 1) * 2 + 8), 8     ; ƒ^[ƒQƒbƒg
+        memcpy ImchHL(3), ImchHL((ImchHL - cnt - 1) * 2 + 8), 8     ; ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ
 
         ;if ImchMode_Group01<ImchHL(3) & ImchHL(3)<ImchMode_Group02  : GdiplusShutdown   ImchHL(4)
         if ImchMode_Group02<ImchHL(3) & ImchHL(3)<ImchMode_Group03  : GdipDisposeImage   ImchHL(4)
@@ -242,43 +242,43 @@ WinXPˆÈ~‚ÌŠÂ‹«‚ÍGDI+‚ğ•W€‘•”õ‚µ‚Ä‚Ü‚·B
         }
         if ImchMode_Group06<ImchHL(3) & ImchHL(3)<ImchMode_Group07 {
             newcom bb, , -1, ImchHL(4)  : delcom bb
-            ; ƒXƒgƒŠ[ƒ€‚Ì”jŠü‚ÍƒRƒ€‰»‚µ‚Ä‚©‚ç‚»‚ÌƒRƒ€‚ğ”jŠü‚·‚é‚Æ‚¢‚¤ˆ—
-            ; GM‚ğŠJ•ú‚µ‚½‚çˆê‚ÉƒXƒgƒŠ[ƒ€‚à”jŠü‚³‚ê‚é‚Á‚Äà–¾‚·‚éƒTƒCƒg‚ª‚ ‚Á‚½‚ñ‚¾‚¯‚Ç‰R‚¾‚æ‚Ëorz
+            ; ã‚¹ãƒˆãƒªãƒ¼ãƒ ã®ç ´æ£„ã¯ã‚³ãƒ åŒ–ã—ã¦ã‹ã‚‰ãã®ã‚³ãƒ ã‚’ç ´æ£„ã™ã‚‹ã¨ã„ã†å‡¦ç†
+            ; GMã‚’é–‹æ”¾ã—ãŸã‚‰ä¸€ç·’ã«ã‚¹ãƒˆãƒªãƒ¼ãƒ ã‚‚ç ´æ£„ã•ã‚Œã‚‹ã£ã¦èª¬æ˜ã™ã‚‹ã‚µã‚¤ãƒˆãŒã‚ã£ãŸã‚“ã ã‘ã©å˜˜ã ã‚ˆã­orz
         }
         if ImchMode_Group07<ImchHL(3) & ImchHL(3)<ImchMode_Group08  : DeleteObject  ImchHL(4)
         if ImchMode_Group08<ImchHL(3) & ImchHL(3)<ImchMode_Group09  : DeleteDC      ImchHL(4)
         if ImchMode_Group09<ImchHL(3) & ImchHL(3)<ImchMode_Group10  : GlobalFree    ImchHL(4)
     loop
 
-    if ImchHL(1)  : GdiplusShutdown ImchHL(1)       ; GDI+‚ğŠJ‚¢‚Ä‚¢‚½‚È‚çB
+    if ImchHL(1)  : GdiplusShutdown ImchHL(1)       ; GDI+ã‚’é–‹ã„ã¦ã„ãŸãªã‚‰ã€‚
     ImchHL = 0, 0
     return
 
 /*=======================================================================================================
-%index                                                                          ; ‹Œ "ImageFileModule"
+%index                                                                          ; æ—§ "ImageFileModule"
 %group
-‰æ‘œŠÖ˜Aƒ‚ƒWƒ…[ƒ‹(ƒtƒ@ƒCƒ‹‘€ì‚Q†)
+ç”»åƒé–¢é€£ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«(ãƒ•ã‚¡ã‚¤ãƒ«æ“ä½œï¼’å·)
 %--------------------------------------------------------------------------------------------------------
 %index
 ImgF_GetFormat
-‰æ‘œƒtƒ@ƒCƒ‹‰ğÍ(‰æ‘œƒtƒH[ƒ}ƒbƒg)
+ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«è§£æ(ç”»åƒãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ)
 %prm
 (Path)
-Path [•¶š]ƒtƒ@ƒCƒ‹–¼(ƒpƒX)
+Path [æ–‡å­—]ãƒ•ã‚¡ã‚¤ãƒ«å(ãƒ‘ã‚¹)
 %inst
-Path‚Åw’è‚µ‚½ƒtƒ@ƒCƒ‹‚ğ•ªÍ‚µ‚Ä‚»‚Ì‹L˜^Œ`®‚ğ•Ô‚µ‚Ü‚·B‚Ü‚½memfile–½—ß‚É‚æ‚é‹[—ƒtƒ@ƒCƒ‹‚É‚à‘Î‰‚µ‚Ä‚¢‚Ü‚·B
-‚±‚ÌŠÖ”‚Ì–ß‚è’l‚ÍˆÈ‰º‚Ì‚¢‚¸‚ê‚©‚Å‚·B
-    0 : •s–¾‚ÈƒtƒH[ƒ}ƒbƒg
+Pathã§æŒ‡å®šã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ã‚’åˆ†æã—ã¦ãã®è¨˜éŒ²å½¢å¼ã‚’è¿”ã—ã¾ã™ã€‚ã¾ãŸmemfileå‘½ä»¤ã«ã‚ˆã‚‹æ“¬ä¼¼ãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚‚å¯¾å¿œã—ã¦ã„ã¾ã™ã€‚
+ã“ã®é–¢æ•°ã®æˆ»ã‚Šå€¤ã¯ä»¥ä¸‹ã®ã„ãšã‚Œã‹ã§ã™ã€‚
+    0 : ä¸æ˜ãªãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
     1 : BITMAP
     2 : JPEG
     3 : GIF
     4 : PNG
 %------------------------------------------------------------------------------------------------------*/
 #defcfunc ImgF_GetFormat str n
-    ; ‚±‚ÌŠÖ”‚Í•›Y•¨‚Æ‚µ‚Ä strsize ‚Éƒtƒ@ƒCƒ‹ƒTƒCƒY‚ğ•Ô‚·
-    ; ƒ‚ƒWƒ…[ƒ‹“à•Ï”‚Ì sb ‚Éƒtƒ@ƒCƒ‹ƒf[ƒ^‘S•”‚ğæ“¾‚·‚é(ImgF_GetPicSize‚Åg‚¤‚½‚ß)
-    exist n  : if strsize < 0  : return 0               ; ‚°‚°‚°(ƒtƒ@ƒCƒ‹‚È‚¢‚æB)
-    sb = "(C)ˆß“ú˜a"  : memexpand sb, strsize           ; sb‚Éƒtƒ@ƒCƒ‹ƒf[ƒ^‚ğ‘Sƒ[ƒh
+    ; ã“ã®é–¢æ•°ã¯å‰¯ç”£ç‰©ã¨ã—ã¦ strsize ã«ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã‚’è¿”ã™
+    ; ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å†…å¤‰æ•°ã® sb ã«ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ãƒ¼ã‚¿å…¨éƒ¨ã‚’å–å¾—ã™ã‚‹(ImgF_GetPicSizeã§ä½¿ã†ãŸã‚)
+    exist n  : if strsize < 0  : return 0               ; ã’ã’ã’(ãƒ•ã‚¡ã‚¤ãƒ«ãªã„ã‚ˆã€‚)
+    sb = "(C)è¡£æ—¥å’Œ"  : memexpand sb, strsize           ; sbã«ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å…¨ãƒ­ãƒ¼ãƒ‰
     bload n, sb, strsize
     if wpeek(sb, 0) == $4D42        : return 1          ; BITMAP    $42,$4D = "BM"
     if wpeek(sb, 0) == $D8FF        : return 2          ; JPEG      $FF,$D8 = "  "
@@ -290,54 +290,54 @@ Path‚Åw’è‚µ‚½ƒtƒ@ƒCƒ‹‚ğ•ªÍ‚µ‚Ä‚»‚Ì‹L˜^Œ`®‚ğ•Ô‚µ‚Ü‚·B‚Ü‚½memfile–½—ß‚É‚æ‚é‹[
 /*-------------------------------------------------------------------------------------------------------
 %index
 ImgF_GetPicSize
-‰æ‘œƒtƒ@ƒCƒ‹‰ğÍ(‰æ‘œ‚Ì‘å‚«‚³)
+ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«è§£æ(ç”»åƒã®å¤§ãã•)
 %prm
 Path, SizeX, SizeY
-Path  [•¶š]ƒtƒ@ƒCƒ‹–¼(ƒpƒX)
-SizeX [•Ï”]‰æ‘œ•(X)‚ª‘ã“ü‚³‚ê‚é•Ï”(int)
-SizeY [•Ï”]‰æ‘œ‚(Y)‚ª‘ã“ü‚³‚ê‚é•Ï”(int)
+Path  [æ–‡å­—]ãƒ•ã‚¡ã‚¤ãƒ«å(ãƒ‘ã‚¹)
+SizeX [å¤‰æ•°]ç”»åƒå¹…(X)ãŒä»£å…¥ã•ã‚Œã‚‹å¤‰æ•°(int)
+SizeY [å¤‰æ•°]ç”»åƒé«˜(Y)ãŒä»£å…¥ã•ã‚Œã‚‹å¤‰æ•°(int)
 %inst
-Path‚Åw’è‚µ‚½ƒtƒ@ƒCƒ‹‚ğ•ªÍ‚µ‚Ä‚»‚Ì‰æ‘œ‚ğƒ[ƒh‚µ‚½‚ÌƒCƒ[ƒWƒTƒCƒY‚ğæ“¾‚µ‚Ü‚·B‚Ü‚½memfile–½—ß‚É‚æ‚é‹[—ƒtƒ@ƒCƒ‹‚É‚à‘Î‰‚µ‚Ä‚¢‚Ü‚·B
-•ªÍ‰Â”\‚ÈŒ`®‚ÍBMP,JPG,GIF,PNG‚Ì‚¢‚¸‚ê‚©‚ÅA–½—ßÀsŒã‚ÌƒVƒXƒeƒ€•Ï”stat‚É‚Íƒtƒ@ƒCƒ‹Œ`®‚ğ¦‚·’l‚ª‘ã“ü‚³‚ê‚Ü‚·B
+Pathã§æŒ‡å®šã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ã‚’åˆ†æã—ã¦ãã®ç”»åƒã‚’ãƒ­ãƒ¼ãƒ‰ã—ãŸæ™‚ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚µã‚¤ã‚ºã‚’å–å¾—ã—ã¾ã™ã€‚ã¾ãŸmemfileå‘½ä»¤ã«ã‚ˆã‚‹æ“¬ä¼¼ãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚‚å¯¾å¿œã—ã¦ã„ã¾ã™ã€‚
+åˆ†æå¯èƒ½ãªå½¢å¼ã¯BMP,JPG,GIF,PNGã®ã„ãšã‚Œã‹ã§ã€å‘½ä»¤å®Ÿè¡Œå¾Œã®ã‚·ã‚¹ãƒ†ãƒ å¤‰æ•°statã«ã¯ãƒ•ã‚¡ã‚¤ãƒ«å½¢å¼ã‚’ç¤ºã™å€¤ãŒä»£å…¥ã•ã‚Œã¾ã™ã€‚
 %------------------------------------------------------------------------------------------------------*/
 #deffunc ImgF_GetPicSize str n, var x, var y
-    x = 0  : y = 0                      ; ‚Æ‚è‚ ‚¦‚¸‚Ê‚é‚ÛBc‚¶‚á‚È‚­‚Ä0‚ğ‘ã“ü
-    ib = ImgF_GetFormat(n)              ; ƒtƒH[ƒ}ƒbƒgƒ^ƒCƒv
-    ib(1) = strsize                     ; ƒf[ƒ^ƒTƒCƒY
+    x = 0  : y = 0                      ; ã¨ã‚Šã‚ãˆãšã¬ã‚‹ã½ã€‚â€¦ã˜ã‚ƒãªãã¦0ã‚’ä»£å…¥
+    ib = ImgF_GetFormat(n)              ; ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚¿ã‚¤ãƒ—
+    ib(1) = strsize                     ; ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 
-    if ib == 1 {                        ; ƒrƒbƒgƒ}ƒbƒvƒtƒH[ƒ}ƒbƒg
-        if lpeek(sb, 14) == 40  : x = lpeek(sb, 18)  : y =lpeek(sb, 22)     ; WindowsŒ`®
+    if ib == 1 {                        ; ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+        if lpeek(sb, 14) == 40  : x = lpeek(sb, 18)  : y =lpeek(sb, 22)     ; Windowså½¢å¼
     }
 
-    if ib == 2 {                        ; JPEGƒtƒH[ƒ}ƒbƒg
+    if ib == 2 {                        ; JPEGãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
         ib(2) = 2                           ; offset
         repeat
-            if ib(1) <= ib(2)  : break          ; ƒAƒvƒŠƒNƒ‰ƒbƒVƒƒ[(”j‘¹ƒtƒ@ƒCƒ‹)‘Îô
-            if peek(sb, ib(2)) != $FF {         ; NikonƒNƒ‰ƒbƒVƒƒ[‘Îô
-                ib(2) ++                            ; nicoD700nico‚ÌƒoƒO(H)‚ÅƒAƒvƒŠ‚ª‘Â‚¿‚½‚å...‰ñ”ğô
-                continue                            ; ‚Æ‚µ‚ÄMarker‚ç‚µ‚«‚Æ‚±‚ë‚Ü‚ÅƒXƒLƒbƒv
+            if ib(1) <= ib(2)  : break          ; ã‚¢ãƒ—ãƒªã‚¯ãƒ©ãƒƒã‚·ãƒ£ãƒ¼(ç ´æãƒ•ã‚¡ã‚¤ãƒ«)å¯¾ç­–
+            if peek(sb, ib(2)) != $FF {         ; Nikonã‚¯ãƒ©ãƒƒã‚·ãƒ£ãƒ¼å¯¾ç­–
+                ib(2) ++                            ; nicoD700nicoã®ãƒã‚°(ï¼Ÿ)ã§ã‚¢ãƒ—ãƒªãŒå •ã¡ãŸã‚‡...å›é¿ç­–
+                continue                            ; ã¨ã—ã¦Markerã‚‰ã—ãã¨ã“ã‚ã¾ã§ã‚¹ã‚­ãƒƒãƒ—
             }
 
             ib(3) = peek(sb, ib(2) + 1)
-            if ib(3) == $D9  : break            ; ƒtƒ@ƒCƒ‹I—¹‚Ì‚¨’m‚ç‚¹
+            if ib(3) == $D9  : break            ; ãƒ•ã‚¡ã‚¤ãƒ«çµ‚äº†ã®ãŠçŸ¥ã‚‰ã›
             if ib(3) == $C0 | ib(3) == $C2 {
-                                        ; –Ú“I’n”­Œ© (ƒnƒtƒ}ƒ“‚Ìƒx[ƒXƒ‰ƒCƒ“‚©ƒvƒƒOƒŒƒbƒVƒu‚ÌMarker)
-                ib(4) = wpeek(sb, ib(2) + 7), wpeek(sb, ib(2) + 5)  ;ƒgƒ‰ƒbƒv”­“®(‚‚³‚ªæ‚¾‚Á‚½orz)
+                                        ; ç›®çš„åœ°ç™ºè¦‹ (ãƒãƒ•ãƒãƒ³ã®ãƒ™ãƒ¼ã‚¹ãƒ©ã‚¤ãƒ³ã‹ãƒ—ãƒ­ã‚°ãƒ¬ãƒƒã‚·ãƒ–ã®Marker)
+                ib(4) = wpeek(sb, ib(2) + 7), wpeek(sb, ib(2) + 5)  ;ãƒˆãƒ©ãƒƒãƒ—ç™ºå‹•(é«˜ã•ãŒå…ˆã ã£ãŸorz)
                 x = (ib(4) >> 8 & $00FF) | (ib(4) << 8 & $FF00)
                 y = (ib(5) >> 8 & $00FF) | (ib(5) << 8 & $FF00)
                 break
             }
-            ib(4) = wpeek(sb, ib(2) + 2)        ; ‚»‚êˆÈŠO‚Ì‰½‚©‚Ìê‡
+            ib(4) = wpeek(sb, ib(2) + 2)        ; ãã‚Œä»¥å¤–ã®ä½•ã‹ã®å ´åˆ
             ib(5) = (ib(4) >> 8 & $00FF) | (ib(4) << 8 & $FF00)
             ib(2) += ib(5) + 2
         loop
     }
 
-    if ib == 3  : x = wpeek(sb, 6)  : y = wpeek(sb, 8)  ; GIFƒtƒH[ƒ}ƒbƒg
+    if ib == 3  : x = wpeek(sb, 6)  : y = wpeek(sb, 8)  ; GIFãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 
-    if ib == 4 {                        ; PNGƒtƒH[ƒ}ƒbƒg
-        if lpeek(sb, 12) == $52444849 {     ; $49,$48,$44,$52 = "IHDR"  ËIHDRƒwƒbƒ_[‚Å‚ ‚Á‚Ä‚µ‚©‚é‚×‚«
-            ib(2) = lpeek(sb, 16), lpeek(sb, 20)    ; ƒrƒbƒOƒGƒ“ƒfƒBƒAƒ“‚¾‚È‚ñ‚Äorz...
+    if ib == 4 {                        ; PNGãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+        if lpeek(sb, 12) == $52444849 {     ; $49,$48,$44,$52 = "IHDR"  â‡’IHDRãƒ˜ãƒƒãƒ€ãƒ¼ã§ã‚ã£ã¦ã—ã‹ã‚‹ã¹ã
+            ib(2) = lpeek(sb, 16), lpeek(sb, 20)    ; ãƒ“ãƒƒã‚°ã‚¨ãƒ³ãƒ‡ã‚£ã‚¢ãƒ³ã ãªã‚“ã¦orz...
             x = (ib(2)>>24&$FF) | (ib(2)>>8&$FF00) | (ib(2)<<8&$FF0000) | (ib(2)<<24&$FF000000)
             y = (ib(3)>>24&$FF) | (ib(3)>>8&$FF00) | (ib(3)<<8&$FF0000) | (ib(3)<<24&$FF000000)
         }
@@ -347,123 +347,123 @@ Path‚Åw’è‚µ‚½ƒtƒ@ƒCƒ‹‚ğ•ªÍ‚µ‚Ä‚»‚Ì‰æ‘œ‚ğƒ[ƒh‚µ‚½‚ÌƒCƒ[ƒWƒTƒCƒY‚ğæ“¾‚µ‚Ü
 /*-------------------------------------------------------------------------------------------------------
 %index
 ImgF_PicloadEx
-‰æ‘œƒtƒ@ƒCƒ‹‚ğƒ[ƒh(GDI+)
+ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰(GDI+)
 %prm
 Path, Mode, Option, WinID
-Path   [•¶š]ƒtƒ@ƒCƒ‹–¼(ƒpƒX)
-Mode   [’è”]‰æ‘œƒ[ƒhƒ‚[ƒh
-    0 : ƒEƒBƒ“ƒhƒE‰Šú‰»(”’)
-    1 : ƒEƒBƒ“ƒhƒE‚Ì‰Šú‰»‚Í‚µ‚È‚¢
-    2 : ƒEƒBƒ“ƒhƒE‰Šú‰»(•)
-Option [’è”]ƒrƒbƒgƒtƒ‰ƒO
-    %**00 =  0 : •`‰ææWindow•W€“®ì
-    %**01 =  1 : WinID‚ğbuffer‚Å‰Šú‰»
-    %**10 =  2 : WinID‚ğscreen‚Å‰Šú‰»
-    %**11 =  3 : WinID‚ğbgscr‚Å‰Šú‰»
-    %00** =  0 : “§‰ßî•ñ‚ğ“K—p(•W€)
-    %01** =  4 : “§‰ßî•ñ‚Í–³‹‚·‚é
-    %10** =  8 : “§‰ßî•ñ‚Ì‚İ‚ğ•`‰æ
-    %11** = 12 : gmode 7 ‚Åg‚¦‚éŒ`®
-WinID  [”’l]Option‚ÅWindow‰Šú‰»w’è‚É—˜—p
-     0ˆÈã : w’èID‚ÌƒEƒBƒ“ƒhƒE‚ğ‰Šú‰»
-    -1ˆÈ‰º : –¢g—pƒEƒBƒ“ƒhƒE‚ğ‰Šú‰»
+Path   [æ–‡å­—]ãƒ•ã‚¡ã‚¤ãƒ«å(ãƒ‘ã‚¹)
+Mode   [å®šæ•°]ç”»åƒãƒ­ãƒ¼ãƒ‰ãƒ¢ãƒ¼ãƒ‰
+    0 : ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦åˆæœŸåŒ–(ç™½)
+    1 : ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®åˆæœŸåŒ–ã¯ã—ãªã„
+    2 : ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦åˆæœŸåŒ–(é»’)
+Option [å®šæ•°]ãƒ“ãƒƒãƒˆãƒ•ãƒ©ã‚°
+    %**00 =  0 : æç”»å…ˆWindowæ¨™æº–å‹•ä½œ
+    %**01 =  1 : WinIDã‚’bufferã§åˆæœŸåŒ–
+    %**10 =  2 : WinIDã‚’screenã§åˆæœŸåŒ–
+    %**11 =  3 : WinIDã‚’bgscrã§åˆæœŸåŒ–
+    %00** =  0 : é€éæƒ…å ±ã‚’é©ç”¨(æ¨™æº–)
+    %01** =  4 : é€éæƒ…å ±ã¯ç„¡è¦–ã™ã‚‹
+    %10** =  8 : é€éæƒ…å ±ã®ã¿ã‚’æç”»
+    %11** = 12 : gmode 7 ã§ä½¿ãˆã‚‹å½¢å¼
+WinID  [æ•°å€¤]Optionã§WindowåˆæœŸåŒ–æŒ‡å®šæ™‚ã«åˆ©ç”¨
+     0ä»¥ä¸Š : æŒ‡å®šIDã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’åˆæœŸåŒ–
+    -1ä»¥ä¸‹ : æœªä½¿ç”¨ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’åˆæœŸåŒ–
 %inst
-HSP•W€‚Ìpicload–½—ß‚ğGDI+‚ğg‚Á‚ÄÄŒ»‚µ‚Ü‚·Bƒ[ƒh‚Å‚«‚éƒtƒ@ƒCƒ‹Œ`®‚ÍBMP,JPG,GIF,PNG‚È‚ÇGDI+‚Å“Ç‚İ‚ß‚é•K—v‚ª‚ ‚è‚Ü‚·B‚Ü‚½memfile–½—ß‚É‚æ‚é‹[—ƒtƒ@ƒCƒ‹‚É‚à‘Î‰‚µ‚Ä‚¢‚Ü‚·B
-Path‚ÆMode‚Ípicload–½—ß‚Æ“¯“™‚Å‚·‚ªOption‚ğw’è‚·‚é‚±‚Æ‚ÅŠg’£ƒ[ƒh‚ğÀs‚Å‚«‚Ü‚·B
-Option‚ÅƒEƒBƒ“ƒhƒE‚Ì‰Šú‰»‚ğw’è‚·‚é‚±‚Æ‚ÅApicload‘O‚Ì‚Ğ‚ÆèŠÔ(screen‚âgsel)‚ğÈ—ª‰Â”\‚Å‚·B‚½‚¾‚µMode‚ª1‚Ì‚Í‚±‚Ìİ’è‚Í“K—p‚³‚ê‚Ü‚¹‚ñB
-Option‚ÅPNG‚âGIFƒtƒ@ƒCƒ‹‚Ì‚Â“§‰ßƒsƒNƒZƒ‹/ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh‚Ìˆµ‚¢‚àw’è‰Â”\‚Å‚·B
+HSPæ¨™æº–ã®picloadå‘½ä»¤ã‚’GDI+ã‚’ä½¿ã£ã¦å†ç¾ã—ã¾ã™ã€‚ãƒ­ãƒ¼ãƒ‰ã§ãã‚‹ãƒ•ã‚¡ã‚¤ãƒ«å½¢å¼ã¯BMP,JPG,GIF,PNGãªã©GDI+ã§èª­ã¿è¾¼ã‚ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚ã¾ãŸmemfileå‘½ä»¤ã«ã‚ˆã‚‹æ“¬ä¼¼ãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚‚å¯¾å¿œã—ã¦ã„ã¾ã™ã€‚
+Pathã¨Modeã¯picloadå‘½ä»¤ã¨åŒç­‰ã§ã™ãŒOptionã‚’æŒ‡å®šã™ã‚‹ã“ã¨ã§æ‹¡å¼µãƒ­ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã§ãã¾ã™ã€‚
+Optionã§ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®åˆæœŸåŒ–ã‚’æŒ‡å®šã™ã‚‹ã“ã¨ã§ã€picloadå‰ã®ã²ã¨æ‰‹é–“(screenã‚„gsel)ã‚’çœç•¥å¯èƒ½ã§ã™ã€‚ãŸã ã—ModeãŒ1ã®æ™‚ã¯ã“ã®è¨­å®šã¯é©ç”¨ã•ã‚Œã¾ã›ã‚“ã€‚
+Optionã§PNGã‚„GIFãƒ•ã‚¡ã‚¤ãƒ«ã®æŒã¤é€éãƒ”ã‚¯ã‚»ãƒ«/ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ã®æ‰±ã„ã‚‚æŒ‡å®šå¯èƒ½ã§ã™ã€‚
 %------------------------------------------------------------------------------------------------------*/
 #deffunc ImgF_PicloadEx str s, int f, int m, int w
-    ; –{‰Æ‚ªPNG‚É³®‘Î‰‚µ‚½‚½‚ß‘¶İˆÓ‹`‚È‚­‚È‚Á‚½B‚Å‚àmemfile(png)‚ÌŠg’£qÈ‚¯‚é‚æ viiV <kanikani
+    ; æœ¬å®¶ãŒPNGã«æ­£å¼å¯¾å¿œã—ãŸãŸã‚å­˜åœ¨æ„ç¾©ãªããªã£ãŸã€‚ã§ã‚‚memfile(pngæ™‚)ã®æ‹¡å¼µå­çœã‘ã‚‹ã‚ˆ viiV <kanikani
     exist s  : if strsize == -1  : return
     ib = strsize, 0, 0, 0, 0, 0, 0, 0
-            ; ƒtƒ@ƒCƒ‹ƒTƒCƒY, ‰æ‘œƒTƒCƒYW, ‰æ‘œƒTƒCƒYH, hGlobal, hStream, hImage, hGraphics, hImageAttr
+            ; ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚º, ç”»åƒã‚µã‚¤ã‚ºW, ç”»åƒã‚µã‚¤ã‚ºH, hGlobal, hStream, hImage, hGraphics, hImageAttr
 
     ImgM_CreateH ImchMode_GlobalAlloc, ib  : ib(3) = stat   ; hGlobal
-    GlobalLock ib(3)                                        ; GM‚ğŒÅ’è‚·‚é
-    dupptr bb, stat, ib, 2                                  ; ŒÅ’è‚µ‚½GM‚É•Ï”–¼‚ğŠ„‚è“–‚Ä‚é
-    bload s, bb, ib, 0                                      ; Š„‚è“–‚Ä‚½•Ï”‚Éƒtƒ@ƒCƒ‹‚Ì“à—e‚ğ—¬‚µ‚Ş
-    GlobalUnlock ib(3)                                      ; ŒÅ’è‰ğœ
-    ImgM_CreateH ImchMode_StreamWithGM, ib(3)  : ib(4) = stat       ; GM‚ğStream‰»
+    GlobalLock ib(3)                                        ; GMã‚’å›ºå®šã™ã‚‹
+    dupptr bb, stat, ib, 2                                  ; å›ºå®šã—ãŸGMã«å¤‰æ•°åã‚’å‰²ã‚Šå½“ã¦ã‚‹
+    bload s, bb, ib, 0                                      ; å‰²ã‚Šå½“ã¦ãŸå¤‰æ•°ã«ãƒ•ã‚¡ã‚¤ãƒ«ã®å†…å®¹ã‚’æµã—è¾¼ã‚€
+    GlobalUnlock ib(3)                                      ; å›ºå®šè§£é™¤
+    ImgM_CreateH ImchMode_StreamWithGM, ib(3)  : ib(4) = stat       ; GMã‚’StreamåŒ–
 
-    ImgM_CreateH ImchMode_ImageFromStream, ib(4)  : ib(5) = stat    ; Stream‚©‚çImage
-    GdipGetImageWidth  ib(5), ib(1)                         ; image.‰¡
-    GdipGetImageHeight ib(5), ib(2)                         ; image.c
+    ImgM_CreateH ImchMode_ImageFromStream, ib(4)  : ib(5) = stat    ; Streamã‹ã‚‰Image
+    GdipGetImageWidth  ib(5), ib(1)                         ; image.æ¨ª
+    GdipGetImageHeight ib(5), ib(2)                         ; image.ç¸¦
 
-    if f == 0 | f == 2 {                        ; ƒEƒBƒ“ƒhƒE‚Ì‰Šú‰»‚ğ”º‚¤
-        if (m & 3) == 0 {                               ; ƒIƒvƒVƒ‡ƒ“‚ÅƒEƒBƒ“ƒhƒEw’è‚Í–³‚¢
+    if f == 0 | f == 2 {                        ; ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®åˆæœŸåŒ–ã‚’ä¼´ã†
+        if (m & 3) == 0 {                               ; ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã§ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æŒ‡å®šã¯ç„¡ã„
             mref bb, 67  : ib(8) = bb(17), ginfo_sel
-        } else {                                        ; ƒIƒvƒVƒ‡ƒ“‚ÅƒEƒBƒ“ƒhƒEw’è‚ª—L‚é
+        } else {                                        ; ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã§ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æŒ‡å®šãŒæœ‰ã‚‹
             ib(8) = m & 3
             if w < 0  : ib(9) = ginfo_newid  : else  : ib(9) = w
         }
-        if (m & %1100) == %1100  : ib(10) = ib(1) * 2  : else  : ib(10) = ib(1) ; ‰¡•
+        if (m & %1100) == %1100  : ib(10) = ib(1) * 2  : else  : ib(10) = ib(1) ; æ¨ªå¹…
 
-        ; ‚±‚±‚Ü‚Å‚Åib‚Í (8)ƒEƒBƒ“ƒhƒEŒ`ó (9)WindowID (10)Window‰¡•
+        ; ã“ã“ã¾ã§ã§ibã¯ (8)ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å½¢çŠ¶ (9)WindowID (10)Windowæ¨ªå¹…
         if ib(8) == 1  : buffer ib(9), ib(10), ib(2)
         if ib(8) == 2  : screen ib(9), ib(10), ib(2)
         if ib(8) == 3  : bgscr  ib(9), ib(10), ib(2)
-        if f == 2  : boxf                               ; ƒ‚[ƒh2‚Ì‚Í•“h‚è‚·‚é
+        if f == 2  : boxf                               ; ãƒ¢ãƒ¼ãƒ‰2ã®æ™‚ã¯é»’å¡—ã‚Šã™ã‚‹
     }
 
     ImgM_CreateH ImchMode_GraphicFromWindow  : ib(6) = stat
 
-    if m & %1100 {              ; ƒIƒvƒVƒ‡ƒ“‚ÅƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒhˆ—‚ªw’è‚³‚ê‚Ä‚¢‚éê‡
+    if m & %1100 {              ; ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã§ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰å‡¦ç†ãŒæŒ‡å®šã•ã‚Œã¦ã„ã‚‹å ´åˆ
         ImgM_CreateH ImchMode_ImageAttributes  : ib(7) = stat
 
-        if m & %0100 {              ; ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒh‚ğ–³‹‚·‚é‰æ‘œ•`‰æ
+        if m & %0100 {              ; ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚’ç„¡è¦–ã™ã‚‹ç”»åƒæç”»
             ib( 8) = $3F800000, 0, 0, 0, 0, 0, $3F800000, 0, 0, 0, 0, 0, $3F800000, 0, 0
             ib(23) = 0, 0, 0, 0, 0, 0, 0, 0, $3F800000, $3F800000
             GdipSetImageAttributesColorMatrix ib(7), 1, 1, ib(8)
             GdipDrawImageRectRectI ib(6),ib(5),ginfo_cx,ginfo_cy,ib(1),ib(2),0,0,ib(1),ib(2),2,ib(7)
         }
-        if m & %1000 {              ; ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒhƒ}ƒXƒN‚Ìæ‚èo‚µ
+        if m & %1000 {              ; ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒã‚¹ã‚¯ã®å–ã‚Šå‡ºã—
             ib( 8) = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
             ib(23) = $3F800000, $3F800000, $3F800000, 0, 0, 0, 0, 0, $3F800000, $3F800000
             GdipSetImageAttributesColorMatrix ib(7), 1, 1, ib(8)
             GdipDrawImageRectRectI ib(6),ib(5),ginfo_cx+((m>>2&1)*ib(1)),ginfo_cy,ib(1),ib(2),0,0,ib(1),ib(2),2,ib(7)
-                ; æ‚ÉƒvƒŒ[ƒ“‰æ‘œ‚ğ•`‰æ‚µ‚Ä‚¢‚é‚Æ‚«‚ÍA‚»‚Ì‰æ‘œ‚Ì‰E‚É•`‰æ‚·‚é‚æ‚¤‚É‚·‚éB
+                ; å…ˆã«ãƒ—ãƒ¬ãƒ¼ãƒ³ç”»åƒã‚’æç”»ã—ã¦ã„ã‚‹ã¨ãã¯ã€ãã®ç”»åƒã®å³ã«æç”»ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
         }
-    } else {                    ; ƒIƒvƒVƒ‡ƒ“‚ÉƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒhˆ—‚ªw’è‚È‚¢ê‡‚Í•’Ê‚ÌƒRƒs[
-        GdipDrawImageRectI ib(6), ib(5), ginfo_cx, ginfo_cy, ib(1), ib(2)   ; ƒAƒ‹ƒtƒ@‚Í“K—p‚³‚ê‚é
+    } else {                    ; ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã«ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‰å‡¦ç†ãŒæŒ‡å®šãªã„å ´åˆã¯æ™®é€šã®ã‚³ãƒ”ãƒ¼
+        GdipDrawImageRectI ib(6), ib(5), ginfo_cx, ginfo_cy, ib(1), ib(2)   ; ã‚¢ãƒ«ãƒ•ã‚¡ã¯é©ç”¨ã•ã‚Œã‚‹
     }
 
-    ImgM_CloseH                 ; Œãn––ô
-    mref bb, 67  : if bb(19) & $FFFF0000  : redraw 1        ; Ä•`‰æˆ—
+    ImgM_CloseH                 ; å¾Œå§‹æœ«â™ª
+    mref bb, 67  : if bb(19) & $FFFF0000  : redraw 1        ; å†æç”»å‡¦ç†
     return
 
 /*-------------------------------------------------------------------------------------------------------
 %index
 ImgF_ImageSave
-‰æ–ÊƒCƒ[ƒWƒZ[ƒu.PNG, JPG•Ò(GDI+)
+ç”»é¢ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚»ãƒ¼ãƒ–.PNG, JPGç·¨(GDI+)
 %prm
 Path, Quality, PositionX, PositionY, Width, Height
-Path    [•¶š]•Û‘¶‚·‚éƒtƒ@ƒCƒ‹–¼(ƒpƒX)
-Quality [”’l]•i¿
-    0:‚ˆ³k(‘e‚¢)`100:’áˆ³k(‚«‚ß×‚â‚©)
-PositionX   [”’l]•Û‘¶‚·‚é—Ìˆæ‚Ì¶ãÀ•WX
-PositionY   [”’l]•Û‘¶‚·‚é—Ìˆæ‚Ì¶ãÀ•WY
-Width   [”’l]‰¡•
-Height  [”’l]c•
+Path    [æ–‡å­—]ä¿å­˜ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«å(ãƒ‘ã‚¹)
+Quality [æ•°å€¤]å“è³ª
+    0:é«˜åœ§ç¸®(ç²—ã„)ï½100:ä½åœ§ç¸®(ãã‚ç´°ã‚„ã‹)
+PositionX   [æ•°å€¤]ä¿å­˜ã™ã‚‹é ˜åŸŸã®å·¦ä¸Šåº§æ¨™X
+PositionY   [æ•°å€¤]ä¿å­˜ã™ã‚‹é ˜åŸŸã®å·¦ä¸Šåº§æ¨™Y
+Width   [æ•°å€¤]æ¨ªå¹…
+Height  [æ•°å€¤]ç¸¦å¹…
 
 %inst
-HSP•W€‚Ìbmpsave–½—ß‚İ‚½‚¢‚È‚à‚Ì‚Å‚·B
-Šg’£q‚É‚æ‚Á‚ÄJPEG‚ÆPNG‚ğØ‚è‘Ö‚¦‚Ü‚·
+HSPæ¨™æº–ã®bmpsaveå‘½ä»¤ã¿ãŸã„ãªã‚‚ã®ã§ã™ã€‚
+æ‹¡å¼µå­ã«ã‚ˆã£ã¦JPEGã¨PNGã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™
 %href
 ImgP_Memsave
 %------------------------------------------------------------------------------------------------------*/
 #deffunc ImgF_ImageSave str s, int p, int x, int y, int w, int h
 	ib = 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0, 1, 0,0,0,0,0,0,0,0
-    ;   (0)GlobalSize (1)stream (2)image(Œ‹‰Ê) (3)image(works) (4)hGlobal
-    ;   (5)PosX (6)PosY (7)Width (8)Height (9)PixelFormat (10`13)ImageCodec
-    ;   (14)ƒpƒ‰ƒ”(0‚¾‚Æ•Û‘¶‚É¸”s‚·‚é‚Ì‚Å1ˆÈãA1‚±‚à•K—v‚È‚¢ê‡‚Íƒpƒ‰ƒ‚É–³Œø‚È’l‚ğ‚¢‚ê‚é‚Æ‚©...)
-    ;   (15`18)ƒpƒ‰ƒƒGƒ“ƒR[ƒ_ (19)ƒpƒ‰ƒ—v‘f”? (20)ƒpƒ‰ƒŒ^ (21)ƒ|ƒCƒ“ƒ^(‚ÁI)
-    ;   (22`)ƒpƒ‰ƒƒGƒ“ƒR[ƒ_‚©‚çŒJ‚è•Ô‚µ
+    ;   (0)GlobalSize (1)stream (2)image(çµæœ) (3)image(works) (4)hGlobal
+    ;   (5)PosX (6)PosY (7)Width (8)Height (9)PixelFormat (10ï½13)ImageCodec
+    ;   (14)ãƒ‘ãƒ©ãƒ¡æ•°(0ã ã¨ä¿å­˜ã«å¤±æ•—ã™ã‚‹ã®ã§1ä»¥ä¸Šã€1ã“ã‚‚å¿…è¦ãªã„å ´åˆã¯ãƒ‘ãƒ©ãƒ¡ã«ç„¡åŠ¹ãªå€¤ã‚’ã„ã‚Œã‚‹ã¨ã‹...)
+    ;   (15ï½18)ãƒ‘ãƒ©ãƒ¡ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ (19)ãƒ‘ãƒ©ãƒ¡è¦ç´ æ•°? (20)ãƒ‘ãƒ©ãƒ¡å‹ (21)ãƒã‚¤ãƒ³ã‚¿(ã£ï¼)
+    ;   (22ï½)ãƒ‘ãƒ©ãƒ¡ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ã‹ã‚‰ç¹°ã‚Šè¿”ã—
 
-    if ( w==0 || h==0): ib(5) = 0, 0, ginfo_winx, ginfo_winy :else: ib(5) = x, y, w, h ; ƒgƒŠƒ~ƒ“ƒO
+    if ( w==0 || h==0): ib(5) = 0, 0, ginfo_winx, ginfo_winy :else: ib(5) = x, y, w, h ; ãƒˆãƒªãƒŸãƒ³ã‚°
 
     mref bb, 67
-    if bb(3)  : ib(9) = PixelFormat8bppIndexed  : else  : ib(9) = PixelFormat24bppRGB   ; ƒsƒNƒtƒHƒ}
+    if bb(3)  : ib(9) = PixelFormat8bppIndexed  : else  : ib(9) = PixelFormat24bppRGB   ; ãƒ”ã‚¯ãƒ•ã‚©ãƒ
 
 	if (getpath(s,18) = ".png") {
 		ib(10) = $557CF406, $11D31A04, $0000739A, $2EF31EF8        ; PNG
@@ -473,9 +473,9 @@ ImgP_Memsave
         ib(14) = 1 ,$1D5BE4B5, $452DFA4A, $B35DDD9C, $EBE70551, 1, 4, varptr(ib(22))
     }
 
-	ImgM_CreateH ImchMode_ImageFromWindow: ib(3) = stat //HSP‚ÌƒEƒBƒ“ƒhƒE‚©‚çGDI+‚Ìimage‚ğì¬H
-    ImgM_CreateH ImchMode_ImageFromImage, ib(3), ib(5), ib(6), ib(7), ib(8), ib(9)  : ib(2) = stat//ª‚Åì‚Á‚½image‚©‚çØ‚èæ‚Á‚½image‚ğì¬
-    //ª‚Åì‚Á‚½image‚ğƒtƒ@ƒCƒ‹‚É•Û‘¶
+	ImgM_CreateH ImchMode_ImageFromWindow: ib(3) = stat //HSPã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‹ã‚‰GDI+ã®imageã‚’ä½œæˆï¼Ÿ
+    ImgM_CreateH ImchMode_ImageFromImage, ib(3), ib(5), ib(6), ib(7), ib(8), ib(9)  : ib(2) = stat//â†‘ã§ä½œã£ãŸimageã‹ã‚‰åˆ‡ã‚Šå–ã£ãŸimageã‚’ä½œæˆ
+    //â†‘ã§ä½œã£ãŸimageã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜
     GdipSaveImageToFile ib(2), s, ib(10), ib(14)
 
     ImgM_CloseH
@@ -483,77 +483,77 @@ return
 
 
 /*=======================================================================================================
-%index                                                                          ; ‹Œ "ImagePrintModule"
+%index                                                                          ; æ—§ "ImagePrintModule"
 %group
-‰æ‘œŠÖ˜Aƒ‚ƒWƒ…[ƒ‹(‰ÁH•`‰æ)
+ç”»åƒé–¢é€£ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«(åŠ å·¥æç”»)
 %--------------------------------------------------------------------------------------------------------
 %index
 ImgP_CalcFitSize
-“™”{ŒvZ(‹éŒ`‚Éû‚Ü‚é‰æ‘œƒTƒCƒY)
+ç­‰å€è¨ˆç®—(çŸ©å½¢ã«åã¾ã‚‹ç”»åƒã‚µã‚¤ã‚º)
 %prm
 Res_W, Res_H, PicW, PicH, RectW, RectH
-Res_W, Res_H [•Ï”]Œ‹‰Ê‚ğó‚¯æ‚é•Ï”(intŒ^)
-PicW,  PicH  [”’l]Œ³‰æ‘œ‚Ì‘å‚«‚³(‰¡•Ac•)
-RectW, RectH [”’l]‹éŒ`‚Ì‘å‚«‚³(‰¡•Ac•)
+Res_W, Res_H [å¤‰æ•°]çµæœã‚’å—ã‘å–ã‚‹å¤‰æ•°(intå‹)
+PicW,  PicH  [æ•°å€¤]å…ƒç”»åƒã®å¤§ãã•(æ¨ªå¹…ã€ç¸¦å¹…)
+RectW, RectH [æ•°å€¤]çŸ©å½¢ã®å¤§ãã•(æ¨ªå¹…ã€ç¸¦å¹…)
 %inst
-c‰¡”äŒÅ’è‚Å‰æ‘œ‚ğŠgk‚·‚é‚Éw’è—Ìˆæ‚Éû‚Ü‚éÅ‘åƒTƒCƒY‚ğZo‚µ‚Ü‚·B
+ç¸¦æ¨ªæ¯”å›ºå®šã§ç”»åƒã‚’æ‹¡ç¸®ã™ã‚‹æ™‚ã«æŒ‡å®šé ˜åŸŸã«åã¾ã‚‹æœ€å¤§ã‚µã‚¤ã‚ºã‚’ç®—å‡ºã—ã¾ã™ã€‚
 %href
 ImgP_gzoom
 %index
 ImgP_gzoom
-•Ï”{‚µ‚Ä‰æ–ÊƒRƒs[(GDI+)
+å¤‰å€ã—ã¦ç”»é¢ã‚³ãƒ”ãƒ¼(GDI+)
 %prm
 SizeX, SizeY, TrimWinID, TrimX, TrimY, TrimW, TrimH
-SizeX, SizeY [”’l]“\‚è•t‚¯‚Ì‰æ–ÊƒTƒCƒY
-TrimWinID    [”’l]ƒRƒs[Œ³‚ÌƒEƒBƒ“ƒhƒEID
-TrimX, TrimY [”’l]ƒRƒs[Œ³‚Ì‹N“_À•W
-TrimW, TrimH [”’l]ƒRƒs[Œ³‚ÌØ‚èo‚µƒTƒCƒY
+SizeX, SizeY [æ•°å€¤]è²¼ã‚Šä»˜ã‘æ™‚ã®ç”»é¢ã‚µã‚¤ã‚º
+TrimWinID    [æ•°å€¤]ã‚³ãƒ”ãƒ¼å…ƒã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ID
+TrimX, TrimY [æ•°å€¤]ã‚³ãƒ”ãƒ¼å…ƒã®èµ·ç‚¹åº§æ¨™
+TrimW, TrimH [æ•°å€¤]ã‚³ãƒ”ãƒ¼å…ƒã®åˆ‡ã‚Šå‡ºã—ã‚µã‚¤ã‚º
 %inst
-HSP•W€‚Ìgzoom–½—ß‚ğGDI+‚ğg—p‚µ‚ÄÄŒ»‚µ‚Ü‚·B•W€–½—ß‚æ‚è‚àA“Á‚ÉŠg‘å‚É‰æ¿‚ª—Ç‚­‚È‚é‚©‚à‚µ‚ê‚Ü‚¹‚ñB
-‰æ‘œ‚ÍƒJƒŒƒ“ƒgƒ|ƒWƒVƒ‡ƒ“‚ğ¶ã‚Æ‚µ‚½ˆÊ’u‚ÉSizeX‚ÆSizeY‚Åw’è‚µ‚½‘å‚«‚³‚Å•`‰æ‚³‚ê‚Ü‚·B
-TrimX‚ÆTrimY‚Í’Êí¶ãÀ•W‚Å‚·‚ªATrimW‚âTrimH‚É•‰”’l‚ğw’è‚·‚é‚±‚Æ‚Åƒ~ƒ‰[”½“]‚ğs‚¤‚±‚Æ‚à‰Â”\‚Å‚·B
+HSPæ¨™æº–ã®gzoomå‘½ä»¤ã‚’GDI+ã‚’ä½¿ç”¨ã—ã¦å†ç¾ã—ã¾ã™ã€‚æ¨™æº–å‘½ä»¤ã‚ˆã‚Šã‚‚ã€ç‰¹ã«æ‹¡å¤§æ™‚ã«ç”»è³ªãŒè‰¯ããªã‚‹ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚
+ç”»åƒã¯ã‚«ãƒ¬ãƒ³ãƒˆãƒã‚¸ã‚·ãƒ§ãƒ³ã‚’å·¦ä¸Šã¨ã—ãŸä½ç½®ã«SizeXã¨SizeYã§æŒ‡å®šã—ãŸå¤§ãã•ã§æç”»ã•ã‚Œã¾ã™ã€‚
+TrimXã¨TrimYã¯é€šå¸¸å·¦ä¸Šåº§æ¨™ã§ã™ãŒã€TrimWã‚„TrimHã«è² æ•°å€¤ã‚’æŒ‡å®šã™ã‚‹ã“ã¨ã§ãƒŸãƒ©ãƒ¼åè»¢ã‚’è¡Œã†ã“ã¨ã‚‚å¯èƒ½ã§ã™ã€‚
 %href
 ImgP_CalcFitSize
 %------------------------------------------------------------------------------------------------------*/
 #deffunc ImgP_CalcFitSize var x, var y, int a, int b, int w, int h
-    if a == 0 | b == 0  : x = 0  : y = 0    : return    ; 0Š„‚èB
-    ib = w * 10000 / a , h * 10000 / b                  ; –œ•ª—¦(Î)ñB
+    if a == 0 | b == 0  : x = 0  : y = 0    : return    ; 0å‰²ã‚Šã€‚
+    ib = w * 10000 / a , h * 10000 / b                  ; ä¸‡åˆ†ç‡(ç¬‘)â€°ã€‚
     if ib <  ib(1)  : x = w  : y = b * ib / 10000
     if ib == ib(1)  : x = w  : y = h
     if ib >  ib(1)  : x = a * ib(1) / 10000  : y = h
-    if x + 1 == w  : x = w                              ; Œë·1pixel
+    if x + 1 == w  : x = w                              ; èª¤å·®1pixel
     if y + 1 == h  : y = h
-    return                                              ; ‚±‚Ì–½—ß‚ÅÀ”g‚Á‚Ä‚È‚¢‚Ì‚ÍÌ‚Ì–¼cB
+    return                                              ; ã“ã®å‘½ä»¤ã§å®Ÿæ•°ä½¿ã£ã¦ãªã„ã®ã¯æ˜”ã®åæ®‹ã€‚
 
 #deffunc ImgP_gzoom int w, int h, int i, int x, int y, int a, int b
     ib = ginfo_sel
-    gsel i   : ImgM_CreateH ImchMode_ImageFromWindow    : ib(1) = stat      ; ƒRƒs[Œ³‚ğImage‚É‚·‚é
-    gsel ib  : ImgM_CreateH ImchMode_GraphicFromWindow  : ib(2) = stat      ; ƒRƒs[æ‚ğGraphic‚É‚·‚é
-    GdipDrawImageRectRectI ib(2), ib(1), ginfo_cx, ginfo_cy, w, h, x, y, a, b, 2    ; ƒRƒs[ÀsB
+    gsel i   : ImgM_CreateH ImchMode_ImageFromWindow    : ib(1) = stat      ; ã‚³ãƒ”ãƒ¼å…ƒã‚’Imageã«ã™ã‚‹
+    gsel ib  : ImgM_CreateH ImchMode_GraphicFromWindow  : ib(2) = stat      ; ã‚³ãƒ”ãƒ¼å…ˆã‚’Graphicã«ã™ã‚‹
+    GdipDrawImageRectRectI ib(2), ib(1), ginfo_cx, ginfo_cy, w, h, x, y, a, b, 2    ; ã‚³ãƒ”ãƒ¼å®Ÿè¡Œã€‚
     ImgM_CloseH
-    mref bb, 67  : if bb(19) & $FFFF0000  : redraw 1                        ; Ä•`‰æˆ—
+    mref bb, 67  : if bb(19) & $FFFF0000  : redraw 1                        ; å†æç”»å‡¦ç†
     return
 
 /*-------------------------------------------------------------------------------------------------------
 %index
 ImgP_RotateFlip
-‰æ‘œ‚Ì”½“]‚â90‹‰ñ“](GDI+)
+ç”»åƒã®åè»¢ã‚„90Â°å›è»¢(GDI+)
 %prm
 Mode, TrimWinID, TrimX, TrimY, TrimW, TrimH
-Mode         [’è”]‰ñ“]•û–@
-    0 : ‰½‚à‚µ‚È‚¢            (gcopyó‘Ô)
-    1 : Œv‰ñ‚è 90‹‰ñ“]
-    2 : Œv‰ñ‚è180‹‰ñ“]     (ã‰º¶‰E”½“]‚Æ‚à‚¢‚¤)
-    3 : Œv‰ñ‚è270‹‰ñ“]
-    4 :   0‹‰ñ“]ŒãA¶‰E”½“] (¶‰E”½“]‚Æ‚¢‚¤‚Ü‚Å‚à‚È‚¢)
-    5 :  90‹‰ñ“]ŒãA¶‰E”½“]
-    6 : 180‹‰ñ“]ŒãA¶‰E”½“] (ã‰º”½“]‚Æ‚à‚¢‚¤)
-    7 : 270‹‰ñ“]ŒãA¶‰E”½“]
-TrimWinID    [”’l]ƒRƒs[Œ³‚ÌƒEƒBƒ“ƒhƒEID
-TrimX, TrimY [”’l]ƒRƒs[Œ³‚Ì‹N“_À•W
-TrimW, TrimH [”’l]ƒRƒs[Œ³‚ÌØ‚èo‚µƒTƒCƒY
+Mode         [å®šæ•°]å›è»¢æ–¹æ³•
+    0 : ä½•ã‚‚ã—ãªã„            (gcopyçŠ¶æ…‹)
+    1 : æ™‚è¨ˆå›ã‚Š 90Â°å›è»¢
+    2 : æ™‚è¨ˆå›ã‚Š180Â°å›è»¢     (ä¸Šä¸‹å·¦å³åè»¢ã¨ã‚‚ã„ã†)
+    3 : æ™‚è¨ˆå›ã‚Š270Â°å›è»¢
+    4 :   0Â°å›è»¢å¾Œã€å·¦å³åè»¢ (å·¦å³åè»¢ã¨ã„ã†ã¾ã§ã‚‚ãªã„)
+    5 :  90Â°å›è»¢å¾Œã€å·¦å³åè»¢
+    6 : 180Â°å›è»¢å¾Œã€å·¦å³åè»¢ (ä¸Šä¸‹åè»¢ã¨ã‚‚ã„ã†)
+    7 : 270Â°å›è»¢å¾Œã€å·¦å³åè»¢
+TrimWinID    [æ•°å€¤]ã‚³ãƒ”ãƒ¼å…ƒã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ID
+TrimX, TrimY [æ•°å€¤]ã‚³ãƒ”ãƒ¼å…ƒã®èµ·ç‚¹åº§æ¨™
+TrimW, TrimH [æ•°å€¤]ã‚³ãƒ”ãƒ¼å…ƒã®åˆ‡ã‚Šå‡ºã—ã‚µã‚¤ã‚º
 %inst
-‰æ‘œ‚ğƒ~ƒ‰[”½“]‚â90“x‰ñ“]‚µ‚ÄƒRƒs[‚µ‚Ü‚·B‰æ‘œ‚ÍƒJƒŒƒ“ƒgƒ|ƒWƒVƒ‡ƒ“‚ğ¶ã‚Æ‚µ‚½ˆÊ’u‚É•`‰æ‚³‚ê‚Ü‚·B
+ç”»åƒã‚’ãƒŸãƒ©ãƒ¼åè»¢ã‚„90åº¦å›è»¢ã—ã¦ã‚³ãƒ”ãƒ¼ã—ã¾ã™ã€‚ç”»åƒã¯ã‚«ãƒ¬ãƒ³ãƒˆãƒã‚¸ã‚·ãƒ§ãƒ³ã‚’å·¦ä¸Šã¨ã—ãŸä½ç½®ã«æç”»ã•ã‚Œã¾ã™ã€‚
 %href
 ImgP_grotate
 %------------------------------------------------------------------------------------------------------*/
@@ -561,53 +561,53 @@ ImgP_grotate
     ib = ginfo_sel
 
     gsel i
-    ImgM_CreateH ImchMode_ImageFromWindow                    : ib(1) = stat ; ƒRƒs[Œ³‚ğImage‚É‚·‚é
-    ImgM_CreateH ImchMode_ImageFromImage, ib(1), x, y, w, h  : ib(2) = stat ; ƒgƒŠƒ~ƒ“ƒO‚µ‚½Image
-    GdipImageRotateFlip ib(2), m                                            ; ‰ñ“]ÀsB
+    ImgM_CreateH ImchMode_ImageFromWindow                    : ib(1) = stat ; ã‚³ãƒ”ãƒ¼å…ƒã‚’Imageã«ã™ã‚‹
+    ImgM_CreateH ImchMode_ImageFromImage, ib(1), x, y, w, h  : ib(2) = stat ; ãƒˆãƒªãƒŸãƒ³ã‚°ã—ãŸImage
+    GdipImageRotateFlip ib(2), m                                            ; å›è»¢å®Ÿè¡Œã€‚
 
     gsel ib
-    ImgM_CreateH ImchMode_GraphicFromWindow  : ib(3) = stat         ; “\‚è•t‚¯æ‚ÌGraphics
-    GdipDrawImageI ib(3), ib(2), ginfo_cx, ginfo_cy                 ; “\‚è•t‚¯ÀsB
+    ImgM_CreateH ImchMode_GraphicFromWindow  : ib(3) = stat         ; è²¼ã‚Šä»˜ã‘å…ˆã®Graphics
+    GdipDrawImageI ib(3), ib(2), ginfo_cx, ginfo_cy                 ; è²¼ã‚Šä»˜ã‘å®Ÿè¡Œã€‚
 
     ImgM_CloseH
-    mref bb, 67  : if bb(19) & $FFFF0000  : redraw 1                ; Ä•`‰æˆ—
+    mref bb, 67  : if bb(19) & $FFFF0000  : redraw 1                ; å†æç”»å‡¦ç†
     return
 
 /*-------------------------------------------------------------------------------------------------------
 %index
 ImgP_Memsave
-‰æ–ÊƒCƒ[ƒWƒZ[ƒuto•Ï”(GDI+)
+ç”»é¢ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚»ãƒ¼ãƒ–toå¤‰æ•°(GDI+)
 %prm
 Res_Bin, Format, Width, Height, Option
-Res_Bin [•Ï”]ƒf[ƒ^‚ğó‚¯æ‚é•Ï”(•¶š—ñŒ^‚É•ÏŠ·‰Â”\‚Å‚ ‚é‚±‚Æ)
-Format  [’è”]•Û‘¶Œ`®
+Res_Bin [å¤‰æ•°]ãƒ‡ãƒ¼ã‚¿ã‚’å—ã‘å–ã‚‹å¤‰æ•°(æ–‡å­—åˆ—å‹ã«å¤‰æ›å¯èƒ½ã§ã‚ã‚‹ã“ã¨)
+Format  [å®šæ•°]ä¿å­˜å½¢å¼
     1 : BMP
     2 : JPG
     3 : GIF
     4 : PNG
-Width   [”’l]‰¡•
-Height  [”’l]c•
-Option  [”’l]JPG‚Ì : •i¿(0`100)
+Width   [æ•°å€¤]æ¨ªå¹…
+Height  [æ•°å€¤]ç¸¦å¹…
+Option  [æ•°å€¤]JPGã®æ™‚ : å“è³ª(0ï½100)
 %inst
-Œ»İ‚Ì‰æ–ÊƒCƒ[ƒW‚ğFormat‚Åw’è‚µ‚½ƒtƒ@ƒCƒ‹Œ`®‚Å•Û‘¶‚µ‚Ü‚·BRes_Bin‚Åw’è‚µ‚½•Ï”‚ªo—Íæ‚Æ‚È‚è‚Ü‚·B–½—ßÀsŒãAƒVƒXƒeƒ€•Ï”stat‚Éo—Í‚³‚ê‚½ƒf[ƒ^ƒTƒCƒY(byte)‚ª‘ã“ü‚³‚ê‚Ä‚¢‚Ü‚·B
+ç¾åœ¨ã®ç”»é¢ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’Formatã§æŒ‡å®šã—ãŸãƒ•ã‚¡ã‚¤ãƒ«å½¢å¼ã§ä¿å­˜ã—ã¾ã™ã€‚Res_Binã§æŒ‡å®šã—ãŸå¤‰æ•°ãŒå‡ºåŠ›å…ˆã¨ãªã‚Šã¾ã™ã€‚å‘½ä»¤å®Ÿè¡Œå¾Œã€ã‚·ã‚¹ãƒ†ãƒ å¤‰æ•°statã«å‡ºåŠ›ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º(byte)ãŒä»£å…¥ã•ã‚Œã¦ã„ã¾ã™ã€‚
 
-Width‚©Height‚ª0‚âÈ—ª‚Ìê‡A‰æ–Ê‘S‘Ì‚ª‘ÎÛ‚Æ‚È‚è‚Ü‚·(‰æ‘œƒTƒCƒY‚ÍƒEƒBƒ“ƒhƒE‚Ì‰Šú‰»ƒTƒCƒY‚Å‚·)BWidth‚ÆHeight‚ª0ˆÈŠO‚Ìê‡‚ÍƒJƒŒƒ“ƒgƒ|ƒWƒVƒ‡ƒ“‚©‚çw’è‚Ì”ÍˆÍ‚ª•Û‘¶‚³‚ê‚Ü‚·B
-•Û‘¶Œ`®‚ª2(JPG)‚Ìê‡AOption‚Å•i¿‚ğw’è‚µ‚Ü‚·B0(‚ˆ³kA‘e‚¢)‚©‚ç100(’áˆ³kA‚«‚ß×‚â‚©)‚Ì®”‚Åw’è‰Â”\‚Å‚·BÈ—ª‚Í0ˆµ‚¢‚Å‚·B
+Widthã‹HeightãŒ0ã‚„çœç•¥ã®å ´åˆã€ç”»é¢å…¨ä½“ãŒå¯¾è±¡ã¨ãªã‚Šã¾ã™(ç”»åƒã‚µã‚¤ã‚ºã¯ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®åˆæœŸåŒ–ã‚µã‚¤ã‚ºã§ã™)ã€‚Widthã¨HeightãŒ0ä»¥å¤–ã®å ´åˆã¯ã‚«ãƒ¬ãƒ³ãƒˆãƒã‚¸ã‚·ãƒ§ãƒ³ã‹ã‚‰æŒ‡å®šã®ç¯„å›²ãŒä¿å­˜ã•ã‚Œã¾ã™ã€‚
+ä¿å­˜å½¢å¼ãŒ2(JPG)ã®å ´åˆã€Optionã§å“è³ªã‚’æŒ‡å®šã—ã¾ã™ã€‚0(é«˜åœ§ç¸®ã€ç²—ã„)ã‹ã‚‰100(ä½åœ§ç¸®ã€ãã‚ç´°ã‚„ã‹)ã®æ•´æ•°ã§æŒ‡å®šå¯èƒ½ã§ã™ã€‚çœç•¥æ™‚ã¯0æ‰±ã„ã§ã™ã€‚
 %href
 ImgF_jpgsave
 %------------------------------------------------------------------------------------------------------*/
-#deffunc ImgP_Memsave var b, int m, int w, int h, int p ; •Ï”,Œ`®,•,‚‚³,•i¿
+#deffunc ImgP_Memsave var b, int m, int w, int h, int p ; å¤‰æ•°,å½¢å¼,å¹…,é«˜ã•,å“è³ª
     ib = 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0, 1, 0,0,0,0,0,0,0,0
-    ;   (0)GlobalSize (1)stream (2)image(Œ‹‰Ê) (3)image(works) (4)hGlobal
-    ;   (5)PosX (6)PosY (7)Width (8)Height (9)PixelFormat (10`13)ImageCodec
-    ;   (14)ƒpƒ‰ƒ”(0‚¾‚Æ•Û‘¶‚É¸”s‚·‚é‚Ì‚Å1ˆÈãA1‚±‚à•K—v‚È‚¢ê‡‚Íƒpƒ‰ƒ‚É–³Œø‚È’l‚ğ‚¢‚ê‚é‚Æ‚©...)
-    ;   (15`18)ƒpƒ‰ƒƒGƒ“ƒR[ƒ_ (19)ƒpƒ‰ƒ—v‘f”? (20)ƒpƒ‰ƒŒ^ (21)ƒ|ƒCƒ“ƒ^(‚ÁI)
-    ;   (22`)ƒpƒ‰ƒƒGƒ“ƒR[ƒ_‚©‚çŒJ‚è•Ô‚µ
+    ;   (0)GlobalSize (1)stream (2)image(çµæœ) (3)image(works) (4)hGlobal
+    ;   (5)PosX (6)PosY (7)Width (8)Height (9)PixelFormat (10ï½13)ImageCodec
+    ;   (14)ãƒ‘ãƒ©ãƒ¡æ•°(0ã ã¨ä¿å­˜ã«å¤±æ•—ã™ã‚‹ã®ã§1ä»¥ä¸Šã€1ã“ã‚‚å¿…è¦ãªã„å ´åˆã¯ãƒ‘ãƒ©ãƒ¡ã«ç„¡åŠ¹ãªå€¤ã‚’ã„ã‚Œã‚‹ã¨ã‹...)
+    ;   (15ï½18)ãƒ‘ãƒ©ãƒ¡ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ (19)ãƒ‘ãƒ©ãƒ¡è¦ç´ æ•°? (20)ãƒ‘ãƒ©ãƒ¡å‹ (21)ãƒã‚¤ãƒ³ã‚¿(ã£ï¼)
+    ;   (22ï½)ãƒ‘ãƒ©ãƒ¡ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ã‹ã‚‰ç¹°ã‚Šè¿”ã—
 
-    if w==0 | h==0 : ib(5) = 0,0,ginfo_sx,ginfo_sy :else: ib(5) = ginfo_cx,ginfo_cy,w,h ; ƒgƒŠƒ~ƒ“ƒO
+    if w==0 | h==0 : ib(5) = 0,0,ginfo_sx,ginfo_sy :else: ib(5) = ginfo_cx,ginfo_cy,w,h ; ãƒˆãƒªãƒŸãƒ³ã‚°
 
     mref bb, 67
-    if bb(3)  : ib(9) = PixelFormat8bppIndexed  : else  : ib(9) = PixelFormat24bppRGB   ; ƒsƒNƒtƒHƒ}
+    if bb(3)  : ib(9) = PixelFormat8bppIndexed  : else  : ib(9) = PixelFormat24bppRGB   ; ãƒ”ã‚¯ãƒ•ã‚©ãƒ
 
     if m == 1  : ib(10) = $557CF400, $11D31A04, $0000739A, $2EF31EF8        ; BMP
     if m == 2 {
@@ -623,11 +623,11 @@ ImgF_jpgsave
 
     ImgM_CreateH ImchMode_StreamWithGM  : ib(1) = stat
     GdipSaveImageToStream ib(2), ib(1), ib(10), ib(14)
-    if stat  : ImgM_CloseH  : return 0                  ; –¾‚ç‚©‚È•s¬Œ÷‚Æ‚©Aƒ}ƒWÁ‚¦‚ëB
+    if stat  : ImgM_CloseH  : return 0                  ; æ˜ã‚‰ã‹ãªä¸æˆåŠŸã¨ã‹ã€ãƒã‚¸æ¶ˆãˆã‚ã€‚
 
-    GetHGlobalFromStream ib(1), ib(4)                   ; ƒXƒgƒŠ[ƒ€ŠÇ—‚ÌhGlobal‚ğ”qØ
-    GlobalSize ib(4)  : ib = stat                       ; ‚¨‚¨‚«‚³
-    b = "(C)ˆß“ú˜a"  : memexpand b, ib                  ; ƒƒ‚ƒŠŠm•Û
+    GetHGlobalFromStream ib(1), ib(4)                   ; ã‚¹ãƒˆãƒªãƒ¼ãƒ ç®¡ç†ã®hGlobalã‚’æ‹å€Ÿ
+    GlobalSize ib(4)  : ib = stat                       ; ãŠãŠãã•
+    b = "(C)è¡£æ—¥å’Œ"  : memexpand b, ib                  ; ãƒ¡ãƒ¢ãƒªç¢ºä¿
     GlobalLock ib(4)
     dupptr bb, stat, ib, vartype("str")
     memcpy b, bb, ib
@@ -639,149 +639,149 @@ ImgF_jpgsave
 /*-------------------------------------------------------------------------------------------------------
 %index
 ImgP_FilterPastel
-‰æ‘œƒtƒBƒ‹ƒ^[(‹P“x•â³)
+ç”»åƒãƒ•ã‚£ãƒ«ã‚¿ãƒ¼(è¼åº¦è£œæ­£)
 %prm
 Lumin, Width, Height
-Lumin  [”’l]•â³’l(-256`256)
-Width  [”’l]‰¡•
-Height [”’l]c•
+Lumin  [æ•°å€¤]è£œæ­£å€¤(-256ï½256)
+Width  [æ•°å€¤]æ¨ªå¹…
+Height [æ•°å€¤]ç¸¦å¹…
 %inst
-Œ»İ‚Ì‰æ–Ê‚É‘Î‚µ‚Ä‹P“x•â³‚ğs‚¢‚Ü‚·B
-Width‚©Height‚ª0‚âÈ—ª‚Ìê‡A‰æ–Ê‘S‘Ì‚ª‘ÎÛ‚Æ‚È‚è‚Ü‚·BWidth‚ÆHeight‚ª0ˆÈŠO‚Ìê‡‚ÍƒJƒŒƒ“ƒgƒ|ƒWƒVƒ‡ƒ“‚©‚çw’è‚Ì”ÍˆÍ‚ª‘ÎÛ‚Å‚·B
+ç¾åœ¨ã®ç”»é¢ã«å¯¾ã—ã¦è¼åº¦è£œæ­£ã‚’è¡Œã„ã¾ã™ã€‚
+Widthã‹HeightãŒ0ã‚„çœç•¥ã®å ´åˆã€ç”»é¢å…¨ä½“ãŒå¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚Widthã¨HeightãŒ0ä»¥å¤–ã®å ´åˆã¯ã‚«ãƒ¬ãƒ³ãƒˆãƒã‚¸ã‚·ãƒ§ãƒ³ã‹ã‚‰æŒ‡å®šã®ç¯„å›²ãŒå¯¾è±¡ã§ã™ã€‚
 
-Lumin‚É‹P“x•Ï‰»‚ÌŠ„‡‚ğw’è‚µ‚Ü‚·B‚±‚Ì’l‚É‚æ‚Á‚ÄŠeƒsƒNƒZƒ‹‚ÍA‚Ü‚Á‚­‚ë(-256w’è)‚©‚ç‚Ü‚Á‚µ‚ë(256w’è)‚ÌŠÔ‚Å•Ï‰»‚µ‚Ü‚·B‚È‚¨A0‚ğw’è‚µ‚½‚Ì‹P“x•Ï‰»‚Í‚ ‚è‚Ü‚¹‚ñ(Šî€)B
-Lumin‚É³”‚ğw’è‚·‚é‚ÆAƒpƒXƒeƒ‹’²‚Ì”’‚ª¬‚¶‚Á‚½‚æ‚¤‚È‚â‚í‚ç‚©‚¢ˆóÛ‚É‚È‚è‚Ü‚·B
-Lumin‚É•‰”‚ğw’è‚·‚é‚ÆA‘S‘Ì“I‚ÉˆÃ‚­F•Ï‰»‚Ì–R‚µ‚¢‰æ‘œ‚É‚È‚è‚Ü‚·B
+Luminã«è¼åº¦å¤‰åŒ–ã®å‰²åˆã‚’æŒ‡å®šã—ã¾ã™ã€‚ã“ã®å€¤ã«ã‚ˆã£ã¦å„ãƒ”ã‚¯ã‚»ãƒ«ã¯ã€ã¾ã£ãã‚(-256æŒ‡å®šæ™‚)ã‹ã‚‰ã¾ã£ã—ã‚(256æŒ‡å®šæ™‚)ã®é–“ã§å¤‰åŒ–ã—ã¾ã™ã€‚ãªãŠã€0ã‚’æŒ‡å®šã—ãŸæ™‚ã®è¼åº¦å¤‰åŒ–ã¯ã‚ã‚Šã¾ã›ã‚“(åŸºæº–)ã€‚
+Luminã«æ­£æ•°ã‚’æŒ‡å®šã™ã‚‹ã¨ã€ãƒ‘ã‚¹ãƒ†ãƒ«èª¿ã®ç™½ãŒæ··ã˜ã£ãŸã‚ˆã†ãªã‚„ã‚ã‚‰ã‹ã„å°è±¡ã«ãªã‚Šã¾ã™ã€‚
+Luminã«è² æ•°ã‚’æŒ‡å®šã™ã‚‹ã¨ã€å…¨ä½“çš„ã«æš—ãè‰²å¤‰åŒ–ã®ä¹ã—ã„ç”»åƒã«ãªã‚Šã¾ã™ã€‚
 %href
 ImgP_FilterVivid
 %index
 ImgP_FilterVivid
-‰æ‘œƒtƒBƒ‹ƒ^[(F‹­’²)
+ç”»åƒãƒ•ã‚£ãƒ«ã‚¿ãƒ¼(è‰²å¼·èª¿)
 %prm
 Lumin, Width, Height
-Lumin  [”’l]•â³’l(-256`256)
-Width  [”’l]‰¡•
-Height [”’l]c•
+Lumin  [æ•°å€¤]è£œæ­£å€¤(-256ï½256)
+Width  [æ•°å€¤]æ¨ªå¹…
+Height [æ•°å€¤]ç¸¦å¹…
 %inst
-Œ»İ‚Ì‰æ–Ê‚É‘Î‚µ‚Ä‹P“x•â³‚ğs‚¢‚Ü‚·B
-Width‚©Height‚ª0‚âÈ—ª‚Ìê‡A‰æ–Ê‘S‘Ì‚ª‘ÎÛ‚Æ‚È‚è‚Ü‚·BWidth‚ÆHeight‚ª0ˆÈŠO‚Ìê‡‚ÍƒJƒŒƒ“ƒgƒ|ƒWƒVƒ‡ƒ“‚©‚çw’è‚Ì”ÍˆÍ‚ª‘ÎÛ‚Å‚·B
+ç¾åœ¨ã®ç”»é¢ã«å¯¾ã—ã¦è¼åº¦è£œæ­£ã‚’è¡Œã„ã¾ã™ã€‚
+Widthã‹HeightãŒ0ã‚„çœç•¥ã®å ´åˆã€ç”»é¢å…¨ä½“ãŒå¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚Widthã¨HeightãŒ0ä»¥å¤–ã®å ´åˆã¯ã‚«ãƒ¬ãƒ³ãƒˆãƒã‚¸ã‚·ãƒ§ãƒ³ã‹ã‚‰æŒ‡å®šã®ç¯„å›²ãŒå¯¾è±¡ã§ã™ã€‚
 
-Lumin‚É‹P“x•Ï‰»‚ÌŠ„‡‚ğw’è‚µ‚Ü‚·B‚±‚Ì’l‚É‚æ‚Á‚ÄŠeƒsƒNƒZƒ‹‚ÍF‚ğ‹­’²‚·‚é‚æ‚¤‚É•Ï‰»‚µ‚Ü‚·B
-Lumin‚É³”‚ğw’è‚·‚é‚ÆAŠeƒsƒNƒZƒ‹‚ÌF‚Í”Z‚­‚È‚è‚Ü‚·B“Á‚ÉˆÃ‚¢F‚Ù‚ÇA‚æ‚è‘å‚«‚­‹P“x‚ª‰º‚ª‚é‚±‚Æ‚É‚È‚è‚Ü‚·BLumin=256‚Ì‚Ì–ÚˆÀ‚ÍˆÈ‰º‚Ì’Ê‚è‚Å‚·B
-    ‹P“x = Œ³‹P“x - (255 - Œ³‹P“x)
-    ¦—á) Œ³‹P“x‚ª250‚ÌA‹P“x‚Í245
-    ¦—á) Œ³‹P“x‚ª130‚ÌA‹P“x‚Í5
-Lumin‚É•‰”‚ğw’è‚·‚é‚ÆAŠeƒsƒNƒZƒ‹‚ÌF‚Í”’‚É‹ß‚Ã‚«‚Ü‚·BLumin=-256‚ÌAŒ³‚Ì‹P“x‚Ì2”{‚Ì‹P“x‚É•Ï‰»‚µ‚Ü‚·B
-Lumin‚É0‚ğw’è‚µ‚½‚Ì‹P“x•Ï‰»‚Í‚ ‚è‚Ü‚¹‚ñ(Šî€)B
-‚¢‚¸‚ê‚Ìê‡‚à‹P“x‚ª0`255‚Ì”ÍˆÍ‚Éû‚Ü‚é‚æ‚¤‚É‰ºãŒÀˆ—‚³‚ê‚Ü‚·B
+Luminã«è¼åº¦å¤‰åŒ–ã®å‰²åˆã‚’æŒ‡å®šã—ã¾ã™ã€‚ã“ã®å€¤ã«ã‚ˆã£ã¦å„ãƒ”ã‚¯ã‚»ãƒ«ã¯è‰²ã‚’å¼·èª¿ã™ã‚‹ã‚ˆã†ã«å¤‰åŒ–ã—ã¾ã™ã€‚
+Luminã«æ­£æ•°ã‚’æŒ‡å®šã™ã‚‹ã¨ã€å„ãƒ”ã‚¯ã‚»ãƒ«ã®è‰²ã¯æ¿ƒããªã‚Šã¾ã™ã€‚ç‰¹ã«æš—ã„è‰²ã»ã©ã€ã‚ˆã‚Šå¤§ããè¼åº¦ãŒä¸‹ãŒã‚‹ã“ã¨ã«ãªã‚Šã¾ã™ã€‚Lumin=256ã®æ™‚ã®ç›®å®‰ã¯ä»¥ä¸‹ã®é€šã‚Šã§ã™ã€‚
+    è¼åº¦ = å…ƒè¼åº¦ - (255 - å…ƒè¼åº¦)
+    â€»ä¾‹) å…ƒè¼åº¦ãŒ250ã®æ™‚ã€è¼åº¦ã¯245
+    â€»ä¾‹) å…ƒè¼åº¦ãŒ130ã®æ™‚ã€è¼åº¦ã¯5
+Luminã«è² æ•°ã‚’æŒ‡å®šã™ã‚‹ã¨ã€å„ãƒ”ã‚¯ã‚»ãƒ«ã®è‰²ã¯ç™½ã«è¿‘ã¥ãã¾ã™ã€‚Lumin=-256ã®æ™‚ã€å…ƒã®è¼åº¦ã®2å€ã®è¼åº¦ã«å¤‰åŒ–ã—ã¾ã™ã€‚
+Luminã«0ã‚’æŒ‡å®šã—ãŸæ™‚ã®è¼åº¦å¤‰åŒ–ã¯ã‚ã‚Šã¾ã›ã‚“(åŸºæº–)ã€‚
+ã„ãšã‚Œã®å ´åˆã‚‚è¼åº¦ãŒ0ï½255ã®ç¯„å›²ã«åã¾ã‚‹ã‚ˆã†ã«ä¸‹ä¸Šé™å‡¦ç†ã•ã‚Œã¾ã™ã€‚
 %href
 ImgP_FilterPastel
 %------------------------------------------------------------------------------------------------------*/
-#deffunc ImgM_FilterLight int l, int w, int h, int m    ; Œõ“xH‹P“xH
-    mref bb, 67                                         ; ginfo‚Å‚àŒ‹\‚¢‚¯‚é‚¯‚Ç‘S•”‚±‚ê‚Å
-    ib = bb(19), bb(35), bb(33), bb(34), bb(65)         ; Ä•`‰æƒtƒ‰ƒO‚Ægmode‚ÌŒ»İ’l
-    if w == 0 | h == 0  : ib(5) = 0, 0, bb(1), bb(2)  : else  : ib(5) = bb(27), bb(28), w, h    ; ”ÍˆÍ
-    ib(9) = bb(27), bb(28)                              ; ƒJƒŒƒ“ƒgƒ|ƒWƒVƒ‡ƒ“(–Y‚ê‚Ä‚½...)
-    if m == 0  : gmode 5, , , limit(abs(l), 0, 256)     ; ƒ‚[ƒhFƒrƒrƒbƒhƒg[ƒ“
-    if m == 1  : gmode 6, , , limit(abs(l), 0, 256)     ; ƒ‚[ƒhFƒpƒXƒeƒ‹ƒg[ƒ“
-    redraw 0                                            ; ƒlƒK‚Ìgcopy‚ªˆêuŒõ‚é‚Ì‚Å‹­§“I‚ÉƒIƒt‚Á‚Æ‚­
-    if 0 < l  : BitBlt hdc, ib(5), ib(6), ib(7), ib(8), , , , DSTINVERT     ; ƒlƒK
+#deffunc ImgM_FilterLight int l, int w, int h, int m    ; å…‰åº¦ï¼Ÿè¼åº¦ï¼Ÿ
+    mref bb, 67                                         ; ginfoã§ã‚‚çµæ§‹ã„ã‘ã‚‹ã‘ã©å…¨éƒ¨ã“ã‚Œã§
+    ib = bb(19), bb(35), bb(33), bb(34), bb(65)         ; å†æç”»ãƒ•ãƒ©ã‚°ã¨gmodeã®ç¾åœ¨å€¤
+    if w == 0 | h == 0  : ib(5) = 0, 0, bb(1), bb(2)  : else  : ib(5) = bb(27), bb(28), w, h    ; ç¯„å›²
+    ib(9) = bb(27), bb(28)                              ; ã‚«ãƒ¬ãƒ³ãƒˆãƒã‚¸ã‚·ãƒ§ãƒ³(å¿˜ã‚Œã¦ãŸ...)
+    if m == 0  : gmode 5, , , limit(abs(l), 0, 256)     ; ãƒ¢ãƒ¼ãƒ‰ï¼šãƒ“ãƒ“ãƒƒãƒ‰ãƒˆãƒ¼ãƒ³
+    if m == 1  : gmode 6, , , limit(abs(l), 0, 256)     ; ãƒ¢ãƒ¼ãƒ‰ï¼šãƒ‘ã‚¹ãƒ†ãƒ«ãƒˆãƒ¼ãƒ³
+    redraw 0                                            ; ãƒã‚¬æ™‚ã®gcopyãŒä¸€ç¬å…‰ã‚‹ã®ã§å¼·åˆ¶çš„ã«ã‚ªãƒ•ã£ã¨ã
+    if 0 < l  : BitBlt hdc, ib(5), ib(6), ib(7), ib(8), , , , DSTINVERT     ; ãƒã‚¬
     pos ib(5), ib(6)  : gcopy bb(18), ib(5), ib(6), ib(7), ib(8)
-    if 0 < l  : BitBlt hdc, ib(5), ib(6), ib(7), ib(8), , , , DSTINVERT     ; ƒ|ƒW
+    if 0 < l  : BitBlt hdc, ib(5), ib(6), ib(7), ib(8), , , , DSTINVERT     ; ãƒã‚¸
 
-    pos ib(9),ib(10)  : gmode ib(1),ib(2),ib(3),ib(4)   ; ‚»‚µ‚ÄŒ³‚ÌˆÊ’u‚É–ß‚·
-    if ib & $FFFF0000  : redraw 1                       ; Ä•`‰æ(İ’è‚Ì•œŒ³‚à‚©‚Ë‚Ä)
+    pos ib(9),ib(10)  : gmode ib(1),ib(2),ib(3),ib(4)   ; ãã—ã¦å…ƒã®ä½ç½®ã«æˆ»ã™
+    if ib & $FFFF0000  : redraw 1                       ; å†æç”»(è¨­å®šã®å¾©å…ƒã‚‚ã‹ã­ã¦)
     return
 
-    ; ‘g‚İ‡‚í‚¹‚Ä4‚Â‚Ì–½—ß‚ª‚Å‚«‚½‚¯‚ÇªÅI“I‚É1‚±‚É‚Ü‚Æ‚Ü‚Á‚½(Î  «ƒ}ƒNƒ‚ÌŒ`‚Å’ñ‹Ÿ
+    ; çµ„ã¿åˆã‚ã›ã¦4ã¤ã®å‘½ä»¤ãŒã§ããŸã‘ã©â†‘æœ€çµ‚çš„ã«1ã“ã«ã¾ã¨ã¾ã£ãŸ(ç¬‘  â†“ãƒã‚¯ãƒ­ã®å½¢ã§æä¾›
 #define global ImgP_FilterPastel(%1,%2=0,%3=0)  ImgM_FilterLight %1,%2,%3,1
 #define global ImgP_FilterVivid(%1,%2=0,%3=0)   ImgM_FilterLight %1,%2,%3,0
-    ; •â³’l‚ª³”‚¾‚Æƒrƒr‚Á‚Æ‚ ‚´‚â‚©‚Á‚ÄŠ´‚¶‚Å‚Í‚È‚­ƒKƒ“ƒ}‚Æ‚©ƒRƒ“ƒgƒ‰ƒXƒg‚Æ‚©‚ª‹ß‚¢‚©‚à
+    ; è£œæ­£å€¤ãŒæ­£æ•°ã ã¨ãƒ“ãƒ“ã£ã¨ã‚ã–ã‚„ã‹ã£ã¦æ„Ÿã˜ã§ã¯ãªãã‚¬ãƒ³ãƒã¨ã‹ã‚³ãƒ³ãƒˆãƒ©ã‚¹ãƒˆã¨ã‹ãŒè¿‘ã„ã‹ã‚‚
 
 /*-------------------------------------------------------------------------------------------------------
 %index
 ImgP_FilterNega
-‰æ‘œƒtƒBƒ‹ƒ^[(ƒlƒKƒ|ƒWA”r‘¼“I˜_—˜a=XOR)
+ç”»åƒãƒ•ã‚£ãƒ«ã‚¿ãƒ¼(ãƒã‚¬ãƒã‚¸ã€æ’ä»–çš„è«–ç†å’Œ=XOR)
 %prm
 Width, Height
-Width  [”’l]‰¡•
-Height [”’l]c•
+Width  [æ•°å€¤]æ¨ªå¹…
+Height [æ•°å€¤]ç¸¦å¹…
 %inst
-Œ»İ‚Ì‰æ–Ê‚É‘Î‚µ‚ÄƒJƒŒƒ“ƒgƒJƒ‰[‚Æ‚ÌXOR‰‰Z‚ğs‚¢‚Ü‚·B
-Width‚©Height‚ª0‚âÈ—ª‚Ìê‡A‰æ–Ê‘S‘Ì‚ª‘ÎÛ‚Æ‚È‚è‚Ü‚·BWidth‚ÆHeight‚ª0ˆÈŠO‚Ìê‡‚ÍƒJƒŒƒ“ƒgƒ|ƒWƒVƒ‡ƒ“‚©‚çw’è‚Ì”ÍˆÍ‚ª‘ÎÛ‚Å‚·B
+ç¾åœ¨ã®ç”»é¢ã«å¯¾ã—ã¦ã‚«ãƒ¬ãƒ³ãƒˆã‚«ãƒ©ãƒ¼ã¨ã®XORæ¼”ç®—ã‚’è¡Œã„ã¾ã™ã€‚
+Widthã‹HeightãŒ0ã‚„çœç•¥ã®å ´åˆã€ç”»é¢å…¨ä½“ãŒå¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚Widthã¨HeightãŒ0ä»¥å¤–ã®å ´åˆã¯ã‚«ãƒ¬ãƒ³ãƒˆãƒã‚¸ã‚·ãƒ§ãƒ³ã‹ã‚‰æŒ‡å®šã®ç¯„å›²ãŒå¯¾è±¡ã§ã™ã€‚
 
-XOR‚Í‚¢‚í‚Îƒrƒbƒg”½“]‚ğ‚·‚éŒvZ‚ÅA‚½‚Æ‚¦‚Î
-    %11001100 ^ %00001111 ¨ %11000011
-    ¦ %11001100:”í”  ^:‰‰Zq  %00001111:‘ÎÛƒrƒbƒgw’è
-‚Æ‚È‚è‚Ü‚·B
-‚Å‚·‚Ì‚ÅA‚Ü‚Á‚µ‚ë(255, 255, 255)‚Æ‚ÌXOR‚ÍƒlƒKƒ|ƒWŒø‰Ê‚ğA‚Ü‚Á‚­‚ë(0, 0, 0)‚Æ‚ÌXOR‚Í–³ˆÓ–¡‚Æ‚È‚é‚Ù‚©A‚³‚Ü‚´‚Ü‚È‰æ‘œŒø‰Ê‚ğ“¾‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+XORã¯ã„ã‚ã°ãƒ“ãƒƒãƒˆåè»¢ã‚’ã™ã‚‹è¨ˆç®—ã§ã€ãŸã¨ãˆã°
+    %11001100 ^ %00001111 â†’ %11000011
+    â€» %11001100:è¢«æ•°  ^:æ¼”ç®—å­  %00001111:å¯¾è±¡ãƒ“ãƒƒãƒˆæŒ‡å®š
+ã¨ãªã‚Šã¾ã™ã€‚
+ã§ã™ã®ã§ã€ã¾ã£ã—ã‚(255, 255, 255)ã¨ã®XORã¯ãƒã‚¬ãƒã‚¸åŠ¹æœã‚’ã€ã¾ã£ãã‚(0, 0, 0)ã¨ã®XORã¯ç„¡æ„å‘³ã¨ãªã‚‹ã»ã‹ã€ã•ã¾ã–ã¾ãªç”»åƒåŠ¹æœã‚’å¾—ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚
 %------------------------------------------------------------------------------------------------------*/
 #deffunc ImgP_FilterNega int w, int h
     mref bb, 67
-    SelectObject hdc, bb(36)  : ib = stat           ; HSP‚ªì‚è’u‚«‚µ‚Ä‚¢‚éƒuƒ‰ƒVƒIƒuƒWƒF‚ğİ’è
-    if w == 0 | h == 0  : ib(1) = 0, 0, bb(1), bb(2)  : else  : ib(1) = bb(27), bb(28), w, h    ; ƒnƒj
-    BitBlt hdc, ib(1), ib(2), ib(3), ib(4), , , , PATINVERT     ; ƒuƒ‰ƒV‚ÆXOR           ‚Í‚É‚Á!?¨”ÍˆÍ
-    SelectObject hdc, ib                            ; Œ³‚Ìƒuƒ‰ƒV‚É–ß‚·
-    if bb(19) & $FFFF0000  : redraw 1               ; Ä•`‰æˆ—
+    SelectObject hdc, bb(36)  : ib = stat           ; HSPãŒä½œã‚Šç½®ãã—ã¦ã„ã‚‹ãƒ–ãƒ©ã‚·ã‚ªãƒ–ã‚¸ã‚§ã‚’è¨­å®š
+    if w == 0 | h == 0  : ib(1) = 0, 0, bb(1), bb(2)  : else  : ib(1) = bb(27), bb(28), w, h    ; ãƒãƒ‹
+    BitBlt hdc, ib(1), ib(2), ib(3), ib(4), , , , PATINVERT     ; ãƒ–ãƒ©ã‚·ã¨XOR           ã¯ã«ã£!?â†’ç¯„å›²
+    SelectObject hdc, ib                            ; å…ƒã®ãƒ–ãƒ©ã‚·ã«æˆ»ã™
+    if bb(19) & $FFFF0000  : redraw 1               ; å†æç”»å‡¦ç†
     return
 
 /*-------------------------------------------------------------------------------------------------------
 %index
 ImgP_FilterSubAbs
-‰æ‘œƒtƒBƒ‹ƒ^[(2‰æ‘œ‚Ì·‚Ìâ‘Î’l)
+ç”»åƒãƒ•ã‚£ãƒ«ã‚¿ãƒ¼(2ç”»åƒã®å·®ã®çµ¶å¯¾å€¤)
 %prm
 DiffWinID, PosX, PosY, Width, Height
-DiffWinID    [”’l]‰æ‘œB‚ÌƒEƒBƒ“ƒhƒEID
-PosX, PosY   [”’l]‰æ‘œB‚Ì¶ãÀ•W
-Width,Height [”’l]‰¡•Ac•
+DiffWinID    [æ•°å€¤]ç”»åƒBã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ID
+PosX, PosY   [æ•°å€¤]ç”»åƒBã®å·¦ä¸Šåº§æ¨™
+Width,Height [æ•°å€¤]æ¨ªå¹…ã€ç¸¦å¹…
 %inst
-Œ»İ‚Ì‰æ–Ê(‰æ‘œA)‚Æƒpƒ‰ƒ[ƒ^w’è‚Ì‰æ–Ê(‰æ‘œB)‚Å·‚ğ‚Æ‚è‚»‚Ìâ‘Î’l‚ğ¦‚µ‚Ü‚·B‚±‚Ì‰æ‘œ‚Í‹P“x‚Ì·‚ª¬‚³‚¢‚Ù‚ÇˆÃ‚¢(•‚¢)“_‚Æ‚µ‚Ä•\¦‚³‚ê
-    E—Ç‚­—‚½‚Q‚Â‚Ì‰æ‘œ‚Ì‘Šˆá“_‚ğ‹Šo“I‚É¦‚·
-    Eˆ³k‚É‚æ‚é‰æ¿‚Ì—ò‰»‹ï‡‚Ì”»’è
-    EFŒ¸ZƒRƒs[‚ÉƒNƒ‰ƒ“ƒv‚³‚ê‚Ä‚¢‚é•”•ª‚Ì‹Šo‰»
-‚Æ‚¢‚Á‚½—p“r‚Ég—p‰Â”\‚Å‚·B
+ç¾åœ¨ã®ç”»é¢(ç”»åƒA)ã¨ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æŒ‡å®šã®ç”»é¢(ç”»åƒB)ã§å·®ã‚’ã¨ã‚Šãã®çµ¶å¯¾å€¤ã‚’ç¤ºã—ã¾ã™ã€‚ã“ã®ç”»åƒã¯è¼åº¦ã®å·®ãŒå°ã•ã„ã»ã©æš—ã„(é»’ã„)ç‚¹ã¨ã—ã¦è¡¨ç¤ºã•ã‚Œ
+    ãƒ»è‰¯ãä¼¼ãŸï¼’ã¤ã®ç”»åƒã®ç›¸é•ç‚¹ã‚’è¦–è¦šçš„ã«ç¤ºã™
+    ãƒ»åœ§ç¸®ã«ã‚ˆã‚‹ç”»è³ªã®åŠ£åŒ–å…·åˆã®åˆ¤å®š
+    ãƒ»è‰²æ¸›ç®—ã‚³ãƒ”ãƒ¼æ™‚ã«ã‚¯ãƒ©ãƒ³ãƒ—ã•ã‚Œã¦ã„ã‚‹éƒ¨åˆ†ã®è¦–è¦šåŒ–
+ã¨ã„ã£ãŸç”¨é€”ã«ä½¿ç”¨å¯èƒ½ã§ã™ã€‚
 
-‰æ‘œA‚É‚Â‚¢‚ÄAWidth‚©Height‚ª0‚âÈ—ª‚Ìê‡‚ÍŒ»İ‚Ì‰æ–Ê‘S‘Ì‚ª‘ÎÛ‚Æ‚È‚è‚Ü‚·BWidth‚ÆHeight‚ª0ˆÈŠO‚Ìê‡‚ÍƒJƒŒƒ“ƒgƒ|ƒWƒVƒ‡ƒ“‚©‚çw’è‚Ì”ÍˆÍ‚ª‘ÎÛ‚Å‚·B
-‰æ‘œB‚Íw’èÀ•W‚ğ¶ã‚Æ‚·‚éˆÊ’u‚©‚ç‰æ‘œA‚Æ“¯ƒTƒCƒY‚ª‘ÎÛ‚Æ‚È‚è‚Ü‚·BŒ‹‰Ê‰æ‘œ‚Í‰æ‘œA‚ğã‘‚«‚·‚éŒ`‚Å•`‰æ‚³‚ê‚Ü‚·B
+ç”»åƒAã«ã¤ã„ã¦ã€Widthã‹HeightãŒ0ã‚„çœç•¥ã®å ´åˆã¯ç¾åœ¨ã®ç”»é¢å…¨ä½“ãŒå¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚Widthã¨HeightãŒ0ä»¥å¤–ã®å ´åˆã¯ã‚«ãƒ¬ãƒ³ãƒˆãƒã‚¸ã‚·ãƒ§ãƒ³ã‹ã‚‰æŒ‡å®šã®ç¯„å›²ãŒå¯¾è±¡ã§ã™ã€‚
+ç”»åƒBã¯æŒ‡å®šåº§æ¨™ã‚’å·¦ä¸Šã¨ã™ã‚‹ä½ç½®ã‹ã‚‰ç”»åƒAã¨åŒã‚µã‚¤ã‚ºãŒå¯¾è±¡ã¨ãªã‚Šã¾ã™ã€‚çµæœç”»åƒã¯ç”»åƒAã‚’ä¸Šæ›¸ãã™ã‚‹å½¢ã§æç”»ã•ã‚Œã¾ã™ã€‚
 %------------------------------------------------------------------------------------------------------*/
 #deffunc ImgP_FilterSubAbs int i, int x, int y, int w, int h
-    ; ‚â‚Á‚Ä‚¢‚é‚±‚Æ‚Í[A-B=C][B-A=D][C+D=E]‚Ì‰æ‘œ‰ÁŒ¸ƒRƒs[‚É‰ß‚¬‚È‚¢‚ªAì‹Æ—pWin•s—v‰»‚Å‰ñ‚è‚­‚Ç‚¢B
-    ; ‰æ‘œƒXƒgƒbƒN‚ÌƒRƒ“ƒpƒ`‚ÍƒRƒs[Œ³Win‚É‡‚í‚¹‚é(ƒRƒs[Œ³‰æ‘œ(ŒvZŒã‚Éc‚é•û)‚Ì—ò‰»‚ğ–h‚®‚½‚ß)B
-    ; [C+D=E]‚ÍA•‰”ƒNƒ‰ƒ“ƒv‚Ìˆ×Aˆê•û‚Í 0 ‚É‚È‚Á‚Ä‚¢‚é ¨ ˜_—˜a/”r‘¼“I˜_—˜a/‡Z(‰ÁZ)‚Ç‚ê‚Å‚àOK!
+    ; ã‚„ã£ã¦ã„ã‚‹ã“ã¨ã¯[A-B=C][B-A=D][C+D=E]ã®ç”»åƒåŠ æ¸›ã‚³ãƒ”ãƒ¼ã«éããªã„ãŒã€ä½œæ¥­ç”¨Winä¸è¦åŒ–ã§å›ã‚Šãã©ã„ã€‚
+    ; ç”»åƒã‚¹ãƒˆãƒƒã‚¯ã®ã‚³ãƒ³ãƒ‘ãƒã¯ã‚³ãƒ”ãƒ¼å…ƒWinã«åˆã‚ã›ã‚‹(ã‚³ãƒ”ãƒ¼å…ƒç”»åƒ(è¨ˆç®—å¾Œã«æ®‹ã‚‹æ–¹)ã®åŠ£åŒ–ã‚’é˜²ããŸã‚)ã€‚
+    ; [C+D=E]ã¯ã€è² æ•°ã‚¯ãƒ©ãƒ³ãƒ—ã®ç‚ºã€ä¸€æ–¹ã¯ 0 ã«ãªã£ã¦ã„ã‚‹ â†’ è«–ç†å’Œ/æ’ä»–çš„è«–ç†å’Œ/åˆç®—(åŠ ç®—)ã©ã‚Œã§ã‚‚OK!
 
-    ;   ib( 0` 7)ƒRƒs[æİ’è  0:WinID   1:redrawFrag   2-5:gmode   6-7:curPos
-    ;   ib( 8`11)o—ÍˆÊ’u”ÍˆÍ  8-9:pos   10-11:size
-    ;   ib(12`18)ƒRƒs[Œ³İ’è  12:redrawFlag   13-16:gmode   17-18:curPos
-    ;   ib(19`21)ƒnƒ“ƒhƒ‹ƒY    19:CreateHDC   20:CreatehBitmap   21:hBitmapStock
+    ;   ib( 0ï½ 7)ã‚³ãƒ”ãƒ¼å…ˆè¨­å®š  0:WinID   1:redrawFrag   2-5:gmode   6-7:curPos
+    ;   ib( 8ï½11)å‡ºåŠ›ä½ç½®ç¯„å›²  8-9:pos   10-11:size
+    ;   ib(12ï½18)ã‚³ãƒ”ãƒ¼å…ƒè¨­å®š  12:redrawFlag   13-16:gmode   17-18:curPos
+    ;   ib(19ï½21)ãƒãƒ³ãƒ‰ãƒ«ã‚º    19:CreateHDC   20:CreatehBitmap   21:hBitmapStock
 
     mref bb, 67
-    ib = bb(18), bb(19), bb(35), bb(33), bb(34), bb(65), bb(27), bb(28)     ; ƒRƒs[æİ’è(T‚¦)
-    redraw 0                                                                ; ƒRƒs[æÄ•`‰æƒIƒt
+    ib = bb(18), bb(19), bb(35), bb(33), bb(34), bb(65), bb(27), bb(28)     ; ã‚³ãƒ”ãƒ¼å…ˆè¨­å®š(æ§ãˆ)
+    redraw 0                                                                ; ã‚³ãƒ”ãƒ¼å…ˆå†æç”»ã‚ªãƒ•
 
-    if w == 0 | h == 0 : ib(8) = 0, 0, bb(1), bb(2) :else: ib(8) = bb(27), bb(28), w, h ; ”ÍˆÍŒvZ
+    if w == 0 | h == 0 : ib(8) = 0, 0, bb(1), bb(2) :else: ib(8) = bb(27), bb(28), w, h ; ç¯„å›²è¨ˆç®—
 
-    gsel i                      ; ‚±‚±‚©‚ç‚Ì hdc ‚ÍƒRƒs[Œ³
+    gsel i                      ; ã“ã“ã‹ã‚‰ã® hdc ã¯ã‚³ãƒ”ãƒ¼å…ƒ
     mref bb, 67
-    ib(12) = bb(19), bb(35), bb(33), bb(34), bb(65), bb(27), bb(28), 0, 0, 0    ; ƒRƒs[Œ³T‚¦{hndlˆæ
-    redraw 0                                                                    ; ƒRƒs[Œ³Ä•`‰æƒIƒt
+    ib(12) = bb(19), bb(35), bb(33), bb(34), bb(65), bb(27), bb(28), 0, 0, 0    ; ã‚³ãƒ”ãƒ¼å…ƒæ§ãˆï¼‹hndlåŸŸ
+    redraw 0                                                                    ; ã‚³ãƒ”ãƒ¼å…ƒå†æç”»ã‚ªãƒ•
 
-    ImgM_CreateH ImchMode_CompDC, hdc  : ib(19) = stat                                  ; ƒfƒoƒRƒ“ì‚è
-    ImgM_CreateH ImchMode_CompBitmapObject, hdc, ib(10) * 2, ib(11)  : ib(20) = stat    ; ƒrƒgƒ}ì‚è
-    SelectObject ib(19), ib(20)  : ib(21) = stat                                        ; ƒrƒgƒ}·‚µ‘Ö‚¦
+    ImgM_CreateH ImchMode_CompDC, hdc  : ib(19) = stat                                  ; ãƒ‡ãƒã‚³ãƒ³ä½œã‚Š
+    ImgM_CreateH ImchMode_CompBitmapObject, hdc, ib(10) * 2, ib(11)  : ib(20) = stat    ; ãƒ“ãƒˆãƒä½œã‚Š
+    SelectObject ib(19), ib(20)  : ib(21) = stat                                        ; ãƒ“ãƒˆãƒå·®ã—æ›¿ãˆ
 
-    BitBlt ib(19), ib(10), 0, ib(10), ib(11), hdc, x, y, SRCCOPY        ; ƒRƒs[Œ³‚Ì‰æ‘œ‚ğT‚¦‚Ä‚¨‚­
-    gmode 6, ib(10), ib(11), 256  : pos x, y  : gcopy ib, ib(8), ib(9)  ; ‚Ü‚¸ƒRƒs[Œ³‚ÉŒ¸ZÀs
-    BitBlt ib(19), 0, 0, ib(10), ib(11), hdc, x, y, SRCCOPY             ; Œ¸ZŒ‹‰Ê‚ğT‚¦‚é
-    BitBlt hdc, x, y, ib(10), ib(11), ib(19), ib(10), 0, SRCCOPY        ; ƒRƒs[Œ³‚ÍŒ¸Z‘O‚É–ß‚·
+    BitBlt ib(19), ib(10), 0, ib(10), ib(11), hdc, x, y, SRCCOPY        ; ã‚³ãƒ”ãƒ¼å…ƒã®ç”»åƒã‚’æ§ãˆã¦ãŠã
+    gmode 6, ib(10), ib(11), 256  : pos x, y  : gcopy ib, ib(8), ib(9)  ; ã¾ãšã‚³ãƒ”ãƒ¼å…ƒã«æ¸›ç®—å®Ÿè¡Œ
+    BitBlt ib(19), 0, 0, ib(10), ib(11), hdc, x, y, SRCCOPY             ; æ¸›ç®—çµæœã‚’æ§ãˆã‚‹
+    BitBlt hdc, x, y, ib(10), ib(11), ib(19), ib(10), 0, SRCCOPY        ; ã‚³ãƒ”ãƒ¼å…ƒã¯æ¸›ç®—å‰ã«æˆ»ã™
 
-    gsel ib                     ; ‚±‚±‚©‚ç‚Ì hdc ‚ÍƒRƒs[æ
-    gmode 6, ib(10), ib(11), 256  : pos ib(8), ib(9)  : gcopy i, x, y   ; Ÿ‚ÉƒRƒs[æ‚ÉŒ¸ZÀs
-    BitBlt hdc, ib(8), ib(9), ib(10), ib(11), ib(19), 0, 0, SRCPAINT    ; ‚Ó‚½‚Â‚ÌŒ¸ZŒ‹‰Ê‚ğ‡‘Ì
+    gsel ib                     ; ã“ã“ã‹ã‚‰ã® hdc ã¯ã‚³ãƒ”ãƒ¼å…ˆ
+    gmode 6, ib(10), ib(11), 256  : pos ib(8), ib(9)  : gcopy i, x, y   ; æ¬¡ã«ã‚³ãƒ”ãƒ¼å…ˆã«æ¸›ç®—å®Ÿè¡Œ
+    BitBlt hdc, ib(8), ib(9), ib(10), ib(11), ib(19), 0, 0, SRCPAINT    ; ãµãŸã¤ã®æ¸›ç®—çµæœã‚’åˆä½“
 
-    SelectObject ib(19), ib(21)                 ; ·‚µ‘Ö‚¦‚Ä‚¢‚½ƒrƒgƒ}‚ğ·‚µ–ß‚·
-    ImgM_CloseH                                 ; APIƒtƒBƒjƒbƒVƒƒ[
+    SelectObject ib(19), ib(21)                 ; å·®ã—æ›¿ãˆã¦ã„ãŸãƒ“ãƒˆãƒã‚’å·®ã—æˆ»ã™
+    ImgM_CloseH                                 ; APIãƒ•ã‚£ãƒ‹ãƒƒã‚·ãƒ£ãƒ¼
 
-    ; ƒEƒBƒ“ƒhƒE‚ÌCurPos/gmode/RedrawFlag‚ğ•œŒ³(WinIDˆê’v‚Ì‰Â”\«‚ğl—¶‚µ‚ÄÅŒã‚É‚Ü‚Æ‚ß‚Ädã‚°‚é)
+    ; ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®CurPos/gmode/RedrawFlagã‚’å¾©å…ƒ(WinIDä¸€è‡´ã®å¯èƒ½æ€§ã‚’è€ƒæ…®ã—ã¦æœ€å¾Œã«ã¾ã¨ã‚ã¦ä»•ä¸Šã’ã‚‹)
     gsel i  : pos ib(17),ib(18) : gmode ib(13),ib(14),ib(15),ib(16) : if ib(12)&$FFFF0000 : redraw 1
     gsel ib : pos ib( 6), ib(7) : gmode ib( 2),ib( 3),ib( 4),ib( 5) : if ib( 1)&$FFFF0000 : redraw 1
     return
@@ -789,42 +789,42 @@ Width,Height [”’l]‰¡•Ac•
 /*-------------------------------------------------------------------------------------------------------
 %index
 ImgP_grotate
-‹éŒ`‰æ‘œ‚ğ‰ñ“]‚µ‚ÄƒRƒs[(GDI+)
+çŸ©å½¢ç”»åƒã‚’å›è»¢ã—ã¦ã‚³ãƒ”ãƒ¼(GDI+)
 %prm
 TrimWinID, TrimX, TrimY, Angle, Width, Height
-TrimWinID     [”’l]Œ³‰æ‘œ‚ÌƒEƒBƒ“ƒhƒEID
-TrimX, TrimY  [”’l]Œ³‰æ‘œ‚Ì‹N“_(¶ã)À•W
-Angle         [À”]‰ñ“]Šp“x(ƒ‰ƒWƒAƒ“A1ü=2ƒÎEŒv‰ñ‚è)
-Width, Height [”’l]•`‰æƒTƒCƒY(‰¡•Ac•)
+TrimWinID     [æ•°å€¤]å…ƒç”»åƒã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ID
+TrimX, TrimY  [æ•°å€¤]å…ƒç”»åƒã®èµ·ç‚¹(å·¦ä¸Š)åº§æ¨™
+Angle         [å®Ÿæ•°]å›è»¢è§’åº¦(ãƒ©ã‚¸ã‚¢ãƒ³ã€1å‘¨=2Ï€ãƒ»æ™‚è¨ˆå›ã‚Š)
+Width, Height [æ•°å€¤]æç”»ã‚µã‚¤ã‚º(æ¨ªå¹…ã€ç¸¦å¹…)
 %inst
-HSP•W€‚Ìgrotate–½—ß‚ğGDI+‚ğg—p‚µ‚ÄÄŒ»‚µ‚Ü‚·Bc‚ªˆÙ‚È‚é“_‚à‘½‚¢‚Å‚·B•W€–½—ß‚æ‚è‚à‰æ¿‚ª—Ç‚­‚È‚è‚Ü‚·B
+HSPæ¨™æº–ã®grotateå‘½ä»¤ã‚’GDI+ã‚’ä½¿ç”¨ã—ã¦å†ç¾ã—ã¾ã™ã€‚â€¦ãŒç•°ãªã‚‹ç‚¹ã‚‚å¤šã„ã§ã™ã€‚æ¨™æº–å‘½ä»¤ã‚ˆã‚Šã‚‚ç”»è³ªãŒè‰¯ããªã‚Šã¾ã™ã€‚
 
-•`‰æ‚ÍƒJƒŒƒ“ƒgƒ|ƒWƒVƒ‡ƒ“‚ğ’†S‚Æ‚µ‚½ˆÊ’u‚És‚í‚ê‚Ü‚·B
-•`‰æŒã‚Ì‹éŒ`ƒTƒCƒY‚ğWidth‚ÆHeight‚Éw’è‚µ‚Ü‚·B‰ñ“]‚·‚é‚½‚ß‰æ‘œ‚Í‚±‚Ì‹éŒ`‚É‚Íû‚Ü‚è‚Ü‚¹‚ñBWidth‚©Height‚ğ0‚©È—ª‚µ‚½ê‡‚Í“™”{ƒRƒs[A‘å‚«‚³‚ğw’è‚µ‚½ê‡‚ÍŠg‘åEk¬ƒRƒs[‚É‚È‚è‚Ü‚·B
-Œ³‰æ‘œ‚ÌƒTƒCƒY‚Ígmode–½—ß‚Åİ’è‚µ‚½’l‚ğg—p‚µ‚Ü‚·‚Ì‚ÅA‚ ‚ç‚©‚¶‚ßw’è‚µ‚Ä‚¨‚¢‚Ä‚­‚¾‚³‚¢B
+æç”»ã¯ã‚«ãƒ¬ãƒ³ãƒˆãƒã‚¸ã‚·ãƒ§ãƒ³ã‚’ä¸­å¿ƒã¨ã—ãŸä½ç½®ã«è¡Œã‚ã‚Œã¾ã™ã€‚
+æç”»å¾Œã®çŸ©å½¢ã‚µã‚¤ã‚ºã‚’Widthã¨Heightã«æŒ‡å®šã—ã¾ã™ã€‚å›è»¢ã™ã‚‹ãŸã‚ç”»åƒã¯ã“ã®çŸ©å½¢ã«ã¯åã¾ã‚Šã¾ã›ã‚“ã€‚Widthã‹Heightã‚’0ã‹çœç•¥ã—ãŸå ´åˆã¯ç­‰å€ã‚³ãƒ”ãƒ¼ã€å¤§ãã•ã‚’æŒ‡å®šã—ãŸå ´åˆã¯æ‹¡å¤§ãƒ»ç¸®å°ã‚³ãƒ”ãƒ¼ã«ãªã‚Šã¾ã™ã€‚
+å…ƒç”»åƒã®ã‚µã‚¤ã‚ºã¯gmodeå‘½ä»¤ã§è¨­å®šã—ãŸå€¤ã‚’ä½¿ç”¨ã—ã¾ã™ã®ã§ã€ã‚ã‚‰ã‹ã˜ã‚æŒ‡å®šã—ã¦ãŠã„ã¦ãã ã•ã„ã€‚
 
-gmode‚ÌƒRƒs[ƒ‚[ƒh‚Í0‚©1‚Ì‚İ‚É‘Î‰‚µ‚Ä‚¢‚Ü‚·(‚Â‚Ü‚èƒxƒ^‚Ê‚è‚Å‚·)B
-Œ³‰æ‘œ‚Ì”ÍˆÍ‚É‰æ–ÊŠO—Ìˆæ‚ªŠÜ‚Ü‚ê‚éê‡A‚»‚Ì—Ìˆæ‚Í“§‰ß‰æ‘f‚Ìˆµ‚¢‚É‚È‚è‚Ü‚·(grotate‚Å‚ÍƒŠƒTƒCƒYH‚³‚ê‚é‚æ‚¤‚ÅAŠgkE•`‰æˆÊ’u‚É‰e‹¿‚ªo‚Ü‚·)B
+gmodeã®ã‚³ãƒ”ãƒ¼ãƒ¢ãƒ¼ãƒ‰ã¯0ã‹1ã®ã¿ã«å¯¾å¿œã—ã¦ã„ã¾ã™(ã¤ã¾ã‚Šãƒ™ã‚¿ã¬ã‚Šã§ã™)ã€‚
+å…ƒç”»åƒã®ç¯„å›²ã«ç”»é¢å¤–é ˜åŸŸãŒå«ã¾ã‚Œã‚‹å ´åˆã€ãã®é ˜åŸŸã¯é€éç”»ç´ ã®æ‰±ã„ã«ãªã‚Šã¾ã™(grotateã§ã¯ãƒªã‚µã‚¤ã‚ºï¼Ÿã•ã‚Œã‚‹ã‚ˆã†ã§ã€æ‹¡ç¸®ãƒ»æç”»ä½ç½®ã«å½±éŸ¿ãŒå‡ºã¾ã™)ã€‚
 %href
 ImgP_RotateFlip
 %------------------------------------------------------------------------------------------------------*/
-;   grotate‚ÌÄŒ»‚ÆŒ¾‚¤‚æ‚èA”CˆÓŠp‰ñ“]–½—ß‚Æ‚µ‚Ä‚Ü‚Æ‚ß‚½•û‚ªŠÈ‘f‚Å—Ç‚¢‚©‚àH
+;   grotateã®å†ç¾ã¨è¨€ã†ã‚ˆã‚Šã€ä»»æ„è§’å›è»¢å‘½ä»¤ã¨ã—ã¦ã¾ã¨ã‚ãŸæ–¹ãŒç°¡ç´ ã§è‰¯ã„ã‹ã‚‚ï¼Ÿ
 #deffunc ImgP_grotate int i, int x, int y, double r, int w, int h
-    mref bb, 67                                     ; ‚±‚Ìˆ—‚Á‚ÄÀ‚Ì‚Æ‚±‚ëƒA[ƒgƒŒƒbƒg‚É[‚Å[‚Å‚Å‚«‚é
+    mref bb, 67                                     ; ã“ã®å‡¦ç†ã£ã¦å®Ÿã®ã¨ã“ã‚ã‚¢ãƒ¼ãƒˆãƒ¬ãƒƒãƒˆã«ãƒ¼ã§ãƒ¼ã§ã§ãã‚‹
     ib = bb(18), bb(19), bb(35), bb(33), bb(34), bb(65), bb(27), bb(28)
-    if w == 0 | h == 0  : ib(8) = ib(3), ib(4)  : else  : ib(8) = w, h      ; •`‰æƒTƒCƒY
-    ;   ib(0-7)•`‰ææî•ñ   0:WinID   1:redrawFrag   2-5:gmode   6-7:curPos©g‚Á‚Ä‚È‚­‚ËH
-    ;   ib(8-9)“\‚è•t‚¯‚Ì‘å‚«‚³     ‚¿‚È‚İ‚Éib(3-4)Ø‚èæ‚èƒTƒCƒY
+    if w == 0 | h == 0  : ib(8) = ib(3), ib(4)  : else  : ib(8) = w, h      ; æç”»ã‚µã‚¤ã‚º
+    ;   ib(0-7)æç”»å…ˆæƒ…å ±   0:WinID   1:redrawFrag   2-5:gmode   6-7:curPosâ†ä½¿ã£ã¦ãªãã­ï¼Ÿ
+    ;   ib(8-9)è²¼ã‚Šä»˜ã‘æ™‚ã®å¤§ãã•     ã¡ãªã¿ã«ib(3-4)åˆ‡ã‚Šå–ã‚Šã‚µã‚¤ã‚º
 
     ImgM_CreateH ImchMode_Matrix  : ib(10) = stat               ; ib(10) matrix
-    GdipTranslateMatrix ib(10), ginfo_cx, ginfo_cy, 0           ; À•W‚ÍAÀ‚ÍÀ”
-    GdipRotateMatrix    ib(10), rad2deg(r), 0                   ; GDI+‚Å‚Írad¨deg‚·‚é
+    GdipTranslateMatrix ib(10), ginfo_cx, ginfo_cy, 0           ; åº§æ¨™ã¯ã€å®Ÿã¯å®Ÿæ•°
+    GdipRotateMatrix    ib(10), rad2deg(r), 0                   ; GDI+ã§ã¯radâ†’degã™ã‚‹
     GdipTranslateMatrix ib(10), -ginfo_cx, -ginfo_cy, 0
 
-    ImgM_CreateH ImchMode_GraphicFromWindow  : ib(11) = stat    ; ib(11) graphic(•`‰ææ)
+    ImgM_CreateH ImchMode_GraphicFromWindow  : ib(11) = stat    ; ib(11) graphic(æç”»å…ˆ)
     GdipSetWorldTransform ib(11), ib(10)
 
-    gsel i  : ImgM_CreateH ImchMode_ImageFromWindow  : ib(12) = stat    ; ib(12) image(Œ³‰æ‘œ)
+    gsel i  : ImgM_CreateH ImchMode_ImageFromWindow  : ib(12) = stat    ; ib(12) image(å…ƒç”»åƒ)
     gsel ib
     GdipDrawImageRectRectI ib(11),ib(12),ginfo_cx-ib(8)/2,ginfo_cy-ib(9)/2,ib(8),ib(9),x,y,ib(3),ib(4),2
 
@@ -832,6 +832,6 @@ ImgP_RotateFlip
     if ib(1) & $FFFF0000  : redraw 1
     return
 
-; http://www.tvg.ne.jp/menyukko/ ; Copyright(C) 2010-2014 ˆß“ú˜a All rights reserved.
+; http://www.tvg.ne.jp/menyukko/ ; Copyright(C) 2010-2014 è¡£æ—¥å’Œ All rights reserved.
 #global
 #endif

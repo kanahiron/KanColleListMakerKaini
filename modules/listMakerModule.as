@@ -3,19 +3,19 @@
 #endif
 
 // listMakerModule
-// ���W�擾�ȂǎG���ȋ@�\���l�܂������W���[��(��낵���Ȃ�)
+// 座標取得など雑多な機能が詰まったモジュール(よろしくない)
 
-//����
+//命令
 // init_ListMakerMod array p1
-// ���W���[���̏�����
-// p1 - �v�f��4��int�^�z�� �f�B�X�v���C���ׂĂ�1���̉��z�f�B�X�v���C�Ɍ����Ă��Ƃ��̍���x,y ��w, ����h
+// モジュールの初期化
+// p1 - 要素数4のint型配列 ディスプレイすべてを1枚の仮想ディスプレイに見立てたときの左上x,y 幅w, 高さh
 //
-// getKanCollePos		�}�E�X�I�[�o�[�Ŋ͂���̍��W���擾����(�����擾����2)
-// �����Ƃ��イ
-// KanCollePosManual	�h���b�O�Ŋ͂���̍��W���擾����(�蓮�擾)
-// �����Ƃ��イ
-// SelectCapturePos		�c�C�[�g�E�B���h�E����Ăяo�����L���v�`���͈͎擾
-// �����Ƃ��イ
+// getKanCollePos		マウスオーバーで艦これの座標を取得する(自動取得その2)
+// かきとちゅう
+// KanCollePosManual	ドラッグで艦これの座標を取得する(手動取得)
+// かきとちゅう
+// SelectCapturePos		ツイートウィンドウから呼び出されるキャプチャ範囲取得
+// かきとちゅう
 #module "ListMakerModule"
 
 #uselib	"user32.dll"
@@ -27,13 +27,13 @@
 #define TRUE 1
 #define FALSE 0
 
-//CompArrays �z�񓯎m���r���S�Ĉ�v����ΐ^��Ԃ�
+//CompArrays 配列同士を比較し全て一致すれば真を返す
 #define CompArrays(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) != %3(cnt){%1 = FALSE: break}: loop
-//CompArrays2 �z�񓯎m���r���S�Ĉ�v���Ȃ���ΐ^��Ԃ�
+//CompArrays2 配列同士を比較し全て一致しなければ真を返す
 #define CompArrays2(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) == %3(cnt){%1 = FALSE: break}: loop
-//CompArrayAndValue �z��ƒl���r���S�Ĉ�v����ΐ^��Ԃ�
+//CompArrayAndValue 配列と値を比較し全て一致すれば真を返す
 #define CompArrayAndValue(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) != %3{%1 = FALSE: break}: loop
-//CompArrayAndValue2 �z��ƒl���r���S�Ĉ�v���Ȃ���ΐ^��Ԃ�
+//CompArrayAndValue2 配列と値を比較し全て一致しなければ真を返す
 #define CompArrayAndValue2(%1, %2, %3) %1 = TRUE: foreach %2: if %2(cnt) == %3{%1 = FALSE: break}: loop
 
 
@@ -81,14 +81,14 @@ return
 	cy = cy_ + 2
 
 
-	if ( ((cx-126) < 0) | ((cx+126) > sw)): logmes "�ȗ�0 cx": goto *en
-	if ( ((cy-71) < 0) | ((cy+71) > sh) ): logmes "�ȗ�0 cy": goto *en
+	if ( ((cx-126) < 0) | ((cx+126) > sw)): logmes "省略0 cx": goto *en
+	if ( ((cy-71) < 0) | ((cy+71) > sh) ): logmes "省略0 cy": goto *en
 
 	dim flag, 1
 	_cx = 0
 	_cy = 0
 
-	//�E��x���W
+	//右側x座標
 	repeat BASE_SIZE_W*ZOOM_MAX, 125
 		if (cx+cnt == sw+1): break
 
@@ -109,9 +109,9 @@ return
 		}
 
 	loop
-	if (rx == -1): logmes "�ȗ�1 rx": goto *en
+	if (rx == -1): logmes "省略1 rx": goto *en
 
-	//����y���W
+	//下側y座標
 	repeat BASE_SIZE_H*ZOOM_MAX, 70
 		if (cy+cnt) = sh: break
 
@@ -132,9 +132,9 @@ return
 		}
 
 	loop
-	if (ry == -1): logmes "�ȗ�2 ry": goto *en
+	if (ry == -1): logmes "省略2 ry": goto *en
 
-	//�㑤y���W(0�̉\���A��)
+	//上側y座標(0の可能性アリ)
 	repeat BASE_SIZE_H*ZOOM_MAX, 70
 		if (cy-cnt) == -1: break
 
@@ -155,12 +155,12 @@ return
 
 	loop
 
-	//�����ł��������ׂ����炷���߂�y�����ł܂������������o��
+	//少しでも処理負荷を減らすためにy方向でまず高さ方向を出す
 	h = ry-ly
-	if (h < 100): logmes "�ȗ�3 h: "+h: goto *en//x�̔����y���W118px�Ŕ��肵�Ă���̂ł���ȉ���x�̔��肪�ł��Ȃ��̂Œe��
+	if (h < 100): logmes "省略3 h: "+h: goto *en//xの判定にy座標118pxで判定しているのでこれ以下はxの判定ができないので弾く
 
 
-	//����x���W(0�̉\���A��)
+	//左側x座標(0の可能性アリ)
 	repeat BASE_SIZE_W*ZOOM_MAX, 125
 
 		if (cx-cnt) == -1: break
@@ -217,8 +217,8 @@ return 0
 	cliflag = 0
 	ccolor(0) = 0, 0, 0
 
-	//imageId3�����C���[�h�E�B���h�E
-	gsel imageid4, 2 //�w�i
+	//imageId3がレイヤードウィンドウ
+	gsel imageid4, 2 //背景
 	imagehwnd4 = hwnd
 	MoveWindow imagehwnd4, disinfo(0), disinfo(1), disinfo(2), disinfo(3), 1
 	LoadCursor 0, 32515
@@ -332,13 +332,13 @@ return 0
 				gsel imageid3, 2
 				MoveWindow imagehwnd3, sscap(0), sscap(1), sscap(2)-sscap(0), sscap(3)-sscap(1), 1
 
-				dialog "�������擾�ł��Ă��܂����H", 2, "�m�F"
+				dialog "正しく取得できていますか？", 2, "確認"
 				if stat = 6{
 					gsel imageid3, -1
 					break
 				}
 			} else {
-				dialog "�擾�Ɏ��s���܂���\n�ēx�I�����܂����H", 2, "�m�F"
+				dialog "取得に失敗しました\n再度選択しますか？", 2, "確認"
 				if stat = 7{
 					gsel imageid3, -1
 					break
@@ -389,8 +389,8 @@ return
 	cliflag = 0
 	ccolor(0) = 0, 0, 0
 
-	//imageId3�����C���[�h�E�B���h�E
-	gsel imageid4, 2 //�w�i
+	//imageId3がレイヤードウィンドウ
+	gsel imageid4, 2 //背景
 	imagehwnd4 = hwnd
 	MoveWindow imagehwnd4, disinfo(0), disinfo(1), disinfo(2), disinfo(3), 1
 	LoadCursor 0, 32515
@@ -518,13 +518,13 @@ return
 				gsel imageid3, 2
 				MoveWindow imagehwnd3, sscap(0), sscap(1), sscap(2)-sscap(0), sscap(3)-sscap(1), 1
 
-				dialog "���͈̔͂��L���v�`�����܂����H", 2, "�m�F"
+				dialog "この範囲をキャプチャしますか？", 2, "確認"
 				if (stat == 6){
 					gsel imageid3, -1
 					break
 				}
 			} else {
-				dialog "�I��͈͂����������邩�]���l�߂Ɏ��s���܂���\n�ēx�I�����܂����H", 2, "�m�F"
+				dialog "選択範囲が小さすぎるか余白詰めに失敗しました\n再度選択しますか？", 2, "確認"
 				if (stat == 7){
 					sscap(0) = 0, 0, 0, 0
 					gsel imageid3, -1
@@ -610,7 +610,7 @@ return
 			pget po(0) + ratio(cnt)*x, po(1)+y
 			tccY(cnt) = (ginfo_b << 16 | ginfo_g << 8 | ginfo_r)
 
-			//�f�o�b�O�p ������R�����g�A�E�g����Ɛ�������̈ꕔ������
+			//デバッグ用 これをコメントアウトすると成功判定の一部が壊れる
 			//color 255, 0, 0
 			//pset po(0) + ratio(cnt)*x, po(1)+y
 			//pset po(0)+ topCnt, po(1) + ratio(cnt)*y
@@ -619,7 +619,7 @@ return
 		CompArrayAndValue flagY, tccY, tccY(0)
 
 		if ( flagX && flagY ){
-			//�f�o�b�O�p
+			//デバッグ用
 			//title strf("%4d %4d %4d %4d %4d %4d %4d %f", x, y, pccX, tccX(0), pccY, tccY(0), topCnt, absf(1.0*(y)/(x) - 0.6))
 			//wait 120
 			if ( pccX != tccX(0) && pccY != tccY(0)){

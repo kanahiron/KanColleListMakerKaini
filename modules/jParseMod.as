@@ -1,12 +1,12 @@
 /**
- * json•¶š—ñ‚ğƒp[ƒX‚·‚éƒ‚ƒWƒ…[ƒ‹
+ * jsonæ–‡å­—åˆ—ã‚’ãƒ‘ãƒ¼ã‚¹ã™ã‚‹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
  */
 
 #module jParseMod mssc
 
 	/**
-	 * json•¶š—ñ‚ğ“Ç‚İ‚Ş
-	 * @param json json•¶š—ñ
+	 * jsonæ–‡å­—åˆ—ã‚’èª­ã¿è¾¼ã‚€
+	 * @param json jsonæ–‡å­—åˆ—
 	 */
 	#modinit str json
 		newcom mssc, "MSScriptControl.ScriptControl"
@@ -15,8 +15,8 @@
 	return
 
 	/**
-	 * ƒL[‚©‚ç’l‚ğó‚¯æ‚é
-	 * @param key ƒL[
+	 * ã‚­ãƒ¼ã‹ã‚‰å€¤ã‚’å—ã‘å–ã‚‹
+	 * @param key ã‚­ãƒ¼
 	 */
 	#modcfunc local GetVal str key
 		comres result
@@ -26,8 +26,8 @@
 	return result
 
 	/**
-	 * ”z—ñ‚Ì—v‘f”‚ğæ“¾‚·‚é
-	 * @param arrKey ”z—ñ‚ğw‚·ƒL[
+	 * é…åˆ—ã®è¦ç´ æ•°ã‚’å–å¾—ã™ã‚‹
+	 * @param arrKey é…åˆ—ã‚’æŒ‡ã™ã‚­ãƒ¼
 	 */
 	#modcfunc local GetLength str arrKey
 		comres result
