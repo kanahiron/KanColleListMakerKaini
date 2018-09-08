@@ -535,10 +535,11 @@
         for k, 0, rectList2Size
             tempColor = _pget2(rectXList2(k), rectYList2(k))
             xLimit = Max(rectXList2(k) - STEP_WIDTH, -1)
+            y0 = rectYList2(k)
+            y1 = rectYList2(k) + STEP_HEIGHT
+            y2 = rectYList2(k) + STEP_HEIGHT * 2
             for x, rectXList2(k) - 1, xLimit, -1
-                if (_pget2(x, rectYList2(k)) != tempColor) :_break
-                y1 = rectYList2(k) + STEP_HEIGHT
-                y2 = rectYList2(k) + STEP_HEIGHT * 2
+                if (_pget2(x, y0) != tempColor) :_break
                 // X=xの候補たりうるかを調査し、駄目ならスキップする
                 if (_pget2(x, y1) != tempColor) :_continue
                 if (_pget2(x, y2) != tempColor) :_continue
