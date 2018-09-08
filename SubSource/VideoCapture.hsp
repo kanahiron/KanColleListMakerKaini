@@ -58,9 +58,9 @@
 
 		GetAbsPos videoCapX, videoCapY
 
-		//座標を8のサイズに整形
-		videoCapSizeX = int((0.125*sscapwh(0))+0.9999999)*8
-		videoCapSizeY = int((0.125*sscapwh(1))+0.9999999)*8
+		//座標を4のサイズに整形
+		videoCapSizeX = int((0.25*sscapwh(0))+0.9999999)*4
+        videoCapSizeY = int((0.25*sscapwh(1))+0.9999999)*4
 
 		//音声なしならフラグを立てる
 		noAudioFlg = FALSE

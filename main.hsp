@@ -15,7 +15,7 @@
 #include "./modules/DateTimeFormatMod.as"
 #include "./modules/encryption.as"
 #include "./modules/execwMod.as"
-#include "./modules/i18n.as"
+//#include "./modules/i18n.as"
 #include "./modules/iniMod.as"
 #include "./modules/kmodule.as"
 #include "./modules/SaveFileDiag_mod.hsp"
@@ -36,9 +36,9 @@
 #packopt icon "KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
-#define SOFTNAME "一覧めいかー改二 Ver0.7"
-#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.7"
-#define klm2ver 7000
+#define SOFTNAME "一覧めいかー改二 Ver0.8"
+#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.8"
+#define klm2ver 8000
 
 #ifdef _debug
 	SafeDelete@kmodule("./SubSource/hsptmp")
@@ -65,7 +65,7 @@
 	nidStackInit
 	DAControlInit
 	isHomeport_init WND_HOME_PORT_MOD
-	Init@i18n
+	//Init@i18n
 
 	gosub *DeclaringVariables
 	gosub *iniLoad

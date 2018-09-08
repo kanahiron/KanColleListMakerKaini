@@ -23,28 +23,32 @@
 	sdim kantaiNum, 4, 7
 	dim kantaiColor, 4
 	dim in, 1
+	// ‚±‚ê‚ª‚È‚¢‚Æ‰½ŒÌ‚©”z—ñQÆ‚ÅƒGƒ‰[‚ğ“f‚­
+	kantaiMei = "", "", "", ""
+	kantaiColor = 0, 0, 0, 0
+	kantaiNum(0, 0) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
+	kantaiNum(0, 1) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
+	kantaiNum(0, 2) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
+	kantaiNum(0, 3) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
+
 	if (enableFirst){
 		kantaiMei(in) = FirstFleetName
 		kantaiColor(in) = fontColorFirstFleet
-		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
 		in+=1
 	}
 	if (enableSecond){
 		kantaiMei(in) = SecondFleetName
 		kantaiColor(in) = fontColorSecondFleet
-		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
 		in+=1
 	}
 	if (enableThird){
 		kantaiMei(in) = ThirdFleetName
 		kantaiColor(in) = fontColorThirdFleet
-		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
 		in+=1
 	}
 	if (enableFourth){
 		kantaiMei(in) = FourthFleetName
 		kantaiColor(in) = fontColorFourthFleet
-		kantaiNum(0, in) = "‡@","‡A","‡B","‡C","‡D","‡E","‡F"
 		in+=1
 	}
 
@@ -134,7 +138,7 @@
 						}
 						ccnt++
 					}
-					if ccnt = 4: break
+					if (ccnt == 4): break
 				loop
 			}
 
@@ -325,7 +329,7 @@
 
 		gsel WND_MAIN, 1+frontRow
 
-		if kmexist(saveNamePath) <= 0{
+		if _exist(saveNamePath) <= 0{
 			LogOut nSaveName+"‚Ì•Û‘¶‚É¸”s‚µ‚Ü‚µ‚½"
 		} else {
 			successFlg = TRUE
