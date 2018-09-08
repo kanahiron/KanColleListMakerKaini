@@ -492,7 +492,7 @@ return
 
 return
 
-//ドロップ処理——————————————————————————————————
+//ドロップ処理――――――――――――――――――――――――――――――――――
 *OnDropFiles
 
 	if ( ginfo_intid == WND_MAIN && mode != MODE_LIST ){
