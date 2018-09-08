@@ -281,7 +281,8 @@ return contNum
 
 	if (po(0) < 0 || po(1) < 0):return (success)^1
 
-	repeat _limitX, int(ZOOM_MIN*BASE_SIZE_W)-2
+	//最小検索幅の少し手前からスタートする
+	repeat _limitX-int(ZOOM_MIN*BASE_SIZE_W)-2, int(ZOOM_MIN*BASE_SIZE_W)-2
 		x = cnt
 		y = int(BASE_ASPECT_RATIO * cnt + 0.5)
 
