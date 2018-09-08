@@ -192,7 +192,7 @@ p1, p2, p3
 p1 = 文字列      : ユーザエージェント
 p2 = 文字列      : Consumer Key
 p3 = 文字列      : Consumer Secret
-p4 = 0〜(30)     : タイムアウトの時間(秒)
+p4 = 0～(30)     : タイムアウトの時間(秒)
 
 %inst
 TsubyakiSoupモジュールの初期化をします。Twitter操作命令の使用前に呼び出す必要があります。

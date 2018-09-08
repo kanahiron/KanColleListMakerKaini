@@ -25,7 +25,7 @@ HSP3.3          2011.11. 3  [製作]ImgF_PicloadEx
                 2012. 1. 9  [移植](コピペ)ImgF_jpgsave,ImgP_RotateFlip
                       1.11  体裁、モジュール化
 HSP3.4β4       2014. 6. 7  ふたつのモジュールを統合、HDL対応
-                〜    6.28  [廃止](内部関数)_ImgF_LoadAndSigCheck ⇒ ImgF_GetFormatに統合
+                ～    6.28  [廃止](内部関数)_ImgF_LoadAndSigCheck ⇒ ImgF_GetFormatに統合
                             [製作](内部関数)ImgM_CreateH , ImgM_CloseH
                             [編集]ImgF_PicloadEx 今さらMode2、やらないって言ってたアルファ取得
                             [編集]ImgP_gzoom 実験中に放置してたらしいorz
@@ -174,8 +174,8 @@ WinXP以降の環境はGDI+を標準装備してます。
 #define ImchMode_UseGdipLast    ImchMode_Group06    ; GDI+を使用しない最初のグループ
 
 ;   ImchHL  ハンドルストック用＆関数内使い回しの変数(HL:HandleList)
-;       (0)現在のストックハンドル数  (1)GDI+利用時のトークン＆初期化フラグ  (2〜6)自由領域
-;       (7)CreateHで使うテンポラ  (8〜偶数)ImchMode_xxx  (9〜奇数)handle
+;       (0)現在のストックハンドル数  (1)GDI+利用時のトークン＆初期化フラグ  (2～6)自由領域
+;       (7)CreateHで使うテンポラ  (8～偶数)ImchMode_xxx  (9～奇数)handle
 
 #deffunc ImgM_CreateH int m, int a, int b, int c, int d, int e, int f
     ImchHL(7) = ImchHL * 2 + 9      ; ImchHLのハンドル格納先のIndex     未初期化変数対策風記述
@@ -440,7 +440,7 @@ ImgF_ImageSave
 Path, Quality, PositionX, PositionY, Width, Height
 Path    [文字]保存するファイル名(パス)
 Quality [数値]品質
-    0:高圧縮(粗い)〜100:低圧縮(きめ細やか)
+    0:高圧縮(粗い)～100:低圧縮(きめ細やか)
 PositionX   [数値]保存する領域の左上座標X
 PositionY   [数値]保存する領域の左上座標Y
 Width   [数値]横幅
@@ -455,10 +455,10 @@ ImgP_Memsave
 #deffunc ImgF_ImageSave str s, int p, int x, int y, int w, int h
 	ib = 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0, 1, 0,0,0,0,0,0,0,0
     ;   (0)GlobalSize (1)stream (2)image(結果) (3)image(works) (4)hGlobal
-    ;   (5)PosX (6)PosY (7)Width (8)Height (9)PixelFormat (10〜13)ImageCodec
+    ;   (5)PosX (6)PosY (7)Width (8)Height (9)PixelFormat (10～13)ImageCodec
     ;   (14)パラメ数(0だと保存に失敗するので1以上、1こも必要ない場合はパラメに無効な値をいれるとか...)
-    ;   (15〜18)パラメエンコーダ (19)パラメ要素数? (20)パラメ型 (21)ポインタ(っ！)
-    ;   (22〜)パラメエンコーダから繰り返し
+    ;   (15～18)パラメエンコーダ (19)パラメ要素数? (20)パラメ型 (21)ポインタ(っ！)
+    ;   (22～)パラメエンコーダから繰り返し
 
     if ( w==0 || h==0): ib(5) = 0, 0, ginfo_winx, ginfo_winy :else: ib(5) = x, y, w, h ; トリミング
 
@@ -587,7 +587,7 @@ Format  [定数]保存形式
     4 : PNG
 Width   [数値]横幅
 Height  [数値]縦幅
-Option  [数値]JPGの時 : 品質(0〜100)
+Option  [数値]JPGの時 : 品質(0～100)
 %inst
 現在の画面イメージをFormatで指定したファイル形式で保存します。Res_Binで指定した変数が出力先となります。命令実行後、システム変数statに出力されたデータサイズ(byte)が代入されています。
 
@@ -599,10 +599,10 @@ ImgF_jpgsave
 #deffunc ImgP_Memsave var b, int m, int w, int h, int p ; 変数,形式,幅,高さ,品質
     ib = 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0, 1, 0,0,0,0,0,0,0,0
     ;   (0)GlobalSize (1)stream (2)image(結果) (3)image(works) (4)hGlobal
-    ;   (5)PosX (6)PosY (7)Width (8)Height (9)PixelFormat (10〜13)ImageCodec
+    ;   (5)PosX (6)PosY (7)Width (8)Height (9)PixelFormat (10～13)ImageCodec
     ;   (14)パラメ数(0だと保存に失敗するので1以上、1こも必要ない場合はパラメに無効な値をいれるとか...)
-    ;   (15〜18)パラメエンコーダ (19)パラメ要素数? (20)パラメ型 (21)ポインタ(っ！)
-    ;   (22〜)パラメエンコーダから繰り返し
+    ;   (15～18)パラメエンコーダ (19)パラメ要素数? (20)パラメ型 (21)ポインタ(っ！)
+    ;   (22～)パラメエンコーダから繰り返し
 
     if w==0 | h==0 : ib(5) = 0,0,ginfo_sx,ginfo_sy :else: ib(5) = ginfo_cx,ginfo_cy,w,h ; トリミング
 
@@ -642,7 +642,7 @@ ImgP_FilterPastel
 画像フィルター(輝度補正)
 %prm
 Lumin, Width, Height
-Lumin  [数値]補正値(-256〜256)
+Lumin  [数値]補正値(-256～256)
 Width  [数値]横幅
 Height [数値]縦幅
 %inst
@@ -659,7 +659,7 @@ ImgP_FilterVivid
 画像フィルター(色強調)
 %prm
 Lumin, Width, Height
-Lumin  [数値]補正値(-256〜256)
+Lumin  [数値]補正値(-256～256)
 Width  [数値]横幅
 Height [数値]縦幅
 %inst
@@ -673,7 +673,7 @@ Luminに正数を指定すると、各ピクセルの色は濃くなります。
     ※例) 元輝度が130の時、輝度は5
 Luminに負数を指定すると、各ピクセルの色は白に近づきます。Lumin=-256の時、元の輝度の2倍の輝度に変化します。
 Luminに0を指定した時の輝度変化はありません(基準)。
-いずれの場合も輝度が0〜255の範囲に収まるように下上限処理されます。
+いずれの場合も輝度が0～255の範囲に収まるように下上限処理されます。
 %href
 ImgP_FilterPastel
 %------------------------------------------------------------------------------------------------------*/
@@ -749,10 +749,10 @@ Width,Height [数値]横幅、縦幅
     ; 画像ストックのコンパチはコピー元Winに合わせる(コピー元画像(計算後に残る方)の劣化を防ぐため)。
     ; [C+D=E]は、負数クランプの為、一方は 0 になっている → 論理和/排他的論理和/合算(加算)どれでもOK!
 
-    ;   ib( 0〜 7)コピー先設定  0:WinID   1:redrawFrag   2-5:gmode   6-7:curPos
-    ;   ib( 8〜11)出力位置範囲  8-9:pos   10-11:size
-    ;   ib(12〜18)コピー元設定  12:redrawFlag   13-16:gmode   17-18:curPos
-    ;   ib(19〜21)ハンドルズ    19:CreateHDC   20:CreatehBitmap   21:hBitmapStock
+    ;   ib( 0～ 7)コピー先設定  0:WinID   1:redrawFrag   2-5:gmode   6-7:curPos
+    ;   ib( 8～11)出力位置範囲  8-9:pos   10-11:size
+    ;   ib(12～18)コピー元設定  12:redrawFlag   13-16:gmode   17-18:curPos
+    ;   ib(19～21)ハンドルズ    19:CreateHDC   20:CreatehBitmap   21:hBitmapStock
 
     mref bb, 67
     ib = bb(18), bb(19), bb(35), bb(33), bb(34), bb(65), bb(27), bb(28)     ; コピー先設定(控え)

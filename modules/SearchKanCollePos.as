@@ -445,14 +445,14 @@
         /**
          * 上辺を検出(PHASE1・PHASE2相当)
          * 1. STEP_WIDTHピクセルごとに画素を読み取る(Y=yとY=y+1)
-         * 2. 以下の2配列の中で、「A1〜A{STEP_COUNT}は全部同じ色」かつ
-         *    「B1〜B{STEP_COUNT}のどれかはAxと違う色」である箇所を見つける
+         * 2. 以下の2配列の中で、「A1～A{STEP_COUNT}は全部同じ色」かつ
+         *    「B1～B{STEP_COUNT}のどれかはAxと違う色」である箇所を見つける
          *   Y=y  [..., A1, A2, .., A{STEP_COUNT}, ...]
          *   Y=y+1[..., B1, B2, .., B{STEP_COUNT}, ...]
          * STEP_WIDTHを上記計算式にしているのは、Y=yにおいて確実に
-         * 「位置A1〜A{STEP_COUNT}」の区間の長さ⊆ゲーム画面の最小横幅(MIN_GAME_WINDOW_WIDTH)
+         * 「位置A1～A{STEP_COUNT}」の区間の長さ⊆ゲーム画面の最小横幅(MIN_GAME_WINDOW_WIDTH)
          * とするためである。「⊆」が満たされないと取りこぼしが発生しかねない。
-         * また、「B1〜B{STEP_COUNT}のどれかはAxと違う色」でないと、関数定義における
+         * また、「B1～B{STEP_COUNT}のどれかはAxと違う色」でないと、関数定義における
          * 「↑の1ピクセル内側に、色Aと異なる色が1ピクセル以上存在する」を満たせない
          * 可能性が生じる(ステップサーチなので「可能性」で弾いている)。
          *
@@ -501,7 +501,7 @@
 
         /**
          * 上辺を確認(PHASE3相当)
-         * A1〜A{STEP_COUNT}が同じ色かを確認する
+         * A1～A{STEP_COUNT}が同じ色かを確認する
          */
         dim rectXList2, 5 :dim rectYList2, 5 :rectList2Size = 0
         for k, 0, rectList1Size

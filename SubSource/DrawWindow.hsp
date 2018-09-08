@@ -759,7 +759,7 @@
 			pos scale5, mesy+2
 			mes "jpg保存品質"
 			pos Scale(155), mesy+2
-			mes "1〜100(大きいほど高画質)"
+			mes "1～100(大きいほど高画質)"
 			pos Scale(100), mesy
 			input jpgquality, Scale(50), Scale(24), 3: mesy += Scale(24)
 			ChgWndowStyle objinfo_hwnd(stat), 0x02
@@ -770,7 +770,7 @@
 			pos scale5, mesy+2
 			mes "連続キャプチャの間隔"
 			pos Scale(205), mesy+2
-			mes "x0.1秒 (0.1〜99.9秒)"
+			mes "x0.1秒 (0.1～99.9秒)"
 			pos Scale(150), mesy
 			input timersec, Scale(50), Scale(24), 3: mesy += Scale(24)
 			ChgWndowStyle objinfo_hwnd(stat), 0x02
@@ -871,7 +871,7 @@
 			mesy += Scale(24)
 
 			pos Scale(5), mesy+Scale(2)
-			mes "フレームレート(5〜30fps)"
+			mes "フレームレート(5～30fps)"
 			pos Scale(222), mesy+Scale(2)
 			mes "fps"
 			pos Scale(250), mesy+Scale(2)
@@ -883,7 +883,7 @@
 
 
 			pos Scale(5), mesy+Scale(2)
-			mes "x264の品質(crf=16〜30)"
+			mes "x264の品質(crf=16～30)"
 			pos Scale(250), mesy+Scale(2)
 			mes "標準: crf=22"
 			pos Scale(180), mesy
