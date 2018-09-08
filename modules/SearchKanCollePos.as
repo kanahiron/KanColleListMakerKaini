@@ -435,9 +435,9 @@
         ;　STEP_WIDTHは100になる。すると、横幅がMIN_GAME_WINDOW_WIDTHな画面を
         ;　STEP_WIDTH間隔で引かれた方眼の上で動かした場合、画面の上辺に少なくとも
         ;　STEP_COUNT本の方眼の線が通ることが保証される
-        STEP_COUNT = 2
-        STEP_WIDTH = (MIN_GAME_WINDOW_WIDTH - 1) / STEP_COUNT
-        STEP_HEIGHT = (MIN_GAME_WINDOW_HEIGHT - 1) / STEP_COUNT
+        ; (※実際には、HSPの速度上の問題により、STEP_COUNT=2としてループアンローリングしている)
+        STEP_WIDTH = (MIN_GAME_WINDOW_WIDTH - 1) / 2
+        STEP_HEIGHT = (MIN_GAME_WINDOW_HEIGHT - 1) / 2
         endTime = timeGetTime@()
         logmes "" + (endTime - startTime) + "ms"
         startTime = endTime
@@ -471,27 +471,24 @@
         for y, 0, LIMIT_HEIGHT
             // まず、Y=yの候補を検索する
             for x, 0, LIMIT_WIDTH, STEP_WIDTH
-                xLimit = x + STEP_COUNT * STEP_WIDTH
+                xLimit = x + 2 * STEP_WIDTH
                 // 辺の色の候補を取得
                 tempColor = _pget2(x, y)
                 // Y=yの候補たりうるかを調査し、駄目ならスキップする
-                flg = TRUE
-                for x2, x + STEP_WIDTH, xLimit, STEP_WIDTH
-                    if (_pget2(x2, y) != tempColor) {
-                        flg = FALSE
-                        _break
-                    }
-                next
-                if (flg == FALSE) :_continue
+                if (_pget2(x + STEP_WIDTH, y) != tempColor) :_continue
+                if (_pget2(x + STEP_WIDTH * 2, y) != tempColor) :_continue
                 // Y=y+1の方もチェックする
-                flg = FALSE
-                for x2, x, xLimit, STEP_WIDTH
-                    if (_pget2(x2, y + 1) != tempColor) {
-                        flg = TRUE
-                        _break
-                    }
-                next
-                if (flg) {
+                if (_pget2(x, y + 1) != tempColor) {
+                    // 候補が見つかったので追加
+                    rectYList1(rectList1Size) = y
+                    rectXList1(rectList1Size) = x
+                    rectList1Size++
+                }else: if (_pget2(x + STEP_WIDTH, y + 1) != tempColor) {
+                    // 候補が見つかったので追加
+                    rectYList1(rectList1Size) = y
+                    rectXList1(rectList1Size) = x
+                    rectList1Size++
+                }else: if (_pget2(x + STEP_WIDTH * 2, y + 1) != tempColor) {
                     // 候補が見つかったので追加
                     rectYList1(rectList1Size) = y
                     rectXList1(rectList1Size) = x
@@ -511,7 +508,7 @@
         for k, 0, rectList1Size
             tempColor = _pget2(rectXList1(k), rectYList1(k))
             flg = TRUE
-            xLimit = rectXList1(k) + STEP_COUNT * STEP_WIDTH
+            xLimit = rectXList1(k) + 2 * STEP_WIDTH
             y = rectYList1(k)
             for x, rectXList1(k) + 1, xLimit
                 if (_pget2(x, y) != tempColor) :flg = FALSE :_break
@@ -537,7 +534,7 @@
         dim rectXList3, 5 :dim rectYList3, 5 :rectList3Size = 0
         for k, 0, rectList2Size
             tempColor = _pget2(rectXList2(k), rectYList2(k))
-            yLimit = Min(rectYList2(k) + STEP_HEIGHT * STEP_COUNT, windowHeight)
+            yLimit = Min(rectYList2(k) + STEP_HEIGHT * 2, windowHeight)
             for x, rectXList2(k) - 1, Max(rectXList2(k) - STEP_WIDTH, -1), -1
                 if (_pget2(x, rectYList2(k)) != tempColor) :_break
                 // X=xの候補たりうるかを調査し、駄目ならスキップする
@@ -571,7 +568,7 @@
         for k, 0, rectList3Size
             tempColor = _pget2(rectXList3(k), rectYList3(k))
             flg = TRUE
-            yLimit = rectYList3(k) + STEP_COUNT * STEP_HEIGHT
+            yLimit = rectYList3(k) + 2 * STEP_HEIGHT
             for y, rectYList3(k) + 1, yLimit
                 if (_pget2(rectXList3(k), y) != tempColor) :flg = FALSE :_break
             next
