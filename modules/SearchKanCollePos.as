@@ -438,9 +438,9 @@
         ; (※実際には、HSPの速度上の問題により、STEP_COUNT=2としてループアンローリングしている)
         STEP_WIDTH = (MIN_GAME_WINDOW_WIDTH - 1) / 2
         STEP_HEIGHT = (MIN_GAME_WINDOW_HEIGHT - 1) / 2
-        endTime = timeGetTime@()
+        /*endTime = timeGetTime@()
         logmes "" + (endTime - startTime) + "ms"
-        startTime = endTime
+        startTime = endTime*/
 
         /**
          * 上辺を検出(PHASE1・PHASE2相当)
@@ -471,7 +471,6 @@
         for y, 0, LIMIT_HEIGHT
             // まず、Y=yの候補を検索する
             for x, 0, LIMIT_WIDTH, STEP_WIDTH
-                xLimit = x + 2 * STEP_WIDTH
                 // 辺の色の候補を取得
                 tempColor = _pget2(x, y)
                 // Y=yの候補たりうるかを調査し、駄目ならスキップする
@@ -496,9 +495,9 @@
                 }
             next
         next
-        endTime = timeGetTime@()
+        /*endTime = timeGetTime@()
         logmes "" + (endTime - startTime) + "ms"
-        startTime = endTime
+        startTime = endTime*/
 
         /**
          * 上辺を確認(PHASE3相当)
@@ -520,9 +519,9 @@
                 rectList2Size++
             }
         next
-        endTime = timeGetTime@()
+        /*endTime = timeGetTime@()
         logmes "" + (endTime - startTime) + "ms"
-        startTime = endTime
+        startTime = endTime*/
 
         /**
          * 左辺を検出(PHASE4相当)
@@ -557,9 +556,9 @@
                 }
             next
         next
-        endTime = timeGetTime@()
+        /*endTime = timeGetTime@()
         logmes "" + (endTime - startTime) + "ms"
-        startTime = endTime
+        startTime = endTime*/
 
         /**
          * 左辺を確認(PHASE5相当)
@@ -580,9 +579,9 @@
                 rectList4Size++
             }
         next
-        endTime = timeGetTime@()
+        /*endTime = timeGetTime@()
         logmes "" + (endTime - startTime) + "ms"
-        startTime = endTime
+        startTime = endTime*/
 
         /**
          * 右辺・下辺を確認し、候補に追加する
@@ -646,15 +645,15 @@
                 rectangleSize++
             next
         next
-        endTime = timeGetTime@()
+        /*endTime = timeGetTime@()
         logmes "" + (endTime - startTime) + "ms"
-        startTime = endTime
+        startTime = endTime*/
 
         /* カレントウィンドウを元に戻す */
         gsel currentWindowId
-        endTime = timeGetTime@()
+        /*endTime = timeGetTime@()
         logmes "" + (endTime - startTime) + "ms"
-        startTime = endTime
+        startTime = endTime*/
     return rectangleSize
 #global
 
