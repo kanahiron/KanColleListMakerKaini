@@ -308,7 +308,7 @@ return
 
 		switch positionType
 			case PT_ABSOLUTE
-				ssCapMes = strf("%d,%d",　sscap(0),　sscap(1))
+				ssCapMes = strf("%d,%d", sscap(0), sscap(1))
 				swbreak
 			case PT_RELATIVE
 				ssCapMes = "追跡中S"

@@ -164,7 +164,7 @@ return
 		input PIN, Scale(100), Scale(30)
 		objsize Scale(150), Scale(30)
 		pos Scale(150), Scale(130)
-		button　gosub "OK",*twioauthok
+		button gosub "OK",*twioauthok
 
 		pos 0,Scale(240)
 		objsize Scale(448),Scale(30)
@@ -607,7 +607,7 @@ return
 		mediaTweetSuccess = TRUE
 
 		if (count != 0){
-			media_upload tempSdim, count,　mediaids, hProgress
+			media_upload tempSdim, count, mediaids, hProgress
 			if (stat = 1){
 			} else {
 				mediaTweetSuccess = FALSE

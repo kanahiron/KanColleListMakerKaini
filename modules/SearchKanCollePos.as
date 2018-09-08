@@ -417,7 +417,7 @@
     /**
      * ListMakerModule#getKanCollePosAutoで採用されているアルゴリズム
      */
-    #defcfunc local Auto int windowId, array rectangles
+    #defcfunc local Auto int windowId, array rectangles, int tempId
         /*startTime = timeGetTime@()*/
 
         /* 以前のカレントウィンドウIDを記憶 */
@@ -461,7 +461,7 @@
         gsel windowId
         windowWidth = ginfo_winx
         windowHeight = ginfo_winy
-        buffer 99, windowWidth, windowHeight
+        buffer tempId, windowWidth, windowHeight
         chgbm@ 32
         mref vram, MREF_VRAM
         gcopy windowId, 0, 0, windowWidth, windowHeight
