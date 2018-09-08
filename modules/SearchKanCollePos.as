@@ -534,8 +534,9 @@
         dim rectXList3, 5 :dim rectYList3, 5 :rectList3Size = 0
         for k, 0, rectList2Size
             tempColor = _pget2(rectXList2(k), rectYList2(k))
+            xLimit = Max(rectXList2(k) - STEP_WIDTH, -1)
             yLimit = Min(rectYList2(k) + STEP_HEIGHT * 2, windowHeight)
-            for x, rectXList2(k) - 1, Max(rectXList2(k) - STEP_WIDTH, -1), -1
+            for x, rectXList2(k) - 1, xLimit, -1
                 if (_pget2(x, rectYList2(k)) != tempColor) :_break
                 // X=xの候補たりうるかを調査し、駄目ならスキップする
                 flg = TRUE
