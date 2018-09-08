@@ -1,6 +1,6 @@
 /**
- * �͂���̍��W����ʂ��猟�����郂�W���[��
- * ��{�I�ɂ́u�E�B���h�EID���󂯎��ƁARectangle�̌��ꗗ�ƌ�␔��Ԃ��v�悤�ɑ����Ă���
+ * 艦これの座標を画面から検索するモジュール
+ * 基本的には「ウィンドウIDを受け取ると、Rectangleの候補一覧と候補数を返す」ように揃えている
  */
 
 #if 0
@@ -10,11 +10,11 @@
 #include "ChangeBitmapDepth.as"
 
 #module SearchKanCollePos
-    /* �e��萔�ݒ� */
-    #const DEFAULT_GAME_WINDOW_WIDTH 1200  //�W���I�ȃQ�[����ʂ�X�T�C�Y
-    #const DEFAULT_GAME_WINDOW_HEIGHT 720  //�W���I�ȃQ�[����ʂ�Y�T�C�Y
-    #const MAX_ZOOM_RATIO 3.0  //�Q�[����ʂ�MAX_ZOOM_RATIO�{�܂ő傫���Ă�OK�A�Ƃ������Ӗ�
-    #const MIN_ZOOM_RATIO 0.4  //�Q�[����ʂ�MIN_ZOOM_RATIO�{�܂ŏ������Ă�OK�A�Ƃ������Ӗ�
+    /* 各種定数設定 */
+    #const DEFAULT_GAME_WINDOW_WIDTH 1200  //標準的なゲーム画面のXサイズ
+    #const DEFAULT_GAME_WINDOW_HEIGHT 720  //標準的なゲーム画面のYサイズ
+    #const MAX_ZOOM_RATIO 3.0  //ゲーム画面がMAX_ZOOM_RATIO倍まで大きくてもOK、といった意味
+    #const MIN_ZOOM_RATIO 0.4  //ゲーム画面がMIN_ZOOM_RATIO倍まで小さくてもOK、といった意味
     #const STICK_ESCBUTTON 128
     #const STICK_LEFTBUTTON 256
     #const STICK_RIGHTBUTTON 512
@@ -36,50 +36,50 @@
 	#define VIRTUAL_DISPLAY_W GetSystemMetrics@(SM_CXVIRTUALSCREEN)
 	#define VIRTUAL_DISPLAY_H GetSystemMetrics@(SM_CYVIRTUALSCREEN)
 
-    /* �ŏ��l��Ԃ� */
+    /* 最小値を返す */
     #defcfunc local Min int a, int b
         if (a > b) :return b
     return a
 
-    /* �ő�l��Ԃ� */
+    /* 最大値を返す */
     #defcfunc local Max int a, int b
         if (a > b) :return a
     return b
 
-    /* �w�肵���_��RGB�l���擾����B(R<<16)|(G<<8)|B */
+    /* 指定した点のRGB値を取得する。(R<<16)|(G<<8)|B */
     #defcfunc local _pget int x, int y
         pget x, y
     return ((ginfo_r << 16) | (ginfo_g << 8) | (ginfo_b))
 
-    /* �uchggm 32�v�����󋵉��ŁA�w�肵���_��RGB�l���擾����B(R<<16)|(G<<8)|B */
+    /* 「chggm 32」した状況下で、指定した点のRGB値を取得する。(R<<16)|(G<<8)|B */
     #defcfunc local _pget2 int x, int y
     return vram(x + (windowHeight - 1 - y) * windowWidth)
 
     /**
-     * ListMakerModule#getKanCollePos�ō̗p����Ă���A���S���Y��
-     * (mx, my)�͊͂���̉�ʓ���(�E�B���h�EID�ɑ΂���)1���W�ł���A������܂ފ͂���̉�ʂ����o����
+     * ListMakerModule#getKanCollePosで採用されているアルゴリズム
+     * (mx, my)は艦これの画面内の(ウィンドウIDに対する)1座標であり、それを含む艦これの画面を検出する
      */
     #defcfunc local SemiAuto int windowId, array rectangles, int mx, int my
-        // �萔�ݒ�
+        // 定数設定
         MIN_GAME_WINDOW_WIDTH_HALF = 250 / 2
         MIN_GAME_WINDOW_HEIGHT_HALF = 150 / 2
         MIN_GAME_WINDOW_WIDTH_QUARTER = MIN_GAME_WINDOW_WIDTH_HALF / 2
         MIN_GAME_WINDOW_HEIGHT_QUARTER = MIN_GAME_WINDOW_HEIGHT_HALF / 2
 
-        // ���O����
+        // 事前準備
         gsel windowId
         window_width = ginfo_sx
         window_height = ginfo_sy
 
-        // ��ʂ�����������Ƃ��͌��o���Ȃ��悤�ɂ���
+        // 画面が小さすぎるときは検出しないようにする
         if (mx < MIN_GAME_WINDOW_WIDTH_HALF) :return 0
         if (mx + MIN_GAME_WINDOW_WIDTH_HALF >= window_width) :return 0
         if (my < MIN_GAME_WINDOW_HEIGHT_HALF) :return 0
         if (my + MIN_GAME_WINDOW_HEIGHT_HALF >= window_height) :return 0
 
-        // �͂���̉�ʂ̉E�����W�̍X��1�s�N�Z���E��(�ʏ́F���W2)��X���Wrx���擾����
-        // �܂�A(mx, my)���炠����x�E�ɐi�񂾓_A�ɂ��āAA����MIN_GAME_WINDOW_HEIGHT_QUARTER�Ԋu��
-        // �c�����ɏ㉺2�_�Â擾���A�����̐F��A�̐F�Ɠ����Ȃ�AA��X���W��rx���Ɛ��肳���
+        // 艦これの画面の右下座標の更に1ピクセル右下(通称：座標2)のX座標rxを取得する
+        // つまり、(mx, my)からある程度右に進んだ点Aについて、AからMIN_GAME_WINDOW_HEIGHT_QUARTER間隔で
+        // 縦方向に上下2点づつ取得し、それらの色がAの色と同じなら、AのX座標がrxだと推定される
         maxRightX = Min(mx + DEFAULT_GAME_WINDOW_WIDTH * MAX_ZOOM_RATIO, window_width)
         for px, mx + MIN_GAME_WINDOW_WIDTH_HALF, maxRightX
             tempColor = _pget(px, my)
@@ -90,7 +90,7 @@
             if (flg) :logmes "rx = " + px + "(" + tempColor + ")" :_rx = px :_break
         next
 
-        // ���W2��Y���Wry���擾����
+        // 座標2のY座標ryを取得する
         maxRightY = Min(my + DEFAULT_GAME_WINDOW_HEIGHT * MAX_ZOOM_RATIO, window_height)
         for py, my + MIN_GAME_WINDOW_HEIGHT_HALF, maxRightY
             tempColor = _pget(mx, py)
@@ -101,7 +101,7 @@
             if (flg) :logmes "ry = " + py + "(" + tempColor + ")" :_ry = py :_break
         next
 
-        // �͂���̉�ʂ̍�����W�̍X��1�s�N�Z������(�ʏ́F���W1)��Y���Wly���擾����
+        // 艦これの画面の左上座標の更に1ピクセル左上(通称：座標1)のY座標lyを取得する
         minLeftY = Max(my - DEFAULT_GAME_WINDOW_HEIGHT * MAX_ZOOM_RATIO, -1)
         for py, my - MIN_GAME_WINDOW_HEIGHT_HALF, minLeftY, -1
             tempColor = _pget(mx, py)
@@ -112,11 +112,11 @@
             if (flg) :logmes "ly = " + py + "(" + tempColor + ")" :_ly = py :_break
         next
 
-        // �c�������܂�ɏ���������ۂ́A���ł͂Ȃ��Ƃ��Ēe��
+        // 縦幅があまりに小さすぎる際は、候補ではないとして弾く
         _height = _ry - _ly - 1
         if (_height < 100) :return 0
 
-        // ���W1��X���Wlx���擾����
+        // 座標1のX座標lxを取得する
         minLeftX = Max(mx - DEFAULT_GAME_WINDOW_WIDTH * MAX_ZOOM_RATIO, -1)
         for px, mx - MIN_GAME_WINDOW_WIDTH_HALF, minLeftX, -1
             tempColor = _pget(px, my)
@@ -127,70 +127,70 @@
             if (flg) :logmes "lx = " + px + "(" + tempColor + ")" :_lx = px :_break
         next
 
-        // �c���䂪���������ꍇ�́A���ł͂Ȃ��Ƃ��Ēe��
+        // 縦横比がおかしい場合は、候補ではないとして弾く
         _width = _rx - _lx - 1
         if (abs(_height * 5 / 3 - _width) >= 3) :return 0
 
-        // �ۑ��p�̃o�b�t�@�[��p��
+        // 保存用のバッファーを用意
         dim rectangles, 4, 1
         rectangles(0, 0) = _lx + 1, _ly + 1, _width, _height
     return 1
 
     /**
-     * ListMakerModule#KanCollePosManual��ListMakerModule#SelectCapturePos�ō̗p����Ă���A���S���Y��
-     * �EwindowId�͎��O�ɉ��z�f�B�X�v���C�S�̂�BitBlt����Ă���buffer
-     * �EoverlayWindowId�͉��z�f�B�X�v���C�S�̂Ɠ����T�C�Y�̃��C���[�h�E�B���h�E��bgscr
-     * �EbgWindowId�͉��z�f�B�X�v���C�S�̂Ɠ����T�C�Y��bgscr�ŁAwindowId�̓��e���R�s�[����Ă���
-     * �EbgWindowId���őO�ʕ\���ɂ��č�������z�f�B�X�v���C����ɍ��킹�A
-     * �@�}�E�X���h���b�O���铮����overlayWindowId�̈ʒu�E�傫�������킹�Ă���B
-     * �@�}�E�X�{�^���𗣂��ƁA�u�I��g�̕ӂ̒���X����1�s�N�Z���Â������m�F���Ă����A
-     * �@X�ƈقȂ�F�ɍs�����������Ƃ���ł��̕ӂ̍i�肪���������Ƃ݂Ȃ��v�Ƃ������m��
-     * �EEsc�L�[���E�}�E�X�{�^���������Ƌ����I������
-     * �E���̊֐��̏I�����A�֐����s�O��gsel���Ă����E�B���h�EID��gsel������
-     * �E�߂�l��RECT���z�肳��Ă���A�I�����s���̓I�[��0�ɂȂ�B
-     * �@Rectangle�ɕϊ����Ă��A�I�����s���̓I�[��0�ɂȂ�v�Z
-     * �@(�Ȃ��AmarginCutFlg��FALSE�Ȃ�΁A�I��������̃g���~���O�ߒ����������Ȃ�)
+     * ListMakerModule#KanCollePosManualやListMakerModule#SelectCapturePosで採用されているアルゴリズム
+     * ・windowIdは事前に仮想ディスプレイ全体をBitBltされているbuffer
+     * ・overlayWindowIdは仮想ディスプレイ全体と同じサイズのレイヤードウィンドウでbgscr
+     * ・bgWindowIdは仮想ディスプレイ全体と同じサイズのbgscrで、windowIdの内容がコピーされている
+     * ・bgWindowIdを最前面表示にして左上を仮想ディスプレイ左上に合わせ、
+     * 　マウスをドラッグする動きにoverlayWindowIdの位置・大きさを合わせている。
+     * 　マウスボタンを離すと、「選択枠の辺の中央Xから1ピクセルづつ内側を確認していき、
+     * 　Xと異なる色に行き当たったところでその辺の絞りが完了したとみなす」といったノリ
+     * ・Escキーか右マウスボタンを押すと強制終了する
+     * ・この関数の終了時、関数実行前にgselしていたウィンドウIDにgselし直す
+     * ・戻り値はRECTが想定されており、選択失敗時はオール0になる。
+     * 　Rectangleに変換しても、選択失敗時はオール0になる計算
+     * 　(なお、marginCutFlgがFALSEならば、選択した後のトリミング過程が発生しない)
      */
     #defcfunc local Manual int windowId, array rectangles, int overlayWindowId, int bgWindowId, int marginCutFlg
-        // �ȑO�̃J�����g�E�B���h�EID���L��
+        // 以前のカレントウィンドウIDを記憶
         currentWindowId = ginfo_sel
 
-        // �ۑ��p�̃o�b�t�@�[��p��
+        // 保存用のバッファーを用意
         dim rectangles, 4, 1
         rectangles(0, 0) = 0, 0, 0, 0
         rectangleCount = 0
 
-        // �E�B���h�E����̏������s��
-        ;bgWindowId���őO�ʕ\���ɂ��č�������z�f�B�X�v���C����ɍ��킹��
+        // ウィンドウ周りの準備を行う
+        ;bgWindowIdを最前面表示にして左上を仮想ディスプレイ左上に合わせる
     	gsel bgWindowId, 2
     	bgWindowIdHandle = hwnd
     	MoveWindow@ bgWindowIdHandle, VIRTUAL_DISPLAY_X, VIRTUAL_DISPLAY_Y, VIRTUAL_DISPLAY_W, VIRTUAL_DISPLAY_H, TRUE
-        ;�}�E�X�J�[�\�����N���X��ɕύX���Ă���
+        ;マウスカーソルをクロス状に変更しておく
     	LoadCursor@ 0, MAKEINTRESOURCE
     	SetClassLong@ bgWindowIdHandle, GCL_HCURSOR, stat
-        ;overlayWindowId���\���ɂ��Ă���
+        ;overlayWindowIdを非表示にしておく
     	gsel overlayWindowId, -1
     	overlayWindowIdHandle = hwnd
     	MoveWindow@ overlayWindowIdHandle, 0, 0, 0, 0, 0
 
-        // �}�E�X�I���̃��[�v
-        selectFlg = FALSE       //�I�𒆂�TRUE
-        selectBeginPos.0 = 0, 0 //�I���J�n���̃}�E�X���W(�X�N���[�����W�n)
-        selectAreaRect.0 = 0, 0, 0, 0   //�I��͈͂�Rect(�X�N���[�����W�n)
+        // マウス選択のループ
+        selectFlg = FALSE       //選択中はTRUE
+        selectBeginPos.0 = 0, 0 //選択開始時のマウス座標(スクリーン座標系)
+        selectAreaRect.0 = 0, 0, 0, 0   //選択範囲のRect(スクリーン座標系)
         while (TRUE)
-            // �L�[���͏�Ԃ�ǂݎ��(���}�E�X�{�^���͉������ςȂ������m)
+            // キー入力状態を読み取る(左マウスボタンは押しっぱなしも検知)
             stick ky, STICK_LEFTBUTTON, 0
 
-            // ���}�E�X�{�^���������Ă����ۂ̏���
+            // 左マウスボタンを押していた際の処理
             if (ky & STICK_LEFTBUTTON){
                 if (selectFlg == FALSE){
-                    // �I���n�߂̏��
+                    // 選択始めの状態
                     selectBeginPos(0) = ginfo_mx
                     selectBeginPos(1) = ginfo_my
                     selectFlg = TRUE
                 }else{
-                    // �I�𒆂̏��
-                    //selectAreaRect�𐏎��X�V���A���̌��ʂɂ����overlayWindowId��I��͈͏�ɕ\�������Ă���
+                    // 選択中の状態
+                    //selectAreaRectを随時更新しつつ、その結果によってoverlayWindowIdを選択範囲上に表示させている
                     selectAreaRect(0) = Min(selectBeginPos(0), ginfo_mx)
                     selectAreaRect(1) = Min(selectBeginPos(1), ginfo_my)
                     selectAreaRect(2) = Max(selectBeginPos(0), ginfo_mx) - selectAreaRect(0)
@@ -199,42 +199,42 @@
     				MoveWindow@ overlayWindowIdHandle, selectAreaRect(0), selectAreaRect(1), selectAreaRect(2), selectAreaRect(3), TRUE
                  }
             }else :if ((ky & STICK_ESCBUTTON) || (ky & STICK_RIGHTBUTTON)){
-                // Esc�L�[ or �E�}�E�X�{�^�����������ۂ̏���
-                ; �I�[�o�[���C�E�B���h�E���\���ɂ���
+                // Escキー or 右マウスボタンを押した際の処理
+                ; オーバーレイウィンドウを非表示にする
                 gsel overlayWindowId, -1
-                ; bgWindowId�ɂ�����}�E�X�|�C���^�̐ݒ�����ɖ߂�
+                ; bgWindowIdにおけるマウスポインタの設定を元に戻す
     			gsel bgWindowId
     			LoadCursor@ 0, IDC_ARROW
     			SetClassLong@ bgWindowIdHandle, GCL_HCURSOR, stat
-                ; bgWindowId���\���ɂ���
+                ; bgWindowIdを非表示にする
     			gsel bgWindowId, -1
     			_break
             }else {
-                // ���������Ă��炸�A�I�����O�����u�ԂȂ�΁A�I��͈͂ɂ��Ă̏������s��
+                // 何も押しておらず、選択を外した瞬間ならば、選択範囲についての処理を行う
                 if (selectFlg) {
-                    // �I����Ԃ�����
+                    // 選択状態を解除
                     selectFlg = FALSE
 
-                    // overlayWindowId��bgWindowId���\���ɂ���
-                    ; �I�[�o�[���C�E�B���h�E���\���ɂ���
+                    // overlayWindowIdとbgWindowIdを非表示にする
+                    ; オーバーレイウィンドウを非表示にする
                     gsel overlayWindowId, -1
-                    ; bgWindowId�ɂ�����}�E�X�|�C���^�̐ݒ�����ɖ߂�
+                    ; bgWindowIdにおけるマウスポインタの設定を元に戻す
         			gsel bgWindowId
         			LoadCursor@ 0, IDC_ARROW
         			SetClassLong@ bgWindowId, GCL_HCURSOR, stat
-                    ; bgWindowId���\���ɂ���
+                    ; bgWindowIdを非表示にする
         			gsel bgWindowId, -1
 
-                    // �I�𕔕�����͂���̉�ʂ����o����
+                    // 選択部分から艦これの画面を検出する
                     gsel windowId
                     if (marginCutFlg){
-                        ;�����͈͂��Z�o����
+                        ;初期範囲を算出する
                         dim tempRect, 4
                         tempRect(0) = selectAreaRect(0) - VIRTUAL_DISPLAY_X
                         tempRect(1) = selectAreaRect(1) - VIRTUAL_DISPLAY_Y
                         tempRect(2) = selectAreaRect(2)
                         tempRect(3) = selectAreaRect(3)
-                        ;�܂����ӂ���i��
+                        ;まず左辺から絞る
                         tempColor = _pget(tempRect(0), tempRect(1) + tempRect(3) / 2)
                         for px, tempRect(0), tempRect(0) + tempRect(2) / 2
                             if (_pget(px, tempRect(1) + tempRect(3) / 2) != tempColor) {
@@ -242,7 +242,7 @@
                                 _break
                             }
                         next
-                        ;���ɉE��
+                        ;次に右辺
                         tempColor = _pget(tempRect(0) + tempRect(2), tempRect(1) + tempRect(3) / 2)
                         for px, tempRect(0) + tempRect(2), tempRect(0) + tempRect(2) / 2, -1
                             if (_pget(px, tempRect(1) + tempRect(3) / 2) != tempColor) {
@@ -250,7 +250,7 @@
                                 _break
                             }
                         next
-                        ;���ɏ��
+                        ;次に上辺
                         tempColor = _pget(tempRect(0) + tempRect(2) / 2, tempRect(1))
                         for py, tempRect(1), tempRect(1) + tempRect(3) / 2
                             if (_pget(tempRect(0) + tempRect(2) / 2, py) != tempColor) {
@@ -258,7 +258,7 @@
                                 _break
                             }
                         next
-                        ;�Ō�ɉ���
+                        ;最後に下辺
                         tempColor = _pget(tempRect(0) + tempRect(2) / 2, tempRect(1) + tempRect(3))
                         for py, tempRect(1) + tempRect(3), tempRect(1) + tempRect(3) / 2, -1
                             if (_pget(tempRect(0) + tempRect(2) / 2, py) != tempColor) {
@@ -273,67 +273,67 @@
                         rectangles(3, 0) = selectAreaRect(3)
                     }
 
-                    // ���o�ł��Ă��邩���m�F����B�ʖڂȂ�ēx�I��������
+                    // 検出できているかを確認する。駄目なら再度選択させる
                     if (rectangles(2, 0) >= 99 && rectangles(3, 0) >= 59) {
                         gsel overlayWindowId, 2
         				MoveWindow@ overlayWindowIdHandle, rectangles(0, 0) + VIRTUAL_DISPLAY_X, rectangles(1, 0) + VIRTUAL_DISPLAY_Y, rectangles(2, 0), rectangles(3, 0), TRUE
-        				dialog "�������擾�ł��Ă��܂����H", 2, "�m�F"
+        				dialog "正しく取得できていますか？", 2, "確認"
         				if (stat == 6) {
         					gsel overlayWindowId, -1
                             rectangleCount = 1
         					_break
         				}
                     }else {
-                        dialog "�擾�Ɏ��s���܂���\n�ēx�I�����܂����H", 2, "�m�F"
+                        dialog "取得に失敗しました\n再度選択しますか？", 2, "確認"
         				if (stat == 7) {
         					gsel overlayWindowId, -1
         					_break
         				}
                     }
-                    ;bgWindowId���őO�ʕ\���ɂ��č�������z�f�B�X�v���C����ɍ��킹��
+                    ;bgWindowIdを最前面表示にして左上を仮想ディスプレイ左上に合わせる
                 	gsel bgWindowId, 2
                 	bgWindowIdHandle = hwnd
                 	MoveWindow@ bgWindowIdHandle, VIRTUAL_DISPLAY_X, VIRTUAL_DISPLAY_Y, VIRTUAL_DISPLAY_W, VIRTUAL_DISPLAY_H, TRUE
-                    ;�}�E�X�J�[�\�����N���X��ɕύX���Ă���
+                    ;マウスカーソルをクロス状に変更しておく
                 	LoadCursor@ 0, MAKEINTRESOURCE
                 	SetClassLong@ bgWindowIdHandle, GCL_HCURSOR, stat
-                    ;overlayWindowId���\���ɂ��Ă���
+                    ;overlayWindowIdを非表示にしておく
                 	gsel overlayWindowId, -1
                 	overlayWindowIdHandle = hwnd
                 	MoveWindow@ overlayWindowIdHandle, 0, 0, 0, 0, TRUE
-                    ;�I��͈͂����Z�b�g
-                    selectBeginPos.0 = 0, 0 //�I���J�n���̃}�E�X���W(�X�N���[�����W�n)
-                    selectAreaRect.0 = 0, 0, 0, 0   //�I��͈͂�Rect(�X�N���[�����W�n)
+                    ;選択範囲をリセット
+                    selectBeginPos.0 = 0, 0 //選択開始時のマウス座標(スクリーン座標系)
+                    selectAreaRect.0 = 0, 0, 0, 0   //選択範囲のRect(スクリーン座標系)
                 }
             }
             await 16
         wend
 
-        // �J�����g�E�B���h�E�����ɖ߂�
+        // カレントウィンドウを元に戻す
         gsel currentWindowId
     return rectangleCount
 
     /**
-     * ListMakerModule#CheckKanCollePos�̃R�[�h���΂ߓǂ݂��čČ�����
-     * �܂�A�u�c���䂪���������v�u�N���b�v�g��1�s�N�Z�������̐F���Ⴄ���v�����Ă���
+     * ListMakerModule#CheckKanCollePosのコードを斜め読みして再現した
+     * つまり、「縦横比が正しいか」「クロップ枠と1ピクセル内側の色が違うか」を見ている
      */
     #defcfunc local isValidRect int windowId, int rectX, int rectY, int rectW, int rectH
         logmes("isValidRect")
-        /* �c���䂪���������H */
+        /* 縦横比が正しいか？ */
         aspect_ratio_diff = absf(BASE_ASPECT_RATIO - 1.0 * rectW / rectH)
         if (aspect_ratio_diff > 0.021) :return FALSE
 
-        /* �N���b�v�g��1�s�N�Z�������̐F���Ⴄ���H */
-        // �ȑO�̃J�����g�E�B���h�EID���L��
+        /* クロップ枠と1ピクセル内側の色が違うか？ */
+        // 以前のカレントウィンドウIDを記憶
         currentWindowId = ginfo_sel
-        // �萔������
+        // 定数を準備
         ddim ratio, 5
     	ratio = 0.9, 0.82, 0.73, 0.5, 0.12
-        // �e�ӂɂ��Ċm�F����
+        // 各辺について確認する
         gsel windowId
         result = FALSE
         while(TRUE)
-            // ��g�ɂ��Ċm�F����
+            // 上枠について確認する
             flg1 = TRUE
             tempColor = _pget(rectX + ratio(0) * rectW, rectY - 1)
             for k, 1, length(ratio)
@@ -351,7 +351,7 @@
                 }
             next
             if (flg1 == FALSE) :_break
-            // ���g
+            // 下枠
             flg1 = TRUE
             tempColor = _pget(rectX + ratio(0) * rectW, rectY + rectH)
             for k, 1, length(ratio)
@@ -370,7 +370,7 @@
             next
             if (flg1 == FALSE) :_break
             _break
-            // ���g
+            // 左枠
             flg1 = TRUE
             tempColor = _pget(rectX - 1, rectY + ratio(0) * rectH)
             for k, 1, length(ratio)
@@ -388,7 +388,7 @@
                 }
             next
             if (flg1 == FALSE) :_break
-            // �E�g
+            // 右枠
             flg1 = TRUE
             tempColor = _pget(rectX + rectW, rectY + ratio(0) * rectH)
             for k, 1, length(ratio)
@@ -410,32 +410,32 @@
             result = TRUE
             _break
         wend
-        // �J�����g�E�B���h�E�����ɖ߂�
+        // カレントウィンドウを元に戻す
         gsel currentWindowId
     return result
 
     /**
-     * ListMakerModule#getKanCollePosAuto�ō̗p����Ă���A���S���Y��
+     * ListMakerModule#getKanCollePosAutoで採用されているアルゴリズム
      */
     #defcfunc local Auto int windowId, array rectangles
         /*startTime = timeGetTime@()*/
 
-        /* �ȑO�̃J�����g�E�B���h�EID���L�� */
+        /* 以前のカレントウィンドウIDを記憶 */
         currentWindowId = ginfo_sel
 
-        /* �e��萔�������� */
-        ;�Q�[����ʂƂ��ĔF������ŏ��T�C�Y
+        /* 各種定数を初期化 */
+        ;ゲーム画面として認識する最小サイズ
         MIN_GAME_WINDOW_WIDTH = int(MIN_ZOOM_RATIO * DEFAULT_GAME_WINDOW_WIDTH)
         MIN_GAME_WINDOW_HEIGHT = int(MIN_ZOOM_RATIO * DEFAULT_GAME_WINDOW_HEIGHT)
-        ;�Q�[����ʂƂ��ĔF������ő�T�C�Y
+        ;ゲーム画面として認識する最大サイズ
         MAX_GAME_WINDOW_WIDTH = int(MAX_ZOOM_RATIO * DEFAULT_GAME_WINDOW_WIDTH)
         MAX_GAME_WINDOW_HEIGHT = int(MAX_ZOOM_RATIO * DEFAULT_GAME_WINDOW_HEIGHT)
-        ;�ŏ��T�C�Y�̃E�B���h�E�̑傫��-1��STEP_COUNT�Ŋ������Ԋu�ŉ�f��ǂݎ��
-        ;���Ⴆ�΁A���[�X�g�P�[�X��MIN_GAME_WINDOW_WIDTH=301�������Ƃ��Ă��A
-        ;�@STEP_WIDTH��100�ɂȂ�B����ƁA������MIN_GAME_WINDOW_WIDTH�ȉ�ʂ�
-        ;�@STEP_WIDTH�Ԋu�ň����ꂽ����̏�œ��������ꍇ�A��ʂ̏�ӂɏ��Ȃ��Ƃ�
-        ;�@STEP_COUNT�{�̕���̐����ʂ邱�Ƃ��ۏ؂����
-        ; (�����ۂɂ́AHSP�̑��x��̖��ɂ��ASTEP_COUNT=2�Ƃ��ă��[�v�A�����[�����O���Ă���)
+        ;最小サイズのウィンドウの大きさ-1をSTEP_COUNTで割った間隔で画素を読み取る
+        ;※例えば、ワーストケースでMIN_GAME_WINDOW_WIDTH=301だったとしても、
+        ;　STEP_WIDTHは100になる。すると、横幅がMIN_GAME_WINDOW_WIDTHな画面を
+        ;　STEP_WIDTH間隔で引かれた方眼の上で動かした場合、画面の上辺に少なくとも
+        ;　STEP_COUNT本の方眼の線が通ることが保証される
+        ; (※実際には、HSPの速度上の問題により、STEP_COUNT=2としてループアンローリングしている)
         STEP_WIDTH = (MIN_GAME_WINDOW_WIDTH - 1) / 2
         STEP_HEIGHT = (MIN_GAME_WINDOW_HEIGHT - 1) / 2
         /*endTime = timeGetTime@()
@@ -443,20 +443,20 @@
         startTime = endTime*/
 
         /**
-         * ��ӂ����o(PHASE1�EPHASE2����)
-         * 1. STEP_WIDTH�s�N�Z�����Ƃɉ�f��ǂݎ��(Y=y��Y=y+1)
-         * 2. �ȉ���2�z��̒��ŁA�uA1�`A{STEP_COUNT}�͑S�������F�v����
-         *    �uB1�`B{STEP_COUNT}�̂ǂꂩ��Ax�ƈႤ�F�v�ł���ӏ���������
+         * 上辺を検出(PHASE1・PHASE2相当)
+         * 1. STEP_WIDTHピクセルごとに画素を読み取る(Y=yとY=y+1)
+         * 2. 以下の2配列の中で、「A1〜A{STEP_COUNT}は全部同じ色」かつ
+         *    「B1〜B{STEP_COUNT}のどれかはAxと違う色」である箇所を見つける
          *   Y=y  [..., A1, A2, .., A{STEP_COUNT}, ...]
          *   Y=y+1[..., B1, B2, .., B{STEP_COUNT}, ...]
-         * STEP_WIDTH����L�v�Z���ɂ��Ă���̂́AY=y�ɂ����Ċm����
-         * �u�ʒuA1�`A{STEP_COUNT}�v�̋�Ԃ̒������Q�[����ʂ̍ŏ�����(MIN_GAME_WINDOW_WIDTH)
-         * �Ƃ��邽�߂ł���B�u���v����������Ȃ��Ǝ�肱�ڂ������������˂Ȃ��B
-         * �܂��A�uB1�`B{STEP_COUNT}�̂ǂꂩ��Ax�ƈႤ�F�v�łȂ��ƁA�֐���`�ɂ�����
-         * �u����1�s�N�Z�������ɁA�FA�ƈقȂ�F��1�s�N�Z���ȏ㑶�݂���v�𖞂����Ȃ�
-         * �\����������(�X�e�b�v�T�[�`�Ȃ̂Łu�\���v�Œe���Ă���)�B
+         * STEP_WIDTHを上記計算式にしているのは、Y=yにおいて確実に
+         * 「位置A1〜A{STEP_COUNT}」の区間の長さ⊆ゲーム画面の最小横幅(MIN_GAME_WINDOW_WIDTH)
+         * とするためである。「⊆」が満たされないと取りこぼしが発生しかねない。
+         * また、「B1〜B{STEP_COUNT}のどれかはAxと違う色」でないと、関数定義における
+         * 「↑の1ピクセル内側に、色Aと異なる色が1ピクセル以上存在する」を満たせない
+         * 可能性が生じる(ステップサーチなので「可能性」で弾いている)。
          *
-         * �Ȃ��ArectYList1��Y=y�̗��y���W�ArectXList1�͂��ꂼ��ɂ�����A1��X���W�ł���
+         * なお、rectYList1はY=yの列のy座標、rectXList1はそれぞれにおけるA1のX座標である
          */
         gsel windowId
         windowWidth = ginfo_winx
@@ -469,26 +469,26 @@
         LIMIT_WIDTH = windowWidth - MIN_GAME_WINDOW_WIDTH - 1
         LIMIT_HEIGHT = windowHeight - MIN_GAME_WINDOW_HEIGHT - 1
         for y, 0, LIMIT_HEIGHT
-            // �܂��AY=y�̌�����������
+            // まず、Y=yの候補を検索する
             for x, 0, LIMIT_WIDTH, STEP_WIDTH
-                // �ӂ̐F�̌����擾
+                // 辺の色の候補を取得
                 tempColor = _pget2(x, y)
-                // Y=y�̌�₽�肤�邩�𒲍����A�ʖڂȂ�X�L�b�v����
+                // Y=yの候補たりうるかを調査し、駄目ならスキップする
                 if (_pget2(x + STEP_WIDTH, y) != tempColor) :_continue
                 if (_pget2(x + STEP_WIDTH * 2, y) != tempColor) :_continue
-                // Y=y+1�̕����`�F�b�N����
+                // Y=y+1の方もチェックする
                 if (_pget2(x, y + 1) != tempColor) {
-                    // ��₪���������̂Œǉ�
+                    // 候補が見つかったので追加
                     rectYList1(rectList1Size) = y
                     rectXList1(rectList1Size) = x
                     rectList1Size++
                 }else: if (_pget2(x + STEP_WIDTH, y + 1) != tempColor) {
-                    // ��₪���������̂Œǉ�
+                    // 候補が見つかったので追加
                     rectYList1(rectList1Size) = y
                     rectXList1(rectList1Size) = x
                     rectList1Size++
                 }else: if (_pget2(x + STEP_WIDTH * 2, y + 1) != tempColor) {
-                    // ��₪���������̂Œǉ�
+                    // 候補が見つかったので追加
                     rectYList1(rectList1Size) = y
                     rectXList1(rectList1Size) = x
                     rectList1Size++
@@ -500,8 +500,8 @@
         startTime = endTime*/
 
         /**
-         * ��ӂ��m�F(PHASE3����)
-         * A1�`A{STEP_COUNT}�������F�����m�F����
+         * 上辺を確認(PHASE3相当)
+         * A1〜A{STEP_COUNT}が同じ色かを確認する
          */
         dim rectXList2, 5 :dim rectYList2, 5 :rectList2Size = 0
         for k, 0, rectList1Size
@@ -513,7 +513,7 @@
                 if (_pget2(x, y) != tempColor) :flg = FALSE :_break
             next
             if (flg) {
-                // ��₪���������̂Œǉ�
+                // 候補が見つかったので追加
                 rectXList2(rectList2Size) = rectXList1(k)
                 rectYList2(rectList2Size) = rectYList1(k)
                 rectList2Size++
@@ -524,11 +524,11 @@
         startTime = endTime*/
 
         /**
-         * ���ӂ����o(PHASE4����)
-         * ��ӂ̌��̍����𑖍����A���ӂƂȂ肤��ӂ��������邩�𒲍�����
-         * �E��L��A1�s�N�Z����荶��STEP_WIDTH�s�N�Z���̊ԂɁA�u������W�v�̌�₪����ƍl������
-         * �E�䂦�ɏ��Ԃ�1�s�N�Z���Â��Ă����A�c�����̕ӂ��������邩���`�F�b�N����
-         * �E���ɂȂ肤�邩�̔���ɂ́A��ӂ̌����Ɠ������X�e�b�v�T�[�`��p����
+         * 左辺を検出(PHASE4相当)
+         * 上辺の候補の左側を走査し、左辺となりうる辺を持ちうるかを調査する
+         * ・上記のA1ピクセルより左側STEP_WIDTHピクセルの間に、「左上座標」の候補があると考えられる
+         * ・ゆえに順番に1ピクセルづつ見ていき、縦方向の辺を持ちうるかをチェックする
+         * ・候補になりうるかの判定には、上辺の検索と同じくステップサーチを用いる
          */
         dim rectXList3, 5 :dim rectYList3, 5 :rectList3Size = 0
         for k, 0, rectList2Size
@@ -539,17 +539,17 @@
             y2 = rectYList2(k) + STEP_HEIGHT * 2
             for x, rectXList2(k) - 1, xLimit, -1
                 if (_pget2(x, y0) != tempColor) :_break
-                // X=x�̌�₽�肤�邩�𒲍����A�ʖڂȂ�X�L�b�v����
+                // X=xの候補たりうるかを調査し、駄目ならスキップする
                 if (_pget2(x, y1) != tempColor) :_continue
                 if (_pget2(x, y2) != tempColor) :_continue
-                // X=x+1�̕����`�F�b�N����
+                // X=x+1の方もチェックする
                 if (_pget2(x + 1, y1) != tempColor) {
-                    // ��₪���������̂Œǉ�
+                    // 候補が見つかったので追加
                     rectXList3(rectList3Size) = x
                     rectYList3(rectList3Size) = rectYList2(k)
                     rectList3Size++
                 }else: if (_pget2(x + 1, y2) != tempColor) {
-                    // ��₪���������̂Œǉ�
+                    // 候補が見つかったので追加
                     rectXList3(rectList3Size) = x
                     rectYList3(rectList3Size) = rectYList2(k)
                     rectList3Size++
@@ -561,8 +561,8 @@
         startTime = endTime*/
 
         /**
-         * ���ӂ��m�F(PHASE5����)
-         * ���ӂ������F�����m�F����
+         * 左辺を確認(PHASE5相当)
+         * 左辺が同じ色かを確認する
          */
         dim rectXList4, 5 :dim rectYList4, 5 :rectList4Size = 0
         for k, 0, rectList3Size
@@ -573,7 +573,7 @@
                 if (_pget2(rectXList3(k), y) != tempColor) :flg = FALSE :_break
             next
             if (flg) {
-                // ��₪���������̂Œǉ�
+                // 候補が見つかったので追加
                 rectXList4(rectList4Size) = rectXList3(k)
                 rectYList4(rectList4Size) = rectYList3(k)
                 rectList4Size++
@@ -584,21 +584,21 @@
         startTime = endTime*/
 
         /**
-         * �E�ӁE���ӂ��m�F���A���ɒǉ�����
+         * 右辺・下辺を確認し、候補に追加する
          */
         ddim ratio, 5
         ratio = 0.9, 0.82, 0.73, 0.5, 0.12
         dim rectangles, 4 :rectangleSize = 0
         for k, 0, rectList4Size
-            // x�͘g�̉E��x���W
+            // xは枠の右下x座標
             for x, rectXList4(k) + MIN_GAME_WINDOW_WIDTH + 1, windowWidth
                 w = x - rectXList4(k) - 1
-                // �g�̉E��y���W���Z�o
+                // 枠の右下y座標を算出
                 y = Min(rectYList4(k) + BASE_ASPECT_RATIO * w + 1, windowHeight - 1)
                 h = y - rectYList4(k) - 1
-                // �g�̐F���擾
+                // 枠の色を取得
                 tempColor = _pget2(rectXList4(k), rectYList4(k))
-                // ����(�E��)
+                // 走査(右辺)
                 flg1 = TRUE
                 for j, 0, length(ratio)
                     if (_pget2(x, rectYList4(k) + ratio(j) * h + 1) != tempColor) {
@@ -619,7 +619,7 @@
                 if (flg2 == FALSE) {
                     _continue
                 }
-                // ����(����)
+                // 走査(下辺)
                 flg1 = TRUE
                 for j, 0, length(ratio)
                     if (_pget2(rectXList4(k) + ratio(j) * w + 1, y) != tempColor) {
@@ -640,7 +640,7 @@
                 if (flg2 == FALSE) {
                     _continue
                 }
-                // �ǋL
+                // 追記
                 rectangles(0, rectangleSize) = rectXList4(k) + 1, rectYList4(k) + 1, w, h
                 rectangleSize++
             next
@@ -649,7 +649,7 @@
         logmes "" + (endTime - startTime) + "ms"
         startTime = endTime*/
 
-        /* �J�����g�E�B���h�E�����ɖ߂� */
+        /* カレントウィンドウを元に戻す */
         gsel currentWindowId
         /*endTime = timeGetTime@()
         logmes "" + (endTime - startTime) + "ms"
@@ -658,19 +658,19 @@
 #global
 
 #if 0
-    title "���W�擾�����̃e�X�g"
+    title "座標取得処理のテスト"
     buffer 1
-    picload "���W�F���e�X�g�p-2.png"
+    picload "座標認識テスト用-2.png"
 
-    /*// �A���S���Y��1
-    dim rectangles //�����Ă��������x�������Ɏg�p
+    /*// アルゴリズム1
+    dim rectangles //無くてもいいが警告消しに使用
     gsel 1 :count = SemiAuto@SearchKanCollePos(1, rectangles, 1059, 1099) :gsel 0
-    mes "�y�A���S���Y��1�z"
+    mes "【アルゴリズム1】"
     gosub *show_result
 
-    // �A���S���Y��2
+    // アルゴリズム2
     gsel 1 :count = Auto@SearchKanCollePos(1, rectangles) :gsel 0
-    mes "�y�A���S���Y��3�z(" + elapsedTime + "ms)"
+    mes "【アルゴリズム3】(" + elapsedTime + "ms)"
     gosub *show_result*/
 
     repeatTime = 10
@@ -685,7 +685,7 @@
     next
     elapsedTime2 = timeGetTime() - startTime
 
-    mes "�y�A���S���Y��3�z(" + (1.0 * (elapsedTime2 - elapsedTime1) / repeatTime) + "ms)"
+    mes "【アルゴリズム3】(" + (1.0 * (elapsedTime2 - elapsedTime1) / repeatTime) + "ms)"
 
     //gsel 1 :count = Auto@SearchKanCollePos(1, rectangles) :gsel 0
 
@@ -694,7 +694,7 @@
     end
 
     *show_result
-        mes "���F" + count
+        mes "個数：" + count
         sdim textBuffer, 4096
         for k, 0, count
             x = rectangles(0, k)
@@ -703,6 +703,6 @@
             h = rectangles(3, k)
             textBuffer += strf("(%d,%d)-%dx%d,", x, y, w, h)
         next
-        mes "���F" + textBuffer
+        mes "候補：" + textBuffer
     return
 #endif

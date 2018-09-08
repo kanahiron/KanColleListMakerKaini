@@ -138,16 +138,16 @@
 	Get@iniMod "KanmusuFormationMode", "soka", soka, "0"
 	Get@iniMod "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation, "1"
 	Get@iniMod "KanmusuFormationMode", "AddOrderNum", addOrderNum, "1"
-	Get@iniMod "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"‘æˆêŠÍ‘à\""
-	Get@iniMod "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"‘æ“ñŠÍ‘à\""
-	Get@iniMod "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"ƒ{ƒXx‰‡\""
-	Get@iniMod "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"“¹’†x‰‡\""
+	Get@iniMod "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"ç¬¬ä¸€è‰¦éšŠ\""
+	Get@iniMod "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"ç¬¬äºŒè‰¦éšŠ\""
+	Get@iniMod "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"ãƒœã‚¹æ”¯æ´\""
+	Get@iniMod "KanmusuFormationMode", "FourthFleetName", FourthFleetName, "\"é“ä¸­æ”¯æ´\""
 	Get@iniMod "KanmusuFormationMode", "FontColorFirstFleetStr", fontColorFirstFleetStr, "\"FF0000\""
 	Get@iniMod "KanmusuFormationMode", "FontColorSecondFleetStr", fontColorSecondFleetStr, "\"0000FF\""
 	Get@iniMod "KanmusuFormationMode", "FontColorThirdFleetStr", fontColorThirdFleetStr, "\"20AC4C\""
 	Get@iniMod "KanmusuFormationMode", "FontColorFourthFleetStr", fontColorFourthFleetStr, "\"E06020\""
-	Get@iniMod "KanmusuFormationMode", "FontName", fontname, "\"ƒƒCƒŠƒI\""
-	Get@iniMod "KanmusuFormationMode", "FontNum", fontnum ,"\"ƒƒCƒŠƒI\""
+	Get@iniMod "KanmusuFormationMode", "FontName", fontname, "\"ãƒ¡ã‚¤ãƒªã‚ª\""
+	Get@iniMod "KanmusuFormationMode", "FontNum", fontnum ,"\"ãƒ¡ã‚¤ãƒªã‚ª\""
 	Get@iniMod "KanmusuFormationMode", "FontSizeName", fontsizename, "42"
 	Get@iniMod "KanmusuFormationMode", "FontSizeNum", fontsizenum, "44"
 	Get@iniMod "KanmusuFormationMode", "PunctuationColorStr", PunctuationColorStr, "\"2020C0\""
@@ -204,12 +204,12 @@ return
 	if (soka != 0) & (soka != 1):soka=0
 	if (enableTweetWindow != 0) & (enableTweetWindow != 1):enableTweetWindow=0
 	if (twijpg != 0) & (twijpg != 1):twijpg=1
-	if fontname = "":fontname = "ƒƒCƒŠƒI"
-	if fontnum = "":fontnum = "ƒƒCƒŠƒI"
+	if fontname = "":fontname = "ãƒ¡ã‚¤ãƒªã‚ª"
+	if fontnum = "":fontnum = "ãƒ¡ã‚¤ãƒªã‚ª"
 	if (fontsizename < 10) | ( 70 < fontsizename):fontsizename=42
 	if (fontsizenum < 10) | ( 70 < fontsizenum):fontsizenum=44
-	if FirstFleetName = "":FirstFleetName = "‘æˆêŠÍ‘à"
-	if SecondFleetName = "":SecondFleetName = "‘æ“ñŠÍ‘à"
+	if FirstFleetName = "":FirstFleetName = "ç¬¬ä¸€è‰¦éšŠ"
+	if SecondFleetName = "":SecondFleetName = "ç¬¬äºŒè‰¦éšŠ"
 	if ( scrSizeMin(0) <= scrSizeBase(0) && scrSizeBase(0) <= maxScrSize(0) && scrSizeMin(1) <= scrSizeBase(1) && scrSizeBase(1) <= maxScrSize(1)){
 	} else {
 		scrSizeBase(0) = int(0.667*ginfo_dispx), int(0.667*ginfo_dispy)
@@ -218,8 +218,8 @@ return
 	if fontColorSecondFleetStr = "":fontColorSecondFleetStr = "0000FF"
 	if fontColorThirdFleetStr = "":fontColorThirdFleetStr = "20AC4C"
 	if fontColorFourthFleetStr = "":fontColorFourthFleetStr = "E06020"
-	if ThirdFleetName = "":ThirdFleetName = "ƒ{ƒXx‰‡"
-	if FourthFleetName = "":FourthFleetName = "“¹’†x‰‡"
+	if ThirdFleetName = "":ThirdFleetName = "ãƒœã‚¹æ”¯æ´"
+	if FourthFleetName = "":FourthFleetName = "é“ä¸­æ”¯æ´"
 	if (fleetPunctuation != 0) & (fleetPunctuation != 1):fleetPunctuation=1
 	if (addOrderNum != 0) & (addOrderNum != 1):addOrderNum=1
 
@@ -265,12 +265,12 @@ return
 	hidelog_ = hidelog
 
 	if PathIsDirectory(listsavedir) = 0 {
-		savelogtext += "Info - ˆê——•Û‘¶æ‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ä¸€è¦§ä¿å­˜å…ˆãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 		listsavedir = dir_exe
 	}
 
 	if PathIsDirectory(sssavedir) = 0{
-		savelogtext += "Info - SS•Û‘¶æ‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - SSä¿å­˜å…ˆãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 		chdir dir_exe
 		if PathIsDirectory(dir_exe+"\\ScreenShots") = 0 {
 			mkdir "ScreenShots"
@@ -279,12 +279,12 @@ return
 	}
 
 	if PathIsDirectory(selectCapSaveDir) = 0{
-		savelogtext += "Info - ”ÍˆÍ‘I‘ğƒLƒƒƒvƒ`ƒƒ•Û‘¶æ‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ç¯„å›²é¸æŠã‚­ãƒ£ãƒ—ãƒãƒ£ä¿å­˜å…ˆãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 		selectCapSaveDir = dir_exe+"\\ScreenShots"
 	}
 
 	if PathIsDirectory(intervalShotDir) = 0{
-		savelogtext += "Info - ˜A‘±B‰e•Û‘¶æ‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - é€£ç¶šæ’®å½±ä¿å­˜å…ˆãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 		intervalShotDir = sssavedir
 	}
 
@@ -301,7 +301,7 @@ return
 	}
 
 	if (hotkeycapalt + hotkeycapctrl + hotkeycapshift + hotkeycapwin) = 0{
-		savelogtext += "Info - ƒzƒbƒgƒL[‚Ìİ’è‚ª•s“KØ‚Å‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã®è¨­å®šãŒä¸é©åˆ‡ã§ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 		hotkeycap = 0
 		hotkeycapalt = 1
 		hotkeycapctrl = 0
@@ -324,7 +324,7 @@ return
 			hotkeycapchar = strf("%c",hotkeycode)
 			poke hotkeystr,4,hotkeycode
 		} else {
-			savelogtext += "Info - ƒzƒbƒgƒL[‚Ìİ’è‚ª•s“KØ‚Å‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+			savelogtext += "Info - ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã®è¨­å®šãŒä¸é©åˆ‡ã§ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 			hotkeycode = 90
 			hotkeycapchar = strf("%c",hotkeycode)
 			hotkeystr = "A___Z"
@@ -336,7 +336,7 @@ return
 		isValidFileName@DateTimeFormatMod Format@DateTimeFormatMod(saveName(cnt))
 		if (stat == FALSE){
 			saveName(cnt) = defaultSaveName(cnt)
-			savelogtext += "Info - "+saveNameStr(cnt)+"•Û‘¶–¼‚Éƒtƒ@ƒCƒ‹–¼‚Æ‚µ‚Äg‚¦‚È‚¢•¶š‚ª‚ ‚è‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+			savelogtext += "Info - "+saveNameStr(cnt)+"ä¿å­˜åã«ãƒ•ã‚¡ã‚¤ãƒ«åã¨ã—ã¦ä½¿ãˆãªã„æ–‡å­—ãŒã‚ã‚Šã¾ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 		}
 	loop
 
@@ -351,7 +351,7 @@ return
 	}
 
 	if PathIsDirectory(videoCapSaveDir) = 0{
-		savelogtext += "Info - “®‰æƒLƒƒƒvƒ`ƒƒ•Û‘¶æ‚ª‘¶İ‚µ‚Ü‚¹‚ñBƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£ä¿å­˜å…ˆãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 		chdir dir_exe
 		if PathIsDirectory(dir_exe+"\\VideoCapture") = 0 {
 			mkdir "VideoCapture"
@@ -392,7 +392,7 @@ return
 		videoCapLimitTimeM = 30
 		videoCapLimitTimeS = 0
 		videoCapLimitTime = 1800000
-		savelogtext += "Info - “®‰æƒLƒƒƒvƒ`ƒƒ§ŒÀŠÔ‚ª’Z‚·‚¬‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£åˆ¶é™æ™‚é–“ãŒçŸ­ã™ãã¾ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 	}
 
 	if (seqCapLimitTimeS > 60): seqCapLimitTimeS \= 60: seqCapLimitTimeM++
@@ -403,17 +403,17 @@ return
 		seqCapLimitTimeM = 99
 		seqCapLimitTimeS = 59
 		seqCapLimitTime = 5999000
-		savelogtext += "Info - ˜A‘±ƒLƒƒƒvƒ`ƒƒ§ŒÀŠÔ‚ª’Z‚·‚¬‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£åˆ¶é™æ™‚é–“ãŒçŸ­ã™ãã¾ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 	}
 
 	if (seqCapLimitSize < 1){
 		seqCapLimitSize = 99999
-		savelogtext += "Info - ˜A‘±ƒLƒƒƒvƒ`ƒƒ§ŒÀ—e—Ê‚ª’Z‚·‚¬‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£åˆ¶é™å®¹é‡ãŒçŸ­ã™ãã¾ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 	}
 
 	if (seqCapLimitNum < 1){
 		seqCapLimitNum = 9999
-		savelogtext += "Info - ˜A‘±ƒLƒƒƒvƒ`ƒƒ§ŒÀ–‡”‚ª’Z‚·‚¬‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£åˆ¶é™æšæ•°ãŒçŸ­ã™ãã¾ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 	}
 
 	videoCapLimitTime = (videoCapLimitTimeM*60+videoCapLimitTimeS)*1000
@@ -421,7 +421,7 @@ return
 		videoCapLimitTimeM = 30
 		videoCapLimitTimeS = 0
 		videoCapLimitTime = 1800000
-		savelogtext += "Info - “®‰æƒLƒƒƒvƒ`ƒƒ§ŒÀŠÔ‚ª’Z‚·‚¬‚Ü‚·BƒfƒtƒHƒ‹ƒg‚É•ÏX‚µ‚Ü‚µ‚½B\n"
+		savelogtext += "Info - å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£åˆ¶é™æ™‚é–“ãŒçŸ­ã™ãã¾ã™ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´ã—ã¾ã—ãŸã€‚\n"
 	}
 
 	if savelogtext != ""{
@@ -611,7 +611,7 @@ return
 				picHistoryCount++
 			}
 		loop
-		sdim listarr	//‚©‚¢‚Ù[
+		sdim listarr	//ã‹ã„ã»ãƒ¼
 	}
 
 	nidPush

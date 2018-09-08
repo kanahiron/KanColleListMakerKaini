@@ -1,13 +1,13 @@
 #include "modclbk3.hsp"
 //#include "hsp3utf.as"
 #ifndef newclbk3
-	dialog "‚±‚Ìƒ‚ƒWƒ…[ƒ‹‚Ímodclbk3.hsp‚ÌƒCƒ“ƒNƒ‹[ƒh‚ª•K{‚Å‚·B\nŒÄ‚Ño‚µŒ³‚ÌƒƒCƒ“ƒXƒNƒŠƒvƒg‚ÅƒCƒ“ƒNƒ‹[ƒh‚µ‚Ä‰º‚³‚¢B", 1, "SelectWindowMod.hsp"
+	dialog "ã“ã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã¯modclbk3.hspã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãŒå¿…é ˆã§ã™ã€‚\nå‘¼ã³å‡ºã—å…ƒã®ãƒ¡ã‚¤ãƒ³ã‚¹ã‚¯ãƒªãƒ—ãƒˆã§ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã—ã¦ä¸‹ã•ã„ã€‚", 1, "SelectWindowMod.hsp"
 	end
 #endif
 
 #if 0
 #ifndef __hsp3utf__
-	dialog "‚±‚Ìƒ‚ƒWƒ…[ƒ‹‚Íhsp3utf.as‚ÌƒCƒ“ƒNƒ‹[ƒh‚ª•K{‚Å‚·B\nŒÄ‚Ño‚µŒ³‚ÌƒƒCƒ“ƒXƒNƒŠƒvƒg‚ÅƒCƒ“ƒNƒ‹[ƒh‚µ‚Ä‰º‚³‚¢B", 1, "SelectWindowMod.hsp"
+	dialog "ã“ã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã¯hsp3utf.asã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãŒå¿…é ˆã§ã™ã€‚\nå‘¼ã³å‡ºã—å…ƒã®ãƒ¡ã‚¤ãƒ³ã‚¹ã‚¯ãƒªãƒ—ãƒˆã§ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã—ã¦ä¸‹ã•ã„ã€‚", 1, "SelectWindowMod.hsp"
 	end
 #endif
 #endif

@@ -1,5 +1,5 @@
 /**
- * “ú•t‚Æ‚ğƒtƒH[ƒ}ƒbƒg•¶š—ñ‚©‚çì¬‚·‚éƒ‚ƒWƒ…[ƒ‹
+ * æ—¥ä»˜ã¨æ™‚åˆ»ã‚’ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæ–‡å­—åˆ—ã‹ã‚‰ä½œæˆã™ã‚‹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
  */
 
 #module DateTimeFormatMod
@@ -8,7 +8,7 @@
 	#func GetLocalTime "GetLocalTime" int
 
 	/**
-	 * ‰Šú‰»ˆ—
+	 * åˆæœŸåŒ–å‡¦ç†
 	 */
 	#deffunc local Init
 
@@ -20,17 +20,17 @@
 		eDayOfWeekFullArr = "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"											//edddd
 		eDayOfWeekAbbreviationsArr = "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"																//eddd
 
-		jDayOfWeekFullArr = "“ú—j“ú", "Œ—j“ú", "‰Î—j“ú", "…—j“ú", "–Ø—j“ú", "‹à—j“ú", "“y—j“ú"													//jdddd
-		jDayOfWeekAbbreviationsArr = "“ú", "Œ", "‰Î", "…", "–Ø", "‹à", "“y"																		//jddd
+		jDayOfWeekFullArr = "æ—¥æ›œæ—¥", "æœˆæ›œæ—¥", "ç«æ›œæ—¥", "æ°´æ›œæ—¥", "æœ¨æ›œæ—¥", "é‡‘æ›œæ—¥", "åœŸæ›œæ—¥"													//jdddd
+		jDayOfWeekAbbreviationsArr = "æ—¥", "æœˆ", "ç«", "æ°´", "æœ¨", "é‡‘", "åœŸ"																		//jddd
 
 		eTimeDivisionArr = "AM","PM"		//ett
-		jTimeDivisionArr = "Œß‘O","ŒßŒã"	//jtt
+		jTimeDivisionArr = "åˆå‰","åˆå¾Œ"	//jtt
 
 	return
 
 	/**
-	 * w’è‚µ‚½ƒtƒH[ƒ}ƒbƒg‚Ì•¶š—ñ‚ğ•Ô‚·
-	 * @param _st ƒtƒH[ƒ}ƒbƒg•¶š—ñ
+	 * æŒ‡å®šã—ãŸãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®æ–‡å­—åˆ—ã‚’è¿”ã™
+	 * @param _st ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæ–‡å­—åˆ—
 	 */
 	#defcfunc local Format str _st
 
@@ -95,8 +95,8 @@
 	return st
 
     /**
-	 * ƒtƒ@ƒCƒ‹–¼‚Æ‚µ‚Ä—˜—p‚Å‚«‚È‚¢•¶š‚ª–³‚¢‚©ƒ`ƒFƒbƒN‚·‚é
-	 * @param _st ƒtƒH[ƒ}ƒbƒg•¶š—ñ
+	 * ãƒ•ã‚¡ã‚¤ãƒ«åã¨ã—ã¦åˆ©ç”¨ã§ããªã„æ–‡å­—ãŒç„¡ã„ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
+	 * @param _st ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæ–‡å­—åˆ—
 	 */
 	#deffunc local isValidFileName str _filename
         sdim filename
@@ -114,8 +114,8 @@
 	return 1
 
     /**
-	 * ƒ~ƒŠ•b‚ğ"mm:ss:ms"Œ`®‚Ì•¶š—ñ‚É•ÏŠ·‚·‚é
-	 * @param _ms ƒ~ƒŠ•b
+	 * ãƒŸãƒªç§’ã‚’"mm:ss:ms"å½¢å¼ã®æ–‡å­—åˆ—ã«å¤‰æ›ã™ã‚‹
+	 * @param _ms ãƒŸãƒªç§’
 	 */
 	#defcfunc local cnvMilliSecondToMMSSMS int _ms
 		ms = limit(_ms, 0, 5999999)
@@ -125,18 +125,18 @@
 Init@DateTimeFormatMod
 
 
-#if 0 //ƒTƒ“ƒvƒ‹
+#if 0 //ã‚µãƒ³ãƒ—ãƒ«
 
-	st =  "”N@@@@<yyyy>-<yy>-<y>\n"
-	st += "Œ@@@@<MMMM>-<MMM>-<MM>-<M>\n"
-	st += "—j“ú@@@<edddd>-<jdddd>-<eddd>-<jddd>\n"
-	st += "“ú@@@@<dd>-<d>\n"
-	st += "Œß‘OŒßŒã@<ett>-<jtt>\n"
-	st += "12ŠÔ@@<hh>-<h>\n"
-	st += "24ŠÔ@@<HH>-<H>\n"
-	st += "•ª@@@@<mm>-<m>\n"
-	st += "•b@@@@<ss>-<s>\n"
-	st += "ƒ~ƒŠ•b@@<ms>"
+	st =  "å¹´ã€€ã€€ã€€ã€€<yyyy>-<yy>-<y>\n"
+	st += "æœˆã€€ã€€ã€€ã€€<MMMM>-<MMM>-<MM>-<M>\n"
+	st += "æ›œæ—¥ã€€ã€€ã€€<edddd>-<jdddd>-<eddd>-<jddd>\n"
+	st += "æ—¥ã€€ã€€ã€€ã€€<dd>-<d>\n"
+	st += "åˆå‰åˆå¾Œã€€<ett>-<jtt>\n"
+	st += "12æ™‚é–“ã€€ã€€<hh>-<h>\n"
+	st += "24æ™‚é–“ã€€ã€€<HH>-<H>\n"
+	st += "åˆ†ã€€ã€€ã€€ã€€<mm>-<m>\n"
+	st += "ç§’ã€€ã€€ã€€ã€€<ss>-<s>\n"
+	st += "ãƒŸãƒªç§’ã€€ã€€<ms>"
 
 	mes Format@DateTimeFormatMod(st)
 

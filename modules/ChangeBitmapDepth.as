@@ -1,6 +1,6 @@
-/* ChangeBitmapDepth ���W���[��
- * HSP��24bit��bitmap��nbit�ɕϊ�����(n = 8, 24, 32)
- * 24bit�ȊO�̃r�b�h�[�x�͈ꕔ�W�����߂��g�p�s�\(gzoom�Ȃ�)
+/* ChangeBitmapDepth モジュール
+ * HSPの24bitなbitmapをnbitに変換する(n = 8, 24, 32)
+ * 24bit以外のビッド深度は一部標準命令が使用不能(gzoomなど)
  */
 #module ChangeBitmapDepth
 	/* WinAPI */
@@ -15,12 +15,12 @@
 	#const NULL 0
 	#define DIB_RGB_COLORS	$0000
 
-	/* ���̑��萔 */
+	/* その他定数 */
 	#const MREF_BMSCR 67
 
 	/**
-	 *�J�����g�E�B���h�E��BMSCR�\���̂ɂ��āA�F�[�x��bpp�Ŏw�肵�����̂ɕύX����
-	 * @param bpp �F�[�x(8, 24, 32����I���B0�ɂ���ƃ��Z�b�g)
+	 *カレントウィンドウのBMSCR構造体について、色深度をbppで指定したものに変更する
+	 * @param bpp 色深度(8, 24, 32から選択。0にするとリセット)
 	 */
 	#deffunc chgbm int bpp
 		mref bm, MREF_BMSCR

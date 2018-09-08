@@ -85,7 +85,7 @@ return
 
 *WM_COMMAND_Proc
 
-	//�R���{�{�b�N�X�ɂ�郂�[�h�ؑւ̔���
+	//コンボボックスによるモード切替の発生
 	if (lparam = hComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
 
 		logmes "ComBox"
@@ -137,7 +137,7 @@ return
 
 	}
 
-	//�I�v�V�������[�h�ؑփR���{�{�b�N�X�ɂ��I�v�V�������[�h�ؑւ̔���
+	//オプションモード切替コンボボックスによるオプションモード切替の発生
 	if (lparam = hOptionComBox) & (((wparam>>16) & 0x0000FFFF) = 1){
 
 		logmes "OptionComBox"
@@ -151,7 +151,7 @@ return
 
 	}
 
-	//�I�v�V�������L���v�`���ݒ�̕ۑ����I���R���{�{�b�N�X
+	//オプション→キャプチャ設定の保存名選択コンボボックス
 	if (lparam == saveNameSelCBh) & (((wparam>>16) & 0x0000FFFF) = 1){
 
 		sendmsg saveNameSelCBh, CB_GETCURSEL
@@ -162,9 +162,9 @@ return
 
 	}
 
-	//���[�h���I�v�V�������[�h�łȂ��Ƃ�
+	//モードがオプションモードでないとき
 	if (mode != MODE_OPTION){
-		//�c�C�[�g�E�B���h�E�\���̃`�F�b�N�{�b�N�X�������ꂽ��
+		//ツイートウィンドウ表示のチェックボックスが押された時
 		if (lparam == enabletweetwindowch && enabletweetwindowch != 0){
 
 			sendmsg enableTweetWindowCh, $F2
@@ -178,16 +178,16 @@ return
 
 		}
 
-		//�ۑ����̐؂�ւ��������ōs��(��⃊�X�L�[�H)
+		//保存名の切り替えをここで行う(ややリスキー？)
 		gosub *saveModeCalc
 		if (mode == MODE_LIST){
 
-			//�ꗗ�쐬���[�h�Ń`�F�b�N�{�b�N�X�̃I���I�t�œ��I�ɉ�ʂ�؂�ւ��邽�߂̔��菈��
-			logmes "���X�g�`�F���W�O���� Index" + DAControlIndex
+			//一覧作成モードでチェックボックスのオンオフで動的に画面を切り替えるための判定処理
+			logmes "リストチェンジ前判定 Index" + DAControlIndex
 			listChangef = FALSE
 			repeat DAControlIndex
 				if (lparam == DAControlArr(cnt)){
-					logmes "�q�b�g cnt:"+cnt
+					logmes "ヒット cnt:"+cnt
 					listChangef = TRUE
 					break
 				}
@@ -198,9 +198,9 @@ return
 	}
 
 	if (mode == MODE_OPTION){
-		//�I�v�V�������[�h�̂Ƃ�
+		//オプションモードのとき
 
-		//UI�X�P�[���̎����ݒ����
+		//UIスケールの自動設定周り
 		if (optionMode == OPMODE_CONFIG){
 			if (lparam = autoUIScaleCh){
 				sendmsg autoUIScaleCh, $F2
@@ -492,7 +492,7 @@ return
 
 return
 
-//�h���b�v�����\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\�\
+//ドロップ処理——————————————————————————————————
 *OnDropFiles
 
 	if ( ginfo_intid == WND_MAIN && mode != MODE_LIST ){
@@ -554,7 +554,7 @@ return
 return
 
 *WM_VSCROLL_Proc
-	//�g���b�N�o�[�𓮂������Ƃ��̏���
+	//トラックバーを動かしたときの処理
 	nidPush
 
 	if (lparam == hTrackbar) {
@@ -653,7 +653,7 @@ return
 return
 
 *mainWndMove
-	//�^�C�g���o�[�ȊO�̕������N���b�N���Ă����C���E�B���h�E���ړ��ł���悤�ɂ��邽�߂̏���
+	//タイトルバー以外の部分をクリックしてもメインウィンドウを移動できるようにするための処理
 	if (wparam == 1) {
 		sendmsg WND_INFO(WND_MAIN, WI_HANDLE), WM_NCLBUTTONDOWN, HTCAPTION, 0
 	}

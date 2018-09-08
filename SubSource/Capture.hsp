@@ -15,7 +15,7 @@
 
 			gosub *ssSettingCheck
 
-			LogOut "ŠÍ‚±‚ê‚Ì‰æ–Ê‚ğŒ©¸‚¢‚Ü‚µ‚½(1)"
+			LogOut "è‰¦ã“ã‚Œã®ç”»é¢ã‚’è¦‹å¤±ã„ã¾ã—ãŸ(1)"
 			nidPop
 			return 1
 		}
@@ -32,14 +32,14 @@
 
 				gosub *ssSettingCheck
 
-				LogOut "ŠÍ‚±‚ê‚Ì‰æ–Ê‚ğŒ©¸‚¢‚Ü‚µ‚½(2)"
+				LogOut "è‰¦ã“ã‚Œã®ç”»é¢ã‚’è¦‹å¤±ã„ã¾ã—ãŸ(2)"
 				nidPop
 				return 1
 			}
 		}
 	}
 
-	//b’è”’l’¼Ú“ü—Í
+	//æš«å®šæ•°å€¤ç›´æ¥å…¥åŠ›
 	sscap(0) = luposx
 	sscap(1) = luposy
 	sscap(2) = rdposx
@@ -52,8 +52,8 @@
 			if seqCapf: gosub *seqcap
 			positionType = 0
 
-			LogOut "æ“¾”ÍˆÍ‚ª¬‚³‚·‚¬‚Ü‚·"
-			ssCapMes = "æ“¾‚·‚é"
+			LogOut "å–å¾—ç¯„å›²ãŒå°ã•ã™ãã¾ã™"
+			ssCapMes = "å–å¾—ã™ã‚‹"
 			objprm SSCapIId, ssCapMes
 
 		}
@@ -114,10 +114,10 @@
 	cutPosY = 0
 
     /*
-    //HTML5ˆÚs‚É‚æ‚è‚µ‚Î‚ç‚­—˜—p•s‰Â”\
+    //HTML5ç§»è¡Œã«ã‚ˆã‚Šã—ã°ã‚‰ãåˆ©ç”¨ä¸å¯èƒ½
 	if (hidename && isHomeport(WND_CAPTURE, sscapwh(0), sscapwh(1))){
 		if (namecut): cutPosY = round(0.0625*sscapwh(1))
-		//’ñ“Â–¼‚ÆƒŒƒxƒ‹‚ğ‰B‚·ˆ—
+		//æç£åã¨ãƒ¬ãƒ™ãƒ«ã‚’éš ã™å‡¦ç†
 		gsel WND_CAPTURE: pos 0, 0
 		if (nameMosaic^1){
 			pos 0.14125*sscapwh(0), 0
@@ -148,7 +148,7 @@
 return 0
 
 
-//SSƒLƒƒƒvƒ`ƒƒ\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//SSã‚­ãƒ£ãƒ—ãƒãƒ£â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 *SSCapture
 
 	nidPush
@@ -164,9 +164,9 @@ return 0
 
 	if (seqCapf == FALSE){
 		if (confirmSaveName(SN_CAPTURE)){
-			SaveFileDialog saveNamePath, "‰æ‘œƒtƒ@ƒCƒ‹(*.png)|*.png|‰æ‘œƒtƒ@ƒCƒ‹( *.jpg)|*.jpg", jpgsave+1, nSaveName, ssSaveDir, strmid(savekind(jpgsave), 1, 3)
+			SaveFileDialog saveNamePath, "ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«(*.png)|*.png|ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«( *.jpg)|*.jpg", jpgsave+1, nSaveName, ssSaveDir, strmid(savekind(jpgsave), 1, 3)
 			if (stat == FALSE){
-				logOut "ƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½B"
+				logOut "ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚Œã¾ã—ãŸã€‚"
 				nidPop
 				return 1
 			}
@@ -187,7 +187,7 @@ return 0
 		savedPicSize = _exist(savenamepath)
 		if (savedPicSize == -1){
 			successFlg = FALSE
-			logmessage = nSaveName+"‚Ì•Û‘¶‚É¸”s‚µ‚Ü‚µ‚½"
+			logmessage = nSaveName+"ã®ä¿å­˜ã«å¤±æ•—ã—ã¾ã—ãŸ"
 		} else {
 
 			successFlg = TRUE
@@ -199,7 +199,7 @@ return 0
 
 			if (seqcapf^1) {
 
-				logmessage = nSaveName+"‚ğ•Û‘¶‚µ‚Ü‚µ‚½"
+				logmessage = nSaveName+"ã‚’ä¿å­˜ã—ã¾ã—ãŸ"
 
 				picHistoryLoad savenamepath
 				gosub *TweetWindow
@@ -226,7 +226,7 @@ return (successFlg^1)
 
 	} else: if ( (hotKeyFlag && autoAddCapture) || (dropFlag && (dropWindowId == WND_MAIN))){
 
-		//ŠÍ–º•Ò¬ƒ‚[ƒh‚Å‚Í©“®‰üs‚ª‚È‚¢‚½‚ß
+		//è‰¦å¨˜ç·¨æˆãƒ¢ãƒ¼ãƒ‰ã§ã¯è‡ªå‹•æ”¹è¡ŒãŒãªã„ãŸã‚
 		if (listmode != LISTMODE_FLEET){
 			ListModeHNumPrev = ListModeHNum
 			if (0 <= (listLoadedNum+1) && (listLoadedNum+1) < 2): ListModeHNum = 1
@@ -262,7 +262,7 @@ return (successFlg^1)
 						ycnt = cnt\6
 					}
 				} else {
-					//7l
+					//7äºº
 					if tuika1{
 						if (cnt == 13):break
 						if (cnt <= 6){
@@ -343,7 +343,7 @@ return (successFlg^1)
 		}
 
         /*
-        //HTML5ˆÚs‚É‚æ‚è‚µ‚Î‚ç‚­—˜—p•s‰Â”\
+        //HTML5ç§»è¡Œã«ã‚ˆã‚Šã—ã°ã‚‰ãåˆ©ç”¨ä¸å¯èƒ½
 		if ( absf(ratio-(450.0/800.0)) <= 0.01 ){
 			pos 0, 30
 			gzoom 800, 450, WND_CAPTURE, 0, 0, picx, picy, 1
@@ -352,7 +352,7 @@ return (successFlg^1)
 			gzoom 800, 480, WND_CAPTURE, 0, 0, picx, picy, 1
 		}
         */
-		LogOut strf("ƒLƒƒƒvƒ`ƒƒ‚ğƒZƒ‹(%d, %d)‚É“Ç‚İ‚İ‚Ü‚µ‚½", dmxy(0), dmxy(1))
+		LogOut strf("ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’ã‚»ãƒ«(%d, %d)ã«èª­ã¿è¾¼ã¿ã¾ã—ãŸ", dmxy(0), dmxy(1))
 		listLoadedNum++
 	} else {
 
@@ -370,7 +370,7 @@ return (successFlg^1)
 			gzoom int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5), WND_TEMP1, 0, 0, picx, picy, 1
 		}
         /*
-        ?HTML5ˆÚs‚É‚æ‚è‚µ‚Î‚ç‚­—˜—p•s‰Â”\
+        ?HTML5ç§»è¡Œã«ã‚ˆã‚Šã—ã°ã‚‰ãåˆ©ç”¨ä¸å¯èƒ½
 		if ( absf(ratio-(450.0/800.0)) <= 0.01 ){
 			pos 0, 30
 			gzoom 800, 450, WND_TEMP1, 0, 0, picx, picy, 1
@@ -379,7 +379,7 @@ return (successFlg^1)
 			gzoom 800, 480, WND_TEMP1, 0, 0, picx, picy, 1
 		}
         */
-		LogOut strf("%s‚ğƒZƒ‹(%d, %d)‚É“Ç‚İ‚İ‚Ü‚µ‚½", getpath(addfilename, 11), dmxy(0), dmxy(1))
+		LogOut strf("%sã‚’ã‚»ãƒ«(%d, %d)ã«èª­ã¿è¾¼ã¿ã¾ã—ãŸ", getpath(addfilename, 11), dmxy(0), dmxy(1))
 		listLoadedNum++
 	}
 	gsel WND_GRID
@@ -392,9 +392,9 @@ return
 
 	seqCapElapsedTime = timeGetTime() - seqCapStartTime
 
-	logmessage = "˜A‘±ƒLƒƒƒvƒ`ƒƒ’†c\n"
-	logmessage += strf("  Œo‰ßŠÔ %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(seqCapElapsedTime))
-	logmessage += strf("  –‡” %d–‡(%dMB)", seqCapCnt, seqCapSize/1024/1024)
+	logmessage = "é€£ç¶šã‚­ãƒ£ãƒ—ãƒãƒ£ä¸­â€¦\n"
+	logmessage += strf("  çµŒéæ™‚é–“ %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(seqCapElapsedTime))
+	logmessage += strf("  æšæ•° %dæš(%dMB)", seqCapCnt, seqCapSize/1024/1024)
 	LogOut logmessage
 	if (seqcapf && enableSeqCapLimitNum): if (seqCapLimitNum < seqCapCnt): gosub *seqcap
 	if (seqcapf && enableSeqCapLimitTime): if (seqCapLimitTime < seqCapElapsedTime): gosub *seqcap
@@ -402,7 +402,7 @@ return
 
 return
 
-//ƒzƒbƒgƒL[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//ãƒ›ãƒƒãƒˆã‚­ãƒ¼â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”
 *hotkey
 	nidPush
 
@@ -410,22 +410,22 @@ return
 
 		hotKeyFlag = TRUE
 
-		//’Êí‚ÌƒzƒbƒgƒL[‚É‚æ‚éƒLƒƒƒvƒ`ƒƒ
+		//é€šå¸¸ã®ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã«ã‚ˆã‚‹ã‚­ãƒ£ãƒ—ãƒãƒ£
 		if (mode == MODE_SSCAP){
 			gosub *ssCapture
 		}
 
-		//ˆê——ì¬ƒ‚[ƒh‚Ì©“®’Ç‰Á‚ ‚è‚ÌƒLƒƒƒvƒ`ƒƒ
+		//ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰ã®è‡ªå‹•è¿½åŠ ã‚ã‚Šã®ã‚­ãƒ£ãƒ—ãƒãƒ£
 		if ( (mode != MODE_SSCAP) && (mode != MODE_OPTION) && autoAddCapture ) {
 			if autoAddNonSave{
-				//•Û‘¶‚È‚µ‚Ìê‡
+				//ä¿å­˜ãªã—ã®å ´åˆ
 				gosub *SSCaptureOnMemory
 			} else {
-				//•Û‘¶‚ ‚è‚Ìê‡
+				//ä¿å­˜ã‚ã‚Šã®å ´åˆ
 				gosub *SSCapture
 				addFileName = saveNamePath
 			}
-			//’Ç‰Á
+			//è¿½åŠ 
 			gosub *addCapture
 
 		}
@@ -453,7 +453,7 @@ return
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapTimerID, 100*timersec, 0
 		SetTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapWriteStatTimerID, 500, 0
 
-		seqcapmes = "’â~"
+		seqcapmes = "åœæ­¢"
 		objprm seqcapBId, seqcapmes
 
 		gosub *SSModeControlDisable
@@ -471,14 +471,14 @@ return
 
 		seqcapf = FALSE
 
-		logmessage = "˜A‘±B‰e‚ğ’â~‚µ‚Ü‚µ‚½\n"
-		logmessage += strf("  Œo‰ßŠÔ %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(seqCapElapsedTime))
-		logmessage += strf("  –‡” %d–‡(%dMB)",seqCapCnt, seqCapSize/1024/1024)
+		logmessage = "é€£ç¶šæ’®å½±ã‚’åœæ­¢ã—ã¾ã—ãŸ\n"
+		logmessage += strf("  çµŒéæ™‚é–“ %s\n", cnvMilliSecondToMMSSMS@DateTimeFormatMod(seqCapElapsedTime))
+		logmessage += strf("  æšæ•° %dæš(%dMB)",seqCapCnt, seqCapSize/1024/1024)
 		LogOut logmessage
 
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapTimerID
 		KillTimer WND_INFO(WND_MAIN, WI_HANDLE), SeqCapWriteStatTimerID
-		seqcapmes = "ŠJn"
+		seqcapmes = "é–‹å§‹"
 		objprm seqcapBId, seqcapmes
 
 		gosub *SSModeControlEnable

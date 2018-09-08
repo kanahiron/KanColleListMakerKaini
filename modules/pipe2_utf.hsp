@@ -1,57 +1,57 @@
-//�[�������[����Ŕz�z����Ă���pipe2.hsp��HSP3utf�p�ɉ���
-//�z�z�� : http://tu3.jp/0569
-//�쐬�� : �[��(���e�Ƃ�)����
-//���ώ� : kanahiron
+//つーさ☆くーかんで配布されているpipe2.hspをHSP3utf用に改変
+//配布元 : http://tu3.jp/0569
+//作成者 : つーさ(月影とも)さん
+//改変者 : kanahiron
 //
-// Win32 �R���\�[�������p�C�v�ʐM���W���[��
-//      ���e�Ƃ� 2008. 2. 7 v0.02
+// Win32 コンソール向きパイプ通信モジュール
+//      月影とも 2008. 2. 7 v0.02
 //
-//      �p�C�v���g�������_�C���N�g��
-//      �W������(STDIN), �W���o��(STDOUT), �W���G���[�o��(STDERR)
-//      �𑀍�ł��郂�W���[���B�ȉ��̖��߂��`���Ă܂��B
+//      パイプを使ったリダイレクトで
+//      標準入力(STDIN), 標準出力(STDOUT), 標準エラー出力(STDERR)
+//      を操作できるモジュール。以下の命令を定義してます。
 //
 // #deffunc pipe2exec str cmdline
-//      �q�v���Z�X���p�C�v�t�����s�B
-//        cmdline : ���s����R�}���h���C���B
-//        stat�̒l : ������ procid (0�ȏ�), ���s�� -1
+//      子プロセスをパイプ付き実行。
+//        cmdline : 実行するコマンドライン。
+//        statの値 : 成功時 procid (0以上), 失敗時 -1
 //
 // #deffunc pipe2get int procid, var buf, int size, int offset
 // #deffunc pipe2err int procid, var buf, int size, int offset
-//      �W���o��/�W���G���[�o�͂�(������/�o�C�i��)�擾�B
-//        procid : pipe2exec �̖߂�l
-//        buf : ���e�擾��̃o�b�t�@
-//        size : �擾����ő�T�C�Y
-//        offset : �o�b�t�@�̏������݊J�n�ʒu
-//        stat�̒l : �擾�����o�C�g��
-//        ���l : size �ȍ~���ȗ������ꍇ�A�K�v�ȃT�C�Y�������buf�Ɋm�ۂ���(���e�̓N���A�����)�B
-//          �擾���e��������Ƃ킩���Ă���ꍇ�͕֗��B������offset�̎w��͖����B
+//      標準出力/標準エラー出力の(文字列/バイナリ)取得。
+//        procid : pipe2exec の戻り値
+//        buf : 内容取得先のバッファ
+//        size : 取得する最大サイズ
+//        offset : バッファの書き込み開始位置
+//        statの値 : 取得したバイト数
+//        備考 : size 以降を省略した場合、必要なサイズを勝手にbufに確保する(内容はクリアされる)。
+//          取得内容が文字列とわかっている場合は便利。ただしoffsetの指定は無効。
 //
 // #deffunc pipe2write int procid, var buf, int size, int offset
-//      �W�����͂փo�C�i���������݁B
-//        procid : pipe2exec �̖߂�l
-//        buf : �������݌��̃f�[�^�������Ă���o�b�t�@
-//        size : �������ރo�C�g��
-//        offset : �������݌��f�[�^�̊J�n�ʒu
-//        stat�̒l : ���ۂɏ������߂��T�C�Y
+//      標準入力へバイナリ書き込み。
+//        procid : pipe2exec の戻り値
+//        buf : 書き込み元のデータが入っているバッファ
+//        size : 書き込むバイト数
+//        offset : 書き込み元データの開始位置
+//        statの値 : 実際に書き込めたサイズ
 //
 // #deffunc pipe2put int procid, str string
-//      �W�����͂֕����񏑂����݁B
-//        procid : pipe2exec �̖߂�l
-//        string : �������ޓ��e
-//        stat�̒l : ���ۂɏ������߂��T�C�Y
+//      標準入力へ文字列書き込み。
+//        procid : pipe2exec の戻り値
+//        string : 書き込む内容
+//        statの値 : 実際に書き込めたサイズ
 //
 // #deffunc pipe2check int procid
-//      �p�C�v�̏󋵂��`�F�b�N�B
-//        procid : pipe2exec �̖߂�l
-//        stat�̒l : �ȉ��̃r�b�g�̑g�ݍ��킹�B
-//            if stat & 1 : �v���O�����͎��s��
-//            if stat & 2 : STDOUT�Ƀf�[�^����(pipe2get�Ŏ擾)
-//            if stat & 4 : STDERR�Ƀf�[�^����(pipe2err�Ŏ擾)
+//      パイプの状況をチェック。
+//        procid : pipe2exec の戻り値
+//        statの値 : 以下のビットの組み合わせ。
+//            if stat & 1 : プログラムは実行中
+//            if stat & 2 : STDOUTにデータあり(pipe2getで取得)
+//            if stat & 4 : STDERRにデータあり(pipe2errで取得)
 //
 // #deffunc pipe2term int procid
-//      �q�v���Z�X�̋����I���{�p�C�v�����
-//        procid : pipe2exec �̖߂�l
-//        stat�̒l : ��� 0
+//      子プロセスの強制終了＋パイプを閉じる
+//        procid : pipe2exec の戻り値
+//        statの値 : 常に 0
 //
 
 #module mod_execconsole m_hStdOut, m_hStdErr, m_hStdIn, m_hProcess
@@ -186,14 +186,14 @@
 
 #global
 
-//// ���W���I���
+//// モジュ終わり
 
-#if 0 // �T���v��
+#if 0 // サンプル
 
 #define CMDLINE "cmd.exe"
 
     pipe2exec CMDLINE : ChildID = stat
-    if stat<0: dialog "���s�Ɏ��s:\n"+CMDLINE : end
+    if stat<0: dialog "実行に失敗:\n"+CMDLINE : end
     wait 10
     pipe2get ChildID, buf : if stat : mes buf
     pipe2put ChildID, "dir /w \\\n"
@@ -201,17 +201,17 @@
 
     wait 10
 
-    // �q���I����ł��󂯎�郂�m�͎󂯎��܂��B
+    // 子が終了後でも受け取るモノは受け取れます。
     pipe2get ChildID, buf : if stat : mes buf
     pipe2check ChildID : title ""+stat
 
 #endif
 
-#if 0 // �T���v�� ���̂Q
+#if 0 // サンプル その２
 
 #define CMDLINE "netstat"
     pipe2exec CMDLINE : ChildID = stat
-    if stat<0: dialog "���s�Ɏ��s:\n"+CMDLINE : end
+    if stat<0: dialog "実行に失敗:\n"+CMDLINE : end
     repeat
         pipe2check ChildId : c = stat : title ""+c
         if c & 4 : pipe2err ChildID, buf : if stat : mes buf
@@ -219,6 +219,6 @@
         if c = 0 : break
         wait 10
     loop
-    mes "�I�����܂����B"
+    mes "終了しました。"
 
 #endif

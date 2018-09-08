@@ -9,29 +9,29 @@
 
 %index
 getAuthorizeAddress
-�A�N�Z�X�������߂�URL�𐶐�
+アクセス許可を求めるURLを生成
 
 %prm
 ()
 
 %inst
-���[�U�ɃA�N�Z�X�������߂�A�h���X�𐶐����A�߂�l�Ƃ��ĕԂ��܂��B
+ユーザにアクセス許可を求めるアドレスを生成し、戻り値として返します。
 
-������Twitter�ƒʐM���A���N�G�X�g�g�[�N�����擾���Ă��܂��B���N�G�X�g�g�[�N���̎擾�Ɏ��s�����ꍇ�́A"Error"�Ƃ����������Ԃ��܂��B
+内部でTwitterと通信し、リクエストトークンを取得しています。リクエストトークンの取得に失敗した場合は、"Error"という文字列を返します。
 
 %group
-TwitterAPI����֐�
+TwitterAPI操作関数
 
 %*/
 //------------------------------------------------------------
 #defcfunc getAuthorizeAddress
 
-	// �A�N�Z�X�g�[�N���擾
+	// アクセストークン取得
 	sdim arguments
 	arguments(0) = "oauth_callback=oob"
 	execRestApi "oauth/request_token", arguments, METHOD_GET
 	if stat != 200 : return "Error"
-	// �g�[�N���̎��o��
+	// トークンの取り出し
 	gaa_body = getResponseBody()
 	;request_token
 	TokenStart = instr(gaa_body, 0, "oauth_token=") + 12
@@ -50,26 +50,26 @@ return "https://api.twitter.com/oauth/authorize?oauth_token="+ requestToken
 
 %index
 GetAccessToken
-OAuth��AccessToken��Secret�擾
+OAuthでAccessTokenとSecret取得
 
 %prm
 p1, p2, p3, p4
-p1 = �ϐ�        : Access Token��������ϐ�
-p2 = �ϐ�        : Access Secret��������ϐ�
-p3 = �ϐ�        : ���[�U����������ϐ�
-p4 = ������      : PIN�R�[�h
+p1 = 変数        : Access Tokenを代入する変数
+p2 = 変数        : Access Secretを代入する変数
+p3 = 変数        : ユーザ情報を代入する変数
+p4 = 文字列      : PINコード
 
 %inst
-TwitterAPI�uoauth/access_token�v�����s���AOAuth������Access Token��Access Secret���擾���܂��B
+TwitterAPI「oauth/access_token」を実行し、OAuth方式でAccess TokenとAccess Secretを取得します。
 
-p1, p2�ɂ��ꂼ��Access Token, Access Secret��������ϐ����w�肵�Ă��������B
+p1, p2にそれぞれAccess Token, Access Secretを代入する変数を指定してください。
 
-p3�ɂ́A���[�U����������ϐ����w�肵�Ă��������B�u���[�UID,���[�U���v�ƃJ���}��؂�Ń��[�U��񂪑������܂��B
+p3には、ユーザ情報を代入する変数を指定してください。「ユーザID,ユーザ名」とカンマ区切りでユーザ情報が代入されます。
 
-p4�ɂ́APIN�R�[�h���w�肵�Ă��������BPIN�R�[�h�́AGetAuthorizeAdress�Ŏ擾����URL�ɃA�N�Z�X���A���[�U���u���v�{�^�����������Ƃ��ɕ\������܂��B�ڂ����́A���t�@�����X���������������B
+p4には、PINコードを指定してください。PINコードは、GetAuthorizeAdressで取得したURLにアクセスし、ユーザが「許可」ボタンを押したときに表示されます。詳しくは、リファレンスをご覧ください。
 
-Access Token��Secret�́A��x�擾����Ɖ��x���g�p���邱�Ƃ��ł��܂��i���݂�Twitter�̎d�l�ł́j�B���̂��߁A��xAccess Token��Secret���擾������ۑ����Ă������Ƃ��������߂��܂��B
-�܂��AAccess Token��Secret�̓��[�U���ƃp�X���[�h�̂悤�Ȃ��̂Ȃ̂ŁA�Í������ĕۑ�����ȂǊǗ��ɂ͋C�����Ă��������BOAuth/xAuth�̏ڂ������Ƃ́A���t�@�����X���������������B
+Access TokenとSecretは、一度取得すると何度も使用することができます（現在のTwitterの仕様では）。そのため、一度Access TokenとSecretを取得したら保存しておくことをおすすめします。
+また、Access TokenとSecretはユーザ名とパスワードのようなものなので、暗号化して保存するなど管理には気をつけてください。OAuth/xAuthの詳しいことは、リファレンスをご覧ください。
 
 %href
 GetAuthorizeAdress
@@ -77,7 +77,7 @@ GetxAuthToken
 SetAccessToken
 
 %group
-TwitterAPI���얽��
+TwitterAPI操作命令
 
 %*/
 //------------------------------------------------------------
@@ -94,7 +94,7 @@ TwitterAPI���얽��
 	pat_body = getResponseBody()
 
 	if statcode = 200  {
-		//�g�[�N���̎��o��
+		//トークンの取り出し
 		;request_token
 		TokenStart = instr(pat_body, 0, "oauth_token=") + 12
 		TokenEnd = instr(pat_body, TokenStart, "&")
@@ -103,7 +103,7 @@ TwitterAPI���얽��
 		TokenStart = instr(pat_body, 0, "oauth_token_secret=") + 19
 		TokenEnd = instr(pat_body, TokenStart, "&")
 		p2 = strmid(pat_body, TokenStart, TokenEnd)
-		;User���
+		;User情報
 		TokenStart = instr(pat_body, 0, "user_id=") + 8
 		TokenEnd = instr(pat_body, TokenStart, "&")
 		p3 = strmid(pat_body, TokenStart, TokenEnd) +","
@@ -176,31 +176,31 @@ return stat
 
 %index
 Tweet
-�c�C�[�g����
+ツイートする
 
 %prm
 p1, p2
-p1 = ������      : �c�C�[�g���镶����
-p2 = ������      : �ԐM(reply)�Ώۂ̃X�e�[�^�XID
+p1 = 文字列      : ツイートする文字列
+p2 = 文字列      : 返信(reply)対象のステータスID
 
 %inst
-TwitterAPI�ustatuses/update�v�����s���ATwitter�֓��e���܂��B���ʂ�SetFormatType���߂Ŏw�肵���t�H�[�}�b�g�Ŏ擾���܂��B
+TwitterAPI「statuses/update」を実行し、Twitterへ投稿します。結果はSetFormatType命令で指定したフォーマットで取得します。
 
-p1�Ƀc�C�[�g����140���ȓ��̕�������w�肵�Ă��������B140���ȏ�̏ꍇ�A140���Ɋۂ߂Ă���c�C�[�g����܂��B
+p1にツイートする140字以内の文字列を指定してください。140字以上の場合、140字に丸めてからツイートされます。
 
-p2�ɕԐM(reply)�Ώۂ̃X�e�[�^�XID���w�肷�邱�Ƃłǂ̃X�e�[�^�X�ɑ΂���ԐM���𖾎��ł��܂��Bp2�ɋ󕶎����w�肷�邩�ȗ������ꍇ�́A��������܂���B
-TwitterAPI�̎d�l��A���݂��Ȃ��A���邢�̓A�N�Z�X�����̂������Ă���X�e�[�^�XID���w�肵���ꍇ�ƁAp1�Ŏw�肵��������Ɂu@���[�U���v���܂܂�Ȃ��A���邢��@���[�U���v�Ŏw�肵�����[�U�����݂��Ȃ��ꍇ�́A��������܂��B
+p2に返信(reply)対象のステータスIDを指定することでどのステータスに対する返信かを明示できます。p2に空文字を指定するか省略した場合は、明示されません。
+TwitterAPIの仕様上、存在しない、あるいはアクセス制限のかかっているステータスIDを指定した場合と、p1で指定した文字列に「@ユーザ名」が含まれない、あるいは@ユーザ名」で指定したユーザが存在しない場合は、無視されます。
 
-TwitterAPI�����s�����ۂ̃X�e�[�^�X�R�[�h�̓V�X�e���ϐ�stat�ɑ������܂��B
+TwitterAPIを実行した際のステータスコードはシステム変数statに代入されます。
 
-API�����K�p�ΏۊO��API���g�p���Ă��܂����A1����1000��܂łƂ������s�񐔏�����ݒ肳��Ă��܂�(API�ȊO����̓��e���J�E���g�Ώ�)�B
+API制限適用対象外のAPIを使用していますが、1日に1000回までという実行回数上限が設定されています(API以外からの投稿もカウント対象)。
 
 %href
 DelTweet
 ReTweet
 
 %group
-TwitterAPI���얽��
+TwitterAPI操作命令
 
 %*/
 //------------------------------------------------------------

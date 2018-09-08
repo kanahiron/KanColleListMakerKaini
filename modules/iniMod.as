@@ -1,11 +1,11 @@
 /*
- * “Æ©Œ`®‚Ìiniƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‘‚«‚·‚éƒ‚ƒWƒ…[ƒ‹
- * •¶š—ñ‚ğ2d‚Ìƒ_ƒuƒ‹ƒNƒI[ƒgAÀ”A®”‚ğƒ_ƒuƒ‹ƒNƒI[ƒg‚ÅˆÍ‚Á‚Ä•\Œ»‚·‚é
- * “¯‚¶Œ^‚ÉŒÀ‚è”z—ñ‚ğ—˜—p‚Å‚«AƒJƒ“ƒ}‹æØ‚è‚Å•\Œ»‚·‚é
- * •¶šƒR[ƒh‚ÍUTF-16LE
+ * ç‹¬è‡ªå½¢å¼ã®iniãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿æ›¸ãã™ã‚‹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
+ * æ–‡å­—åˆ—ã‚’2é‡ã®ãƒ€ãƒ–ãƒ«ã‚¯ã‚ªãƒ¼ãƒˆã€å®Ÿæ•°ã€æ•´æ•°ã‚’ãƒ€ãƒ–ãƒ«ã‚¯ã‚ªãƒ¼ãƒˆã§å›²ã£ã¦è¡¨ç¾ã™ã‚‹
+ * åŒã˜å‹ã«é™ã‚Šé…åˆ—ã‚’åˆ©ç”¨ã§ãã€ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§è¡¨ç¾ã™ã‚‹
+ * æ–‡å­—ã‚³ãƒ¼ãƒ‰ã¯UTF-16LE
  * ex)
- * ®””z—ñ : key="Integer1", "Integer2"
- * •¶š—ñ”z—ñ : key=""String1"", ""String2""
+ * æ•´æ•°é…åˆ— : key="Integer1", "Integer2"
+ * æ–‡å­—åˆ—é…åˆ— : key=""String1"", ""String2""
  */
 
 #module iniMod
@@ -14,8 +14,8 @@
 	#func GetPrivateProfileString "GetPrivateProfileStringW" wstr, wstr, wstr, int, int, wstr
 
 	/**
-	 * iniƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
-	 * @param path iniƒtƒ@ƒCƒ‹‚ÌƒpƒX
+	 * iniãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
+	 * @param path iniãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
 	 */
 	#deffunc local Load str path
 		inipath = path
@@ -36,11 +36,11 @@
 	return 0
 
 	/**
-	 * •Ï”‚É’l‚ğ“Ç‚İ‚Ş •Ï”‚Í©“®“I‚É‰Šú‰»‚³‚ê‚é
-	 * @param sect ƒZƒNƒVƒ‡ƒ“•¶š—ñ
-	 * @param para ƒpƒ‰ƒƒ^•¶š—ñ
-	 * @param vari ’l‚ª•Ô‚³‚ê‚é•Ï”
-	 * @param defParam ƒpƒ‰ƒƒ^‚ª‘¶İ‚µ‚È‚¢ê‡‚É•Ô‚³‚ê‚éƒfƒtƒHƒ‹ƒg’l
+	 * å¤‰æ•°ã«å€¤ã‚’èª­ã¿è¾¼ã‚€ å¤‰æ•°ã¯è‡ªå‹•çš„ã«åˆæœŸåŒ–ã•ã‚Œã‚‹
+	 * @param sect ã‚»ã‚¯ã‚·ãƒ§ãƒ³æ–‡å­—åˆ—
+	 * @param para ãƒ‘ãƒ©ãƒ¡ã‚¿æ–‡å­—åˆ—
+	 * @param vari å€¤ãŒè¿”ã•ã‚Œã‚‹å¤‰æ•°
+	 * @param defParam ãƒ‘ãƒ©ãƒ¡ã‚¿ãŒå­˜åœ¨ã—ãªã„å ´åˆã«è¿”ã•ã‚Œã‚‹ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
 	 */
 	#define Get(%1, %2, %3, %4="") Get_@iniMod %1, %2, %3, %4
 	#deffunc local Get_ str sect, str para, array vari, str defParam
@@ -54,7 +54,7 @@
 			tempBuf = cnvwtos(tempBuf)
 		}
 		if (strmid(tempBuf, 0, 1) == "\""){
-			//•¶š—ñŒ^
+			//æ–‡å­—åˆ—å‹
 			strrep tempBuf, "\"\"", "\""
 			if (tempBuf == "\""){
 				sdim vari
@@ -70,21 +70,21 @@
 
 			return 0
 		} else {
-			//®”Œ^‚©À”Œ^
+			//æ•´æ•°å‹ã‹å®Ÿæ•°å‹
 
 			tempBuf = "\""+ tempBuf +"\""
 			dQuartoParse@iniMod tempBuf, tempArray
 			if (stat == 1):return 1
 
 			if (instr(tempArray(0), 0, ".") == -1){
-				//®”Œ^‚Å‚µ‚½
+				//æ•´æ•°å‹ã§ã—ãŸ
 				dim vari, length(tempArray)
 				repeat length(tempArray)
 					vari(cnt) = int(tempArray(cnt))
 				loop
 				return 0
 			} else {
-				//À”Œ^‚Å‚µ‚½
+				//å®Ÿæ•°å‹ã§ã—ãŸ
 				ddim vari, length(tempArray)
 				repeat length(tempArray)
 					vari(cnt) = double(tempArray(cnt))
@@ -96,10 +96,10 @@
 	return 1
 
 	/**
-	 * iniƒtƒ@ƒCƒ‹‚É’l‚ğ‘‚«‚Ş
-	 * @param sect ƒZƒNƒVƒ‡ƒ“•¶š—ñ
-	 * @param para ƒpƒ‰ƒƒ^•¶š—ñ
-	 * @param vari ‘‚«‚Ş’l‚Ì“ü‚Á‚½•Ï”
+	 * iniãƒ•ã‚¡ã‚¤ãƒ«ã«å€¤ã‚’æ›¸ãè¾¼ã‚€
+	 * @param sect ã‚»ã‚¯ã‚·ãƒ§ãƒ³æ–‡å­—åˆ—
+	 * @param para ãƒ‘ãƒ©ãƒ¡ã‚¿æ–‡å­—åˆ—
+	 * @param vari æ›¸ãè¾¼ã‚€å€¤ã®å…¥ã£ãŸå¤‰æ•°
 	 */
 	#deffunc local Write str sect, str para, array vari
 		if inipath = "" : return 1
@@ -107,7 +107,7 @@
 		sdim tempBuf, 1040
 
 		switch vartype(vari)
-			case 2 //•¶š—ñŒ^
+			case 2 //æ–‡å­—åˆ—å‹
 				repeat length(vari)
 					tempBuf += "\"\""+vari(cnt)+"\"\", "
 				loop
@@ -116,7 +116,7 @@
 				return 0
 			swbreak
 
-			case 3: case 4 //À”Œ^, ®”Œ^
+			case 3: case 4 //å®Ÿæ•°å‹, æ•´æ•°å‹
 				repeat length(vari)
 					tempBuf += "\""+str(vari(cnt))+"\", "
 				loop
@@ -129,9 +129,9 @@
 	return 1
 
 	/**
-	 * ƒ_ƒuƒ‹ƒNƒI[ƒg‚ÅˆÍ‚Ü‚ê‚½•¶š—ñ‚ğƒp[ƒX‚µ”z—ñ•Ï”‚ÉŠi”[‚·‚é
-	 * @param buf ƒ_ƒuƒ‹ƒNƒI[ƒg‚ÅˆÍ‚Ü‚ê‚½•¶š—ñ
-	 * @param vari ’l‚ª•Ô‚³‚ê‚é•Ï”
+	 * ãƒ€ãƒ–ãƒ«ã‚¯ã‚ªãƒ¼ãƒˆã§å›²ã¾ã‚ŒãŸæ–‡å­—åˆ—ã‚’ãƒ‘ãƒ¼ã‚¹ã—é…åˆ—å¤‰æ•°ã«æ ¼ç´ã™ã‚‹
+	 * @param buf ãƒ€ãƒ–ãƒ«ã‚¯ã‚ªãƒ¼ãƒˆã§å›²ã¾ã‚ŒãŸæ–‡å­—åˆ—
+	 * @param vari å€¤ãŒè¿”ã•ã‚Œã‚‹å¤‰æ•°
 	 */
 	#deffunc local dQuartoParse var buf, array vari
 

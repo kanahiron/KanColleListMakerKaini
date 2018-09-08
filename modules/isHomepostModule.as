@@ -6,11 +6,11 @@
 #endif
 
 // isHomeportModule
-// �͂���̃L���v�`�������`���ۂ��𔻒肷��
+// 艦これのキャプチャから母港か否かを判定する
 #module
 
     //isHomeport_init
-	//���W���[���̏���������
+	//モジュールの初期化命令
 	#deffunc isHomeport_init int wndId
 
 		homeportBufId = wndId
@@ -21,7 +21,7 @@
 		wRatio =  1.0* (240)/800
 		hRatio =  1.0* (20)	/480
 
-		//�ł��邾�������ɓ��삳���邽�߃o�b�t�@�̏��������ɍs��
+		//できるだけ高速に動作させるためバッファの初期化を先に行う
 		buffer homeportBufId, 8, 9
 		chgbm 32
 		mref homeportVram, 66

@@ -1,8 +1,8 @@
 //======================================================================
 //    TsubuyakiSoup_mod_utf
 //----------------------------------------------------------------------
-//    HSP‚©‚çTwitter‚ğ‘€ì‚·‚éƒ‚ƒWƒ…[ƒ‹B
-//    OAuth‚É‘Î‰BAPI1.1‚Ö‘Î‰B
+//    HSPã‹ã‚‰Twitterã‚’æ“ä½œã™ã‚‹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã€‚
+//    OAuthã«å¯¾å¿œã€‚API1.1ã¸å¯¾å¿œã€‚
 //----------------------------------------------------------------------
 //  Author : Takaya,kanahiron
 //  CreateDate : 10/07/29
@@ -20,7 +20,7 @@ TsubuyakiSoup
 2010/11/14
 
 %note
-TsubuyakiSoup.as‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚é‚±‚ÆB
+TsubuyakiSoup.asã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ã™ã‚‹ã“ã¨ã€‚
 
 %port
 Win
@@ -166,9 +166,9 @@ Win
 
 
 //------------------------------
-//  ’è”
+//  å®šæ•°
 //------------------------------
-//HTTPƒƒ\ƒbƒh
+//HTTPãƒ¡ã‚½ãƒƒãƒ‰
 #define global METHOD_GET    0
 #define global METHOD_POST   1
 #define global METHOD_DELETE 2
@@ -185,38 +185,38 @@ Win
 
 %index
 tCupInit
-TsubuyakiSoup‚Ì‰Šú‰»
+TsubuyakiSoupã®åˆæœŸåŒ–
 
 %prm
 p1, p2, p3
-p1 = •¶š—ñ      : ƒ†[ƒUƒG[ƒWƒFƒ“ƒg
-p2 = •¶š—ñ      : Consumer Key
-p3 = •¶š—ñ      : Consumer Secret
-p4 = 0`(30)     : ƒ^ƒCƒ€ƒAƒEƒg‚ÌŠÔ(•b)
+p1 = æ–‡å­—åˆ—      : ãƒ¦ãƒ¼ã‚¶ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆ
+p2 = æ–‡å­—åˆ—      : Consumer Key
+p3 = æ–‡å­—åˆ—      : Consumer Secret
+p4 = 0ã€œ(30)     : ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®æ™‚é–“(ç§’)
 
 %inst
-TsubyakiSoupƒ‚ƒWƒ…[ƒ‹‚Ì‰Šú‰»‚ğ‚µ‚Ü‚·BTwitter‘€ì–½—ß‚Ìg—p‘O‚ÉŒÄ‚Ño‚·•K—v‚ª‚ ‚è‚Ü‚·B
+TsubyakiSoupãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®åˆæœŸåŒ–ã‚’ã—ã¾ã™ã€‚Twitteræ“ä½œå‘½ä»¤ã®ä½¿ç”¨å‰ã«å‘¼ã³å‡ºã™å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 
-p1‚Éƒ†[ƒUƒG[ƒWƒFƒ“ƒg‚ğw’è‚µ‚Ü‚·Bƒ†[ƒUƒG[ƒWƒFƒ“ƒg‚ğw’è‚µ‚Ä‚¢‚È‚¢‚ÆSearchAPI‚È‚Ç‚ÅŒµ‚µ‚¢API§ŒÀ‚ğó‚¯‚é‚±‚Æ‚ª‚ ‚è‚Ü‚·B
+p1ã«ãƒ¦ãƒ¼ã‚¶ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã‚’æŒ‡å®šã—ã¾ã™ã€‚ãƒ¦ãƒ¼ã‚¶ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã‚’æŒ‡å®šã—ã¦ã„ãªã„ã¨SearchAPIãªã©ã§å³ã—ã„APIåˆ¶é™ã‚’å—ã‘ã‚‹ã“ã¨ãŒã‚ã‚Šã¾ã™ã€‚
 
-p2‚ÉConsumer Key‚ğAp3‚ÉConsumer Secret‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢BConsumer Key‚ÆConsumer Secret‚ÍATwitter‚©‚çæ“¾‚·‚é•K—v‚ª‚ ‚è‚Ü‚·BÚ‚µ‚­‚ÍAƒŠƒtƒ@ƒŒƒ“ƒX‚ğ‚²——‚­‚¾‚³‚¢B
+p2ã«Consumer Keyã‚’ã€p3ã«Consumer Secretã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚Consumer Keyã¨Consumer Secretã¯ã€Twitterã‹ã‚‰å–å¾—ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚è©³ã—ãã¯ã€ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹ã‚’ã”è¦§ãã ã•ã„ã€‚
 
-p4‚É‚ÍTwitter‚Æ’ÊM‚·‚éÛ‚Ìƒ^ƒCƒ€ƒAƒEƒg‚ÌŠÔ‚ğ•b’PˆÊ‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢B
+p4ã«ã¯Twitterã¨é€šä¿¡ã™ã‚‹éš›ã®ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®æ™‚é–“ã‚’ç§’å˜ä½ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
 
 %href
 TS_End
 
 %group
-TwitterAPI‘€ì–½—ß
+TwitterAPIæ“ä½œå‘½ä»¤
 
 %*/
 //------------------------------------------------------------
 #deffunc _tCupInit str p1, str p2, str p3, int p4
 
-	//Šeí•Ï”‚Ì‰Šú‰»
-;	rateLimit(0) = -1		// 15•ªŠÔ‚ÉAPI‚ğÀs‚Å‚«‚é‰ñ”
-;	rateLimit(1) = -1		// API‚ğÀs‚Å‚«‚éc‚è‰ñ”
-;	rateLimit(2) = -1		// ƒŠƒZƒbƒg‚·‚éŠÔ
+	//å„ç¨®å¤‰æ•°ã®åˆæœŸåŒ–
+;	rateLimit(0) = -1		// 15åˆ†é–“ã«APIã‚’å®Ÿè¡Œã§ãã‚‹å›æ•°
+;	rateLimit(1) = -1		// APIã‚’å®Ÿè¡Œã§ãã‚‹æ®‹ã‚Šå›æ•°
+;	rateLimit(2) = -1		// ãƒªã‚»ãƒƒãƒˆã™ã‚‹æ™‚é–“
 	accessToken = ""		// AccessToken
 	accessSecret = ""		// AccessTokenSecret
 	requestToken = ""		// RequestToken
@@ -232,7 +232,7 @@ TwitterAPI‘€ì–½—ß
 	gzipFlag = 1 // true /-------------------
 	sdim userAgent,strlen(p1)*3
 	cnvstow userAgent, p1
-	//ƒCƒ“ƒ^[ƒlƒbƒgƒI[ƒvƒ“
+	//ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆã‚ªãƒ¼ãƒ—ãƒ³
 	hInet = _InternetOpen( varptr(_userAgent), INTERNET_OPEN_TYPE_PRECONFIG, 0, 0, 0)
 	if hInet = 0:return -1
 	_InternetSetOption hInet, INTERNET_OPTION_CONNECT_TIMEOUT, varptr(timeOutTime), 4
@@ -246,22 +246,22 @@ return 0
 
 %index
 tCupWash
-TsubuyakiSoup‚ÌI—¹ˆ—
+TsubuyakiSoupã®çµ‚äº†å‡¦ç†
 
 %inst
-TsubyakiSoupƒ‚ƒWƒ…[ƒ‹‚ÌI—¹ˆ—‚ğs‚È‚¢‚Ü‚·B
-ƒvƒƒOƒ‰ƒ€I—¹‚É©“®“I‚ÉŒÄ‚Ño‚³‚ê‚é‚Ì‚Å–¾¦“I‚ÉŒÄ‚Ño‚·•K—v‚Í‚ ‚è‚Ü‚¹‚ñB
+TsubyakiSoupãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®çµ‚äº†å‡¦ç†ã‚’è¡Œãªã„ã¾ã™ã€‚
+ãƒ—ãƒ­ã‚°ãƒ©ãƒ çµ‚äº†æ™‚ã«è‡ªå‹•çš„ã«å‘¼ã³å‡ºã•ã‚Œã‚‹ã®ã§æ˜ç¤ºçš„ã«å‘¼ã³å‡ºã™å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚
 
 %href
 TS_Init
 
 %group
-TwitterAPI‘€ì–½—ß
+TwitterAPIæ“ä½œå‘½ä»¤
 
 %*/
 //------------------------------------------------------------
 #deffunc tCupWash onexit
-	//ƒnƒ“ƒhƒ‹‚Ì”jŠü
+	//ãƒãƒ³ãƒ‰ãƒ«ã®ç ´æ£„
 	if (hRequest) : _InternetCloseHandle hRequest
 	if (hConnect) : _InternetCloseHandle hConnect
 	if (hInet) : _InternetCloseHandle hInet
@@ -273,25 +273,25 @@ return
 
 %index
 getHmacSha1
-HMAC-SHA1‚Å–¼‚ğ¶¬
+HMAC-SHA1ã§ç½²åã‚’ç”Ÿæˆ
 
 %prm
 (p1, p2)
-p1 = •¶š—ñ    : –¼‰»‚·‚é•¶š—ñ
-p2 = •¶š—ñ    : Œ®‚Æ‚·‚é•¶š—ñ
+p1 = æ–‡å­—åˆ—    : ç½²ååŒ–ã™ã‚‹æ–‡å­—åˆ—
+p2 = æ–‡å­—åˆ—    : éµã¨ã™ã‚‹æ–‡å­—åˆ—
 
 %inst
-SHA-1ƒnƒbƒVƒ…ŠÖ”‚ğg—p‚µ‚½ƒnƒbƒVƒ…ƒƒbƒZ[ƒW”FØƒR[ƒhiHMACj‚ğ•Ô‚µ‚Ü‚·B
+SHA-1ãƒãƒƒã‚·ãƒ¥é–¢æ•°ã‚’ä½¿ç”¨ã—ãŸãƒãƒƒã‚·ãƒ¥ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸èªè¨¼ã‚³ãƒ¼ãƒ‰ï¼ˆHMACï¼‰ã‚’è¿”ã—ã¾ã™ã€‚
 
-p1‚É–¼‰»‚·‚é•¶š—ñ‚ğw’è‚µ‚Ü‚·B
+p1ã«ç½²ååŒ–ã™ã‚‹æ–‡å­—åˆ—ã‚’æŒ‡å®šã—ã¾ã™ã€‚
 
-–¼‰»‚·‚é‚½‚ß‚ÌŒ®iƒL[j‚ÍAp2‚Å•¶š—ñ‚Åw’è‚µ‚Ü‚·B
+ç½²ååŒ–ã™ã‚‹ãŸã‚ã®éµï¼ˆã‚­ãƒ¼ï¼‰ã¯ã€p2ã§æ–‡å­—åˆ—ã§æŒ‡å®šã—ã¾ã™ã€‚
 
 %href
 sigEncode
 
 %group
-TsubuyakiSoup•â•ŠÖ”
+TsubuyakiSoupè£œåŠ©é–¢æ•°
 
 %*/
 //------------------------------------------------------------
@@ -321,9 +321,9 @@ TsubuyakiSoup•â•ŠÖ”
 	sdim ghc_dest, 20
 	ghc_dest = "Error"
 
-	//ƒRƒ“ƒeƒLƒXƒg‚Ìæ“¾
+	//ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®å–å¾—
 	if ( _CryptAcquireContext(varptr(hProv), 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT) ) {
-		//ƒL[‚ÌƒCƒ“ƒ|[ƒg
+		//ã‚­ãƒ¼ã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 		if ( _CryptImportKey(hProv, varptr(keyBlob), (12+ghc_p2Length), 0, CRYPT_IPSEC_HMAC_KEY, varptr(hKey)) ) {
 			if ( _CryptCreateHash(hProv, CALG_HMAC, hKey, 0, varptr(hHash)) ) {
 				if ( _CryptSetHashParam(hHash, HP_HMAC_INFO, varptr(hmacInfo), 0) ) {
@@ -335,13 +335,13 @@ TsubuyakiSoup•â•ŠÖ”
 						}
 					}
 				}
-				//ƒnƒbƒVƒ…ƒnƒ“ƒhƒ‹‚Ì”jŠü
+				//ãƒãƒƒã‚·ãƒ¥ãƒãƒ³ãƒ‰ãƒ«ã®ç ´æ£„
 				_CryptDestroyHash hHash
 			}
-			//ƒL[ƒnƒ“ƒhƒ‹‚Ì”jŠü
+			//ã‚­ãƒ¼ãƒãƒ³ãƒ‰ãƒ«ã®ç ´æ£„
 			_CryptDestroyKey hKey
 		}
-		//ƒnƒ“ƒhƒ‹‚Ì”jŠü
+		//ãƒãƒ³ãƒ‰ãƒ«ã®ç ´æ£„
 		_CryptReleaseContext hProv, 0
 	}
 return
@@ -352,35 +352,35 @@ return
 
 %index
 sigEncode
-OAuth/xAuth—pƒVƒOƒlƒ`ƒƒ‚ğ¶¬
+OAuth/xAuthç”¨ã‚·ã‚°ãƒãƒãƒ£ã‚’ç”Ÿæˆ
 
 %prm
 (p1, p2)
-p1 = •¶š—ñ    : –¼‰»‚·‚é•¶š—ñ
-p2 = •¶š—ñ    : Œ®‚Æ‚·‚é•¶š—ñ
+p1 = æ–‡å­—åˆ—    : ç½²ååŒ–ã™ã‚‹æ–‡å­—åˆ—
+p2 = æ–‡å­—åˆ—    : éµã¨ã™ã‚‹æ–‡å­—åˆ—
 
 %inst
-OAuth/xAuth—p‚Ì–¼‚ğ•Ô‚µ‚Ü‚·B
+OAuth/xAuthç”¨ã®ç½²åã‚’è¿”ã—ã¾ã™ã€‚
 
-p1‚É–¼‰»‚·‚é•¶š—ñ‚ğw’è‚µ‚Ü‚·B
+p1ã«ç½²ååŒ–ã™ã‚‹æ–‡å­—åˆ—ã‚’æŒ‡å®šã—ã¾ã™ã€‚
 
-–¼‰»‚·‚é‚½‚ß‚ÌŒ®iƒL[j‚ÍAp2‚Å•¶š—ñ‚Åw’è‚µ‚Ü‚·B
+ç½²ååŒ–ã™ã‚‹ãŸã‚ã®éµï¼ˆã‚­ãƒ¼ï¼‰ã¯ã€p2ã§æ–‡å­—åˆ—ã§æŒ‡å®šã—ã¾ã™ã€‚
 
-Twitter‚ÌƒVƒOƒlƒ`ƒƒ¶¬‚Ìd—l‚æ‚èA
-•¶šƒR[ƒhUTF-8‚ÅURLƒGƒ“ƒR[ƒh‚µ‚½•¶š—ñip1j‚ğA“¯‚¶‚­URLƒGƒ“ƒR[ƒh‚µ‚½•¶š—ñip2j‚ğƒL[‚Æ‚µ‚ÄHAMAC-SHA1•û®‚Å¶¬‚µ‚½–¼‚ğABASE64ƒGƒ“ƒR[ƒh‚µ‚½‚¤‚¦URLƒGƒ“ƒR[ƒh‚µ‚Ä‚¢‚Ü‚·B
+Twitterã®ã‚·ã‚°ãƒãƒãƒ£ç”Ÿæˆã®ä»•æ§˜ã‚ˆã‚Šã€
+æ–‡å­—ã‚³ãƒ¼ãƒ‰UTF-8ã§URLã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã—ãŸæ–‡å­—åˆ—ï¼ˆp1ï¼‰ã‚’ã€åŒã˜ãURLã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã—ãŸæ–‡å­—åˆ—ï¼ˆp2ï¼‰ã‚’ã‚­ãƒ¼ã¨ã—ã¦HAMAC-SHA1æ–¹å¼ã§ç”Ÿæˆã—ãŸç½²åã‚’ã€BASE64ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã—ãŸã†ãˆURLã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã—ã¦ã„ã¾ã™ã€‚
 
 %href
 HMAC_SHA1
 
 %group
-TsubuyakiSoup•â•ŠÖ”
+TsubuyakiSoupè£œåŠ©é–¢æ•°
 
 %*/
 //------------------------------------------------------------
 #defcfunc sigEncode str se_p1, str se_p2
 	SigTmp = se_p1
 	SecretTmp = se_p2
-	//URLƒGƒ“ƒR[ƒh
+	//URLã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰
 	SigEnc = form_encode(SigTmp, 0)
 	SecretEnc = form_encode(SecretTmp, 0)
 	getHmacSha1 SigEnc, SecretEnc, HmacSha1
@@ -442,12 +442,12 @@ return form_encode(str(base64HmacSha1), 0)
 	sigArrayLength = 6+argumentLength
 	sdim sigArray, 500, sigArrayLength
 
-	hConnect = 0	// InternetConnect‚Ìƒnƒ“ƒhƒ‹
-	hRequest = 0	// HttpOpenRequest‚Ìƒnƒ“ƒhƒ‹
-	statCode = 0	// ƒŠƒNƒGƒXƒg‚ÌŒ‹‰ÊƒR[ƒh
-	intSize = 4		//intŒ^‚ÌƒoƒCƒg”
+	hConnect = 0	// InternetConnectã®ãƒãƒ³ãƒ‰ãƒ«
+	hRequest = 0	// HttpOpenRequestã®ãƒãƒ³ãƒ‰ãƒ«
+	statCode = 0	// ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®çµæœã‚³ãƒ¼ãƒ‰
+	intSize = 4		//intå‹ã®ãƒã‚¤ãƒˆæ•°
 
-	apiVersion = "1.1"	// TwitterAPI‚Ìƒo[ƒWƒ‡ƒ“
+	apiVersion = "1.1"	// TwitterAPIã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 
 	RequestURL = "api.twitter.com"
 	if (api = "media/upload.json") {
@@ -457,7 +457,7 @@ return form_encode(str(base64HmacSha1), 0)
 	apiUrl = apiVersion +"/"+ api
 
 	sdim transStr, 4096
-	//OAuth1.0a—p‚ÌƒVƒOƒlƒ`ƒƒì¬
+	//OAuth1.0aç”¨ã®ã‚·ã‚°ãƒãƒãƒ£ä½œæˆ
 	transStr = method +" https://"+RequestURL+"/"+ apiVersion +"/"+ api +" "
 	if (strmid(api,0,5) = "oauth") {
 		apiUrl = api
@@ -496,9 +496,9 @@ return form_encode(str(base64HmacSha1), 0)
 	loop
 	transStr = strmid(transStr, 0, strlen(transStr)-1)
 	signature = sigEncode(transStr, sigKey)
-	//ƒVƒOƒlƒ`ƒƒì¬‚±‚±‚Ü‚Å
+	//ã‚·ã‚°ãƒãƒãƒ£ä½œæˆã“ã“ã¾ã§
 
-	//ƒŠƒNƒGƒXƒgì¬
+	//ãƒªã‚¯ã‚¨ã‚¹ãƒˆä½œæˆ
 	if (methodType = METHOD_POST) {
 
 		sdim boundary,128
@@ -526,7 +526,7 @@ return form_encode(str(base64HmacSha1), 0)
 			repeat argumentLength
 				PostData += arguments(cnt)+"&"
 			loop
-			PostData = strmid(PostData, 0, strlen(PostData)-1) //Œã‚ë‚Ì&‚ğœ‹
+			PostData = strmid(PostData, 0, strlen(PostData)-1) //å¾Œã‚ã®&ã‚’é™¤å»
 			PostDataLength = strlen(PostData)
 			logmes "PostData: "+PostData
 		}
@@ -569,33 +569,33 @@ return form_encode(str(base64HmacSha1), 0)
 		PostDataLength = 0
 	}
 
-	//ƒwƒbƒ_[‚ğUTF-16LE‚É•ÏŠ·
-	RequestHeaderWideLength = MultiByteToWideChar( 65001, 0, varptr(RequestHeader), strlen(RequestHeader), 0, 0) //UTF-16•¶š—ñ‚Ì •¶ š ”
-	sdim RequestHeaderWide, (RequestHeaderWideLength*2)+2	//UTF-16•¶š—ñ‚ğ“ü‚ê‚éƒoƒbƒtƒ@‚ğŠm•Û
-	cnvstow RequestHeaderWide, RequestHeader				//ƒoƒbƒtƒ@‚ÉUTF-8‚©‚çUTF-16‚É•ÏŠ·‚µ‚ÄŠi”[
+	//ãƒ˜ãƒƒãƒ€ãƒ¼ã‚’UTF-16LEã«å¤‰æ›
+	RequestHeaderWideLength = MultiByteToWideChar( 65001, 0, varptr(RequestHeader), strlen(RequestHeader), 0, 0) //UTF-16æ–‡å­—åˆ—ã® æ–‡ å­— æ•°
+	sdim RequestHeaderWide, (RequestHeaderWideLength*2)+2	//UTF-16æ–‡å­—åˆ—ã‚’å…¥ã‚Œã‚‹ãƒãƒƒãƒ•ã‚¡ã‚’ç¢ºä¿
+	cnvstow RequestHeaderWide, RequestHeader				//ãƒãƒƒãƒ•ã‚¡ã«UTF-8ã‹ã‚‰UTF-16ã«å¤‰æ›ã—ã¦æ ¼ç´
 
-	//HttpSendRequestEx—p‚ÌINTERNET_BUFFERS\‘¢‘Ì‚ğì¬
+	//HttpSendRequestExç”¨ã®INTERNET_BUFFERSæ§‹é€ ä½“ã‚’ä½œæˆ
 	dim INTERNET_BUFFERS, 10
 	INTERNET_BUFFERS( 0) = 40
 	INTERNET_BUFFERS( 2) = varptr(RequestHeaderWide)
-	INTERNET_BUFFERS( 3) = RequestHeaderWideLength //ƒŠƒNƒGƒXƒgƒwƒbƒ_‚Ì•¶š”
-	INTERNET_BUFFERS( 7) = PostDataLength //RequestBody‚¾‚¯‚ÌƒTƒCƒY
+	INTERNET_BUFFERS( 3) = RequestHeaderWideLength //ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ˜ãƒƒãƒ€ã®æ–‡å­—æ•°
+	INTERNET_BUFFERS( 7) = PostDataLength //RequestBodyã ã‘ã®ã‚µã‚¤ã‚º
 
 	requestFlag = INTERNET_FLAG_NO_CACHE_WRITE
 	requestFlag |= INTERNET_FLAG_SECURE
 
-	//ƒT[ƒo‚ÖÚ‘±
+	//ã‚µãƒ¼ãƒã¸æ¥ç¶š
 	hConnect = _InternetConnect(hInet, RequestURL, INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
 	logmes "1 InternetConnect"
 	if (hConnect) {
-		//ƒŠƒNƒGƒXƒg‚Ì‰Šú‰»
+		//ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®åˆæœŸåŒ–
 		hRequest = _HttpOpenRequest(hConnect, method, apiURL, httpVer, 0, 0, requestFlag)
 		logmes "2 HttpOpenRequest"
 		if (hRequest) {
-			//ƒf[ƒ^‘—M€”õ
+			//ãƒ‡ãƒ¼ã‚¿é€ä¿¡æº–å‚™
 			if _HttpSendRequestEx( hRequest, varptr(INTERNET_BUFFERS), 0, 0, 0) {
 				logmes "3 HttpSendRequestEx"
-				//ƒŠƒNƒGƒXƒgƒ{ƒfƒB‚Ì‘—M
+				//ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒœãƒ‡ã‚£ã®é€ä¿¡
 				sentFailFlg = 0
 				if (PostDataLength != 0){
 
@@ -613,12 +613,12 @@ return form_encode(str(base64HmacSha1), 0)
 						//logmes " tSize :"+tSize
 
 						_InternetWriteFile hRequest, varptr(PostData)+sentSize, tSize, varptr(BytesWritten)
-						if (stat == 0): sentFailFlg = 1: break //‘—M¸”s
+						if (stat == 0): sentFailFlg = 1: break //é€ä¿¡å¤±æ•—
 						//logmes "BytesWritten "+BytesWritten
 						sentSize += BytesWritten
 						unSentSize -= BytesWritten
 						//logmes " unSentSize :"+unSentSize
-						//title@hsp strf("‘—MƒoƒCƒg” %d/%dByte %.2f%%", sentSize, PostdataLength, (100.0*sentSize/PostDataLength))
+						//title@hsp strf("é€ä¿¡ãƒã‚¤ãƒˆæ•° %d/%dByte %.2f%%", sentSize, PostdataLength, (100.0*sentSize/PostDataLength))
 						if hProgress: sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength+0.9)+1: sendmsg hProgress, $402, int(100.0*sentSize/PostDataLength+0.9)
 						await
 					loop
@@ -635,17 +635,17 @@ return form_encode(str(base64HmacSha1), 0)
 						_HttpQueryInfo hRequest, HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER, varptr(statCode), varptr(intSize), 0
 						//logmes "StatCode "+statCode
 
-						//“üè‰Â”\‚Èƒf[ƒ^—Ê‚ğæ“¾
+						//å…¥æ‰‹å¯èƒ½ãªãƒ‡ãƒ¼ã‚¿é‡ã‚’å–å¾—
 						_InternetQueryDataAvailable hRequest, varptr(ResponseBodySize), 0, 0
 						logmes "ResponseBodySize :"+ResponseBodySize
 
-						//ƒoƒbƒtƒ@‚Ì‰Šú‰»
+						//ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–
 						sdim readBuffer, BLOCK_SIZE+1
 						sdim responseBody, ResponseBodySize+1
 						repeat
 							_InternetReadFile hRequest, varptr(readBuffer), BLOCK_SIZE, varptr(readSize)
 							if (readSize = 0) : break
-							if ((readTotalSize+readSize)>ResponseBodySize): memexpand responseBody, (readTotalSize+readSize+1): logmes "ResBodyŠg’£ :"+(readTotalSize+readSize+1)
+							if ((readTotalSize+readSize)>ResponseBodySize): memexpand responseBody, (readTotalSize+readSize+1): logmes "ResBodyæ‹¡å¼µ :"+(readTotalSize+readSize+1)
 							memcpy responseBody, readBuffer, readSize, readTotalSize, 0
 							readTotalSize += readSize
 						loop
@@ -660,7 +660,7 @@ return form_encode(str(base64HmacSha1), 0)
 /*
 	#ifdef _debug
 		nid = ginfo(3)
-		screen 45,1200,500 //•Ï”‚Ì“à—e•\¦
+		screen 45,1200,500 //å¤‰æ•°ã®å†…å®¹è¡¨ç¤º
 		mesbox RequestHeader,1200,75,0
 		mesbox PostData,1200,175,0
 		mesbox responseHeader,1200,175,0
@@ -690,26 +690,26 @@ return responseBody
 
 %index
 SetAccessToken
-AccessToken‚ÆSecret‚ğİ’è
+AccessTokenã¨Secretã‚’è¨­å®š
 
 %prm
 p1, p2
-p1 = •¶š—ñ      : Access Token
-p2 = •¶š—ñ      : Access Secret
+p1 = æ–‡å­—åˆ—      : Access Token
+p2 = æ–‡å­—åˆ—      : Access Secret
 
 %inst
-TsubuyakiSoup‚ÉAccess Token‚ÆAccess Secret‚ğİ’è‚µ‚Ü‚·B
+TsubuyakiSoupã«Access Tokenã¨Access Secretã‚’è¨­å®šã—ã¾ã™ã€‚
 
-p1‚ÉAccess Token‚ğAp2‚ÉAccess Secret‚ğw’è‚µ‚Ü‚·B
+p1ã«Access Tokenã‚’ã€p2ã«Access Secretã‚’æŒ‡å®šã—ã¾ã™ã€‚
 
-‚±‚ÌAccess Token‚ÆAccess Secret‚ÍAGetAccessToken–½—ß‚©GetxAuthToken–½—ß‚Åæ“¾‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·BÚ‚µ‚­‚ÍAƒŠƒtƒ@ƒŒƒ“ƒX‚ğ‚²——‚­‚¾‚³‚¢B
+ã“ã®Access Tokenã¨Access Secretã¯ã€GetAccessTokenå‘½ä»¤ã‹GetxAuthTokenå‘½ä»¤ã§å–å¾—ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ã€‚è©³ã—ãã¯ã€ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹ã‚’ã”è¦§ãã ã•ã„ã€‚
 
 %href
 GetAccessToken
 GetxAuthToken
 
 %group
-TwitterAPI‘€ì–½—ß
+TwitterAPIæ“ä½œå‘½ä»¤
 
 %*/
 //------------------------------------------------------------
@@ -724,24 +724,24 @@ return
 
 %index
 setRequestToken
-RequestToken‚ÆSecret‚ğİ’è
+RequestTokenã¨Secretã‚’è¨­å®š
 
 %prm
 p1, p2
-p1 = •¶š—ñ      : Request Token
-p2 = •¶š—ñ      : Request Secret
+p1 = æ–‡å­—åˆ—      : Request Token
+p2 = æ–‡å­—åˆ—      : Request Secret
 
 %inst
-TsubuyakiSoup‚ÉRequest Token‚ÆRequest Secret‚ğİ’è‚µ‚Ü‚·B
+TsubuyakiSoupã«Request Tokenã¨Request Secretã‚’è¨­å®šã—ã¾ã™ã€‚
 
-p1‚ÉRequest Token‚ğAp2‚ÉRequest Secret‚ğw’è‚µ‚Ü‚·B
+p1ã«Request Tokenã‚’ã€p2ã«Request Secretã‚’æŒ‡å®šã—ã¾ã™ã€‚
 
 
 %href
 setAccessToken
 
 %group
-TwitterAPI‘€ì–½—ß
+TwitterAPIæ“ä½œå‘½ä»¤
 
 %*/
 //------------------------------------------------------------
@@ -756,7 +756,7 @@ return
 
 %index
 getRequestToken
-RequestToken‚ÆSecret‚ğİ’è
+RequestTokenã¨Secretã‚’è¨­å®š
 
 %prm
 ()
@@ -767,7 +767,7 @@ RequestToken‚ÆSecret‚ğİ’è
 setAccessToken
 
 %group
-TwitterAPI‘€ì–½—ß
+TwitterAPIæ“ä½œå‘½ä»¤
 
 %*/
 //------------------------------------------------------------
@@ -780,7 +780,7 @@ return requestToken
 
 %index
 getRequestSecret
-RequestToken‚ÆSecret‚ğİ’è
+RequestTokenã¨Secretã‚’è¨­å®š
 
 %prm
 ()
@@ -791,7 +791,7 @@ RequestToken‚ÆSecret‚ğİ’è
 setAccessToken
 
 %group
-TwitterAPI‘€ì–½—ß
+TwitterAPIæ“ä½œå‘½ä»¤
 
 %*/
 //------------------------------------------------------------
@@ -804,23 +804,23 @@ return requestSecret
 
 %index
 setConsumerToken
-AccessToken‚ÆSecret‚ğİ’è
+AccessTokenã¨Secretã‚’è¨­å®š
 
 %prm
 p1, p2
-p1 = •¶š—ñ      : Consumer Token
-p2 = •¶š—ñ      : Consumer Secret
+p1 = æ–‡å­—åˆ—      : Consumer Token
+p2 = æ–‡å­—åˆ—      : Consumer Secret
 
 %inst
-TsubuyakiSoup‚ÉConsumer Token‚ÆConsumer Secret‚ğİ’è‚µ‚Ü‚·B
+TsubuyakiSoupã«Consumer Tokenã¨Consumer Secretã‚’è¨­å®šã—ã¾ã™ã€‚
 
-p1‚ÉConsumer Token‚ğAp2‚ÉConsumer Secret‚ğw’è‚µ‚Ü‚·B
+p1ã«Consumer Tokenã‚’ã€p2ã«Consumer Secretã‚’æŒ‡å®šã—ã¾ã™ã€‚
 
 %href
 tCupInit
 
 %group
-TwitterAPI‘€ì–½—ß
+TwitterAPIæ“ä½œå‘½ä»¤
 
 %*/
 //------------------------------------------------------------
@@ -835,26 +835,26 @@ return
 
 %index
 setUserInfo
-ƒ†[ƒUî•ñ‚ğİ’è
+ãƒ¦ãƒ¼ã‚¶æƒ…å ±ã‚’è¨­å®š
 
 %prm
 p1, p2
-p1 = •¶š—ñ      : ƒ†[ƒU–¼iƒXƒNƒŠ[ƒ“–¼j
-p2 = •¶š—ñ      : ƒ†[ƒUID
+p1 = æ–‡å­—åˆ—      : ãƒ¦ãƒ¼ã‚¶åï¼ˆã‚¹ã‚¯ãƒªãƒ¼ãƒ³åï¼‰
+p2 = æ–‡å­—åˆ—      : ãƒ¦ãƒ¼ã‚¶ID
 
 %inst
-TsubuyakiSoup‚Éƒ†[ƒU–¼iƒXƒNƒŠ[ƒ“–¼j‚Æƒ†[ƒUID‚ğİ’è‚µ‚Ü‚·B
+TsubuyakiSoupã«ãƒ¦ãƒ¼ã‚¶åï¼ˆã‚¹ã‚¯ãƒªãƒ¼ãƒ³åï¼‰ã¨ãƒ¦ãƒ¼ã‚¶IDã‚’è¨­å®šã—ã¾ã™ã€‚
 
-p1‚Éƒ†[ƒU–¼iƒXƒNƒŠ[ƒ“–¼j‚ğAp2‚Éƒ†[ƒUID‚ğw’è‚µ‚Ü‚·B
+p1ã«ãƒ¦ãƒ¼ã‚¶åï¼ˆã‚¹ã‚¯ãƒªãƒ¼ãƒ³åï¼‰ã‚’ã€p2ã«ãƒ¦ãƒ¼ã‚¶IDã‚’æŒ‡å®šã—ã¾ã™ã€‚
 
-TsubuyakiSoup2‚©‚çƒ†[ƒUID‚à•¶š—ñ‚Åˆ—‚µ‚Ä‚¢‚Ü‚·B
+TsubuyakiSoup2ã‹ã‚‰ãƒ¦ãƒ¼ã‚¶IDã‚‚æ–‡å­—åˆ—ã§å‡¦ç†ã—ã¦ã„ã¾ã™ã€‚
 
 %href
 GetAccessToken
 GetxAuthToken
 
 %group
-TwitterAPI‘€ì–½—ß
+TwitterAPIæ“ä½œå‘½ä»¤
 
 %*/
 //------------------------------------------------------------
@@ -873,10 +873,10 @@ return
 #cfunc _MultiByteToWideChar "MultiByteToWideChar" int, int, sptr, int, int, int
 
 /*------------------------------------------------------------*/
-//1ƒoƒCƒgE2ƒoƒCƒg”»’è
+//1ãƒã‚¤ãƒˆãƒ»2ãƒã‚¤ãƒˆåˆ¤å®š
 //
 //	isByte(p1)
-//		p1...”»•Ê•¶šƒR[ƒh
+//		p1...åˆ¤åˆ¥æ–‡å­—ã‚³ãƒ¼ãƒ‰
 //		[0:1byte/1:2byte]
 //
 #defcfunc isByte int p1
@@ -893,12 +893,12 @@ return
 
 
 /*------------------------------------------------------------*/
-//”¼ŠpE‘SŠpŠÜ‚ß‚½•¶š”‚ğæ‚èo‚·
+//åŠè§’ãƒ»å…¨è§’å«ã‚ãŸæ–‡å­—æ•°ã‚’å–ã‚Šå‡ºã™
 //
 //	mb_strmid(p1, p2, p3)
-//		p1...æ‚èo‚·‚à‚Æ‚Ì•¶š—ñ‚ªŠi”[‚³‚ê‚Ä‚¢‚é•Ï”–¼
-//		p2...æ‚èo‚µn‚ß‚ÌƒCƒ“ƒfƒbƒNƒX
-//		p3...æ‚èo‚·•¶š”
+//		p1...å–ã‚Šå‡ºã™ã‚‚ã¨ã®æ–‡å­—åˆ—ãŒæ ¼ç´ã•ã‚Œã¦ã„ã‚‹å¤‰æ•°å
+//		p2...å–ã‚Šå‡ºã—å§‹ã‚ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+//		p3...å–ã‚Šå‡ºã™æ–‡å­—æ•°
 //
 #defcfunc mb_strmid var p1, int p2, int p3
 	if vartype != 2 : return ""
@@ -917,11 +917,11 @@ return strmid(p1,trim_start,trim_num)
 
 
 
-//p2 ”¼ŠpƒXƒy[ƒX‚Ìˆ—  0 : '&'  1 : '%20'
+//p2 åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã®å‡¦ç†  0 : '&'  1 : '%20'
 #defcfunc form_encode str p1, int p2
 /*
 09 az AZ - . _ ~
-‚Í‚»‚Ì‚Ü‚Üo—Í
+ã¯ãã®ã¾ã¾å‡ºåŠ›
 */
 fe_str = p1
 fe_p1Long = strlen(p1)
@@ -934,7 +934,7 @@ repeat fe_p1Long
 	} else {
 		if fe_tmp = ' ' {
 			if p2 = 0 : fe_val += "&"
-			if p2 = 1 : fe_val += "%20"	//‹ó”’ˆ—
+			if p2 = 1 : fe_val += "%20"	//ç©ºç™½å‡¦ç†
 		} else {
 			fe_val += "%" + strf("%02X",fe_tmp)
 		}
@@ -942,8 +942,8 @@ repeat fe_p1Long
 loop
 return fe_val
 
-//ƒ‰ƒ“ƒ_ƒ€‚È•¶š—ñ‚ğ”­¶‚³‚¹‚é
-//p1‚©‚çp2•¶š‚Ü‚Å
+//ãƒ©ãƒ³ãƒ€ãƒ ãªæ–‡å­—åˆ—ã‚’ç™ºç”Ÿã•ã›ã‚‹
+//p1ã‹ã‚‰p2æ–‡å­—ã¾ã§
 #defcfunc getRandomString int p1, int p2
 ;randomize
 RS_Strlen = rnd(p2-p1+1) + p1

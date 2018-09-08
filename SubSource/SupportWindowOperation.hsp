@@ -5,11 +5,11 @@
 #deffunc DrawSupportWindow double UIScale_
 	UIScale = UIScale_
 
-	font "ƒƒCƒŠƒI", Scale(15) , 1
-	ts = "[   ’Ç‰Á   ]"
-	ka = "[ŠÍ–º]"
-	ko = "[U—ª]"
-	so = "[‚»‚Ì‘¼]"
+	font "ãƒ¡ã‚¤ãƒªã‚ª", Scale(15) , 1
+	ts = "[   è¿½åŠ    ]"
+	ka = "[è‰¦å¨˜]"
+	ko = "[æ”»ç•¥]"
+	so = "[ãã®ä»–]"
 	sp = " "
 
 	mes ts
@@ -98,24 +98,24 @@ return
 
 	switch GetIndexSupportWnd(PushedX)
 		case 0
-			//ƒzƒbƒgƒL[‚Æ‹U‚Á‚½‚Ù‚¤‚ªˆ—‚ªŠy
+			//ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã¨å½ã£ãŸã»ã†ãŒå‡¦ç†ãŒæ¥½
 			if (availableCap){
 				hotKeyFlag = TRUE
 
 				if autoAddNonSave{
-					//•Û‘¶‚È‚µ‚Ìê‡
+					//ä¿å­˜ãªã—ã®å ´åˆ
 					gosub *SSCaptureOnMemory
 				} else {
-					//•Û‘¶‚ ‚è‚Ìê‡
+					//ä¿å­˜ã‚ã‚Šã®å ´åˆ
 					gosub *SSCapture
 					addFileName = saveNamePath
 				}
-				//’Ç‰Á
+				//è¿½åŠ 
 				gosub *addCapture
 				hotKeyFlag = FALSE
 				addfilename = ""
 			} else {
-				LogOut "À•W‚ªæ“¾‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ"
+				LogOut "åº§æ¨™ãŒå–å¾—ã•ã‚Œã¦ã„ã¾ã›ã‚“"
 			}
 			swbreak
 		case 1

@@ -1,10 +1,10 @@
 /*
-**���̃��W���[���͂[�������[���̂��[����(http://tu3.jp/)�ɂĔz�z���Ă���u�t�H���_�I���_�C�A���O���W���[���v��kanahiron�����ς������̂ł��B**
-���z�z�� :http://tu3.jp/0110
+**このモジュールはつーさ氏がつーさのくーかん(http://tu3.jp/)にて配布している「フォルダ選択ダイアログモジュール」をkanahironが改変したものです。**
+元配布元 :http://tu3.jp/0110
 */
 
 #ifndef __hsp3utf__
-	dialog "���̃��W���[����HSP3utf���K�v�ł��B\n���C���\�[�X��include���Ă��������B\n\n���W���[��:BrowseFolder_kai_utf",1,"�I�����܂�"
+	dialog "このモジュールはHSP3utfが必要です。\nメインソースでincludeしてください。\n\nモジュール:BrowseFolder_kai_utf",1,"終了します"
 	end
 #endif
 
@@ -15,7 +15,7 @@
 #endif
 
 /**
- * �t�H���_�I���_�C�A���O���o�����W���[��
+ * フォルダ選択ダイアログを出すモジュール
  */
 #module BrowseFolderMod
 
@@ -32,47 +32,47 @@
 #cfunc SHGetPathFromIDList "SHGetPathFromIDListW" int,int
 
 #define BIF_RETURNONLYFSDIRS	0x0001
-//�t�@�C���V�X�e���f�B���N�g���݂̂�Ԃ��܂��B����ȊO�̃A�C�e�����I������Ă���Ƃ��ɂ́A[OK]�{�^���͊D�F�\���ɂȂ�܂��B
+//ファイルシステムディレクトリのみを返します。それ以外のアイテムが選択されているときには、[OK]ボタンは灰色表示になります。
 #define BIF_DONTGOBELOWDOMAIN	0x0002
-//�_�C�A���O�{�b�N�X�̃c���[�r���[�R���g���[���Ƀh���C�����x���̃l�b�g���[�N�t�H���_���܂߂Ȃ��悤�ɂ��܂��B
+//ダイアログボックスのツリービューコントロールにドメインレベルのネットワークフォルダを含めないようにします。
 #define BIF_STATUSTEXT			0x0004
-//�_�C�A���O�{�b�N�X�ɃX�e�[�^�X�̈��\�����܂��B�\���e�L�X�g��ݒ肷��ɂ́A�R�[���o�b�N�֐�����_�C�A���O�{�b�N�X�Ƀ��b�Z�[�W�𑗐M���܂��B
+//ダイアログボックスにステータス領域を表示します。表示テキストを設定するには、コールバック関数からダイアログボックスにメッセージを送信します。
 #define BIF_RETURNFSANCESTORS	0x0008
-//�V�F���l�[���X�y�[�X�K�w�\���̒��Ń��[�g�t�H���_�̉��ɂ���t�@�C���V�X�e���T�u�t�H���_�݂̂�Ԃ��܂��B����ȊO�̃A�C�e�����I������Ă���Ƃ��ɂ́A[OK]�{�^���͊D�F�\���ɂȂ�܂��B
+//シェルネームスペース階層構造の中でルートフォルダの下にあるファイルシステムサブフォルダのみを返します。それ以外のアイテムが選択されているときには、[OK]ボタンは灰色表示になります。
 #define BIF_EDITBOX				0x0010
-//Version 4.71 �ȍ~�F ���[�U�[���A�C�e�������������ނ��Ƃ��ł���G�f�B�b�g�R���g���[����\�����܂��B
+//Version 4.71 以降： ユーザーがアイテム名を書き込むことができるエディットコントロールを表示します。
 #define BIF_VALIDATE			0x0020
-//Version 4.71 �ȍ~�F ���[�U�[���G�f�B�b�g�R���g���[���ɖ����Ȗ��O����͂����ꍇ�ɁA BFFM_VALIDATEFAILED ���b�Z�[�W�ƂƂ��ɃR�[���o�b�N�֐����Ăяo����܂��BBIF_EDITBOX�t���O���w�肳��Ă��Ȃ��ꍇ�́A���̃t���O�͖�������܂��B
+//Version 4.71 以降： ユーザーがエディットコントロールに無効な名前を入力した場合に、 BFFM_VALIDATEFAILED メッセージとともにコールバック関数が呼び出されます。BIF_EDITBOXフラグが指定されていない場合は、このフラグは無視されます。
 #define BIF_NEWDIALOGSTYLE		0x0040
-//Version 5.0 �ȍ~�F �V�������[�U�[�C���^�[�t�F�[�X���g�p���܂��B�]���̃_�C�A���O�{�b�N�X�����傫���A���T�C�Y�\�ȃ_�C�A���O�{�b�N�X���\������A�_�C�A���O�{�b�N�X�ւ̃h���b�O�A���h�h���b�v�A�t�H���_�̍Đ����A�V���[�g�J�b�g���j���[�A�V�����t�H���_�쐬�A�폜�A���̑��̃V���[�g�J�b�g���j���[�R�}���h���ǉ�����܂��B���̃t���O���g�p����ɂ́A���炩����OleInitialize�֐��܂���CoInitialize�֐����Ăяo����COM�����������Ă����K�v������܂��B
+//Version 5.0 以降： 新しいユーザーインターフェースを使用します。従来のダイアログボックスよりも大きい、リサイズ可能なダイアログボックスが表示され、ダイアログボックスへのドラッグアンドドロップ、フォルダの再整理、ショートカットメニュー、新しいフォルダ作成、削除、その他のショートカットメニューコマンドが追加されます。このフラグを使用するには、あらかじめOleInitialize関数またはCoInitialize関数を呼び出してCOMを初期化しておく必要があります。
 #define BIF_USENEWUI			0x0050
-//Version 5.0 �ȍ~�F �G�f�B�b�g�R���g���[�������A�V�������[�U�[�C���^�[�t�F�[�X���g�p���܂��B���̃t���O��BIF_EDITBOX|BIF_NEWDIALOGSTYLE�Ɠ����ł��B���̃t���O���g�p����ɂ́A���炩����OleInitialize�֐��܂���CoInitialize�֐����Ăяo����COM�����������Ă����K�v������܂��B
+//Version 5.0 以降： エディットコントロールを持つ、新しいユーザーインターフェースを使用します。このフラグはBIF_EDITBOX|BIF_NEWDIALOGSTYLEと同等です。このフラグを使用するには、あらかじめOleInitialize関数またはCoInitialize関数を呼び出してCOMを初期化しておく必要があります。
 #define BIF_BROWSEINCLUDEURLS	0x0080
-//Version 5.0 �ȍ~�F URL��\�����邱�Ƃ��ł���悤�ɂ��܂��BBIF_USENEWUI��BIF_BROWSEINCLUDEFILES�������Ɏw�肳��Ă��Ȃ���΂Ȃ�܂���B�����̃t���O���ݒ肳��Ă���Ƃ��A�I�����ꂽ�A�C�e�����܂ރt�H���_���T�|�[�g����ꍇ�ɂ̂݁AURL���\������܂��B�A�C�e���̑�����₢���킹�邽�߂Ƀt�H���_��IShellFolder::GetAttributesOf ���\�b�h���Ăяo���ꂽ�Ƃ��ɁA�t�H���_�ɂ����SFGAO_FOLDER�����t���O���ݒ肳�ꂽ�ꍇ�ɂ̂݁AURL���\������܂��B
+//Version 5.0 以降： URLを表示することができるようにします。BIF_USENEWUIとBIF_BROWSEINCLUDEFILESが同時に指定されていなければなりません。これらのフラグが設定されているとき、選択されたアイテムを含むフォルダがサポートする場合にのみ、URLが表示されます。アイテムの属性を問い合わせるためにフォルダのIShellFolder::GetAttributesOf メソッドが呼び出されたときに、フォルダによってSFGAO_FOLDER属性フラグが設定された場合にのみ、URLが表示されます。
 #define BIF_UAHINT				0x0100
-//Version 6.0 �ȍ~�F �G�f�B�b�g�R���g���[���̑���ɁA�_�C�A���O�{�b�N�X�ɗp�@�q���g��ǉ����܂��BBIF_NEWDIALOGSTYLE�t���O�ƂƂ��Ɏw�肵�Ȃ���΂Ȃ�܂���B
+//Version 6.0 以降： エディットコントロールの代わりに、ダイアログボックスに用法ヒントを追加します。BIF_NEWDIALOGSTYLEフラグとともに指定しなければなりません。
 #define BIF_NONEWFOLDERBUTTON	0x0200
-//Version 6.0 �ȍ~�F �_�C�A���O�{�b�N�X�Ɂu�V�����t�H���_�v�{�^����\�����Ȃ��悤�ɂ��܂��BBIF_NEWDIALOGSTYLE�t���O�ƂƂ��Ɏw�肵�Ȃ���΂Ȃ�܂���B
+//Version 6.0 以降： ダイアログボックスに「新しいフォルダ」ボタンを表示しないようにします。BIF_NEWDIALOGSTYLEフラグとともに指定しなければなりません。
 #define BIF_NOTRANSLATETARGETS	0x0400
-//Version 6.0 �ȍ~�F �I�����ꂽ�A�C�e�����V���[�g�J�b�g�ł���Ƃ��A���̃����N��ł͂Ȃ��A�V���[�g�J�b�g�t�@�C�����̂�PIDL��Ԃ��܂��B
+//Version 6.0 以降： 選択されたアイテムがショートカットであるとき、そのリンク先ではなく、ショートカットファイル自体のPIDLを返します。
 #define BIF_BROWSEFORCOMPUTER	0x1000
-//�R���s���[�^�݂̂�Ԃ��܂��B����ȊO�̃A�C�e�����I������Ă���Ƃ��ɂ́A[OK]�{�^���͊D�F�\���ɂȂ�܂��B
+//コンピュータのみを返します。それ以外のアイテムが選択されているときには、[OK]ボタンは灰色表示になります。
 #define BIF_BROWSEFORPRINTER	0x2000
-//�v�����^�݂̂�Ԃ��܂��B����ȊO�̃A�C�e�����I������Ă���Ƃ��ɂ́AOK �{�^���͊D�F�\���ɂȂ�܂��B
+//プリンタのみを返します。それ以外のアイテムが選択されているときには、OK ボタンは灰色表示になります。
 #define BIF_BROWSEINCLUDEFILES	0x4000
-//Version 4.71 �ȍ~�F �t�H���_�ƃt�@�C����\�����܂��B
+//Version 4.71 以降： フォルダとファイルを表示します。
 #define BIF_SHAREABLE			0x8000
-//Version 5.0 �ȍ~�F �����[�g�V�X�e����ɂ��鋤�L���\�[�X��\���ł���悤�ɂ��܂��BBIF_USENEWUI�t���O�ƂƂ��Ɏw�肵�Ȃ���΂Ȃ�܂���B
+//Version 5.0 以降： リモートシステム上にある共有リソースを表示できるようにします。BIF_USENEWUIフラグとともに指定しなければなりません。
 
 /**
- * �t�H���_�I���_�C�A���O��\������
- * @param _szTitle �_�C�A���O�̃^�C�g��
- * @param _defaultfolder �����\���p�X
- * @param flag �u�V�����t�H���_�v�{�^����\�������邩(0 on, 1 off)
+ * フォルダ選択ダイアログを表示する
+ * @param _szTitle ダイアログのタイトル
+ * @param _defaultfolder 初期表示パス
+ * @param flag 「新しいフォルダ」ボタンを表示させるか(0 on, 1 off)
  */
 #deffunc local Open str _szTitle, str _defaultfolder , int flag
 
-	// flag��0�̎��́u�V�����t�H���_�v�{�^�����\���A1�̎��͕\��
+	// flagが0の時は「新しいフォルダ」ボタンを非表示、1の時は表示
 
 	sdim retfldr, 1024
 	sdim _retfldr, 1024
@@ -100,7 +100,7 @@ return retfldr
 
 #global
 
-//unicode�Ή��T���v���R�[�h
+//unicode対応サンプルコード
 #if 0
 
 	sdim String, 256
@@ -111,13 +111,13 @@ return retfldr
 		poke String, ccnt+2, 0x80+cnt
 	loop
 
-	BrowseFolder String, "C:\\"			//�V�����t�H���_�{�^���L��
-	//BrowseFolder2 String,"C:\\" 		//�V�����t�H���_�{�^������1
-	//BrowseFolder String,"C:\\",1		//�V�����t�H���_�{�^������2
+	BrowseFolder String, "C:\\"			//新しいフォルダボタン有り
+	//BrowseFolder2 String,"C:\\" 		//新しいフォルダボタン無し1
+	//BrowseFolder String,"C:\\",1		//新しいフォルダボタン無し2
 	if (stat){
 		mes refstr
 	} else {
-		mes "���I��"
+		mes "未選択"
 	}
 
 #endif

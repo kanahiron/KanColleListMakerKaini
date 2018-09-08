@@ -1,9 +1,9 @@
 /**
- * ‘Û‰»‘Î‰‚ğs‚¤ƒ‚ƒWƒ…[ƒ‹
+ * å›½éš›åŒ–å¯¾å¿œã‚’è¡Œã†ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
  */
 #module i18n
     /**
-     * ƒf[ƒ^ƒx[ƒX‚ğ‰Šú‰»
+     * ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚’åˆæœŸåŒ–
      */
     #deffunc local Init
         defaultLang = ""
@@ -14,17 +14,17 @@
     return
 
     /**
-     * ƒfƒtƒHƒ‹ƒg‚ÌŒ¾Œêİ’è‚ğs‚¤
-     * @param lang Œ¾Œêİ’è
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è¨€èªè¨­å®šã‚’è¡Œã†
+     * @param lang è¨€èªè¨­å®š
      */
     #deffunc local SetLanguage str lang
         defaultLang = lang
     return
 
     /**
-     * Œ¾Œêİ’è‚ÆƒL[‚Éƒ}ƒbƒ`‚µ‚½–|–óƒeƒLƒXƒg‚ğ•Ô‚·
-     * @param lang Œ¾Œêİ’è
-     * @param key ƒL[
+     * è¨€èªè¨­å®šã¨ã‚­ãƒ¼ã«ãƒãƒƒãƒã—ãŸç¿»è¨³ãƒ†ã‚­ã‚¹ãƒˆã‚’è¿”ã™
+     * @param lang è¨€èªè¨­å®š
+     * @param key ã‚­ãƒ¼
      */
     #defcfunc local GetTextLong str lang, str key
         index = BinarySearch(lang + "," + key, 0, dataCount - 1)
@@ -32,8 +32,8 @@
     return valueList(index)
 
     /**
-     * ƒfƒtƒHƒ‹ƒg‚ÌŒ¾Œêİ’è‚ÆƒL[‚Éƒ}ƒbƒ`‚µ‚½–|–óƒeƒLƒXƒg‚ğ•Ô‚·
-     * @param key ƒL[
+     * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è¨€èªè¨­å®šã¨ã‚­ãƒ¼ã«ãƒãƒƒãƒã—ãŸç¿»è¨³ãƒ†ã‚­ã‚¹ãƒˆã‚’è¿”ã™
+     * @param key ã‚­ãƒ¼
      */
     #defcfunc local GetText str key
         index = BinarySearch(defaultLang + "," + key, 0, dataCount - 1)
@@ -53,7 +53,7 @@
         noteunsel
         dim textBuffer, 1
 
-        // ˆÈ‰ºƒRƒ€ƒ\[ƒg
+        // ä»¥ä¸‹ã‚³ãƒ ã‚½ãƒ¼ãƒˆ
         h = dataCount
         isSwapped = 0
         while h > 1 || isSwapped
@@ -76,11 +76,11 @@
     return
 
     /**
-     * ƒL[”z—ñ‚É‘Î‚µ‚Ä“ñ•ªŒŸõ‚ğs‚¤
-     * @param bkey ƒL[
-     * @param bmin ƒCƒ“ƒfƒbƒNƒX‚ÌÅ¬’l
-     * @param bmax ƒCƒ“ƒfƒbƒNƒX‚ÌÅ‘å’l
-     * @param bmid ƒCƒ“ƒfƒbƒNƒX‚ÌŠÔ‚Ì”
+     * ã‚­ãƒ¼é…åˆ—ã«å¯¾ã—ã¦äºŒåˆ†æ¤œç´¢ã‚’è¡Œã†
+     * @param bkey ã‚­ãƒ¼
+     * @param bmin ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æœ€å°å€¤
+     * @param bmax ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æœ€å¤§å€¤
+     * @param bmid ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®é–“ã®æ•°
      */
     #defcfunc BinarySearch str bkey, int bmin, int bmax, local bmid
         if bmin > bmax :return -1

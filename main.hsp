@@ -4,14 +4,14 @@
 #include "./SubSource/FunctionDefinition.hsp"
 #include "./SubSource/key.hsp"
 
-//ƒ‰ƒCƒuƒ‰ƒŠ“I‚Èƒ‚ƒWƒ…[ƒ‹
+//ãƒ©ã‚¤ãƒ–ãƒ©ãƒªçš„ãªãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 #include "./modules/BrowseFolderMod.as"
 #include "./modules/ImageFileModule2.as"
 #include "./modules/isfilled.hsp"
 #include "./modules/pipe2_utf.hsp"
 #include "./modules/TsubuyakiSoup_mod_utf.hsp"
 
-//©•ª‚Åì‚Á‚½ƒ‰ƒCƒuƒ‰ƒŠ“I‚Èƒ‚ƒWƒ…[ƒ‹
+//è‡ªåˆ†ã§ä½œã£ãŸãƒ©ã‚¤ãƒ–ãƒ©ãƒªçš„ãªãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 #include "./modules/DateTimeFormatMod.as"
 #include "./modules/encryption.as"
 #include "./modules/execwMod.as"
@@ -21,7 +21,7 @@
 #include "./modules/SaveFileDiag_mod.hsp"
 #include "./modules/SearchKanCollePos.as"
 
-//‚Ç‚¿‚ç‚Æ‚¢‚¤‚ÆƒTƒuƒ\[ƒX‚Èƒ‚ƒWƒ…[ƒ‹
+//ã©ã¡ã‚‰ã¨ã„ã†ã¨ã‚µãƒ–ã‚½ãƒ¼ã‚¹ãªãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 #include "./modules/FFMPEGLog.hsp"
 #include "./modules/GetAudioDeviceMod.as"
 #include "./modules/isHomepostModule.as"
@@ -30,14 +30,14 @@
 
 #pack "data2.png"
 #pack "huki.png"
-#packopt name "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ"
+#packopt name "è‰¦ã“ã‚Œä¸€è¦§ã‚ã„ã‹ãƒ¼æ”¹äºŒ"
 #packopt hide 1
 #packopt manifest "KanColleListMakerKaini.manifest"
 #packopt icon "KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
-#define SOFTNAME "ˆê——‚ß‚¢‚©[‰ü“ñ Ver0.8"
-#define LONGSOFTNAME "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ Ver0.8"
+#define SOFTNAME "ä¸€è¦§ã‚ã„ã‹ãƒ¼æ”¹äºŒ Ver0.8"
+#define LONGSOFTNAME "è‰¦ã“ã‚Œä¸€è¦§ã‚ã„ã‹ãƒ¼æ”¹äºŒ Ver0.8"
 #define klm2ver 8000
 
 #ifdef _debug
@@ -54,7 +54,7 @@
 	SafeDelete@kmodule("./start.ax")
 	SafeDelete@kmodule("./packfile")
 
-	//ƒfƒoƒbƒO’†‚Å‚à‚DPI‚É‘Î‰‚³‚¹‚é
+	//ãƒ‡ãƒãƒƒã‚°ä¸­ã§ã‚‚é«˜DPIã«å¯¾å¿œã•ã›ã‚‹
 	SetProcessDPIAware
 	//onerror gosub *err_
 #endif
@@ -92,17 +92,17 @@
 		oncmd gosub *mainWindowProc, WM_SELWINDOW
 		objmode 2
 
-		combox dummy, 100, "  SSƒLƒƒƒvƒ`ƒƒƒ‚[ƒh\n  ŠÍ–ºˆê——ƒ‚[ƒh\n  U—ª•Ò¬ƒ‚[ƒh\n  ‚»‚Ì‘¼ˆê——ì¬ƒ‚[ƒh\n  ƒIƒvƒVƒ‡ƒ“"
+		combox dummy, 100, "  SSã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ¢ãƒ¼ãƒ‰\n  è‰¦å¨˜ä¸€è¦§ãƒ¢ãƒ¼ãƒ‰\n  æ”»ç•¥ç·¨æˆãƒ¢ãƒ¼ãƒ‰\n  ãã®ä»–ä¸€è¦§ä½œæˆãƒ¢ãƒ¼ãƒ‰\n  ã‚ªãƒ—ã‚·ãƒ§ãƒ³"
 		comboxId = stat
 		hCombox = objinfo_hwnd(comboxId)
 
-		combox dummy, 100, " ŠÂ‹«İ’è\n ƒLƒƒƒvƒ`ƒƒEì¬İ’è\n “®‰æƒLƒƒƒvƒ`ƒƒİ’è\n Twitterİ’è\n ‚»‚Ì‘¼İ’è"
+		combox dummy, 100, " ç’°å¢ƒè¨­å®š\n ã‚­ãƒ£ãƒ—ãƒãƒ£ãƒ»ä½œæˆè¨­å®š\n å‹•ç”»ã‚­ãƒ£ãƒ—ãƒãƒ£è¨­å®š\n Twitterè¨­å®š\n ãã®ä»–è¨­å®š"
 		optionCBId = stat
 		hOptionComBox = objinfo(optionCBId, 2)
 
 		chkbox "dummy", dummy
 
-	screen WND_GRID, disInfo(2), disInfo(3), 2:title "•\¦‚³‚¹‚½‚¢ƒZƒ‹‚ÉD&D"
+	screen WND_GRID, disInfo(2), disInfo(3), 2:title "è¡¨ç¤ºã•ã›ãŸã„ã‚»ãƒ«ã«D&D"
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 1
 		GetWindowLong WND_INFO(WND_GRID, WI_HANDLE),-20
@@ -116,7 +116,7 @@
 		framesy = ginfo_sizey - ginfo_winy
 		Init@kmodule
 
-	//”ÍˆÍ‘I‘ğ—pƒŒƒCƒ„[ƒhƒEƒBƒ“ƒhƒE
+	//ç¯„å›²é¸æŠç”¨ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ‰ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
 	bgscr WND_OVERLAY, disInfo(2), disInfo(3), 2
 		SET_WND_INFO
 		color 0,255,0
@@ -133,7 +133,7 @@
 		SetLayeredWindowAttributes WND_INFO(WND_SUPPORT, WI_HANDLE), 0x000000FF, 255, LWA_COLORKEY
 		gosub *DrawSupportWnd
 
-	//‰æ‘œ“Ç‚İ‚İ—p
+	//ç”»åƒèª­ã¿è¾¼ã¿ç”¨
 	buffer WND_IMAGE_BUF
 		SET_WND_INFO
 		ImgF_PicloadEx "data2.png"
@@ -151,11 +151,11 @@
 	buffer WND_GRID_STRING ,640,150
 		SET_WND_INFO
 		syscolor 16
-		font "ƒƒCƒŠƒI", 25, 1
-		mes "ƒXƒNƒŠ[ƒ“ƒVƒ‡ƒbƒg‚ğ‚±‚±‚Éƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒv"
-		mes "‚Ü‚½‚ÍƒzƒbƒgƒL[(AltƒL[{ZƒL[“¯‰Ÿ‚µ)‚Å
-		mes "                                         ‰æ‘œ‚ğ’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢"
-		mes "ƒZƒ‹‚Ì‰æ‘œ‚ÍƒEƒBƒ“ƒhƒEŠO‚Éƒhƒ‰ƒbƒO‚ÅÁ‹‚Å‚«‚Ü‚·"
+		font "ãƒ¡ã‚¤ãƒªã‚ª", 25, 1
+		mes "ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚·ãƒ§ãƒƒãƒˆã‚’ã“ã“ã«ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—"
+		mes "ã¾ãŸã¯ãƒ›ãƒƒãƒˆã‚­ãƒ¼(Altã‚­ãƒ¼ï¼‹Zã‚­ãƒ¼åŒæ™‚æŠ¼ã—)ã§
+		mes "                                         ç”»åƒã‚’è¿½åŠ ã—ã¦ãã ã•ã„"
+		mes "ã‚»ãƒ«ã®ç”»åƒã¯ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¤–ã«ãƒ‰ãƒ©ãƒƒã‚°ã§æ¶ˆå»ã§ãã¾ã™"
 		//640,150
 
 	screen WND_TWITTER, disInfo(2), disInfo(3), 2 | 4
@@ -191,7 +191,7 @@
 		color 255, 255, 255
 		boxf 8, 8, 791, 471
 		color
-		font "ƒƒCƒŠƒI", 130
+		font "ãƒ¡ã‚¤ãƒªã‚ª", 130
 		pos 100, 150
 		mes "No image"
 
@@ -220,7 +220,7 @@
 	}
 
 	if initialActivation {
-		dialog "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ‚Ö‚æ‚¤‚±‚»I\n©“®ƒo[ƒWƒ‡ƒ“ƒ`ƒFƒbƒN‹@”\‚ğ—LŒø‚É‚µ‚Ü‚·‚©H\n¦İ’è‚©‚ç‚¢‚Â‚Å‚àØ‚è‘Ö‚¦‚ª‚Å‚«‚Ü‚·", 2, "‰‰ñ‹N“®"
+		dialog "è‰¦ã“ã‚Œä¸€è¦§ã‚ã„ã‹ãƒ¼æ”¹äºŒã¸ã‚ˆã†ã“ãï¼\nè‡ªå‹•ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯æ©Ÿèƒ½ã‚’æœ‰åŠ¹ã«ã—ã¾ã™ã‹ï¼Ÿ\nâ€»è¨­å®šã‹ã‚‰ã„ã¤ã§ã‚‚åˆ‡ã‚Šæ›¿ãˆãŒã§ãã¾ã™", 2, "åˆå›èµ·å‹•"
 		if (stat != 6){
 			autoVersionCheck = FALSE
 		}
@@ -234,7 +234,7 @@
 		gosub *CaptureMethodDecide
 		if (positionType != PT_ABSOLUTE || (autoSearch^1)){
 			ShowWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SW_RESTORE
-			dialog "‘O‰ñ‹N“®‚ÌÀ•W‚ğæ“¾‚µ‚Ü‚µ‚½B\n•œŒ³‚µ‚Ü‚·‚©H", 2, "Šm”F"
+			dialog "å‰å›èµ·å‹•æ™‚ã®åº§æ¨™ã‚’å–å¾—ã—ã¾ã—ãŸã€‚\nå¾©å…ƒã—ã¾ã™ã‹ï¼Ÿ", 2, "ç¢ºèª"
 			dialogStat = stat
 			ShowWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SW_HIDE
 			if (dialogStat == 6){
@@ -292,8 +292,8 @@
 	}
 
 	if (confirmCompletion && iparam == 0){
-		//iparam‚ª1‚Ì‚Æ‚«‚ÍƒVƒƒƒbƒgƒ_ƒEƒ“‚È‚Ì‚ÅŠm”F‚¹‚¸‚ÉI—¹‚·‚é
-		dialog "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ‚ğI—¹‚µ‚Ü‚·‚©H", 2, "I—¹Šm”F"
+		//iparamãŒ1ã®ã¨ãã¯ã‚·ãƒ£ãƒƒãƒˆãƒ€ã‚¦ãƒ³ãªã®ã§ç¢ºèªã›ãšã«çµ‚äº†ã™ã‚‹
+		dialog "è‰¦ã“ã‚Œä¸€è¦§ã‚ã„ã‹ãƒ¼æ”¹äºŒã‚’çµ‚äº†ã—ã¾ã™ã‹ï¼Ÿ", 2, "çµ‚äº†ç¢ºèª"
 		if (stat != 6):return
 	}
 
@@ -351,7 +351,7 @@
 	SafeDelete@kmodule videoFileName+"_a.wav"
 	SafeDelete@kmodule videoFileName+".mp4"
 
-	dialog "\‚µ–ó‚ ‚è‚Ü‚¹‚ñB’v–½“I‚ÈƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½B\nƒGƒ‰[”Ô† :"+wparam+"\n‰½“x‚à”­¶‚·‚éê‡ìÒkanahiron‚Ü‚Å•ñ‚ğ‚¨Šè‚¢‚µ‚Ü‚·", 1, LONGSOFTNAME
+	dialog "ç”³ã—è¨³ã‚ã‚Šã¾ã›ã‚“ã€‚è‡´å‘½çš„ãªã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚\nã‚¨ãƒ©ãƒ¼ç•ªå· :"+wparam+"\nä½•åº¦ã‚‚ç™ºç”Ÿã™ã‚‹å ´åˆä½œè€…kanahironã¾ã§å ±å‘Šã‚’ãŠé¡˜ã„ã—ã¾ã™", 1, LONGSOFTNAME
 	end
 	end
 

@@ -1,7 +1,7 @@
 //#include "hsp3utf.as"
 
 #ifndef __hsp3utf__
-	dialog "SaveFileDiag_mod‚ÍHSP3utf.as‚ÌƒCƒ“ƒNƒ‹[ƒh‚ª•K—v‚Å‚·"
+	dialog "SaveFileDiag_modã¯HSP3utf.asã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãŒå¿…è¦ã§ã™"
 	end
 #endif
 
@@ -17,8 +17,8 @@
 #deffunc SaveFileDialog_ var filename, str _filter, int nFilterIndex, str defaultFileName, str currentDir, str fExt
 
 	sdim lpstrFilter, 2050 //
-	sdim lpstrFile, 2050 //ƒtƒ@ƒCƒ‹ƒpƒX‘S‘Ì‚ª“ü‚éóæ‚è—pƒoƒbƒtƒ@
-	sdim lpstrInitialDir, 2050 //ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠw’è—p
+	sdim lpstrFile, 2050 //ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹å…¨ä½“ãŒå…¥ã‚‹å—å–ã‚Šç”¨ãƒãƒƒãƒ•ã‚¡
+	sdim lpstrInitialDir, 2050 //ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªæŒ‡å®šç”¨
 	sdim lpstrDefExt
 	sdim filename
 	sdim temp, 1026
@@ -29,7 +29,7 @@
 	filterIndex = 0
 	repeat length(filter) /2
 		cnvstow temp, filter(cnt*2)
-		tSize = stat //cnvstow‚Ì•Ô‚è’l‚Íu•ÏŠ·æ•¶šƒR[ƒh‚Ìnull•¶š‚ğŠÜ‚ñ‚¾ƒoƒCƒg”v
+		tSize = stat //cnvstowã®è¿”ã‚Šå€¤ã¯ã€Œå¤‰æ›å…ˆæ–‡å­—ã‚³ãƒ¼ãƒ‰ã®nullæ–‡å­—ã‚’å«ã‚“ã ãƒã‚¤ãƒˆæ•°ã€
 		memcpy lpstrFilter, temp, tSize, filterIndex, 0
 		filterIndex += tSize
 
@@ -79,6 +79,6 @@ return
 #global
 
 #if 0
-	SaveFileDialog dir, "‰æ‘œƒtƒ@ƒCƒ‹(*.png;*.jpg)|*.png;*.jpg|ƒeƒLƒXƒgƒtƒ@ƒCƒ‹(*.txt)|*.txt",1,"DefFileName","C:\\","jpg"
+	SaveFileDialog dir, "ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«(*.png;*.jpg)|*.png;*.jpg|ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«(*.txt)|*.txt",1,"DefFileName","C:\\","jpg"
 	mes dir
 #endif

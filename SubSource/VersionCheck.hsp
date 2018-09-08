@@ -41,13 +41,13 @@
 
 	sdim RequestHeader
 	sdim responseBody
-	hInet = 0		// InternetOpen‚Ìƒnƒ“ƒhƒ‹
-	hConnect = 0	// InternetConnect‚Ìƒnƒ“ƒhƒ‹
-	hRequest = 0	// HttpOpenRequest‚Ìƒnƒ“ƒhƒ‹
-	statcode = 0	// ƒŠƒNƒGƒXƒg‚ÌŒ‹‰ÊƒR[ƒh
-	rsize = 1024	// ƒoƒbƒtƒ@‰Šú’l
-	hsize = 0		// æ“¾‚µ‚½ƒoƒCƒg”‚ª‘ã“ü‚³‚ê‚é•Ï”
-	intSize = 4		// intŒ^‚Ì‘å‚«‚³
+	hInet = 0		// InternetOpenã®ãƒãƒ³ãƒ‰ãƒ«
+	hConnect = 0	// InternetConnectã®ãƒãƒ³ãƒ‰ãƒ«
+	hRequest = 0	// HttpOpenRequestã®ãƒãƒ³ãƒ‰ãƒ«
+	statcode = 0	// ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®çµæœã‚³ãƒ¼ãƒ‰
+	rsize = 1024	// ãƒãƒƒãƒ•ã‚¡åˆæœŸå€¤
+	hsize = 0		// å–å¾—ã—ãŸãƒã‚¤ãƒˆæ•°ãŒä»£å…¥ã•ã‚Œã‚‹å¤‰æ•°
+	intSize = 4		// intå‹ã®å¤§ãã•
 	connTimeOut = 1000
 	sendTimeOut = 1000
 	receiveTimeOut = 1000
@@ -70,31 +70,31 @@
 	requestFlag |= INTERNET_FLAG_IGNORE_CERT_CN_INVALID
 	requestFlag |= INTERNET_FLAG_SECURE
 
-	//ƒCƒ“ƒ^[ƒlƒbƒg‚ğƒI[ƒvƒ“
+	//ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆã‚’ã‚ªãƒ¼ãƒ—ãƒ³
 	hInet = InternetOpen( "KanColleListMakerKaini", INTERNET_OPEN_TYPE_PRECONFIG, 0, 0, 0)
 	if (hInet){
 
-		//ƒ^ƒCƒ€ƒAƒEƒg 4•b ƒŠƒgƒ‰ƒC”2‰ñ
+		//ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆ 4ç§’ ãƒªãƒˆãƒ©ã‚¤æ•°2å›
 		InternetSetOption hInet, INTERNET_OPTION_CONNECT_TIMEOUT, varptr(connTimeOut), intSize
 		InternetSetOption hInet, INTERNET_OPTION_SEND_TIMEOUT, varptr(sendTimeOut), intSize
 		InternetSetOption hInet, INTERNET_OPTION_RECEIVE_TIMEOUT, varptr(receiveTimeOut), intSize
 		InternetSetOption hInet, INTERNET_OPTION_CONNECT_RETRIES, varptr(connRetry), intSize
 
-		//ƒT[ƒo‚ÖÚ‘±
+		//ã‚µãƒ¼ãƒã¸æ¥ç¶š
 		hConnect = InternetConnect(hInet, serverName, INTERNET_DEFAULT_HTTPS_PORT, 0, 0, INTERNET_SERVICE_HTTP, 0, 0)
 		if (hConnect) {
-			//ƒŠƒNƒGƒXƒg‚Ì‰Šú‰»
+			//ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®åˆæœŸåŒ–
 			hRequest = HttpOpenRequest(hConnect, method, apiUrl, httpVer, 0, 0, requestFlag, 0)
 			if (hRequest) {
-				//ƒŠƒNƒGƒXƒg‘—M
+				//ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
 				if (HttpSendRequest(hRequest, RequestHeader, -1, 0, 0)) {
-					//ƒXƒe[ƒ^ƒXƒR[ƒhæ“¾
+					//ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰å–å¾—
 					HttpQueryInfo hRequest, HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER, varptr(statCode), varptr(intSize), 0
 
 					if (statCode == 200){
-						//“üè‰Â”\‚Èƒf[ƒ^—Ê‚ğæ“¾
+						//å…¥æ‰‹å¯èƒ½ãªãƒ‡ãƒ¼ã‚¿é‡ã‚’å–å¾—
 						InternetQueryDataAvailable hRequest, varptr(rsize), 0, 0
-						//ƒoƒbƒtƒ@‚Ì‰Šú‰»
+						//ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–
 						sdim responseBuffer, rsize+1
 						sdim responseBody, rsize+1
 
@@ -124,22 +124,22 @@ return responseBody
 
 	if autoVersionCheck {
 
-		logOut "ƒo[ƒWƒ‡ƒ“ƒ`ƒFƒbƒN’†‚Å‚·B"
+		logOut "ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯ä¸­ã§ã™ã€‚"
 
 		execVerCheck
 		if (stat == 200){
-			logmes "ƒAƒbƒvƒf[ƒgƒtƒ@ƒCƒ‹‚Ìæ“¾¬Œ÷"
+			logmes "ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®å–å¾—æˆåŠŸ"
 			newmod jObj, jParseMod, getResponse()
 
-			logmes "æ“¾‚µ‚½ƒo[ƒWƒ‡ƒ“ " + GetVal@jParseMod(jObj, "[0].version")
+			logmes "å–å¾—ã—ãŸãƒãƒ¼ã‚¸ãƒ§ãƒ³ " + GetVal@jParseMod(jObj, "[0].version")
 			if (klm2ver < int(GetVal@jParseMod(jObj, "[0].version"))){
 
 				sdim text,1024
-				text =  "ŠÍ‚±‚êˆê——‚ß‚¢‚©[‰ü“ñ‚ÌÅV”Å"+GetVal@jParseMod(jObj, "[0].versionstr")+"‚ªŒöŠJ‚³‚ê‚Ä‚¢‚Ü‚·\n"
+				text =  "è‰¦ã“ã‚Œä¸€è¦§ã‚ã„ã‹ãƒ¼æ”¹äºŒã®æœ€æ–°ç‰ˆ"+GetVal@jParseMod(jObj, "[0].versionstr")+"ãŒå…¬é–‹ã•ã‚Œã¦ã„ã¾ã™\n"
 				text += GetVal@jParseMod(jObj, "[0].comment")
-				text += "\nƒ_ƒEƒ“ƒ[ƒhƒy[ƒW‚ğŠJ‚«‚Ü‚·‚©H"
+				text += "\nãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸ã‚’é–‹ãã¾ã™ã‹ï¼Ÿ"
 
-				dialog text,2,"ÅV”Å‚ªŒöŠJ‚³‚ê‚Ä‚¢‚Ü‚·"
+				dialog text,2,"æœ€æ–°ç‰ˆãŒå…¬é–‹ã•ã‚Œã¦ã„ã¾ã™"
 				if stat = 6{
 					exec ""+GetVal@jParseMod(jObj, "[0].distributionurl"),16
 				}
@@ -147,12 +147,12 @@ return responseBody
 			sdim text
 			delmod jObj
 		} else {
-			logmes "ƒAƒbƒvƒf[ƒgƒtƒ@ƒCƒ‹‚Ìæ“¾¸”s"
-			dialog "Ÿ‚ÌŒ´ˆö‚ªl‚¦‚ç‚ê‚Ü‚·\nƒAƒbƒvƒf[ƒgî•ñ”zMƒT[ƒo[‚Ìƒ_ƒEƒ“\nƒCƒ“ƒ^[ƒlƒbƒg–¢Ú‘±",0,"ƒAƒbƒvƒf[ƒgî•ñ‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½"
+			logmes "ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®å–å¾—å¤±æ•—"
+			dialog "æ¬¡ã®åŸå› ãŒè€ƒãˆã‚‰ã‚Œã¾ã™\nã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆæƒ…å ±é…ä¿¡ã‚µãƒ¼ãƒãƒ¼ã®ãƒ€ã‚¦ãƒ³\nã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆæœªæ¥ç¶š",0,"ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆæƒ…å ±ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ"
 		}
 
 		if (mode == MODE_SSCAP){
-			logmessage = "ƒo[ƒWƒ‡ƒ“ƒ`ƒFƒbƒN‚ªŠ®—¹‚µ‚Ü‚µ‚½B"
+			logmessage = "ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯ãŒå®Œäº†ã—ã¾ã—ãŸã€‚"
 			LogOut logMessage
 		}
 	}
