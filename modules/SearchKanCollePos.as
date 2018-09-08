@@ -411,6 +411,7 @@
      * ListMakerModule#getKanCollePosAutoで採用されているアルゴリズム
      */
     #defcfunc local Auto int windowId, array rectangles
+        startTime = timeGetTime@()
         /* 以前のカレントウィンドウIDを記憶 */
         currentWindowId = ginfo_sel
 
@@ -429,6 +430,7 @@
         STEP_COUNT = 3
         STEP_WIDTH = (MIN_GAME_WINDOW_WIDTH - 1) / STEP_COUNT
         STEP_HEIGHT = (MIN_GAME_WINDOW_HEIGHT - 1) / STEP_COUNT
+        logmes "" + (timeGetTime@() - startTime) + "ms"
 
         /**
          * 上辺を検出(PHASE1・PHASE2相当)
@@ -480,6 +482,7 @@
                 }
             next
         next
+        logmes "" + (timeGetTime@() - startTime) + "ms"
 
         /**
          * 上辺を確認(PHASE3相当)
@@ -499,6 +502,7 @@
                 rectList2Size++
             }
         next
+        logmes "" + (timeGetTime@() - startTime) + "ms"
 
         /**
          * 左辺を検出(PHASE4相当)
@@ -531,6 +535,7 @@
                 }
             next
         next
+        logmes "" + (timeGetTime@() - startTime) + "ms"
 
         /**
          * 左辺を確認(PHASE5相当)
@@ -550,6 +555,7 @@
                 rectList4Size++
             }
         next
+        logmes "" + (timeGetTime@() - startTime) + "ms"
 
         /**
          * 右辺・下辺を確認し、候補に追加する
@@ -613,9 +619,11 @@
                 rectangleSize++
             next
         next
+        logmes "" + (timeGetTime@() - startTime) + "ms"
 
         /* カレントウィンドウを元に戻す */
         gsel currentWindowId
+        logmes "" + (timeGetTime@() - startTime) + "ms"
     return rectangleSize
 #global
 
@@ -635,7 +643,7 @@
     mes "【アルゴリズム3】(" + elapsedTime + "ms)"
     gosub *show_result*/
 
-    repeatTime = 10
+    /*repeatTime = 10
     startTime = timeGetTime()
     for k, 0, repeatTime
         gsel 1 :gsel 0
@@ -647,7 +655,9 @@
     next
     elapsedTime2 = timeGetTime() - startTime
 
-    mes "【アルゴリズム3】(" + (1.0 * (elapsedTime2 - elapsedTime1) / repeatTime) + "ms)"
+    mes "【アルゴリズム3】(" + (1.0 * (elapsedTime2 - elapsedTime1) / repeatTime) + "ms)"*/
+
+    gsel 1 :count = Auto@SearchKanCollePos(1, rectangles) :gsel 0
 
     gosub *show_result
     stop
