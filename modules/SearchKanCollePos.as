@@ -635,20 +635,17 @@
     mes "yƒAƒ‹ƒSƒŠƒYƒ€3z(" + elapsedTime + "ms)"
     gosub *show_result*/
 
-    #uselib "winmm.dll"
-    #func timeGetTime_ "timeGetTime"
-
     repeatTime = 10
-    startTime = timeGetTime_()
+    startTime = timeGetTime()
     for k, 0, repeatTime
         gsel 1 :gsel 0
     next
-    elapsedTime1 = timeGetTime_() - startTime
-    startTime = timeGetTime_()
+    elapsedTime1 = timeGetTime() - startTime
+    startTime = timeGetTime()
     for k, 0, repeatTime
         gsel 1 :count = Auto@SearchKanCollePos(1, rectangles) :gsel 0
     next
-    elapsedTime2 = timeGetTime_() - startTime
+    elapsedTime2 = timeGetTime() - startTime
 
     mes "yƒAƒ‹ƒSƒŠƒYƒ€3z(" + (1.0 * (elapsedTime2 - elapsedTime1) / repeatTime) + "ms)"
 
