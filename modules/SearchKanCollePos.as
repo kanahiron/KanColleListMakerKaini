@@ -435,7 +435,7 @@
         ;　STEP_WIDTHは100になる。すると、横幅がMIN_GAME_WINDOW_WIDTHな画面を
         ;　STEP_WIDTH間隔で引かれた方眼の上で動かした場合、画面の上辺に少なくとも
         ;　STEP_COUNT本の方眼の線が通ることが保証される
-        STEP_COUNT = 3
+        STEP_COUNT = 2
         STEP_WIDTH = (MIN_GAME_WINDOW_WIDTH - 1) / STEP_COUNT
         STEP_HEIGHT = (MIN_GAME_WINDOW_HEIGHT - 1) / STEP_COUNT
         endTime = timeGetTime@()
@@ -669,7 +669,7 @@
     mes "【アルゴリズム3】(" + elapsedTime + "ms)"
     gosub *show_result*/
 
-    /*repeatTime = 10
+    repeatTime = 10
     startTime = timeGetTime()
     for k, 0, repeatTime
         gsel 1 :gsel 0
@@ -681,9 +681,9 @@
     next
     elapsedTime2 = timeGetTime() - startTime
 
-    mes "【アルゴリズム3】(" + (1.0 * (elapsedTime2 - elapsedTime1) / repeatTime) + "ms)"*/
+    mes "【アルゴリズム3】(" + (1.0 * (elapsedTime2 - elapsedTime1) / repeatTime) + "ms)"
 
-    gsel 1 :count = Auto@SearchKanCollePos(1, rectangles) :gsel 0
+    //gsel 1 :count = Auto@SearchKanCollePos(1, rectangles) :gsel 0
 
     gosub *show_result
     stop
