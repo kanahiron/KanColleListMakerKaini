@@ -418,7 +418,7 @@
      * ListMakerModule#getKanCollePosAutoで採用されているアルゴリズム
      */
     #defcfunc local Auto int windowId, array rectangles
-        startTime = timeGetTime@()
+        /*startTime = timeGetTime@()*/
 
         /* 以前のカレントウィンドウIDを記憶 */
         currentWindowId = ginfo_sel
