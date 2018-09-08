@@ -3,7 +3,7 @@
  * 基本的には「ウィンドウIDを受け取ると、Rectangleの候補一覧と候補数を返す」ように揃えている
  */
 
-#if 0
+#if 1
     #include "../SubSource/FunctionDefinition.hsp"
 #endif
 
@@ -575,7 +575,6 @@
                     }
                 next
                 if (flg1 == FALSE){
-                    if (w == 1200) :assert
                     _continue
                 }
                 flg2 = FALSE
@@ -586,7 +585,6 @@
                     }
                 next
                 if (flg2 == FALSE) {
-                    if (w == 1200) :assert
                     _continue
                 }
                 // 走査(下辺)
@@ -598,7 +596,6 @@
                     }
                 next
                 if (flg1 == FALSE) {
-                    if (w == 1200) :assert
                     _continue
                 }
                 flg2 = FALSE
@@ -609,7 +606,6 @@
                     }
                 next
                 if (flg2 == FALSE) {
-                    if (w == 1200) :assert
                     _continue
                 }
                 // 追記
@@ -623,12 +619,12 @@
     return rectangleSize
 #global
 
-#if 0
+#if 1
     title "座標取得処理のテスト"
     buffer 1
-    picload "SKP_test.png"
+    picload "座標認識テスト用-2.png"
 
-    // アルゴリズム1
+    /*// アルゴリズム1
     dim rectangles //無くてもいいが警告消しに使用
     gsel 1 :count = SemiAuto@SearchKanCollePos(1, rectangles, 1059, 1099) :gsel 0
     mes "【アルゴリズム1】"
@@ -636,9 +632,27 @@
 
     // アルゴリズム2
     gsel 1 :count = Auto@SearchKanCollePos(1, rectangles) :gsel 0
-    mes "【アルゴリズム3】"
-    gosub *show_result
+    mes "【アルゴリズム3】(" + elapsedTime + "ms)"
+    gosub *show_result*/
 
+    #uselib "winmm.dll"
+    #func timeGetTime_ "timeGetTime"
+
+    repeatTime = 10
+    startTime = timeGetTime_()
+    for k, 0, repeatTime
+        gsel 1 :gsel 0
+    next
+    elapsedTime1 = timeGetTime_() - startTime
+    startTime = timeGetTime_()
+    for k, 0, repeatTime
+        gsel 1 :count = Auto@SearchKanCollePos(1, rectangles) :gsel 0
+    next
+    elapsedTime2 = timeGetTime_() - startTime
+
+    mes "【アルゴリズム3】(" + (1.0 * (elapsedTime2 - elapsedTime1) / repeatTime) + "ms)"
+
+    gosub *show_result
     stop
 
     *show_result
