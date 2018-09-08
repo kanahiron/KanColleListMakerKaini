@@ -21,7 +21,7 @@
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
 
 		dim sscap_, 4
-		count = Auto@SearchKanCollePos(WND_TEMP1, sscap_) //戻り値は見つかった個数
+		count = Auto@SearchKanCollePos(WND_TEMP1, sscap_, WND_TEMP2) //戻り値は見つかった個数
 		logmes "getKanCollePosAuto "+count
 		if (count >= 1){
 			//成功
