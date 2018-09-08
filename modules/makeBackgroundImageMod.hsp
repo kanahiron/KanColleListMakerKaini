@@ -10,9 +10,9 @@
 	buffer drawImageId, BASE_SIZE_W, BASE_SIZE_H
 
 	redraw 0
-	repeat BASE_SIZE_W*ZOOM_MAX*10
+	repeat (BASE_SIZE_W/4)*(BASE_SIZE_H/4)
 		color baseColR-5+rnd(11), baseColG-5+rnd(11), baseColB-5+rnd(11)
-		pset cnt\BASE_SIZE_W/4, cnt/BASE_SIZE_H/4
+		pset cnt\(BASE_SIZE_W/4), cnt/(BASE_SIZE_W/4)
 	loop
 	redraw 1
 
