@@ -325,7 +325,7 @@
 
 		gsel WND_MAIN, 1+frontRow
 
-		if kmexist(saveNamePath) <= 0{
+		if (_exist(saveNamePath) <= 0){
 			LogOut nSaveName+"‚Ì•Û‘¶‚ÉŽ¸”s‚µ‚Ü‚µ‚½"
 		} else {
 			successFlg = TRUE
