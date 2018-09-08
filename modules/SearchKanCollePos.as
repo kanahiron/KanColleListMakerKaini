@@ -3,7 +3,7 @@
  * 基本的には「ウィンドウIDを受け取ると、Rectangleの候補一覧と候補数を返す」ように揃えている
  */
 
-#if 1
+#if 0
     #include "../SubSource/FunctionDefinition.hsp"
 #endif
 
@@ -657,7 +657,7 @@
     return rectangleSize
 #global
 
-#if 1
+#if 0
     title "座標取得処理のテスト"
     buffer 1
     picload "座標認識テスト用-2.png"
