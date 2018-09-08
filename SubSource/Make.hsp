@@ -329,7 +329,7 @@
 
 		gsel WND_MAIN, 1+frontRow
 
-		if _exist(saveNamePath) <= 0{
+		if (_exist(saveNamePath) <= 0){
 			LogOut nSaveName+"の保存に失敗しました"
 		} else {
 			successFlg = TRUE

@@ -15,7 +15,7 @@
 #include "./modules/DateTimeFormatMod.as"
 #include "./modules/encryption.as"
 #include "./modules/execwMod.as"
-//#include "./modules/i18n.as"
+//#include "./modules/i18n.as" //まだ準備ができていないため
 #include "./modules/iniMod.as"
 #include "./modules/kmodule.as"
 #include "./modules/SaveFileDiag_mod.hsp"
@@ -65,7 +65,7 @@
 	nidStackInit
 	DAControlInit
 	isHomeport_init WND_HOME_PORT_MOD
-	//Init@i18n
+	//Init@i18n //準備ができていないため
 
 	gosub *DeclaringVariables
 	gosub *iniLoad

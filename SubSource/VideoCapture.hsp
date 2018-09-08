@@ -58,7 +58,7 @@
 
 		GetAbsPos videoCapX, videoCapY
 
-		//座標を4のサイズに整形
+		//縦横をを4の整数倍に整形
 		videoCapSizeX = int((0.25*sscapwh(0))+0.9999999)*4
         videoCapSizeY = int((0.25*sscapwh(1))+0.9999999)*4
 
