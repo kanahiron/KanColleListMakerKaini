@@ -535,21 +535,20 @@
         for k, 0, rectList2Size
             tempColor = _pget2(rectXList2(k), rectYList2(k))
             xLimit = Max(rectXList2(k) - STEP_WIDTH, -1)
-            yLimit = rectYList2(k) + STEP_HEIGHT * 2
             for x, rectXList2(k) - 1, xLimit, -1
                 if (_pget2(x, rectYList2(k)) != tempColor) :_break
+                y1 = rectYList2(k) + STEP_HEIGHT
+                y2 = rectYList2(k) + STEP_HEIGHT * 2
                 // X=xの候補たりうるかを調査し、駄目ならスキップする
-                flg = TRUE
-                for y, rectYList2(k) + STEP_HEIGHT, yLimit, STEP_HEIGHT
-                    if (_pget2(x, y) != tempColor) :flg = FALSE :_break
-                next
-                if (flg == FALSE) :_continue
+                if (_pget2(x, y1) != tempColor) :_continue
+                if (_pget2(x, y2) != tempColor) :_continue
                 // X=x+1の方もチェックする
-                flg = FALSE
-                for y, rectYList2(k) + STEP_HEIGHT, yLimit, STEP_HEIGHT
-                    if (_pget2(x + 1, y) != tempColor) :flg = TRUE :_break
-                next
-                if (flg) {
+                if (_pget2(x + 1, y1) != tempColor) {
+                    // 候補が見つかったので追加
+                    rectXList3(rectList3Size) = x
+                    rectYList3(rectList3Size) = rectYList2(k)
+                    rectList3Size++
+                }else: if (_pget2(x + 1, y2) != tempColor) {
                     // 候補が見つかったので追加
                     rectXList3(rectList3Size) = x
                     rectYList3(rectList3Size) = rectYList2(k)
