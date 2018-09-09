@@ -320,7 +320,8 @@
     #defcfunc local isValidRect int windowId, int rectX, int rectY, int rectW, int rectH
         logmes("isValidRect")
         /* 縦横比が正しいか？ */
-        aspect_ratio_diff = absf(BASE_ASPECT_RATIO - 1.0 * rectW / rectH)
+        aspect_ratio_diff = absf(BASE_ASPECT_RATIO - 1.0 * rectH / rectW)
+        logmes("aspect_ratio_diff=" + aspect_ratio_diff)
         if (aspect_ratio_diff > 0.021) :return FALSE
 
         /* クロップ枠と1ピクセル内側の色が違うか？ */
@@ -342,15 +343,15 @@
                     _break
                 }
             next
-            if (flg1 == FALSE) :_break
+            if (flg1 == FALSE) :logmes("上辺-1") :_break
             flg2 = FALSE
             for k, 0, length(ratio)
                 if (_pget(rectX + ratio(k) * rectW, rectY) != tempColor) {
-                    flg = TRUE
+                    flg2 = TRUE
                     _break
                 }
             next
-            if (flg1 == FALSE) :_break
+            if (flg2 == FALSE) :logmes("上辺-2") :_break
             // 下枠
             flg1 = TRUE
             tempColor = _pget(rectX + ratio(0) * rectW, rectY + rectH)
@@ -360,16 +361,15 @@
                     _break
                 }
             next
-            if (flg1 == FALSE) :_break
+            if (flg1 == FALSE) :logmes("下辺-1") :_break
             flg2 = FALSE
             for k, 0, length(ratio)
                 if (_pget(rectX + ratio(k) * rectW, rectY + rectH - 1) != tempColor) {
-                    flg = TRUE
+                    flg2 = TRUE
                     _break
                 }
             next
-            if (flg1 == FALSE) :_break
-            _break
+            if (flg2 == FALSE) :logmes("下辺-2") :_break
             // 左枠
             flg1 = TRUE
             tempColor = _pget(rectX - 1, rectY + ratio(0) * rectH)
@@ -379,15 +379,15 @@
                     _break
                 }
             next
-            if (flg1 == FALSE) :_break
+            if (flg1 == FALSE) :logmes("左辺-1") :_break
             flg2 = FALSE
             for k, 0, length(ratio)
                 if (_pget(rectX, rectY + ratio(k) * rectH) != tempColor) {
-                    flg = TRUE
+                    flg2 = TRUE
                     _break
                 }
             next
-            if (flg1 == FALSE) :_break
+            if (flg2 == FALSE) :logmes("左辺-2") :_break
             // 右枠
             flg1 = TRUE
             tempColor = _pget(rectX + rectW, rectY + ratio(0) * rectH)
@@ -397,15 +397,15 @@
                     _break
                 }
             next
-            if (flg1 == FALSE) :_break
+            if (flg1 == FALSE) :logmes("右辺-1") :_break
             flg2 = FALSE
             for k, 0, length(ratio)
                 if (_pget(rectX + rectW - 1, rectY + ratio(k) * rectH) != tempColor) {
-                    flg = TRUE
+                    flg2 = TRUE
                     _break
                 }
             next
-            if (flg1 == FALSE) :_break
+            if (flg2 == FALSE) :logmes("右辺-2") :_break
             //
             result = TRUE
             _break

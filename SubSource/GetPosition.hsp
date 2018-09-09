@@ -276,6 +276,7 @@ return
 		isfilled temp2vram, sscapwh(0), sscapwh(1)
 		if (stat==0){
 			validRectFlg = isValidRect@SearchKanCollePos(WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1))
+			logmes "validRectFlg=" + validRectFlg
 			if (validRectFlg){
 				sscap(0) = cliPoint(0)
 				sscap(1) = cliPoint(1)
