@@ -370,18 +370,18 @@ return
 		buffer WND_TEMP2, selcapwh(0), selcapwh(1)
 		gcopy WND_TEMP1, selcap(0)+abs(disInfo(0)), selcap(1)+abs(disInfo(1)), selcapwh(0), selcapwh(1)
 
-		saveName = strf("%s%s", Format@DateTimeFormatMod(saveName(SN_SELECTCAPTURE)), savekind(jpgsave))
+		nSaveName = strf("%s%s", Format@DateTimeFormatMod(saveName(SN_SELECTCAPTURE)), savekind(jpgsave))
 
 		if (confirmSaveName(SN_SELECTCAPTURE)){
-			SaveFileDialog saveNamePath, "画像ファイル(*.png)|*.png|画像ファイル( *.jpg)|*.jpg", jpgsave+1, saveName, selectCapSaveDir, strmid(savekind(jpgsave), 1, 3)
+			SaveFileDialog saveNamePath, "画像ファイル(*.png)|*.png|画像ファイル( *.jpg)|*.jpg", jpgsave+1, nSaveName, selectCapSaveDir, strmid(savekind(jpgsave), 1, 3)
 			if (stat == FALSE){
 				logOut "キャンセルされました。"
 				nidPop
 				return 1
 			}
-			saveName = getpath(saveNamePath, 8)
+			nSaveName = getpath(saveNamePath, 8)
 		} else {
-			saveNamePath = selectCapSaveDir +"\\"+ saveName
+			saveNamePath = selectCapSaveDir +"\\"+ nSaveName
 		}
 
 		ImgF_ImageSave saveNamePath, jpgQuality
@@ -390,10 +390,10 @@ return
 
 		if _exist(saveNamePath) <= 0 {
 			successFlg = FALSE
-			logOut saveName+"の保存に失敗しました"
+			logOut nSaveName+"の保存に失敗しました"
 		} else {
 			successFlg = TRUE
-			logOut saveName+"を保存しました"
+			logOut nSaveName+"を保存しました"
 
 			if dispcap & (mode == MODE_SSCAP){
 				pos 0, dispcapy
