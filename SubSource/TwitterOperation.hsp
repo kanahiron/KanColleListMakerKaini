@@ -598,7 +598,7 @@ return
 		mediaTweetSuccess = TRUE
 
 		if (count != 0){
-			media_upload tempSdim, count,　mediaids, hProgress
+			media_upload tempSdim, count, mediaids, hProgress
 			if (stat = 1){
 			} else {
 				mediaTweetSuccess = FALSE
