@@ -70,21 +70,21 @@
 	Get@iniMod "CaptureAndMaking", "SaveNameUserDefList", tempStr, "\""+defaultSaveName(SN_USERDEF)+"\""
 	saveName(SN_USERDEF) = tempStr
 	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameCapture", tempInt, "0"
-	comfirmSaveName(SN_CAPTURE) = tempInt
+	confirmSaveName(SN_CAPTURE) = tempInt
 	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameSelectCapture", tempInt, "0"
-	comfirmSaveName(SN_SELECTCAPTURE) = tempInt
+	confirmSaveName(SN_SELECTCAPTURE) = tempInt
 	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameList", tempInt, "0"
-	comfirmSaveName(SN_LIST) = tempInt
+	confirmSaveName(SN_LIST) = tempInt
 	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameFormation", tempInt, "0"
-	comfirmSaveName(SN_FORMATION) = tempInt
+	confirmSaveName(SN_FORMATION) = tempInt
 	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameAirStation", tempInt, "0"
-	comfirmSaveName(SN_AIRSTATION) = tempInt
+	confirmSaveName(SN_AIRSTATION) = tempInt
 	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameDirectLink", tempInt, "0"
-	comfirmSaveName(SN_DIRECTLINK) = tempInt
+	confirmSaveName(SN_DIRECTLINK) = tempInt
 	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameEquipmentList", tempInt, "0"
-	comfirmSaveName(SN_EQUIPMENT) = tempInt
+	confirmSaveName(SN_EQUIPMENT) = tempInt
 	Get@iniMod "CaptureAndMaking", "ConfirmSaveNameUserDefList", tempInt, "0"
-	comfirmSaveName(SN_USERDEF) = tempInt
+	confirmSaveName(SN_USERDEF) = tempInt
 
 	Get@iniMod "VideoCapture", "enableVideoCap", enableVideoCap, "1"
 	Get@iniMod "VideoCapture", "lateEncode", lateEncode, "1"
