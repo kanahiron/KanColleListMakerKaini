@@ -95,10 +95,10 @@
 
 		pipe2exec cmda
 		apid = stat
-		aStartTime2 = 0.001*(timeGetTime()\60000)
+		aStartTime2 = timeGetTime()
 		pipe2exec cmdv
 		vpid = stat
-		vStartTime2 = 0.001*(timeGetTime()\60000)
+		vStartTime2 = timeGetTime()
 
 		if ( (apid == -1) || (vpid == -1) ){
 			LogOut "動画キャプチャの開始に失敗しました"
@@ -178,10 +178,10 @@
 		LateEncodeFlg = TRUE
 		lateEncodeStartTime = timeGetTime()
 
-		diffTime = 1.0*(vStartTime2+60.0-aStartTime2)\60.0
+		diffTime2 = 0.001*(aStartTime2-vStartTime2)
 		logmes "vStartTime2 :"+vStartTime2
 		logmes "aStartTime2 :"+aStartTime2
-		logmes "diffTime   :"+diffTime+"s\n"
+		logmes "diffTime2   :"+diffTime2+"s\n"
 
 		ddim vStartTime, 1
 		ddim aStartTime, 1
@@ -192,17 +192,25 @@
 		diffTime = 0.0
 
 		if (vStartTime!=0.0 && aStartTime!=0.0){
-			vStartTime = vStartTime+11644473600.0
+			vStartTime = 11644473600.0+vStartTime
 			dim FILETIME, 2
 			GetSystemTimeAsFileTime varptr(FILETIME)
 			aStartTime = -0.001*timeGetTime() + aStartTime + (4294967295.0*FILETIME(1) + (FILETIME(0)&0x7FFFFFFF) + -2147483648.0*((d(0)&0x80000000)>>31) )/10000000.0
 			diffTime = (aStartTime-vStartTime)/1000
+			//2秒以上ズレずれていたら無かったことにする
+			if ( absf(diffTime)>2.0 ){
+				diffTime = diffTime2
+			}
 		}
 
+		//2秒以上ズレずれていたら無(ry)
+		if ( absf(diffTime)>2.0 ){
+			diffTime = 0.0
+		}
+		
 		logmes "vStartTime :"+vStartTime
 		logmes "aStartTime :"+aStartTime
 		logmes "diffTime   :"+diffTime+"s\n"
-
 
 		if (audioNormalize){
 			normalizeStr = "-af volumedetect"
