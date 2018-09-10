@@ -19,17 +19,13 @@
 		FontSizeNum_ = int(0.73*FontSizeNum_)
 	}
 
-	sdim kantaiMei, 4
-	sdim kantaiNum, 4, 7
+	sdim kantaiMei, 64, 4
+	sdim kantaiNum, 64, 7, 4
 	dim kantaiColor, 4
 	dim in, 1
-	// これがないと何故か配列参照でエラーを吐く
-	kantaiMei = "", "", "", ""
-	kantaiColor = 0, 0, 0, 0
-	kantaiNum(0, 0) = "①","②","③","④","⑤","⑥","⑦"
-	kantaiNum(0, 1) = "①","②","③","④","⑤","⑥","⑦"
-	kantaiNum(0, 2) = "①","②","③","④","⑤","⑥","⑦"
-	kantaiNum(0, 3) = "①","②","③","④","⑤","⑥","⑦"
+	repeat 4
+		kantaiNum(0, cnt) = "①","②","③","④","⑤","⑥","⑦"
+	loop
 
 	if (enableFirst){
 		kantaiMei(in) = FirstFleetName
