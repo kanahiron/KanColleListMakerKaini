@@ -871,7 +871,7 @@
 			mesy += Scale(24)
 
 			pos Scale(5), mesy+Scale(2)
-			mes "フレームレート(5～30fps)"
+			mes "フレームレート(5～60fps)"
 			pos Scale(222), mesy+Scale(2)
 			mes "fps"
 			pos Scale(250), mesy+Scale(2)
