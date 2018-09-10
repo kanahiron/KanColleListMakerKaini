@@ -188,8 +188,7 @@
 		vStartTime = GetVideoStartTime()
 		aStartTime = GetAudioStartTime()
 		logmes "video UNIXTIME   :"+vStartTime
-		logmes "audio SYSTEMTIME :"+aStartTime: mes
-
+		logmes "audio SYSTEMTIME :"+aStartTime
 		diffTime = 0.0
 
 		if (vStartTime!=0.0 && aStartTime!=0.0){
