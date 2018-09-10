@@ -21,24 +21,23 @@
 		BitBlt hdc, 0,0, disinfo(2), disinfo(3), hdcScreen,  disinfo(0), disinfo(1), SRCCOPY | CAPTUREBLT: redraw
 
 		dim sscap_, 4
-		getKanCollePosAuto WND_TEMP1, sscap_, WND_TEMP2 //戻り値は見つかった個数
-		logmes "getKanCollePosAuto "+stat
-		if (stat){
+		count = Auto@SearchKanCollePos(WND_TEMP1, sscap_, WND_TEMP2) //戻り値は見つかった個数
+		logmes "getKanCollePosAuto "+count
+		if (count >= 1){
 			//成功
-
-			if (length2(sscap_) == 1){
+			if (count == 1){
 				//見つけたウィンドウが1つだった時
 				sscap(0) = sscap_(0) + disInfo(0)
 				sscap(1) = sscap_(1) + disInfo(1)
-				sscap(2) = sscap_(2) + disInfo(0)
-				sscap(3) = sscap_(3) + disInfo(1)
+				sscap(2) = sscap_(0) + sscap_(2) + disInfo(0)
+				sscap(3) = sscap_(1) + sscap_(3) + disInfo(1)
 			} else {
 				//見つけたウィンドウ複数だった場合
-				repeat length2(sscap_)
+				repeat count
 					sscap_(0, cnt) += disInfo(0)
 					sscap_(1, cnt) += disInfo(1)
-					sscap_(2, cnt) += disInfo(0)
-					sscap_(3, cnt) += disInfo(1)
+					sscap_(2, cnt) += sscap_(0, cnt)
+					sscap_(3, cnt) += sscap_(1, cnt)
 				loop
 				sscap(0) = 0
 				sscap(1) = 0
@@ -70,12 +69,12 @@
 
 				MoveWindow WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), ginfo_mx+1, ginfo_my+1, imageBuf2W, imageBuf2H,1
 
-				getKanCollePos WND_TEMP1, WND_TEMP2, KCRect, ginfo_mx-disInfo(0), ginfo_my-disInfo(1)
-				if (stat == 1){
-					KCRect(0) += disInfo(0)
-					KCRect(1) += disInfo(1)
-					KCRect(2) += disInfo(0)
-					KCRect(3) += disInfo(1)
+				count = SemiAuto@SearchKanCollePos(WND_TEMP1, rectangles, ginfo_mx-disInfo(0), ginfo_my-disInfo(1))
+                if (count >= 1){
+                    KCRect(0) = rectangles(0, 0) + disInfo(0)
+                    KCRect(1) = rectangles(1, 0) + disInfo(1)
+                    KCRect(2) = rectangles(0, 0) + rectangles(2, 0) + disInfo(0)
+                    KCRect(3) = rectangles(1, 0) + rectangles(3, 0) + disInfo(1)
 					MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), KCRect(0), KCRect(1), KCRect(2)-KCRect(0), KCRect(3)-KCRect(1), 1
 					successflg = TRUE
 				} else {
@@ -134,7 +133,16 @@
 		pos abs(disinfo(0))+5, abs(disinfo(1))+2
 		mes "艦これの画面を覆うようにドラッグしてください Escキーでキャンセル"
 
-		KanCollePosManual WND_TEMP1, sscap, WND_OVERLAY, WND_TEMP_SCR1
+		count = Manual@SearchKanCollePos(WND_TEMP1, rectangles, WND_OVERLAY, WND_TEMP_SCR1, TRUE)
+		if (count >= 1) {
+			dim sscap, 4
+			sscap(0) = rectangles(0, 0) + disinfo(0)
+			sscap(1) = rectangles(1, 0) + disinfo(1)
+			sscap(2) = sscap(0) + rectangles(2, 0) + 1
+			sscap(3) = sscap(1) + rectangles(3, 0) + 1
+		}else{
+			dim sscap, 4
+		}
 	}
 
 	gosub *CaptureMethodDecide
@@ -212,8 +220,8 @@ return
 
 		isfilled temp2vram, sscapwh(0), sscapwh(1)
 		if (stat==0){
-			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
-			if (stat){
+			validRectFlg = isValidRect@SearchKanCollePos(WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1))
+			if (validRectFlg){
 
 				sscap(0) = cliPoint(0)
 				sscap(1) = cliPoint(1)
@@ -240,8 +248,8 @@ return
 
 		isfilled temp2vram, sscapwh(0), sscapwh(1)
 		if (stat==0){
-			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
-			if (stat){
+			validRectFlg = isValidRect@SearchKanCollePos(WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1))
+			if (validRectFlg){
 				sscap(0) = cliPoint(0)
 				sscap(1) = cliPoint(1)
 				sscap(2) = sscap(0)+sscapwh(0)
@@ -267,8 +275,9 @@ return
 
 		isfilled temp2vram, sscapwh(0), sscapwh(1)
 		if (stat==0){
-			CheckKanCollePos WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1)
-			if (stat){
+			validRectFlg = isValidRect@SearchKanCollePos(WND_TEMP1, cliPosX, cliPosY, sscapwh(0), sscapwh(1))
+			logmes "validRectFlg=" + validRectFlg
+			if (validRectFlg){
 				sscap(0) = cliPoint(0)
 				sscap(1) = cliPoint(1)
 				sscap(2) = sscap(0)+sscapwh(0)
