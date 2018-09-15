@@ -1,7 +1,7 @@
 Release/
 ScreenShots/
 ScreenShots2/
-SubSource/key.hsp
+src/sub/key.hsp
 hsptmp
 obj
 packfile
