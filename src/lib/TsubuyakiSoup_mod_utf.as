@@ -1,6 +1,6 @@
-#include "tCup_mod_utf.hsp"
+#include "tCup_mod_utf.as"
 #ifndef jParseMod
-	#include "./modules/jParseMod.as"
+	#include "./lib/jParseMod.as"
 #endif
 
 #module

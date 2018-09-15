@@ -1,40 +1,44 @@
 #include "hsp3utf.as"
 #include "modclbk3.hsp"
 
-#include "./SubSource/FunctionDefinition.hsp"
-#include "./SubSource/key.hsp"
+#include "./sub/FunctionDefinition.hsp"
+#include "./sub/key.hsp"
 
 //ライブラリ的なモジュール
-#include "./modules/BrowseFolderMod.as"
-#include "./modules/ImageFileModule2.as"
-#include "./modules/isfilled.hsp"
-#include "./modules/pipe2_utf.hsp"
-#include "./modules/TsubuyakiSoup_mod_utf.hsp"
+#include "./lib/BrowseFolderMod.as"
+#include "./lib/ImageFileModule2.as"
+#include "./lib/isfilled.as"
+#include "./lib/pipe2_utf.as"
+#include "./lib/TsubuyakiSoup_mod_utf.as"
+
+//プリプロセッサ命令で相対パスがなぜか動かなさそうなので暫定措置
+#include "./lib/ChangeBitmapDepth.as"
+#include "./lib/PerceptualHashMod.as"
 
 //自分で作ったライブラリ的なモジュール
-#include "./modules/DateTimeFormatMod.as"
-#include "./modules/encryption.as"
-#include "./modules/execwMod.as"
-//#include "./modules/i18n.as" //まだ準備ができていないため
-#include "./modules/iniMod.as"
-#include "./modules/kmodule.as"
-#include "./modules/SaveFileDiag_mod.hsp"
+#include "./lib/DateTimeFormatMod.as"
+#include "./lib/Encryption.as"
+#include "./lib/execwMod.as"
+//#include "./lib/i18n.as" //まだ準備ができていないため
+#include "./lib/iniMod.as"
+#include "./lib/kmodule.as"
+#include "./lib/SaveFileDiag_mod.as"
 
 //どちらというとサブソースなモジュール
-#include "./modules/FFMPEGLog.hsp"
-#include "./modules/GetAudioDeviceMod.as"
-#include "./modules/GetKanCollePosMod.hsp"
-#include "./modules/isHomepostModule.as"
-#include "./modules/listMakerModule.as"
-#include "./modules/makeBackgroundImageMod.hsp"
-#include "./modules/SelectWindowMod.hsp"
+#include "./mod/FFMPEGLog.as"
+#include "./mod/GetAudioDeviceMod.as"
+#include "./mod/GetKanCollePosMod.as"
+#include "./mod/isHomepostModule.as"
+#include "./mod/listMakerModule.as"
+#include "./mod/makeBackgroundImageMod.as"
+#include "./mod/SelectWindowMod.as"
 
-#pack "data2.png"
-#pack "huki.png"
+#pack "../res/data2.png"
+#pack "../res/huki.png"
 #packopt name "艦これ一覧めいかー改二"
 #packopt hide 1
-#packopt manifest "KanColleListMakerKaini.manifest"
-#packopt icon "KanColleListMakerKaini.ico"
+#packopt manifest "../res/KanColleListMakerKaini.manifest"
+#packopt icon "../res/KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
 #define SOFTNAME "一覧めいかー改二 Ver0.9"
@@ -42,13 +46,17 @@
 #define klm2ver 9000
 
 #ifdef _debug
-	SafeDelete@kmodule("./SubSource/hsptmp")
-	SafeDelete@kmodule("./SubSource/obj")
-	SafeDelete@kmodule("./SubSource/packfile")
+	SafeDelete@kmodule("./sub/hsptmp")
+	SafeDelete@kmodule("./sub/obj")
+	SafeDelete@kmodule("./sub/packfile")
 
-	SafeDelete@kmodule("./modules/hsptmp")
-	SafeDelete@kmodule("./modules/obj")
-	SafeDelete@kmodule("./modules/packfile")
+	SafeDelete@kmodule("./mod/hsptmp")
+	SafeDelete@kmodule("./mod/obj")
+	SafeDelete@kmodule("./mod/packfile")
+
+	SafeDelete@kmodule("./lib/hsptmp")
+	SafeDelete@kmodule("./lib/obj")
+	SafeDelete@kmodule("./lib/packfile")
 
 	SafeDelete@kmodule("./hsptmp")
 	SafeDelete@kmodule("./obj")
@@ -57,7 +65,7 @@
 
 	//デバッグ中でも高DPIに対応させる
 	SetProcessDPIAware
-	//onerror gosub *err_
+	onerror gosub *err_
 #endif
 
 	onexit gosub *exit
@@ -137,11 +145,11 @@
 	//画像読み込み用
 	buffer WND_IMAGE_BUF
 		SET_WND_INFO
-		ImgF_PicloadEx "data2.png"
+		ImgF_PicloadEx "../res/data2.png"
 
 	bgscr WND_IMAGE_BUF2,,,2
 		SET_WND_INFO
-		ImgF_PicloadEx "huki.png"
+		ImgF_PicloadEx "../res/huki.png"
 		GetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20
 		SetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20, stat | $80000
 		SetLayeredWindowAttributes WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), 0x000000FF, 192, LWA_COLORKEY | LWA_ALPHA
@@ -356,17 +364,17 @@
 	end
 	end
 
-#include "./SubSource/DeclaringVariables.hsp"
-#include "./SubSource/DrawWindow.hsp"
-#include "./SubSource/iniFileOperation.hsp"
-#include "./SubSource/TwitterOperation.hsp"
-#include "./SubSource/DrawString.hsp"
-#include "./SubSource/Make.hsp"
-#include "./SubSource/GetPosition.hsp"
-#include "./SubSource/VersionCheck.hsp"
-#include "./SubSource/OptionSetting.hsp"
-#include "./SubSource/WindowMessageEvent.hsp"
-#include "./SubSource/Capture.hsp"
-#include "./SubSource/GridWindowOperation.hsp"
-#include "./SubSource/VideoCapture.hsp"
-#include "./SubSource/SupportWindowOperation.hsp"
+#include "./sub/DeclaringVariables.hsp"
+#include "./sub/DrawWindow.hsp"
+#include "./sub/iniFileOperation.hsp"
+#include "./sub/TwitterOperation.hsp"
+#include "./sub/DrawString.hsp"
+#include "./sub/Make.hsp"
+#include "./sub/GetPosition.hsp"
+#include "./sub/VersionCheck.hsp"
+#include "./sub/OptionSetting.hsp"
+#include "./sub/WindowMessageEvent.hsp"
+#include "./sub/Capture.hsp"
+#include "./sub/GridWindowOperation.hsp"
+#include "./sub/VideoCapture.hsp"
+#include "./sub/SupportWindowOperation.hsp"

@@ -1,5 +1,5 @@
 #ifndef ChangeBitmapDepth
-	#include "ChangeBitmapDepth.as"
+	#include "../lib/ChangeBitmapDepth.as"
 #endif
 
 #module getKanCollePosMod

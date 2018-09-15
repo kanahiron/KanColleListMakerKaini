@@ -1,8 +1,8 @@
 #ifndef ChangeBitmapDepth
-	#include "ChangeBitmapDepth.as"
+	#include "../lib/ChangeBitmapDepth.as"
 #endif
 #ifndef PerceptualHashMod
-	#include "PerceptualHashMod.as"
+	#include "../lib/PerceptualHashMod.as"
 #endif
 
 // isHomeportModule

@@ -1,5 +1,5 @@
 #ifndef chgbm
-	#include "ChangeBitmapDepth.as"
+	#include "../lib/ChangeBitmapDepth.as"
 #endif
 
 // listMakerModule
