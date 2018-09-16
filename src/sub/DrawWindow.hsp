@@ -126,7 +126,6 @@
 		pos Scale(5+mesaddx), mesy
 		chkbox "提督名と司令部Lvを隠す", hidename: mesy += scale20
 		hidenameBId = stat
-		objenable hidenameBId, 0 //HTML5移行による暫定対処
 
 		pos Scale(5+mesaddx), mesy
 		chkbox "ツイートウィンドウ表示", enableTweetWindow: mesy += scale20
@@ -704,13 +703,8 @@
 
 			pos scale5, mesy
 			chkbox "\"提督名と司令部Lvを隠す\"で司令部Lvは隠さない", noHideLv: mesy += scale20
-			objenable stat, 0 //HTML5移行による暫定対処
 			pos scale5, mesy
 			chkbox "\"提督名と司令部Lvを隠す\"で隠すのではなく切り取る", namecut: mesy += scale20
-			objenable stat, 0 //HTML5移行による暫定対処
-			pos scale5, mesy
-			chkbox "\"提督名と司令部Lvを隠す\"をモザイク処理にする", nameMosaic: mesy += scale20
-			objenable stat, 0 //HTML5移行による暫定対処
 
 			pos scale5, mesy
 			chkbox "SSキャプチャ時に一覧めいかーの映込みを防止する", hideOnCapture: mesy += scale20

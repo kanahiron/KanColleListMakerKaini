@@ -65,7 +65,7 @@
 
 	//デバッグ中でも高DPIに対応させる
 	SetProcessDPIAware
-	onerror gosub *err_
+	//onerror gosub *err_
 #endif
 
 	onexit gosub *exit
@@ -73,7 +73,7 @@
 	wndInfoInit
 	nidStackInit
 	DAControlInit
-	isHomeport_init WND_HOME_PORT_MOD
+	init@isHomeportMod WND_HOME_PORT_MOD
 	//Init@i18n //準備ができていないため
 
 	gosub *DeclaringVariables

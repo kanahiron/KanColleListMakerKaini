@@ -29,7 +29,6 @@
 	Get@iniMod "Configuration", "GridScreenSize", scrSizeBase, "-1\",\"-1"
 
 	Get@iniMod "CaptureAndMaking", "NoHideLv", noHideLv, "0"
-	Get@iniMod "CaptureAndMaking", "NameMosaic", nameMosaic, "0"
 	Get@iniMod "CaptureAndMaking", "NameCut", namecut, "0"
 	Get@iniMod "CaptureAndMaking", "HideOnCapture", hideOnCapture, "0"
 	Get@iniMod "CaptureAndMaking", "forceResize", forceResize, "0"
@@ -179,7 +178,6 @@ return
 	if (hidename != 0) & (hidename != 1):hidename = 0
 	if (noHideLv != 0) & (noHideLv != 1):noHideLv=0
 	if (namecut != 0) & (namecut != 1):namecut=0
-	if (nameMosaic != 0) & (nameMosaic != 1):nameMosaic=0
 	if (hideOnCapture != 0) & (hideOnCapture != 1):hideOnCapture=0
 	if (forceResize != 0) & (forceResize != 1):forceResize=0
 	if (pastSize != 0) & (pastSize != 1):pastSize=0
@@ -462,7 +460,6 @@ return
 	Write@iniMod "Configuration", "GridScreenSize", scrSizeBase
 
 	Write@iniMod "CaptureAndMaking", "NoHideLv", noHideLv
-	Write@iniMod "CaptureAndMaking", "NameMosaic", nameMosaic
 	Write@iniMod "CaptureAndMaking", "NameCut", namecut
 	Write@iniMod "CaptureAndMaking", "HideOnCapture", hideOnCapture
 	Write@iniMod "CaptureAndMaking", "forceResize", forceResize

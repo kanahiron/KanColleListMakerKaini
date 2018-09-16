@@ -1,5 +1,11 @@
 #module PerceptualHashMod
 
+#deffunc local init
+
+	dim tCol, 64
+
+return
+
 #defcfunc PopCnt int _bit
 
 	num = _bit
@@ -16,14 +22,13 @@ return (num & 0x0000ffff) + (num >>16 & 0x0000ffff)
 
 #deffunc CmptDHash array hash, array vram
 
-	dim hash, 2
+	memset hash, 0, 8
 
 	pLum = (( (vram(0)&0xFF)*18 + ((vram(0)>>8)&0xFF)*158 + ((vram(0)>>16)&0xFF)*80 ) >> 8) & 0xFF
-
 	repeat 64
 		lum = (( (vram(cnt+1)&0xFF)*18 + ((vram(cnt+1)>>8)&0xFF)*158 + ((vram(cnt+1)>>16)&0xFF)*80 ) >> 8) & 0xFF
 		hash(cnt/32) <<= 1
-		hash(cnt/32) |= (pLum > lum)
+		hash(cnt/32) |= pLum>lum
 		pLum = lum
 	loop
 
@@ -31,8 +36,8 @@ return
 
 #deffunc CmptAHash array hash, array vram
 
-	dim hash, 2
-	dim tCol, 64
+	memset hash, 0, 8
+	memset tCol, 0, 256
 	avgCol = 0
 
 	repeat 64
@@ -44,10 +49,10 @@ return
 
 	repeat 64
 		hash(cnt/32) <<= 1
-		hash(cnt/32) |= (tCol(cnt) > avgCol)
+		hash(cnt/32) |= tCol(cnt)>avgCol
 	loop
 
-	dim tCol, 0
 return
 
 #global
+init@PerceptualHashMod
