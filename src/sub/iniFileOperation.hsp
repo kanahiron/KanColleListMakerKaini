@@ -138,6 +138,9 @@
 	Get@iniMod "KanmusuFormationMode", "soka", soka, "0"
 	Get@iniMod "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation, "1"
 	Get@iniMod "KanmusuFormationMode", "AddOrderNum", addOrderNum, "1"
+	Get@iniMod "KanmusuFormationMode", "FleetWindowNormal", fleetWindowNormal, "1"
+	Get@iniMod "KanmusuFormationMode", "FleetWindowMini", fleetWindowMini, "0"
+	Get@iniMod "KanmusuFormationMode", "FleetWindowNishimura", fleetWindowNishimura, "0"
 	Get@iniMod "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"第一艦隊\""
 	Get@iniMod "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"第二艦隊\""
 	Get@iniMod "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName, "\"ボス支援\""
@@ -366,6 +369,12 @@ return
 		tuika4 = 0
 	}
 
+	if (fleetWindowNormal+fleetWindowMini+fleetWindowNishimura) != 1{
+		fleetWindowNormal = 1
+		fleetWindowMini = 0
+		fleetWindowNishimura = 0
+	}
+	
 	if (directLink+airStation+equipmentList+userDefList) != 1{
 		directLink = 1
 		airStation = 0
@@ -572,6 +581,9 @@ return
 	Write@iniMod "KanmusuFormationMode", "soka", soka
 	Write@iniMod "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation
 	Write@iniMod "KanmusuFormationMode", "AddOrderNum", addOrderNum
+	Write@iniMod "KanmusuFormationMode", "FleetWindowNormal", fleetWindowNormal
+	Write@iniMod "KanmusuFormationMode", "FleetWindowMini", fleetWindowMini
+	Write@iniMod "KanmusuFormationMode", "FleetWindowNishimura", fleetWindowNishimura
 	Write@iniMod "KanmusuFormationMode", "FirstFleetName", FirstFleetName
 	Write@iniMod "KanmusuFormationMode", "SecondFleetName", SecondFleetName
 	Write@iniMod "KanmusuFormationMode", "ThirdFleetName", ThirdFleetName

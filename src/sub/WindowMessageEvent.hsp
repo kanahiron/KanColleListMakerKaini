@@ -347,10 +347,21 @@ return
 			sendmsg fleetPunctuationch, $F2
 			fleetPunctuation = stat & 0x01
 
-			sendmsg nishimuraFlgCh, $F2
-			nishimuraFlg = stat & 0x01
+			sendmsg fleetWindowNormalCh, $F2
+			fleetWindowNormal = stat & 0x01
+			sendmsg fleetWindowMiniCh, $F2
+			fleetWindowMini = stat & 0x01
+			sendmsg fleetWindowNishimuraCh, $F2
+			fleetWindowNishimura = stat & 0x01
 
-			if (nishimuraFlg){
+			nishimuraFlg = fleetWindowNishimura
+			miniGridWindow = fleetWindowMini
+
+			logmes "fleetWindowNormal     " + fleetWindowNormal
+			logmes "fleetWindowMini       " + fleetWindowMini
+			logmes "fleetWindowNishimura  " + fleetWindowNishimura
+
+			if (nishimuraFlg | miniGridWindow){
 				if (tuika2 + tuika3 == 1){
 					tuika1 = 1
 					tuika2 = 0

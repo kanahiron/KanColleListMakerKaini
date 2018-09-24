@@ -237,7 +237,17 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 	if (listMode == LISTMODE_FLEET){
 
 		cellnum(0) = 5, 5
-		if (nishimuraFlg): cellnum(0) = 3, 3
+		if (nishimuraFlg){
+			cellnum(0) = 3, 3
+		}
+		if (miniGridWindow){
+			if (tuika1){
+				cellnum(0) = 3, 2
+			}
+			if (tuika4){
+				cellnum(0) = 2, 3
+			}
+		}
 
 		if sosuka {
 			w = 684

@@ -341,29 +341,28 @@
 
 			mesy += Scale(1)
 
+			pos Scale(5), mesy+Scale(1)
+			mes "ウィンドウサイズ":mesy += Scale(18)
 			pos Scale(5), mesy
-			chkbox "艦隊区切り線を追加", fleetPunctuation: mesy += scale20
-			fleetPunctuationCId = stat
-			fleetPunctuationCh = objinfo_hwnd(fleetPunctuationCId)
+			objsize Scale(56), scale20
+			chkbox "通常", fleetWindowNormal
+			fleetWindowNormalCId = stat
+			fleetWindowNormalCh = objinfo_hwnd(fleetWindowNormalCId)
+			SetWindowLong fleetWindowNormalCh, -16, $50000009 | $20000
 
-			pos Scale(5), mesy
-			chkbox "順番に番号を入れる", addOrderNum: mesy += scale20
-			addOrderNumCId = stat
+			pos Scale(5+56), mesy
+			objsize Scale(40), scale20
+			chkbox "小", fleetWindowMini
+			fleetWindowMiniCId = stat
+			fleetWindowMiniCh = objinfo_hwnd(fleetWindowMiniCId)
+			sendmsg fleetWindowMiniCh, $F4, $9
 
-			pos Scale(5), mesy
-			chkbox "西村艦隊(7人)に対応", nishimuraFlg: mesy += scale20
-			nishimuraFlgCId = stat
-			nishimuraFlgCh = objinfo_hwnd(nishimuraFlgCId)
-
-			SetDAControl tuika1Ch
-			SetDAControl tuika2Ch
-			SetDAControl tuika3Ch
-			SetDAControl tuika4Ch
-			SetDAControl sosukaCh
-			SetDAControl sosuCh
-			SetDAControl sokaCh
-			SetDAControl fleetPunctuationCh
-			SetDAControl nishimuraFlgCh
+			pos Scale(5+96), mesy
+			objsize Scale(74), scale20
+			chkbox "西村艦隊", fleetWindowNishimura: mesy += scale20
+			fleetWindowNishimuraCId = stat
+			fleetWindowNishimuraCh = objinfo_hwnd(fleetWindowNishimuraCId)
+			sendmsg fleetWindowNishimuraCh, $F4, $9
 
 			window2x = Scale(175)
 
@@ -416,9 +415,31 @@
 			pos window2x + Scale(7), mesy2
 			button gosub "変更", *colorCange5: mesy2 += Scale(22)
 
+			mesy2 += Scale(5)
+			objsize Scale(175), scale20
+
+			pos window2x + Scale(5), mesy2
+			chkbox "艦隊区切り線を追加", fleetPunctuation: mesy2 += scale20
+			fleetPunctuationCId = stat
+			fleetPunctuationCh = objinfo_hwnd(fleetPunctuationCId)
+
+			pos window2x + Scale(5), mesy2
+			chkbox "順番に番号を入れる", addOrderNum: mesy2 += scale20
+			addOrderNumCId = stat
+
+			SetDAControl tuika1Ch
+			SetDAControl tuika2Ch
+			SetDAControl tuika3Ch
+			SetDAControl tuika4Ch
+			SetDAControl sosukaCh
+			SetDAControl sosuCh
+			SetDAControl sokaCh
+			SetDAControl fleetPunctuationCh
+			SetDAControl fleetWindowNormalCh
+			SetDAControl fleetWindowNishimuraCh
+			SetDAControl fleetWindowMiniCh
+
 			gosub *drawColor
-
-
 		}
 
 		if (listmode == LISTMODE_OTHER){
