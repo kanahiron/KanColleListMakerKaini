@@ -229,7 +229,7 @@
 		MoveWindow WND_INFO(WND_TWITTER, WI_HANDLE), tweetWindowPos(0), tweetWindowPos(1), rect(2)-rect(0), rect(3)-rect(1), 1
 	}
 
-	if initialActivation {
+	if (initialActivation) {
 		dialog "艦これ一覧めいかー改二へようこそ！\n自動バージョンチェック機能を有効にしますか？\n※設定からいつでも切り替えができます", 2, "初回起動"
 		if (stat != 6){
 			autoVersionCheck = FALSE
@@ -265,6 +265,7 @@
 	optionMode = OPMODE_CAPTURE
 	gosub *drawMainWindow
 	//*/
+	firstStart = FALSE
 	stop
 
 *exit

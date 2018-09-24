@@ -27,6 +27,8 @@
 	Get@iniMod "Configuration", "SelectCapSaveDir", selectCapSaveDir, "\"\""
 	Get@iniMod "Configuration", "YabumiExeDir", yabumidir, "\"\""
 	Get@iniMod "Configuration", "GridScreenSize", scrSizeBase, "-1\",\"-1"
+	Get@iniMod "Configuration", "IniVersion", iniVersion, ""+klm2ver
+	Get@iniMod "Configuration", "FirstStart", firstStart, "1"
 
 	Get@iniMod "CaptureAndMaking", "NoHideLv", noHideLv, "0"
 	Get@iniMod "CaptureAndMaking", "NameCut", namecut, "0"
@@ -374,7 +376,7 @@ return
 		fleetWindowMini = 0
 		fleetWindowNishimura = 0
 	}
-	
+
 	if (directLink+airStation+equipmentList+userDefList) != 1{
 		directLink = 1
 		airStation = 0
@@ -441,6 +443,19 @@ return
 		savelogtext = ""
 	}
 
+	//iniのバージョンが現在の実行ファイルのバージョンより低いなら初回起動フラグを立てる
+	if (iniVersion<klm2ver){
+		firstStart = TRUE
+	}
+
+	if(firstStart){
+		userdata = ""
+		ACCESS_TOKEN = ""
+		ACCESS_SECRET = ""
+	}
+
+	iniVersion = klm2ver
+
 	gosub *CalcCapPosAndWinSize
 
 	chdir currentdir
@@ -469,6 +484,8 @@ return
 	Write@iniMod "Configuration", "SelectCapSaveDir",selectCapSaveDir
 	Write@iniMod "Configuration", "YabumiExeDir", yabumidir
 	Write@iniMod "Configuration", "GridScreenSize", scrSizeBase
+	Write@iniMod "Configuration", "IniVersion", iniVersion
+	Write@iniMod "Configuration", "FirstStart", firstStart
 
 	Write@iniMod "CaptureAndMaking", "NoHideLv", noHideLv
 	Write@iniMod "CaptureAndMaking", "NameCut", namecut
