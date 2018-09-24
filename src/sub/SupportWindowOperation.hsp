@@ -29,7 +29,7 @@
 	koPos = Scale(14)+swTsWidth+swSpWidth+swKaWidth+swSpWidth
 	soPos = Scale(14)+swTsWidth+swSpWidth+swKaWidth+swSpWidth+swKoWidth+swSpWidth
 	swWidth = swTsWidth + swKaWidth + swKoWidth + swSoWidth + swSpWidth*3
-	
+
 	tempx = 0, swWidth+Scale(30), swWidth+Scale(20), Scale(10)
 	tempy = 0, 0, swHeight+Scale(5), swHeight+Scale(5)
 
@@ -105,13 +105,17 @@ return
 				if autoAddNonSave{
 					//保存なしの場合
 					gosub *SSCaptureOnMemory
+					if (stat==0){
+						gosub *addCapture
+					}
 				} else {
 					//保存ありの場合
 					gosub *SSCapture
-					addFileName = saveNamePath
+					if (stat==0){
+						addFileName = saveNamePath
+						gosub *addCapture
+					}
 				}
-				//追加
-				gosub *addCapture
 				hotKeyFlag = FALSE
 				addfilename = ""
 			} else {

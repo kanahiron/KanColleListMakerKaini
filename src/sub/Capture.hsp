@@ -408,14 +408,17 @@ return
 			if autoAddNonSave{
 				//保存なしの場合
 				gosub *SSCaptureOnMemory
+				if (stat==0){
+					gosub *addCapture
+				}
 			} else {
 				//保存ありの場合
 				gosub *SSCapture
-				addFileName = saveNamePath
+				if (stat==0){
+					addFileName = saveNamePath
+					gosub *addCapture
+				}
 			}
-			//追加
-			gosub *addCapture
-
 		}
 
 		hotKeyFlag = FALSE
