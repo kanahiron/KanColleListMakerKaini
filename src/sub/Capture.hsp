@@ -15,7 +15,7 @@
 
 			gosub *ssSettingCheck
 
-			LogOut "艦これの画面を見失いました(1)"
+			LogOut "座標を見失いました\nブラウザが閉じられました"
 			nidPop
 			return 1
 		}
@@ -32,7 +32,7 @@
 
 				gosub *ssSettingCheck
 
-				LogOut "艦これの画面を見失いました(2)"
+				LogOut "座標を見失いました\nウィンドウサイズが変えられました"
 				nidPop
 				return 1
 			}
