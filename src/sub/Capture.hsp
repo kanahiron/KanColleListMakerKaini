@@ -59,9 +59,11 @@
 	}
 
 	if (hideOnCapture){
-		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
-		SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
-		SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
+		if (hideOnCaptureOnlyListMake && mode = MODE_LIST){
+			SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
+			SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
+			SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
+		}
 	}
 
 	switch captureMethod
@@ -97,9 +99,11 @@
 
 
 	if (hideOnCapture){
-		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
-		SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
-		SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
+		if (hideOnCaptureOnlyListMake && mode = MODE_LIST){
+			SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
+			SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
+			SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
+		}
 	}
 
 	if (forceResize){

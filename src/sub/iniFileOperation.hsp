@@ -30,7 +30,8 @@
 
 	Get@iniMod "CaptureAndMaking", "NoHideLv", noHideLv, "0"
 	Get@iniMod "CaptureAndMaking", "NameCut", namecut, "0"
-	Get@iniMod "CaptureAndMaking", "HideOnCapture", hideOnCapture, "0"
+	Get@iniMod "CaptureAndMaking", "HideOnCapture", hideOnCapture, "1"
+	Get@iniMod "CaptureAndMaking", "hideOnCaptureOnlyListMake", hideOnCaptureOnlyListMake, "1"
 	Get@iniMod "CaptureAndMaking", "forceResize", forceResize, "0"
 	Get@iniMod "CaptureAndMaking", "PastSize", pastSize, "0"
 	Get@iniMod "CaptureAndMaking", "maxSearchLevel", maxSearchLevel, "2"
@@ -178,7 +179,8 @@ return
 	if (hidename != 0) & (hidename != 1):hidename = 0
 	if (noHideLv != 0) & (noHideLv != 1):noHideLv=0
 	if (namecut != 0) & (namecut != 1):namecut=0
-	if (hideOnCapture != 0) & (hideOnCapture != 1):hideOnCapture=0
+	if (hideOnCapture != 0) & (hideOnCapture != 1):hideOnCapture=1
+	if (hideOnCaptureOnlyListMake != 0) & (hideOnCaptureOnlyListMake != 1):hideOnCaptureOnlyListMake=1
 	if (forceResize != 0) & (forceResize != 1):forceResize=0
 	if (pastSize != 0) & (pastSize != 1):pastSize=0
 	if (frontrow != 0) & (frontrow != 1):frontrow=1
@@ -462,6 +464,7 @@ return
 	Write@iniMod "CaptureAndMaking", "NoHideLv", noHideLv
 	Write@iniMod "CaptureAndMaking", "NameCut", namecut
 	Write@iniMod "CaptureAndMaking", "HideOnCapture", hideOnCapture
+	Write@iniMod "CaptureAndMaking", "hideOnCaptureOnlyListMake", hideOnCaptureOnlyListMake
 	Write@iniMod "CaptureAndMaking", "forceResize", forceResize
 	Write@iniMod "CaptureAndMaking", "PastSize", pastSize
 	Write@iniMod "CaptureAndMaking", "maxSearchLevel", maxSearchLevel
