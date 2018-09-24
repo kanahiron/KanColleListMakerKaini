@@ -20,22 +20,19 @@
 			return 1
 		}
 
-		if (positionType==PT_RELATIVE){
+		GetClientRect hClient, varptr(rect)
+		if (clientSize(0) != (rect(2)-rect(0))) | (clientSize(1) != (rect(3)-rect(1))){
 
-			GetClientRect hClient, varptr(rect)
-			if (clientSize(0) != (rect(2)-rect(0))) | (clientSize(1) != (rect(3)-rect(1))){
+			ssCap(0) = 0, 0, 0, 0
+			hClient = 0
+			ReleaseDC dcClient
+			if seqCapf: gosub *seqcap
 
-				ssCap(0) = 0, 0, 0, 0
-				hClient = 0
-				ReleaseDC dcClient
-				if seqCapf: gosub *seqcap
+			gosub *ssSettingCheck
 
-				gosub *ssSettingCheck
-
-				LogOut "座標を見失いました\nウィンドウサイズが変えられました"
-				nidPop
-				return 1
-			}
+			LogOut "座標を見失いました\nウィンドウサイズが変えられました"
+			nidPop
+			return 1
 		}
 	}
 
