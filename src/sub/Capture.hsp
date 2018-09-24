@@ -160,7 +160,7 @@ return 0
 				nidPop
 				return 1
 			}
-			nSaveName = getpath(saveNamePath, 8)
+			nSaveName = getpath@getpathMod(saveNamePath, 8)
 		} else {
 			saveNamePath = ssSaveDir +"\\"+ nSaveName
 		}
@@ -367,7 +367,7 @@ return (successFlg^1)
 			gzoom BASE_SIZE_W, BASE_SIZE_H, WND_TEMP1, 0, 0, picx, picy, 1
 		}
 
-		LogOut strf("%sをセル(%d, %d)に読み込みました", getpath(addfilename, 11), dmxy(0), dmxy(1))
+		LogOut strf("%sをセル(%d, %d)に読み込みました", getpath@getpathMod(addfilename, 11), dmxy(0), dmxy(1))
 		listLoadedNum++
 	}
 	gsel WND_GRID

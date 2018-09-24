@@ -465,7 +465,7 @@ ImgP_Memsave
     mref bb, 67
     if bb(3)  : ib(9) = PixelFormat8bppIndexed  : else  : ib(9) = PixelFormat24bppRGB   ; ピクフォマ
 
-	if (getpath(s,18) = ".png") {
+	if (getpath@getpathMod(s,18) = ".png") {
 		ib(10) = $557CF406, $11D31A04, $0000739A, $2EF31EF8        ; PNG
 	} else {
         ib(22) = p

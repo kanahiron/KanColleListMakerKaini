@@ -5,6 +5,7 @@
 #include "./sub/key.hsp"
 
 //ライブラリ的なモジュール
+#include "./lib/getpathMod.as"
 #include "./lib/BrowseFolderMod.as"
 #include "./lib/ImageFileModule2.as"
 #include "./lib/isfilled.as"

@@ -407,7 +407,7 @@ return
 	exist videoFileName+"_a.wav"
 	if (strsize != -1): delete videoFileName+"_a.wav"
 
-	LogOut strf("%s.mp4を保存しました。", getpath(videoFileName, 8))
+	LogOut strf("%s.mp4を保存しました。", getpath@getpathMod(videoFileName, 8))
 
 	videoCapMes = "開始"
 	if (mode == MODE_SSCAP){

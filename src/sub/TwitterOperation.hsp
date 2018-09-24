@@ -379,7 +379,7 @@ return
 				nidPop
 				return 1
 			}
-			nSaveName = getpath(saveNamePath, 8)
+			nSaveName = getpath@getpathMod(saveNamePath, 8)
 		} else {
 			saveNamePath = selectCapSaveDir +"\\"+ nSaveName
 		}

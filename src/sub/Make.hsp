@@ -315,7 +315,7 @@
 				nidPop
 				return
 			}
-			nSaveName = getpath(saveNamePath, 8)
+			nSaveName = getpath@getpathMod(saveNamePath, 8)
 		} else {
 			nSaveName = tempstr + savekind(jpgsave)
 			saveNamePath = listsavedir +"\\"+ nSaveName

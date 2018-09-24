@@ -20,8 +20,8 @@
 	#deffunc local Load str path
 		inipath = path
 		if instr(inipath, 0, ":") = -1 : inipath = "" : return 1
-		fname = getpath(path, 8)
-		fpath = getpath(path, 32)
+		fname = getpath@getpathMod(path, 8)
+		fpath = getpath@getpathMod(path, 32)
 		fpath = strmid(fpath, 0, strlen(fpath) - 1)
 		opath = dir_cur
 		chdir fpath
