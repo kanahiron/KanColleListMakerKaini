@@ -445,7 +445,7 @@ return
 	repeat 4
 		if PicStack(cnt) = "": break
 		pos twiPicFrameXL(cnt)+1, twiPicFrameYU(cnt)+1
-		gcopy WND_IMAGE_BUF, 0, 40+twiOrder(cnt)*120, Scale(62), Scale(38)
+		gcopy WND_IMAGE_BUF, 0, twiOrder(cnt)*120, Scale(62), Scale(38)
 	loop
 
 	gmode 0

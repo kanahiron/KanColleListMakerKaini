@@ -34,8 +34,8 @@
 #include "./mod/makeBackgroundImageMod.as"
 #include "./mod/SelectWindowMod.as"
 
-#pack "../res/data2.png"
-#pack "../res/huki.png"
+#pack "../res/d.png"
+#pack "../res/h.png"
 #packopt name "艦これ一覧めいかー改二"
 #packopt hide 1
 #packopt manifest "../res/KanColleListMakerKaini.manifest"
@@ -146,11 +146,11 @@
 	//画像読み込み用
 	buffer WND_IMAGE_BUF
 		SET_WND_INFO
-		ImgF_PicloadEx "../res/data2.png"
+		picload "../res/f.png"
 
 	bgscr WND_IMAGE_BUF2,,,2
 		SET_WND_INFO
-		ImgF_PicloadEx "../res/huki.png"
+		ImgF_PicloadEx "../res/h.png"
 		GetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20
 		SetWindowLong WND_INFO(WND_IMAGE_BUF2, WI_HANDLE),-20, stat | $80000
 		SetLayeredWindowAttributes WND_INFO(WND_IMAGE_BUF2, WI_HANDLE), 0x000000FF, 192, LWA_COLORKEY | LWA_ALPHA
