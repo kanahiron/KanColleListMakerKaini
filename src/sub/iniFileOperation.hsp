@@ -36,7 +36,7 @@
 	Get@iniMod "CaptureAndMaking", "hideOnCaptureOnlyListMake", hideOnCaptureOnlyListMake, "1"
 	Get@iniMod "CaptureAndMaking", "forceResize", forceResize, "0"
 	Get@iniMod "CaptureAndMaking", "PastSize", pastSize, "0"
-	Get@iniMod "CaptureAndMaking", "maxSearchLevel", maxSearchLevel, "2"
+	Get@iniMod "CaptureAndMaking", "maxSearchLevel", maxSearchLevel, "1"
 	Get@iniMod "CaptureAndMaking", "HotkeyCapture", hotkeycap, "1"
 	Get@iniMod "CaptureAndMaking", "HotkeyStr", hotkeystr, "\"A___Z\""
 	Get@iniMod "CaptureAndMaking", "AutoAddCapture", autoaddCapture, "1"
@@ -256,7 +256,7 @@ return
 
 	if (confirmCancelVideoCapture != 0) & (confirmCancelVideoCapture != 1):confirmCancelVideoCapture=1
 
-	if (maxSearchLevel < 0) | ( 2 < maxSearchLevel): maxSearchLevel=2
+	if (maxSearchLevel < 0) | ( 2 < maxSearchLevel): maxSearchLevel=1
 
 	if (ConfirmCompletion != 0) & (ConfirmCompletion != 1): ConfirmCompletion=1
 	if (twiFrontRow != 0) & (twiFrontRow != 1):twiFrontRow=1
