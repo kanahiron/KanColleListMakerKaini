@@ -15,8 +15,8 @@
 	if (pastSize){
 		nameOffset(0) = int(0.66666667*nameOffset(0)), int(0.66666667*nameOffset(1))
 		numOffset(0) = int(0.66666667*numOffset(0)), int(0.66666667*numOffset(1))
-		FontSizeName_ = int(0.73*FontSizeName_)
-		FontSizeNum_ = int(0.73*FontSizeNum_)
+		FontSizeName_ = int(0.67*FontSizeName_)
+		FontSizeNum_ = int(0.67*FontSizeNum_)
 	}
 
 	sdim kantaiMei, 64, 4

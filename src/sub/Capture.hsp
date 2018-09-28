@@ -324,21 +324,17 @@ return (successFlg^1)
 		picx = ssCapWH(0)
 		picy = ssCapWH(1)
 		ratio = 1.0*picy/picx
+		//NameCutFlg = absf(ratio-(1.0*(BASE_SIZE_H-45)/BASE_SIZE_W))<=0.01
+		NameCutFlg = absf(ratio-0.5625)<=0.01
 
 		if (pastSize^1){
 			buffer bufid, BASE_SIZE_W, BASE_SIZE_H
-			gzoom BASE_SIZE_W, BASE_SIZE_H, WND_CAPTURE, 0, 0, picx, picy, 1
+			pos 0, 45*NameCutFlg
+			gzoom BASE_SIZE_W, BASE_SIZE_H-45*NameCutFlg, WND_CAPTURE, 0, 0, picx, picy, 1
 		} else {
 			buffer bufid, int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5)
-			gzoom int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5), WND_CAPTURE, 0, 0, picx, picy, 1
-		}
-
-		if ( absf(ratio-(1.0*(BASE_SIZE_H-45)/BASE_SIZE_W)) <= 0.01 ){
-			pos 0, 45
-			gzoom BASE_SIZE_W, BASE_SIZE_H-45, WND_CAPTURE, 0, 0, picx, picy, 1
-		} else {
-			pos 0, 0
-			gzoom BASE_SIZE_W, BASE_SIZE_H, WND_CAPTURE, 0, 0, picx, picy, 1
+			pos 0, 30*NameCutFlg
+			gzoom int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5)-30*NameCutFlg, WND_CAPTURE, 0, 0, picx, picy, 1
 		}
 
 		LogOut strf("キャプチャをセル(%d, %d)に読み込みました", dmxy(0), dmxy(1))
@@ -351,21 +347,17 @@ return (successFlg^1)
 		picx = ginfo_winx
 		picy = ginfo_winy
 		ratio = 1.0*picy/picx
+		//NameCutFlg = absf(ratio-(1.0*(BASE_SIZE_H-45)/BASE_SIZE_W))<=0.01
+		NameCutFlg = absf(ratio-0.5625)<=0.01
 
 		if (pastSize^1){
 			buffer bufid, BASE_SIZE_W, BASE_SIZE_H
-			gzoom BASE_SIZE_W, BASE_SIZE_H, WND_TEMP1, 0, 0, picx, picy, 1
+			pos 0, 45*NameCutFlg
+			gzoom BASE_SIZE_W, BASE_SIZE_H-45*NameCutFlg, WND_TEMP1, 0, 0, picx, picy, 1
 		} else {
 			buffer bufid, int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5)
-			gzoom int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5), WND_TEMP1, 0, 0, picx, picy, 1
-		}
-
-		if ( absf(ratio-(1.0*(BASE_SIZE_H-45)/BASE_SIZE_W)) <= 0.01 ){
-			pos 0, 45
-			gzoom BASE_SIZE_W, BASE_SIZE_H-45, WND_TEMP1, 0, 0, picx, picy, 1
-		} else {
-			pos 0, 0
-			gzoom BASE_SIZE_W, BASE_SIZE_H, WND_TEMP1, 0, 0, picx, picy, 1
+			pos 0, 30*NameCutFlg
+			gzoom int(1.0*BASE_SIZE_W/1.5), int(1.0*BASE_SIZE_H/1.5)-30*NameCutFlg, WND_TEMP1, 0, 0, picx, picy, 1
 		}
 
 		LogOut strf("%sをセル(%d, %d)に読み込みました", getpath@getpathMod(addfilename, 11), dmxy(0), dmxy(1))
