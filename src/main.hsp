@@ -34,7 +34,7 @@
 #include "./mod/makeBackgroundImageMod.as"
 #include "./mod/SelectWindowMod.as"
 
-#pack "../res/d.png"
+#pack "../res/f.png"
 #pack "../res/h.png"
 #packopt name "艦これ一覧めいかー改二"
 #packopt hide 1
@@ -42,8 +42,8 @@
 #packopt icon "../res/KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
-#define SOFTNAME "一覧めいかー改二 Ver0.10"
-#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.10"
+#define SOFTNAME "一覧めいかー改二 Ver0.11"
+#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.11"
 #define klm2ver 10000
 
 #ifdef _debug
