@@ -146,7 +146,7 @@
 	//画像読み込み用
 	buffer WND_IMAGE_BUF
 		SET_WND_INFO
-		picload "../res/f.png"
+		ImgF_PicloadEx "../res/f.png"
 
 	bgscr WND_IMAGE_BUF2,,,2
 		SET_WND_INFO
