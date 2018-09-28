@@ -23,29 +23,29 @@
 	sdim kantaiNum, 64, 7, 4
 	dim kantaiColor, 4
 	dim in, 1
-	repeat 4
-		kantaiNum(0, cnt) = "①","②","③","④","⑤","⑥","⑦"
-	loop
 
 	if (enableFirst){
 		kantaiMei(in) = FirstFleetName
 		kantaiColor(in) = fontColorFirstFleet
+		kantaiNum(0, in) = "①","②","③","④","⑤","⑥","⑦"
 		in+=1
 	}
 	if (enableSecond){
 		kantaiMei(in) = SecondFleetName
 		kantaiColor(in) = fontColorSecondFleet
+		kantaiNum(0, in) = "①","②","③","④","⑤","⑥","⑦"
 		in+=1
 	}
 	if (enableThird){
 		kantaiMei(in) = ThirdFleetName
 		kantaiColor(in) = fontColorThirdFleet
+		kantaiNum(0, in) = "①","②","③","④","⑤","⑥","⑦"
 		in+=1
 	}
 	if (enableFourth){
 		kantaiMei(in) = FourthFleetName
 		kantaiColor(in) = fontColorFourthFleet
-		in+=1
+		kantaiNum(0, in) = "①","②","③","④","⑤","⑥","⑦"
 	}
 
 	//縦横の画像枚数をカウント
