@@ -511,7 +511,24 @@ return form_encode(str(base64HmacSha1), 0)
 			PostDataLength = 0
 
 			PostDataHead = "--"+boundary+"\n"
-			PostDataHead += "Content-Disposition: form-data; name=\"media\";\n\n"
+			PostDataHead += "Content-Disposition: form-data; name=\"media\";\n"
+			PostDataHead += "Content-Type: image/"
+			switch getpath@getpathMod(era_p2, 18)
+				case ".jpg"
+				case ".jpeg"
+					PostDataHead += "jpeg"
+					swbreak
+				case ".png"
+					PostDataHead += "png"
+					swbreak
+				case ".gif"
+					PostDataHead += "gif"
+					swbreak
+				case ".bmp"
+					PostDataHead += "bmp"
+					swbreak
+			swend
+			PostDataHead += "\n\n"
 			PostDataFoot = "\n--"+boundary+"--\n"
 
 			PostDataLength = strlen(PostDataHead) + strlen(PostDataFoot) + picLength
@@ -657,18 +674,19 @@ return form_encode(str(base64HmacSha1), 0)
 		}
 		_InternetCloseHandle hConnect
 	}
-/*
+///*
 	#ifdef _debug
 		nid = ginfo(3)
 		screen 45,1200,500 //変数の内容表示
 		mesbox RequestHeader,1200,75,0
-		mesbox PostData,1200,175,0
+		tempStr = b2s(PostData, PostDataLength)
+		mesbox tempStr,1200,175,0
 		mesbox responseHeader,1200,175,0
 		mesbox responseBody,1200,75,0
 		gsel nid
 	#endif
 //*/
-
+	assert
 	sdim requestHeader
 	sdim postData
 	sdim picBuf

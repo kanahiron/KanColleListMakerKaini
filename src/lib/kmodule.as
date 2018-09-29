@@ -60,4 +60,19 @@
 	#defcfunc _noteget int lineNumber
 		noteget retVal, lineNumber
 	return retVal
+
+	/**
+	 * バイナリを無理やり文字列にして返す(与えられた変数中のNull文字をスペースに置換する)
+	 * @param in 入力バイナリの入った変数
+	 * @param len バイナリのサイズ(Byte)
+	 * @return 文字列
+	 */
+	#defcfunc b2s var in, int len
+		sdim out, len+1
+		memcpy out, in, len
+		repeat len
+			if (peek(out, cnt)==0):poke out, cnt, ' '
+		loop
+	return out
+
 #global
