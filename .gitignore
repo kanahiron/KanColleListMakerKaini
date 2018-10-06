@@ -1,3 +1,4 @@
+log/
 Release/
 ScreenShots/
 ScreenShots2/
@@ -11,6 +12,7 @@ packfile
 *.i
 *.ini
 *.json
+*.log
 *.mp4
 *.png
 !f.png
