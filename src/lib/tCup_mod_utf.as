@@ -677,20 +677,20 @@ return form_encode(str(base64HmacSha1), 0)
 ///*
 	#ifdef _debug
 		nid = ginfo(3)
-		screen 45,1200,500 //変数の内容表示
-		mesbox RequestHeader,1200,75,0
+		screen 45,1200,700 //変数の内容表示
+		mesbox RequestHeader,1200,100,0
 		tempStr = b2s(PostData, PostDataLength)
-		mesbox tempStr,1200,175,0
-		mesbox responseHeader,1200,175,0
-		mesbox responseBody,1200,75,0
+		mesbox tempStr,1200,400,0
+		mesbox responseBody,1200,200,0
 		gsel nid
 	#endif
 //*/
-	assert
 	sdim requestHeader
 	sdim postData
 	sdim picBuf
 	sdim transStr
+
+	logmes "================="
 
 return statcode
 
