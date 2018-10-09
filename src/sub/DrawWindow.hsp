@@ -1089,6 +1089,8 @@ return
 		gsel WND_TWITTER
 		objenable ttid, 0
 		objenable tweetbid, 0
+		objenable addHashtagCId, 0
+ 		objenable hashtagIId, 0
 		gsel WND_MAIN
 	}
 	disableWindowSizeChange = TRUE
@@ -1165,6 +1167,8 @@ return
 		gsel WND_TWITTER
 		objenable ttid, 1
 		objenable tweetbid, 1
+		objenable addHashtagCId, 1
+		objenable hashtagIId, 1
 		gsel WND_MAIN
 	}
 	disableWindowSizeChange = FALSE
