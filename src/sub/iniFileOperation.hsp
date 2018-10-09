@@ -118,6 +118,8 @@
 
 	Get@iniMod "TwitterSetting", "TwiFrontRow", twiFrontRow, "1"
 	Get@iniMod "TwitterSetting", "TwiJpg",twijpg, "1"
+	Get@iniMod "TwitterSetting", "Hashtag", hashtag, "\"#艦これ\""
+	Get@iniMod "TwitterSetting", "AddHashtag", addHashtag, "0"
 
 	Get@iniMod "SSMode", "AutoSearch", autosearch, "1"
 	Get@iniMod "SSMode", "HideName", hidename, "0"
@@ -209,6 +211,14 @@ return
 	if (soka != 0) & (soka != 1):soka=0
 	if (enableTweetWindow != 0) & (enableTweetWindow != 1):enableTweetWindow=0
 	if (twijpg != 0) & (twijpg != 1):twijpg=1
+	if (addHashtag != 0) & (addHashtag != 1):addHashtag=0
+	hashtag = ""+hashtag
+	htCount = MultiByteToWideChar( 65001, 0, varptr(hashtag), strlen(hashtag), 0, 0)+1
+	if ( htCount > 21){
+		hashtag = "#艦これ"
+		htCount = 5
+		addHashtag = 0
+	}
 	if fontname = "":fontname = "メイリオ"
 	if fontnum = "":fontnum = "メイリオ"
 	if (fontsizename < 10) | ( 70 < fontsizename):fontsizename=42
@@ -576,6 +586,8 @@ return
 
 	Write@iniMod "TwitterSetting", "TwiFrontRow", twiFrontRow
 	Write@iniMod "TwitterSetting", "TwiJpg",twijpg
+	Write@iniMod "TwitterSetting", "Hashtag", hashtag
+	Write@iniMod "TwitterSetting", "AddHashtag", addHashtag
 
 	Write@iniMod "SSMode", "AutoSearch", autosearch
 	Write@iniMod "SSMode", "HideName", hidename

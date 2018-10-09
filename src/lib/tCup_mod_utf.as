@@ -674,7 +674,7 @@ return form_encode(str(base64HmacSha1), 0)
 		}
 		_InternetCloseHandle hConnect
 	}
-///*
+/*
 	#ifdef _debug
 		nid = ginfo(3)
 		screen 45,1200,700 //変数の内容表示

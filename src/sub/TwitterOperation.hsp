@@ -64,11 +64,23 @@ return
 		font "メイリオ", Scale(12)
 
 		pos 1,1
-		mesbox tweettext, Scale(180), Scale(209), 1
+		mesbox tweettext, Scale(180), Scale(189), 1
 		ttid = stat
 		tth = objinfo(ttid,2)
 
-		font "メイリオ",Scale(20)
+		objsize Scale(55), Scale(17)
+
+ 		pos Scale(5), Scale(193)
+ 		chkbox "#タグ", addHashtag
+ 		addHashtagCId = stat
+ 		addHashtagCh = objinfo_hwnd(addHashtagCId)
+
+ 		pos Scale(60), Scale(191)
+		input hashtag, Scale(120), Scale(19), 20
+ 		hashtagIId = stat
+ 		hashtagIh = objinfo_hwnd(hashtagIId)
+
+		font "メイリオ", Scale(20)
 
 		objsize Scale(140), Scale(32)
 		pos 0, Scale(210)
@@ -123,7 +135,7 @@ return
 		stackCounth = objinfo(stat, 2)
 		sendmsg stackCounth, $30, hFont
 
-		sendmsg ttCounth, $C , , strf("%3d ", 140-ttCount)
+		sendmsg ttCounth, $C , , strf("%3d ", 140-ttCount-htCount)
 		//----
 
 		pos 0, Scale(242)
@@ -496,8 +508,8 @@ return
 
 				gsel WND_TWITTER
 
-				color 200,200,200
-				boxf
+				color 200, 200, 200
+				boxf Scale(180), 0, Scale(448), Scale(201)
 				syscolor 8
 
 				//詳細表示部
@@ -621,18 +633,20 @@ return
 		}
 
 		if (mediaTweetSuccess) {
-
-			tweet tweettext, "", mediaids
+			tempStr = tweettext
+			if (addHashtag): tempStr+=" "+hashtag
+			tweet tempStr, "", mediaids
 			if (stat = 200){
 				repeat 4
 					picStack(cnt) = ""
 				loop
 
 				tweettext = ""
+				tempStr = ""
 				twiOrder = 0,0,0,0
 				twiOrderCount = 0
 				objprm ttid, tweettext
-				sendmsg ttCounth ,$C , , strf("%3d",140)
+				sendmsg ttCounth, $C , , strf("%3d ", 140-htCount)
 				sendmsg hProgress, $402, 0
 
 				logmessage = "ツイートを投稿しました"
@@ -701,7 +715,29 @@ return
 	if (lparam = tth){
 		if ( ((wparam >> 16)&0x0000FFFF) == 0x0400 ){
 			ttCount = GetWindowText(tth, varptr(tweetTextBuf), 512) - SendMessage( tth, EM_GETLINECOUNT, 0, 0)+1
-			sendmsg ttCounth ,$C , , strf("%3d",140-ttCount)
+			sendmsg ttCounth, $C , , strf("%3d ", 140-ttCount-htCount)
 		}
 	}
+
+	if (lparam == hashtagIh){
+		if ( ((wparam >> 16)&0x0000FFFF) == 0x0400 ){
+			if (addHashtag){
+				htCount = GetWindowText(hashtagIh, varptr(tweetTextBuf), 512)+1
+			} else {
+				htCount = 0
+			}
+			sendmsg ttCounth ,$C , , strf("%3d",140-ttCount-htCount)
+		}
+	}
+
+	if (lparam == addHashtagCh){
+		sendmsg addHashtagCh, $F2
+		addHashtag = stat & 0x01
+		if (addHashtag){
+			htCount = GetWindowText(hashtagIh, varptr(tweetTextBuf), 512)+1
+		} else {
+			htCount = 0
+		}
+		sendmsg ttCounth ,$C , , strf("%3d",140-ttCount-htCount)
+ 	}
 return
