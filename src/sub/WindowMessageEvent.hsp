@@ -686,6 +686,8 @@ return
 		twiPicFrameXR(cnt) = Scale(_twiPicFrameXR(cnt))
 		twiPicFrameYU(cnt) = Scale(_twiPicFrameYU(cnt))
 		twiPicFrameYD(cnt) = Scale(_twiPicFrameYD(cnt))
+		twiPicFrameW(cnt) = twiPicFrameXR(cnt) - twiPicFrameXL(cnt)
+		twiPicFrameH(cnt) = twiPicFrameYD(cnt) - twiPicFrameYU(cnt)
 	loop
 
 	gosub *DrawSupportWnd
