@@ -59,51 +59,50 @@ return
 		clrobj
 		objmode 2
 		title "ツイートウィンドウ"
-		width Scale(448), Scale(270)
+		width Scale(448), Scale(262)
 
 		font "メイリオ", Scale(12)
 
 		pos 1,1
-		mesbox tweettext, Scale(180), Scale(217), 1
+		mesbox tweettext, Scale(180), Scale(209), 1
 		ttid = stat
 		tth = objinfo(ttid,2)
 
 		font "メイリオ",Scale(20)
 
 		objsize Scale(140), Scale(32)
-		pos 0, Scale(218)
+		pos 0, Scale(210)
 		button gosub "ツイート",*tweet_
 		tweetbid = stat
 
 		objsize Scale(25), Scale(32)
-		pos Scale(184), Scale(218)
+		pos Scale(184), Scale(210)
 		button gosub "<",*picHistoryTop
 
 		objsize Scale(50), Scale(32)
-		pos Scale(209), Scale(218)
+		pos Scale(209), Scale(210)
 		button gosub "←",*picHistoryBack
 		picHistoryBackBId = stat
 		objsize Scale(50), Scale(32)
-		pos Scale(299), Scale(218)
+		pos Scale(299), Scale(210)
 		button gosub "→",*picHistoryNext
 		picHistoryNextBId = stat
 
 		objsize Scale(40), Scale(40)
-		pos Scale(259), Scale(210)
 		pos Scale(259), Scale(202)
 		button gosub "↑", *picHistoryAddStack
 
 		objsize Scale(32), Scale(40)
 
-		pos Scale(350), Scale(210)
+		pos Scale(350), Scale(202)
 		button gosub "撮", *TwiCapture
 		TwiWndCapBId = stat
 
-		pos Scale(382), Scale(210)
+		pos Scale(382), Scale(202)
 		button gosub "「」", *TwiCaptureSelect
 		twiCaptureSelectBId = stat
 
-		pos Scale(414), Scale(210)
+		pos Scale(414), Scale(202)
 		button gosub "［］", *TwiCaptureSelectNonCut
 		twiCaptureSelectNonCutBid = stat
 
@@ -114,12 +113,12 @@ return
 		mref BMSCR, 67
 		hFont = BMSCR.38
 
-		pos Scale(140), Scale(230)
+		pos Scale(140), Scale(222)
 		winobj "static", strf("%3d", 140-ttCount), , $50000002, Scale(44), Scale(20)
 		ttCounth = objinfo(stat, 2)
 		sendmsg ttCounth, $30, hFont
 
-		pos Scale(379), Scale(189)
+		pos Scale(379), Scale(181)
 		winobj "static", strf("None"), , $50001002, Scale(65), Scale(20)
 		stackCounth = objinfo(stat, 2)
 		sendmsg stackCounth, $30, hFont
@@ -127,7 +126,7 @@ return
 		sendmsg ttCounth, $C , , strf("%3d ", 140-ttCount)
 		//----
 
-		pos 0, Scale(250)
+		pos 0, Scale(242)
 		winobj "msctls_progress32", "", , $50000000, Scale(448), Scale(20)
 		hProgress = objinfo(stat, 2)
 		sendmsg hProgress ,PBM_SETRANGE,0,MAKELPARAM(0,100)
@@ -285,19 +284,33 @@ return
 				PicStack(i) = PicStack(i-1)
 				twiOrder(i) = twiOrder(i-1)
 				twiOrder(i-1) = 0
+
 				gsel WND_TWIBUF1+i
 				pos 0, 0: syscolor 15: boxf
-				gcopy WND_TWIBUF1+i-1, 0, 0, 2400, 1440
+				gcopy WND_TWIBUF1+i-1, 0, 0, BASE_SIZE_W*ZOOM_MAX, BASE_SIZE_H*ZOOM_MAX
 				twiBufPicSize(0, i) = twiBufPicSize(0, i-1), twiBufPicSize(1, i-1)
+
+				gsel WND_TWIBUF_TMB1+i
+				pos 0, 0: syscolor 15: boxf
+				gcopy WND_TWIBUF_TMB1+i-1, 0, 0, 260*ZOOM_MAX, 156*ZOOM_MAX
 			}
 			i--
 		loop
 		PicStack(0) = picHistory(picHistoryNum)
 
+		gsel WND_TEMP1
+		ImgF_PicloadEx PicStack(0)
+		ImgF_GetPicSize PicStack(0), twiBufPicSize(0, 0), twiBufPicSize(1, 0)
+
 		gsel WND_TWIBUF1
 		pos 0, 0: syscolor 15: boxf
-		ImgF_GetPicSize PicStack(0), twiBufPicSize(0, 0), twiBufPicSize(1, 0)
-		ImgF_PicloadEx PicStack(0), 1
+		gcopy WND_TEMP1, 0, 0, BASE_SIZE_W*ZOOM_MAX, BASE_SIZE_H*ZOOM_MAX
+
+		gsel WND_TWIBUF_TMB1
+		pos 0, 0: color 200,200,200: boxf
+		ImgP_CalcFitSize tDispW, tDispH, twiBufPicSize(0, 0), twiBufPicSize(1, 0), 260*ZOOM_MAX, 156*ZOOM_MAX
+		pos (260*ZOOM_MAX-tDispW)/2, 0
+		gzoom tDispW, tDispH, WND_TEMP1, 0, 0, twiBufPicSize(0, 0), twiBufPicSize(1, 0), 1
 
 		if twiOrder(0) = 0{
 			twiOrderCount++
@@ -486,10 +499,10 @@ return
 				color 200,200,200
 				boxf
 				syscolor 8
+
 				//詳細表示部
-				ImgP_CalcFitSize tDispW, tDispH, twiBufPicSize(0, rcFlg), twiBufPicSize(1, rcFlg), twiPicFrameW(4)-3, twiPicFrameH(4)-3
-				pos (twiPicFrameXL(4)+2)+((twiPicFrameW(4)-3)-tDispW)/2, twiPicFrameYU(4)+2
-				gzoom tDispW, tDispH, WND_TWIBUF1+rcFlg, 0, 0, twiBufPicSize(0, rcFlg), twiBufPicSize(1, rcFlg), 1
+				pos twiPicFrameXL(4)+2, twiPicFrameYU(4)+2
+				gzoom twiPicFrameW(4)-3, twiPicFrameH(4)-3, WND_TWIBUF_TMB1+rcFlg, 0, 0, 260*ZOOM_MAX, 156*ZOOM_MAX, 1
 
 				//サムネイル部
 				ImgP_CalcFitSize tDispW, tDispH, limit(twiBufPicSize(0, rcFlg), 0, Scale(BASE_SIZE_W)), limit(twiBufPicSize(1, rcFlg), 0, Scale(BASE_SIZE_H)), Scale(62), Scale(38)
