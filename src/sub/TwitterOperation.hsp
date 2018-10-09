@@ -90,6 +90,7 @@ return
 
 		objsize Scale(40), Scale(40)
 		pos Scale(259), Scale(210)
+		pos Scale(259), Scale(202)
 		button gosub "↑", *picHistoryAddStack
 
 		objsize Scale(32), Scale(40)

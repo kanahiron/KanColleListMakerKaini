@@ -69,7 +69,7 @@
 	_twiPicFrameXL = 185, 250, 315, 380, 184
 	_twiPicFrameXR = 248, 313, 378, 443, 444
 	_twiPicFrameYU = 3 , 3 , 3, 3, 45
-	_twiPicFrameYD = 42, 42, 42, 42, 209
+	_twiPicFrameYD = 42, 42, 42, 42, 201
 
 	repeat 5
 		twiPicFrameW(cnt) = _twiPicFrameXR(cnt) - _twiPicFrameXL(cnt)
