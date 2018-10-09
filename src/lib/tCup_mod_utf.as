@@ -588,8 +588,8 @@ return form_encode(str(base64HmacSha1), 0)
 
 	//ヘッダーをUTF-16LEに変換
 	RequestHeaderWideLength = MultiByteToWideChar( 65001, 0, varptr(RequestHeader), strlen(RequestHeader), 0, 0) //UTF-16文字列の 文 字 数
-	sdim RequestHeaderWide, (RequestHeaderWideLength*2)+4	//UTF-16文字列を入れるバッファを確保	
-	MultiByteToWideChar( 65001, 0, varptr(RequestHeader), strlen(RequestHeader), varptr(RequestHeaderWide), RequestHeaderWideLength+1) //UTF-8→UTF-16
+	sdim RequestHeaderWide, (RequestHeaderWideLength*2)+4	//UTF-16文字列を入れるバッファを確保
+	MultiByteToWideChar 65001, 0, varptr(RequestHeader), strlen(RequestHeader), varptr(RequestHeaderWide), RequestHeaderWideLength+1 //UTF-8→UTF-16
 
 	//HttpSendRequestEx用のINTERNET_BUFFERS構造体を作成
 	dim INTERNET_BUFFERS, 10
