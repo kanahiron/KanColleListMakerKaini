@@ -24,6 +24,13 @@
 			gosub *OnDropFiles
 			swbreak
 
+		case WM_TWEET
+			logmes "WM_TWEET"
+			if (tweetFlg)^1{
+				gosub *tweet_
+			}
+			swbreak
+
 	swend
 
 	oncmd 1
@@ -64,7 +71,7 @@ return
 		font "メイリオ", Scale(12)
 
 		pos 1,1
-		mesbox tweettext, Scale(180), Scale(189), 1
+		SetTweetEditBox@TweetEditBoxMod tweetText, Scale(180), Scale(189), WM_TWEET, 1
 		ttid = stat
 		tth = objinfo(ttid,2)
 
@@ -671,6 +678,7 @@ return
 		nidPop
 	}
 
+	objsel ttid
 	gosub *TweetWindow
 
 return

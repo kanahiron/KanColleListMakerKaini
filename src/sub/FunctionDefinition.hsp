@@ -236,6 +236,8 @@
 #const WM_DROPFILES		0x0233
 #const WM_DPICHANGED	0x02E0
 #const WM_HOTKEY		0x0312
+#const WM_APP           0x8000
+#const WM_TWEET         (WM_APP+1)
 
 //エディットコントロール周り
 #define EM_SETSEL		0x00B1

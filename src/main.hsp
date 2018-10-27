@@ -24,6 +24,7 @@
 #include "./lib/iniMod.as"
 #include "./lib/kmodule.as"
 #include "./lib/SaveFileDiag_mod.as"
+#include "./lib/TweetEditBoxMod.as"
 
 //どちらというとサブソースなモジュール
 #include "./mod/FFMPEGLog.as"
@@ -177,6 +178,7 @@
 		oncmd gosub *TweetWindowProc, WM_MOUSEMOVE
 		oncmd gosub *TweetWindowProc, WM_COMMAND
 		oncmd gosub *TweetWindowProc, WM_DROPFILES
+		oncmd gosub *TweetWindowProc, WM_TWEET
 
 	MakeFFMPEGLogWindow WND_FFMPEG
 
