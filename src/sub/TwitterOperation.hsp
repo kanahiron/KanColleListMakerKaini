@@ -44,11 +44,14 @@ return
 		gsel WND_TWITTER
 		gosub *TweetWindowDraw
 
+		objsel ttid
+
 		if (picHistoryCount == 0){
 			sendmsg stackCounth ,$C , , strf("None")
 		} else {
 			sendmsg stackCounth ,$C , , strf("%3d/%3d", picHistoryNum+1, picHistoryCount)
 		}
+
 		nidPop
 	}
 return
@@ -678,7 +681,6 @@ return
 		nidPop
 	}
 
-	objsel ttid
 	gosub *TweetWindow
 
 return
