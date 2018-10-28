@@ -54,12 +54,12 @@ return
 				// Ctrl+Enter
 				if ( (peek(kbState, VK_RETURN)&0x80) == 0x80 && (peek(kbState, VK_CONTROL)&0x80) == 0x80){
 					sendmsg hwnd@TweetEditBoxMod, messageID, 0, 0
-					return 1
+					return 0
 				}
 				// Ctrl+A
 				if ( (peek(kbState, 'A')&0x80) == 0x80 && (peek(kbState, VK_CONTROL)&0x80) == 0x80){
 					sendmsg hEditControl, EM_SETSEL, 0, -1
-					return 1
+					return 0
 				}
 			}
 		}
