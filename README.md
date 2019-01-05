@@ -1,7 +1,6 @@
 # 艦これ一覧めいかー改二 (KanColleListMakerKaini)
 
-艦これ一覧めいかー改二はWindows上で動作する艦隊これくしょん -艦これ-の補助をするツールです。
-
+艦これ一覧めいかー改二はWindows上で動作する艦隊これくしょん -艦これ-の補助をするツールです。  
 スクリーンショットの撮影、それを利用した艦隊、所持艦娘のまとめ画像の作成、Twitterへの投稿、動画キャプチャなどの機能を持っています。
 
 ## ダウンロード
@@ -10,9 +9,11 @@
 - https://ux.getuploader.com/KanColleListMakerKaini/
 
 ## コンパイル環境
-
 艦これ一覧めいかー改二をコンパイルするには次のソフトが必要です。
-- **[Hot Soup Processor](http://hsp.tv/)** (>=3.5beta6)
+- **[Hot Soup Processor](http://hsp.tv/)** (>=3.51)
+
+**Ver0.9からソースコードがUTF-8になりました。  
+UTF-8で記述されたソースは標準のスクリプトエディタでは編集/コンパイルができませんのでお気をつけ下さい。**
 
 ## ライセンス
 Copyright 2017 kanahiron
