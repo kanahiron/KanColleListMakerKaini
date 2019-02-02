@@ -1,5 +1,5 @@
 #ifndef mod_execconsole
-    #include "pipe2_utf.hsp"
+    #include "../lib/pipe2_utf.as"
 #endif
 
 // GetAudioDeviceMod
