@@ -118,6 +118,7 @@
 #enum WND_NOIMAGE
 #enum WND_PRINTWND
 #enum WND_KANCOLLEBG
+#enum WND_DL_FFMPEG
 
 //フォントサイズ(未使用)
 #const FONT_SIZE_GRID_STRING 25

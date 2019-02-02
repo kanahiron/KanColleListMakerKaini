@@ -27,6 +27,12 @@
 				}
 			}
 			sdim text
+
+			ffmpegDownloadServer = GetVal@jParseMod(jObj, "[0].ffmpegDownloadServer")
+	        ffmpegDownloadFilePath = GetVal@jParseMod(jObj, "[0].ffmpegDownloadFilePath")
+	        ffmpegDownloadSize = GetVal@jParseMod(jObj, "[0].ffmpegDownloadSize")
+	        ffmpegDownloadHash = GetVal@jParseMod(jObj, "[0].ffmpegDownloadHash")
+
 			delmod jObj
 		} else {
 			logmes "アップデートファイルの取得失敗"

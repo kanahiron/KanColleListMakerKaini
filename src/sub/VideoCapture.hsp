@@ -2,6 +2,12 @@
 
 	nidPush
 
+	if (ffmpegDir == ""){
+		//"ffmpegが設定されていません。\n設定画面を開きますか？"
+		gosub *ffmpegDownload
+		return
+	}
+
 	if (audioDeviceName == ""){
 		gsel WND_MAIN
 
@@ -207,7 +213,7 @@
 		if ( absf(diffTime)>2.0 ){
 			diffTime = 0.0
 		}
-		
+
 		logmes "vStartTime :"+vStartTime
 		logmes "aStartTime :"+aStartTime
 		logmes "diffTime   :"+diffTime+"s\n"
@@ -536,9 +542,9 @@ return
 
 	dialog "exe", 16, "ffmpeg.exe"
 	if (stat==1){
-		ffmpegdir = refstr
+		ffmpegDir = refstr
 	} else {
-		ffmpegdir = ""
+		ffmpegDir = ""
 	}
 
 	objprm ffmpegDirIId, ffmpegdir
@@ -551,5 +557,82 @@ return
 	sendmsg hAudioDeviceLB, LB_SETCURSEL, audioDeviceListNum, 0
 
 	nidPop
+
+return
+
+*ffmpegDownload
+
+	dialog "ビデオキャプチャにはffmpegが必要です\n自動でダウンロードしますか？\n※インターネット通信が発生します。", 2, "ビデオキャプチャ"
+	if (stat != 6){
+		return
+	}
+
+	//ハッシュ値が空、つまり情報が取得されていない場合はバージョンチェックを無理やり実行する
+	if (ffmpegDownloadHash == ""){
+		dialog "ffmpegのダウンロードにはバージョンチェックが必要です。実行してもよろしいですか？", 2, "確認"
+		if (stat==6){
+			autoVersionCheck = TRUE
+			gosub *VerCheck
+			autoVersionCheck = FALSE
+		} else {
+			return //ダウンロード情報が無いため戻る
+		}
+	}
+
+	dialog strf("ffmpegのダウンロードを開始します。\n%.1fMBの通信が発生しますがよろしいですか？", 1.0*ffmpegDownloadSize/1048576.0), 2, "確認"
+	if (stat == 6){
+
+		LogOut "ffmpegをダウンロードしています…"
+		//gsel WND_DL_FFMPEG, 2
+		download ffmpegDownloadServer, ffmpegDownloadFilePath, ffmpegzip//, hDLFfmpegProgress
+		if (stat == 200){
+	        ffmpegSavename = strf("ffmpeg_tmp%x%x%x.zip", rnd(4096), rnd(4096), rnd(4096))
+	        downloadedHash = GetHash_SHA1(ffmpegzip, ffmpegDownloadSize)
+	        //mes "ハッシュ値 :"+downloadedHash
+
+	        if (ffmpegDownloadHash != downloadedHash){
+	            dim ffmpegzip
+	            dialog "ダウンロードしたファイルが破損しているか、改ざんされています\nダウンロードに失敗しました"
+	            return
+	        }
+			bsave strf("%s\\%s",dir_exe,ffmpegSavename), ffmpegzip, ffmpegDownloadSize
+	        dim ffmpegzip
+
+			LogOut "zipを展開しています…"
+	        unzip strf("%s\\%s",dir_exe,ffmpegSavename)
+	        if (stat!=0){
+				exec dir_exe, 16
+	            dialog strf("ダウンロードしたファイルの解凍に失敗しました。\n%sを解凍し、中のffmpeg.exeをbinフォルダに移動させてください\n移動したら、OKを押してください。",ffmpegSavename)
+				if ( _exist(dir_exe+"\\bin\\ffmpeg.exe") <= 0){
+					dialog "binフォルダ内にffmpegが見つかりませんでした", 0, "ffmpegのダウンロードを中止します"
+					return
+				}
+				ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
+				mode = MODE_OPTION
+				optionMode = OPMODE_VIDEOCAPTURE
+				gosub *drawMainWindow
+				await
+				dialog "続いて、オーディオデバイスを選択してください。", 0, "ffmpegのダウンロードが完了しました"
+				return
+	        }
+
+	        tempStr = ffmpegDownloadFilePath
+	        strrep tempStr, "/", "\\"
+	        bcopy strf("%s\\%s\\bin\\ffmpeg.exe", strmid(ffmpegSavename, 0, strlen(ffmpegSavename)-4), getpath@getpathMod(tempStr, 9)), dir_exe+"\\bin\\ffmpeg.exe"
+
+			delete strf("%s\\%s",dir_exe,ffmpegSavename)
+	        deletefolder strf("%s\\%s", dir_exe, strmid(ffmpegSavename, 0, strlen(ffmpegSavename)-4))
+
+			ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
+
+			mode = MODE_OPTION
+			optionMode = OPMODE_VIDEOCAPTURE
+			gosub *drawMainWindow
+			await
+			dialog "ダウンロードが完了しました。続いて、オーディオデバイスを選択してください。", 0, "ffmpegのダウンロードが完了しました"
+		} else {
+			dialog "次の原因が考えられます\n配信サーバーのダウン\nインターネット未接続",0,"ffmpegのダウンロードに失敗しました"
+		}
+	}
 
 return

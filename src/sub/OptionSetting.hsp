@@ -142,8 +142,6 @@ return
 	nidPop
 return
 
-
-
 *yabumiupload
 
 	if (mode == MODE_SSCAP) {
