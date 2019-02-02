@@ -123,7 +123,7 @@
 							InternetReadFile hRequest, varptr(readBuffer), BLOCK_SIZE, varptr(readSize)
 
 							if hProgress: sendmsg hProgress, $402, int(readTotalSize/1024)
-							title@hsp strf("受信バイト数 %d/%dkByte %.2f%%", readTotalSize/1024, 53220, (100.0*readTotalSize/1024/53220))
+							//title@hsp strf("受信バイト数 %d/%dkByte %.2f%%", readTotalSize/1024, 53220, (100.0*readTotalSize/1024/53220))
 
 							if (readSize = 0) : break
 							if ((readTotalSize+readSize)>ResponseBodySize): memexpand responseBody, (readTotalSize+readSize+1): logmes "ResBody拡張 :"+(readTotalSize+readSize+1)
