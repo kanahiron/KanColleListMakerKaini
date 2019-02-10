@@ -12,29 +12,30 @@
     chkFlg = FALSE
     unzipAvailFlg = FALSE
 
-    #defcfunc unzipChk
-        logmes "unzipChk_start"
-        sdim buf, 256
-        sdim buf_, 256
-        pipe2exec "PowerShell $PSVersionTable.PSVersion.Major"
-        pid = stat
-        if(pid == -1): return FALSE
-        repeat 20
-            pipe2check pid
-            if (stat & 2): pipe2get pid, buf_: buf += buf_
-            if (stat == 0):break
-            wait 10
-        loop
-        pipe2term pid
-        pid = 0
+#defcfunc local unzipChk
+    logmes "unzipChk_start"
+    sdim buf, 256
+    sdim buf_, 256
+    pipe2exec "PowerShell $PSVersionTable.PSVersion.Major"
+    pid = stat
+    if(pid == -1): return FALSE
+    repeat 20
+        pipe2check pid
+        if (stat & 2): pipe2get pid, buf_: buf += buf_
+        if (stat == 0):break
+        wait 10
+    loop
+    pipe2term pid
+    pid = 0
 
-        PSMajorVer = int(buf)
-        dim buf
-        dim buf_
+    PSMajorVer = int(buf)
+    dim buf
+    dim buf_
 
 return (PSMajorVer>=5)
 
-#deffunc unzip str zippath
+#define global unzip(%1, %2="") unzip_@unzipMod %1, %2
+#deffunc local unzip_ str zippath, str destpath
 
     if (chkFlg==FALSE){
         chkFlg = TRUE
@@ -45,8 +46,12 @@ return (PSMajorVer>=5)
     }
 
     sdim buf, 1024*10
-    pipe2exec strf("PowerShell Expand-Archive -Path \"%s\" -Force", zippath)
-
+    cmd = strf("PowerShell Expand-Archive -Path \"%s\"" , zippath)
+    if (destpath!=""){
+        cmd += strf(" -DestinationPath \"%s\"" , destpath)
+    }
+    cmd += " -Force"
+    pipe2exec cmd
     pid = stat
     if(pid == -1): dim buf: return -2
     unzipFlg = 0
@@ -56,7 +61,7 @@ return (PSMajorVer>=5)
             unzipFlg = 1
             break
         }
-        wait 10
+        await 100
     loop
     pipe2term pid
 
