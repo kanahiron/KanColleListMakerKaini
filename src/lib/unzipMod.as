@@ -29,7 +29,6 @@
         pid = 0
 
         PSMajorVer = int(buf)
-        PSMajorVer = 9
         dim buf
         dim buf_
 
