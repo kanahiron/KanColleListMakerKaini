@@ -147,13 +147,13 @@ return
 	if (mode == MODE_SSCAP) {
 		gosub *ssCapture
 		if (successFlg){
-			execw yabumidir, "\""+(sssavedir +"\\"+ savename)+"\""
+			execw yabumidir, "\""+(ssSaveDir +"\\"+ nSaveName)+"\""
 		}
 		successFlg = FLASE
 	} else {
 		gosub *make
 		if (successFlg){
-			execw yabumidir, "\""+(listsavedir +"\\"+ savename)+"\""
+			execw yabumidir, "\""+(listsavedir +"\\"+ nSaveName)+"\""
 		}
 		successFlg = FLASE
 	}
