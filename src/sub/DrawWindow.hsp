@@ -854,133 +854,159 @@
 
 		if (optionMode == OPMODE_VIDEOCAPTURE){
 
-			gosub *VideoCapSetting
+			if (ffmpegdir == ""){
 
-			objsize Scale(350), scale20
-			pos scale5, mesy
-			chkbox "動画キャプチャを有効にする", enableVideoCap: mesy += scale20
-			pos scale5, mesy
-			chkbox "録画時のCPU負荷を軽減した動画キャプチャ", lateEncode: mesy += scale20
-			pos scale5, mesy
-			chkbox "マウスカーソルを非表示にする", videoCapHideCursor: mesy += scale20
-			pos scale5, mesy
-			chkbox "キャプチャ中に取り込み範囲枠を表示する", videoCapShowFrame: mesy += scale20
-			pos scale5, mesy
-			chkbox "ffmpegのログウィンドウを表示する", enableFFMPEGLogWindow: mesy += scale20
-			pos scale5, mesy
-			chkbox "中止時に確認のダイアログを出す", confirmCancelVideoCapture: mesy += scale20
+				mesy += Scale(5)
+				pos scale5, mesy
+				mes "動画キャプチャを利用するにはffmpegが必要です。": mesy+=ginfo(15)
+				mes "ffmpegを指定するか、": mesy+=ginfo(15)
+				mes "「ダウンロード」ボタンを押してください。": mesy+=ginfo(15)
 
-			objsize Scale(174), scale20
-			pos scale5, mesy+Scale(3)
-			chkbox "動画キャプチャ時間の制限", enableVideoCapLimit
+				mesy += Scale(4)
 
-			pos Scale(222), mesy
-			mes ":"
-			pos Scale(180), mesy
-			input videoCapLimitTimeM, Scale(40),  Scale(24), 2
-			ChgWndowStyle objinfo_hwnd(stat), 0x02
-			pos Scale(230), mesy
-			input videoCapLimitTimeS, Scale(40),  Scale(24), 2
-			ChgWndowStyle objinfo_hwnd(stat), 0x02
-			pos Scale(275), mesy+Scale(3)
-			mes "[ 分]:[ 秒]"
-
-			mesy += Scale(24)
-
-			pos Scale(5), mesy+Scale(2)
-			mes "フレームレート(5～60fps)"
-			pos Scale(222), mesy+Scale(2)
-			mes "fps"
-			pos Scale(250), mesy+Scale(2)
-			mes "標準: 20fps"
-			pos Scale(180), mesy
-			input videoCapFR, Scale(40),  Scale(24), 2: mesy += Scale(24)
-			videoCapFRIId = stat
-			ChgWndowStyle objinfo_hwnd(stat), 0x02
+				objsize Scale(175), Scale(30)
+				pos 0, mesy
+				button gosub "ffmpeg.exeを指定する", *openDialogffmpeg//: mesy += scale20
+				pos Scale(175), mesy
+				button gosub "ダウンロードする", *ffmpegDownload: mesy += Scale(30)
+				pos scale5, mesy
+				mes "ダウンロード進捗"
+				pos Scale(120), mesy
+				winobj "msctls_progress32", "", , $50000000, Scale(230), Scale(20)
+				hDLFfmpegProgress = objinfo(stat, 2)
+				sendmsg hDLFfmpegProgress, PBM_SETRANGE, 0, MAKELPARAM(0,120)
+				mesy += Scale(20)
 
 
-			pos Scale(5), mesy+Scale(2)
-			mes "x264の品質(crf=16～30)"
-			pos Scale(250), mesy+Scale(2)
-			mes "標準: crf=22"
-			pos Scale(180), mesy
-			input videoCapCRF, Scale(40),  Scale(24), 2: mesy += Scale(24)
-			videoCapCRFIId = stat
-			ChgWndowStyle objinfo_hwnd(stat), 0x02
+			} else {
 
-			pos Scale(5), mesy+Scale(3)
-			mes "x264のプリセット"
-			pos Scale(250), mesy+Scale(3)
-			mes "標準: medium"
-			pos Scale(140), mesy
-			objsize Scale(80), Scale(25)
-			combox x264presetNum,, "ultrafast\nveryfast\nfaster\nfast\nmedium\nslow\nslower\nveryslow"
-			mesy += ComBoxH
+				gosub *VideoCapSetting
 
-			objsize Scale(350), Scale(50)
-			pos scale5, mesy
-			mes "使用するオーディオデバイス": mesy += scale20
-			pos 0, mesy
-			listbox audioDeviceListNum, 30, audioDeviceList
-			audioDeviceLBId = stat
-			hAudioDeviceLB = objinfo_hwnd(audioDeviceLBId)
-			await: GetClientRect hAudioDeviceLB, varptr(rect)
-			mesy += rect(3)+scale5
+				objsize Scale(350), scale20
+				pos scale5, mesy
+				chkbox "動画キャプチャを有効にする", enableVideoCap: mesy += scale20
+				pos scale5, mesy
+				chkbox "録画時のCPU負荷を軽減した動画キャプチャ", lateEncode: mesy += scale20
+				pos scale5, mesy
+				chkbox "マウスカーソルを非表示にする", videoCapHideCursor: mesy += scale20
+				pos scale5, mesy
+				chkbox "キャプチャ中に取り込み範囲枠を表示する", videoCapShowFrame: mesy += scale20
+				pos scale5, mesy
+				chkbox "ffmpegのログウィンドウを表示する", enableFFMPEGLogWindow: mesy += scale20
+				pos scale5, mesy
+				chkbox "中止時に確認のダイアログを出す", confirmCancelVideoCapture: mesy += scale20
 
+				objsize Scale(174), scale20
+				pos scale5, mesy+Scale(3)
+				chkbox "動画キャプチャ時間の制限", enableVideoCapLimit
 
-			pos scale5, mesy
-			mes "音声": mesy += scale20
+				pos Scale(222), mesy
+				mes ":"
+				pos Scale(180), mesy
+				input videoCapLimitTimeM, Scale(40),  Scale(24), 2
+				ChgWndowStyle objinfo_hwnd(stat), 0x02
+				pos Scale(230), mesy
+				input videoCapLimitTimeS, Scale(40),  Scale(24), 2
+				ChgWndowStyle objinfo_hwnd(stat), 0x02
+				pos Scale(275), mesy+Scale(3)
+				mes "[ 分]:[ 秒]"
 
-			pos Scale(25+5), mesy+Scale5
-			mes "音量の調節"
+				mesy += Scale(24)
 
-			pos Scale(100), mesy
-			winobj "msctls_trackbar32", "",, $50000000 | $1, Scale(175), Scale(30)
-			hVolumeTrackbar = objinfo(stat, 2)
-
-			sendmsg hVolumeTrackbar, TBM_SETRANGE, 1, (250<<16) | 25
-			sendmsg hVolumeTrackbar, TBM_SETPAGESIZE, 0, 25
-			sendmsg hVolumeTrackbar, TBM_SETTICFREQ, 50, 0
-			sendmsg hVolumeTrackbar, TBM_SETPOS, 1, volume
-
-			pos Scale(300), mesy
-			winobj "static", strf("%d%% ", volume),, $50000002, Scale(40), Scale(30): mesy += Scale(30)
-			hVolumeTrackBarScale = objinfo(stat, 2)
-			sendmsg hVolumeTrackBarScale, $30, hFontMain
+				pos Scale(5), mesy+Scale(2)
+				mes "フレームレート(5～60fps)"
+				pos Scale(222), mesy+Scale(2)
+				mes "fps"
+				pos Scale(250), mesy+Scale(2)
+				mes "標準: 20fps"
+				pos Scale(180), mesy
+				input videoCapFR, Scale(40),  Scale(24), 2: mesy += Scale(24)
+				videoCapFRIId = stat
+				ChgWndowStyle objinfo_hwnd(stat), 0x02
 
 
-			objsize Scale(70), Scale(20)
-			pos Scale(25+5), mesy
-			chkbox "標準化", audioNormalize: mesy += scale20
+				pos Scale(5), mesy+Scale(2)
+				mes "x264の品質(crf=16～30)"
+				pos Scale(250), mesy+Scale(2)
+				mes "標準: crf=22"
+				pos Scale(180), mesy
+				input videoCapCRF, Scale(40),  Scale(24), 2: mesy += Scale(24)
+				videoCapCRFIId = stat
+				ChgWndowStyle objinfo_hwnd(stat), 0x02
+
+				pos Scale(5), mesy+Scale(3)
+				mes "x264のプリセット"
+				pos Scale(250), mesy+Scale(3)
+				mes "標準: medium"
+				pos Scale(140), mesy
+				objsize Scale(80), Scale(25)
+				combox x264presetNum,, "ultrafast\nveryfast\nfaster\nfast\nmedium\nslow\nslower\nveryslow"
+				mesy += ComBoxH
+
+				objsize Scale(350), Scale(50)
+				pos scale5, mesy
+				mes "使用するオーディオデバイス": mesy += scale20
+				pos 0, mesy
+				listbox audioDeviceListNum, 30, audioDeviceList
+				audioDeviceLBId = stat
+				hAudioDeviceLB = objinfo_hwnd(audioDeviceLBId)
+				await: GetClientRect hAudioDeviceLB, varptr(rect)
+				mesy += rect(3)+scale5
 
 
-			objsize Scale(150), scale20
-			pos Scale(14), mesy
-			mes "ffmpeg.exeの場所"
-			pos Scale(200), mesy
-			button gosub "変更", *openDialogffmpeg: mesy += scale20
-			pos 0, mesy
-			mesbox ffmpegDir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
-			ffmpegDirIId = stat
-			ShowScrollBar objinfo_hwnd(ffmpegDirIId), SB_VERT, FALSE
+				pos scale5, mesy
+				mes "音声": mesy += scale20
 
-			pos Scale(14), mesy
-			mes "動画キャプチャ保存先"
-			pos Scale(200), mesy
-			button gosub "動画保存先変更", *videoCapSaveDialog: mesy += scale20
-			pos 0, mesy
-			mesbox videoCapSaveDir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
-			videoCapSaveDirIId = stat
-			ShowScrollBar objinfo_hwnd(videoCapSaveDirIId), SB_VERT, FALSE
+				pos Scale(25+5), mesy+Scale5
+				mes "音量の調節"
 
-			pos Scale(14), mesy+1
-			mes "動画キャプチャ保存名"
-			pos Scale(200), mesy
-			button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
-			pos 0, mesy
-			mesbox saveName(SN_VIDEO), Scale(350), Scale(45), 5, 259: mesy += Scale(45)
-			saveNameVideoCaptureIId = stat
-			ShowScrollBar objinfo_hwnd(saveNameVideoCaptureIId), SB_VERT, FALSE
+				pos Scale(100), mesy
+				winobj "msctls_trackbar32", "",, $50000000 | $1, Scale(175), Scale(30)
+				hVolumeTrackbar = objinfo(stat, 2)
+
+				sendmsg hVolumeTrackbar, TBM_SETRANGE, 1, (250<<16) | 25
+				sendmsg hVolumeTrackbar, TBM_SETPAGESIZE, 0, 25
+				sendmsg hVolumeTrackbar, TBM_SETTICFREQ, 50, 0
+				sendmsg hVolumeTrackbar, TBM_SETPOS, 1, volume
+
+				pos Scale(300), mesy
+				winobj "static", strf("%d%% ", volume),, $50000002, Scale(40), Scale(30): mesy += Scale(30)
+				hVolumeTrackBarScale = objinfo(stat, 2)
+				sendmsg hVolumeTrackBarScale, $30, hFontMain
+
+
+				objsize Scale(70), Scale(20)
+				pos Scale(25+5), mesy
+				chkbox "標準化", audioNormalize: mesy += scale20
+
+				objsize Scale(150), scale20
+				pos Scale(14), mesy
+				mes "ffmpeg.exeの場所"
+				pos Scale(200), mesy
+				button gosub "変更", *openDialogffmpeg: mesy += scale20
+				pos 0, mesy
+				mesbox ffmpegDir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
+				ffmpegDirIId = stat
+				ShowScrollBar objinfo_hwnd(ffmpegDirIId), SB_VERT, FALSE
+
+				pos Scale(14), mesy
+				mes "動画キャプチャ保存先"
+				pos Scale(200), mesy
+				button gosub "動画保存先変更", *videoCapSaveDialog: mesy += scale20
+				pos 0, mesy
+				mesbox videoCapSaveDir, Scale(350), Scale(45), 4, 259 :mesy += Scale(45)
+				videoCapSaveDirIId = stat
+				ShowScrollBar objinfo_hwnd(videoCapSaveDirIId), SB_VERT, FALSE
+
+				pos Scale(14), mesy+1
+				mes "動画キャプチャ保存名"
+				pos Scale(200), mesy
+				button gosub "デフォルトに戻す", *LoadDefaultSaveName: mesy += scale20
+				pos 0, mesy
+				mesbox saveName(SN_VIDEO), Scale(350), Scale(45), 5, 259: mesy += Scale(45)
+				saveNameVideoCaptureIId = stat
+				ShowScrollBar objinfo_hwnd(saveNameVideoCaptureIId), SB_VERT, FALSE
+			}
 		}
 
 		if (optionMode == OPMODE_TWITTER){

@@ -3,8 +3,12 @@
 	nidPush
 
 	if (ffmpegDir == ""){
-		//"ffmpegが設定されていません。\n設定画面を開きますか？"
-		gosub *ffmpegDownload
+		dialog "動画キャプチャには事前に設定が必要です。\n設定画面に移動しますか？", 2, "ffmpegが設定されていません"
+		if (stat == 6){
+			mode = MODE_OPTION
+			optionMode = OPMODE_VIDEOCAPTURE
+			gosub *drawMainWindow
+		}
 		return
 	}
 
@@ -92,7 +96,7 @@
 			//負荷軽減動画キャプチャ
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
 			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, videoCapX, videoCapY)
-			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, 12, "ultrafast", videoFileName)
+			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, 16, "ultrafast", videoFileName)
 		} else {
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
 			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, videoCapX, videoCapY)
@@ -547,14 +551,20 @@ return
 		ffmpegDir = ""
 	}
 
-	objprm ffmpegDirIId, ffmpegdir
-
+	//成功なら0が帰る
 	GetAudioDevice ffmpegdir, audioDeviceList
+	if (stat == 0){
+
+		audioDeviceList += "音声なし"
+		gosub *drawMainWindow
+
+	} else {
+
+		ffmpegdir = ""
+	}
+
 	audioDeviceList += "音声なし"
-	objprm audioDeviceLBId, audioDeviceList
-	audioDeviceListNum = -1
-	audioDeviceName = ""
-	sendmsg hAudioDeviceLB, LB_SETCURSEL, audioDeviceListNum, 0
+	gosub *drawMainWindow
 
 	nidPop
 
@@ -562,77 +572,80 @@ return
 
 *ffmpegDownload
 
-	dialog "ビデオキャプチャにはffmpegが必要です\n自動でダウンロードしますか？\n※インターネット通信が発生します。", 2, "ビデオキャプチャ"
-	if (stat != 6){
-		return
-	}
+	nidPush
+	gsel WMD_MAIN, 1
 
 	//ハッシュ値が空、つまり情報が取得されていない場合はバージョンチェックを無理やり実行する
 	if (ffmpegDownloadHash == ""){
-		dialog "ffmpegのダウンロードにはバージョンチェックが必要です。実行してもよろしいですか？", 2, "確認"
-		if (stat==6){
-			autoVersionCheck = TRUE
-			gosub *VerCheck
-			autoVersionCheck = FALSE
-		} else {
-			return //ダウンロード情報が無いため戻る
-		}
+		//ffmpegDownloadHashがからということは自動バージョンチェックが無効になっているということ…
+		autoVersionCheck = TRUE
+		gosub *VerCheck
+		autoVersionCheck = FALSE
 	}
 
-	dialog strf("ffmpegのダウンロードを開始します。\n%.1fMBの通信が発生しますがよろしいですか？", 1.0*ffmpegDownloadSize/1048576.0), 2, "確認"
-	if (stat == 6){
-
-		LogOut "ffmpegをダウンロードしています…"
-		//gsel WND_DL_FFMPEG, 2
-		download ffmpegDownloadServer, ffmpegDownloadFilePath, ffmpegzip//, hDLFfmpegProgress
-		if (stat == 200){
-	        ffmpegSavename = strf("ffmpeg_tmp%x%x%x.zip", rnd(4096), rnd(4096), rnd(4096))
-	        downloadedHash = GetHash_SHA1(ffmpegzip, ffmpegDownloadSize)
-	        //mes "ハッシュ値 :"+downloadedHash
-
-	        if (ffmpegDownloadHash != downloadedHash){
-	            dim ffmpegzip
-	            dialog "ダウンロードしたファイルが破損しているか、改ざんされています\nダウンロードに失敗しました"
-	            return
-	        }
-			bsave strf("%s\\%s",dir_exe,ffmpegSavename), ffmpegzip, ffmpegDownloadSize
-	        dim ffmpegzip
-
-			LogOut "zipを展開しています…"
-	        unzip strf("%s\\%s",dir_exe,ffmpegSavename)
-	        if (stat!=0){
-				exec dir_exe, 16
-	            dialog strf("ダウンロードしたファイルの解凍に失敗しました。\n%sを解凍し、中のffmpeg.exeをbinフォルダに移動させてください\n移動したら、OKを押してください。",ffmpegSavename)
-				if ( _exist(dir_exe+"\\bin\\ffmpeg.exe") <= 0){
-					dialog "binフォルダ内にffmpegが見つかりませんでした", 0, "ffmpegのダウンロードを中止します"
-					return
-				}
-				ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
-				mode = MODE_OPTION
-				optionMode = OPMODE_VIDEOCAPTURE
-				gosub *drawMainWindow
-				await
-				dialog "続いて、オーディオデバイスを選択してください。", 0, "ffmpegのダウンロードが完了しました"
-				return
-	        }
-
-	        tempStr = ffmpegDownloadFilePath
-	        strrep tempStr, "/", "\\"
-	        bcopy strf("%s\\%s\\bin\\ffmpeg.exe", strmid(ffmpegSavename, 0, strlen(ffmpegSavename)-4), getpath@getpathMod(tempStr, 9)), dir_exe+"\\bin\\ffmpeg.exe"
-
-			delete strf("%s\\%s",dir_exe,ffmpegSavename)
-	        deletefolder strf("%s\\%s", dir_exe, strmid(ffmpegSavename, 0, strlen(ffmpegSavename)-4))
-
-			ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
-
-			mode = MODE_OPTION
-			optionMode = OPMODE_VIDEOCAPTURE
-			gosub *drawMainWindow
-			await
-			dialog "ダウンロードが完了しました。続いて、オーディオデバイスを選択してください。", 0, "ffmpegのダウンロードが完了しました"
-		} else {
-			dialog "次の原因が考えられます\n配信サーバーのダウン\nインターネット未接続",0,"ffmpegのダウンロードに失敗しました"
-		}
+	dialog strf("%.1fMBの通信が発生しますがよろしいですか？", 1.0*ffmpegDownloadSize/1048576.0), 2, "ffmpegのダウンロードを開始します"
+	if (stat != 6){
+		nidPop
+		return
 	}
 
+	sendmsg hDLFfmpegProgress, PBM_SETRANGE, 0, MAKELPARAM(0,int(1.2*ffmpegDownloadSize/4096))
+	download ffmpegDownloadServer, ffmpegDownloadFilePath, ffmpegzip, hDLFfmpegProgress
+	if (stat != 200){
+		dialog "次の原因が考えられます\n配信サーバーのダウン\nインターネット未接続",0,"ダウンロードに失敗しました"
+		nidPop
+		return
+	}
+
+	downloadedHash = GetHash_SHA1(ffmpegzip, ffmpegDownloadSize)
+	logmes "downloadedHash "+downloadedHash
+
+	if (ffmpegDownloadHash != downloadedHash){
+	    dim ffmpegzip
+	    dialog "ダウンロードしたファイルが破損しています\nダウンロードに失敗しました"
+		nidPop
+	    return
+	}
+
+	ffmpegSavename = strf("ffmpeg_tmp%x%x%x.zip", rnd(4096), rnd(4096), rnd(4096))
+	bsave strf("%s\\%s",dir_exe,ffmpegSavename), ffmpegzip, ffmpegDownloadSize
+    dim ffmpegzip
+
+    unzip strf("%s\\%s",dir_exe,ffmpegSavename), dir_exe
+    if (stat!=0){
+		exec dir_exe, 16
+        dialog strf("%sを解凍し、中のffmpeg.exeを一覧めいかー改二のフォルダにあるbinフォルダに移動させてください\n移動したら、OKを押してください。",ffmpegSavename), 0, "ダウンロードしたファイルの解凍に失敗しました"
+		if ( _exist(dir_exe+"\\bin\\ffmpeg.exe") <= 0){
+			dialog "binフォルダ内にffmpegが見つかりませんでした", 0, "ダウンロードを中止します"
+			nidPop
+			return
+		}
+		ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
+		mode = MODE_OPTION
+		optionMode = OPMODE_VIDEOCAPTURE
+		gosub *drawMainWindow
+		await
+		dialog "続いて、オーディオデバイスを選択してください。", 0, "ダウンロードが完了しました！"
+		nidPop
+		return
+    }
+	sendmsg hProgress, $402, int(1.1*ffmpegDownloadSize/4096)
+
+    tempStr = ffmpegDownloadFilePath
+    strrep tempStr, "/", "\\"
+    bcopy strf("%s\\%s\\bin\\ffmpeg.exe", dir_exe, getpath@getpathMod(tempStr, 9)), dir_exe+"\\bin\\ffmpeg.exe"
+
+	delete strf("%s\\%s", dir_exe, ffmpegSavename)
+    deletefolder strf("%s\\%s", dir_exe, getpath@getpathMod(tempStr, 9))
+
+	ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
+	sendmsg hProgress, $402, int(1.2*ffmpegDownloadSize/4096)
+
+	mode = MODE_OPTION
+	optionMode = OPMODE_VIDEOCAPTURE
+	gosub *drawMainWindow
+	await
+	dialog "続いて、オーディオデバイスを選択してください。", 0, "ダウンロードが完了しました！"
+
+	nidPop
 return

@@ -223,14 +223,6 @@
 	buffer WND_KANCOLLEBG, BASE_SIZE_W, BASE_SIZE_H
 		MakeBackgroundImage WND_KANCOLLEBG, WND_TEMP1
 
-/*
-	screen WND_DL_FFMPEG, 480, 300
-	font "メイリオ", 13
-	syscolor 15: boxf: color 8
-	mes "ダウンロードしています…"
-	winobj "msctls_progress32", "", , $50000000, 480, 30
-	hDLFfmpegProgress = objinfo(stat, 2)
-*/
 	gsel WND_MAIN
 
 	gosub *loadHistory
