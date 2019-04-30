@@ -12,8 +12,7 @@
     chkFlg = FALSE
     unzipAvailFlg = FALSE
 
-#defcfunc local unzipChk
-    logmes "unzipChk_start"
+#defcfunc local unzipChk local buf, local buf_, local pid
     sdim buf, 256
     sdim buf_, 256
     pipe2exec "PowerShell $PSVersionTable.PSVersion.Major"
@@ -26,16 +25,11 @@
         wait 10
     loop
     pipe2term pid
-    pid = 0
-
     PSMajorVer = int(buf)
-    dim buf
-    dim buf_
-
 return (PSMajorVer>=5)
 
 #define global unzip(%1, %2="") unzip_@unzipMod %1, %2
-#deffunc local unzip_ str zippath, str destpath
+#deffunc local unzip_ str zippath, str destpath, local buf, local pid, local cmd
 
     if (chkFlg==FALSE){
         chkFlg = TRUE
@@ -53,7 +47,7 @@ return (PSMajorVer>=5)
     cmd += " -Force"
     pipe2exec cmd
     pid = stat
-    if(pid == -1): dim buf: return -2
+    if(pid == -1): return -2
     unzipFlg = 0
     repeat 100
         pipe2check pid
@@ -65,10 +59,7 @@ return (PSMajorVer>=5)
     loop
     pipe2term pid
 
-    if (unzipFlg==0){
-        dim buf
-        return -2
-    }
+    if (unzipFlg==0): return -2
 return 0
 
 #global
