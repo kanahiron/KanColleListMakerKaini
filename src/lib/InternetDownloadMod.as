@@ -38,7 +38,7 @@
 #define HTTP_QUERY_STATUS_CODE 19
 #define HTTP_QUERY_FLAG_NUMBER 0x20000000
 
-#deffunc download str serverName, str apiUrl, var responseBody, int hProgress
+#deffunc download str serverName, str apiUrl, var responseBody, int hProgress, local RequestHeader, local RequestHeaderWide, local readBuffer
 
 	sdim RequestHeader
 	server = server_
@@ -122,7 +122,7 @@
 						repeat
 							InternetReadFile hRequest, varptr(readBuffer), BLOCK_SIZE, varptr(readSize)
 
-							if hProgress: sendmsg hProgress, $402, int(readTotalSize/1024)
+							if hProgress: sendmsg hProgress, $402, int(readTotalSize/4096) //4kByteで1メモリを想定
 							//title@hsp strf("受信バイト数 %d/%dkByte %.2f%%", readTotalSize/1024, 53220, (100.0*readTotalSize/1024/53220))
 
 							if (readSize = 0) : break
