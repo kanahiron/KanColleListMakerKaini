@@ -257,7 +257,7 @@
 	if ( CheckPosRange(ssCap) && ( ssCap(2)-ssCap(0) != 0 || ssCap(3)-ssCap(1) != 0) ){
 		MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), ssCap(0), ssCap(1), ssCap(2)-SSCap(0), ssCap(3)-ssCap(1), 1
 		gosub *CaptureMethodDecide
-		if (positionType != PT_ABSOLUTE || (autoSearch^1)){
+		if (positionType != PT_ABSOLUTE || (autoSearch^1) || manualPos){
 			ShowWindow WND_INFO(WND_OVERLAY, WI_HANDLE), SW_RESTORE
 			dialog "前回起動時の座標を取得しました。\n復元しますか？", 2, "確認"
 			dialogStat = stat
