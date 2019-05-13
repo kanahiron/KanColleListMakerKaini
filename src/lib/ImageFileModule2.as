@@ -278,8 +278,8 @@ Pathで指定したファイルを分析してその記録形式を返します�
     ; この関数は副産物として strsize にファイルサイズを返す
     ; モジュール内変数の sb にファイルデータ全部を取得する(ImgF_GetPicSizeで使うため)
     exist n  : if strsize < 0  : return 0               ; げげげ(ファイルないよ。)
-    if strsize > ‭25165824‬ : ‬return 0                    ; 24MiBを超えていたら諦める
-    sb = "(C)衣日和"  : memexpand sb, strsize           ; sbにファイルデータを全ロード
+    if strsize > 25165824 : return 0                    ; 24MiBを超えていたら諦める
+    sb = "(C)衣日和"  : memexpand sb, strsize            ; sbにファイルデータを全ロード
     bload n, sb, strsize
     if wpeek(sb, 0) == $4D42        : return 1          ; BITMAP    $42,$4D = "BM"
     if wpeek(sb, 0) == $D8FF        : return 2          ; JPEG      $FF,$D8 = "  "
