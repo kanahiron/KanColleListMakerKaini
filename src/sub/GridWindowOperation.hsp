@@ -21,10 +21,10 @@
 				//mxy_ はドラッグ開始の座標
 				mxy(0) = limit(_mousex/cellsize(0), 0, cellnum(0)) , limit(_mousey/cellsize(1), 0, cellnum(1))
 
-				if ( (listMode != LISTMODE_FLEET) and (cliFlag == FALSE) ){
+				if ( (listMode!=LISTMODE_FLEET) and (cliFlag==FALSE) and (bufIDPos(mxy(0),mxy(1))==0) ){
 					if (_mousey > (cellsize(1)-10)){
-						temph = (_mousey\cellsize(1)+10)\cellsize(1)
-						if ( (0<=temph and temph <= 20) and bufIDPos(mxy(0),mxy(1))==0 ){
+						temph = ((_mousey+cellsize(1))-(cellsize(1)-10)) \ cellsize(1)
+						if ( (0<=temph) and (temph<=20) ){
 							listModeHNum = (_mousey+10)/cellsize(1)
 							gosub *ChangeListModeHNum
 							gosub *draw
@@ -67,6 +67,11 @@
 					pos 0, 0
 					gzoom cellsize(0), cellsize(1), bufIDPos(mxy_(0), mxy_(1)), cutRange(0), cutRange(1), cutRange(2), cutRange(3), 1
 					gsel WND_GRID, 0
+				}
+				//クリックされていなかったら無駄にループが回るのを防ぐ
+				if (cliFlag == 0){
+					//強制的に右クリックを離した扱いにする
+					sti = 0
 				}
 			}
 
