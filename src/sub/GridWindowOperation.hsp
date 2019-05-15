@@ -5,26 +5,23 @@
 		//縮小処理用
 		buffer WND_TEMP1, maxScrSize(0), maxScrSize(1)
 			SET_WND_INFO
-
 		//背景コピー用
 		buffer WND_TEMP2, maxScrSize(0), maxScrSize(1)
 			SET_WND_INFO
-
 		gsel WND_GRID
 
 		dragdata = 0
 		repeat
 
 			stick sti, 256
-
 			//左クリック用の処理ここから-----
 			if (sti == 256){
 
 				if ( (listMode != LISTMODE_FLEET) and (cliFlag == FALSE) ){
-					if (mousey > (cellsize(1)-10)){
-						temph = (mousey\cellsize(1)+10)\cellsize(1)
+					if (_mousey > (cellsize(1)-10)){
+						temph = (_mousey\cellsize(1)+10)\cellsize(1)
 						if ( (0 <= temph) and (temph <= 20) ){
-							listModeHNum = (mousey+10)/cellsize(1)
+							listModeHNum = (_mousey+10)/cellsize(1)
 							gosub *ChangeListModeHNum
 							gosub *draw
 							sti = 0
@@ -44,7 +41,7 @@
 						mxy_(0) = mxy(0), mxy(1)
 						mxyi(0) = mxy(0)-selRange(CR_X), mxy(1)-selRange(CR_Y)
 						mxy_(0) = mxy_(0)-mxyi(0), mxy_(1)-mxyi(1)
-						mindexxy(0) = (mousex-(mxy_(0)*(cellsize(0)-1))), (mousey-(mxy_(1)*(cellsize(1)-1)))
+						mindexxy(0) = (_mousex-(mxy_(0)*(cellsize(0)-1))), (_mousey-(mxy_(1)*(cellsize(1)-1)))
 
 						gsel WND_TEMP2
 						pos 0, 0
@@ -62,7 +59,7 @@
 				if ( bufIDPos(mxy(0), mxy(1) )>=100 && cliflag==0 && (MultiSelectedFlg^1)){
 					cliflag = 1
 					mxy_(0) = mxy(0), mxy(1)
-					mindexxy(0) = (mousex-(mxy_(0)*(cellsize(0)-1))), (mousey-(mxy_(1)*(cellsize(1)-1)))
+					mindexxy(0) = (_mousex-(mxy_(0)*(cellsize(0)-1))), (_mousey-(mxy_(1)*(cellsize(1)-1)))
 					gsel WND_TEMP2
 					pos 0, 0
 					gcopy 1, 0, 0, maxScrSize(0), maxScrSize(1)
@@ -78,7 +75,7 @@
 				pos 0, 0
 				gcopy WND_TEMP2, 0, 0, maxScrSize(0), maxScrSize(1)
 				gmode 4, cellsize(0), cellsize(1), 100
-				pos mousex-mindexxy(0), mousey-mindexxy(1)
+				pos _mousex-mindexxy(0), _mousey-mindexxy(1)
 
 				if (MultiSelectedFlg^1){
 					gcopy WND_TEMP1, 0, 0, cellsize(0), cellsize(1)
@@ -159,7 +156,7 @@ return
 		if (sti == 512){
 			if (RCliFlag == FALSE){
 				staMPos = ginfo_mx, ginfo_my
-				staMPosWnd = mousex, mousey
+				staMPosWnd = _mousex, _mousey
 				MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), 0, 0, 0, 0, 1
 				gsel WND_OVERLAY, 2
 				gsel WND_GRID
@@ -169,12 +166,12 @@ return
 
 				dragW = abs(staMPos(0)-ginfo_mx)
 				dragH = abs(staMPos(1)-ginfo_my)
-				dragWnd = abs(staMPosWnd(0)-mousex), abs(staMPosWnd(1)-mousey)
+				dragWnd = abs(staMPosWnd(0)-_mousex), abs(staMPosWnd(1)-_mousey)
 
-				if staMPos(CR_X) < ginfo_mx: overRlayWndX = staMPos(0): else: overRlayWndX = ginfo_mx
-				if staMPos(CR_Y) < ginfo_my: overRlayWndY = staMPos(1): else: overRlayWndY = ginfo_my
-				if staMPosWnd(CR_X) < mousex: selMPosX = staMPosWnd(0): else: selMPosX = mousex
-				if staMPosWnd(CR_Y) < mousey: selMPosY = staMPosWnd(1): else: selMPosY = mousey
+				if staMPos(CR_X) < ginfo_mx: overRlayWndX = staMPos(0): else: overRlayWndX = _ginfo_mx
+				if staMPos(CR_Y) < ginfo_my: overRlayWndY = staMPos(1): else: overRlayWndY = _info_my
+				if staMPosWnd(CR_X) < _mousex: selMPosX = staMPosWnd(0): else: selMPosX = _mousex
+				if staMPosWnd(CR_Y) < _mousey: selMPosY = staMPosWnd(1): else: selMPosY = _mousey
 
 				MoveWindow WND_INFO(WND_OVERLAY, WI_HANDLE), overRlayWndX, overRlayWndY, dragW, dragH, 1
 			}
