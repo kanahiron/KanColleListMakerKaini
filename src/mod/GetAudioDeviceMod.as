@@ -22,63 +22,49 @@
 #func CharLower "CharLowerW" wptr
 #endif
 
-#deffunc GetAudioDevice str ffmpegpath, var output
+#deffunc GetAudioDevice str ffmpegpath, var output, local pid, local buf, local tBuf1
 
-	sdim output, 1024*4
+	if (ffmpegpath == ""): return -1
 
-	if (ffmpegpath == ""): gosub *release: return -1
-
+    sdim output, 1024
 	sdim buf, 1024*10
-	sdim buf1, 1024*10
-	sdim buf2, 1024*10
+	sdim tBuf, 1024*4 //汎用一時変数
 
-	cmdm = strf("%s -list_devices true -f dshow -i audio", ffmpegpath)
+    cmdm = strf("%s -list_devices true -f dshow -i audio", ffmpegpath)
 
 	pipe2exec cmdm
 	pid = stat
-	if(pid == -1): gosub *release: return -1 //実行に失敗した
+	if (pid==-1): return -1 //実行に失敗した
 
     timelimit = timeGetTime() + 1500 //1.5秒でループから抜けるようにする
     do
         pipe2check pid
-        if stat & 2: pipe2get pid, buf: buf1 + = buf
-        if stat & 4: pipe2err pid, buf: buf2 + = buf
-        if (stat == 0): _break
+        if (stat&2): pipe2get pid, tBuf: buf += tBuf
+        if (stat&4): pipe2err pid, tBuf: buf += tBuf
+        if (stat==0): _break
         await 100
 	until (timelimit < timeGetTime())
 
 	pipe2term pid
 
-	if strlen(buf1) != 0: buf = buf1
-	if strlen(buf2) != 0: buf = buf2
-
-    sdim tempStr
-    tempStr = strmid(buf,0,6)
-    cnvstow tempStr, tempStr
-    CharLower varptr(tempStr)
-    tempStr = cnvwtos(tempStr)
-    if tempStr != "ffmpeg": gosub *release: return -1 //実行ファイルがffmpegではなかった
+    //オーディオデバイス名抽出処理
+    tBuf = strmid(buf, 0, 6) //ffmpegの出力から頭6Byte取得
+    cnvstow tBuf, tBuf
+    CharLower varptr(tBuf) //unicode版CharLowerを使いたいがためにこんな冗長に…
+    tBuf = cnvwtos(tBuf)
+    if tBuf != "ffmpeg": return -1 //実行ファイルがffmpegではなかった
 
 	notesel buf
 	repeat notemax
-		noteget temp, cnt
-		if (strmid(temp, 0, 1) == "["){
-			getstr temp, temp, instr(temp, 0, "] ")+2, 0
-			if (strmid(temp, 0, 2) == " \""){
-				getstr temp, temp, instr(temp, 0, "\"")+1, '\"'
-				output + = temp+"\n"
+		noteget tBuf, cnt //tBufを使い回す
+		if (strmid(tBuf, 0, 1) == "["){
+			getstr tBuf, tBuf, instr(tBuf, 0, "] ")+2, 0
+			if (strmid(tBuf, 0, 2) == " \""){
+				getstr tBuf, tBuf, instr(tBuf, 0, "\"")+1, '\"'
+				output + = tBuf+"\n"
 			}
 		}
 	loop
-
-    gosub *release
 return 0
-
-*release
-    dim buf
-    dim buf1
-    dim buf2
-    dim tempStr
-return
 
 #global

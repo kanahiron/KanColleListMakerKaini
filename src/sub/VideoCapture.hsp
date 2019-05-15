@@ -553,21 +553,13 @@ return
 
 	//成功なら0が帰る
 	GetAudioDevice ffmpegdir, audioDeviceList
-	if (stat == 0){
-
-		audioDeviceList += "音声なし"
-		gosub *drawMainWindow
-
-	} else {
-
+	if (stat!=0){ //失敗したら
 		ffmpegdir = ""
 	}
-
 	audioDeviceList += "音声なし"
 	gosub *drawMainWindow
 
 	nidPop
-
 return
 
 *ffmpegDownload
