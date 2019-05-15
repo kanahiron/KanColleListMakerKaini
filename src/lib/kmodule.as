@@ -5,9 +5,11 @@
 	/* WinAPI */
 	#uselib "user32.dll"
 		#func GetSystemMetrics "GetSystemMetrics" int
-	#const SM_CYCAPTION 4
-	#const SM_CXDLGFRAME 7
-	#const SM_CYDLGFRAME 8
+	#const SM_CYCAPTION		4
+	#const SM_CXDLGFRAME	7
+	#const SM_CYDLGFRAME	8
+	#const SM_CXFRAME		32
+	#const SM_CYFRAME		33
 
 	/**
 	 * exist命令の関数版
@@ -32,11 +34,11 @@
 	/**
 	 * 以下のフィールドの値を初期化する
 	 * menuH : 通常のタイトルバーの高さ＋タイトルバーがあり、サイズが変更できないウィンドウの周囲を囲む枠の高さ
-	 * menuW : タイトルバーがあり、サイズが変更できないウィンドウの周囲を囲む枠の幅
+	 * menuW : タイトルバーがあり、サイズ可変ウィンドウの周囲を囲む枠の幅
 	 */
 	#deffunc local Init
-		menuH = GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CYDLGFRAME)
-		menuW = GetSystemMetrics(SM_CXDLGFRAME)
+		menuH = GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CXFRAME)
+		menuW = GetSystemMetrics(SM_CYFRAME)
 	return
 
 	/**
