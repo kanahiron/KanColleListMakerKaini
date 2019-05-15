@@ -739,9 +739,9 @@
 			chkbox "一覧作成モードで第一期と同じサイズに縮小する", pastSize: mesy += scale20
 
 			pos scale5, mesy
-			chkbox "一覧作成モードで背景を補間する", listMakeInterpolation: mesy += scale20
+			chkbox "一覧作成モードで背景を補完する", listMakeInterpolation: mesy += scale20
 			pos Scale(5+25), mesy
-			chkbox "直接連結では補間しない", directLinkDisInterpolation: mesy += scale20
+			chkbox "直接連結では補完しない", directLinkDisInterpolation: mesy += scale20
 
 			pos scale5, mesy
 			chkbox "サポートウィンドウを使用する", enableSupportWindow: mesy += scale20
