@@ -154,6 +154,16 @@ return
 		sendmsg hProgress ,PBM_SETRANGE,0,MAKELPARAM(0,100)
 		//----
 
+		loadTwiPicHistory ssSaveDir, picHistory, picHistoryCount
+
+		gsel WND_TWIBUF: pos 0, 0
+		if (ImgF_GetFormat(picHistory(0)) != 0){
+			syscolor 15: boxf
+			ImgF_PicloadEx picHistory(picHistoryNum), 1
+		} else {
+			gcopy WND_NOIMAGE, 0, 0, BASE_SIZE_W, BASE_SIZE_H
+		}
+
 		nidPop
 		gosub *TweetWindow
 
@@ -751,3 +761,54 @@ return
 		sendmsg ttCounth ,$C , , strf("%3d",140-ttCount-htCount)
  	}
 return
+
+#module
+
+#deffunc loadTwiPicHistory  str ssSaveDir, array picHistory, var picHistoryCount, local tempBuf, local listBuf, local temp, local fExt
+
+	dim picHistoryCount
+	dim imageType
+	sdim tempBuf, 1024*1024*4	//4MB
+	sdim listBuf				//あとで再確保する
+	sdim temp, 512
+
+	imageType = 0
+	picHistoryCount = 0
+	fExt = ""
+
+	chdir sssavedir
+	dirlist tempBuf, "*.*", 3
+	if (stat != 0){
+
+		//tempBuf以上の大きさになることはないので同じ大きさで確保する
+		memexpand listBuf, varsize(tempBuf)
+
+		//拡張子で絞ってlistBufに入れる
+		notesel tempBuf
+		repeat notemax
+			fExt = getpath@GetpathMod( _noteget(cnt), 18)
+			//HSPには短絡評価をしないので少しでも早くする
+			if fExt == ".png": listBuf += _noteget(cnt)+"\n": continue
+			if fExt == ".jpg": listBuf += _noteget(cnt)+"\n": continue
+			if fExt == ".jpeg": listBuf += _noteget(cnt)+"\n": continue
+			if fExt == ".gif": listBuf += _noteget(cnt)+"\n": continue
+		loop
+		noteunsel
+
+		//ソートして最初から100つをpicStackに入れていく
+		sortnote listbuf, 1
+		notesel listbuf
+		repeat limit(notemax, 0, 100)
+			temp = sssavedir + "\\" + _noteget(cnt)
+			//拡張子がおかしいファイルが紛れている可能性があるのでちゃんと検査する
+			imageType = ImgF_GetFormat(temp)
+			if ( (imageType==2) || (imageType==3) || (imageType==4) ){ //jpg, gif, png
+				picHistory(picHistoryCount) = temp
+				picHistoryCount++
+			}
+		loop
+	}
+
+return
+
+#global

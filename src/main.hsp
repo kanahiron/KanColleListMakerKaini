@@ -224,8 +224,7 @@
 		MakeBackgroundImage WND_KANCOLLEBG, WND_TEMP1
 
 	gsel WND_MAIN
-
-	gosub *loadHistory
+	
 	gosub *calcUIScale
 	gosub *hotkeyCapSetting
 	gosub *twiInit
