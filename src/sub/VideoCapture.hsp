@@ -553,10 +553,15 @@ return
 
 	//成功なら0が帰る
 	GetAudioDevice ffmpegdir, audioDeviceList
+	audioDeviceList += "音声なし"
 	if (stat!=0){ //失敗したら
 		ffmpegdir = ""
 	}
-	audioDeviceList += "音声なし"
+
+	notesel audioDeviceList
+	audioDeviceListNum = notemax
+	noteunsel
+
 	gosub *drawMainWindow
 
 	nidPop
