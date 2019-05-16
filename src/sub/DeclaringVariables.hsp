@@ -201,6 +201,20 @@
 	saveNameStr(SN_USERDEF) = "ユーザ定義"
 	saveNameStr(SN_VIDEO) = "動画キャプチャ"
 
+	dim chooseColorStruct, 9
+	dim colorRefArr, 16
+	chooseColorStruct(0) = 36
+	chooseColorStruct(4) = varptr(colorRefArr)
+	chooseColorStruct(5) = CC_FULLOPEN | CC_ANYCOLOR | CC_RGBINIT
+	repeat 16
+		colorRefArr(cnt)=0x00FFFFFF
+	loop
+	colorRefArr( 8) = RGBtoBGR(0xFF0000)
+	colorRefArr( 9) = RGBtoBGR(0x0000FF)
+	colorRefArr(10) = RGBtoBGR(0x20AC4C)
+	colorRefArr(11) = RGBtoBGR(0xE06020)
+	colorRefArr(12) = RGBtoBGR(0x2020C0)
+
 return
 
 #defcfunc CheckPosRange array arg

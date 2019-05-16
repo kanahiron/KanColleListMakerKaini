@@ -277,6 +277,13 @@ return
 	fontColorFourthFleet = int("$"+fontcolorFourthFleetstr)
 	PunctuationColor = int("$"+PunctuationColorStr)
 
+	//カラーパレットに予め色を入れておく
+	colorRefArr(0) =  RGBtoBGR(fontColorFirstFleet)
+	colorRefArr(1) =  RGBtoBGR(fontColorSecondFleet)
+	colorRefArr(2) =  RGBtoBGR(fontColorThirdFleet)
+	colorRefArr(3) =  RGBtoBGR(fontColorFourthFleet)
+	colorRefArr(4) =  RGBtoBGR(PunctuationColor)
+	
 	hidelog_ = hidelog
 
 	if PathIsDirectory(listsavedir) = 0 {

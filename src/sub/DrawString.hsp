@@ -26,52 +26,47 @@ return
 #global
 
 *colorCange1
-	colorRefArr(0) = RGBtoBGR(fontColorFirstFleet)
-	chooseColoerStruct(3) = RGBtoBGR(fontColorFirstFleet)
-	ChooseColor varptr(chooseColoerStruct)
+	chooseColorStruct(3) = RGBtoBGR(fontColorFirstFleet)
+	ChooseColor varptr(chooseColorStruct)
 	if (stat != 0){
-		fontColorFirstFleet = RGBtoBGR(chooseColoerStruct(3))
+		fontColorFirstFleet = RGBtoBGR(chooseColorStruct(3))
 		fontColorFirstFleetStr = strf("%06X", fontColorFirstFleet)
 		gosub *drawColor
 	}
 return
 *colorCange2
-	colorRefArr(0) = RGBtoBGR(fontColorSecondFleet)
-	chooseColoerStruct(3) = RGBtoBGR(fontColorSecondFleet)
-	ChooseColor varptr(chooseColoerStruct)
+	chooseColorStruct(3) = RGBtoBGR(fontColorSecondFleet)
+	ChooseColor varptr(chooseColorStruct)
 	if (stat != 0){
-		fontColorSecondFleet = RGBtoBGR(chooseColoerStruct(3))
+		fontColorSecondFleet = RGBtoBGR(chooseColorStruct(3))
 		fontColorSecondFleetStr = strf("%06X", fontColorSecondFleet)
 		gosub *drawColor
 	}
 return
 *colorCange3
-	colorRefArr(0) = RGBtoBGR(fontColorThirdFleet)
-	chooseColoerStruct(3) = RGBtoBGR(fontColorThirdFleet)
-	ChooseColor varptr(chooseColoerStruct)
+	chooseColorStruct(3) = RGBtoBGR(fontColorThirdFleet)
+	ChooseColor varptr(chooseColorStruct)
 	if (stat != 0){
-		fontColorThirdFleet = RGBtoBGR(chooseColoerStruct(3))
+		fontColorThirdFleet = RGBtoBGR(chooseColorStruct(3))
 		fontColorThirdFleetStr = strf("%06X", fontColorThirdFleet)
 		gosub *drawColor
 	}
 return
 *colorCange4
-	colorRefArr(0) = RGBtoBGR(fontColorFourthFleet)
-	chooseColoerStruct(3) = RGBtoBGR(fontColorFourthFleet)
-	ChooseColor varptr(chooseColoerStruct)
+	chooseColorStruct(3) = RGBtoBGR(fontColorFourthFleet)
+	ChooseColor varptr(chooseColorStruct)
 	if (stat != 0){
-		fontColorFourthFleet = RGBtoBGR(chooseColoerStruct(3))
+		fontColorFourthFleet = RGBtoBGR(chooseColorStruct(3))
 		fontColorFourthFleetStr = strf("%06X", fontColorFourthFleet)
 		gosub *drawColor
 	}
 return
 
 *colorCange5
-	colorRefArr(0) = RGBtoBGR(PunctuationColor)
-	chooseColoerStruct(3) = RGBtoBGR(PunctuationColor)
-	ChooseColor varptr(chooseColoerStruct)
+	chooseColorStruct(3) = RGBtoBGR(PunctuationColor)
+	ChooseColor varptr(chooseColorStruct)
 	if (stat != 0){
-		PunctuationColor = RGBtoBGR(chooseColoerStruct(3))
+		PunctuationColor = RGBtoBGR(chooseColorStruct(3))
 		PunctuationColorStr = strf("%06X", PunctuationColor)
 		gosub *drawColor
 		gosub *draw
