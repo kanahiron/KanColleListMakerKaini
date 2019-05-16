@@ -172,9 +172,8 @@ return
 				dragW = abs(staMPos(0)-ginfo_mx)
 				dragH = abs(staMPos(1)-ginfo_my)
 				dragWnd = abs(staMPosWnd(0)-_mousex), abs(staMPosWnd(1)-_mousey)
-
-				if staMPos(CR_X) < ginfo_mx: overRlayWndX = staMPos(0): else: overRlayWndX = _ginfo_mx
-				if staMPos(CR_Y) < ginfo_my: overRlayWndY = staMPos(1): else: overRlayWndY = _info_my
+				if staMPos(CR_X) < ginfo_mx: overRlayWndX = staMPos(0): else: overRlayWndX = ginfo_mx
+				if staMPos(CR_Y) < ginfo_my: overRlayWndY = staMPos(1): else: overRlayWndY = ginfo_my
 				if staMPosWnd(CR_X) < _mousex: selMPosX = staMPosWnd(0): else: selMPosX = _mousex
 				if staMPosWnd(CR_Y) < _mousey: selMPosY = staMPosWnd(1): else: selMPosY = _mousey
 
