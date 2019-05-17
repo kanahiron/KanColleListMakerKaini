@@ -17,6 +17,7 @@
 #func global DeleteObject "DeleteObject" int
 #func global GetDeviceCaps "GetDeviceCaps" int, int
 #func global CreateFontIndirect "CreateFontIndirectW" int
+#func global CreateSolidBrush "CreateSolidBrush" int
 
 #uselib "user32.dll"
 #func global GetDC "GetDC" int
@@ -124,7 +125,8 @@
 //Mode
 #const MODE_SSCAP	0
 #const MODE_LIST	1
-#const MODE_OPTION	2
+#const MODE_TIMER	2
+#const MODE_OPTION	3
 
 //ListMode
 #const LISTMODE_LIST		0
@@ -170,10 +172,10 @@
 #const WI_DC		1
 
 //RECT構造体用
-#const CR_X 0
-#const CR_Y 1
-#const CR_W 2
-#const CR_H 3
+#const global CR_X 0
+#const global CR_Y 1
+#const global CR_W 2
+#const global CR_H 3
 
 //ゲームサイズ、拡大率
 #define global BASE_SIZE_W 1200
@@ -216,72 +218,72 @@
 //ヘッダファイルで定義されてるもの
 
 //ウィンドウメッセージ
-#const WM_ACTIVATE		0x0006
-#const WM_SETREDRAW		0x000B
-#const WM_SETTEXT		0x000C
-#const WM_GETMINMAXINFO	0x0024
-#const WM_SETFONT		0x0030
-#const WM_NCLBUTTONDOWN 0x00A1
-#const WM_COMMAND		0x0111
-#const WM_TIMER			0x0113
-#const WM_VSCROLL		0x0114
-#const WM_MOUSEMOVE		0x0200
-#const WM_LBUTTONDOWN   0x0201
-#const WM_LBUTTONDBLCLK 0x0203
-#const WM_RBUTTONDOWN   0x0204
-#const WM_RBUTTONDBLCLK 0x0206
-#const WM_MBUTTONDOWN   0x0207
-#const WM_MBUTTONDBLCLK 0x0209
-#const WM_SIZING		0x0214
-#const WM_DROPFILES		0x0233
-#const WM_DPICHANGED	0x02E0
-#const WM_HOTKEY		0x0312
-#const WM_APP           0x8000
-#const WM_TWEET         (WM_APP+1)
+#const global WM_ACTIVATE		0x0006
+#const global WM_SETREDRAW		0x000B
+#const global WM_SETTEXT		0x000C
+#const global WM_GETMINMAXINFO	0x0024
+#const global WM_SETFONT		0x0030
+#const global WM_NCLBUTTONDOWN  0x00A1
+#const global WM_COMMAND		0x0111
+#const global WM_TIMER			0x0113
+#const global WM_VSCROLL		0x0114
+#const global WM_MOUSEMOVE		0x0200
+#const global WM_LBUTTONDOWN    0x0201
+#const global WM_LBUTTONDBLCLK  0x0203
+#const global WM_RBUTTONDOWN    0x0204
+#const global WM_RBUTTONDBLCLK  0x0206
+#const global WM_MBUTTONDOWN    0x0207
+#const global WM_MBUTTONDBLCLK  0x0209
+#const global WM_SIZING         0x0214
+#const global WM_DROPFILES		0x0233
+#const global WM_DPICHANGED     0x02E0
+#const global WM_HOTKEY         0x0312
+#const global WM_APP            0x8000
+#const global WM_TWEET          (WM_APP+1)
 
 //エディットコントロール周り
-#define EM_SETSEL		0x00B1
-#define EM_GETLINECOUNT	0x00BA
+#const global EM_SETSEL         0x00B1
+#const global EM_GETLINECOUNT   0x00BA
 
 //リストボックス周り
-#define LB_ADDSTRING	$00000180
-#define LB_SETCURSEL	$00000186
-#define LB_GETCURSEL	$00000188
-#define LB_GETTEXT		$00000189
-#define LB_GETCOUNT		$0000018B
+#const global LB_ADDSTRING      $00000180
+#const global LB_SETCURSEL      $00000186
+#const global LB_GETCURSEL      $00000188
+#const global LB_GETTEXT		$00000189
+#const global LB_GETCOUNT		$0000018B
 
 //レイヤードウィンドウ周り
-#const LWA_COLORKEY		0x0001
-#const LWA_ALPHA		0x0002
+#const global LWA_COLORKEY      0x0001
+#const global LWA_ALPHA         0x0002
 
 //コンボボックス周り
-#const CB_GETCURSEL		0x0147
+#const global CB_GETCURSEL		0x0147
 
 //WM_ACTIVATE周り
-#const WA_INACTIVE		0
-#const WA_ACTIVE		1
-#const WA_CLICKACTIVE	2
+#const global WA_INACTIVE		0
+#const global WA_ACTIVE         1
+#const global WA_CLICKACTIVE	2
 
 //ホットキー周り
-#const MOD_ALT			0x0001
-#const MOD_CONTROL		0x0002
-#const MOD_SHIFT		0x0004
-#const MOD_WIN			0x0008
+#const global MOD_ALT			0x0001
+#const global MOD_CONTROL		0x0002
+#const global MOD_SHIFT         0x0004
+#const global MOD_WIN			0x0008
 
 //GetWindowLpng
-#const GWL_STYLE		(-16)
+#const global GWL_STYLE         (-16)
 
 //プログレスパー周り
-#const PBS_MARQUEE		0x0008
+#const global PBS_MARQUEE		0x0008
 
-#const PBM_SETMARQUEE	0x040A
-#const PBM_SETRANGE		0x0401
-#const PBM_SETPOS		0x0402
+#const global PBM_SETMARQUEE	0x040A
+#const global PBM_SETRANGE		0x0401
+#const global PBM_SETPOS		0x0402
 
 //GetAncestor用
-#const GA_PARENT		1
-#const GA_ROO			2
-#const GA_ROOTOWNER		3
+#const global GA_PARENT         1
+#const global GA_ROO			2
+#const global GA_ROOTOWNER		3
 
 //トラックバーコントロール用
 #enum TBM_GETPOS		= 0x0400
@@ -314,34 +316,34 @@
 #enum TBM_GETTHUMBLENGTH
 
 //Colorなんとか
-#const CC_ANYCOLOR				0x00000100
-#const CC_ENABLEHOOK			0x00000010
-#const CC_ENABLETEMPLATE		0x00000020
-#const CC_ENABLETEMPLATEHANDLE	0x00000040
-#const CC_FULLOPEN				0x00000002
-#const CC_PREVENTFULLOPEN		0x00000004
-#const CC_RGBINIT				0x00000001
-#const CC_SHOWHELP				0x00000008
-#const CC_SOLIDCOLOR			0x00000080
+#const global CC_ANYCOLOR			    0x00000100
+#const global CC_ENABLEHOOK             0x00000010
+#const global CC_ENABLETEMPLATE         0x00000020
+#const global CC_ENABLETEMPLATEHANDLE	0x00000040
+#const global CC_FULLOPEN				0x00000002
+#const global CC_PREVENTFULLOPEN		0x00000004
+#const global CC_RGBINIT				0x00000001
+#const global CC_SHOWHELP				0x00000008
+#const global CC_SOLIDCOLOR             0x00000080
 
 //ShowWindow周り
-#const SW_HIDE		0x0000
-#const SW_SHOW		0x0005
-#const SW_MINIMIZE	0x0006
-#const SW_SHOWNA	0x0008
-#const SW_RESTORE	0x0009
+#const global SW_HIDE		0x0000
+#const global SW_SHOW		0x0005
+#const global SW_MINIMIZE	0x0006
+#const global SW_SHOWNA     0x0008
+#const global SW_RESTORE	0x0009
 //ウインドウスタイル
-#const WS_CHILD		0x40000000
-#const WS_VISIBLE	0x10000000
+#const global WS_CHILD		0x40000000
+#const global WS_VISIBLE	0x10000000
 
 //なんだろう
-#define HTCAPTION 2
+#const global  HTCAPTION 2
 
 //BitBltのオプション
-#const SRCCOPY		0x00CC0020
-#const CAPTUREBLT	0x40000000
+#const global SRCCOPY		0x00CC0020
+#const global CAPTUREBLT	0x40000000
 
 //ScrollBar
-#define SB_BOTH 3
-#define SB_HORZ 0
-#define SB_VERT 1
+#const global SB_BOTH 3
+#const global SB_HORZ 0
+#const global SB_VERT 1
