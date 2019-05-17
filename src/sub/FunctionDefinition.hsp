@@ -17,7 +17,6 @@
 #func global DeleteObject "DeleteObject" int
 #func global GetDeviceCaps "GetDeviceCaps" int, int
 #func global CreateFontIndirect "CreateFontIndirectW" int
-#func global CreateSolidBrush "CreateSolidBrush" int
 
 #uselib "user32.dll"
 #func global GetDC "GetDC" int
@@ -337,7 +336,7 @@
 #const global WS_VISIBLE	0x10000000
 
 //なんだろう
-#const global  HTCAPTION 2
+#const global HTCAPTION 2
 
 //BitBltのオプション
 #const global SRCCOPY		0x00CC0020
