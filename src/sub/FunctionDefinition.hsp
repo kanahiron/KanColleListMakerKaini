@@ -1,80 +1,77 @@
 #uselib "shlwapi.dll"
-#func PathIsDirectory "PathIsDirectoryW" wptr
+#func global PathIsDirectory "PathIsDirectoryW" wptr
 
 #uselib "shell32.dll"
-#func DragAcceptFiles "DragAcceptFiles" int, int
-#func DragQueryFile   "DragQueryFileW"  int, int, int, int
-#func DragQueryPoint  "DragQueryPoint"  int, int
-#func DragFinish      "DragFinish"      int
+#func global DragAcceptFiles "DragAcceptFiles" int, int
+#func global DragQueryFile   "DragQueryFileW"  int, int, int, int
+#func global DragQueryPoint  "DragQueryPoint"  int, int
+#func global DragFinish      "DragFinish"      int
 
 #uselib "gdi32.dll"
-#func CreateDC "CreateDCW" wptr, wptr, int, int
-#func DeleteDC "DeleteDC"  wptr
-#func BitBlt "BitBlt" int, int, int, int, int, int, int, int, int
-#func CreateDIBSection "CreateDIBSection" int, int, int, int, int, int
-#func CreateCompatibleBitmap "CreateCompatibleBitmap" int, int, int
-#func SelectObject "SelectObject" int, int
-#func DeleteObject "DeleteObject" int
-#func GetDeviceCaps "GetDeviceCaps" int, int
-#func CreateFontIndirect "CreateFontIndirectW" int
+#func global CreateDC "CreateDCW" wptr, wptr, int, int
+#func global DeleteDC "DeleteDC"  wptr
+#func global BitBlt "BitBlt" int, int, int, int, int, int, int, int, int
+#func global CreateDIBSection "CreateDIBSection" int, int, int, int, int, int
+#func global CreateCompatibleBitmap "CreateCompatibleBitmap" int, int, int
+#func global SelectObject "SelectObject" int, int
+#func global DeleteObject "DeleteObject" int
+#func global GetDeviceCaps "GetDeviceCaps" int, int
+#func global CreateFontIndirect "CreateFontIndirectW" int
 
 #uselib "user32.dll"
-#func GetDC "GetDC" int
-#func ReleaseDC "ReleaseDC" int, int
-#func MoveWindow "MoveWindow" int, int, int, int, int, int
-#func GetWindowLong "GetWindowLongW" int, int
-#func SetWindowLong "SetWindowLongW" int, int, int
-#func SetClassLong "SetClassLongW" int, int, int
-#func GetClassLong "GetClassLongW" int, int
-#func SetLayeredWindowAttributes "SetLayeredWindowAttributes" int, int, int, int
-#func GetCursorPos "GetCursorPos" int
-#func SetCursorPos "SetCursorPos" int, int
-#func ScreenToClient "ScreenToClient" int , int
-#func ChildWindowFromPoint "ChildWindowFromPoint" int, int, int
-#func ChildWindowFromPointEx "ChildWindowFromPointEx" int, int, int, int
-#func SetFocus "SetFocus" int
-#func SetParent "SetParent" int , int
-#func RegisterHotKey "RegisterHotKey" int, int, int, int
-#func UnregisterHotKey "UnregisterHotKey" int, int
-#func IsWindowVisible "IsWindowVisible" int
-#func GetSystemMetrics "GetSystemMetrics" int
-#func LoadCursor "LoadCursorW" int, int
-#func SetTimer "SetTimer" int, int, int, sptr
-#func KillTimer "KillTimer" int, int
-#func WindowFromPoint "WindowFromPoint" int, int
-#func GetClientRect "GetClientRect" int, int
-#func GetWindowRect "GetWindowRect" int, int
-#func ClientToScreen "ClientToScreen" int, int
-#func GetParent "GetParent" int
-#func GetAncestor "GetAncestor" int, int
-#func IsWindow "IsWindow" int
-#func EnableWindow "EnableWindow" int, int
-#func PrintWindow "PrintWindow" int, int, int
-#func SetWindowText "SetWindowTextW" int, wptr
-#func UpdateWindow "UpdateWindow" int
-#func InvalidateRect "InvalidateRect" int, int, int
-#func ShowWindow "ShowWindow" int, int
-#func IsIconic "IsIconic" int
-#func ShowScrollBar "ShowScrollBar" int, int, int
-#func GetWindowText "GetWindowTextW" int, int, int
-#func SetWindowPos "SetWindowPos" wptr, wptr, wptr, wptr, wptr, wptr, wptr
-#func SendMessage "SendMessageW" wptr, wptr, wptr, wptr
-#func SetProcessDPIAware "SetProcessDPIAware"
+#func global GetDC "GetDC" int
+#func global ReleaseDC "ReleaseDC" int, int
+#func global MoveWindow "MoveWindow" int, int, int, int, int, int
+#func global GetWindowLong "GetWindowLongW" int, int
+#func global SetWindowLong "SetWindowLongW" int, int, int
+#func global SetClassLong "SetClassLongW" int, int, int
+#func global GetClassLong "GetClassLongW" int, int
+#func global SetLayeredWindowAttributes "SetLayeredWindowAttributes" int, int, int, int
+#func global GetCursorPos "GetCursorPos" int
+#func global SetCursorPos "SetCursorPos" int, int
+#func global ScreenToClient "ScreenToClient" int , int
+#func global ChildWindowFromPoint "ChildWindowFromPoint" int, int, int
+#func global ChildWindowFromPointEx "ChildWindowFromPointEx" int, int, int, int
+#func global SetFocus "SetFocus" int
+#func global SetParent "SetParent" int , int
+#func global RegisterHotKey "RegisterHotKey" int, int, int, int
+#func global UnregisterHotKey "UnregisterHotKey" int, int
+#func global IsWindowVisible "IsWindowVisible" int
+#func global GetSystemMetrics "GetSystemMetrics" int
+#func global LoadCursor "LoadCursorW" int, int
+#func global SetTimer "SetTimer" int, int, int, sptr
+#func global KillTimer "KillTimer" int, int
+#func global WindowFromPoint "WindowFromPoint" int, int
+#func global GetClientRect "GetClientRect" int, int
+#func global GetWindowRect "GetWindowRect" int, int
+#func global ClientToScreen "ClientToScreen" int, int
+#func global GetParent "GetParent" int
+#func global GetAncestor "GetAncestor" int, int
+#func global IsWindow "IsWindow" int
+#func global EnableWindow "EnableWindow" int, int
+#func global PrintWindow "PrintWindow" int, int, int
+#func global SetWindowText "SetWindowTextW" int, wptr
+#func global UpdateWindow "UpdateWindow" int
+#func global InvalidateRect "InvalidateRect" int, int, int
+#func global ShowWindow "ShowWindow" int, int
+#func global IsIconic "IsIconic" int
+#func global ShowScrollBar "ShowScrollBar" int, int, int
+#func global GetWindowText "GetWindowTextW" int, int, int
+#func global SetWindowPos "SetWindowPos" wptr, wptr, wptr, wptr, wptr, wptr, wptr
+#func global SendMessage "SendMessageW" wptr, wptr, wptr, wptr
+#func global SetProcessDPIAware "SetProcessDPIAware"
 
 #uselib "kernel32.dll"
-#func MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
-#func CreateProcess "CreateProcessW" wptr, wptr, int, int, int, int, int, int, int, int
-#func GetSystemTimeAsFileTime "GetSystemTimeAsFileTime" int
+#func global MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
+#func global CreateProcess "CreateProcessW" wptr, wptr, int, int, int, int, int, int, int, int
+#func global GetSystemTimeAsFileTime "GetSystemTimeAsFileTime" int
 
 #uselib "winmm.dll"
-#func timeGetTime "timeGetTime"
+#func global timeGetTime "timeGetTime"
 
 #uselib "Comdlg32.dll"
-#func ChooseColor "ChooseColorW" int
+#func global ChooseColor "ChooseColorW" int
 
-
-#undef title
-#define title(%1, %2 = hwnd) SetWindowText %2, %1
 
 #define global TRUE 1
 #define global FALSE 0
@@ -86,7 +83,6 @@
 #define VideoCapTimerID			103
 #define LateEncodeTimerID		104
 #define SeqCapWriteStatTimerID	105
-
 
 //自分で定義した定数
 #enum WND_MAIN = 0
@@ -191,6 +187,9 @@
 #define ctype HIWORD(%1) (%1>>16) and 0x0000FFFFF
 #define ctype LOWORD(%1) %1 and 0x0000FFFFF
 
+#undef title
+#define title(%1, %2 = hwnd) SetWindowText %2, %1
+
 #define nidStackInit dim nidStack, 100: nidIndex = 0
 #define nidPush nidindex++:nidstack(nidindex) = ginfo(3)
 #define nidPop gsel nidstack(nidindex), 0:nidindex--
@@ -199,7 +198,7 @@
 #define SET_WND_INFO wndInfoArr(ginfo(3), WI_HANDLE) = hwnd: wndInfoArr(ginfo(3), WI_DC) = hdc
 #define ctype WND_INFO(%1, %2) wndInfoArr(%1, %2)
 
-#define ctype RGBtoBGR(%1) (((%1<<16)&0xFF0000) | ((%1>>16)&0xFF) | (%1&0xFF00))
+#define global ctype RGBtoBGR(%1) (((%1<<16)&0xFF0000) | ((%1>>16)&0xFF) | (%1&0xFF00))
 
 //DynamicActionControl
 #define DAControlInit dim DAControlArr, 20: DAControlIndex = 0
@@ -211,7 +210,7 @@
 #define LogOut(%1) sendmsg hLog, WM_SETTEXT, 0, (%1)
 
 //ウィンドウスタイルの変更用マクロ
-#define ChgWndowStyle(%1, %2) SetWindowLong %1, -16, GetWindowLong(%1, -16) | (%2)
+#define global ChgWndowStyle(%1, %2) SetWindowLong %1, -16, GetWindowLong(%1, -16) | (%2)
 
 
 //ヘッダファイルで定義されてるもの
