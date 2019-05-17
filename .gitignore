@@ -2,6 +2,7 @@ log/
 Release/
 ScreenShots/
 ScreenShots2/
+Sound/
 src/sub/key.hsp
 hsptmp
 obj
@@ -19,3 +20,4 @@ packfile
 !h.png
 *.txt
 *.zip
+*.wav
