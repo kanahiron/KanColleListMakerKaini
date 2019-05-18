@@ -56,6 +56,17 @@
 		modemes = "オプション"
 	}
 
+	/*
+	//Ver0.14では見送り
+	: if(mode == MODE_TIMER){
+		objprm comboxId, 4
+		modemes = "タイマー"
+	} else: if(mode == MODE_OPTION){
+		objprm comboxId, 5
+		modemes = "オプション"
+	}
+	*/
+
 	mesy = rect(3) + scale3
 
 	if (mode == MODE_SSCAP){
@@ -607,7 +618,16 @@
 
 		//一覧作成モードここまで//一覧作成モードここまで//一覧作成モードここまで//一覧作成モードここまで
 	}
+/*
+	//時間が足りないためVer0.14では見送り
+	if (mode == MODE_TIMER){
 
+		Draw@TimerOperationMod UIScale, mesy
+
+		mainWndW = Scale(175)
+		mainWndH = mesy
+	}
+*/
 
 	if (mode == MODE_OPTION){
 		//オプション//オプション//オプション//オプション//オプション

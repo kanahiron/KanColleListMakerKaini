@@ -35,7 +35,7 @@
 
 		case WM_LBUTTONDOWN
 			logmes "WM_LBUTTONDOWN"
-			gosub *mainWndMove
+			gosub *WM_LBUTTONDOWN_Proc
 			swbreak
 
 		case WM_LBUTTONDBLCLK
@@ -117,6 +117,11 @@ return
 				mode = MODE_LIST
 				listmode = LISTMODE_OTHER
 				swbreak
+			//Ver0.14では見送り
+			//case 4
+			//	mode = MODE_TIMER
+			//	swbreak
+			//case 5
 			case 4
 				mode = MODE_OPTION
 				swbreak
@@ -238,6 +243,14 @@ return
 
 	}
 
+return
+
+*WM_LBUTTONDOWN_Proc
+	gosub *mainWndMove
+	if (mode==MODE_TIMER){
+		//Ver0.14では見送り
+		//WM_LBUTTONDOWN_Proc@TimerOperationMod lparam, wparam
+	}
 return
 
 *saveModeCalc

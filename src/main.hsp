@@ -79,6 +79,7 @@
 	wndInfoInit
 	nidStackInit
 	DAControlInit
+	init@TimerOperationMod
 	init@isHomeportMod WND_HOME_PORT_MOD
 	//Init@i18n //準備ができていないため
 
@@ -105,8 +106,10 @@
 		oncmd gosub *MainWindowProc, WM_LBUTTONDOWN
 		oncmd gosub *MainWindowProc, WM_LBUTTONDBLCLK
 		oncmd gosub *mainWindowProc, WM_SELWINDOW
+		oncmd gosub *mainWindowProc, WM_CTLCOLOREDIT
 		objmode 2
 
+		//combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  タイマーモード\n  オプション"
 		combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
 		comboxId = stat
 		hCombox = objinfo_hwnd(comboxId)
@@ -224,7 +227,7 @@
 		MakeBackgroundImage WND_KANCOLLEBG, WND_TEMP1
 
 	gsel WND_MAIN
-	
+
 	gosub *calcUIScale
 	gosub *hotkeyCapSetting
 	gosub *twiInit
@@ -279,6 +282,10 @@
 	optionMode = OPMODE_CAPTURE
 	gosub *drawMainWindow
 	//*/
+
+	//mode = MODE_TIMER
+	//gosub *drawMainWindow
+
 	firstStart = FALSE
 	stop
 
@@ -394,3 +401,4 @@
 #include "./sub/GridWindowOperation.hsp"
 #include "./sub/VideoCapture.hsp"
 #include "./sub/SupportWindowOperation.hsp"
+#include "./sub/TimerOperation.hsp"
