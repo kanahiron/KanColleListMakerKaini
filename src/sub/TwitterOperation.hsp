@@ -764,7 +764,7 @@ return
 
 #module
 
-#deffunc loadTwiPicHistory  str ssSaveDir, array picHistory, var picHistoryCount, local tempBuf, local listBuf, local temp, local fExt
+#deffunc loadTwiPicHistory  str ssSaveDir, array picHistory, var picHistoryCount, local tempBuf, local listBuf, local temp, local fExt, local curDir
 
 	dim picHistoryCount
 	dim imageType
@@ -772,6 +772,7 @@ return
 	sdim listBuf				//あとで再確保する
 	sdim temp, 512
 
+	curDir = dir_cur
 	imageType = 0
 	picHistoryCount = 0
 	fExt = ""
@@ -808,7 +809,7 @@ return
 			}
 		loop
 	}
-
+	chdir curDir
 return
 
 #global
