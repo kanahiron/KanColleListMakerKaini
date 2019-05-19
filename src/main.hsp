@@ -214,13 +214,12 @@
 
 	buffer WND_NOIMAGE, BASE_SIZE_W, BASE_SIZE_H
 		SET_WND_INFO
-		color
-		boxf
+		font "メイリオ", int(BASE_SIZE_W/6)
+		color: boxf: mes "No image"
 		color 255, 255, 255
-		boxf 8, 8, 791, 471
+		boxf int(0.01*BASE_SIZE_W), int(0.01*BASE_SIZE_W), int(0.99*(BASE_SIZE_W-1)), BASE_SIZE_H-1-int(0.01*BASE_SIZE_W)
 		color
-		font "メイリオ", 130
-		pos 100, 150
+		pos BASE_SIZE_W/2-ginfo_mesx/2, BASE_SIZE_H/2-ginfo_mesy/2
 		mes "No image"
 
 	buffer WND_KANCOLLEBG, BASE_SIZE_W, BASE_SIZE_H
