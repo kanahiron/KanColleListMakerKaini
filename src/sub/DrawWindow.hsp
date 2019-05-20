@@ -895,8 +895,10 @@
 				objsize Scale(175), Scale(30)
 				pos 0, mesy
 				button gosub "ffmpeg.exeを指定する", *openDialogffmpeg//: mesy += scale20
+				openDialogffmpegBId = stat
 				pos Scale(175), mesy
 				button gosub "ダウンロードする", *ffmpegDownload: mesy += Scale(30)
+				ffmpegDownloadBId = stat
 				pos scale5, mesy
 				mes "ダウンロード進捗"
 				pos Scale(120), mesy
