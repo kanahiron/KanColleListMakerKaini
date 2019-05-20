@@ -604,11 +604,18 @@ return
 	    return
 	}
 
+	if PathIsDirectory(dir_exe+"\\bin") = 0{
+		dirCur = dir_cur
+		chdir dir_exe
+		mkdir "bin"
+		chdir dirCur
+	}
+
 	ffmpegSavename = strf("ffmpeg_tmp%x%x%x.zip", rnd(4096), rnd(4096), rnd(4096))
 	bsave strf("%s\\%s",dir_exe,ffmpegSavename), ffmpegzip, ffmpegDownloadSize
     dim ffmpegzip
 
-    unzip strf("%s\\%s",dir_exe,ffmpegSavename), dir_exe
+    unzip strf("%s\\%s",dir_exe,ffmpegSavename), dir_exe, 10
     if (stat!=0){
 		exec dir_exe, 16
         dialog strf("%sを解凍し、中のffmpeg.exeを一覧めいかー改二のフォルダにあるbinフォルダに移動させてください\n移動したら、OKを押してください。",ffmpegSavename), 0, "ダウンロードしたファイルの解凍に失敗しました"
