@@ -432,6 +432,8 @@ return
 
 		ImgF_ImageSave saveNamePath, jpgQuality
 
+		buffer WND_TEMP1, 1, 1		//メモリ浪費対策
+		bgscr WND_TEMP_SCR1, 1, 1, 2
 		gsel WND_MAIN
 
 		if _exist(saveNamePath) <= 0 {
@@ -636,7 +638,9 @@ return
 				if _exist(saveNamed) > 0 {
 					tempSdim(cnt) = saveNamed
 				}
+				wait 10
 			loop
+			buffer WND_TEMP1, 1, 1
 		}
 
 		gsel WND_TWITTER

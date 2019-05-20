@@ -310,8 +310,8 @@ return (successFlg^1)
 	}
 
 	repeat (CELL_MAX_W*CELL_MAX_H)
-		if loadPicBufID(cnt) = 0{
-			loadPicBufID(cnt) = 1
+		if (loadPicBufID(cnt) == FALSE){
+			loadPicBufID(cnt) = TRUE
 			bufid = cnt +100
 			break
 		}

@@ -222,7 +222,7 @@ return tempInt
 //============================================================
 
 #define global media_upload(%1,%2,%3,%4=0) media_upload_ %1,%2,%3,%4
-#deffunc media_upload_ array p1 ,int p3,var p2, int hProgress
+#deffunc media_upload_ array p1 ,int p3,var p2, int hProgress, local picname
 
 	sdim p2,512
 	sdim picname,1024

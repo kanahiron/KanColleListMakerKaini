@@ -25,6 +25,8 @@
 	gmode 3, BASE_SIZE_W, BASE_SIZE_H, 130
 	gcopy tempImageId, 0, 0, BASE_SIZE_W, BASE_SIZE_H
 	gmode
+
+	buffer tempImageId, 1, 1
 return
 
 #global
