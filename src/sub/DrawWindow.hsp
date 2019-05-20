@@ -11,6 +11,14 @@
 		gsel WND_GRID, -1
 	}
 
+	if (mode = MODE_OPTION){
+		if enabletweetwindow: gsel WND_TWITTER, -1
+		if enableFFMPEGLogWindow: HideFFMPEGLog
+	} else {
+		if enabletweetwindow: gsel WND_TWITTER, 1+twiFrontRow
+		if enableFFMPEGLogWindow: ShowFFMPEGLog
+	}
+
 	gsel WND_MAIN, 1+frontrow
 	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
 
