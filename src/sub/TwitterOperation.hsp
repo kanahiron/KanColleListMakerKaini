@@ -725,6 +725,7 @@ return
 	if (stat != 200){
 		dialog "Twitter認証に失敗しました\nもう一度お試しください"
 	} else {
+		gosub *iniSave
 		gosub *twiinit
 	}
 
