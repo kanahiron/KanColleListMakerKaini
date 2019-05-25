@@ -303,12 +303,11 @@ return
 	gsel WND_MAIN
 
 	if (exfv || exfa){
-		gosub *VideoCapEmgStop
-
 		logmessage =  "Error-動画キャプチャを停止しました\n"
 		if (exfv): logmessage += "動画プロセスが異常停止しました\n"
 		if (exfa): logmessage += "音声プロセスが異常停止しました\n"
 
+		gosub *VideoCapEmgStop
 		LogOut logmessage
 		nidPop
 		return
