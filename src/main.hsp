@@ -76,7 +76,7 @@
 #endif
 
 	onexit gosub *exit
-
+	randomize
 	wndInfoInit
 	nidStackInit
 	DAControlInit
