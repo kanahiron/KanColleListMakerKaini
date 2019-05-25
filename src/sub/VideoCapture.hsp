@@ -53,7 +53,12 @@
 
 	if (videoCapFlg == FALSE){
 
+		videoCapFlg = TRUE
+		gosub *SSModeControlDisable
+
 		sdim ffbuf, 1024*4
+		ddim vStartTime, 1
+		ddim aStartTime, 1
 		ResetFFMPEGLog
 		apid = 0
 		vpid = 0
@@ -63,6 +68,9 @@
 		estimatedTime = 0
 		remainingTime = 0
 		encodeTime = 0
+		apid = -1
+		vpid = -1
+		mpid = -1
 
 		sscapwh(0) = sscap(2)-sscap(0), sscap(3)-sscap(1)
 
@@ -96,22 +104,46 @@
 			//負荷軽減動画キャプチャ
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
 			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, videoCapX, videoCapY)
-			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, 16, "ultrafast", videoFileName)
+			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s -tune zerolatency \"%s_v.mp4\"", videoCapFR, videoCapFR, 16, "ultrafast", videoFileName)
 		} else {
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
 			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, videoCapX, videoCapY)
-			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s \"%s_v.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, videoFileName)
+			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s -tune zerolatency \"%s_v.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, videoFileName)
 		}
 
-		pipe2exec cmda
-		apid = stat
-		aStartTime2 = timeGetTime()
-		pipe2exec cmdv
-		vpid = stat
-		vStartTime2 = timeGetTime()
+		pipe2exec cmda: apid = stat
+		aStartSystemTime = timeGetTime()
+
+		timelimit = timeGetTime() + 5000 //5秒でループから抜けるようにする
+	    do
+			pipe2check apid
+			if (stat == 0): exfv = 1: vpid = -1
+			if (stat & 2): pipe2get apid, ffbuf
+			if (stat & 4): pipe2err apid, ffbuf
+
+			if (ffbuf != ""){
+				AddFFmpegLog "", ffbuf: ffbuf = ""
+				aStartTime = GetAudioStartTime()
+				if (aStartTime != 0.0): _break
+			}
+		until (timelimit < timeGetTime())
+
+		//5秒経っても開始時刻を受け取れなかったら強制終了
+		if (aStartTime = 0.0){
+			pipe2term apid
+			apid = -1
+		} else {
+			//オーディオプロセスから開始時刻を受け取れたら
+			pipe2exec cmdv: vpid = stat
+			vStartSystemTime = timeGetTime()
+		}
 
 		if ( (apid == -1) || (vpid == -1) ){
 			LogOut "動画キャプチャの開始に失敗しました"
+
+			videoCapFlg = FALSE
+			gosub *SSModeControlEnable
+
 			return
 		}
 
@@ -126,7 +158,6 @@
 			objprm videoCapBId, videoCapMes
 		}
 
-		gosub *SSModeControlDisable
 		gosub *VideoCapTimerProcessing
 
 	} else {
@@ -160,8 +191,6 @@
 				if stat & 2: pipe2get vpid, ffbuf
 				if stat & 4: pipe2err vpid, ffbuf
 				if (ffbuf != ""){
-					strrep ffbuf, "\r", "\n"
-					strrep ffbuf, "\r\r", "\r"
 					AddFFmpegLog ffbuf
 				}
 			}
@@ -172,12 +201,10 @@
 				if stat & 2: pipe2get apid, ffbuf
 				if stat & 4: pipe2err apid, ffbuf
 				if (ffbuf != ""){
-					strrep ffbuf, "\r", "\n"
-					strrep ffbuf, "\r\r", "\r"
 					AddFFmpegLog "", ffbuf
 				}
 			}
-			logmes strf("cnt %d  exfv %d  exfa %d",cnt, exfv, exfa)
+			//logmes strf("cnt %d  exfv %d  exfa %d",cnt, exfv, exfa)
 			if (exfv && exfa): break
 		loop
 
@@ -188,34 +215,11 @@
 		LateEncodeFlg = TRUE
 		lateEncodeStartTime = timeGetTime()
 
-		diffTime2 = 0.001*(aStartTime2-vStartTime2)
-		logmes "vStartTime2 :"+vStartTime2
-		logmes "aStartTime2 :"+aStartTime2
-		logmes "diffTime2   :"+diffTime2+"s\n"
-
-		ddim vStartTime, 1
-		ddim aStartTime, 1
 		vStartTime = GetVideoStartTime()
-		aStartTime = GetAudioStartTime()
-		logmes "video UNIXTIME   :"+vStartTime
-		logmes "audio SYSTEMTIME :"+aStartTime
 		diffTime = 0.0
 
 		if (vStartTime!=0.0 && aStartTime!=0.0){
-			vStartTime = 11644473600.0+vStartTime
-			dim FILETIME, 2
-			GetSystemTimeAsFileTime varptr(FILETIME)
-			aStartTime = -0.001*timeGetTime() + aStartTime + (4294967295.0*FILETIME(1) + (FILETIME(0)&0x7FFFFFFF) + -2147483648.0*((d(0)&0x80000000)>>31) )/10000000.0
-			diffTime = (aStartTime-vStartTime)/1000
-			//2秒以上ズレずれていたら無かったことにする
-			if ( absf(diffTime)>2.0 ){
-				diffTime = diffTime2
-			}
-		}
-
-		//2秒以上ズレずれていたら無(ry)
-		if ( absf(diffTime)>2.0 ){
-			diffTime = 0.0
+			diffTime = (vStartTime-aStartTime)
 		}
 
 		logmes "vStartTime :"+vStartTime
@@ -245,8 +249,7 @@
 				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -c:v copy \"%s.mp4\"", ffmpegdir, videoFileName, videoFileName)
 			}
 		}
-		pipe2exec cmdm
-		mpid = stat
+		pipe2exec cmdm: mpid = stat
 		logmes "cmdm :"+cmdm
 
 		if ( mpid == -1 ){
@@ -284,8 +287,6 @@ return
 	if (stat & 4): pipe2err vpid, ffbuf
 
 	if (ffbuf != ""){
-		strrep ffbuf, "\r", "\n"
-		strrep ffbuf, "\r\r", "\r"
 		AddFFmpegLog ffbuf
 	}
 
@@ -296,8 +297,6 @@ return
 	if (stat & 4): pipe2err apid, ffbuf
 
 	if (ffbuf != ""){
-		strrep ffbuf, "\r", "\n"
-		strrep ffbuf, "\r\r", "\r"
 		AddFFmpegLog "", ffbuf
 	}
 
@@ -344,8 +343,6 @@ return
 	if (stat & 4): pipe2err mpid, ffbuf
 
 	if (ffbuf != ""){
-		strrep ffbuf, "\r", "\n"
-		strrep ffbuf, "\r\r", "\r"
 		AddFFmpegLog "", "", ffbuf
 	}
 
@@ -471,7 +468,7 @@ return
 			if stat & 2: pipe2get mpid, ffbuf
 			if stat & 4: pipe2err mpid, ffbuf
 		}
-		logmes strf("cnt %d  exfv %d  exfa %d  exfm %d",cnt, exfv, exfa, exfm)
+		//logmes strf("cnt %d  exfv %d  exfa %d  exfm %d",cnt, exfv, exfa, exfm)
 		if (exfv && exfa && exfm): break
 	loop
 
