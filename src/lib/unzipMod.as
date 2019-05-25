@@ -44,10 +44,10 @@ return (PSMajorVer>=5)
         return -1
     }
 
-    sdim buf, 1024*10
-    cmd = strf("PowerShell Expand-Archive -Path \"%s\"" , zippath)
+    sdim buf, 1024*4
+    cmd = strf("PowerShell Expand-Archive -Path '%s'" , zippath)
     if (destpath!=""){
-        cmd += strf(" -DestinationPath \"%s\"" , destpath)
+        cmd += strf(" -DestinationPath '%s'" , destpath)
     }
     cmd += " -Force"
     pipe2exec cmd
