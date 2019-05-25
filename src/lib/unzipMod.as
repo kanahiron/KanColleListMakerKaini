@@ -4,6 +4,11 @@
 
 #module unzipMod
 
+#ifndef timeGetTime
+    #uselib "winmm.dll"
+    #func timeGetTime "timeGetTime"
+#endif
+
 #ifndef TRUE
     #define TRUE 1
     #define FALSE 0
@@ -28,8 +33,8 @@
     PSMajorVer = int(buf)
 return (PSMajorVer>=5)
 
-#define global unzip(%1, %2="") unzip_@unzipMod %1, %2
-#deffunc local unzip_ str zippath, str destpath, local buf, local pid, local cmd
+#define global unzip(%1, %2="", %3=5) unzip_@unzipMod %1, %2, %3
+#deffunc local unzip_ str zippath, str destpath, int limitTimeSec, local buf, local pid, local cmd
 
     if (chkFlg==FALSE){
         chkFlg = TRUE
@@ -49,14 +54,18 @@ return (PSMajorVer>=5)
     pid = stat
     if(pid == -1): return -2
     unzipFlg = 0
-    repeat 100
+    timelimit = timeGetTime() + (1000*limitTimeSec) //指定秒数でループから抜けるようにする
+    do
         pipe2check pid
-        if (stat == 0){
+        if (stat&2): pipe2get pid, buf  //出力を処理しないフリーズすることがある
+        if (stat&4): pipe2err pid, buf
+        if (stat==0){
             unzipFlg = 1
-            break
+            _break
         }
         await 100
-    loop
+	until (timelimit < timeGetTime())
+
     pipe2term pid
 
     if (unzipFlg==0): return -2

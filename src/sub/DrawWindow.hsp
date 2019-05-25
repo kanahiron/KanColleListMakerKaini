@@ -11,6 +11,14 @@
 		gsel WND_GRID, -1
 	}
 
+	if (mode = MODE_OPTION){
+		if enabletweetwindow: gsel WND_TWITTER, -1
+		if enableFFMPEGLogWindow: HideFFMPEGLog
+	} else {
+		if enabletweetwindow: gsel WND_TWITTER, 1+twiFrontRow
+		if enableFFMPEGLogWindow: ShowFFMPEGLog
+	}
+
 	gsel WND_MAIN, 1+frontrow
 	//sendmsg WND_INFO( WND_MAIN, WI_HANDLE), WM_SETREDRAW, 0
 
@@ -887,8 +895,10 @@
 				objsize Scale(175), Scale(30)
 				pos 0, mesy
 				button gosub "ffmpeg.exeを指定する", *openDialogffmpeg//: mesy += scale20
+				openDialogffmpegBId = stat
 				pos Scale(175), mesy
 				button gosub "ダウンロードする", *ffmpegDownload: mesy += Scale(30)
+				ffmpegDownloadBId = stat
 				pos scale5, mesy
 				mes "ダウンロード進捗"
 				pos Scale(120), mesy

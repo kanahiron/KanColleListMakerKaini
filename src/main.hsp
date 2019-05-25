@@ -29,6 +29,7 @@
 #include "./lib/unzipMod.as"
 #include "./lib/deletefolderMod.as"
 #include "./lib/hash.as"
+#include "./lib/Math.as"
 
 //どちらというとサブソースなモジュール
 #include "./mod/FFMPEGLog.as"
@@ -47,9 +48,9 @@
 #packopt icon "../res/KanColleListMakerKaini.ico"
 #packopt lang "1041"
 
-#define SOFTNAME "一覧めいかー改二 Ver0.13.1"
-#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.13.1"
-#define klm2ver 13001
+#define SOFTNAME "一覧めいかー改二 Ver0.14"
+#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.14"
+#define klm2ver 14000
 
 #ifdef _debug
 	SafeDelete@kmodule("./sub/hsptmp")
@@ -89,7 +90,7 @@
 	gosub *iniSave
 	gosub *VideoCapSetting
 
-	screen WND_MAIN, disInfo(2), disInfo(3), 2:title SOFTNAME
+	screen WND_MAIN, (ZOOM_MAX*350), disInfo(3), 2:title SOFTNAME
 		SET_WND_INFO
 		GetClassLong WND_INFO(WND_MAIN, WI_HANDLE), -26
 		SetClassLong WND_INFO(WND_MAIN, WI_HANDLE), -26, stat | $0008
@@ -120,7 +121,7 @@
 
 		chkbox "dummy", dummy
 
-	screen WND_GRID, disInfo(2), disInfo(3), 2:title "表示させたいセルにD&D"
+	screen WND_GRID, min@Math(disInfo(3)*2, disInfo(2)), disInfo(3), 2:title "表示させたいセルにD&D"
 		SET_WND_INFO
 		DragAcceptFiles WND_INFO(WND_GRID, WI_HANDLE), 1
 		GetWindowLong WND_INFO(WND_GRID, WI_HANDLE),-20
@@ -135,7 +136,7 @@
 		Init@kmodule
 
 	//範囲選択用レイヤードウィンドウ
-	bgscr WND_OVERLAY, disInfo(2), disInfo(3), 2
+	bgscr WND_OVERLAY, min@Math(disInfo(3)*2, disInfo(2)), disInfo(3), 2
 		SET_WND_INFO
 		color 0,255,0
 		boxf
@@ -176,7 +177,7 @@
 		mes "セルの画像はウィンドウ外にドラッグで消去できます"
 		//640,150
 
-	screen WND_TWITTER, disInfo(2), disInfo(3), 2 | 4
+	screen WND_TWITTER, int(ZOOM_MAX*448), int(ZOOM_MAX*262), 2 | 4
 		SET_WND_INFO
 		GetWindowLong WND_INFO(WND_TWITTER, WI_HANDLE),-20
 		SetWindowLong WND_INFO(WND_TWITTER, WI_HANDLE),-20, stat | $80000
@@ -189,15 +190,15 @@
 
 	MakeFFMPEGLogWindow WND_FFMPEG
 
-	buffer WND_TWIBUF, BASE_SIZE_W*ZOOM_MAX, BASE_SIZE_H*ZOOM_MAX
+	buffer WND_TWIBUF, BASE_SIZE_W, BASE_SIZE_H
 		SET_WND_INFO
-	buffer WND_TWIBUF1, BASE_SIZE_W*ZOOM_MAX, BASE_SIZE_H*ZOOM_MAX
+	buffer WND_TWIBUF1, BASE_SIZE_W, BASE_SIZE_H
 		SET_WND_INFO
-	buffer WND_TWIBUF2, BASE_SIZE_W*ZOOM_MAX, BASE_SIZE_H*ZOOM_MAX
+	buffer WND_TWIBUF2, BASE_SIZE_W, BASE_SIZE_H
 		SET_WND_INFO
-	buffer WND_TWIBUF3, BASE_SIZE_W*ZOOM_MAX, BASE_SIZE_H*ZOOM_MAX
+	buffer WND_TWIBUF3, BASE_SIZE_W, BASE_SIZE_H
 		SET_WND_INFO
-	buffer WND_TWIBUF4, BASE_SIZE_W*ZOOM_MAX, BASE_SIZE_H*ZOOM_MAX
+	buffer WND_TWIBUF4, BASE_SIZE_W, BASE_SIZE_H
 		SET_WND_INFO
 
 	buffer WND_TWIBUF_TMB1, 260*ZOOM_MAX, 156*ZOOM_MAX
@@ -214,13 +215,12 @@
 
 	buffer WND_NOIMAGE, BASE_SIZE_W, BASE_SIZE_H
 		SET_WND_INFO
-		color
-		boxf
+		font "メイリオ", int(BASE_SIZE_W/6)
+		color: boxf: mes "No image"
 		color 255, 255, 255
-		boxf 8, 8, 791, 471
+		boxf int(0.01*BASE_SIZE_W), int(0.01*BASE_SIZE_W), int(0.99*(BASE_SIZE_W-1)), BASE_SIZE_H-1-int(0.01*BASE_SIZE_W)
 		color
-		font "メイリオ", 130
-		pos 100, 150
+		pos BASE_SIZE_W/2-ginfo_mesx/2, BASE_SIZE_H/2-ginfo_mesy/2
 		mes "No image"
 
 	buffer WND_KANCOLLEBG, BASE_SIZE_W, BASE_SIZE_H

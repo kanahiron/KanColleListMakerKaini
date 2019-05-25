@@ -71,8 +71,6 @@
 			if bufIDPos(cnt, ycnt) >= 100{
 				pos cnt*cutRange(CR_W), ycnt*cutRange(CR_H)
 				gcopy bufIDPos(cnt, ycnt), cutRange(CR_X) , cutRange(CR_Y), cutRange(CR_W), cutRange(CR_H)
-				buffer bufIDPos(cnt, ycnt), 1, 1
-				gsel WND_TEMP1
 				drawcount++
 			} else {
 				if (interpolationFlg){
@@ -339,20 +337,34 @@
 		LogOut "画像が一枚もありません"
 	}
 
-	listLoadedNum = 0
-	dim bufIDPos, CELL_MAX_W, CELL_MAX_H
-	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
-
+	gosub *listReset
 	nidPop
 	gosub *draw
 return
 
 *listDel
 	nidPush
-	listLoadedNum = 0
-	dim bufIDPos, CELL_MAX_W, CELL_MAX_H
-	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
+	gosub *listReset
 	gosub *draw
 	LogOut "グリッドウィンドウをクリアしました"
 	nidPop
+return
+
+*listReset
+	//bufIDPosではなくloadPicBufIDから利用済みbufidを判定し開放する
+	//loadPicBufIDは先頭からフラグが立っているかいないか
+	repeat length(loadPicBufID)
+		if (loadPicBufID(cnt) == TRUE){
+			buffer (cnt+100), 1, 1
+		} else {
+			break
+		}
+	loop
+	buffer WND_TEMP1, 1, 1
+	buffer WND_TEMP2, 1, 1
+
+	dim bufIDPos, CELL_MAX_W, CELL_MAX_H
+	dim loadPicBufID, CELL_MAX_W * CELL_MAX_H
+	listLoadedNum = 0
+	
 return

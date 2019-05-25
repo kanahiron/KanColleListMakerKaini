@@ -685,10 +685,16 @@ return form_encode(str(base64HmacSha1), 0)
 		gsel nid
 	#endif
 //*/
-	sdim requestHeader
-	sdim postData
-	sdim picBuf
-	sdim transStr
+	dim AuthorizationStr
+	dim RequestHeader
+	dim RequestHeaderWide
+	dim PostDataHead
+	dim PostDataFoot
+	dim PostData
+	dim picBuf
+	dim transStr
+	dim sigArray
+	dim arguments
 
 	logmes "================="
 

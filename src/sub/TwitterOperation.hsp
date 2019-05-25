@@ -432,6 +432,8 @@ return
 
 		ImgF_ImageSave saveNamePath, jpgQuality
 
+		buffer WND_TEMP1, 1, 1		//メモリ浪費対策
+		bgscr WND_TEMP_SCR1, 1, 1, 2
 		gsel WND_MAIN
 
 		if _exist(saveNamePath) <= 0 {
@@ -636,7 +638,9 @@ return
 				if _exist(saveNamed) > 0 {
 					tempSdim(cnt) = saveNamed
 				}
+				wait 10
 			loop
+			buffer WND_TEMP1, 1, 1
 		}
 
 		gsel WND_TWITTER
@@ -725,6 +729,7 @@ return
 	if (stat != 200){
 		dialog "Twitter認証に失敗しました\nもう一度お試しください"
 	} else {
+		gosub *iniSave
 		gosub *twiinit
 	}
 
@@ -764,38 +769,21 @@ return
 
 #module
 
-#deffunc loadTwiPicHistory  str ssSaveDir, array picHistory, var picHistoryCount, local tempBuf, local listBuf, local temp, local fExt, local curDir
+#deffunc loadTwiPicHistory  str ssSaveDir, array picHistory, var picHistoryCount, local listBuf, local temp, local fExt, local curDir
 
 	dim picHistoryCount
 	dim imageType
-	sdim tempBuf, 1024*1024*4	//4MB
-	sdim listBuf				//あとで再確保する
-	sdim temp, 512
+	sdim listBuf, 1024*1024*4	//4MB
+	sdim temp, 1044
 
+	fExt = ""
 	curDir = dir_cur
 	imageType = 0
 	picHistoryCount = 0
-	fExt = ""
 
 	chdir sssavedir
-	dirlist tempBuf, "*.*", 3
+	dirlist listBuf, "*.*", 3
 	if (stat != 0){
-
-		//tempBuf以上の大きさになることはないので同じ大きさで確保する
-		memexpand listBuf, varsize(tempBuf)
-
-		//拡張子で絞ってlistBufに入れる
-		notesel tempBuf
-		repeat notemax
-			fExt = getpath@GetpathMod( _noteget(cnt), 18)
-			//HSPには短絡評価をしないので少しでも早くする
-			if fExt == ".png": listBuf += _noteget(cnt)+"\n": continue
-			if fExt == ".jpg": listBuf += _noteget(cnt)+"\n": continue
-			if fExt == ".jpeg": listBuf += _noteget(cnt)+"\n": continue
-			if fExt == ".gif": listBuf += _noteget(cnt)+"\n": continue
-		loop
-		noteunsel
-
 		//ソートして最初から100つをpicStackに入れていく
 		sortnote listbuf, 1
 		notesel listbuf

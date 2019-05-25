@@ -147,6 +147,8 @@
 	}
 
 	MultiSelectedFlg = FALSE
+	buffer WND_TEMP1, 1, 1	//メモリ浪費対策
+	buffer WND_TEMP2, 1, 1
 
 return
 

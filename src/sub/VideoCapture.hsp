@@ -586,10 +586,13 @@ return
 		return
 	}
 
+	gosub *ffmpegDownloadWindowObjDisable
+
 	sendmsg hDLFfmpegProgress, PBM_SETRANGE, 0, MAKELPARAM(0,int(1.2*ffmpegDownloadSize/4096))
 	download ffmpegDownloadServer, ffmpegDownloadFilePath, ffmpegzip, hDLFfmpegProgress
 	if (stat != 200){
 		dialog "次の原因が考えられます\n配信サーバーのダウン\nインターネット未接続",0,"ダウンロードに失敗しました"
+		gosub *ffmpegDownloadWindowObjEnableAll
 		nidPop
 		return
 	}
@@ -600,20 +603,29 @@ return
 	if (ffmpegDownloadHash != downloadedHash){
 	    dim ffmpegzip
 	    dialog "ダウンロードしたファイルが破損しています\nダウンロードに失敗しました"
+		gosub *ffmpegDownloadWindowObjEnableAll
 		nidPop
 	    return
+	}
+
+	if PathIsDirectory(dir_exe+"\\bin") = 0{
+		dirCur = dir_cur
+		chdir dir_exe
+		mkdir "bin"
+		chdir dirCur
 	}
 
 	ffmpegSavename = strf("ffmpeg_tmp%x%x%x.zip", rnd(4096), rnd(4096), rnd(4096))
 	bsave strf("%s\\%s",dir_exe,ffmpegSavename), ffmpegzip, ffmpegDownloadSize
     dim ffmpegzip
 
-    unzip strf("%s\\%s",dir_exe,ffmpegSavename), dir_exe
+    unzip strf("%s\\%s",dir_exe,ffmpegSavename), dir_exe, 10
     if (stat!=0){
 		exec dir_exe, 16
         dialog strf("%sを解凍し、中のffmpeg.exeを一覧めいかー改二のフォルダにあるbinフォルダに移動させてください\n移動したら、OKを押してください。",ffmpegSavename), 0, "ダウンロードしたファイルの解凍に失敗しました"
 		if ( _exist(dir_exe+"\\bin\\ffmpeg.exe") <= 0){
 			dialog "binフォルダ内にffmpegが見つかりませんでした", 0, "ダウンロードを中止します"
+			gosub *ffmpegDownloadWindowObjEnableAll
 			nidPop
 			return
 		}
@@ -623,6 +635,7 @@ return
 		gosub *drawMainWindow
 		await
 		dialog "続いて、オーディオデバイスを選択してください。", 0, "ダウンロードが完了しました！"
+		gosub *ffmpegDownloadWindowObjEnable
 		nidPop
 		return
     }
@@ -636,13 +649,31 @@ return
     deletefolder strf("%s\\%s", dir_exe, getpath@getpathMod(tempStr, 9))
 
 	ffmpegDir = dir_exe+"\\bin\\ffmpeg.exe"
-	sendmsg hProgress, $402, int(1.2*ffmpegDownloadSize/4096)
+	sendmsg hDLFfmpegProgress, $402, int(1.2*ffmpegDownloadSize/4096)
 
 	mode = MODE_OPTION
 	optionMode = OPMODE_VIDEOCAPTURE
 	gosub *drawMainWindow
 	await
 	dialog "続いて、オーディオデバイスを選択してください。", 0, "ダウンロードが完了しました！"
+	gosub *ffmpegDownloadWindowObjEnable
 
 	nidPop
+return
+
+*ffmpegDownloadWindowObjDisable
+	objenable openDialogffmpegBId, FALSE
+	objenable ffmpegDownloadBId, FALSE
+	objenable comboxId, FALSE
+	objenable optionCBId, FALSE
+	sendmsg hDLFfmpegProgress, $402, 0 //初期値にする
+return
+
+*ffmpegDownloadWindowObjEnableAll
+	objenable openDialogffmpegBId, TRUE
+	objenable ffmpegDownloadBId, TRUE
+	sendmsg hDLFfmpegProgress, $402, 0 //初期値にする
+*ffmpegDownloadWindowObjEnable
+	objenable comboxId, TRUE
+	objenable optionCBId, TRUE
 return
