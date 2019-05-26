@@ -97,7 +97,7 @@
 			//オーデイオあり
 			cmda = strf("\"%s\" -vn -f dshow -i audio=\"%s\" -acodec pcm_s16le -ac 2 -ar 44100 \"%s_a.wav\"", ffmpegdir, audioDeviceName, videoFileName)
 		} else {
-			cmda = strf("cmd /K echo 'Duration: N/A, start: 99999.99999 , '")
+			cmda = strf("cmd /K echo '  Duration: N/A, start: %7.6f, bitrate: 1536 kb/s'", 0.001*timeGetTime())
 		}
 
 		if (lateEncode){
