@@ -17,6 +17,12 @@
 
 #uselib "kernel32.dll"
 #func MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
+#func GetSystemTimeAsFileTime "GetSystemTimeAsFileTime" int
+
+#define ctype FileTime2UnixTime(%1) ((4294967296.0 * %1(1) + (%1(0)&0x7FFFFFFF) + 2.0*(%1(0)>>1&0x40000000) - 116444736000000000.0) / 10000000.0)
+
+#uselib "winmm.dll"
+#func timeGetTime "timeGetTime"
 
 #define ES_AUTOVSCROLL	0x0040
 
@@ -128,7 +134,7 @@ return
 	ShowWindow hffWindow, 0
 return
 
-#defcfunc GetVideoStartTime
+#defcfunc GetVideoStartTime local time, local tbuf, local TimeStr, local timeStrIndex
 	ddim time, 1
 	sdim tbuf
 	tbuf = cnvwtos(ffLogVideo)
@@ -138,10 +144,10 @@ return
 		getstr TimeStr, tbuf, timeStrIndex+22, ' '
 		time = double(TimeStr)
 	}
-	dim tbuf //メモリ使用を抑えるため
 return time
 
-#defcfunc GetAudioStartTime
+#defcfunc GetAudioStartTime local time, local tbuf, local TimeStr, local timeStrIndex, local FILETIME
+	dim FILETIME, 2
 	ddim time, 1
 	sdim tbuf
 	tbuf = cnvwtos(ffLogAudio)
@@ -149,9 +155,9 @@ return time
 	if ( timeStrIndex != -1){
 		TimeStr = ""
 		getstr TimeStr, tbuf, timeStrIndex+22, ' '
-		time = double(TimeStr)
+		GetSystemTimeAsFileTime varptr(FILETIME)
+		time = FileTime2UnixTime(FILETIME) - 0.001*timeGetTime() + double(TimeStr)
 	}
-	dim tbuf //メモリ使用を抑えるため
 return time
 
 #global

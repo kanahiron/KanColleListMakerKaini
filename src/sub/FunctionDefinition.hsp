@@ -67,7 +67,6 @@
 #uselib "kernel32.dll"
 #func global MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
 #func global CreateProcess "CreateProcessW" wptr, wptr, int, int, int, int, int, int, int, int
-#func global GetSystemTimeAsFileTime "GetSystemTimeAsFileTime" int
 
 #uselib "winmm.dll"
 #func global timeGetTime "timeGetTime"
