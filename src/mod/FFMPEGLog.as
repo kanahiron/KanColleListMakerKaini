@@ -152,7 +152,7 @@ return time
 	sdim tbuf
 	tbuf = cnvwtos(ffLogAudio)
 	timeStrIndex = instr(tbuf, 0, "Duration: N/A, start: ")
-	if ( timeStrIndex != -1){
+	if ( timeStrIndex!=-1 && instr(tbuf, timeStrIndex, "bitrate:")!=-1 ){
 		TimeStr = ""
 		getstr TimeStr, tbuf, timeStrIndex+22, ' '
 		GetSystemTimeAsFileTime varptr(FILETIME)
