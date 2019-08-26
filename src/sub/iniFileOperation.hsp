@@ -142,8 +142,8 @@
 	Get@iniMod "KanmusuFormationMode", "soka", soka, "0"
 	Get@iniMod "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation, "1"
 	Get@iniMod "KanmusuFormationMode", "AddOrderNum", addOrderNum, "1"
-	Get@iniMod "KanmusuFormationMode", "FleetWindowNormal", fleetWindowNormal, "1"
-	Get@iniMod "KanmusuFormationMode", "FleetWindowMini", fleetWindowMini, "0"
+	Get@iniMod "KanmusuFormationMode", "normalGridWindow", normalGridWindow, "1"
+	Get@iniMod "KanmusuFormationMode", "miniGridWindow", miniGridWindow, "0"
 	Get@iniMod "KanmusuFormationMode", "FleetWindowNishimura", fleetWindowNishimura, "0"
 	Get@iniMod "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"第一艦隊\""
 	Get@iniMod "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"第二艦隊\""
@@ -283,7 +283,7 @@ return
 	colorRefArr(2) =  RGBtoBGR(fontColorThirdFleet)
 	colorRefArr(3) =  RGBtoBGR(fontColorFourthFleet)
 	colorRefArr(4) =  RGBtoBGR(PunctuationColor)
-	
+
 	hidelog_ = hidelog
 
 	if PathIsDirectory(listsavedir) = 0 {
@@ -388,9 +388,9 @@ return
 		tuika4 = 0
 	}
 
-	if (fleetWindowNormal+fleetWindowMini+fleetWindowNishimura) != 1{
-		fleetWindowNormal = 1
-		fleetWindowMini = 0
+	if (normalGridWindow+miniGridWindow+fleetWindowNishimura) != 1{
+		normalGridWindow = 1
+		miniGridWindow = 0
 		fleetWindowNishimura = 0
 	}
 
@@ -617,8 +617,8 @@ return
 	Write@iniMod "KanmusuFormationMode", "soka", soka
 	Write@iniMod "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation
 	Write@iniMod "KanmusuFormationMode", "AddOrderNum", addOrderNum
-	Write@iniMod "KanmusuFormationMode", "FleetWindowNormal", fleetWindowNormal
-	Write@iniMod "KanmusuFormationMode", "FleetWindowMini", fleetWindowMini
+	Write@iniMod "KanmusuFormationMode", "normalGridWindow", normalGridWindow
+	Write@iniMod "KanmusuFormationMode", "miniGridWindow", miniGridWindow
 	Write@iniMod "KanmusuFormationMode", "FleetWindowNishimura", fleetWindowNishimura
 	Write@iniMod "KanmusuFormationMode", "FirstFleetName", FirstFleetName
 	Write@iniMod "KanmusuFormationMode", "SecondFleetName", SecondFleetName

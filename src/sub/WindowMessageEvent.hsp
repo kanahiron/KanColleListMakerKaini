@@ -289,6 +289,16 @@ return
 			sendmsg ichiranMode2Ch, $F2
 			ichiranMode2 = stat & 0x01
 
+			sendmsg normalGridWindowCh, $F2
+			normalGridWindow = stat & 0x01
+			sendmsg miniGridWindowCh, $F2
+			miniGridWindow = stat & 0x01
+
+			if fleetWindowNishimura {
+				normalGridWindow = TRUE
+				fleetWindowNishimura = FALSE
+			}
+
 			if (ichiranMode1) {
 
 				lvnamef = lvname
@@ -323,7 +333,6 @@ return
 
 		}
 
-
 		if (listMode == LISTMODE_FLEET){
 
 			sosuf = sosu
@@ -351,19 +360,16 @@ return
 			sendmsg fleetPunctuationch, $F2
 			fleetPunctuation = stat & 0x01
 
-			sendmsg fleetWindowNormalCh, $F2
-			fleetWindowNormal = stat & 0x01
-			sendmsg fleetWindowMiniCh, $F2
-			fleetWindowMini = stat & 0x01
+			sendmsg normalGridWindowCh, $F2
+			normalGridWindow = stat & 0x01
+			sendmsg normalGridWindowCh, $F2
+			normalGridWindow = stat & 0x01
+			sendmsg miniGridWindowCh, $F2
+			miniGridWindow = stat & 0x01
 			sendmsg fleetWindowNishimuraCh, $F2
 			fleetWindowNishimura = stat & 0x01
 
 			nishimuraFlg = fleetWindowNishimura
-			miniGridWindow = fleetWindowMini
-
-			logmes "fleetWindowNormal     " + fleetWindowNormal
-			logmes "fleetWindowMini       " + fleetWindowMini
-			logmes "fleetWindowNishimura  " + fleetWindowNishimura
 
 			if (nishimuraFlg | miniGridWindow){
 				if (tuika2 + tuika3 == 1){
@@ -403,6 +409,16 @@ return
 
 			sendmsg userDefListCh, $F2
 			userDefList = stat & 0x01
+
+			sendmsg normalGridWindowCh, $F2
+			normalGridWindow = stat & 0x01
+			sendmsg miniGridWindowCh, $F2
+			miniGridWindow = stat & 0x01
+
+			if fleetWindowNishimura {
+				normalGridWindow = TRUE
+				fleetWindowNishimura = FALSE
+			}
 
 			sdim tempStr
 			GetWindowText userDefListXIh, varptr(tempStr), 32
