@@ -58,24 +58,23 @@
 		return 1
 	}
 
-	if (hideOnCapture){
-		if ( (hideOnCaptureOnlyListMake^1) || (mode==MODE_LIST) ){
-			SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
-			SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
-			SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
-		}
-	}
-
 	switch captureMethod
 
 		case CM_BITBLT
 			switch positionType
 				case PT_RELATIVE
 					logmes "PT_RELATIVE"
+					GetWindowRect hClient, varptr(RECT)
+					screenPosGame = RECT(0)+sscap(0), RECT(1)+sscap(1), 0, 0, sscapwh(0), sscapwh(1)
+					gosub *AdaptiveHideWindow
+
 					BitBlt WND_INFO(WND_CAPTURE, WI_DC), 0, 0, sscapwh(0), sscapwh(1), dcClient, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
 					swbreak
 				case PT_ABSOLUTE
 					logmes "PT_ABSOLUTE"
+					screenPosGame = sscap(0), sscap(1), 0, 0, sscapwh(0), sscapwh(1)
+					gosub *AdaptiveHideWindow
+
 					BitBlt WND_INFO(WND_CAPTURE, WI_DC), 0, 0, sscapwh(0), sscapwh(1), hdcScreen, sscap(0), sscap(1), SRCCOPY | CAPTUREBLT: redraw
 					swbreak
 
@@ -83,6 +82,9 @@
 					logmes "PT_WNDABSOLUTE"
 					scrPoint = sscap(0), sscap(1)
 					ClientToScreen hClient, varptr(scrPoint)
+					screenPosGame = scrPoint(0), scrPoint(1), 0, 0, sscapwh(0), sscapwh(1)
+					gosub *AdaptiveHideWindow
+
 					BitBlt WND_INFO(WND_CAPTURE, WI_DC), 0, 0, sscapwh(0), sscapwh(1), hdcScreen, scrPoint(0), scrPoint(1), SRCCOPY | CAPTUREBLT: redraw
 					swbreak
 			swend
@@ -90,6 +92,10 @@
 
 		case CM_PRINTWINDOW
 			logmes "CM_PRINTWINDOW"
+			GetWindowRect hClient, varptr(RECT)
+			screenPosGame = RECT(0)+sscap(0), RECT(1)+sscap(1), 0, 0, sscapwh(0), sscapwh(1)
+			gosub *AdaptiveHideWindow
+
 			PrintWindow hClient, WND_INFO( WND_PRINTWND, WI_DC), 1
 			gsel WND_CAPTURE: pos 0, 0
 			gcopy WND_PRINTWND, sscap(0), sscap(1), sscapwh(0), sscapwh(1)
@@ -97,13 +103,11 @@
 
 	swend
 
-
-	if (hideOnCapture){
-		if ( (hideOnCaptureOnlyListMake^1) || (mode==MODE_LIST) ){
-			SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
-			SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
-			SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
-		}
+	if (AdaptiveHideWindowFlg) {
+		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
+		SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
+		SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
+		AdaptiveHideWindowFlg = FALSE
 	}
 
 	if (forceResize){
@@ -138,6 +142,32 @@
 
 return 0
 
+*AdaptiveHideWindow
+	//screenPosGame lx, ly, rx, ry, w, h
+	//repeat 6
+	//	logmes "screenPosGame("+cnt+") :"+screenPosGame(cnt)
+	//loop
+
+	if collisionWindow(screenPosGame, WND_INFO(WND_MAIN, WI_HANDLE)){
+		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
+		AdaptiveHideWindowFlg = TRUE
+	}
+	if collisionWindow(screenPosGame, WND_INFO(WND_GRID, WI_HANDLE)){
+		SetLayeredWindowAttributes WND_INFO(WND_GRID, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
+		AdaptiveHideWindowFlg = TRUE
+	}
+	if collisionWindow(screenPosGame, WND_INFO(WND_TWITTER, WI_HANDLE)){
+		SetLayeredWindowAttributes WND_INFO(WND_TWITTER, WI_HANDLE), 0x00000000, 0, LWA_ALPHA
+		AdaptiveHideWindowFlg = TRUE
+	}
+return
+
+#module
+dim rect, 6
+#defcfunc collisionWindow array screenPosGame, int hwnd_
+	GetWindowRect hwnd_, varptr(rect): rect(4)=rect(2)-rect(0): rect(5)=rect(3)-rect(1)
+return ( (abs( (rect(0)+rect(4)/2)-(screenPosGame(0)+screenPosGame(4)/2))<(rect(4)+screenPosGame(4))/2) && (abs((rect(1)+rect(5)/2)-(screenPosGame(1)+screenPosGame(5)/2))<(rect(5)+screenPosGame(5))/2) )
+#global
 
 //SSキャプチャ――――――――――――――――――――――――――――――――――
 *SSCapture

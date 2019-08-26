@@ -33,6 +33,7 @@
 	dim cellSize, 2
 	dim tempMouse, 2
 	dim userDefRect, 4
+	dim screenPosGame, 6
 
 	ddim AspectRatio, 1
 	sdim sscapmes, 1026

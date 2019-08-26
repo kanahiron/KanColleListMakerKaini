@@ -796,11 +796,6 @@
 			chkbox "\"提督名と司令部Lvを隠す\"で隠すのではなく切り取る", namecut: mesy += scale20
 
 			pos scale5, mesy
-			chkbox "SSキャプチャ時に一覧めいかーの映込みを防止する", hideOnCapture: mesy += scale20
-			pos Scale(5+25), mesy
-			chkbox "一覧作成モードでのみ有効にする", hideOnCaptureOnlyListMake: mesy += scale20
-
-			pos scale5, mesy
 			chkbox "SSを強制的に等倍にリサイズする", forceResize: mesy += scale20
 
 			pos scale5, mesy
