@@ -33,6 +33,7 @@
 	dim cellSize, 2
 	dim tempMouse, 2
 	dim userDefRect, 4
+	dim screenPosGame, 6
 
 	ddim AspectRatio, 1
 	sdim sscapmes, 1026
@@ -227,8 +228,13 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 
 	if (listMode == LISTMODE_LIST){
 
-		cellnum(0) = 6, 4
-		ListModeHNum = 5
+		if (normalGridWindow){
+			cellnum(0) = 5, 4
+			ListModeHNum = 5
+		} else {
+			cellnum(0) = 7, 6
+			ListModeHNum = 7
+		}
 
 		if ichiranMode1 {
 			if yubiwa = 0 & kantai = 0 : w = 588 : capx = 586
@@ -283,8 +289,16 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 	if (listMode == LISTMODE_OTHER){
 
 		if (directLink) {
-			cellnum(0) = 6, 4
-			ListModeHNum = 5
+
+			if (normalGridWindow){
+				cellnum(0) = 5, 4
+				ListModeHNum = 5
+
+			} else {
+				cellnum(0) = 7, 6
+				ListModeHNum = 7
+			}
+
 			w = BASE_SIZE_W
 			h = BASE_SIZE_H
 			capx = 0
@@ -306,8 +320,16 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 			}
 		}
 		if (equipmentList) {
-			cellnum(0) = 6, 4
-			ListModeHNum = 5
+
+			if (normalGridWindow){
+				cellnum(0) = 5, 4
+				ListModeHNum = 5
+
+			} else {
+				cellnum(0) = 8, 7
+				ListModeHNum = 8
+			}
+
 			h = 460
 			if (sceneKaiso) {
 				w = 280
@@ -324,8 +346,16 @@ return ( 0 <= tpos(0) && 0 <= tpos(1) && tpos(0) < disInfo(2) && tpos(1) < disIn
 		}
 
 		if (userDefList) {
-			cellnum(0) = 6, 4
-			ListModeHNum = 5
+
+			if (normalGridWindow){
+				cellnum(0) = 5, 4
+				ListModeHNum = 5
+
+			} else {
+				cellnum(0) = 8, 7
+				ListModeHNum = 8
+			}
+
 			capx = userDefRect(0)
 			capy = userDefRect(1)
 			w = userDefRect(2)

@@ -32,8 +32,6 @@
 
 	Get@iniMod "CaptureAndMaking", "NoHideLv", noHideLv, "0"
 	Get@iniMod "CaptureAndMaking", "NameCut", namecut, "0"
-	Get@iniMod "CaptureAndMaking", "HideOnCapture", hideOnCapture, "1"
-	Get@iniMod "CaptureAndMaking", "hideOnCaptureOnlyListMake", hideOnCaptureOnlyListMake, "1"
 	Get@iniMod "CaptureAndMaking", "forceResize", forceResize, "0"
 	Get@iniMod "CaptureAndMaking", "PastSize", pastSize, "0"
 	Get@iniMod "CaptureAndMaking", "maxSearchLevel", maxSearchLevel, "1"
@@ -142,8 +140,8 @@
 	Get@iniMod "KanmusuFormationMode", "soka", soka, "0"
 	Get@iniMod "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation, "1"
 	Get@iniMod "KanmusuFormationMode", "AddOrderNum", addOrderNum, "1"
-	Get@iniMod "KanmusuFormationMode", "FleetWindowNormal", fleetWindowNormal, "1"
-	Get@iniMod "KanmusuFormationMode", "FleetWindowMini", fleetWindowMini, "0"
+	Get@iniMod "KanmusuFormationMode", "normalGridWindow", normalGridWindow, "1"
+	Get@iniMod "KanmusuFormationMode", "miniGridWindow", miniGridWindow, "0"
 	Get@iniMod "KanmusuFormationMode", "FleetWindowNishimura", fleetWindowNishimura, "0"
 	Get@iniMod "KanmusuFormationMode", "FirstFleetName", FirstFleetName, "\"第一艦隊\""
 	Get@iniMod "KanmusuFormationMode", "SecondFleetName", SecondFleetName, "\"第二艦隊\""
@@ -186,8 +184,6 @@ return
 	if (hidename != 0) & (hidename != 1):hidename = 0
 	if (noHideLv != 0) & (noHideLv != 1):noHideLv=0
 	if (namecut != 0) & (namecut != 1):namecut=0
-	if (hideOnCapture != 0) & (hideOnCapture != 1):hideOnCapture=1
-	if (hideOnCaptureOnlyListMake != 0) & (hideOnCaptureOnlyListMake != 1):hideOnCaptureOnlyListMake=1
 	if (forceResize != 0) & (forceResize != 1):forceResize=0
 	if (pastSize != 0) & (pastSize != 1):pastSize=0
 	if (frontrow != 0) & (frontrow != 1):frontrow=1
@@ -283,7 +279,7 @@ return
 	colorRefArr(2) =  RGBtoBGR(fontColorThirdFleet)
 	colorRefArr(3) =  RGBtoBGR(fontColorFourthFleet)
 	colorRefArr(4) =  RGBtoBGR(PunctuationColor)
-	
+
 	hidelog_ = hidelog
 
 	if PathIsDirectory(listsavedir) = 0 {
@@ -388,9 +384,9 @@ return
 		tuika4 = 0
 	}
 
-	if (fleetWindowNormal+fleetWindowMini+fleetWindowNishimura) != 1{
-		fleetWindowNormal = 1
-		fleetWindowMini = 0
+	if (normalGridWindow+miniGridWindow+fleetWindowNishimura) != 1{
+		normalGridWindow = 1
+		miniGridWindow = 0
 		fleetWindowNishimura = 0
 	}
 
@@ -506,8 +502,6 @@ return
 
 	Write@iniMod "CaptureAndMaking", "NoHideLv", noHideLv
 	Write@iniMod "CaptureAndMaking", "NameCut", namecut
-	Write@iniMod "CaptureAndMaking", "HideOnCapture", hideOnCapture
-	Write@iniMod "CaptureAndMaking", "hideOnCaptureOnlyListMake", hideOnCaptureOnlyListMake
 	Write@iniMod "CaptureAndMaking", "forceResize", forceResize
 	Write@iniMod "CaptureAndMaking", "PastSize", pastSize
 	Write@iniMod "CaptureAndMaking", "maxSearchLevel", maxSearchLevel
@@ -617,8 +611,8 @@ return
 	Write@iniMod "KanmusuFormationMode", "soka", soka
 	Write@iniMod "KanmusuFormationMode", "FleetPunctuation", fleetPunctuation
 	Write@iniMod "KanmusuFormationMode", "AddOrderNum", addOrderNum
-	Write@iniMod "KanmusuFormationMode", "FleetWindowNormal", fleetWindowNormal
-	Write@iniMod "KanmusuFormationMode", "FleetWindowMini", fleetWindowMini
+	Write@iniMod "KanmusuFormationMode", "normalGridWindow", normalGridWindow
+	Write@iniMod "KanmusuFormationMode", "miniGridWindow", miniGridWindow
 	Write@iniMod "KanmusuFormationMode", "FleetWindowNishimura", fleetWindowNishimura
 	Write@iniMod "KanmusuFormationMode", "FirstFleetName", FirstFleetName
 	Write@iniMod "KanmusuFormationMode", "SecondFleetName", SecondFleetName

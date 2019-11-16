@@ -287,12 +287,33 @@
 			lvnameCId = stat
 			lvnameCh = objinfo_hwnd(lvnameCId)
 
+			mesy += Scale(1)
+
+			pos Scale(5), mesy+Scale(1)
+			mes "並べる数":mesy += Scale(18)
+			pos Scale(5), mesy
+			objsize Scale(80), scale20
+			chkbox "通常", normalGridWindow
+			normalGridWindowCId = stat
+			normalGridWindowCh = objinfo_hwnd(normalGridWindowCId)
+			SetWindowLong normalGridWindowCh, -16, $50000009 | $20000
+
+			pos Scale(5+85), mesy
+			chkbox "多", miniGridWindow
+			miniGridWindowCId = stat
+			miniGridWindowCh = objinfo_hwnd(miniGridWindowCId)
+			sendmsg miniGridWindowCh, $F4, $9
+
+			mesy += scale20
+
 			SetDAControl ichiranMode1Ch
 			SetDAControl ichiranMode2Ch
 			SetDAControl yubiwaCh
 			SetDAControl kantaiCh
 			SetDAControl pageCh
 			SetDAControl lvnameCh
+			SetDAControl normalGridWindowCh
+			SetDAControl miniGridWindowCh
 		}
 
 		if (listmode == LISTMODE_FLEET){
@@ -361,20 +382,20 @@
 			mesy += Scale(1)
 
 			pos Scale(5), mesy+Scale(1)
-			mes "ウィンドウサイズ":mesy += Scale(18)
+			mes "並べる数":mesy += Scale(18)
 			pos Scale(5), mesy
 			objsize Scale(56), scale20
-			chkbox "通常", fleetWindowNormal
-			fleetWindowNormalCId = stat
-			fleetWindowNormalCh = objinfo_hwnd(fleetWindowNormalCId)
-			SetWindowLong fleetWindowNormalCh, -16, $50000009 | $20000
+			chkbox "通常", normalGridWindow
+			normalGridWindowCId = stat
+			normalGridWindowCh = objinfo_hwnd(normalGridWindowCId)
+			SetWindowLong normalGridWindowCh, -16, $50000009 | $20000
 
 			pos Scale(5+56), mesy
 			objsize Scale(40), scale20
-			chkbox "小", fleetWindowMini
-			fleetWindowMiniCId = stat
-			fleetWindowMiniCh = objinfo_hwnd(fleetWindowMiniCId)
-			sendmsg fleetWindowMiniCh, $F4, $9
+			chkbox "少", miniGridWindow
+			miniGridWindowCId = stat
+			miniGridWindowCh = objinfo_hwnd(miniGridWindowCId)
+			sendmsg miniGridWindowCh, $F4, $9
 
 			pos Scale(5+96), mesy
 			objsize Scale(74), scale20
@@ -454,9 +475,9 @@
 			SetDAControl sosuCh
 			SetDAControl sokaCh
 			SetDAControl fleetPunctuationCh
-			SetDAControl fleetWindowNormalCh
 			SetDAControl fleetWindowNishimuraCh
-			SetDAControl fleetWindowMiniCh
+			SetDAControl normalGridWindowCh
+			SetDAControl miniGridWindowCh
 
 			gosub *drawColor
 		}
@@ -553,6 +574,23 @@
 
 			mesy += Scale(43)
 
+			pos Scale(5), mesy+Scale(1)
+			mes "並べる数":mesy += Scale(18)
+			pos Scale(5), mesy
+			objsize Scale(80), scale20
+			chkbox "通常", normalGridWindow
+			normalGridWindowCId = stat
+			normalGridWindowCh = objinfo_hwnd(normalGridWindowCId)
+			SetWindowLong normalGridWindowCh, -16, $50000009 | $20000
+
+			pos Scale(5+85), mesy
+			chkbox "多", miniGridWindow
+			miniGridWindowCId = stat
+			miniGridWindowCh = objinfo_hwnd(miniGridWindowCId)
+			sendmsg miniGridWindowCh, $F4, $9
+
+			mesy += scale20
+
 			SetDAControl directLinkCh
 			SetDAControl airStationCh
 			SetDAControl airStationTabCh
@@ -565,6 +603,8 @@
 			SetDAControl userDefListYIh
 			SetDAControl userDefListWIh
 			SetDAControl userDefListHIh
+			SetDAControl normalGridWindowCh
+			SetDAControl miniGridWindowCh
 
 		}
 
@@ -754,11 +794,6 @@
 			chkbox "\"提督名と司令部Lvを隠す\"で司令部Lvは隠さない", noHideLv: mesy += scale20
 			pos scale5, mesy
 			chkbox "\"提督名と司令部Lvを隠す\"で隠すのではなく切り取る", namecut: mesy += scale20
-
-			pos scale5, mesy
-			chkbox "SSキャプチャ時に一覧めいかーの映込みを防止する", hideOnCapture: mesy += scale20
-			pos Scale(5+25), mesy
-			chkbox "一覧作成モードでのみ有効にする", hideOnCaptureOnlyListMake: mesy += scale20
 
 			pos scale5, mesy
 			chkbox "SSを強制的に等倍にリサイズする", forceResize: mesy += scale20
