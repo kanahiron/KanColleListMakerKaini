@@ -80,7 +80,7 @@
 	wndInfoInit
 	nidStackInit
 	DAControlInit
-	init@TimerOperationMod
+	init@TimerOperationMod WND_INFO(WND_MAIN, WI_HANDLE), TickTackTimerID
 	init@isHomeportMod WND_HOME_PORT_MOD
 	//Init@i18n //準備ができていないため
 
@@ -110,8 +110,7 @@
 		oncmd gosub *mainWindowProc, WM_CTLCOLOREDIT
 		objmode 2
 
-		//combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  タイマーモード\n  オプション"
-		combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+		combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  タイマーモード\n  オプション"
 		comboxId = stat
 		hCombox = objinfo_hwnd(comboxId)
 
@@ -283,8 +282,10 @@
 	gosub *drawMainWindow
 	//*/
 
-	//mode = MODE_TIMER
-	//gosub *drawMainWindow
+	/*
+	mode = MODE_TIMER
+	gosub *drawMainWindow
+	*/
 
 	firstStart = FALSE
 	stop

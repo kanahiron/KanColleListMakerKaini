@@ -9,17 +9,24 @@
 #enum MEBTimer_NameIId
 #enum MEBTimer_NameIh
 #enum MEBTimer_SecTime
+#enum MEBTimer_UpdateFlg
 #enum MEBTimer_COUNT
+
 #enum MEBTimerStr_Time = 0
 #enum MEBTimerStr_Name
 #enum MEBTimerStr_COUNT
+
+#enum MEBData_Name = 0
+#enum MEBData_Time
 
 #enum DockTimer_ChangeBId = 0
 #enum DockTimer_TimeIId
 #enum DockTimer_TimeIh
 #enum DockTimer_SecTime
+#enum DockTimer_UpdateFlg
 #enum DockTimer_COUNT
-#enum DockTimerStr_Time = 0
+
+#enum DockTimerStr_SecTime = 0
 #enum DockTimerStr_COUNT
 
 #enum COLORREF_COLOR = 0
@@ -33,9 +40,18 @@
 #define MEBTimerNum		3
 #define DockTimerNum	4
 
-#deffunc local init
+#deffunc local init int hwnd_, int timerID_
 
 	ddim UIScale, 1
+
+	dim globalTime, 1
+	dim pGlobalTime, 1
+	dim hMainWnd, 1
+	dim timerID, 1
+	dim KLM2startTime, 1
+	hMainWnd = hwnd_
+	timerID = timerID_
+	KLM2startTime = timeGetTime()
 
 	dim MEBTimer, MEBTimer_COUNT, MEBTimerNum
 	sdim MEBTimerStr, 64, MEBTimerStr_COUNT, MEBTimerNum
@@ -43,13 +59,28 @@
 	dim DockTimer, DockTimer_COUNT, DockTimerNum
 	sdim DockTimerStr, 64, DockTimerStr_COUNT, DockTimerNum
 
+	sdim MEBDataList, 512, 2, 1
+	//仮
+	MEBDataList(MEBData_Name, 0) = "01.練習航海"
+	MEBDataList(MEBData_Time, 0) = ""+(15*60)
+	MEBDataList(MEBData_Name, 1) = "A3.長時間対潜警戒"
+	MEBDataList(MEBData_Time, 1) = ""+(15*60+2*3600)
+	MEBDataList(MEBData_Name, 2) = "43.ミ船団護衛(二号船団)(マンスリー・交戦型)"
+	MEBDataList(MEBData_Time, 2) = ""+(12*3600)
+	MEBDataListCount = 3
+
+	sdim MEBSelectBoxStr, 4096
+	repeat MEBDataListCount
+		MEBSelectBoxStr += MEBDataList(MEBData_Name, cnt)+"\n"
+	loop
+	MEBSelectBoxStr = strmid(MEBSelectBoxStr, 0, strlen(MEBSelectBoxStr)-2)
+
 	dim COLORREF, COLORREF_COUNT, COLOR_COUNT
 	sdim TimerSetTime, 64, 3
 
-	UIScale = 1.0
 	repeat MEBTimerNum
 		MEBTimerStr(MEBTimerStr_Time, cnt) = "---"
-		MEBTimerStr(MEBTimerStr_Name, cnt) = "テストうぉお"
+		MEBTimerStr(MEBTimerStr_Name, cnt) = "---"
 	loop
 	repeat DockTimerNum
 		DockTimerStr(DockTimerStr_Time, cnt) = "---"
@@ -59,6 +90,8 @@
 	COLORREF(COLORREF_BRUSH, COLOR_RED) = CreateSolidBrush(0x0000FF)
 	COLORREF(COLORREF_COLOR, COLOR_WHITE) = 0xFFFFFF
 	COLORREF(COLORREF_BRUSH, COLOR_WHITE) = CreateSolidBrush(0xFFFFFF)
+
+	SetTimer hMainWnd, timerID, 400, 0
 
 return
 
@@ -84,12 +117,12 @@ return
 		sendmsg MEBTimer(MEBTimer_TimeIh, cnt), $CF, 1
 		ChgWndowStyle objinfo_hwnd( MEBTimer(MEBTimer_TimeIId, cnt)), 0x01
 		pos Scale(21), mesy
-		input MEBTimerStr(MEBTimerStr_Name, cnt), Scale(134), Scale(20)
+		input MEBTimerStr(MEBTimerStr_Name, cnt), Scale(134), Scale(24)
 		MEBTimer(MEBTimer_NameIId, cnt) = stat
 		MEBTimer(MEBTimer_NameIh, cnt) = objinfo( MEBTimer(MEBTimer_NameIId, cnt), 2)
 		sendmsg MEBTimer(MEBTimer_NameIh, cnt), $CF, 1
-		pos Scale(155), mesy: objsize Scale(20), Scale(20)
-		button gosub "↺", *MEBTimerReset: mesy += Scale(20)
+		pos Scale(155), mesy: objsize Scale(20), Scale(24)
+		button gosub "↺", *MEBTimerReset: mesy += Scale(24)
 		MEBTimer(MEBTimer_ResetBId, cnt) = stat
 	loop
 
@@ -112,25 +145,23 @@ return
 		ChgWndowStyle DockTimer(DockTimer_TimeIh, cnt), 0x01
 	loop
 
-	tetete = "01.かああ\n,02.うあああ"
+	pos Scale(175)+Scale(15), mesy_
+	mes "時間指定": mesy_+=Scale(20)
 
 	pos Scale(175)+Scale(15), mesy_
-	mes "残り時間指定": mesy_+=Scale(20)
-
-	pos Scale(175)+Scale(15), mesy_
-	input TimerSetTime(0), Scale(40), Scale(20), 2
+	input TimerSetTime(0), Scale(40), Scale(22), 2
 	TimerSetTimeIId(0) = stat
 	ChgWndowStyle objinfo_hwnd(stat), 0x02
 	pos Scale(175)+Scale(60), mesy_
 	mes ":"
 	pos Scale(175)+Scale(70), mesy_
-	input TimerSetTime(1), Scale(40), Scale(20)
+	input TimerSetTime(1), Scale(40), Scale(22), 2
 	TimerSetTimeIId(1) = stat
 	ChgWndowStyle objinfo_hwnd(stat), 0x02
 	pos Scale(175)+Scale(115), mesy_
 	mes ":"
 	pos Scale(175)+Scale(125), mesy_
-	input TimerSetTime(2), Scale(40), Scale(20)
+	input TimerSetTime(2), Scale(40), Scale(22), 2
 	TimerSetTimeIId(2) = stat
 	ChgWndowStyle objinfo_hwnd(stat), 0x02
 	mesy_+=Scale(30)
@@ -139,7 +170,7 @@ return
 	mes "遠征名で指定": mesy_+=Scale(20)
 	pos Scale(175)+Scale(15), mesy_
 	objsize Scale(150), Scale(20)
-	combox temp, 100, tetete: mesy_+=Scale(35)
+	combox temp, 100, MEBSelectBoxStr: mesy_+=Scale(35)
 	MEBListCBId = stat
 	MEBListCBh = objinfo_hwnd(MEBListCBId)
 
@@ -158,8 +189,41 @@ return
 
 return
 
-*TimerSet
+s
+*TickTackTimer
+	globalTime = (timeGetTime() - KLM2startTime)/1000
+	if (globalTime != pGlobalTime){
+		pGlobalTime = globalTime
+		gosub *TickTack
+	}
+return
 
+*TickTack
+
+	repeat MEBTimerNum
+		if (MEBTimer( MEBTimer_SecTime, cnt) != 0) {
+			MEBTimer( MEBTimer_SecTime, cnt) -= 1
+			time = MEBTimer( MEBTimer_SecTime, cnt)
+			MEBTimer( MEBTimer_UpdateFlg, cnt) = TRUE
+			MEBTimerStr( MEBTimerStr_Time, cnt) = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+		}
+	loop
+
+	repeat DockTimerNum
+		if (DockTimer( DockTimer_SecTime, cnt) != 0) {
+			DockTimer( DockTimer_SecTime, cnt) -= 1
+			time = DockTimer( DockTimer_SecTime, cnt)
+			DockTimer( DockTimer_UpdateFlg, cnt) = TRUE
+			DockTimerStr( DockTimerStr_Time, cnt) = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+			changeFlg = TRUE
+		}
+	loop
+
+	gosub *TimerUpdate
+
+return
+
+*TimerSet
 	if (selected==-1):return
 
 	if ((""+TimerSetTime(0)+TimerSetTime(1)+TimerSetTime(2)) != ""){
@@ -170,45 +234,62 @@ return
 		if (timemm > 59): timemm \= 60: timehh++
 		if (timehh > 99): timehh = 99
 
-		time = itimehh*3600 + timemm*60 + timess
-		timeStr = strf("%02d:%02d:%02d", timehh, timemm, timess)
-		dialog ""+timeStr
+		time = timehh*3600 + timemm*60 + timess
+		timeStr = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
 
 		if( selected & 0x10){
-			dialog "遠征"
+			//遠征
 			MEBTimer( MEBTimer_SecTime, selected-16) = time
+			MEBTimer( MEBTimer_UpdateFlg, selected-16) = TRUE
 			MEBTimerStr( MEBTimerStr_Time, selected-16) = timeStr
-			MEBTimerStr( MEBTimerStr_Name, selected-16) = "(指定なし)"
+			MEBTimerStr( MEBTimerStr_Name, selected-16) = "(手入力)"
+
 		} else {
-			dialog "dock"
+			//ドック
 			DockTimer( DockTimer_SecTime, selected) = time
+			DockTimer( DockTimer_UpdateFlg, selected) = TRUE
 			DockTimerStr( DockTimerStr_Time, selected) = timeStr
-			DockTimerStr( DockTimerStr_Name, selected) = "(指定なし)"
 		}
 
-	} else {
+	} else :if( selected & 0x10 ){
 		//リストボックスから取得
+		//遠征のみ
+		sendmsg MEBListCBh, CB_GETCURSEL
+		temp = stat
+		time = int(MEBDataList(MEBData_Time, temp))
+		timeStr = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+
 		MEBTimer( MEBTimer_SecTime, selected-16) = time
-		MEBTimerStr( MEBTimerStr_Time, selected-16) = TimerSetTime(0)+":"+TimerSetTime(1)+":"+TimerSetTime(2)
-		MEBTimerStr( MEBTimerStr_Name, selected-16) = "(指定なし)"
+		MEBTimer( MEBTimer_UpdateFlg, selected-16) = TRUE
+		MEBTimerStr( MEBTimerStr_Time, selected-16) = timeStr
+		MEBTimerStr( MEBTimerStr_Name, selected-16) = MEBDataList(MEBData_Name, temp)
 	}
 
 	width Scale(175)
 	selected = -1
+	gosub *SetMEBTimerName
 	gosub *TimerUpdate
 return
 
-*TimerUpdate
-
+*SetMEBTimerName
 	repeat MEBTimerNum
 		objprm MEBTimer(MEBTimer_NameIId, cnt), MEBTimerStr(MEBTimerStr_Name, cnt)
-		objprm MEBTimer(MEBTimer_TimeIId, cnt), MEBTimerStr(MEBTimerStr_Time, cnt)
 	loop
+return
 
+*TimerUpdate
+	repeat MEBTimerNum
+		if MEBTimer(MEBTimer_UpdateFlg, cnt){
+			objprm MEBTimer(MEBTimer_TimeIId, cnt), MEBTimerStr(MEBTimerStr_Time, cnt)
+			MEBTimer(MEBTimer_UpdateFlg, cnt) = FALSE
+		}
+	loop
 	repeat DockTimerNum
-		objprm DockTimer(DockTimer_TimeIId, cnt), DockTimerStr(DockTimerStr_Time, cnt)
+		if DockTimer(DockTimer_UpdateFlg, cnt){
+			objprm DockTimer(DockTimer_TimeIId, cnt), DockTimerStr(DockTimerStr_Time, cnt)
+			DockTimer(DockTimer_UpdateFlg, cnt) = FALSE
+		}
 	loop
-
 return
 
 *MEBTimerChange
@@ -269,6 +350,8 @@ return
 	repeat COLOR_COUNT
 		DeleteObject COLOR_BRUSH(COLORREF_BRUSH, cnt)
 	loop
+	//タイマーを削除
+	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), TickTackTimerID
 return
 
 /*

@@ -85,6 +85,7 @@
 #define VideoCapTimerID			103
 #define LateEncodeTimerID		104
 #define SeqCapWriteStatTimerID	105
+#define TickTackTimerID         106
 
 //自分で定義した定数
 #enum WND_MAIN = 0

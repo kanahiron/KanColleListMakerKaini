@@ -117,12 +117,10 @@ return
 				mode = MODE_LIST
 				listmode = LISTMODE_OTHER
 				swbreak
-			//Ver0.14では見送り
-			//case 4
-			//	mode = MODE_TIMER
-			//	swbreak
-			//case 5
 			case 4
+				mode = MODE_TIMER
+				swbreak
+			case 5
 				mode = MODE_OPTION
 				swbreak
 		swend
@@ -239,8 +237,7 @@ return
 *WM_LBUTTONDOWN_Proc
 	gosub *mainWndMove
 	if (mode==MODE_TIMER){
-		//Ver0.14では見送り
-		//WM_LBUTTONDOWN_Proc@TimerOperationMod lparam, wparam
+		WM_LBUTTONDOWN_Proc@TimerOperationMod lparam, wparam
 	}
 return
 
@@ -736,5 +733,10 @@ return
 		case SeqCapWriteStatTimerID
 			gosub *SeqCapWriteStatTimerProcessing
 			swbreak
+
+		case TickTackTimerID
+			gosub *TickTackTimer@TimerOperationMod
+			swbreak
+
 	swend
 return 0
