@@ -198,70 +198,6 @@ return
 	if (mesy_ > mesy): mesy = mesy_
 return
 
-#deffunc local WM_LBUTTONDOWN_Proc int lparam_, int wparam_
-
-	if (selected == -1):return
-	width Scale(175)
-	selected = -1
-
-return
-
-#deffunc local WM_CTLCOLOREDIT_Proc int lparam_, int wparam_
-
-	tmp = 0
-	repeat MEBTimerNum
-		if lparam_ = MEBTimer(MEBTimer_TimeIh, cnt): tmp = MEBTimer(MEBTimer_TimeBKColor, cnt)
-		//if lparam_ = MEBTimer(MEBTimer_NameIh, cnt): tmp = MEBTimer(MEBTimer_NameBKColor, cnt)
-	loop
-	repeat DockTimerNum
-		if lparam_ = DockTimer(DockTimer_TimeIh, cnt): tmp = DockTimer(DockTimer_TimeBKColor, cnt)
-	loop
-	if tmp : return tmp
-
-return 0
-
-*TickTackTimer
-	globalTime = (timeGetTime() - KLM2startTime)/1000
-	if (globalTime != pGlobalTime){
-		pGlobalTime = globalTime
-		gosub *TickTack
-	}
-return
-
-*TickTack
-
-	repeat MEBTimerNum
-		if (MEBTimer( MEBTimer_SecTime, cnt) != -1) {
-			MEBTimer( MEBTimer_SecTime, cnt) -= 1
-			time = MEBTimer( MEBTimer_SecTime, cnt)
-			MEBTimer( MEBTimer_UpdateFlg, cnt) = TRUE
-			MEBTimerStr( MEBTimerStr_Time, cnt) = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
-			if (time == 59): MEBTimer( MEBTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_YEL)
-			if (time == -1) {
-				MEBTimer( MEBTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_RED)
-				MEBTimerStr( MEBTimerStr_Time, cnt) = "完了"
-			}
-		}
-	loop
-
-	repeat DockTimerNum
-		if (DockTimer( DockTimer_SecTime, cnt) != -1) {
-			DockTimer( DockTimer_SecTime, cnt) -= 1
-			time = DockTimer( DockTimer_SecTime, cnt)
-			DockTimer( DockTimer_UpdateFlg, cnt) = TRUE
-			DockTimerStr( DockTimerStr_Time, cnt) = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
-			if (time == 59): DockTimer( DockTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_YEL)
-			if (time == -1) {
-				DockTimer( DockTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_RED)
-				DockTimerStr( DockTimerStr_Time, cnt) = "完了"
-			}
-		}
-	loop
-
-	gosub *TimerUpdate
-
-return
-
 *TimerSet
 	if (selected==-1):return
 
@@ -317,6 +253,48 @@ return
 	repeat MEBTimerNum
 		objprm MEBTimer(MEBTimer_NameIId, cnt), MEBTimerStr(MEBTimerStr_Name, cnt)
 	loop
+return
+
+*TickTackTimer
+	globalTime = (timeGetTime() - KLM2startTime)/1000
+	if (globalTime != pGlobalTime){
+		pGlobalTime = globalTime
+		gosub *TickTack
+	}
+return
+
+*TickTack
+
+	repeat MEBTimerNum
+		if (MEBTimer( MEBTimer_SecTime, cnt) != -1) {
+			MEBTimer( MEBTimer_SecTime, cnt) -= 1
+			time = MEBTimer( MEBTimer_SecTime, cnt)
+			MEBTimer( MEBTimer_UpdateFlg, cnt) = TRUE
+			MEBTimerStr( MEBTimerStr_Time, cnt) = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+			if (time == 59): MEBTimer( MEBTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_YEL)
+			if (time == -1) {
+				MEBTimer( MEBTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_RED)
+				MEBTimerStr( MEBTimerStr_Time, cnt) = "完了"
+			}
+		}
+	loop
+
+	repeat DockTimerNum
+		if (DockTimer( DockTimer_SecTime, cnt) != -1) {
+			DockTimer( DockTimer_SecTime, cnt) -= 1
+			time = DockTimer( DockTimer_SecTime, cnt)
+			DockTimer( DockTimer_UpdateFlg, cnt) = TRUE
+			DockTimerStr( DockTimerStr_Time, cnt) = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+			if (time == 59): DockTimer( DockTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_YEL)
+			if (time == -1) {
+				DockTimer( DockTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_RED)
+				DockTimerStr( DockTimerStr_Time, cnt) = "完了"
+			}
+		}
+	loop
+
+	gosub *TimerUpdate
+
 return
 
 *TimerUpdate
@@ -386,6 +364,27 @@ return
 
 return
 
+#deffunc local WM_LBUTTONDOWN_Proc int lparam_, int wparam_
+
+	if (selected == -1):return
+	width Scale(175)
+	selected = -1
+
+return
+
+#deffunc local WM_CTLCOLOREDIT_Proc int lparam_, int wparam_
+
+	tmp = 0
+	repeat MEBTimerNum
+		if lparam_ = MEBTimer(MEBTimer_TimeIh, cnt): tmp = MEBTimer(MEBTimer_TimeBKColor, cnt)
+		//if lparam_ = MEBTimer(MEBTimer_NameIh, cnt): tmp = MEBTimer(MEBTimer_NameBKColor, cnt)
+	loop
+	repeat DockTimerNum
+		if lparam_ = DockTimer(DockTimer_TimeIh, cnt): tmp = DockTimer(DockTimer_TimeBKColor, cnt)
+	loop
+	if tmp : return tmp
+
+return 0
 
 #deffunc local exit onexit
 	//作成したブラシを削除
@@ -395,33 +394,5 @@ return
 	//タイマーを削除
 	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), TickTackTimerID
 return
-
-/*
-#deffunc local proc int lparam_, int wparam_
-
-	status = 0
-	repeat MEBTimerNum
-		if ( lparam_ == MEBTimer(MEBTimer_TimeIh, cnt) ){
-			SetBkColor wparam_, COLORREF(COLORREF_COLOR, COLOR_RED)
-			status = COLORREF(COLORREF_BRUSH, COLOR_RED)
-			break
-		}
-		if ( lparam_ == MEBTimer(MEBTimer_NameIh, cnt) ){
-			SetBkColor wparam_, COLORREF(COLORREF_COLOR, COLOR_RED)
-			status = COLORREF(COLORREF_BRUSH, COLOR_RED)
-			break
-		}
-	loop
-	repeat DockTimerNum
-		if ( lparam_ == DockTimer(DockTimer_TimeIh, cnt) ){
-			SetBkColor wparam_, COLORREF(COLORREF_COLOR, COLOR_RED)
-			status = COLORREF(COLORREF_BRUSH, COLOR_RED)
-			break
-		}
-	loop
-
-return status
-*/
-
 
 #global
