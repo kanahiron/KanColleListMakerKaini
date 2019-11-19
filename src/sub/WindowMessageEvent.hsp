@@ -19,7 +19,7 @@
 			swbreak
 
 		case WM_TIMER
-			logmes "WM_TIMER"
+			//logmes "WM_TIMER"
 			gosub *WM_TIMER_Proc
 			swbreak
 
@@ -46,6 +46,12 @@
 		case WM_SELWINDOW
 			logmes "WM_SELWINDOW"
 			gosub *AutoPosGetSelWindow
+			swbreak
+
+		case WM_CTLCOLOREDIT
+			logmes "WM_CTLCOLOREDIT"
+			WM_CTLCOLOREDIT_Proc@TimerOperationMod lparam, wparam
+			if (stat): logmes "背景色セット": oncmd 1: return stat
 			swbreak
 
 	swend

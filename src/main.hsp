@@ -80,7 +80,6 @@
 	wndInfoInit
 	nidStackInit
 	DAControlInit
-	init@TimerOperationMod WND_INFO(WND_MAIN, WI_HANDLE), TickTackTimerID
 	init@isHomeportMod WND_HOME_PORT_MOD
 	//Init@i18n //準備ができていないため
 
@@ -98,6 +97,7 @@
 		SetWindowLong WND_INFO(WND_MAIN, WI_HANDLE),-20, stat | $80000
 		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
 		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 1
+		init@TimerOperationMod WND_INFO(WND_MAIN, WI_HANDLE), TickTackTimerID
 		oncmd gosub *MainWindowProc, WM_DROPFILES
 		oncmd gosub *MainWindowProc, WM_COMMAND
 		oncmd gosub *MainWindowProc, WM_HOTKEY
