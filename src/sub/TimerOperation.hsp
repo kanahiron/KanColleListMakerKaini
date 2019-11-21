@@ -88,19 +88,18 @@
 	COLORREF(COLORREF_BRUSH, COLOR_WHT) = CreateSolidBrush(0xFFFFFF)
 	COLORREF(COLORREF_COLOR, COLOR_GRY) = 0xF0F0F0
 	COLORREF(COLORREF_BRUSH, COLOR_GRY) = CreateSolidBrush(0xF0F0F0)
-	COLORREF(COLORREF_COLOR, COLOR_RED) = 0x4040FF
-	COLORREF(COLORREF_BRUSH, COLOR_RED) = CreateSolidBrush(0x4040FF)
-	COLORREF(COLORREF_COLOR, COLOR_GRN) = 0x80FF80
-	COLORREF(COLORREF_BRUSH, COLOR_GRN) = CreateSolidBrush(0x80FF80)
-	COLORREF(COLORREF_COLOR, COLOR_YEL) = 0x20F0FF
-	COLORREF(COLORREF_BRUSH, COLOR_YEL) = CreateSolidBrush(0x20F0FF)
+	COLORREF(COLORREF_COLOR, COLOR_RED) = 0x8080FF
+	COLORREF(COLORREF_BRUSH, COLOR_RED) = CreateSolidBrush(0x8080FF)
+	COLORREF(COLORREF_COLOR, COLOR_GRN) = 0xA0FFA0
+	COLORREF(COLORREF_BRUSH, COLOR_GRN) = CreateSolidBrush(0xA0FFA0)
+	COLORREF(COLORREF_COLOR, COLOR_YEL) = 0x60FAFF
+	COLORREF(COLORREF_BRUSH, COLOR_YEL) = CreateSolidBrush(0x60FAFF)
 
 	repeat MEBTimerNum
 		MEBTimer(MEBTimer_SecTime, cnt) = -1
 		MEBTimer(MEBTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_GRY)
-		//MEBTimer(MEBTimer_NameBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_GRY)
 		MEBTimerStr(MEBTimerStr_Time, cnt) = "---"
-		MEBTimerStr(MEBTimerStr_Name, cnt) = "---"
+		MEBTimerStr(MEBTimerStr_Name, cnt) = " ---"
 	loop
 	repeat DockTimerNum
 		DockTimer(DockTimer_SecTime, cnt) = -1
@@ -115,31 +114,34 @@ return
 #deffunc local Draw double UIScale_, var mesy
 	UIScale = UIScale_
 
+	mref BMSCR, 67
+	hFont = BMSCR(38)
+
 	mesx = Scale(175)
 	mesy_ = mesy
 
 	pos Scale(4), mesy
 	mes "遠"
-	pos Scale(4), mesy+Scale(16)
+	pos Scale(4), mesy+Scale(14)
 	mes "征"
 
 	repeat MEBTimerNum
-		pos Scale(20), mesy: objsize Scale(60), Scale(24)
+		pos Scale(20), mesy: objsize Scale(60), Scale(21)
 		button gosub strf("第%d艦隊", cnt+2), *MEBTimerChange
 		MEBTimer(MEBTimer_ChangeBId, cnt) = stat
 		pos Scale(80), mesy+Scale(1)
-		input MEBTimerStr(MEBTimerStr_Time, cnt), Scale(95), Scale(22): mesy += Scale(24)
+		winobj "static", MEBTimerStr(MEBTimerStr_Time, cnt), , $50001001, Scale(95), Scale(20): mesy += Scale(21)
 		MEBTimer(MEBTimer_TimeIId, cnt) = stat
 		MEBTimer(MEBTimer_TimeIh, cnt) = objinfo( MEBTimer(MEBTimer_TimeIId, cnt), 2)
-		//sendmsg MEBTimer(MEBTimer_TimeIh, cnt), $CF, 1
+		sendmsg MEBTimer(MEBTimer_TimeIh, cnt), $30, hFont
 		ChgWndowStyle objinfo_hwnd( MEBTimer(MEBTimer_TimeIId, cnt)), 0x01
 		pos Scale(21), mesy
-		input MEBTimerStr(MEBTimerStr_Name, cnt), Scale(134), Scale(24)
+		winobj "static", MEBTimerStr(MEBTimerStr_Name, cnt), , $50001000, Scale(134), Scale(20)
 		MEBTimer(MEBTimer_NameIId, cnt) = stat
 		MEBTimer(MEBTimer_NameIh, cnt) = objinfo( MEBTimer(MEBTimer_NameIId, cnt), 2)
-		sendmsg MEBTimer(MEBTimer_NameIh, cnt), $CF, 1
-		pos Scale(155), mesy: objsize Scale(20), Scale(24)
-		button gosub "↺", *MEBTimerReset: mesy += Scale(24)
+		sendmsg MEBTimer(MEBTimer_NameIh, cnt), $30, hFont
+		pos Scale(155), mesy: objsize Scale(20), Scale(20)
+		button gosub "↺", *MEBTimerReset: mesy += Scale(20)
 		MEBTimer(MEBTimer_ResetBId, cnt) = stat
 	loop
 
@@ -147,21 +149,23 @@ return
 
 	pos Scale(4), mesy
 	mes "入"
-	pos Scale(4), mesy+Scale(16)
+	pos Scale(4), mesy+Scale(14)
 	mes "渠"
 
 	repeat DockTimerNum
-		pos Scale(20), mesy: objsize Scale(60), Scale(24)
+		pos Scale(20), mesy: objsize Scale(60), Scale(21)
 		button gosub strf("ドック%d", cnt+1), *DockTimerChange
 		DockTimer(DockTimer_ChangeBId, cnt) = stat
 		pos Scale(80), mesy+Scale(1)
-		input DockTimerStr(DockTimerStr_Time, cnt), Scale(95), Scale(22): mesy += Scale(24)
+		winobj "static", DockTimerStr(DockTimerStr_Name, cnt), , $50001000, Scale(95), Scale(20): mesy += Scale(20)
 		DockTimer(DockTimer_TimeIId, cnt) = stat
 		DockTimer(DockTimer_TimeIh, cnt) = objinfo( DockTimer(DockTimer_TimeIId, cnt), 2)
-		//sendmsg DockTimer(DockTimer_TimeIh, cnt), $CF, 1
+		sendmsg DockTimer(DockTimer_TimeIh, cnt), $30, hFont
 		ChgWndowStyle DockTimer(DockTimer_TimeIh, cnt), 0x01
 	loop
+	mesy += 1
 
+	//ここから二列目(右半分)
 	pos Scale(175)+Scale(15), mesy_
 	mes "時間指定": mesy_+=Scale(20)
 
@@ -251,7 +255,7 @@ return
 
 *SetMEBTimerName
 	repeat MEBTimerNum
-		objprm MEBTimer(MEBTimer_NameIId, cnt), MEBTimerStr(MEBTimerStr_Name, cnt)
+		SetWindowText MEBTimer(MEBTimer_NameIh, cnt), " "+MEBTimerStr(MEBTimerStr_Name, cnt)
 	loop
 return
 
@@ -300,13 +304,13 @@ return
 *TimerUpdate
 	repeat MEBTimerNum
 		if MEBTimer(MEBTimer_UpdateFlg, cnt){
-			objprm MEBTimer(MEBTimer_TimeIId, cnt), MEBTimerStr(MEBTimerStr_Time, cnt)
+			SetWindowText MEBTimer(MEBTimer_TimeIh, cnt), MEBTimerStr(MEBTimerStr_Time, cnt)
 			MEBTimer(MEBTimer_UpdateFlg, cnt) = FALSE
 		}
 	loop
 	repeat DockTimerNum
 		if DockTimer(DockTimer_UpdateFlg, cnt){
-			objprm DockTimer(DockTimer_TimeIId, cnt), DockTimerStr(DockTimerStr_Time, cnt)
+			SetWindowText DockTimer(DockTimer_TimeIh, cnt), DockTimerStr(DockTimerStr_Time, cnt)
 			DockTimer(DockTimer_UpdateFlg, cnt) = FALSE
 		}
 	loop
@@ -372,17 +376,19 @@ return
 
 return
 
-#deffunc local WM_CTLCOLOREDIT_Proc int lparam_, int wparam_
+#deffunc local WM_CTLCOLORSTATIC_Proc int lparam_, int wparam_
 
 	tmp = 0
 	repeat MEBTimerNum
 		if lparam_ = MEBTimer(MEBTimer_TimeIh, cnt): tmp = MEBTimer(MEBTimer_TimeBKColor, cnt)
-		//if lparam_ = MEBTimer(MEBTimer_NameIh, cnt): tmp = MEBTimer(MEBTimer_NameBKColor, cnt)
 	loop
 	repeat DockTimerNum
 		if lparam_ = DockTimer(DockTimer_TimeIh, cnt): tmp = DockTimer(DockTimer_TimeBKColor, cnt)
 	loop
-	if tmp : return tmp
+	if tmp {
+		SetBkMode wparam_, TRANSPARENT
+		return tmp
+	}
 
 return 0
 

@@ -107,7 +107,7 @@
 		oncmd gosub *MainWindowProc, WM_LBUTTONDOWN
 		oncmd gosub *MainWindowProc, WM_LBUTTONDBLCLK
 		oncmd gosub *mainWindowProc, WM_SELWINDOW
-		oncmd gosub *mainWindowProc, WM_CTLCOLOREDIT
+		oncmd gosub *mainWindowProc, WM_CTLCOLORSTATIC
 		objmode 2
 
 		combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  タイマーモード\n  オプション"
@@ -276,16 +276,10 @@
 
 	gsel WND_MAIN,1+frontRow
 
-	/*
-	mode = MODE_OPTION
-	optionMode = OPMODE_CAPTURE
-	gosub *drawMainWindow
-	//*/
-
-	/*
+	///*
 	mode = MODE_TIMER
 	gosub *drawMainWindow
-	*/
+	//*/
 
 	firstStart = FALSE
 	stop

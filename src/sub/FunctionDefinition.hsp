@@ -20,6 +20,7 @@
 #func global CreateSolidBrush "CreateSolidBrush" int
 #func global SetTextColor "SetTextColor" int, int
 #func global SetBkColor "SetBkColor" int, int
+#func global SetBkMode "SetBkMode" int, int
 
 #uselib "user32.dll"
 #func global GetDC "GetDC" int
@@ -230,6 +231,7 @@
 #const global WM_TIMER			0x0113
 #const global WM_VSCROLL		0x0114
 #const global WM_CTLCOLOREDIT   0x0133
+#const global WM_CTLCOLORSTATIC 0x0138
 #const global WM_MOUSEMOVE		0x0200
 #const global WM_LBUTTONDOWN    0x0201
 #const global WM_LBUTTONDBLCLK  0x0203
@@ -247,6 +249,9 @@
 //エディットコントロール周り
 #const global EM_SETSEL         0x00B1
 #const global EM_GETLINECOUNT   0x00BA
+
+//スタティックコントロール周り
+#const global TRANSPARENT       0x0001
 
 //リストボックス周り
 #const global LB_ADDSTRING      $00000180

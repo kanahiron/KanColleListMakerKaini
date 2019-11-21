@@ -48,10 +48,10 @@
 			gosub *AutoPosGetSelWindow
 			swbreak
 
-		case WM_CTLCOLOREDIT
-			logmes "WM_CTLCOLOREDIT"
-			WM_CTLCOLOREDIT_Proc@TimerOperationMod lparam, wparam
-			if (stat): logmes "背景色セット": oncmd 1: return stat
+		case WM_CTLCOLORSTATIC
+			logmes "WM_CTLCOLORSTATIC"
+			WM_CTLCOLORSTATIC_Proc@TimerOperationMod lparam, wparam
+			if (stat): logmes "背景色セット "+lparam: oncmd 1: return stat
 			swbreak
 
 	swend
@@ -741,7 +741,10 @@ return
 			swbreak
 
 		case TickTackTimerID
+			//ここで許可しないとスタティックコントロールの背景色がうまくセットされない…
+			oncmd 1
 			gosub *TickTackTimer@TimerOperationMod
+			oncmd 0
 			swbreak
 
 	swend
