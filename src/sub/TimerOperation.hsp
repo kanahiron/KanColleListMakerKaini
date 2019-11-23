@@ -2,6 +2,8 @@
 #module TimerOperationMod
 
 #define ctype Scale(%1) int(UIScale*(%1)+0.5)
+#define ctype sec2hhmmss(%1) strf("%%02d:%%02d:%%02d", (%1)/3600, (%1)\3600/60, (%1)\60)
+
 #enum MEBTimer_ChangeBId = 0
 #enum MEBTimer_ResetBId
 #enum MEBTimer_TimeIId
@@ -203,7 +205,7 @@ return
 		if (timehh > 99): timehh = 99
 
 		time = timehh*3600 + timemm*60 + timess
-		timeStr = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+		timeStr = sec2hhmmss(time)
 
 		if( selected & 0x10){
 			//遠征
@@ -229,7 +231,7 @@ return
 		time = int(MEBDataList(MEBData_Time, listIndex))
 		if time != 0{
 
-			timeStr = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+			timeStr = sec2hhmmss(time)
 			MEBTimer( MEBTimer_SecTime, selected-16) = time
 			MEBTimer( MEBTimer_UpdateFlg, selected-16) = TRUE
 			MEBTimer( MEBTimer_TimeBKColor, selected-16) = COLORREF(COLORREF_BRUSH, COLOR_GRN)
@@ -266,7 +268,7 @@ return
 			MEBTimer( MEBTimer_SecTime, cnt) -= 1
 			time = MEBTimer( MEBTimer_SecTime, cnt)
 			MEBTimer( MEBTimer_UpdateFlg, cnt) = TRUE
-			MEBTimerStr( MEBTimerStr_Time, cnt) = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+			MEBTimerStr( MEBTimerStr_Time, cnt) = sec2hhmmss(time)
 			if (time == 59): MEBTimer( MEBTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_YEL)
 			if (time == -1) {
 				MEBTimer( MEBTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_RED)
@@ -280,7 +282,7 @@ return
 			DockTimer( DockTimer_SecTime, cnt) -= 1
 			time = DockTimer( DockTimer_SecTime, cnt)
 			DockTimer( DockTimer_UpdateFlg, cnt) = TRUE
-			DockTimerStr( DockTimerStr_Time, cnt) = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+			DockTimerStr( DockTimerStr_Time, cnt) = sec2hhmmss(time)
 			if (time == 59): DockTimer( DockTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_YEL)
 			if (time == -1) {
 				DockTimer( DockTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_RED)
