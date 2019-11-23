@@ -20,6 +20,7 @@
 
 #enum MEBData_Name = 0
 #enum MEBData_Time
+#enum MEBData_COUNT
 
 #enum DockTimer_ChangeBId = 0
 #enum DockTimer_TimeIId
@@ -65,21 +66,8 @@
 	dim DockTimer, DockTimer_COUNT, DockTimerNum
 	sdim DockTimerStr, 64, DockTimerStr_COUNT, DockTimerNum
 
-	sdim MEBDataList, 512, 2, 1
-	//仮
-	MEBDataList(MEBData_Name, 0) = "01.練習航海"
-	MEBDataList(MEBData_Time, 0) = ""+(15*60)
-	MEBDataList(MEBData_Name, 1) = "A3.長時間対潜警戒"
-	MEBDataList(MEBData_Time, 1) = ""+(15*60+2*3600)
-	MEBDataList(MEBData_Name, 2) = "43.ミ船団護衛(二号船団)(マンスリー・交戦型)"
-	MEBDataList(MEBData_Time, 2) = ""+(12*3600)
-	MEBDataListCount = 3
-
+	sdim MEBDataList, 512, MEBData_COUNT, 1
 	sdim MEBSelectBoxStr, 4096
-	repeat MEBDataListCount
-		MEBSelectBoxStr += MEBDataList(MEBData_Name, cnt)+"\n"
-	loop
-	MEBSelectBoxStr = strmid(MEBSelectBoxStr, 0, strlen(MEBSelectBoxStr)-2)
 
 	dim COLORREF, COLORREF_COUNT, COLOR_COUNT
 	sdim TimerSetTime, 64, 3
@@ -108,6 +96,7 @@
 	loop
 
 	SetTimer hMainWnd, timerID, 400, 0
+	timerListLoad
 
 return
 
@@ -236,15 +225,18 @@ return
 		//リストボックスから取得
 		//遠征のみ
 		sendmsg MEBListCBh, CB_GETCURSEL
-		temp = stat
-		time = int(MEBDataList(MEBData_Time, temp))
-		timeStr = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+		listIndex = stat
+		time = int(MEBDataList(MEBData_Time, listIndex))
+		if time != 0{
 
-		MEBTimer( MEBTimer_SecTime, selected-16) = time
-		MEBTimer( MEBTimer_UpdateFlg, selected-16) = TRUE
-		MEBTimer( MEBTimer_TimeBKColor, selected-16) = COLORREF(COLORREF_BRUSH, COLOR_GRN)
-		MEBTimerStr( MEBTimerStr_Time, selected-16) = timeStr
-		MEBTimerStr( MEBTimerStr_Name, selected-16) = MEBDataList(MEBData_Name, temp)
+			timeStr = strf("%02d:%02d:%02d", (time/3600), (time\3600/60), (time\60))
+			MEBTimer( MEBTimer_SecTime, selected-16) = time
+			MEBTimer( MEBTimer_UpdateFlg, selected-16) = TRUE
+			MEBTimer( MEBTimer_TimeBKColor, selected-16) = COLORREF(COLORREF_BRUSH, COLOR_GRN)
+			MEBTimerStr( MEBTimerStr_Time, selected-16) = timeStr
+			MEBTimerStr( MEBTimerStr_Name, selected-16) = MEBDataList(MEBData_Name, listIndex)
+
+		}
 	}
 
 	width Scale(175)
@@ -400,5 +392,50 @@ return 0
 	//タイマーを削除
 	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), TickTackTimerID
 return
+
+#deffunc timerListLoad local loadfile, local row, local c1, local c2, local gap
+
+	sdim loadfile
+	sdim row
+	sdim c1
+	sdim c2
+
+	exist dir_cur+"\\TimerList.txt"
+	if strsize == -1{
+		MEBDataList(MEBData_Name, 0) = ""
+		MEBDataList(MEBData_Time, 0) = ""
+		MEBSelectBoxStr = "---"
+		return
+	}
+
+	notesel loadfile
+	noteload dir_cur+"\\TimerList.txt"
+
+	gap = 0
+	repeat notemax
+		row = _noteget(cnt)
+		if strmid(row,0,1) == "#": continue
+		if strmid(row,0,1) == "@"{
+			if row = "@建造":break
+			MEBSelectBoxStr += "海域: "+strmid(row,1,99)+"\n"
+			MEBDataList(MEBData_Name, MEBDataListCount) = "" //配列の自動拡張の為必要
+			MEBDataListCount += 1
+			continue
+		}
+
+		c1 = strmid(row,0,instr(row,0,","))
+		c2 = strmid(row,instr(row,0,",")+1,99)
+		MEBDataList(MEBData_Name, MEBDataListCount) = c2
+		MEBDataList(MEBData_Time, MEBDataListCount) = ""+timevalue(c1)
+		MEBSelectBoxStr += c2+"\n"
+		MEBDataListCount += 1
+	loop
+	MEBSelectBoxStr = strmid(MEBSelectBoxStr, 0, strlen(MEBSelectBoxStr)-2)
+	noteunsel
+return
+
+#defcfunc local timevalue str p1, local t
+	t = p1
+return 3600*strmid(t,0,2)+60*strmid(t,3,2)+strmid(t,6,2)
 
 #global

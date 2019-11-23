@@ -19,5 +19,6 @@ packfile
 !f.png
 !h.png
 *.txt
+!TimerList.txt
 *.zip
 *.wav
