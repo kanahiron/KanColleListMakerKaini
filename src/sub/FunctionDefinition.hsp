@@ -64,6 +64,7 @@
 #func global SetWindowPos "SetWindowPos" wptr, wptr, wptr, wptr, wptr, wptr, wptr
 #func global SendMessage "SendMessageW" wptr, wptr, wptr, wptr
 #func global SetProcessDPIAware "SetProcessDPIAware"
+#func global MessageBeep "MessageBeep" int
 
 #uselib "kernel32.dll"
 #func global MultiByteToWideChar "MultiByteToWideChar" int, int, int, int, int, int
@@ -355,3 +356,19 @@
 #const global SB_BOTH 3
 #const global SB_HORZ 0
 #const global SB_VERT 1
+
+#const global MB_OK                 0x00000000
+#const global MB_OKCANCEL           0x00000001
+#const global MB_ABORTRETRYIGNORE	0x00000002
+#const global MB_YESNOCANCEL        0x00000003
+#const global MB_YESNO              0x00000004
+#const global MB_RETRYCANCEL        0x00000005
+#const global MB_CANCELTRYCONTINUE	0x00000006
+#const global MB_ICONHAND           0x00000006
+#const global MB_ICONERROR          0x00000006
+#const global MB_ICONSTOP           0x00000010
+#const global MB_ICONQUESTION       0x00000020
+#const global MB_ICONEXCLAMATION    0x00000020
+#const global MB_ICONWARNING        0x00000030
+#const global MB_ICONASTERISK       0x00000030
+#const global MB_ICONINFORMATION    0x00000030

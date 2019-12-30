@@ -273,6 +273,7 @@ return
 			if (time == -1) {
 				MEBTimer( MEBTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_RED)
 				MEBTimerStr( MEBTimerStr_Time, cnt) = "完了"
+				MessageBeep MB_OK
 			}
 		}
 	loop
@@ -287,6 +288,7 @@ return
 			if (time == -1) {
 				DockTimer( DockTimer_TimeBKColor, cnt) = COLORREF(COLORREF_BRUSH, COLOR_RED)
 				DockTimerStr( DockTimerStr_Time, cnt) = "完了"
+				MessageBeep MB_OK
 			}
 		}
 	loop
