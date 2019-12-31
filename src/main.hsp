@@ -1,6 +1,18 @@
-#include "hsp3utf.as"
-#include "modclbk3.hsp"
+#packopt name "艦これ一覧めいかー改二"
+#packopt hide 1
+#packopt manifest "../res/KanColleListMakerKaini.manifest"
+#packopt icon "../res/KanColleListMakerKaini.ico"
+#packopt lang "1041"
+#pack "../res/f.png"
+#pack "../res/h.png"
 
+#define SOFTNAME "一覧めいかー改二 Ver0.18"
+#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.18"
+#define klm2ver 18000
+
+#include "hsp3utf.as"
+#include "WrapCall.as"
+#include "modclbk3.hsp"
 #include "./sub/FunctionDefinition.hsp"
 #include "./sub/key.hsp"
 
@@ -40,18 +52,6 @@
 #include "./mod/makeBackgroundImageMod.as"
 #include "./mod/SelectWindowMod.as"
 
-#pack "../res/f.png"
-#pack "../res/h.png"
-#packopt name "艦これ一覧めいかー改二"
-#packopt hide 1
-#packopt manifest "../res/KanColleListMakerKaini.manifest"
-#packopt icon "../res/KanColleListMakerKaini.ico"
-#packopt lang "1041"
-
-#define SOFTNAME "一覧めいかー改二 Ver0.17"
-#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.17"
-#define klm2ver 16000
-
 #ifdef _debug
 	SafeDelete@kmodule("./sub/hsptmp")
 	SafeDelete@kmodule("./sub/obj")
@@ -72,7 +72,6 @@
 
 	//デバッグ中でも高DPIに対応させる
 	SetProcessDPIAware
-	//onerror gosub *err_
 #endif
 
 	onexit gosub *exit
@@ -80,7 +79,6 @@
 	wndInfoInit
 	nidStackInit
 	DAControlInit
-	init@TimerOperationMod
 	init@isHomeportMod WND_HOME_PORT_MOD
 	//Init@i18n //準備ができていないため
 
@@ -98,6 +96,7 @@
 		SetWindowLong WND_INFO(WND_MAIN, WI_HANDLE),-20, stat | $80000
 		SetLayeredWindowAttributes WND_INFO(WND_MAIN, WI_HANDLE), 0x00000000, 255, LWA_ALPHA
 		DragAcceptFiles WND_INFO(WND_MAIN, WI_HANDLE), 1
+		init@TimerOperationMod WND_INFO(WND_MAIN, WI_HANDLE), TickTackTimerID
 		oncmd gosub *MainWindowProc, WM_DROPFILES
 		oncmd gosub *MainWindowProc, WM_COMMAND
 		oncmd gosub *MainWindowProc, WM_HOTKEY
@@ -107,11 +106,10 @@
 		oncmd gosub *MainWindowProc, WM_LBUTTONDOWN
 		oncmd gosub *MainWindowProc, WM_LBUTTONDBLCLK
 		oncmd gosub *mainWindowProc, WM_SELWINDOW
-		oncmd gosub *mainWindowProc, WM_CTLCOLOREDIT
+		oncmd gosub *mainWindowProc, WM_CTLCOLORSTATIC
 		objmode 2
 
-		//combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  タイマーモード\n  オプション"
-		combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  オプション"
+		combox dummy, 100, "  SSキャプチャモード\n  艦娘一覧モード\n  攻略編成モード\n  その他一覧作成モード\n  タイマーモード\n  オプション"
 		comboxId = stat
 		hCombox = objinfo_hwnd(comboxId)
 
@@ -278,13 +276,9 @@
 	gsel WND_MAIN,1+frontRow
 
 	/*
-	mode = MODE_OPTION
-	optionMode = OPMODE_CAPTURE
+	mode = MODE_TIMER
 	gosub *drawMainWindow
 	//*/
-
-	//mode = MODE_TIMER
-	//gosub *drawMainWindow
 
 	firstStart = FALSE
 	stop
@@ -370,22 +364,6 @@
 	end
 	end
 
-*err_
-	onerror 0
-
-	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), VideoCapTimerID
-	KillTimer WND_INFO(WND_MAIN, WI_HANDLE), LateEncodeTimerID
-	if (apid != -1): pipe2term apid
-	if (vpid != -1): pipe2term vpid
-	if (mpid != -1): pipe2term mpid
-	wait 50
-	SafeDelete@kmodule videoFileName+"_v.mp4"
-	SafeDelete@kmodule videoFileName+"_a.wav"
-	SafeDelete@kmodule videoFileName+".mp4"
-
-	dialog "申し訳ありません。致命的なエラーが発生しました。\nエラー番号 :"+wparam+"\n何度も発生する場合作者kanahironまで報告をお願いします", 1, LONGSOFTNAME
-	end
-	end
 
 #include "./sub/DeclaringVariables.hsp"
 #include "./sub/DrawWindow.hsp"

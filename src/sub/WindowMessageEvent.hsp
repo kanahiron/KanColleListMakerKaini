@@ -19,7 +19,7 @@
 			swbreak
 
 		case WM_TIMER
-			logmes "WM_TIMER"
+			//logmes "WM_TIMER"
 			gosub *WM_TIMER_Proc
 			swbreak
 
@@ -46,6 +46,12 @@
 		case WM_SELWINDOW
 			logmes "WM_SELWINDOW"
 			gosub *AutoPosGetSelWindow
+			swbreak
+
+		case WM_CTLCOLORSTATIC
+			logmes "WM_CTLCOLORSTATIC"
+			WM_CTLCOLORSTATIC_Proc@TimerOperationMod lparam, wparam
+			if (stat): logmes "背景色セット "+lparam: oncmd 1: return stat
 			swbreak
 
 	swend
@@ -117,12 +123,10 @@ return
 				mode = MODE_LIST
 				listmode = LISTMODE_OTHER
 				swbreak
-			//Ver0.14では見送り
-			//case 4
-			//	mode = MODE_TIMER
-			//	swbreak
-			//case 5
 			case 4
+				mode = MODE_TIMER
+				swbreak
+			case 5
 				mode = MODE_OPTION
 				swbreak
 		swend
@@ -239,8 +243,7 @@ return
 *WM_LBUTTONDOWN_Proc
 	gosub *mainWndMove
 	if (mode==MODE_TIMER){
-		//Ver0.14では見送り
-		//WM_LBUTTONDOWN_Proc@TimerOperationMod lparam, wparam
+		WM_LBUTTONDOWN_Proc@TimerOperationMod lparam, wparam
 	}
 return
 
@@ -736,5 +739,13 @@ return
 		case SeqCapWriteStatTimerID
 			gosub *SeqCapWriteStatTimerProcessing
 			swbreak
+
+		case TickTackTimerID
+			//ここで許可しないとスタティックコントロールの背景色がうまくセットされない…
+			oncmd 1
+			gosub *TickTackTimer@TimerOperationMod
+			oncmd 0
+			swbreak
+
 	swend
 return 0
