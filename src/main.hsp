@@ -275,7 +275,7 @@
 
 	gsel WND_MAIN,1+frontRow
 
-	///*
+	/*
 	mode = MODE_TIMER
 	gosub *drawMainWindow
 	//*/
