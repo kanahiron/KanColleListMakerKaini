@@ -23,6 +23,7 @@
 #include "./lib/isfilled.as"
 #include "./lib/pipe2_utf.as"
 #include "./lib/TsubuyakiSoup_mod_utf.as"
+#include "./lib/ExCalcModule.as"
 
 //プリプロセッサ命令で相対パスがなぜか動かなさそうなので暫定措置
 #include "./lib/ChangeBitmapDepth.as"
