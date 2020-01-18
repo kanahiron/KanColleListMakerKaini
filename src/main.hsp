@@ -6,9 +6,9 @@
 #pack "../res/f.png"
 #pack "../res/h.png"
 
-#define SOFTNAME "一覧めいかー改二 Ver0.18"
-#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.18"
-#define klm2ver 18000
+#define SOFTNAME "一覧めいかー改二 Ver0.19"
+#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.19"
+#define klm2ver 19000
 
 #include "hsp3utf.as"
 #include "WrapCall.as"
