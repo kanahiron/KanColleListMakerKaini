@@ -11,6 +11,10 @@
 	#const SM_CXFRAME		32
 	#const SM_CYFRAME		33
 
+	#uselib "kernel32.dll"
+		#func QueryPerformanceFrequency "QueryPerformanceFrequency" int
+		#func QueryPerformanceCounter "QueryPerformanceCounter" int
+
 	/**
 	 * exist命令の関数版
 	 * (※グローバル変数strsizeを変更する)
@@ -76,5 +80,25 @@
 			if (peek(out, cnt)==0):poke out, cnt, ' '
 		loop
 	return out
+
+	/**
+	 * PCの起動時間を日にして返す
+	 * @return 起動時間(日)
+	 */
+	#defcfunc GetStartupTime local freq, local start, local result
+
+		dim freq,2
+		dim start,2
+		dim result, 2
+
+		QueryPerformanceFrequency varptr(freq)
+		QueryPerformanceCounter varptr(start)
+		Int64_CalcDiv64 result(0), result(1), start(0), start(1), freq(0), freq(1)
+		if (result(0) != 0){
+			logmes "起動時間："+(1.0*result(0)/86400.0)+"日"
+			return 1.0*result(0)/86400.0
+		}
+
+	return 0.0
 
 #global

@@ -274,6 +274,12 @@
 		repeat 4: ssCap(cnt) = 0: loop
 	}
 
+	if (40.0 < GetStartupTime()) {
+		dialog strf({"PCの連続稼働時間が40日を超えています(現在%0.1f日)
+		49.7日を超えると動画キャプチャに音声が入らなくなるため、ご注意ください
+		PCの再起動、または完全シャットダウンを行うことでリセットされます"}, GetStartupTime()), 1, "警告 "+LONGSOFTNAME
+	}
+
 	gsel WND_MAIN,1+frontRow
 
 	/*
