@@ -102,29 +102,57 @@
 
 		if (lateEncode){
 			//負荷軽減動画キャプチャ
+			//*
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
 			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, videoCapX, videoCapY)
 			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s -tune zerolatency \"%s_v.mp4\"", videoCapFR, videoCapFR, 16, "ultrafast", videoFileName)
+			//*/
+
+			/*
+			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
+			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, videoCapX, videoCapY)
+			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p ", videoCapFR, videoCapFR)
+			cmdv += strf("-c:v hevc_nvenc  -preset lossless ")
+			cmdv += strf("\"%s_v.mp4\"", videoFileName)
+			//*/
+
+			/*
+			cmdv  = strf("\"%s\" -an -rtbufsize 256M -f dshow ", ffmpegdir)
+			cmdv += strf("-video_size %dx%d ",videoCapSizeX, videoCapSizeY)
+			cmdv += strf("-framerate %d/1 ", videoCapFR)
+			cmdv += strf("-i video=\"SCFF DirectShow Filter\" ")
+			//cmdv += strf("-vf fps=%d ", videoCapFR)
+			cmdv += strf("-pix_fmt yuv420p ")
+			cmdv += strf("-c:v hevc_nvenc -preset lossless ")
+			cmdv += strf("\"%s_v.mp4\"", videoFileName)
+			//*/
+			//SCFF DirectShow Filter
+
+
 		} else {
 			cmdv  = strf("\"%s\" -an -f gdigrab -draw_mouse %d -show_region %d ", ffmpegdir, videoCapHideCursor^1, videoCapShowFrame)
 			cmdv += strf("-video_size %dx%d -offset_x %d -offset_y %d ",videoCapSizeX, videoCapSizeY, videoCapX, videoCapY)
 			cmdv += strf("-framerate %d/1 -i desktop -vf fps=%d -pix_fmt yuv420p -c:v libx264 -crf %d -preset %s -tune zerolatency \"%s_v.mp4\"", videoCapFR, videoCapFR, videoCapCRF, x264presetStr, videoFileName)
 		}
 
-		pipe2exec cmda: apid = stat
-		aStartSystemTime = timeGetTime()
+		// ==== 音声プロセスの開始 ====
+		AddFFmpegLog "","cmd = "+cmda+"\n\n"
+		pipe2exec cmda: apid = stat: ffbuf = ""
 
-		timelimit = timeGetTime() + 5000 //5秒でループから抜けるようにする
+		timelimit = timeGetTime() + 3000 //3秒でループから抜けるようにする
 	    do
 			pipe2check apid
-			if (stat == 0): exfv = 1: vpid = -1
+			if (stat == 0): exfv = 1: apid = -1
 			if (stat & 2): pipe2get apid, ffbuf
 			if (stat & 4): pipe2err apid, ffbuf
 
 			if (ffbuf != ""){
 				AddFFmpegLog "", ffbuf: ffbuf = ""
 				aStartTime = GetAudioStartTime()
-				if (aStartTime != 0.0): _break
+				if (aStartTime != 0.0){
+					AddFFmpegLog "", "", "aStartTime : "+aStartTime+"\n"
+					_break
+				}
 			}
 		until (timelimit < timeGetTime())
 
@@ -132,18 +160,43 @@
 		if (aStartTime = 0.0){
 			pipe2term apid
 			apid = -1
-		} else {
-			//オーディオプロセスから開始時刻を受け取れたら
-			pipe2exec cmdv: vpid = stat
-			vStartSystemTime = timeGetTime()
-		}
 
-		if ( (apid == -1) || (vpid == -1) ){
-			LogOut "動画キャプチャの開始に失敗しました"
-
+			LogOut "動画キャプチャの開始に失敗しました\n音声プロセスが立ち上がりませんでした"
 			videoCapFlg = FALSE
 			gosub *SSModeControlEnable
+			return
+		}
 
+		// ==== 動画プロセスの開始 ====
+		AddFFmpegLog "cmd = "+cmdv+"\n\n",""
+		pipe2exec cmdv: vpid = stat: ffbuf = ""
+
+		timelimit = timeGetTime() + 3000 //3秒でループから抜けるようにする
+	    do
+			pipe2check vpid
+			if (stat == 0): exfv = 1: vpid = -1
+			if (stat & 2): pipe2get vpid, ffbuf
+			if (stat & 4): pipe2err vpid, ffbuf
+
+			if (ffbuf != ""){
+				AddFFmpegLog ffbuf, : ffbuf = ""
+				vStartTime = GetVideoStartTime()
+				if (vStartTime != 0.0){
+					AddFFmpegLog "", "", "vStartTime : "+vStartTime+"\n"
+					_break
+				}
+			}
+		until (timelimit < timeGetTime())
+
+		if (vStartTime = 0.0){
+			pipe2term vpid
+			vpid = -1
+			pipe2term apid
+			apid = -1
+
+			LogOut "動画キャプチャの開始に失敗しました\n動画プロセスが立ち上がりませんでした"
+			videoCapFlg = FALSE
+			gosub *SSModeControlEnable
 			return
 		}
 
@@ -208,23 +261,13 @@
 			if (exfv && exfa): break
 		loop
 
-		apid = -1
-		vpid = -1
+		apid = -1: vpid = -1
 
 		//エンコードの開始
 		LateEncodeFlg = TRUE
 		lateEncodeStartTime = timeGetTime()
 
-		vStartTime = GetVideoStartTime()
-		diffTime = 0.0
-
-		if (vStartTime!=0.0 && aStartTime!=0.0){
-			diffTime = (vStartTime-aStartTime)
-		}
-
-		logmes "vStartTime :"+vStartTime
-		logmes "aStartTime :"+aStartTime
-		logmes "diffTime   :"+diffTime+"s\n"
+		diffTime = vStartTime-aStartTime
 
 		if (audioNormalize){
 			normalizeStr = "-af volumedetect"
@@ -249,14 +292,14 @@
 				cmdm = strf("\"%s\" -i \"%s_v.mp4\" -c:v copy \"%s.mp4\"", ffmpegdir, videoFileName, videoFileName)
 			}
 		}
+
+		AddFFmpegLog "", "", "diffTime = "+diffTime+"\n"
+		AddFFmpegLog "", "", "cmd = "+cmdm+"\n\n"
 		pipe2exec cmdm: mpid = stat
-		logmes "cmdm :"+cmdm
 
 		if ( mpid == -1 ){
-
 			gosub *VideoCapEmgStop
 			LogOut "Error-エンコードプロセスの開始に失敗しました"
-
 			nidPop
 			return
 		}

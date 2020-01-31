@@ -1,8 +1,5 @@
-//#include "hsp3utf.as"
-
 #ifndef __hsp3utf__
-	dialog "このモジュールはHSP3utfが必要です。\nメインソースでincludeしてください。\n\nモジュール:FFMPEGLog",1,"終了します"
-	end
+	#include "hsp3utf.as"
 #endif
 
 #module FFMPEGLog_mod
@@ -51,6 +48,7 @@
 	sdim aInBuf, 4096
 	sdim eInBuf, 4096
 	sdim wideCharBuf, 4096
+	dim FILETIME, 2
 
 return
 
@@ -134,31 +132,39 @@ return
 	ShowWindow hffWindow, 0
 return
 
-#defcfunc GetVideoStartTime local time, local tbuf, local TimeStr, local timeStrIndex
-	ddim time, 1
-	sdim tbuf
-	tbuf = cnvwtos(ffLogVideo)
-	timeStrIndex = instr(tbuf, 0, "Duration: N/A, start: ")
-	if ( timeStrIndex != -1){
-		TimeStr = ""
-		getstr TimeStr, tbuf, timeStrIndex+22, ' '
-		time = double(TimeStr)
-	}
-return time
+#define global ctype GetAudioStartTime GetStartTime@FFMPEGLog_mod(ffLogAudio@FFMPEGLog_mod)
+#define global ctype GetVideoStartTime GetStartTime@FFMPEGLog_mod(ffLogVideo@FFMPEGLog_mod)
 
-#defcfunc GetAudioStartTime local time, local tbuf, local TimeStr, local timeStrIndex, local FILETIME
-	dim FILETIME, 2
-	ddim time, 1
+#defcfunc local GetStartTime var p1, local time, local tbuf, local TimeStr, local timeStrIndex
 	sdim tbuf
-	tbuf = cnvwtos(ffLogAudio)
+	sdim timeStr
+	tbuf = cnvwtos(p1)
 	timeStrIndex = instr(tbuf, 0, "Duration: N/A, start: ")
 	if ( timeStrIndex!=-1 && instr(tbuf, timeStrIndex, "bitrate:")!=-1 ){
-		TimeStr = ""
 		getstr TimeStr, tbuf, timeStrIndex+22, ' '
-		GetSystemTimeAsFileTime varptr(FILETIME)
-		time = FileTime2UnixTime(FILETIME) - 0.001*timeGetTime() + double(TimeStr)
+		return Align2Unixtime(1.0*TimeStr)
 	}
-return time
+return 0.0
+
+#defcfunc local Align2Unixtime double inTime
+	//想定する時間形式
+	// UNIXTIME(秒)　or UpTime(秒)
+	//戻り値
+	// 成功 UNIXTIME(秒) or 失敗 0.0
+
+	//起動時間を求めるために現在時刻とstartuptimeを取得
+	GetSystemTimeAsFileTime varptr(FILETIME)
+	startUpMilliSec = timeGetTime()
+
+	//起動時間(ms)を32bit変数で格納できる限界　しかしinTimeは(s) なので　2^32-1/1000の値
+	if (4294967.295 < inTime){
+		return inTime
+	} else {
+		// 32bit符号付き整数のオーバーフロー対策
+		startUpSec = 0.001 * ((startUpMilliSec&0x7FFFFFFF) + 2.0*(startUpMilliSec>>1&0x40000000))
+		return FileTime2UnixTime(FILETIME) - startUpSec + inTime
+	}
+return 0.0
 
 #global
 

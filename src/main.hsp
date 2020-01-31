@@ -6,9 +6,9 @@
 #pack "../res/f.png"
 #pack "../res/h.png"
 
-#define SOFTNAME "一覧めいかー改二 Ver0.18"
-#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.18"
-#define klm2ver 18000
+#define SOFTNAME "一覧めいかー改二 Ver0.19"
+#define LONGSOFTNAME "艦これ一覧めいかー改二 Ver0.19"
+#define klm2ver 19000
 
 #include "hsp3utf.as"
 #include "WrapCall.as"
@@ -23,6 +23,7 @@
 #include "./lib/isfilled.as"
 #include "./lib/pipe2_utf.as"
 #include "./lib/TsubuyakiSoup_mod_utf.as"
+#include "./lib/ExCalcModule.as"
 
 //プリプロセッサ命令で相対パスがなぜか動かなさそうなので暫定措置
 #include "./lib/ChangeBitmapDepth.as"
@@ -271,6 +272,12 @@
 
 	if (restoreSSCapFlg == FALSE){
 		repeat 4: ssCap(cnt) = 0: loop
+	}
+
+	if (40.0 < GetStartupTime()) {
+		dialog strf({"PCの連続稼働時間が40日を超えています(現在%0.1f日)
+		49.7日を超えると動画キャプチャに音声が入らなくなるため、ご注意ください
+		PCの再起動、または完全シャットダウンを行うことでリセットされます"}, GetStartupTime()), 1, "警告 "+LONGSOFTNAME
 	}
 
 	gsel WND_MAIN,1+frontRow
