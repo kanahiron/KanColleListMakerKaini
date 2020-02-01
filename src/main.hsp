@@ -43,6 +43,7 @@
 #include "./lib/deletefolderMod.as"
 #include "./lib/hash.as"
 #include "./lib/Math.as"
+#include "./lib/SpeechMod.as"
 
 //どちらというとサブソースなモジュール
 #include "./mod/FFMPEGLog.as"
