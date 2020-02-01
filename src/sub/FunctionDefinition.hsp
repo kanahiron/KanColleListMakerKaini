@@ -80,14 +80,14 @@
 #define global TRUE 1
 #define global FALSE 0
 
-#define CELL_MAX_W				9
-#define CELL_MAX_H				9
-#define HOTKEYID				7798
-#define SeqCapTimerID			101
-#define VideoCapTimerID			103
-#define LateEncodeTimerID		104
-#define SeqCapWriteStatTimerID	105
-#define TickTackTimerID         106
+#define CELL_MAX_W	9
+#define CELL_MAX_H	9
+#define HOTKEYID	7798
+#enum SeqCapTimerID = 101
+#enum VideoCapTimerID
+#enum LateEncodeTimerID
+#enum SeqCapWriteStatTimerID
+#enum TickTackTimerID
 
 //自分で定義した定数
 #enum WND_MAIN = 0
@@ -127,53 +127,56 @@
 #const FONT_SIZE_ALL 13
 
 //Mode
-#const MODE_SSCAP	0
-#const MODE_LIST	1
-#const MODE_TIMER	2
-#const MODE_OPTION	3
+#enum MODE_SSCAP = 0
+#enum MODE_LIST
+#enum MODE_TIMER
+#enum MODE_OPTION
+#enum MODE_COUNT
 
 //ListMode
-#const LISTMODE_LIST		0
-#const LISTMODE_FLEET		1
-#const LISTMODE_OTHER		2
+#enum LISTMODE_LIST = 0
+#enum LISTMODE_FLEET
+#enum LISTMODE_OTHER
 
 //ListModeOther
-#const LISTMODEOTHER_DIRECT		0
-#const LISTMODEOTHER_AIRBASE	1
-#const LISTMODEOTHER_ITEM		2
-#const LISTMODEOTHER_USERDEF	3
+#enum LISTMODEOTHER_DIRECT = 0
+#enum LISTMODEOTHER_AIRBASE
+#enum LISTMODEOTHER_ITEM
+#enum LISTMODEOTHER_USERDEF
 
 //OptionMode
-#const OPMODE_CONFIG		0
-#const OPMODE_CAPTURE		1
-#const OPMODE_VIDEOCAPTURE	2
-#const OPMODE_TWITTER		3
-#const OPMODE_OTHER			4
+#enum OPMODE_CONFIG = 0
+#enum OPMODE_CAPTURE
+#enum OPMODE_VIDEOCAPTURE
+#enum OPMODE_TIMER
+#enum OPMODE_TWITTER
+#enum OPMODE_OTHER
 
 //保存名
-#const SAVENAME_COUNT   9
-#const SN_CAPTURE       0
-#const SN_SELECTCAPTURE 1
-#const SN_LIST          2
-#const SN_FORMATION     3
-#const SN_DIRECTLINK    4
-#const SN_AIRSTATION    5
-#const SN_EQUIPMENT     6
-#const SN_USERDEF       7
-#const SN_VIDEO         8
+
+#enum SN_CAPTURE = 0
+#enum SN_SELECTCAPTURE
+#enum SN_LIST
+#enum SN_FORMATION
+#enum SN_DIRECTLINK
+#enum SN_AIRSTATION
+#enum SN_EQUIPMENT
+#enum SN_USERDEF
+#enum SN_VIDEO
+#enum SAVENAME_COUNT
 
 //captureMethod
-#const CM_BITBLT		0
-#const CM_PRINTWINDOW	1
+#enum CM_BITBLT = 0
+#enum CM_PRINTWINDOW
 
 //positionType
-#const PT_ABSOLUTE		1
-#const PT_RELATIVE		2
-#const PT_WNDABSOLUTE	3
+#enum PT_ABSOLUTE = 1
+#enum PT_RELATIVE
+#enum PT_WNDABSOLUTE
 
 //WindowInfo
-#const WI_HANDLE	0
-#const WI_DC		1
+#enum WI_HANDLE = 0
+#enum WI_DC
 
 //RECT構造体用
 #const global CR_X 0
